@@ -1,0 +1,2092 @@
+/*
+ * Fonts: the client's own, registered by src/ui/fonts.ts from /out/fonts/ (english = Arial Rounded MT Bold,
+ * basic = TaeUtum, chat = SeUtum). Body and chat fall back to a clean sans (the exported basic/chat TTFs are rejected
+ * by Chrome's font sanitiser, docs/UX_GAPS.md L2); the title face falls back to a serif.
+ */
+:root {
+  --ui: 1;
+  --font-title: 'SRO English', Georgia, 'Times New Roman', serif;
+  --font-body: 'SRO Basic', Tahoma, Verdana, 'Segoe UI', sans-serif;
+  --font-chat: 'SRO Chat', Tahoma, Verdana, 'Segoe UI', sans-serif;
+  --font: var(--font-body);
+  --gold: #f3d58a;
+  --text: #efe6cf;
+  --dim: #b9ad8f;
+  --bad: #ff8a73;
+  --good: #9fe39a;
+  --bar-h: min(calc(100vw * 172 / 1600), 16vh);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: var(--text);
+  font: 12px/1.3 var(--font);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+  visibility: hidden;
+}
+
+body.has-scene #canvas {
+  visibility: visible;
+}
+
+#ui,
+#overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+#ui {
+  z-index: 10;
+}
+
+#overlay {
+  z-index: 20;
+}
+
+#fade {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 40;
+}
+
+#fade.on {
+  opacity: 1;
+}
+
+.boot,
+.fatal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--dim);
+  margin: 0;
+  white-space: pre-wrap;
+  z-index: 60;
+}
+
+.fatal {
+  color: var(--bad);
+  background: #000;
+  padding: 24px;
+  place-items: start;
+}
+
+/* ---- shared art ------------------------------------------------------------------------------ */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.screen button,
+.screen input,
+.screen label,
+.art-window,
+.modal-shade,
+.chat {
+  pointer-events: auto;
+}
+
+.art {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.art.no-art {
+  background: linear-gradient(#4c4a45, #2e2c28);
+  border: 2px solid #9c8350;
+  border-radius: 3px;
+}
+
+.art-window {
+  position: relative;
+  color: var(--text);
+}
+
+.anchored {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(var(--ui));
+  transform-origin: 50% 50%;
+}
+
+.anchored.origin-top {
+  transform: translate(-50%, 0) scale(var(--ui));
+  transform-origin: 50% 0;
+}
+
+.anchored.origin-bottom {
+  transform: translate(-50%, -100%) scale(var(--ui));
+  transform-origin: 50% 100%;
+}
+
+.art-button {
+  position: relative;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: var(--img) no-repeat 0 0 / 100% 100%;
+  color: var(--text);
+  font: 12px var(--font-title);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 1px #000, 0 0 3px #000;
+  cursor: pointer;
+  flex: none;
+}
+
+.art-button:hover:not(:disabled) {
+  background-image: var(--img-focus);
+  color: #fff6d8;
+}
+
+.art-button:active:not(:disabled) {
+  background-image: var(--img-press);
+}
+
+.art-button:active:not(:disabled) .label {
+  transform: translateY(1px);
+}
+
+.art-button:disabled {
+  cursor: default;
+  filter: grayscale(0.7) brightness(0.65);
+}
+
+.art-button.no-art {
+  background: linear-gradient(#6d5a33, #3a2f1b);
+  border: 1px solid #c9a860;
+  border-radius: 3px;
+}
+
+.art-button.no-art.on {
+  box-shadow: inset 0 0 0 2px #7ad36b;
+}
+
+.art-button .label {
+  display: block;
+  pointer-events: none;
+}
+
+.art-button:focus-visible {
+  outline: 1px dashed var(--gold);
+  outline-offset: 2px;
+}
+
+.label {
+  color: #e9dfc6;
+  white-space: nowrap;
+}
+
+.field {
+  border: 0;
+  padding: 1px 4px;
+  background: transparent;
+  color: #fff;
+  font: 12px var(--font);
+  outline: none;
+  caret-color: var(--gold);
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.field:focus {
+  background: rgba(255, 220, 140, 0.06);
+}
+
+.field[hidden],
+.check[hidden] {
+  display: none;
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--bar-h);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.bar.no-art {
+  background: #000;
+}
+
+.bar-top {
+  top: 0;
+}
+
+.bar-bottom {
+  bottom: 0;
+}
+
+/* Live-text caption in the place of the text-characterselect / text-custom art (gold small capitals). */
+.caption {
+  position: absolute;
+  left: 3vw;
+  top: calc(var(--bar-h) * 0.5);
+  transform: scale(var(--ui));
+  transform-origin: 0 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 1px #000) drop-shadow(0 0 4px rgba(0, 0, 0, 0.8));
+}
+
+.caption-text {
+  display: block;
+  font: 30px/1.1 var(--font-title);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--gold);
+  background: linear-gradient(#fff3c4 0%, #f3d58a 45%, #c9953a 60%, #e9c46e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Interim wordmark (src/ui/wordmark.ts) in the place of the logo art. */
+.wordmark {
+  pointer-events: none;
+}
+
+.wordmark svg {
+  display: block;
+  overflow: visible;
+}
+
+.wordmark text {
+  font-family: var(--font-title);
+  font-weight: bold;
+}
+
+.wordmark .wordmark-sub {
+  letter-spacing: 0.35em;
+}
+
+.bottom-buttons {
+  position: absolute;
+  right: 3vw;
+  /* Above the corner mute button, which sits at the bar's bottom-right edge. */
+  bottom: calc(var(--bar-h) * 0.3);
+  display: flex;
+  gap: 8px;
+  transform: scale(var(--ui));
+  transform-origin: 100% 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.window-title {
+  text-align: center;
+  color: var(--gold);
+  font-family: var(--font-title);
+  text-shadow: 0 1px 1px #000;
+}
+
+.modal-shade {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 5;
+}
+
+.dialog-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22px;
+  text-align: center;
+  color: var(--gold);
+  font-family: var(--font-title);
+}
+
+.dialog-body {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 44px;
+  text-align: center;
+}
+
+.dialog-body p {
+  margin: 0 0 8px;
+}
+
+.dialog-body .field {
+  width: 160px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #9c8350;
+  text-align: center;
+}
+
+.dialog-error {
+  margin-top: 6px;
+  color: var(--bad);
+  min-height: 15px;
+}
+
+.dialog-buttons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ---- corner, banner, toasts ------------------------------------------------------------------ */
+
+/*
+ * The corner (main.ts): the master mute. On the outer screens it sits at the bottom-right of the black bar
+ * (docs/UI.md §4.7.7); in the world it tucks under the minimap plate (native 6..178 px, zoomed by --ui) so it
+ * never covers the map (A19).
+ */
+.corner {
+  position: fixed;
+  bottom: 6px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  z-index: 50;
+  font-size: 11px;
+  transform: scale(var(--ui));
+  transform-origin: 100% 100%;
+}
+
+body:has(.screen.world) .corner {
+  bottom: auto;
+  top: calc(178px * var(--ui));
+  right: calc(6px * var(--ui));
+  transform-origin: 100% 0;
+}
+
+.engine-badge {
+  color: #cfc6ad;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.mute-button {
+  height: 18px;
+  border: 0;
+  padding: 0 8px;
+  background: rgba(0, 0, 0, 0.72);
+  box-shadow: inset 0 0 0 1px #e0bf74, 0 0 0 1px #000;
+  color: var(--c-button, #fefbd8);
+  font: 11px/18px var(--font-body);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  cursor: inherit;
+  opacity: 0.85;
+}
+
+.mute-button:hover {
+  opacity: 1;
+  color: var(--c-highlight, #ffef99);
+}
+
+.mute-button:focus-visible {
+  outline: 1px solid var(--c-level, #ffd953);
+  outline-offset: 1px;
+}
+
+.mute-button.muted {
+  color: var(--c-button-off, #8a8a8a);
+}
+
+.net-banner {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(90, 20, 10, 0.9);
+  border: 1px solid #e0a060;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 3px;
+  z-index: 30;
+}
+
+.toasts {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(15, 12, 8, 0.9);
+  border: 1px solid #9c8350;
+  padding: 6px 14px;
+  border-radius: 3px;
+  transition: opacity 0.4s;
+}
+
+.toast.error {
+  border-color: #d06040;
+  color: #ffc2b0;
+}
+
+.toast.out {
+  opacity: 0;
+}
+
+.mock-badge {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--bar-h) + 8px);
+  transform: translateX(-50%);
+  color: #ffd27a;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+/* ---- splash ---------------------------------------------------------------------------------- */
+
+.splash {
+  background: #000;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.splash-logo {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.splash-logo.in {
+  opacity: 1;
+}
+
+.splash-logo.out {
+  opacity: 0;
+  transition-duration: 1s;
+}
+
+.splash-hint {
+  position: absolute;
+  bottom: 6vh;
+  width: 100%;
+  text-align: center;
+  color: #6f6754;
+}
+
+/* ---- login / servers ------------------------------------------------------------------------- */
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.check input {
+  margin: 0;
+  accent-color: #c9a24a;
+}
+
+/* Outer-screen kit pieces (screens/outer-ui.ts, docs/UI.md §4.7). Outer buttons: the basic face, retail cream text. */
+.kit-btn.outer-btn {
+  font: 12px/1 var(--font-body);
+  letter-spacing: 0.01em;
+  padding: 0 2px;
+}
+
+.kit-btn.outer-btn .kit-btn-label {
+  padding-bottom: 1px;
+}
+
+.kit-btn.outer-btn[hidden] {
+  display: none;
+}
+
+/* The 1-px gold rim and black body of the login_window art's own input boxes (sampled from the art). */
+.outer-box {
+  border: 1px solid #e0bf74;
+  background: #000;
+  pointer-events: none;
+}
+
+.login-window .field,
+.customize-window .field {
+  font: 12px/18px var(--font-body);
+  color: var(--c-text, #fff);
+  text-shadow: none;
+}
+
+.login-caption {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--c-caption, #fff7ca);
+  pointer-events: none;
+}
+
+.login-remember {
+  height: 20px;
+  padding-left: 2px;
+  gap: 5px;
+}
+
+.login-remember[hidden] {
+  display: none;
+}
+
+.login-remember .kit-toggle-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.login-message {
+  display: grid;
+  place-items: center;
+  padding: 0 24px;
+  color: var(--c-text, #fff);
+  font: 12px var(--font-body);
+  text-shadow: var(--t-shadow, 0 1px 2px #000);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.login-message > span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.login-message[hidden] {
+  display: none;
+}
+
+.login-message.error {
+  color: var(--c-bad, #ff4a3d);
+}
+
+/* The warning dialogs (screens/outer-ui.ts outerDialog), laid out at their resinfo rects. */
+.outer-dialog-title {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outer-dialog-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font: 12px/16px var(--font-body);
+  color: var(--c-text, #fff);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+}
+
+.outer-dialog-body p {
+  margin: 0 0 8px;
+}
+
+.outer-dialog-body .field {
+  flex: none;
+  width: 160px;
+  height: 20px;
+  background: #000;
+  border: 1px solid #e0bf74;
+  text-align: center;
+}
+
+.outer-dialog-body .dialog-error {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 13px;
+  color: var(--c-bad, #ff4a3d);
+}
+
+/* The server list frame's pane is transparent; this stands in for server_window's darkened pane. */
+.server-pane {
+  background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72));
+}
+
+.server-title {
+  line-height: 16px;
+  text-align: left;
+  padding-left: 6px;
+  white-space: nowrap;
+}
+
+.server-head {
+  font-size: 11px;
+  line-height: 13px;
+  white-space: nowrap;
+}
+
+.server-head.right {
+  text-align: right;
+  padding-right: 6px;
+}
+
+.server-list {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.server-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* The retail scroll lane (screens/outer-ui.ts OuterScroll): server_up / server_mov / server_down. */
+.outer-scroll {
+  pointer-events: auto;
+}
+
+.outer-scroll .kit-btn {
+  position: absolute;
+  left: 0;
+}
+
+.outer-scroll-up {
+  top: 0;
+}
+
+.outer-scroll-down {
+  bottom: 0;
+}
+
+.outer-scroll-lane {
+  touch-action: none;
+}
+
+.outer-scroll-thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--img) no-repeat 0 0 / 100% 100%;
+  touch-action: none;
+  image-rendering: var(--art-rendering, auto);
+}
+
+.outer-scroll-thumb:hover {
+  background-image: var(--img-focus);
+}
+
+.outer-scroll-thumb.pressed {
+  background-image: var(--img-press);
+}
+
+.outer-scroll-thumb.no-art {
+  border: 1px solid #c9a860;
+  background: #6d5a33;
+}
+
+.outer-scroll.fits .outer-scroll-thumb {
+  filter: brightness(0.75);
+}
+
+.server-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 204px;
+  height: 20px;
+  padding: 0 8px;
+  cursor: pointer;
+  color: var(--c-label, #efdaa4);
+  font: 12px/20px var(--font-body);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  white-space: nowrap;
+  background-size: 100% 100%;
+}
+
+.server-row .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.server-row:hover {
+  background-image: var(--row-hover);
+}
+
+.server-row.selected {
+  background-image: var(--row);
+  color: var(--c-text, #fff);
+}
+
+.server-row.maintenance,
+.server-row.offline {
+  color: var(--c-button-off, #8a8a8a);
+  cursor: default;
+}
+
+.server-row .load {
+  flex: none;
+  font-size: 11px;
+  color: var(--c-highlight, #ffef99);
+}
+
+.server-row.maintenance .load,
+.server-row.offline .load {
+  color: var(--c-button-off, #8a8a8a);
+}
+
+.server-empty {
+  padding: 8px;
+  color: var(--dim);
+}
+
+.server-status {
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+}
+
+.server-status.error {
+  color: var(--bad);
+}
+
+/* ---- loading --------------------------------------------------------------------------------- */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  pointer-events: auto;
+  transition: opacity 0.4s;
+}
+
+.loading-screen.out {
+  opacity: 0;
+}
+
+.loading-picture {
+  position: absolute;
+  inset: 0;
+  background: no-repeat center / contain;
+}
+
+/* A cropped picture (LoadingPicture.crop): a centered strip at the crop's aspect, right edge faded out. */
+.loading-picture.cropped {
+  inset: auto;
+  left: 50%;
+  top: 44%;
+  width: min(100vw, calc(62vh * var(--ratio)));
+  aspect-ratio: var(--aspect);
+  transform: translate(-50%, -50%);
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, #000 88%, transparent);
+}
+
+.loading-bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 6vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transform: translateX(-50%) scale(var(--ui));
+  transform-origin: 50% 100%;
+}
+
+.loading-now {
+  align-self: flex-start;
+  margin-left: 12px;
+  color: var(--gold);
+  font: 16px var(--font-title);
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px #000;
+}
+
+.loading-frame {
+  position: relative;
+}
+
+.loading-track {
+  position: absolute;
+  left: 15px;
+  right: 17px;
+  top: 9px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.loading-fill {
+  height: 100%;
+  width: 0;
+  background: #c9a24a repeat-x 0 0 / auto 100%;
+  transition: width 0.2s;
+}
+
+.loading-text {
+  min-height: 15px;
+  font: 12px/15px var(--font-body);
+  color: var(--c-label, #efdaa4);
+  text-shadow: var(--t-shadow, 0 1px 2px #000);
+}
+
+/* The rotating tip in the body style (--t-body, docs/UI.md §4.7.6); overrides hud/ux-style.ts's base rule. */
+.loading-bottom .loading-tip {
+  font: 12px/16px var(--font-body);
+  color: var(--c-text, #fff);
+  text-shadow: var(--t-shadow, 0 1px 2px #000);
+}
+
+/* ---- character select ------------------------------------------------------------------------ */
+
+.name-tags {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.name-tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 100%;
+}
+
+/* A plate on the tooltip frame (screens/outer-ui.ts framedTag): the frame draws the rim, the body is dark glass. */
+.outer-tag {
+  position: absolute;
+  padding: 5px 10px 4px;
+  background: rgba(0, 0, 0, 0.72);
+  background-clip: padding-box;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.outer-tag-text {
+  position: relative;
+  display: block;
+  font: 12px/15px var(--font-body);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+}
+
+.name-tag .n {
+  color: var(--c-text, #fff);
+  margin-right: 6px;
+}
+
+.name-tag .l {
+  color: var(--c-level, #ffd953);
+}
+
+.char-info {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 100%;
+  pointer-events: none !important;
+}
+
+.info-name,
+.info-line {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-level-label {
+  text-align: right;
+  font: 12px/15px var(--font-body);
+  color: var(--c-highlight, #ffef99);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+}
+
+.info-level {
+  text-align: left;
+}
+
+.charselect-empty {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%) scale(var(--ui));
+  padding: 10px 18px;
+  font: 12px/15px var(--font-body);
+  color: var(--c-caption, #fff7ca);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  background: rgba(0, 0, 0, 0.72);
+  box-shadow: inset 0 0 0 1px #e0bf74, 0 0 0 1px #000;
+}
+
+.charselect-empty[hidden],
+.name-tag[hidden],
+.char-info[hidden],
+.entity-label[hidden] {
+  display: none;
+}
+
+.account-line {
+  position: absolute;
+  left: 3vw;
+  bottom: calc(var(--bar-h) * 0.3);
+  font: 12px var(--font-body);
+  color: var(--c-label, #efdaa4);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  transform: scale(var(--ui));
+  transform-origin: 0 100%;
+}
+
+/* ---- character creation ---------------------------------------------------------------------- */
+
+/*
+ * The calligraphy panel (outer/back_image, 408x556 art) on the stage (docs/SCREENS.md §0B.7, §6.2): retail's screen
+ * rect (969, 170, 632, 864 of the 1600x1200 space): its left edge at 60.6 % of the width, its top at 14.2 % and its
+ * height 72 % of the viewport, aspect kept (contain), never past the right edge. Decoration only: under the bars and
+ * the windows (it comes first in the screen), and drags pass through it to the canvas (the turntable).
+ */
+.create-backimage {
+  position: absolute;
+  left: 60.56%;
+  right: 0;
+  top: 14.17%;
+  height: 72%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 0;
+  pointer-events: none;
+}
+
+.create-backimage[hidden] {
+  display: none;
+}
+
+.name-status {
+  font: 11px/15px var(--font-body);
+  text-align: right;
+  color: var(--c-hint, #b0b0b0);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name-status.ok {
+  color: var(--c-good, #7cff6b);
+}
+
+.name-status.bad {
+  color: var(--c-bad, #ff4a3d);
+}
+
+.row-value {
+  text-align: center;
+  font: 12px/16px var(--font-body);
+  color: var(--c-text, #fff);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Height / Body: the black track takes clicks, the outer/slider thumb sits on it (screens/charcreate.ts). */
+.row-value.row-track {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.slider-thumb {
+  pointer-events: auto;
+  background: var(--img) no-repeat 0 0 / 100% 100%;
+  touch-action: none;
+  image-rendering: var(--art-rendering, auto);
+  transition: left 0.08s ease-out;
+}
+
+.slider-thumb:hover {
+  background-image: var(--img-focus);
+}
+
+.slider-thumb.pressed {
+  background-image: var(--img-press);
+  transition: none;
+}
+
+.slider-thumb.no-art {
+  border: 1px solid #c9a860;
+  border-radius: 3px;
+  background: #6d5a33;
+}
+
+/* The man / woman plates (72x28): the label sits in the text window beside the gem, never under it. */
+.kit-btn.sex-button {
+  justify-content: flex-start;
+  font: 12px/1 var(--font-body);
+}
+
+.kit-btn.sex-button .kit-btn-label {
+  width: 44px;
+  text-align: center;
+  overflow: visible;
+  text-overflow: clip;
+  color: var(--c-button, #fefbd8);
+}
+
+.kit-btn.sex-male .kit-btn-label {
+  margin-left: 22px;
+}
+
+.kit-btn.sex-female .kit-btn-label {
+  margin-left: 4px;
+}
+
+.kit-btn.sex-button:not(.on) .kit-btn-label {
+  color: var(--c-label, #efdaa4);
+}
+
+.explain-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  font: 12px/14px var(--font-body);
+  color: var(--c-highlight, #ffef99);
+  text-shadow: var(--t-outline, 0 1px 1px #000);
+  white-space: nowrap;
+}
+
+.explain-count {
+  flex: none;
+  color: var(--c-hint, #b0b0b0);
+  font: 10px var(--font-body);
+}
+
+.explain-text {
+  color: var(--c-text, #fff);
+  font: 12px/15px var(--font-body);
+  text-shadow: var(--t-shadow, 0 1px 1px #000);
+}
+
+.explain-scroll {
+  pointer-events: auto;
+}
+
+.explain-text p {
+  margin: 0 0 6px;
+}
+
+.explain-text .explain-weapon {
+  color: var(--c-level, #ffd953);
+}
+
+.preview-note {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translateX(-50%);
+  font: 12px var(--font-body);
+  color: var(--c-hint, #b0b0b0);
+  text-shadow: var(--t-shadow, 0 1px 2px #000);
+}
+
+/* ---- world ----------------------------------------------------------------------------------- */
+
+.entity-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.entity-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  font-family: var(--font-title);
+  color: #fff;
+  text-shadow: 0 0 2px #000, 0 1px 2px #000;
+}
+
+.entity-label.self .name {
+  color: #ffe9a6;
+}
+
+.entity-label .level {
+  color: #cfe3ff;
+  font: 11px var(--font-body);
+}
+
+.hud-stats {
+  position: absolute;
+  right: 8px;
+  top: 30px;
+  color: #3d3a30;
+  font-size: 11px;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.hud-help {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  color: rgba(20, 20, 20, 0.75);
+  font-size: 11px;
+}
+
+.chat {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  width: 400px;
+  transform-origin: 0 100%;
+}
+
+.chat-log {
+  font-family: var(--font-chat);
+  height: 170px;
+  overflow-y: auto;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(156, 131, 80, 0.5);
+  scrollbar-width: thin;
+  text-shadow: 0 1px 1px #000;
+}
+
+.chat.typing .chat-log {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.chat-line {
+  word-break: break-word;
+}
+
+.chat-line .from {
+  color: #fff;
+}
+
+.chat-line.self .from {
+  color: #ffe9a6;
+}
+
+.chat-line.system {
+  color: #ffd35a;
+}
+
+.chat-line.error {
+  color: var(--bad);
+}
+
+.chat-input {
+  width: 100%;
+  height: 22px;
+  margin-top: 3px;
+  border: 1px solid rgba(156, 131, 80, 0.5);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font: 12px var(--font-chat);
+  padding: 2px 6px;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.chat.typing .chat-input {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: #c9a24a;
+}
+
+.chat-line {
+  white-space: pre-line;
+}
+
+.chat-line.gm {
+  color: #9fd8ff;
+}
+
+.chat-line.notice {
+  color: #ffb347;
+}
+
+.hud-help-gm {
+  margin-left: 14px;
+  color: rgba(110, 30, 10, 0.85);
+}
+
+.entity-label.ghost {
+  opacity: 0.55;
+  font-style: italic;
+}
+
+/* ---- server notice banner (GM `notice`, every screen) --------------------------------------- */
+
+.notice-banner {
+  position: fixed;
+  top: 14vh;
+  left: 50%;
+  max-width: min(760px, 92vw);
+  padding: 7px 34px 10px;
+  text-align: center;
+  background: linear-gradient(90deg, transparent, rgba(12, 8, 3, 0.86) 14%, rgba(12, 8, 3, 0.86) 86%, transparent);
+  border-style: solid;
+  border-width: 1px 0;
+  border-image: linear-gradient(90deg, transparent, rgba(243, 213, 138, 0.85) 20%, rgba(243, 213, 138, 0.85) 80%, transparent) 1;
+  transform: translate(-50%, -8px);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 35;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.notice-banner.in {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.notice-banner.out {
+  opacity: 0;
+  /* H11-CH-5: an invisible banner (fading out, or before .in) never eats a world click. */
+  pointer-events: none;
+}
+
+.notice-banner:not(.in) {
+  pointer-events: none;
+}
+
+.notice-head {
+  font: 11px var(--font-title);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e9b95a;
+}
+
+.notice-from {
+  margin-left: 10px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--dim);
+}
+
+.notice-text {
+  margin-top: 2px;
+  font: 18px/1.3 var(--font-title);
+  color: #fff3c4;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9), 0 1px 1px #000;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---- GM window (src/gm/window.ts) ----------------------------------------------------------- */
+
+/* outer/unity_window as a 9-slice: 25 px brass header, 3 px frame, translucent dark body. */
+.gm-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-width: 25px 3px 3px;
+  border-image: var(--frame) 25 3 3 fill / 25px 3px 3px stretch;
+  color: var(--text);
+  font: 12px/1.3 var(--font-body);
+  transform: scale(var(--ui));
+  transform-origin: 0 0;
+  pointer-events: auto;
+  z-index: 3;
+}
+
+.gm-window.no-art {
+  border-color: #9c8350;
+  border-width: 25px 2px 2px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.gm-window[hidden],
+.gm-panel[hidden] {
+  display: none;
+}
+
+.gm-header {
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: -25px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 28px 0 10px;
+  cursor: move;
+  touch-action: none;
+}
+
+.gm-window.no-art .gm-header {
+  background: linear-gradient(#cdb37a, #6a5b3c);
+}
+
+.gm-title {
+  font: 13px var(--font-title);
+  color: #fff6dc;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 2px #000, 0 1px 1px #000;
+}
+
+.gm-role {
+  font: 10px var(--font-title);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffe08a;
+  padding: 0 5px;
+  border: 1px solid rgba(40, 25, 5, 0.7);
+  background: rgba(40, 25, 5, 0.55);
+  border-radius: 2px;
+}
+
+.gm-close {
+  position: absolute;
+  right: 6px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: var(--img) no-repeat 0 0 / 100% 100%;
+  cursor: pointer;
+}
+
+.gm-close:hover {
+  background-image: var(--img-focus);
+}
+
+.gm-close:active {
+  background-image: var(--img-press);
+}
+
+.gm-close.no-art {
+  background: #3a2f1b;
+  color: var(--gold);
+  font: 11px/16px var(--font-title);
+}
+
+.gm-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 5px 4px 0;
+  border-bottom: 1px solid rgba(156, 131, 80, 0.45);
+}
+
+.gm-tab {
+  font-size: 11px;
+  color: #d9ceb2;
+}
+
+.gm-tab.on {
+  background-image: var(--img-press);
+  color: var(--gold);
+}
+
+.gm-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 6px 8px;
+}
+
+.gm-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+}
+
+.gm-status {
+  height: 18px;
+  padding: 1px 8px 0;
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top: 1px solid rgba(156, 131, 80, 0.3);
+}
+
+.gm-status.bad {
+  color: var(--bad);
+}
+
+.gm-section {
+  padding: 5px 8px 8px;
+  border: 1px solid rgba(156, 131, 80, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.gm-section-title {
+  margin-bottom: 5px;
+  font: 12px var(--font-title);
+  color: var(--gold);
+  text-shadow: 0 1px 1px #000;
+}
+
+.gm-line,
+.gm-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gm-right {
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.gm-label {
+  color: var(--dim);
+}
+
+.gm-muted {
+  color: var(--dim);
+  font-size: 11px;
+}
+
+.gm-hint {
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 11px;
+}
+
+.gm-button {
+  font-size: 12px;
+}
+
+.gm-button.gm-small {
+  font-size: 11px;
+}
+
+.gm-field {
+  height: 22px;
+  padding: 1px 5px;
+  border: 1px solid #6b6b6b;
+  background: #000;
+  color: #fff;
+  font: 12px var(--font-body);
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.gm-field:focus {
+  border-color: #c9a24a;
+}
+
+.gm-field:disabled {
+  background: #1a1a1a;
+}
+
+.gm-num {
+  width: 72px;
+}
+
+.gm-name {
+  width: 112px;
+}
+
+.gm-level {
+  width: 52px;
+}
+
+.gm-notice-field {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  font: 13px/1.35 var(--font-body);
+}
+
+.gm-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid #5a5a5a;
+  background: rgba(0, 0, 0, 0.45);
+  scrollbar-width: thin;
+  scrollbar-color: #8a7446 #111;
+}
+
+.gm-row {
+  display: grid;
+  grid-template-columns: 1fr 26px 124px 162px;
+  align-items: center;
+  gap: 4px;
+  min-height: 25px;
+  padding: 1px 4px;
+  border-bottom: 1px solid rgba(156, 131, 80, 0.2);
+  cursor: pointer;
+}
+
+.gm-row:hover {
+  background: rgba(255, 220, 140, 0.06);
+}
+
+.gm-row.selected {
+  background: rgba(224, 145, 58, 0.14);
+  box-shadow: inset 0 0 0 1px #e0913a;
+}
+
+.gm-row-head {
+  min-height: 18px;
+  padding: 0 5px;
+  border: 0;
+  color: var(--gold);
+  font: 11px var(--font-title);
+  cursor: default;
+}
+
+.gm-row-head:hover {
+  background: none;
+}
+
+.gm-c-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.gm-pname {
+  color: #fff;
+  font-family: var(--font-title);
+}
+
+.gm-c-lv {
+  text-align: right;
+  color: var(--gold);
+}
+
+.gm-c-pos {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.gm-c-act {
+  display: flex;
+  gap: 3px;
+  justify-content: flex-end;
+}
+
+.gm-badge {
+  margin-left: 4px;
+  padding: 0 3px;
+  font: 9px var(--font-title);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  vertical-align: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--dim);
+}
+
+.gm-badge.gm,
+.gm-badge.admin {
+  background: rgba(201, 162, 74, 0.25);
+  color: var(--gold);
+}
+
+.gm-badge.you {
+  color: #cfe3ff;
+}
+
+.gm-badge.ghost {
+  color: #b9a5ff;
+}
+
+.gm-empty {
+  padding: 10px;
+  text-align: center;
+  color: var(--dim);
+}
+
+.gm-places {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.gm-cursor {
+  margin-bottom: 6px;
+  color: #cfe3ff;
+}
+
+.gm-range {
+  width: 170px;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.gm-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border: 1px solid #6b6b6b;
+  background: #000;
+}
+
+.gm-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 24px;
+  margin-top: -10px;
+  border: 0;
+  background: var(--thumb, linear-gradient(#c9a860, #6d5a33)) no-repeat center / 100% 100%;
+}
+
+.gm-range:hover::-webkit-slider-thumb {
+  background-image: var(--thumb-focus, var(--thumb, linear-gradient(#e0c27a, #7d6a43)));
+}
+
+.gm-range::-moz-range-track {
+  height: 6px;
+  border: 1px solid #6b6b6b;
+  background: #000;
+}
+
+.gm-range::-moz-range-thumb {
+  width: 16px;
+  height: 24px;
+  border: 0;
+  border-radius: 0;
+  background: var(--thumb, linear-gradient(#c9a860, #6d5a33)) no-repeat center / 100% 100%;
+}
+
+.gm-value {
+  min-width: 34px;
+  color: var(--gold);
+  font-family: var(--font-title);
+}
+
+.gm-value.changed {
+  color: #fff;
+}
+
+.gm-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.gm-check-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.gm-check-box {
+  width: 16px;
+  height: 16px;
+  background: var(--off) no-repeat 0 0 / 100% 100%;
+}
+
+.gm-check-input:checked + .gm-check-box {
+  background-image: var(--on);
+}
+
+.gm-check.no-art .gm-check-box {
+  border: 1px solid #9c8350;
+  background: #000;
+}
+
+.gm-check.no-art .gm-check-input:checked + .gm-check-box {
+  background: var(--gold);
+}
+
+.gm-check-input:focus-visible + .gm-check-box {
+  outline: 1px dashed var(--gold);
+  outline-offset: 2px;
+}
+
+.gm-disabled {
+  opacity: 0.55;
+}
+
+.gm-soon {
+  margin-top: 10px;
+  color: var(--gold);
+  font-style: italic;
+}
+
+.gm-log {
+  padding: 3px 0;
+}
+
+.gm-log-line {
+  padding: 1px 6px;
+  font: 11px/1.35 var(--font-chat);
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.gm-log-line.sent {
+  color: var(--dim);
+}
+
+.gm-log-line.ok {
+  color: #9fd8ff;
+}
+
+.gm-log-line.fail {
+  color: var(--bad);
+}
+
+.gm-log-time {
+  margin-right: 6px;
+  color: #7f7a6a;
+}
+
+.dialog-body .field.gm-kick-reason {
+  width: 240px;
+}
+
+/* ---- in-game HUD (src/hud/*) ----------------------------------------------------------------- */
+
+.hud-help {
+  /* above the EXP bar, clear of the chat (left) and the target window (top centre) */
+  bottom: 60px;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 2px #000, 0 0 3px #000;
+}
+
+.hud-help-gm {
+  color: #ffc58a;
+}
+
+/*
+ * The zoomed layers (docs/UI.md §3.2): the HUD and the world screen's chat / minimap / perf / help are laid out in
+ * retail native px and scaled as a whole by --ui (a step, never below 1 on a desktop viewport; ui/kit/scale.ts).
+ * Screen-projected things (entity labels, nameplates, damage floaters) stay outside them.
+ */
+.hud-root,
+.world-ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  zoom: var(--ui);
+}
+
+.sro-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sro-frame-piece,
+.sro-frame-fill {
+  position: absolute;
+  background-repeat: no-repeat;
+}
+
+.sro-frame-fill {
+  background-repeat: repeat;
+  opacity: 0.94;
+}
+
+.sro-frame.no-art {
+  background: rgba(20, 17, 12, 0.92);
+  border: 1px solid #9c8350;
+  border-radius: 3px;
+}
+
+/* player frame, EXP/SP (underbar) and target window: hud/hud-style.ts (UI-H) */
+
+/* floating combat numbers */
+.hud-floaters {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hud-float {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+  font: 22px/1 var(--font-title);
+  color: #fff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 2px 4px rgba(0, 0, 0, 0.7);
+  will-change: transform, opacity;
+}
+
+.hud-float.hit {
+  color: #fffbe8;
+}
+
+.hud-float.crit {
+  color: #ff9a2e;
+  font-size: 29px;
+}
+
+.hud-float.miss {
+  color: #b8b8b8;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+}
+
+.hud-float.block {
+  color: #cfd8ff;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+}
+
+.hud-float.taken {
+  color: #ff4a3a;
+  font-size: 20px;
+}
+
+.hud-float.heal {
+  color: #7dff7a;
+}
+
+.hud-float-tag {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #ffd36b;
+  margin-bottom: 1px;
+}
+
+/* level-up banner */
+.hud-levelup {
+  position: absolute;
+  left: 50%;
+  top: 27%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.hud-levelup.in {
+  opacity: 1;
+  animation: hud-levelup-pop 0.7s ease-out;
+}
+
+@keyframes hud-levelup-pop {
+  from {
+    transform: translate(-50%, -50%) scale(1.6);
+    filter: brightness(2);
+  }
+  to {
+    transform: translate(-50%, -50%);
+    filter: brightness(1);
+  }
+}
+
+.hud-levelup-title {
+  font: 42px/1.05 var(--font-title);
+  letter-spacing: 0.12em;
+  color: #ffe08a;
+  background: linear-gradient(#fff6c8, #f3c14a 55%, #b77b12);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px rgba(255, 190, 60, 0.75)) drop-shadow(0 2px 2px #000);
+}
+
+.hud-levelup-sub {
+  margin-top: 4px;
+  font: 16px var(--font-title);
+  color: #fff;
+  text-shadow: 0 0 3px #000, 0 1px 2px #000;
+}
+
+.hud-levelup-hint {
+  margin-top: 2px;
+  font: 12px var(--font-body);
+  color: var(--gold);
+  text-shadow: 0 0 3px #000;
+}
+
+/* centre messages */
+.hud-messages {
+  position: absolute;
+  left: 50%;
+  top: 19%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  pointer-events: none;
+}
+
+.hud-message {
+  font: 14px var(--font-title);
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 0 0 3px #000, 0 1px 2px #000, 0 0 6px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.5s ease;
+  animation: hud-message-in 0.2s ease-out;
+}
+
+.hud-message.error {
+  color: #ff6b5a;
+}
+
+.hud-message.loot {
+  color: #fff1a6;
+}
+
+.hud-message.out {
+  opacity: 0;
+}
+
+@keyframes hud-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* death */
+.hud-death {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 35%, rgba(50, 0, 0, 0.55));
+  pointer-events: none;
+}
+
+.hud-death[hidden] {
+  display: none;
+}
+
+.hud-death-box {
+  pointer-events: auto;
+  text-align: center;
+}
+
+.hud-death-title {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 0;
+  text-align: center;
+}
+
+.hud-death-picture {
+  position: absolute;
+  left: 76px;
+  top: 42px;
+  width: 148px;
+  height: 52px;
+  background: no-repeat center / 100% 100%;
+}
+
+.hud-death-body {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 102px;
+}
+
+.kit-btn.hud-death-button {
+  position: absolute;
+  left: 62px;
+  bottom: 18px;
+  pointer-events: auto;
+}
+
+body.hud-dead #canvas {
+  filter: grayscale(0.9) brightness(0.75);
+  transition: filter 1.2s ease;
+}
+
+/* windows */
+.hud-windows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* HudWindow is a kit window (ui/kit/window.ts): frame, title strip, close button and body inset come from the kit. */
+.hud-window {
+  color: var(--text);
+}
+
+body.hud-dragging,
+body.hud-dragging * {
+  cursor: grabbing !important;
+}
+
+/* GM window: gameplay tabs (spawn, items, kill, heal) */
+.gm-panel {
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.gm-field.gm-code {
+  width: 190px;
+  text-transform: uppercase;
+}
+
+.gm-sub {
+  margin: 4px 0 2px;
+  color: var(--dim);
+  font-size: 11px;
+}
+
+.art-button.gm-button.gm-quick .label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.hud-help-keys {
+  margin-left: 14px;
+  color: #ffe9a6;
+}

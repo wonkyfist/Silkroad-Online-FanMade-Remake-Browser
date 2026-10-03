@@ -1,0 +1,2308 @@
+{
+  "format": "sro-texpipe-overrides",
+  "version": 1,
+  "sets": {
+    "prim/mtrl/nature/common/tree/tre_bank_pilla.ddj": {
+      "wrap": [true, false],
+      "detail": "sdxl",
+      "note": "B0 review (2026-09-28): the ginkgo trunk repeats around the trunk (U) only. The glb UVs leave [0, 1] in V too, but the retail texture is not seamless in V (source seam ratio 2.4) and TEXPIPE §3.4 measured that wrapping V raises that edge's seam; so U only. DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0-cf0.5: 28.63 dB vs GAN 30.43). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_roof.ddj": {
+      "detail": "sdxl",
+      "note": "B0 review: the 64x256 source gives soft normals. Tried what TEXPIPE allows: aiMix 1 (no visible change: at 64 px the model adds almost nothing after the tone match) and normalScale 1.5 / 2 / 3 (deeper but blurrier, blobby shading, not crisper tile edges). Kept the defaults; an SDXL (ControlNet Tile) candidate for DT-2 or a hand/generated replacement. DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 29.44 dB vs GAN 30.64). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/item/china/weapon/sword1_2_3.ddj": {
+      "note": "B0 review: cluster 0 is sword_02's jade blade and hex guard pieces (clustered as cloth, which gave it a weave); cluster 8 is sword_01's wooden grip (painted wood grain, clustered as leather) and also sword_03's braided cord wrap, where leather is right, so only sword_01's grip is painted wood. Cluster ids are checked against pbr.json masks after each run (clustering is seeded).",
+      "pbr": {
+        "maskRelabel": { "0": "jade" },
+        "maskPaint": [
+          { "uv": [0, 0.86, 0.18, 1], "class": "wood", "clusters": [8], "note": "sword_01 grip (bottom-left)" }
+        ]
+      }
+    },
+    "prim/mtrl/char/china/man/chinaman_adventurer_body.ddj": {
+      "note": "B0 review: the dark-brown hair on the face part (cluster 1, near black) was painted shadow filled from around, i.e. skin (hair never grows by the fill rule). Painted hair inside rectangles that leave out the headband (its black lacquer is the same cluster) and the trousers. Cluster 5 (olive-gold trouser pattern and some face skin) is painted cloth on the trousers only.",
+      "pbr": {
+        "maskPaint": [
+          { "uv": [0.5, 0, 0.88, 0.185], "class": "hair", "clusters": [1], "note": "hair above the headband" },
+          { "uv": [0.775, 0.18, 0.88, 0.6], "class": "hair", "clusters": [1], "note": "hair at the side, right of the headband" },
+          { "uv": [0.24, 0, 0.32, 0.08], "class": "hair", "clusters": [1], "note": "hair at the nape (top of the back part)" },
+          { "uv": [0, 0.73, 0.31, 1], "class": "cloth", "clusters": [5], "note": "trousers: their olive-gold pattern shares cluster 5 with face skin since the tone-matched upscale" }
+        ]
+      }
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_floor.ddj": {
+      "detail": "gan",
+      "note": "B1 check (2026-09-28): SEAM-U/V on the albedo is the stone-slab joint that sits exactly on the tile edge in the retail art (source seam ratio 2.5 U / 2.9 V); the upscale draws that joint crisper, which raises the ratio (3.5 / 5.1). The lit 3x3 repeat shows the joint, not a seam. No change. DT-2 (2026-09-29): the SDXL result failed its gate after 3 generations (wrap-edge seam ratios 4.2/5.7 vs the source's 2.6/3.0: the slab joint sits on the tile edge and the seam repair redraws it), so it keeps its GAN master."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_stair.ddj": {
+      "note": "B1 check: SEAM-U(nx) and SEAM-V(albedo, rough) are the retail step notch on the U edge and the step edge on the V edge (source ratio 1.5 U / 3.7 V); both are art lines the remaster keeps. Lit 3x3 repeat reads as continuous steps. No change."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_gate01.ddj": {
+      "detail": "sdxl",
+      "note": "B1 check: SEAM-U(albedo, rough) is a strip atlas (frieze, window panels, pillar) whose U edge joins unrelated panels (source ratio 4.0); only the dragon frieze row really repeats and it tiles cleanly. No change. DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0-cf0.5: 29.7 dB vs GAN 30.09). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_alpha.ddj": {
+      "note": "B1 check: SEAM-V(albedo, rough) is a cutout trim atlas whose V edge joins unrelated pieces (source ratio 3.9); no piece crosses that edge visibly. No change."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_gate06.ddj": {
+      "note": "B1 check: SEAM-V(ny) (ratio 6.9, source 2.1): a faint vertical line in the lit 3x3 repeat; the retail tile has the same faint seam in colour. Low priority; judge in game at the gate."
+    },
+    "tile2d:c_grass_hmfld_01": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_grass_fld_03": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_grass_hmfld_03": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_marble_jang_09": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). F-12 (2026-10-02; H-12 TEL-3): paving's soft maps (normal x0.35, AO x0.4) on its SDXL master, as the other c_marble_jang_* tiles (it had the default maps: AO mean 0.87); re-encoded.",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 }
+    },
+    "tile2d:c_marble_jang_04": {
+      "detail": "sdxl",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). 9B check: the derived relief turned the flat retail slabs into dark pillowed edges (same under GAN and SDXL); soft maps (normal x0.35, AO x0.4) as for c_marble_jang_02 give flat slabs with crisp joints."
+    },
+    "tile2d:c_dust_swmp_06": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_dust_fld_08": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_dust_fld_01": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "normalScale": 0.6, "aoScale": 0.25, "delight": 0.5, "roughness": 0.81 },
+      "note": "B3 retune (2026-10-02; TERRAIN_TEX D5, WAVE_PLAN8 TT-B): below 60% on the pinned grain gate, so the GAN route with the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25), stepped by the grain gate; re-encoded with B3c at step 2. Before: DT-2 item 3 (2026-09-29): B1's dark blotches came from the derived relief on a smooth soil tile. Pick: the SDXL albedo (35.5 dB, seams 1.02/1.00 vs source 1.50/1.32) with soft maps (normal x0.35, AO x0.4), closest to retail with fine grit. Candidates: work/tmp/w9b-sdxl/problems.png. In-game gate (TT-B step 2): the roughness plane's mean was 0.937 against the 0.851 neutral every non-hero tile renders with (step 1's measured cause of the Medium darkening), so the plane's base roughness is 0.81 (mean ~0.85). Gates (TT-B step 2, the encoded 512 tier): grain 68%, albedo Δlum +0.8 (channels −0.2/+1.4/+1.0). Re-encoded at step 2 (hero, all maps). In-game gate (TT-B step 2, Medium WebGPU noon, game camera crop, against the X1 set): /tp 342 -222 (the player lands at 334, -224 beside the town wall), +0.3 levels (gate >= -3): pass. Sheet: Dropbox wave12/terrain-retune-medium-{game,wide}.jpg."
+    },
+    "tile2d:c_stone_jinfild_01": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_dust_fld_06": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "DT-2 item 3 (2026-09-29): the SDXL albedo passed its gate (31.8 dB after the 0.5-texel re-composite) but keeps darker patches the retail art does not have, and so does the GAN route; the retail route (Lanczos3 x4 of the retail pixels, no AI) with soft maps (normal x0.35, AO x0.4) is closest to retail. Candidates: work/tmp/w9b-sdxl/problems.png."
+    },
+    "tile2d:c_marble_jang_02": {
+      "detail": "sdxl",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "DT-2 item 3 (2026-09-29): B1 turned this flat mossy paving into rocks. That came mostly from the derived relief (the retail route with B1's maps looks the same), so the pick is the SDXL albedo (colour-locked, re-composited at a 0.5-texel colour fix: 29.8 dB vs GAN 29.6) with soft maps (normal x0.35, AO x0.4): crisp slab joints and moss, flat slabs. Candidates: work/tmp/w9b-sdxl/problems.png."
+    },
+    "tile2d:c_grass_fld_08": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_grass_fld_04": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+    },
+    "tile2d:c_stone_hmfld_01": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "normalScale": 0.6, "aoScale": 0.25, "delight": 0.5, "roughness": 0.76 },
+      "note": "B3 retune (2026-10-02; TERRAIN_TEX D5, WAVE_PLAN8 TT-B): 41-45% grain retention under SDXL; 3.5% of the fields, so the GAN route with the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25), stepped by the grain gate; re-encoded with B3c at step 2. Before: DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). 9B check: the retail tile is flat dark stone with faint cracks, the derived relief made deep lumps (same under GAN and SDXL); soft maps (normal x0.35, AO x0.4) tone them down. Judge in game: the lumps still read, a lower height/normal or the retail route may be wanted. In-game gate (TT-B step 2): the roughness plane's mean was 0.894 against the 0.851 neutral every non-hero tile renders with (step 1's measured cause of the Medium darkening), so the plane's base roughness is 0.76 (mean ~0.85). Gates (TT-B step 2, the encoded 512 tier): grain 66%, albedo Δlum +0.9 (channels +0.5/+1.1/+1.4). Fallback ladder: the first pass failed (grain 59.8% FAIL, Δlum +0.7 (+0.0/+0.8/+1.7) ok), so aiMix 0.3. Re-encoded at step 2 (hero, all maps). In-game gate (TT-B step 2, Medium WebGPU noon, game camera crop, against the X1 set): /tp -344 -524, +4.5 levels (gate >= -3): pass. Sheet: Dropbox wave12/terrain-retune-medium-{game,wide}.jpg."
+    },
+    "tile2d:c_grass_hmfld_04": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "roughness": 0.79 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 4.12% of the fields, 0.00% of the town, 3.55% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 90%, albedo Δlum -0.2 (channels -0.0/+0.1/-2.2); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.3 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.915 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.79 (mean ~0.85)."
+    },
+    "tile2d:c_marble_jang_07_1": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 2.50% of the fields, 1.59% of the town, 5.90% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). Gates (TT-B, the encoded 512 tier): grain 65%, albedo Δlum +0.9 (channels -0.3/+1.1/+2.8); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:wc_dust_don_07": {
+      "hero": true,
+      "detail": "gan",
+      "note": "X2 (2026-09-30): pinned as a hero (TEXPIPE §1.3); coast phase 2's repaint of the west moved it out of the computed top 16. DT-2 (2026-09-29): the SDXL result failed its gate after 3 generations and a re-composite (the mean colour of this pale, flat dust moved 3.0-3.3 levels, over the 3-level splat limit; PSNR 41 dB, seams fine), so the tile keeps its GAN master. Retry later with a lower denoise or a tighter colour fix (sdxl: { denoise: 0.3, cfix: 0.5 })."
+    },
+    "tile2d:c_dust_hmfld_03": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "note": "B3 retune (2026-10-02; TERRAIN_TEX D5, WAVE_PLAN8 TT-B): 21-22% grain retention under SDXL, so the GAN route with the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25), stepped by the grain gate; re-encoded with B3c at step 2. Before: DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). In-game gate (TT-B step 2): the roughness plane's mean was 0.943 against the 0.851 neutral every non-hero tile renders with (step 1's measured cause of the Medium darkening), so the plane's base roughness is 0.81 (mean ~0.85). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +0.6 (channels +0.7/+0.6/+0.3). Fallback ladder: the first pass failed (grain 41% FAIL, Δlum +0.9 (+0.6/+0.9/+1.9) ok), so aiMix 0.3 -> the retail route. Re-encoded at step 2 (hero, all maps). In-game gate (TT-B step 2, Medium WebGPU noon, game camera crop, against the X1 set): /tp -1304 -170, +3.0 levels (gate >= -3): pass. Sheet: Dropbox wave12/terrain-retune-medium-{game,wide}.jpg."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_gate02.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 32.51 dB vs GAN 35.27). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_gate07.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 34.66 dB vs GAN 38.66). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_bridge.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0-cf0.5: 29.26 dB vs GAN 31.1). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_dam.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 34.21 dB vs GAN 35.67). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_ehwa_roof.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 29.11 dB vs GAN 30.43). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_floor02.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 34.75 dB vs GAN 36.84). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_wall02.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 33.72 dB vs GAN 37.05). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan03/cj_pal_wall03.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0-cf0.5: 28.79 dB vs GAN 28.44). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_door.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, atlas, attempt a0: 30.19 dB vs GAN 34.21). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_wall01.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 29.17 dB vs GAN 33.57). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/nature/common/cliff/stone_clif01.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0-cf0.5: 31.47 dB vs GAN 34.49). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/nature/common/tree/tre_pine08_03.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 29.87 dB vs GAN 34.55). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/nature/common/tree/tre_tree02_02.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 30.78 dB vs GAN 35.73). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/nature/common/tree/tre_tree02_03.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 30.65 dB vs GAN 34.84). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_roof.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 30.99 dB vs GAN 31.22). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_wall02.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a1: 34.63 dB vs GAN 35.13). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_wall03.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, atlas, attempt a0-cf0.5: 30.48 dB vs GAN 29.76). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_wall04.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 31.91 dB vs GAN 34.79). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "prim/mtrl/bldg/china/jangan_enter/cj_wall05.ddj": {
+      "detail": "gan",
+      "note": "DT-2 (2026-09-29): the SDXL result failed its gate after 3 generations (wrap-edge seam ratios 12.4/9.8 vs the source's 7.0/6.3: the art has a joint on the tile edge and the seam repair redraws it), so it keeps its GAN master."
+    },
+    "prim/mtrl/nature/common/tree/tre_willow03_will01.ddj": {
+      "detail": "sdxl",
+      "note": "DT-2 (2026-09-29): world hero texture, local SDXL detail (world profile, tile, attempt a0: 31.76 dB vs GAN 34.82). Review: work/tmp/w9b-sdxl/closeups_world.png."
+    },
+    "tile2d:asiaminor_sand_01": {
+      "status": "ok",
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "delight": 1, "albedoTint": [0.92, 0.79, 0.58], "grain": 1.2 },
+      "note": "P-LOOK (2026-10-01): the retail tile is a pale grey-beige (mean sRGB 168/159/139, sigma 3 after the de-light) that read almost white under the PBR noon sun (rendered 235/225/205); warmed to a golden sand in linear light (x 0.92 / 0.79 / 0.58, mean about 160/141/106) with a tileable grain (fine noise, mottling, dark mineral grains, a few bright bits; pbr/grain.ts), the same grade as 412 so the two sands match. Wet sand (tile 154 plus the coast wet band) stays darker. Before/after: work/tmp/w10p/look/. CST-T B-coast (2026-09-30): beach sand, dry (tile 407), hero. De-light 1 flattens the tile's large-scale light so the 8 m period does not read from the camera (macro CV at 0.5 m / 2 m cells: retail 0.016 / 0.006, remaster 0.014 / 0.002). GAN route: the SDXL detail failed its gate three times (mean colour moved 3.7-4.1 levels on this pale sand) with watchdog restarts on a RAM-starved machine. Review: work/tmp/w10r/coast-textures.png."
+    },
+    "tile2d:asiaminor_sand_02": {
+      "status": "ok",
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "delight": 1, "albedoTint": [0.92, 0.79, 0.58], "grain": 1.2 },
+      "note": "B3 (2026-10-02; TERRAIN_TEX D6): a hero now (Medium gets its AO and roughness; one of the 63 hero tiles), an index-only flip (`pnpm texpipe hero`). P-LOOK (2026-10-01): the same golden grade and grain as 407 (see its note). CST-T B-coast (2026-09-30): sand with pebbles toward the dune (tile 412). De-light 1 (macro CV retail 0.059 / 0.029, remaster 0.048 / 0.010). The retail art clusters its pebbles in one quarter of the tile, so a wide area of 412 alone shows the pebble groups repeating every 8 m (retail does the same): paint it as a narrow band or mixed with 407. GAN route (SDXL not run: the same pale sand failed its colour gate on 407). Review: work/tmp/w10r/coast-textures.png."
+    },
+    "tile2d:oaho_dust_earth01": {
+      "status": "ok",
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "delight": 1, "albedoGain": 0.65, "roughness": 0.3, "ripples": 0.2 },
+      "note": "CST-T B-coast (2026-09-30): tile 70 remastered as wet sand (COAST 7.2), hero: albedo x0.65 in linear light, base roughness 0.3, tileable ripple marks (22 cm) in the height at 0.2 (0.35 read as corduroy). Classic keeps retail tile 70. On PBR the coast wet band (CST-S) darkens this band again: the wet band should treat this layer as already wet, or the gain goes back toward 1. Macro CV retail 0.046 / 0.031, remaster 0.024 / 0.005. GAN route. Review: work/tmp/w10r/coast-textures.png."
+    },
+    "tile2d:alex_dust_05": {
+      "status": "ok",
+      "hero": false,
+      "detail": "gan",
+      "note": "CST-T B-coast (2026-09-30): shingle (tile 534), for the river-mouth spits and the strait. Default soil maps read well (pebbles get relief). Macro CV retail 0.143 / 0.065, remaster 0.104 / 0.022. GAN route (SDXL deferred: the machine was RAM-starved). Review: work/tmp/w10r/coast-textures.png."
+    },
+    "tile2d:c_stone_hmfld_02": {
+      "status": "ok",
+      "hero": true,
+      "detail": "gan",
+      "note": "B3 (2026-10-02; TERRAIN_TEX D6): a hero now (Medium gets its AO and roughness; one of the 63 hero tiles), an index-only flip (`pnpm texpipe hero`). CST-T B-coast (2026-09-30): Jangan rock (tile 226) on the flank above 45 degrees (rock profile, normal 4). Unlike c_stone_hmfld_01 its art has real boulders and grassy joints, so the default relief is kept. Macro CV retail 0.138 / 0.074, remaster 0.103 / 0.037. GAN route (SDXL deferred). Review: work/tmp/w10r/coast-textures.png. F-12 (2026-10-02; H-12 TEL-1): as a D6 hero with the default maps it drew 13.3 levels darker in game (gate -3; its ao@512 mean 0.83, the darkest hero, and a roughness plane at 0.91 against the 0.85 neutral). Now the painterly rock rule (de-light 0.5, normal x0.6), AO stepped once by the in-game gate (x0.25 -> x0.15; ao@512 mean 0.97) and the roughness plane based at 0.76 (mean 0.854); re-encoded. In-game gate at /tp -1476 738 (Medium WebGPU, noon, the game camera; the look lab, base hero:false vs now): 106.08 -> 103.67, -2.4 (pass); x0.25 with roughness 0.83 measured -8.1, x0.15 -7.2: the roughness plane was the main cause. The albedo (GAN, no aiMix) is unchanged.",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.15, "roughness": 0.76 }
+    },
+    "tile2d:oaho_dust_earth06": {
+      "status": "ok",
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.83 },
+      "note": "B3 retune (2026-10-02; TERRAIN_TEX D5, WAVE_PLAN8 TT-B): 17-27% grain retention; also made a hero (D6: 8.5% of the fields, 69% of the coast filler), so the GAN route with the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25), stepped by the grain gate; re-encoded with B3c at step 2. Before: CST-T B-coast (2026-09-30): sea bed (tile 154), seen only through the shallows; GAN route by design (no SDXL under water). Macro CV retail 0.054 / 0.037, remaster 0.030 / 0.011. Review: work/tmp/w10r/coast-textures.png. Re-encoded with B3b (TT-B, 2026-10-02) because the hero flip gives it Medium maps now: the in-game gate at the coast spot was -3.06 with its B-coast maps; the roughness plane is based at 0.83 (mean ~0.85, the neutral the non-hero tile rendered with). Fallback ladder (TERRAIN_TEX §3.2): grain 48% at aiMix 0.5 and 59% at 0.3, so the retail route."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_pondfen.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_pondfen02.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_jang_dragon.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_por_stone.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_por_fence.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_por_floor.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_por_gidung.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_por_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_resta01_tent.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_acce_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_acce_wall.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_acce_winlight.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_armo_gidung.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_armo_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_armo_fence.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_armo_floor.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_armo_helmet.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_weap_wall.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_weap_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_weap_chimn.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_sidewall.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_wall01.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_wall02.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_stove.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_etc_fence.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_luxu_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_luxu_door_sign.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_luxu_winlight02.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_stab_roof.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_stab_gidung.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "prim/mtrl/bldg/china/jangan01/cj_stab_sign.ddj": {
+      "hero": true,
+      "note": "B2 town batch (2026-10-01; TOWN_LIFE §7.6): a shop front, roof, stall or plaza piece seen from the plaza and the market; a hero set so Medium gets its maps; the GAN route (painted signs and characters stay as painted; no SDXL)."
+    },
+    "tile2d:c_marble_jang_07": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.10% of the fields, 3.18% of the town, 0.24% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). Gates (TT-B, the encoded 512 tier): grain 72%, albedo Δlum +0.2 (channels -1.3/+0.7/+1.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_marble_jang_01": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.08% of the fields, 2.61% of the town, 0.19% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). Gates (TT-B, the encoded 512 tier): grain 69%, albedo Δlum +0.9 (channels -0.5/+1.2/+3.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_dust_fld_02": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.59% of the fields, 2.53% of the town, 1.49% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 70%, albedo Δlum +0.8 (channels -0.6/+1.3/+2.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.945 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_stone_jinfild_04": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.76 },
+      "sdxl": { "prompt": "tilled brown field soil, small clods and furrow crumbs, fine dry earth" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.34% of the fields, 1.62% of the town, 0.85% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The field soil prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 71%, albedo Δlum +0.6 (channels +0.7/+0.6/+0.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.893 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.76 (mean ~0.85)."
+    },
+    "tile2d:c_dust_hmfld_02": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.8 },
+      "sdxl": { "prompt": "tilled brown field soil, small clods and furrow crumbs, fine dry earth" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.90% of the fields, 1.47% of the town, 1.90% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The field soil prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 65%, albedo Δlum +0.7 (channels +0.1/+1.0/+1.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the grain gate stepped it to aiMix 0.3. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.948 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.8 (mean ~0.85)."
+    },
+    "tile2d:c_marble_jang_03": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.04% of the fields, 1.26% of the town, 0.09% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). Gates (TT-B, the encoded 512 tier): grain 67%, albedo Δlum +0.9 (channels +0.1/+1.1/+1.7); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the grain gate stepped it to aiMix 0.3."
+    },
+    "tile2d:c_marble_jang_08": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.66% of the town, 0.06% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). Gates (TT-B, the encoded 512 tier): grain 68%, albedo Δlum +0.9 (channels -1.1/+1.7/+2.7); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_grass_hmfld_02": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "roughness": 0.79 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 1.70% of the fields, 2.15% of the town, 1.73% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 70%, albedo Δlum +0.1 (channels -0.8/+1.2/-2.7); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.5 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.911 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.79 (mean ~0.85)."
+    },
+    "tile2d:wc_stone_don_08": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.77 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 3.77% of the fields, 0.00% of the town, 0.08% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 84%, albedo Δlum +1.1 (channels -0.0/+1.3/+3.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.880 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.77 (mean ~0.85)."
+    },
+    "tile2d:c_dust_hmfld_01": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "sdxl": { "prompt": "tilled brown field soil, small clods and furrow crumbs, fine dry earth" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 1.54% of the fields, 0.20% of the town, 1.75% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The field soil prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 71%, albedo Δlum +0.6 (channels +0.7/+0.6/+0.2); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.946 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_grass_hmfld_05": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "roughness": 0.78 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.86% of the fields, 0.00% of the town, 1.14% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 86%, albedo Δlum +0.6 (channels +0.4/+0.8/+0.2); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.918 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.78 (mean ~0.85)."
+    },
+    "tile2d:c_dust_swmp_07": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.8 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.48% of the fields, 0.29% of the town, 1.19% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 85%, albedo Δlum +0.2 (channels -1.0/+0.7/+0.5); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.947 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.8 (mean ~0.85)."
+    },
+    "tile2d:c_dust_fld_07": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.82 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.31% of the fields, 0.60% of the town, 0.77% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 76%, albedo Δlum +0.6 (channels +0.6/+0.7/+0.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.933 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.82 (mean ~0.85)."
+    },
+    "tile2d:c_grass_fld_11": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "roughness": 0.79 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.23% of the fields, 0.64% of the town, 0.59% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 84%, albedo Δlum +0.7 (channels +1.4/+0.9/-2.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.5 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.911 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.79 (mean ~0.85)."
+    },
+    "tile2d:wc_dust_don_10": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.83 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 1.18% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 70%, albedo Δlum +0.6 (channels +0.5/+0.7/+0.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.918 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.83 (mean ~0.85)."
+    },
+    "tile2d:wc_dust_don12": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 1.03% of the fields, 0.00% of the town, 0.01% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 80%, albedo Δlum +1.1 (channels -0.5/+1.5/+3.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.936 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:wc_stone_don_04": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.75 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.32% of the fields, 0.00% of the town, 0.55% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 64%, albedo Δlum +1.0 (channels +0.3/+1.2/+1.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.900 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.75 (mean ~0.85)."
+    },
+    "tile2d:c_dust_swmp_05": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.8 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.25% of the fields, 0.01% of the town, 0.55% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 84%, albedo Δlum -0.2 (channels -1.3/+0.6/-1.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.951 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.8 (mean ~0.85)."
+    },
+    "tile2d:wc_dust_don_06": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.82 },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.72% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 70%, albedo Δlum +0.9 (channels -0.2/+1.3/+2.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.928 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.82 (mean ~0.85)."
+    },
+    "tile2d:wc_stone_don_05": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.75 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3a (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.59% of the fields, 0.00% of the town, 0.09% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). SDXL kept on none of the 10 paving/rock/moss tiles (TT-B0 Q0, work/tmp/terrain-tex/q0/answer.md: softer at 1024, 15-23 grain points lost, paving fails its seam gate). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 64%, albedo Δlum +0.9 (channels +0.6/+1.0/+1.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the grain gate stepped it to aiMix 0.3. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.899 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.75 (mean ~0.85)."
+    },
+    "tile2d:c_grass_fld_05": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "roughness": 0.78 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.18% of the fields, 0.18% of the town, 0.27% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 76%, albedo Δlum +0.1 (channels -1.4/+1.7/-3.6); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.3 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.918 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.78 (mean ~0.85)."
+    },
+    "tile2d:c_dust_fld_03": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.09% of the fields, 0.27% of the town, 0.23% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 68%, albedo Δlum +0.6 (channels -0.9/+1.5/-0.0); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.940 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_marble_jang_05": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.47% of the town, 0.04% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). Gates (TT-B, the encoded 512 tier): grain 63%, albedo Δlum +0.5 (channels -1.1/+0.9/+2.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_dust_swmp_08": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.8 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.14% of the fields, 0.01% of the town, 0.34% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 88%, albedo Δlum +0.2 (channels -0.9/+0.6/+1.0); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.946 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.8 (mean ~0.85)."
+    },
+    "tile2d:c_grass_fld_10": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "roughness": 0.79 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.43% of the town, 0.04% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 85%, albedo Δlum -1.8 (channels -1.2/-1.9/-2.8); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.5 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.915 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.79 (mean ~0.85)."
+    },
+    "tile2d:c_dust_swmp_03": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.15% of the fields, 0.00% of the town, 0.30% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 71%, albedo Δlum +1.1 (channels -0.2/+1.4/+2.5); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.945 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_marble_jang_08_1": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.38% of the town, 0.05% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). Gates (TT-B, the encoded 512 tier): grain 68%, albedo Δlum +0.7 (channels -1.2/+1.6/+1.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:oaho_water_04": {
+      "hero": true,
+      "detail": "gan",
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.38% of the town, 0.03% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, Water-typed: seen through the water; the defaults. Gates (TT-B, the encoded 512 tier): grain 82%, albedo Δlum +0.3 (channels -1.7/+1.0/+1.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_dust_swmp_04": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.11% of the fields, 0.00% of the town, 0.29% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 68%, albedo Δlum +1.1 (channels +0.7/+1.3/+1.3); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the grain gate stepped it to aiMix 0.3. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.945 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:wc_grass_don_01": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.82 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.32% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 68%, albedo Δlum +0.9 (channels -0.5/+1.6/+1.6); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.931 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.82 (mean ~0.85)."
+    },
+    "tile2d:c_grass_fld_09": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "roughness": 0.79 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.28% of the town, 0.03% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B, the encoded 512 tier): grain 87%, albedo Δlum -1.8 (channels -1.1/-2.0/-2.8); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder: the colour lock failed at aiMix 0.8 (TP-U's AI crushed the dark blue channel by 4-10 levels; de-light is not the cause), so aiMix 0.5 (the grain ladder doubles as the colour fallback). In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.913 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.79 (mean ~0.85)."
+    },
+    "tile2d:c_marble_jang_06": {
+      "hero": true,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.03% of the fields, 0.17% of the town, 0.07% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). Gates (TT-B, the encoded 512 tier): grain 69%, albedo Δlum +1.0 (channels -0.9/+1.6/+3.4); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:wc_grass02_01": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.19% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 69%, albedo Δlum +0.5 (channels -1.6/+1.1/+2.6); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.936 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_stone_jinfild_06": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.76 },
+      "sdxl": { "prompt": "tilled brown field soil, small clods and furrow crumbs, fine dry earth" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.05% of the fields, 0.00% of the town, 0.12% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The field soil prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 70%, albedo Δlum +0.7 (channels +0.8/+0.7/+0.3); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.893 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.76 (mean ~0.85)."
+    },
+    "tile2d:wc_stone_don_00": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.76 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.17% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 86%, albedo Δlum +1.1 (channels +0.3/+1.2/+3.2); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.888 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.76 (mean ~0.85)."
+    },
+    "tile2d:wc_dust_don_18": {
+      "hero": true,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.83 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.16% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 73%, albedo Δlum +0.6 (channels +0.5/+0.7/+0.5); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. Fallback ladder (TERRAIN_TEX §3.2): grain below 60% at aiMix 0.5 and 0.3, so the retail route (Lanczos3 x4, no AI) with the rule's maps. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.923 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.83 (mean ~0.85)."
+    },
+    "tile2d:oaho_water_03": {
+      "hero": true,
+      "detail": "gan",
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.13% of the town, 0.01% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, Water-typed: seen through the water; the defaults. Gates (TT-B, the encoded 512 tier): grain 83%, albedo Δlum +0.2 (channels -2.1/+1.1/+2.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:c_dust_swmp_02": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.81 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.04% of the fields, 0.00% of the town, 0.11% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 63%, albedo Δlum +1.2 (channels +0.5/+1.5/+2.1); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.944 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.81 (mean ~0.85)."
+    },
+    "tile2d:c_stone_jinfild_05": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.75 },
+      "sdxl": { "prompt": "tilled brown field soil, small clods and furrow crumbs, fine dry earth" },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.04% of the fields, 0.00% of the town, 0.10% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The field soil prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B, the encoded 512 tier): grain 67%, albedo Δlum +1.2 (channels +0.5/+1.5/+1.8); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.902 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.75 (mean ~0.85)."
+    },
+    "tile2d:oaho_water_01": {
+      "hero": true,
+      "detail": "gan",
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.12% of the town, 0.01% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, Water-typed: seen through the water; the defaults. Gates (TT-B, the encoded 512 tier): grain 79%, albedo Δlum +0.6 (channels -1.4/+1.1/+2.9); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles."
+    },
+    "tile2d:wc_dust_don_09": {
+      "hero": true,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25, "roughness": 0.82 },
+      "note": "B3b (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.11% of the fields, 0.00% of the town, 0.00% of the near ring; hero (Medium gets its AO and roughness, High its normals and 1024 tier); GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B, the encoded 512 tier): grain 75%, albedo Δlum +1.0 (channels -0.2/+1.4/+2.0); in game: see work/texpipe/review/terrain/ingame.json for the spot tiles. In-game gate (TT-B Q2b): the darkening at the Medium spots was the roughness plane (mean 0.933 against the 0.851 neutral every non-hero tile renders with; AO only 0.6-1.9 levels), so the plane's base roughness is 0.82 (mean ~0.85)."
+    },
+    "tile2d:oaho_grass_05": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.00% of the town, 0.06% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 68%, albedo Δlum +1.1 (channels −0.2/+2.0/−0.2)."
+    },
+    "tile2d:wc_dust_don08": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.08% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +0.7 (channels +0.6/+0.7/+0.5). Fallback ladder: the first pass failed (grain 44% FAIL, Δlum +0.8 (−0.1/+1.0/+2.5) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:wc_dust_don_00": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.06% of the fields, 0.00% of the town, 0.03% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 71%, albedo Δlum +1.0 (channels +0.1/+1.3/+2.0)."
+    },
+    "tile2d:oaho_water_02": {
+      "hero": false,
+      "detail": "gan",
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.06% of the town, 0.02% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, Water-typed: seen through the water; the defaults. Gates (TT-B step 2, the encoded 512 tier): grain 91%, albedo Δlum +0.2 (channels −2.1/+0.9/+2.5)."
+    },
+    "tile2d:wc_grass02": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.07% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +0.3 (channels −1.7/+0.9/+2.2). Fallback ladder: the first pass failed (grain 71% ok, Δlum −0.8 (−4.3/+0.2/+3.2) FAIL), so aiMix 0.5."
+    },
+    "tile2d:wc_dust_don_17": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.06% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 74%, albedo Δlum +0.6 (channels +0.6/+0.7/+0.5). Fallback ladder: the first pass failed (grain 48% FAIL, Δlum +0.4 (−0.2/+0.6/+1.0) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:stormdesert_stone05": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.03% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 69%, albedo Δlum +1.0 (channels −0.3/+1.3/+2.8)."
+    },
+    "tile2d:stormdesert_stone07": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.03% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +1.0 (channels −0.5/+1.4/+2.9)."
+    },
+    "tile2d:wc_dust_don_05": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.03% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 69%, albedo Δlum +1.2 (channels +0.2/+1.6/+2.1)."
+    },
+    "tile2d:w_earthgst_dust_08": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.03% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 67%, albedo Δlum +1.0 (channels −0.3/+1.4/+2.5)."
+    },
+    "tile2d:wc_dust_don_08": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 78%, albedo Δlum +0.9 (channels +0.4/+1.1/+1.1)."
+    },
+    "tile2d:c_dust_swmp_01": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "sdxl": { "prompt": "damp forest floor, soft moss and short mossy grass over dark earth, tiny leaves" },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.02% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The moss prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B step 2, the encoded 512 tier): grain 63%, albedo Δlum +1.0 (channels +0.2/+1.3/+1.9)."
+    },
+    "tile2d:wc_dust_don_16": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 66%, albedo Δlum +1.4 (channels −0.0/+1.9/+2.7)."
+    },
+    "tile2d:wc_dust_don_15": {
+      "hero": false,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 66%, albedo Δlum +0.9 (channels −0.5/+1.5/+1.8). F-12 (2026-10-02; H-12 TEL-3): paving (the palette's \"Road and paving\"; texpipe paving.ts): B1's soft maps (normal x0.35, AO x0.4), no aiMix (the class mix), no de-light, as the c_marble_jang_* paving; re-encoded."
+    },
+    "tile2d:ruin_takl_dest_05-1": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.02% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 65%, albedo Δlum +0.7 (channels +0.5/+0.7/+0.7). Fallback ladder: the first pass failed (grain 40% FAIL, Δlum +0.6 (−0.2/+0.8/+1.4) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:stormdesert_salt_03": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.01% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 65%, albedo Δlum +1.0 (channels +0.6/+0.9/+3.0)."
+    },
+    "tile2d:stormdesert_stone06": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 74%, albedo Δlum +1.0 (channels −0.3/+1.3/+3.0)."
+    },
+    "tile2d:wc_stone_don_06": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.01% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B step 2, the encoded 512 tier): grain 68%, albedo Δlum +1.2 (channels +0.6/+1.2/+2.6)."
+    },
+    "tile2d:oaho_dust_earth03": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 71%, albedo Δlum +1.1 (channels −0.5/+1.5/+3.1)."
+    },
+    "tile2d:wc_stone_don_09": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B step 2, the encoded 512 tier): grain 79%, albedo Δlum +1.1 (channels −0.0/+1.3/+3.0)."
+    },
+    "tile2d:wc_dust_don_11": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.01% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 80%, albedo Δlum +0.9 (channels +0.2/+1.1/+1.2)."
+    },
+    "tile2d:wc_dust_don_14": {
+      "hero": false,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 73%, albedo Δlum +1.1 (channels +0.4/+1.3/+1.8). F-12 (2026-10-02; H-12 TEL-3): paving (the palette's \"Road and paving\"; texpipe paving.ts): B1's soft maps (normal x0.35, AO x0.4), no aiMix (the class mix), no de-light, as the c_marble_jang_* paving; re-encoded."
+    },
+    "tile2d:w_earthgst_dust_05": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 63%, albedo Δlum +1.2 (channels +0.1/+1.6/+2.5)."
+    },
+    "tile2d:c_marble_jang_10": {
+      "hero": false,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, paving: B1's soft maps (normal x0.35, AO x0.4); no anti-tiling (TT-Q's paving bit). Gates (TT-B step 2, the encoded 512 tier): grain 77%, albedo Δlum +0.5 (channels −0.8/+0.7/+2.6)."
+    },
+    "tile2d:rok_stone_02": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 63%, albedo Δlum +1.2 (channels +0.4/+1.3/+2.8)."
+    },
+    "tile2d:wc_dust_don_01": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 82%, albedo Δlum +0.9 (channels +0.5/+1.1/+1.4)."
+    },
+    "tile2d:ruin_takl_dest_05": {
+      "hero": false,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 77%, albedo Δlum +0.9 (channels −0.0/+1.1/+2.1). F-12 (2026-10-02; H-12 TEL-3): paving (the palette's \"Road and paving\"; texpipe paving.ts): B1's soft maps (normal x0.35, AO x0.4), no aiMix (the class mix), no de-light, as the c_marble_jang_* paving; re-encoded."
+    },
+    "tile2d:alex_stone02": {
+      "hero": false,
+      "detail": "gan",
+      "pbr": { "normalScale": 0.35, "aoScale": 0.4 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 72%, albedo Δlum +1.0 (channels −0.6/+1.4/+2.9). F-12 (2026-10-02; H-12 TEL-3): paving (the palette's \"Road and paving\"; texpipe paving.ts): B1's soft maps (normal x0.35, AO x0.4), no aiMix (the class mix), no de-light, as the c_marble_jang_* paving; re-encoded."
+    },
+    "tile2d:wc_dust_stone03": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +0.6 (channels +0.6/+0.7/+0.5). Fallback ladder: the first pass failed (grain 43% FAIL, Δlum +0.7 (−0.1/+1.0/+1.6) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:wc_dust_don_03": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 69%, albedo Δlum +1.1 (channels +0.1/+1.3/+2.6)."
+    },
+    "tile2d:w_earthgst_dust_04": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 68%, albedo Δlum +1.0 (channels −0.2/+1.3/+2.6). Fallback ladder: the first pass failed (grain 59% FAIL, Δlum +0.8 (−1.0/+1.1/+3.6) ok), so aiMix 0.3."
+    },
+    "tile2d:wc_dust_don00_1": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 66%, albedo Δlum +0.6 (channels +0.6/+0.7/+0.5). Fallback ladder: the first pass failed (grain 35% FAIL, Δlum +0.7 (+0.2/+0.8/+1.2) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:wc_dust_don07": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 66%, albedo Δlum +1.4 (channels +1.1/+1.4/+2.0)."
+    },
+    "tile2d:stormdesert_salt_01": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 67%, albedo Δlum +1.0 (channels +0.6/+0.8/+3.0)."
+    },
+    "tile2d:w_earthgst_dust_01": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 74%, albedo Δlum +0.8 (channels −0.1/+1.3/+0.7)."
+    },
+    "tile2d:wc_grass_don_00": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 79%, albedo Δlum +0.6 (channels +0.6/+0.6/+0.2). Fallback ladder: the first pass failed (grain 41% FAIL, Δlum +0.4 (−0.6/+0.9/+0.4) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:w_earthgst_dust_09": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 67%, albedo Δlum +0.9 (channels −0.1/+1.2/+2.2). Fallback ladder: the first pass failed (grain 58% FAIL, Δlum +0.8 (−1.0/+1.2/+3.2) ok), so aiMix 0.3."
+    },
+    "tile2d:wc_stone_don_07": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "sdxl": { "prompt": "weathered sandstone rock ground, wind-worn ridges, fine mineral grain, grit in the hollows" },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). The rock prompt stays for a later SDXL run (TERRAIN_TEX §2.3). Gates (TT-B step 2, the encoded 512 tier): grain 86%, albedo Δlum +1.1 (channels +0.3/+1.2/+3.2)."
+    },
+    "tile2d:stormdesert_stone04": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 60%, albedo Δlum +0.8 (channels +0.5/+0.9/+1.5). Fallback ladder: the first pass failed (grain 55% FAIL, Δlum +0.5 (−0.0/+0.6/+1.9) ok), so aiMix 0.3."
+    },
+    "tile2d:pha_grass_01": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 84%, albedo Δlum −0.7 (channels −0.4/−1.0/−0.1)."
+    },
+    "tile2d:w_earthgst_dust_06": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.5 },
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 75%, albedo Δlum +1.0 (channels +0.1/+1.3/+2.2)."
+    },
+    "tile2d:wc_grass01": {
+      "hero": false,
+      "detail": "retail",
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B step 2, the encoded 512 tier): grain 71%, albedo Δlum +0.7 (channels +0.7/+0.6/+0.5). Fallback ladder: the first pass failed (grain 45% FAIL, Δlum +0.6 (−2.0/+1.6/+1.9) ok), so aiMix 0.5 -> aiMix 0.3 -> the retail route."
+    },
+    "tile2d:wc_grass03": {
+      "hero": false,
+      "detail": "gan",
+      "upscale": { "aiMix": 0.3 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B step 2, the encoded 512 tier): grain 65%, albedo Δlum +0.6 (channels −0.7/+1.2/+1.3). Fallback ladder: the first pass failed (grain 53% FAIL, Δlum +0.1 (−3.6/+1.4/+2.6) ok), so aiMix 0.5 -> aiMix 0.3."
+    },
+    "tile2d:wc_dust_don08_1": {
+      "hero": false,
+      "detail": "retail",
+      "pbr": { "delight": 0.5, "normalScale": 0.6, "aoScale": 0.25 },
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, the painterly ground rule (aiMix 0.5, de-light 0.5, normal x0.6, AO x0.25; TERRAIN_TEX D3), stepped by the grain gate (aiMix 0.3, then the retail route). Gates (TT-B step 2, the encoded 512 tier): grain 70%, albedo Δlum +0.6 (channels +0.6/+0.7/+0.4). Fallback ladder: the first pass failed (grain 44% FAIL, Δlum +0.8 (+0.1/+0.9/+2.4) ok), so aiMix 0.3 -> the retail route."
+    },
+    "tile2d:oaho_dust_earth07": {
+      "hero": false,
+      "detail": "gan",
+      "note": "B3c (2026-10-02; TERRAIN_TEX D1/D6, WAVE_PLAN8 TT-B): 0.00% of the fields, 0.00% of the town, 0.00% of the near ring; not a hero: the remastered 512 albedo on every PBR preset; all its maps are encoded, so `pnpm texpipe hero` (the editor's Publish past 0.1 % cover) is an index-only flip; GAN route, grass: the defaults (mostly under the grass field; no SDXL, TERRAIN_TEX §2.5). Gates (TT-B step 2, the encoded 512 tier): grain 64%, albedo Δlum +1.1 (channels −0.9/+1.6/+3.6)."
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_bridge_btree.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_bridge_stree.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_bridge_treea.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_bridge_treef.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_bran.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/reed/w_cd_reeds.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_gra_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_05.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_leaf01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_lea_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_gra_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig01_tree03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig02_tree03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree2/w_cd_wood_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree3/w_cd_deadtree_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/china/dunhuang/tree3/w_cd_stump01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/cj_ricestraw.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/flower/flw_g01_w.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/flower/flw_g01_y.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/flower/grs_flower05.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/flower/grs_weed07.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/c_pondflower.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/cj_barley_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/cj_graveyard_grass01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/cj_graveyard_grass03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_flower05.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_water.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_weed04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_weed06.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_weed06_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/grass/grs_weed07.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_dead_tre01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_gagi01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_maple01_leaf_green.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_maple01_leaf_green2.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_maple01_leaf_middle.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_maple_pin.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_pine01_leaf.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_pine01_pin.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_pine02_leaf.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_pine03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_pine04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_tree01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_tree_bran.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_willow01_brn.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tre_willow01_leaf1.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_hhm_tree_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_hhm_tree_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_hhm_tree_04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree02_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree02_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree02_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_05.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_06_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/c_swamp_tree_06_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/cj_graveyard_tree01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/cj_graveyard_tree02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/cj_graveyard_tree05.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/cj_graveyard_tree06.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/leaf04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree03_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree04_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree05_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree06_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree06_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree07_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/new-maple/tre_tree08_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry02_1.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry_04.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_dry_leaf.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_frie_body.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_frie_leaf.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_wood00.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_wood01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_lea02_wood02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_leaf_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_leaf_01_1.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_maple01_leaf_green.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_maple_leaf_red.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_maple_pin.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine05_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine05_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine05_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine06_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine06_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine06_03.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine10_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_pine10_02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_green2.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_middle.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_red.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry02_1.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow01.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow02.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow02.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_strand.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow02.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_willow02_leaf01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_willow02_leaf02.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_willow02_will01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_wood_01.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/oasis/tarim/oas_tarim_dvweed.ddj": {
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B B0: retail sprite, Real-ESRGAN x4 colour-matched (TREES WF3), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bamboo04_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_barley_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree06.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree07.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree03.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree04.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree06.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree07.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree08.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad01_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf01.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf02.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf02.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark_dunhuang.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark_dunhuang.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf_dunhuang.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf_bare.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf_bare.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_poplar_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf_tree05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf_twig01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom_flower05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf_flower05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_w_head.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_w_rosette.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_w_stem.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_y_head.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_y_rosette.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_flower_y_stem.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark_blossom.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01big.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_blossom.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf_grass03.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark_grave05.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf_grave05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine05.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine06.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine05.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine06.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine09.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine10_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine01.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine02.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine04.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_reeds_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_ricestraw_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry03.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry04.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark_swamp.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf_swamp.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark_swamp02.ddj": {
+      "class": "wood",
+      "alpha": "none",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf_swamp02.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed04_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf_tarim.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf_weed06_1.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    },
+    "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf_weed09_2.ddj": {
+      "class": "foliage",
+      "alpha": "cutout",
+      "hero": false,
+      "status": "albedo-only",
+      "note": "T12-B: new tree species sprite (pnpm trees build), albedo tiers only"
+    }
+  }
+}

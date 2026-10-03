@@ -1,0 +1,25 @@
+{
+  "id": "dh_tree",
+  "name": "Desert tree",
+  "family": "dunhuang_tree",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B4",
+  "target": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree03.bsr",
+  "envelope": {"h": 19.89, "w": 7.19},
+  "seed": 85,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree02_03.ddj", "repeatM": 2.5},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree02_02.ddj", "anchor": [0.35, 0.0], "aspect": 2.0, "grade": {"gain": 1.1}}
+  },
+  "tints": [
+    {"name": "tree05", "textures": {"leaf": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_wood_02.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree03.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree05.bsr", "tint": "tree05"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree02.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree01.bsr"}
+  ],
+  "params": {"trunkFrac": 0.85, "trunkRadius": 0.05, "lean": [0.03, 0.02], "limbStart": [0.25, 1.0], "limbs": [7, 8], "limbTilt": [12, 32], "limbLen": [0.15, 0.25], "limbTaper": 0.4, "twigs": [3, 4], "cardScale": 0.5, "normalRule": "dim", "normalUp": 0.62, "normalBend": 0.0, "backDim": 0.34}
+}

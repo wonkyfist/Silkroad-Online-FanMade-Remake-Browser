@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>World Editor</title>
+    <link rel="stylesheet" href="/src/editor/editor.css" />
+  </head>
+  <body>
+    <canvas id="c" touch-action="none"></canvas>
+
+    <div id="top">
+      <b class="title" id="title">World Editor</b>
+      <div class="sep"></div>
+      <button id="undo" title="Undo the last change (Ctrl+Z)">Undo</button>
+      <button id="redo" title="Redo (Ctrl+Y)">Redo</button>
+      <button id="save" class="primary" title="Save your changes on this PC (Ctrl+S). Players see nothing until you publish.">Save</button>
+      <button id="publish" title="Publish checks your changes, re-builds the regions you touched and rebuilds walking, then shows a report. Nothing changes until you press Keep.">Publish…</button>
+      <button id="testGame" title="Play your changes in the real game on a private test server (your account, a copy of the database). Saves first.">Test in game</button>
+      <span id="testChip" class="chip hidden"></span>
+      <button id="deploy" disabled title="Sends a published map to the friends' server. Available after a Publish.">Deploy…</button>
+      <div class="sep"></div>
+      <label title="High is what this PC's game starts on; Medium is what Macs see, Low what the small PC sees">Look
+        <select id="preset">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </label>
+      <label title="Time of day">Time <input id="time" type="range" min="0" max="1" step="0.005" value="0.42" /> <span id="timeOut">10:05</span></label>
+      <label title="Keep water, wind and life moving (costs the GPU while on)"><input id="animate" type="checkbox" /> Animate</label>
+      <label title="Show where players can't walk: red tiles (bright red: closed by your edits; green: opened with the Walkable brush)"><input id="walkOverlay" type="checkbox" checked /> Walking</label>
+      <label title="Show the minimap (M)"><input id="minimapOn" type="checkbox" checked /> Map</label>
+      <button id="walkBtn" title="Put the adventurer on the map and walk him over your changes (Esc stops)">Walk here</button>
+      <button id="compare" title="Show the original map, to compare (press again to see your changes; nothing can be edited meanwhile)">Original</button>
+      <div class="grow"></div>
+      <span id="saved" class="muted">No changes yet.</span>
+      <button id="helpBtn" title="All the keys (F1)">Help</button>
+    </div>
+
+    <div id="banner" class="hidden"></div>
+
+    <div id="tools"></div>
+
+    <div id="side">
+      <section id="brush">
+        <h3>Brush <small id="brushTool"></small></h3>
+        <label class="slider">Size <span id="sizeV"></span><input id="size" type="range" min="2" max="60" step="1" value="20" /></label>
+        <label id="strRow" class="slider">Strength <span id="strV"></span><input id="str" type="range" min="1" max="100" step="1" value="50" /></label>
+        <label id="softRow" class="slider">Softness <span id="softV"></span><input id="soft" type="range" min="0" max="100" step="1" value="50" /></label>
+        <div id="flattenRow" class="row hidden" style="margin-top: 6px">
+          <span>Flatten to</span>
+          <span><input id="flattenTo" type="number" step="0.1" style="width: 90px" placeholder="where you start" /> m</span>
+        </div>
+        <div id="grassModes" class="modes hidden" style="margin-top: 6px">
+          <button data-mode="less" class="on" title="Less grass here (a path, bare ground)">Less grass</button>
+          <button data-mode="more" title="Lusher grass">More grass</button>
+          <button data-mode="flowers" title="Paint flowers into the grass">Flowers</button>
+          <button data-mode="clear" title="Back to the map's own grass">Original</button>
+        </div>
+        <div id="walkModes" class="modes hidden" style="margin-top: 6px">
+          <button data-mode="open" class="on" title="Let players walk here (ground you flattened that is still red)">Open</button>
+          <button data-mode="close" title="Keep players off (a decorative slope, a cliff edge)">Close</button>
+          <button data-mode="auto" title="Take your override away: the automatic rule decides again">Auto</button>
+        </div>
+        <div id="walkNote" class="muted hidden" style="margin-top: 4px">Shift + drag does the other one (Open / Close). Green tiles: opened by you. Bright red: closed by you or too steep.</div>
+        <label id="followRow" class="row" style="margin-top: 6px; justify-content: flex-start"><input id="follow" type="checkbox" checked /> Keep trees and small props on the ground</label>
+      </section>
+
+      <section id="selected" class="hidden">
+        <h3>Selected <small id="selMode"></small></h3>
+        <div id="selInfo" class="muted">Nothing selected. Click a rock, tree or prop.</div>
+        <div class="btns">
+          <button id="selSnap" title="Put it on the ground (G)">Snap to ground</button>
+          <button id="selBack" title="Back where the original map has it">Put back</button>
+          <button id="selDelete" title="Delete (Del)">Delete</button>
+        </div>
+        <label class="row" style="justify-content: flex-start; margin-top: 6px"><input id="showDeleted" type="checkbox" /> Show deleted (click a red box to bring it back)</label>
+        <div class="btns">
+          <button id="modeMove" class="on" title="Move (W)">Move</button>
+          <button id="modeTurn" title="Turn (E)">Turn</button>
+          <button id="modeScale" title="Resize (R)">Resize</button>
+        </div>
+      </section>
+
+      <section id="palette" class="fill hidden">
+        <h3>Paint <small id="paletteCount"></small></h3>
+        <div id="paintPick"><div class="chip" id="paintChip"></div><div><b id="paintName">Pick a ground</b><div class="muted" id="paintNote">Shift + drag brings back the original ground.</div></div></div>
+        <input id="paletteSearch" class="search" type="search" placeholder="Find a ground texture…" />
+        <div id="paletteList"></div>
+      </section>
+
+      <section id="place" class="fill hidden">
+        <h3>Place <small id="placeCount"></small></h3>
+        <div class="tabs" id="placeTabs"></div>
+        <input id="placeSearch" class="search" type="search" placeholder="Find a model…" />
+        <label class="row" style="justify-content: flex-start"><input id="scatter" type="checkbox" checked /> Scatter (plants get a random turn and size)</label>
+        <div id="placeList"></div>
+      </section>
+
+      <section id="changes" class="fill">
+        <h3>Changes <small id="changesCount"></small></h3>
+        <ol id="changeList" reversed></ol>
+      </section>
+    </div>
+
+    <canvas id="minimap" width="230" height="230" title="Click to fly there. Right-click a region to revert it."></canvas>
+    <div id="keys"></div>
+    <div id="bottom">
+      <div id="msg">Loading the map…</div>
+      <div id="budget"></div>
+    </div>
+    <div id="rect" class="hidden"></div>
+    <div id="help" class="hidden"></div>
+    <div id="publishPanel" class="hidden" role="dialog" aria-label="Publish report"></div>
+    <div id="shots" class="hidden"><div>Taking the before / after pictures… The editor moves the camera by itself; please wait.</div></div>
+    <div id="loading">Loading the World Editor…</div>
+
+    <script type="module" src="/src/editor/editor.ts"></script>
+  </body>
+</html>

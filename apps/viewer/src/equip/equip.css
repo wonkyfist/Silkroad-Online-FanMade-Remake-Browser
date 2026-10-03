@@ -1,0 +1,25 @@
+.equip-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 6px 0;
+}
+
+.equip-slots {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  align-items: center;
+}
+
+.equip-slots select {
+  width: 100%;
+  min-width: 0;
+}
+
+.equip-info {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  word-break: break-word;
+}

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRO Asset Viewer</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <aside id="sidebar">
+      <header>
+        <h1>SRO Asset Viewer</h1>
+        <span id="engine-badge" class="badge">…</span>
+        <a href="./world.html?world=jangan" title="World viewer (Jangan)">world</a>
+      </header>
+
+      <section>
+        <h2>Model <button id="reload-index" class="small" title="Reload /out/index.json">Reload</button></h2>
+        <input id="model-filter" type="search" placeholder="Filter by name, id or category" autocomplete="off" />
+        <select id="model-list" size="12" aria-label="Models"></select>
+        <div id="model-count" class="muted"></div>
+      </section>
+
+      <section>
+        <h2>Info</h2>
+        <dl id="info"></dl>
+      </section>
+
+      <section>
+        <h2>Animation</h2>
+        <select id="clip-list" size="6" aria-label="Animation clips"></select>
+        <label class="row"><input id="loop" type="checkbox" checked /> Loop</label>
+        <label class="row">
+          Speed
+          <input id="speed" type="range" min="0.1" max="2" step="0.05" value="1" />
+          <output id="speed-out">1.00x</output>
+        </label>
+        <div class="legend">
+          <span><i class="ev-1"></i>hit (1)</span>
+          <span><i class="ev-2"></i>footstep (2)</span>
+          <span><i class="ev-other"></i>other</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Display</h2>
+        <div class="checks">
+          <label><input id="show-skeleton" type="checkbox" /> Skeleton</label>
+          <label><input id="show-wireframe" type="checkbox" /> Wireframe</label>
+          <label><input id="show-normals" type="checkbox" /> Normals (bind pose)</label>
+          <label><input id="show-grid" type="checkbox" checked /> Grid</label>
+        </div>
+        <button id="frame">Frame model</button>
+      </section>
+
+      <section>
+        <h2>Attach to bone</h2>
+        <select id="attach-model" aria-label="Attachment model"><option value="">(none)</option></select>
+        <select id="attach-bone" aria-label="Bone"></select>
+        <select id="attach-mode" aria-label="Attach mode" title="SRO socket: the client's rule (cancel the bone's bind rotation). bone-local: attachment origin and axes are the bone's. cancel bind pose: attachment was authored in the character's model space.">
+          <option value="socket">SRO socket</option>
+          <option value="bone">bone-local</option>
+          <option value="bind">cancel bind pose</option>
+        </select>
+        <div id="attach-info" class="muted"></div>
+      </section>
+
+      <section>
+        <h2>Equipment</h2>
+        <div id="equip-panel"></div>
+      </section>
+
+      <section>
+        <details>
+          <summary>Sidecar JSON</summary>
+          <pre id="sidecar">(no model)</pre>
+        </details>
+      </section>
+    </aside>
+
+    <main id="stage">
+      <canvas id="canvas" touch-action="none"></canvas>
+      <div id="hud"></div>
+      <div id="status" role="status"></div>
+      <div id="drop-hint">Drop a .glb (and its sidecar .json) to view it</div>
+      <div id="timeline-bar">
+        <button id="play" disabled>Play</button>
+        <span id="time">0.00 / 0.00 s</span>
+        <div id="timeline">
+          <div id="markers"></div>
+          <input id="scrub" type="range" min="0" max="1" step="0.0005" value="0" disabled aria-label="Timeline" />
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+{
+ "format": "sro-editor-base",
+ "version": 1,
+ "world": "jangan-fields",
+ "files": {
+  "grass/169_90.png": {
+   "gone": true,
+   "live": "9f346060b47e8a6848a8739d1b817e1ade5c84112c2bc1b869f2051f69884a34"
+  },
+  "grass/169_91.png": {
+   "gone": true,
+   "live": "a0f6e87f7dd90520c03b2a68a01fdadeb88229eda49eb075955d1a62c4adf544"
+  },
+  "grass/169_92.png": {
+   "gone": true,
+   "live": "2f99047202a5fb70ec07a30aa028c1e44f55f6465c3f22913be9661f62298e17"
+  },
+  "manifest.json": {
+   "live": "2fa5e8071f1dbd51f40051d139b8d53c26e0b361832e44628230d786221022bd"
+  },
+  "minimap/168x90.png": {
+   "live": "5fdb5ce064e2105f4816f37f53ee9dc2e202599f8848f7cd58a4eaacdf75188e"
+  },
+  "minimap/168x91.png": {
+   "live": "b3ddc3a8431888d3f468e5b5c2ccae00f2b78f55a0962a92454e4cddb041045a"
+  },
+  "minimap/168x92.png": {
+   "live": "57cf69a72b75547fa6bc143fa273e09143e7800e614fac0dd5a88413146e270a"
+  },
+  "minimap/168x97.png": {
+   "live": "5cba30a0ab547569bbefb3bf6d5d762b3147b643b3564bbd07bc4bac31311d67"
+  },
+  "minimap/169x90.png": {
+   "live": "62ea75c3809ff5f9343d7e0e1c0f28a46b48e1124aab58c24c3be83bf2ff994a"
+  },
+  "minimap/169x91.png": {
+   "live": "7781f269fc89e588647d7d64b0eceb103d9dbcf0dd6fb6289138da82315e63d9"
+  },
+  "minimap/169x92.png": {
+   "live": "5b58b41b5e7b4a19663e9cb394c4c2878b06a9eb4eba5717f84e9c3c3ddd29e1"
+  },
+  "minimap/170x90.png": {
+   "live": "2285dac7493e0a7d48a1e26ff5cd4678edd8fb7cc194570545c406bedf6ba1f9"
+  },
+  "minimap/170x91.png": {
+   "live": "c1e60ff5c7d4be6336ff538d39e79465698f3398d3563b296800ff62a2b1e661"
+  },
+  "minimap/170x92.png": {
+   "live": "70097c5b3fa61a4ad6d476fd7ee221c7eaccf91c57b20d81d8dfe7a227acc19b"
+  },
+  "nav-objects.bin": {
+   "live": "a9fa42b3d0f92e4ce315366aede7d322c7988e9d870483ac9bb5080e852265a1"
+  },
+  "nav.bin": {
+   "live": "d7e8c528ea48d61ac464f3b92e50c33b6ff5b931458076d0a8d52b10ae4272aa"
+  },
+  "nav/168_90.bin": {
+   "live": "045260aa73f98c8564f6af5c15f2fdce3a6132dd38885494cc9ec96a4abdad58"
+  },
+  "nav/168_91.bin": {
+   "live": "bd5f5e14e193292e96ffef013e6ef4ef6e0cd5c9aa2f472fd14071979d689374"
+  },
+  "nav/168_92.bin": {
+   "live": "175db38c4093d1a72e0ae6e238e70792618779eeadbf98498cca4adb95c958b5"
+  },
+  "nav/169_90.bin": {
+   "live": "a63247f8810bd5bff5b5b3fcf569931e8e233e18dad19783db521d638f966e2c"
+  },
+  "nav/169_91.bin": {
+   "live": "21542ad6633697a984103dcb840332a2cb2c5b82f46734ff002ed588358b0470"
+  },
+  "nav/169_92.bin": {
+   "live": "58490f090f106ba7a7429f17973632c2c8a66da98f1a888a7c1d976334f2dbcc"
+  },
+  "nav/170_90.bin": {
+   "live": "cea633584109bf00157d045d8b6b6758a13b19576424dcfe7e9352915a15edbe"
+  },
+  "nav/170_91.bin": {
+   "live": "c24cd4065537981b3b183954744b3dead0e352bc5e54407dd0d2043a2020a260"
+  },
+  "nav/170_92.bin": {
+   "live": "e19c1d93c78c84154ab4a43d724853566fe6695196c17071159a99f86ebe3790"
+  },
+  "navmesh/168_90.bin": {
+   "live": "9b64d86f43c1ea5fdfa9da8d381fa70958bab508bc66b68e629aba997eab92c8"
+  },
+  "navmesh/168_91.bin": {
+   "live": "97b1afff3957e44655fb0286423bcb5775b56c92e76e9a83a117b2407bade8e2"
+  },
+  "navmesh/168_92.bin": {
+   "live": "aa49e85fe2a17f8d51fa1d9495c29e3c420b3632378b15adb954c3ffc9a32eb9"
+  },
+  "navmesh/169_90.bin": {
+   "live": "8ad613f9101e6112aa824da35ca2ff823ae7c5a094b6335c95e8b5cfe8155fce"
+  },
+  "navmesh/169_91.bin": {
+   "live": "cf9327ae76f3df1ad3581e47f2f34081cbbb8aa0088b65de1b198356718c4a45"
+  },
+  "navmesh/169_92.bin": {
+   "live": "041f11a1d6616bd1bd7c2ac1349d0d79ba1c60b063394b4e5120fcb1ddea67e9"
+  },
+  "navmesh/170_90.bin": {
+   "live": "001f3d8de5113450db0ba68a6549a5d3945bf88a6cd12e0f8f7745085de1fafc"
+  },
+  "navmesh/170_91.bin": {
+   "live": "ccac472bdaaf06386da6cf08fa14e4420b6176de7fca573367446eb1bc59e7ec"
+  },
+  "navmesh/170_92.bin": {
+   "live": "fbf92290f521d6aeb5b34e01dba969ebafbc91b872dfa2daf84a0c98784fa9c4"
+  },
+  "terrain/167_97_lightmap.png": {
+   "live": "8dffc79b37369cec496ab57a1f0c7c033cb2bbd575be0868419e2d227b63c6a6"
+  },
+  "terrain/168_90.bin": {
+   "live": "cfb286c6c205ae2dff21e2180db78dd9b71adf2bb945cb3ef70bd5eb6873bfcf"
+  },
+  "terrain/168_90_lightmap.png": {
+   "live": "5040de5d3fc5914aecaf11ad2d9c5b801a5ef1b03fbde522b2fc22953c735ba7"
+  },
+  "terrain/168_91.bin": {
+   "live": "b5787c3afc135c4508450e3f9e8eff76845b6dcb0c67c8805a99df2aa66a3f35"
+  },
+  "terrain/168_91_lightmap.png": {
+   "live": "f1bbdb994f327e6568718fcb4ca60213cbc4ac9506307a22db8e002dca645042"
+  },
+  "terrain/168_92.bin": {
+   "live": "5f5ab011013a7ed1f128e341c6a437c99c8cb619c70344e8a40c9c1843a6a8c6"
+  },
+  "terrain/168_92_lightmap.png": {
+   "live": "885e7df5a4198957127ffb1c1d8006757a38041d88950dc26abc443977f71ee1"
+  },
+  "terrain/168_96_lightmap.png": {
+   "live": "a94f0bb59de7a5dc0b4ae67334833a8a59bed2976617ae240a332275c58c3c2d"
+  },
+  "terrain/168_97_lightmap.png": {
+   "live": "70930affd175faac5a5016e5cd752fca64b6e98904215515edc25c404f704088"
+  },
+  "terrain/169_90.bin": {
+   "live": "cfd6a2c688d33d2cce5a836928af1c895957ef8eac08b39d5adb32b31d642538"
+  },
+  "terrain/169_90_lightmap.png": {
+   "live": "2d109b43a5268b4375990dcc84be34262d270fe93232b4130c095c02cd760352"
+  },
+  "terrain/169_91.bin": {
+   "live": "db3f0f6b1655516fb346d76d343201947a843dd611cd4fc8133a1fe794aeb478"
+  },
+  "terrain/169_91_lightmap.png": {
+   "live": "1e20cd2e77423b14d571905bd79d8f101da965543ec100f8948442bcf180c2a9"
+  },
+  "terrain/169_92.bin": {
+   "live": "faf1174cc7e5f19152703f03dd0f059ff625d0ce83a74ccb512725e93460c359"
+  },
+  "terrain/169_92_lightmap.png": {
+   "live": "7e1eed716796f6cb75faf72370aa9758243818af76b5976462ed6e95183813a2"
+  },
+  "terrain/170_90.bin": {
+   "live": "07b0c409e8f1338a57298d6c8aabbea81bb59bafa55f762e5cf3277fd415bf6a"
+  },
+  "terrain/170_90_lightmap.png": {
+   "live": "81ea103b86fba4c44d26721d643153f61fb115ccb121c52fa12ec82a83b95b6e"
+  },
+  "terrain/170_91.bin": {
+   "live": "2af0c16896e0044edc1faa6e8a07a7006603a88cf25cc25f02dc1b06f1cfe4b6"
+  },
+  "terrain/170_91_lightmap.png": {
+   "live": "5565b671433376357e014dff3b48abe40f954e9b410bcd540348fdb89ee811e4"
+  },
+  "terrain/170_92.bin": {
+   "live": "cb2d799c0545f529dda9b9d75c6f64b8eeaa710be544e2f5d21fde96e6f46ecc"
+  },
+  "terrain/170_92_lightmap.png": {
+   "live": "8816158bcf4afd995c00b9b1e2f2895ae0760828836e7d35ad8e7d53dcfac63f"
+  },
+  "worldmap.png": {
+   "live": "97f940fef08256568d774f8ca8699b8707ab7c469887061e81072b526b4c97fb"
+  }
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "clip": "sweep",
+ "kind": "SWEEP",
+ "note": "TOWN_LIFE §3.1 (TL-A2): a dawn sweeper with a broom (the crowd hangs the broom on the right hand: socket): two strokes from the right side across to the left, the second a little shorter, bent forward over the broom; a 2 s loop. Legs are ABSOLUTE on a STAND1 base (slightly bent, the same on every key: the feet never slide). Arms REACH: the right (lower) wrist is solved every frame to a point from the pelvis's head ([forward, up, right] metres); the left (top) wrist goes 0.3 m up the handle, on the line from the broom's floor point ([forward, right] from the pelvis's ground projection) through the right hand; the right wrist rolls so the broom (socket) stays along the handle. lean = spine forward, head = nod forward (looks at the floor), twist = + turns the chest left (follows the stroke). Shared by both skeletons.",
+ "fps": 30,
+ "lastFrame": 60,
+ "loop": true,
+ "base": "STAND1",
+ "lock": "fixed",
+ "socket": {"bone": "Bip01 R Hand", "prop": "broom", "origin": {"from": "Bip01 R Hand", "at": [0, 0, 0]}, "axis": ["Bip01 R Hand", "Bip01 L Hand"]},
+ "keys": [
+  {"f": 0, "pose": "reach right", "lean": 24, "head": 10, "twist": -12, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.78, 0.36], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.34, 0.06, 0.16]}}},
+  {"f": 11, "pose": "stroke", "lean": 26, "head": 12, "twist": 2, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.88, 0.0], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.35, 0.05, 0.0]}}},
+  {"f": 19, "pose": "end left", "lean": 25, "head": 11, "twist": 12, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.74, -0.36], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.32, 0.08, -0.14]}}},
+  {"f": 30, "pose": "return", "lean": 23, "head": 9, "twist": -10, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.74, 0.3], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.33, 0.09, 0.14]}}},
+  {"f": 40, "pose": "stroke 2", "lean": 26, "head": 12, "twist": 3, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.88, 0.0], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.35, 0.05, 0.0]}}},
+  {"f": 48, "pose": "end 2", "lean": 25, "head": 11, "twist": 10, "legs": {"L": [14, 26, 0, 0], "R": [12, 22, 0, 0]}, "arms": {"L": {"from": "Bip01 R Hand", "floor": [0.76, -0.28], "grip": 0.3}, "R": {"from": "Bip01 Pelvis", "at": [0.32, 0.08, -0.11]}}}
+ ]
+}

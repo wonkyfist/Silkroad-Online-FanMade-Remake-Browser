@@ -1,0 +1,22 @@
+{
+  "id": "broad01",
+  "name": "Round tree",
+  "family": "broadleaf",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_tree01.bsr",
+  "envelope": {"h": 20.77, "w": 15.28},
+  "seed": 29,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tre_tree_bran.ddj", "repeatM": 2.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tre_tree01.ddj", "anchor": [0.05, 0.03], "aspect": 1.0, "crop": [1.0, 0.0, 0.0, 1.0], "grade": {"gain": 0.7}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_tree01.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_tree01_big.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_smalltree01.bsr"}
+  ],
+  "params": {"trunkFrac": 0.4, "limbTilt": [30, 50], "normalRule": "mirror", "normalUp": 0.4, "normalBend": 0.0}
+}

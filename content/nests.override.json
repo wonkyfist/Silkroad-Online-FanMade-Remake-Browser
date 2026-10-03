@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "kind": "nests-override",
+  "world": "jangan",
+  "rev": 1,
+  "updatedAt": "2026-09-28T00:00:00.000Z",
+  "add": [],
+  "patch": [
+    { "id": 5416, "aggressive": false }
+  ],
+  "remove": []
+}

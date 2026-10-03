@@ -1,0 +1,25 @@
+{
+  "id": "dh_brush",
+  "name": "Desert brushwood",
+  "family": "dunhuang_tree",
+  "archetype": "deadwood",
+  "kind": "tree",
+  "batch": "B4",
+  "target": "res\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood04_01.bsr",
+  "envelope": {"h": 38.85, "w": 40.57},
+  "seed": 89,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood01_01.ddj", "repeatM": 3.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood01_02.ddj", "anchor": [0.05, 0.05], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "bare", "textures": {"leaf": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_brhwood01_03.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood04_01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood03_01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree2\\w_cd_brhwood01_01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree2\\w_cd_brhwood02_01.bsr", "tint": "bare"}
+  ],
+  "params": {"lean": [0.75, 0.1], "trunkFrac": 0.8, "trunkRadius": 0.06, "trunkWobble": 0.2, "limbs": [2, 3], "limbStart": [0.5, 1.0], "limbTilt": [30, 70], "limbLen": [0.3, 0.45], "wobble": 0.25, "twigs": [1, 3], "cardScale": 1.1, "normalRule": "mirror", "normalUp": 0.5, "normalBend": 0.0}
+}

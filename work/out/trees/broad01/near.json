@@ -1,0 +1,160 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\broad01.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "broad01.near",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "broad01_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tre_tree_bran.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    64,
+    512
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "broad01_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_broad01_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "broad01_bark",
+   "vertices": 712,
+   "triangles": 904,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "broad01_leaf",
+   "vertices": 1928,
+   "triangles": 964,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 2640,
+  "triangles": 1868,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 0,
+  "heightM": 20.769999884068966,
+  "boundsMin": [
+   -6.047540187835693,
+   -0.07173671573400497,
+   -6.597497463226318
+  ],
+  "boundsMax": [
+   9.23245906829834,
+   20.69826316833496,
+   7.490431308746338
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "broad01",
+  "kind": "tree",
+  "part": "near",
+  "tiers": {
+   "lod0": 0
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_broad01_leaf.ddj": "prim\\mtrl\\nature\\common\\tre_tree01.ddj"
+  }
+ }
+}

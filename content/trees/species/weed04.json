@@ -1,0 +1,20 @@
+{
+  "id": "weed04",
+  "name": "Wild grass",
+  "family": "weed_tall",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\grs_weed04.bsr",
+  "envelope": {"h": 3.74, "w": 2.45},
+  "seed": 55,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed04.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed04.ddj", "anchor": [0.5, 0.0], "aspect": 1.43, "crop": [0.15, 0.0, 0.85, 1.0]}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\grs_weed04.bsr"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "up", "count": [12, 5], "size": [0.7, 0.85], "tilt": [0, 20], "radius": 0.12}], "normalRule": "retail", "normalUp": 1.0, "frontShare": 0.6}
+}

@@ -1,0 +1,24 @@
+{
+  "id": "deadwood_a",
+  "name": "Dead tree",
+  "family": "dry_dead",
+  "archetype": "deadwood",
+  "kind": "tree",
+  "batch": "B3",
+  "target": "res\\nature\\common\\tree\\tre_dry01.bsr",
+  "envelope": {"h": 7.04, "w": 8.6},
+  "seed": 41,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_dry_01.ddj", "repeatM": 1.5},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_dry_leaf.ddj", "anchor": [0.12, 0.0], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "dunhuang", "textures": {"bark": "prim\\mtrl\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_01.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_dry01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_01.bsr", "tint": "dunhuang"},
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_02.bsr", "tint": "dunhuang"}
+  ],
+  "params": {"normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}
+}

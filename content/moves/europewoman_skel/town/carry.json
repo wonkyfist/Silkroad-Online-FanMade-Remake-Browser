@@ -1,0 +1,19 @@
+{
+ "clip": "carry",
+ "kind": "CARRY",
+ "note": "TOWN_LIFE §3.1 (TL-A2): a porter walking with a box or sack on the right shoulder: an upper-body layer on the retail WALK (its legs, feet and root are kept, so its contacts and its 1.17 s cycle are the WALK's own), baked as one clip. The right wrist is solved every frame to hold the load on top of the shoulder (from the upper arm's head: [forward, up, right] metres, turning with the neck: reachFrame; the humeral twist stays 0: twist false, so the folded forearm never rolls); the left arm keeps the WALK's swing (null). The torso leans a little forward and away from the load (side: + leans right); only Spine1 and up move. The load is a socket prop on the right hand (TOWN_LIFE §3.1): its frame-0 spot on top of the shoulder is `origin`, and the hand keeps its rotation relative to the neck (`steady`) so the load does not wobble. Shared by both skeletons.",
+ "fps": 30,
+ "lastFrame": 35,
+ "loop": true,
+ "base": "WALK",
+ "lock": "base",
+ "twist": false,
+ "reachFrame": "Bip01 Neck",
+ "socket": {"bone": "Bip01 R Hand", "prop": "crate", "origin": {"from": "Bip01 R UpperArm", "at": [-0.04, 0.16, 0.08]}, "steady": "Bip01 Neck"},
+ "keys": [
+  { "f": 0, "pose": "step R", "lean": 4, "side": -5, "head": 0, "headYaw": 0,
+    "arms": { "L": null, "R": { "from": "Bip01 R UpperArm", "at": [0.15, 0.06, 0.04] } } },
+  { "f": 17, "pose": "step L", "lean": 4, "side": -6, "head": 1, "headYaw": 0,
+    "arms": { "L": null, "R": { "from": "Bip01 R UpperArm", "at": [0.15, 0.06, 0.04] } } }
+ ]
+}

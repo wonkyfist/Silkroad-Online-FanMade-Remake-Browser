@@ -1,0 +1,25 @@
+# systemd USER service for the Silkroad game server. Installed by deploy/deploy.sh as
+# ~/.config/systemd/user/silkroad.service. Logs: journalctl --user -u silkroad -f
+# It runs while <your-user> (the SSH user) has a session, or always (and from boot) once lingering is on:
+#   sudo loginctl enable-linger <your-user>
+[Unit]
+Description=Silkroad web game server (Tailscale only)
+Documentation=file://%h/silkroad/current/docs/DEPLOY.md
+# Keep retrying: at boot the Tailscale address may not exist yet, so the first binds can fail.
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+EnvironmentFile=%h/silkroad/silkroad.env
+EnvironmentFile=-%h/silkroad/silkroad.local.env
+ExecStart=%h/silkroad/bin/start.sh
+# SIGTERM makes the server save every position before it exits (apps/server/src/main.ts).
+KillSignal=SIGTERM
+KillMode=mixed
+TimeoutStopSec=20
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

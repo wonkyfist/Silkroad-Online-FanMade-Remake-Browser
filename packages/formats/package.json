@@ -1,0 +1,10 @@
+{
+  "name": "@sro/formats",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Parsers for Joymax Silkroad Online client formats (PK2, JMXV*). Environment-neutral: no Node APIs.",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

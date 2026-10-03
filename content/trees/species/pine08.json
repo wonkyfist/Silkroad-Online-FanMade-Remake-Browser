@@ -1,0 +1,27 @@
+{
+  "id": "pine08",
+  "name": "Mountain pine",
+  "family": "pine_tall",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_pine08.bsr",
+  "envelope": {"h": 57.49, "w": 73.6},
+  "seed": 21,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_03.ddj", "repeatM": 3.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_01.ddj", "anchor": [0.5, 0.02], "aspect": 1.0, "grade": {"gain": 0.92}}
+  },
+  "tints": [
+    {"name": "pine09", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_04.ddj"}},
+    {"name": "pine05", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_pine05_01.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\tre_pine05_02.ddj"}},
+    {"name": "pine06", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_pine06_02.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\tre_lea02_wood00.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_pine08.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_pine09.bsr", "tint": "pine09"},
+    {"source": "res\\nature\\common\\tree\\tre_pine05.bsr", "tint": "pine05"},
+    {"source": "res\\nature\\common\\tree\\tre_pine06.bsr", "tint": "pine06"}
+  ],
+  "params": {"trunkFrac": 0.3, "limbs": [6, 7], "limbTilt": [25, 65], "cardScale": 1.15, "normalRule": "mirror", "normalUp": 0.3, "normalBend": 0.0}
+}

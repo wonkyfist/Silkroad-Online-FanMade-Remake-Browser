@@ -1,0 +1,23 @@
+{
+  "name": "@sro/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Authoritative game server: HTTP auth API + WebSocket game protocol + SQLite persistence.",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "gm": "tsx src/cli/gm.ts",
+    "places": "tsx src/cli/places.ts"
+  },
+  "dependencies": {
+    "@sro/shared": "workspace:*",
+    "better-sqlite3": "^13.0.3",
+    "ws": "^8.22.0",
+    "@sro/nav": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/ws": "^8.18.1"
+  }
+}

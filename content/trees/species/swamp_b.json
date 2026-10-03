@@ -1,0 +1,24 @@
+{
+  "id": "swamp_b",
+  "name": "Swamp tree",
+  "family": "swamp",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B3",
+  "target": "res\\nature\\common\\tree\\c_swamp_tree06.bsr",
+  "envelope": {"h": 11.12, "w": 15.83},
+  "seed": 49,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_06_02.ddj", "repeatM": 1.5},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_06_01.ddj", "anchor": [0.05, 0.05], "aspect": 1.0, "crop": [1.0, 0.0, 0.0, 1.0], "grade": {"gain": 1.22}}
+  },
+  "tints": [
+    {"name": "swamp02", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree02_01.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree02_03.ddj"}, "crops": {"leaf": [0.0, 0.0, 1.0, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree06.bsr"},
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree02.bsr", "tint": "swamp02"},
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree04.bsr", "tint": "swamp02"}
+  ],
+  "params": {"trunkFrac": 0.25, "lean": [0.25, 0.1], "limbs": [4, 5], "limbTilt": [35, 75], "limbWobble": 0.14, "normalRule": "retail", "normalUp": 1.0}
+}

@@ -1,0 +1,717 @@
+{
+ "format": "sro-plaza-remaster-staging",
+ "version": 1,
+ "createdAt": "2026-10-02T21:00:51.082Z",
+ "what": "The Jangan plaza landmark, finalized: the golden dragon statue (Meshy M1 fitted to the retail statue + a gold sro-remaster map set) and the new fountain basin (bmesh, v2) inside the plaza model. Critique pass of work/tmp/dragon; integration: work/tmp/dragon/INTEGRATE.md.",
+ "meshyCredits": {
+  "job": 110,
+  "cap": 150,
+  "balance": "1,840 -> 1,730 (no Meshy jobs in the critique pass)"
+ },
+ "pieces": {
+  "dragon": {
+   "replaces": {
+    "source": "res\\bldg\\china\\jangan01\\cj_jang_gate_dragon.bsr",
+    "manifestModel": 305,
+    "retailTris": 2384,
+    "retailGlbBytes": 226068
+   },
+   "placements": [
+    {
+     "region": 25000,
+     "uid": 19457,
+     "objId": 708,
+     "position": [
+      100.843488,
+      -3.450566,
+      -83.8664
+     ],
+     "yaw": -3.141592502593994,
+     "group": 2,
+     "drawRangeM": 202
+    }
+   ],
+   "space": "cj_jang_gate_dragon glTF model space: same origin, axes and metres as the retail glb; the placement transform is unchanged",
+   "scale": 1,
+   "pivot": "the retail model origin (the placement position); no offset",
+   "source": "Meshy multi-image-to-3d M1 (4 retail turnaround renders, meshy-7.1, 30 credits), cleaned and ICP-fitted to the retail mesh (rigid + uniform scale), decimated per LOD",
+   "fit": {
+    "meanChamferM": 0.351,
+    "heightM": 18.584,
+    "retailHeightM": 18.718,
+    "mouthToRetailFallTopM": 0.499
+   },
+   "footprint": {
+    "widestRadiusM": 7.039,
+    "widestAtHeightAboveFootM": 5.34,
+    "footRadiusM": 5.97,
+    "basinInnerWallApothemM": 8.76,
+    "note": "radii from the basin centre; entirely inside the inner wall, nothing walkable"
+   },
+   "lods": [
+    {
+     "lod": 0,
+     "file": "dragon/cj_jang_gate_dragon_lod0.glb",
+     "tris": 29998,
+     "bytes": 1530036,
+     "sidecar": "dragon/cj_jang_gate_dragon_lod0.json",
+     "distanceM": {
+      "lod": 0,
+      "fromM": 0,
+      "toM": 60
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0
+     }
+    },
+    {
+     "lod": 1,
+     "file": "dragon/cj_jang_gate_dragon_lod1.glb",
+     "tris": 11998,
+     "bytes": 828916,
+     "sidecar": "dragon/cj_jang_gate_dragon_lod1.json",
+     "distanceM": {
+      "lod": 1,
+      "fromM": 60,
+      "toM": 140
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0
+     }
+    },
+    {
+     "lod": 2,
+     "file": "dragon/cj_jang_gate_dragon_lod2.glb",
+     "tris": 2998,
+     "bytes": 383488,
+     "sidecar": "dragon/cj_jang_gate_dragon_lod2.json",
+     "distanceM": {
+      "lod": 2,
+      "fromM": 140,
+      "toM": 202
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0
+     }
+    }
+   ],
+   "lodNote": "The world renderer has no per-object LOD for buildings (one glb per model; placements batch per region with a 202 m draw range for group 2). Ship LOD0 on every preset; LOD1 is the fallback if the Medium frame check fails; the distances are for a future per-object LOD hook. LOD2 (3k) is also a shadow / far proxy.",
+   "materials": [
+    {
+     "glTF": "cj_jang_dragon_m1",
+     "image": "cj_jang_dragon_m1 (embedded 512 JPEG: the Low / retail-tier fallback)",
+     "textureKey": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_dragon_m1.ddj (a new key: no texpipe set needed)",
+     "class": "metal (from the remaster entry)",
+     "alphaMode": "OPAQUE",
+     "doubleSided": false,
+     "lightmap": "none (no retail-like bake: the Meshy surface baked to noise; the gold set carries the shading)",
+     "remaster": {
+      "entry": "dragon/remaster/manifest-entry.json",
+      "key": "world/jangan-fields/models/bldg/china/jangan01/cj_jang_gate_dragon#cj_jang_dragon_m1",
+      "maps": "albedo (sRGB), normal (glTF/OpenGL green), metallic (R), roughness (R); 2048 full + @1024; sizes [1024] -> Medium/High @1024, Ultra 2048",
+      "derivation": "Meshy M1 maps; gold told from rock and the jade pearl by hue/saturation: gold metallic 0.6-0.8 (median 0.8), roughness 0.26-0.55 (median 0.389), gold albedo x1.08; rock metal 0, rough >= 0.8; pearl metal 0, rough 0.3 (scripts/m1_pbr.py). A full-metal set (0.78-0.95, no lift) read olive and dim at night and in rain and was rejected (previews/ingame_gold_variants.jpg)",
+      "shares": {
+       "gold": 0.828,
+       "rock": 0.156,
+       "pearl": 0.0156
+      },
+      "files": {
+       "albedo.webp": 1248826,
+       "albedo@1024.webp": 424968,
+       "metallic.webp": 281316,
+       "metallic@1024.webp": 128770,
+       "normal.webp": 970476,
+       "normal@1024.webp": 330314,
+       "roughness.webp": 424352,
+       "roughness@1024.webp": 170658
+      }
+     }
+    }
+   ],
+   "waterfall": {
+    "placement": "compound\\particle\\cj_wf_dr.cpd, region 25000 uid 19463",
+    "change": "none: it starts 0.50 m from the M1 mouth (inside the fall width); town/fx.ts keys the spray and ripple rings on cj_wf_dr_03-05"
+   }
+  },
+  "fountain": {
+   "replaces": {
+    "source": "res\\bldg\\china\\jangan01\\cj_jang_gate.bsr",
+    "meshes": [
+     "cj_jang_pondFen (336 tris)",
+     "cj_jang_pondFen02 (32 tris, the MASK lattice)"
+    ],
+    "manifestModel": 251,
+    "retailTris": 822,
+    "retailGlbBytes": 556808
+   },
+   "placements": [
+    {
+     "region": 25000,
+     "uid": 19458,
+     "objId": 587,
+     "position": [
+      100.822461,
+      -3.30703,
+      -84.547595
+     ],
+     "yaw": 3.131923198699951,
+     "group": 2,
+     "drawRangeM": 202
+    }
+   ],
+   "space": "cj_jang_gate glTF model space; the octagon centre at (x, z) = (2.99275, 0.99425), faces at k*45 deg; plaza level y 0.05, water y 0.007",
+   "scale": 1,
+   "pivot": "the retail plaza model origin; no offset",
+   "dropIn": [
+    {
+     "lod": 0,
+     "file": "fountain/cj_jang_gate.lod0.glb",
+     "tris": 8302,
+     "bytes": 1364756,
+     "textures": [
+      "cj_jang_gate06",
+      "cj_jang_gate07",
+      "cj_jang_gate08",
+      "cj_jang_pondfen"
+     ],
+     "sidecar": "fountain/cj_jang_gate.lod0.json",
+     "note": "SHIP: the retail gate06/07/08 meshes (byte-identical, retail lightmaps) + the fountain LOD0"
+    },
+    {
+     "lod": 1,
+     "file": "fountain/cj_jang_gate.lod1.glb",
+     "tris": 3230,
+     "bytes": 1120080,
+     "textures": [
+      "cj_jang_gate06",
+      "cj_jang_gate07",
+      "cj_jang_gate08",
+      "cj_jang_pondfen"
+     ],
+     "sidecar": "fountain/cj_jang_gate.lod1.json",
+     "note": "fallback: + the fountain LOD1"
+    }
+   ],
+   "lods": [
+    {
+     "lod": 0,
+     "file": "fountain/fountain_lod0.glb",
+     "tris": 7848,
+     "bytes": 959348,
+     "lightmap": "fountain/lightmaps/remaster/plaza/fountain_lod0_lightmap.png",
+     "sidecar": "fountain/fountain_lod0.json",
+     "distanceM": {
+      "lod": 0,
+      "fromM": 0,
+      "toM": 60
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 5
+     }
+    },
+    {
+     "lod": 1,
+     "file": "fountain/fountain_lod1.glb",
+     "tris": 2776,
+     "bytes": 714668,
+     "lightmap": "fountain/lightmaps/remaster/plaza/fountain_lod1_lightmap.png",
+     "sidecar": "fountain/fountain_lod1.json",
+     "distanceM": {
+      "lod": 1,
+      "fromM": 60,
+      "toM": 140
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 5
+     }
+    },
+    {
+     "lod": 2,
+     "file": "fountain/fountain_lod2.glb",
+     "tris": 840,
+     "bytes": 502044,
+     "lightmap": "fountain/lightmaps/remaster/plaza/fountain_lod2_lightmap.png",
+     "sidecar": "fountain/fountain_lod2.json",
+     "distanceM": {
+      "lod": 2,
+      "fromM": 140,
+      "toM": 202
+     },
+     "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 4
+     }
+    }
+   ],
+   "pieces": [
+    "basin: pool floor (y -0.965), inner wall at apothem 8.76 (as retail), moulded coping (top y 0.88, a 4 cm lip), outer wall with pilasters and recessed framed panels (two per span), a two-tier plinth step; everything above the water in the warm pond-fence slab stone",
+    "rail: 16 posts (pond-fence carved strip) with gourd finials, sills, framed rail panels, vase balusters, round handrails",
+    "pillar base: a sumeru base under the statue (apothem 4.70 -> 4.62, top y 0.34) with carved waist panels and a lotus band (LOD0); mostly inside the M1 rock"
+   ],
+   "footprint": {
+    "navHoleApothemM": [
+     9.584,
+     9.844
+    ],
+    "retail": {
+     "maxApothemAbovePlaza": 9.614,
+     "maxApothem": 9.614,
+     "yMin": -0.987,
+     "yMax": 2.816,
+     "tris": 368
+    },
+    "lod0": {
+     "maxApothemAbovePlaza": 9.54,
+     "maxApothem": 9.54,
+     "yMin": -0.995,
+     "yMax": 2.88,
+     "tris": 7848
+    },
+    "lod1": {
+     "maxApothemAbovePlaza": 9.54,
+     "maxApothem": 9.54,
+     "yMin": -0.995,
+     "yMax": 2.88,
+     "tris": 2776
+    },
+    "lod2": {
+     "maxApothemAbovePlaza": 9.5,
+     "maxApothem": 9.5,
+     "yMin": -0.995,
+     "yMax": 2.73,
+     "tris": 840
+    },
+    "water": {
+     "maxApothemAbovePlaza": 0,
+     "maxApothem": 8.8,
+     "yMin": 0.007,
+     "yMax": 0.007,
+     "tris": 16
+    }
+   },
+   "nav": "unchanged and cannot change: nav.bin is built from the retail .bms navmeshes; the gate navmesh blocks an octagon at apothem 9.584-9.844; the basin reaches 9.54 (LOD0/1) / 9.50 (LOD2) above the plaza, retail fence 9.614",
+   "materials": [
+    {
+     "glTF": "FT_stone_l<n>",
+     "image": "cj_jang_gate06 (retail, byte-identical: deduped in the plaza glb)",
+     "textureKey": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate06.ddj",
+     "use": "the pool floor, the inner wall below the water, the pillar base",
+     "pbrSet": "exists (out/pbr)"
+    },
+    {
+     "glTF": "FT_trim_l<n>",
+     "image": "cj_jang_pondfen (the texpipe master, 512)",
+     "textureKey": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_pondfen.ddj",
+     "use": "everything above the water: coping, plinth, outer wall, recess panels, inner wall above the water, posts, caps, finials, sills, balusters, rail panels, handrails (plain stone from the slab row, v 0.145-0.325)",
+     "pbrSet": "B2 batch (content/texpipe/b2-town.json) once run; painterly gates passed (grain 174 %, dLum +0.66)"
+    },
+    {
+     "glTF": "FT_carve_l<n>",
+     "image": "cj_jang_gate08 (retail, deduped)",
+     "textureKey": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate08.ddj",
+     "use": "the pillar base waist panels only",
+     "pbrSet": "exists (out/pbr)"
+    }
+   ],
+   "materialColours": "BMT diffuse = ambient = 150/255 (the plaza's), flags 320, OPAQUE, single-sided (glTF doubleSided false), TEXCOORD_1 kept",
+   "lightmaps": {
+    "files": [
+     "fountain/lightmaps/remaster/plaza/fountain_lod0_lightmap.png",
+     "fountain/lightmaps/remaster/plaza/fountain_lod1_lightmap.png",
+     "fountain/lightmaps/remaster/plaza/fountain_lod2_lightmap.png"
+    ],
+    "uri": "lightmaps/remaster/plaza/fountain_lod<n>_lightmap.png (relative to the world manifest; optimize-out makes it .webp)",
+    "bake": "Cycles AO (plaza ring as occluder) on TEXCOORD_1, stored as 0.75 + 0.2 * AO on a white background with 6-texel island margins and a 16-texel extension: the PBR path reads an object lightmap as sun visibility, saturate((lm - 0.55) / 0.4), plus an AO share, so open stone keeps the full sun (0.95, the retail in-sun value) and the deepest crease half of it",
+    "sizes": "256 (LOD0; the batch array layer size) / 128 / 128"
+   }
+  },
+  "water": {
+   "used": "the region terrain water (region 25000, blocks (2,2) and (3,2), -3.3 m; town water shader, rain ripples, reflection) - unchanged",
+   "piece": {
+    "file": "fountain/fountain_water.glb",
+    "tris": 16,
+    "status": "optional, not used: an extra disc over the region water would double its reflection and hide the ripples"
+   }
+  }
+ },
+ "critiqueFixes": [
+  "dragon: a gold sro-remaster set (metal class, Meshy-derived metallic / roughness / normal; 1024 + 2048). The build pass staged the M1 matte (class default), which read almost like retail in game",
+  "dragon + fountain: glTF doubleSided false (Blender exported true: the region batch emitted every triangle twice, +72k instead of +35k triangles, and drew back faces)",
+  "plaza drop-in + fountain: TEXCOORD_1 kept (gltf-transform prune() dropped the lightmap UVs of every plaza mesh, the retail paving pieces included, in the build pass glb)",
+  "fountain v3 geometry: a 4 cm coping lip instead of 13 cm (the sun cascaded shadow striped the outer wall), warm pond-fence slab stone above the water (gate06 drew cool blue-grey), the slab band moved off the texture dark seam line, framed panels in the recesses",
+  "fountain lightmaps re-baked (0.75 + 0.2 AO on white, wide margins, 256 / 128) and the sidecar strings fixed (v1 wrote backspace / form-feed control characters into source and lightmap paths)",
+  "the dragon glbs embed a 512 albedo (the Low / retail fallback) instead of a 2048 JPEG; the gold set brings 1024 / 2048"
+ ],
+ "budgets": {
+  "triangles": {
+   "retail": {
+    "dragon": 2384,
+    "fountain": 368,
+    "plazaModel": 822
+   },
+   "final": {
+    "dragon": 29998,
+    "fountain": 7848,
+    "plazaModel": 8302
+   },
+   "addedInView": 35094,
+   "fallbackLod1Added": 12022
+  },
+  "textures": {
+   "dragonMedium": {
+    "files": "@1024 albedo + normal + metallic + roughness (metal and rough packed into one ORMH at runtime)",
+    "downloadBytes": 1054710,
+    "vramApproxMiB": 15.899999999999999
+   },
+   "dragonUltra": {
+    "downloadBytes": 2924970,
+    "vramApproxMiB": 63.900000000000006
+   },
+   "dragonFallback": "the glb's 512 albedo (Low / retail tier)",
+   "fountain": "no new texture keys except pondfen (512 master, 0.4 MB PNG in the glb until texpipe); gate06/gate08 shared with the plaza",
+   "lightmaps": "fountain LOD0 512 (0.19 MB PNG -> webp)"
+  },
+  "downloads": {
+   "dragonGlbLod0": 1530036,
+   "plazaGlbLod0": 1364756,
+   "retailDragonGlb": 226068,
+   "retailPlazaGlb": 556808,
+   "note": "before optimize-out (meshopt + webp shrink them further)"
+  },
+  "frameTimeSummary": "Lab (work/tmp/dragon/lab, the real loadWorld on out-opt, Medium, 1600x900, GPU lock 16:24-16:58): WebGPU, CPU+GPU synced per frame (onSubmittedWorkDone), p50 of 400 frames: plaza view retail 5.5 / 5.9 / 6.1 / 6.9 ms (4 runs) vs final 5.6 / 6.9 (2 runs); at the rail 5.3-6.5 vs 5.6-7.0; LOD1 pair 6.6 / 5.9. WebGL2 (readPixels sync): plaza 3.4 / 3.6 vs 3.5, rail 3.4 / 3.7 vs 3.5. CPU submit 1.2-2.1 ms both. Draws per frame unchanged (100 plaza, 96-97 rail). The difference is inside the run-to-run noise (about 1 ms); the 60 fps budget is 16.7 ms. RDNA4 desktop GPU: the integration lane re-runs LAB G1 on its gated scenes.",
+  "lodRecommendation": "Ship LOD0 for both pieces on every preset (+35k triangles in view, no new draws). If LAB G1 on the gate machine misses on Medium, ship the LOD1 pair (dragon 12k, plaza with fountain 3.2k: +12k triangles).",
+  "frameTime": {
+   "G1b_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 804102,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.6,
+      "p95": 2.1,
+      "mean": 1.675
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 713424,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.8,
+      "p95": 2.3,
+      "mean": 1.917
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "Gb3_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 826156,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.6,
+      "p95": 2.1,
+      "mean": 1.692
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 736922,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 2.1,
+      "p95": 3.8,
+      "mean": 2.373
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "Gb4_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 824418,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.7,
+      "p95": 2.4,
+      "mean": 1.871
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 734502,
+     "activeMeshes": 85,
+     "cpuMs": {
+      "p50": 1.5,
+      "p95": 2.1,
+      "mean": 1.651
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 96,
+      "max": 96
+     }
+    }
+   ],
+   "GbGL2_bench_WebGL2": [
+    {
+     "view": "plaza",
+     "trisInView": 813709,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.4,
+      "p95": 2.5,
+      "mean": 1.544
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 737185,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.4,
+      "p95": 1.6,
+      "mean": 1.558
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "R1_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 800173,
+     "activeMeshes": 89,
+     "cpuMs": {
+      "p50": 1.6,
+      "p95": 2.1,
+      "mean": 1.592
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 98,
+      "max": 99
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 705616,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.5,
+      "p95": 1.9,
+      "mean": 1.54
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "R2_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 789366,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.5,
+      "p95": 1.7,
+      "mean": 1.51
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 701532,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.4,
+      "p95": 1.5,
+      "mean": 1.422
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "Rb3_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 794179,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.6,
+      "p95": 2.1,
+      "mean": 1.672
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 703597,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.8,
+      "p95": 2.1,
+      "mean": 1.959
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ],
+   "Rb4_bench_WebGPU": [
+    {
+     "view": "plaza",
+     "trisInView": 789536,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.6,
+      "p95": 1.9,
+      "mean": 1.602
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 700545,
+     "activeMeshes": 85,
+     "cpuMs": {
+      "p50": 1.9,
+      "p95": 2.3,
+      "mean": 1.878
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 96,
+      "max": 96
+     }
+    }
+   ],
+   "RbGL2_bench_WebGL2": [
+    {
+     "view": "plaza",
+     "trisInView": 784628,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.2,
+      "p95": 1.8,
+      "mean": 1.292
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 698676,
+     "activeMeshes": 85,
+     "cpuMs": {
+      "p50": 1.2,
+      "p95": 1.7,
+      "mean": 1.272
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 96,
+      "max": 96
+     }
+    }
+   ],
+   "RbGL_bench_WebGL2": [
+    {
+     "view": "plaza",
+     "trisInView": 793576,
+     "activeMeshes": 90,
+     "cpuMs": {
+      "p50": 1.3,
+      "p95": 2.4,
+      "mean": 1.502
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 100,
+      "max": 100
+     }
+    },
+    {
+     "view": "close",
+     "trisInView": 702717,
+     "activeMeshes": 86,
+     "cpuMs": {
+      "p50": 1.4,
+      "p95": 1.7,
+      "mean": 1.391
+     },
+     "gpuMs": null,
+     "draws": {
+      "p50": 97,
+      "max": 97
+     }
+    }
+   ]
+  }
+ }
+}

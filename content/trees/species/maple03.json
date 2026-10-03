@@ -1,0 +1,29 @@
+{
+  "id": "maple03",
+  "name": "Maple",
+  "family": "maple",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B1",
+  "target": "res\\nature\\common\\tree\\tre_maple03.bsr",
+  "envelope": { "h": 16.68, "w": 17.54 },
+  "seed": 11,
+  "textures": {
+    "bark": { "retail": "prim\\mtrl\\nature\\common\\tre_maple_pin.ddj", "repeatM": 1.6 },
+    "leaf": { "retail": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_green.ddj", "anchor": [0.02, 0.1], "aspect": 1.0 }
+  },
+  "tints": [
+    { "name": "green2", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_green2.ddj" } },
+    { "name": "middle", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_middle.ddj" } },
+    { "name": "red", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_maple_leaf_red.ddj" } }
+  ],
+  "replaces": [
+    { "source": "res\\nature\\common\\tree\\tre_maple01.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_maple02.bsr", "tint": "middle" },
+    { "source": "res\\nature\\common\\tree\\tre_maple03.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_maple03_big.bsr", "tint": "green2" },
+    { "source": "res\\nature\\common\\tree\\tre_maple03_big01.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_maple04_big01_brn.bsr", "tint": "red" }
+  ],
+  "params": {"normalRule": "retail", "normalUp": 1.0, "frontShare": 0.2}
+}

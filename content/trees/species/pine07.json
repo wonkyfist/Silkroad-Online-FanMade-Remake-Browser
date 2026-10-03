@@ -1,0 +1,23 @@
+{
+  "id": "pine07",
+  "name": "Chinese pine",
+  "family": "pine_tall",
+  "archetype": "conifer_layered",
+  "kind": "tree",
+  "batch": "B1",
+  "target": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+  "envelope": { "h": 48.56, "w": 42.71 },
+  "seed": 11,
+  "textures": {
+    "bark": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_01.ddj", "repeatM": 3.0, "base": 0.3 },
+    "leaf": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_02.ddj", "anchor": [0.0, 0.05], "aspect": 0.5 }
+  },
+  "tints": [],
+  "replaces": [
+    { "source": "res\\nature\\common\\tree\\tre_pine07_01.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_pine07_02.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_pine07_03.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr" }
+  ],
+  "params": {"padScale": 1.15, "barkSides": [[8, 4, 2], [5, 3, 0], [5, 3, 0]], "normalRule": "mirror", "normalUp": 0.4, "normalBend": 0.0}
+}

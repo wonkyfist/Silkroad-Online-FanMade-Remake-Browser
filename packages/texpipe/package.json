@@ -1,0 +1,11 @@
+{
+  "name": "@sro/texpipe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline texture pipeline: retail textures -> upscaled PBR map sets and the runtime pbr index. Node only.",
+  "dependencies": {
+    "@gltf-transform/core": "^4.5.0",
+    "sharp": "^0.35.5"
+  }
+}

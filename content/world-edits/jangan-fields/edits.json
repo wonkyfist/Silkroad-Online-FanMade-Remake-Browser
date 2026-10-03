@@ -1,0 +1,97 @@
+{
+  "format": "sro-world-edits",
+  "version": 1,
+  "world": "jangan-fields",
+  "regions": [
+    {
+      "x": 168,
+      "z": 90,
+      "base": "3ce5f978e1bdfb94eeeb98fa0924003c7148ae39c02cafec52e36d4c5fb1e2b5",
+      "layers": [
+        "height"
+      ]
+    },
+    {
+      "x": 169,
+      "z": 90,
+      "base": "a73c80d85c876adabb223ca8c19ff7e69f5eacd844281133e0cbef24fc88e9bc",
+      "layers": [
+        "grass",
+        "height",
+        "paint",
+        "walk"
+      ]
+    },
+    {
+      "x": 170,
+      "z": 90,
+      "base": "6a956fc8cc319f5712761d11ba2632204da018f73557b116d30e94df61ea4ba0",
+      "layers": [
+        "height"
+      ]
+    },
+    {
+      "x": 168,
+      "z": 91,
+      "base": "6ed1030bd8e89a0fc461b3b3101d68a01bbc2f12d18604d73b4bd71bf0a61bab",
+      "layers": [
+        "height"
+      ]
+    },
+    {
+      "x": 169,
+      "z": 91,
+      "base": "281ed9d90508220a68650f6570a2799f2dc52d913eee5afdbaec00cbb2570ee0",
+      "layers": [
+        "grass",
+        "height",
+        "paint",
+        "walk"
+      ]
+    },
+    {
+      "x": 170,
+      "z": 91,
+      "base": "1cc4217ad09b17786171472abf18209784ba45da0a84b1da2ad9f13ebf744692",
+      "layers": [
+        "height"
+      ]
+    },
+    {
+      "x": 168,
+      "z": 92,
+      "base": "9337d62bb1126ac5eb679721fd19b8a9d7607bd2c605f3354a435d048f6d81d2",
+      "layers": [
+        "height"
+      ]
+    },
+    {
+      "x": 169,
+      "z": 92,
+      "base": "6831da15001a58be3ccdb54ce63c8e0521f432c5948ec4b5bf45de8da609223f",
+      "layers": [
+        "grass",
+        "height",
+        "paint",
+        "walk"
+      ]
+    },
+    {
+      "x": 170,
+      "z": 92,
+      "base": "2f8b7246d784ce88d31e9ff6d25c39e2525cebfcc15a0855f3ff1a681adbb927",
+      "layers": [
+        "height"
+      ]
+    }
+  ],
+  "counts": {
+    "height": 9,
+    "paint": 3,
+    "grass": 3,
+    "walk": 3,
+    "move": 16,
+    "drop": 0,
+    "add": 10
+  }
+}

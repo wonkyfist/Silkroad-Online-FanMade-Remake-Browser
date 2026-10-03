@@ -1,0 +1,392 @@
+{
+  "schema": 1,
+  "kind": "places",
+  "world": "jangan",
+  "notes": [
+    "The GM teleport places (docs/PLAYTEST.md §7 \"Teleport places\"), merged after the world manifest places (the textzonename.txt areas and beach-south): a place here replaces a manifest place of the same name (western-china-ferry) and takes over the names in its aliases (beach-south). The town spawn (jangan, spawn) comes from towns.json and is not listed here.",
+    "Every wave that adds somewhere worth visiting adds it here (docs/BACKLOG.md). A row: { name (kebab-case, at most 32 characters), group (town | fields | coast | bosses | other), x, y (the height hint: tp stands on the open surface nearest it), z (glTF metres), aliases? }. At start the server checks each row by the tp rule (open ground in the town spawn's walkable component within 10 m, inside the world bounds) and logs and skips a row that fails.",
+    "Rows with a snap are computed on the real export by the places tool (pnpm --filter @sro/server places [--write]; apps/server/src/cli/places.ts). near: the nearest open point to a hand-picked spot. area: inside a zones.json area by the GM where name, 16 m inside the world bounds, dry (not under a retail water plane); with shore, its lowest open point at least aboveSeaM over the sea level (the beach, not the cliff behind it), else the nearest open point to its mean centre. nest: the nearest open point to a nest centre. Open = standing by the placement rule, an open terrain cell, 1.5 m of standing ground around. Rows without a snap are hand-authored; the tool only checks them.",
+    "Coast: the in-bounds coast a player can stand on. Tiger Beach, Tiger Cape, Tomb Ridge Beach, River Mouth, South-East Cape, Jangan Bay, Spur Cove, Canyon Beach, Western China Beach and Northern Road Beach lie wholly in the sea ring outside the walkable bounds of jangan-fields, so they have no place. east-shelf-beach and western-strait are the in-bounds strip the HUD names after them: a cliff and a ridge over the water. Earth Ghost Canyon, Okmungwan Field and the Western China areas across the river are not in the town's walkable component (no ferry yet).",
+    "north-gate: Jangan's outer wall has no north opening; the north gate is the palace's big gate at the north end of the plaza avenue, where Soldier Choiyoung [Teleport] stands guard. Bosses: tiger-camp-1 .. 11 are Tiger Girl's eleven camps (nests.json uniqueGroup) in nest id order."
+  ],
+  "places": [
+    {
+      "name": "plaza",
+      "group": "town",
+      "x": 97,
+      "z": -63,
+      "snap": {
+        "near": [
+          97,
+          -64
+        ],
+        "y": -3.26
+      },
+      "y": -3.26,
+      "source": "snapped from 97, -64: 1.0 m"
+    },
+    {
+      "name": "storage",
+      "group": "town",
+      "x": 98,
+      "z": -104,
+      "snap": {
+        "near": [
+          98,
+          -104
+        ],
+        "y": -3.25
+      },
+      "y": -3.26,
+      "source": "snapped from 98, -104: 0.0 m"
+    },
+    {
+      "name": "palace-steps",
+      "group": "town",
+      "x": 98.8,
+      "z": -212,
+      "snap": {
+        "near": [
+          98.8,
+          -212
+        ],
+        "y": 0
+      },
+      "y": 0,
+      "source": "snapped from 98.8, -212: 0.0 m"
+    },
+    {
+      "name": "north-gate",
+      "group": "town",
+      "x": 97,
+      "z": -184,
+      "snap": {
+        "near": [
+          97,
+          -184
+        ],
+        "y": 0
+      },
+      "y": -0.56,
+      "source": "snapped from 97, -184: 0.0 m"
+    },
+    {
+      "name": "south-gate",
+      "group": "town",
+      "x": 98.5,
+      "z": -18,
+      "snap": {
+        "near": [
+          98.5,
+          -18
+        ],
+        "y": 0
+      },
+      "y": -0.01,
+      "source": "snapped from 98.5, -18: 0.0 m"
+    },
+    {
+      "name": "east-gate",
+      "group": "town",
+      "x": 316,
+      "z": -182.5,
+      "snap": {
+        "near": [
+          316,
+          -182.5
+        ],
+        "y": 0
+      },
+      "y": -0.3,
+      "source": "snapped from 316, -182.5: 0.0 m"
+    },
+    {
+      "name": "west-gate",
+      "group": "town",
+      "x": -145,
+      "z": -190.5,
+      "snap": {
+        "near": [
+          -145,
+          -190.5
+        ],
+        "y": 0
+      },
+      "y": -0.26,
+      "source": "snapped from -145, -190.5: 0.0 m"
+    },
+    {
+      "name": "market",
+      "group": "town",
+      "x": 160,
+      "z": -112,
+      "snap": {
+        "near": [
+          160,
+          -112
+        ],
+        "y": 0
+      },
+      "y": 0,
+      "source": "snapped from 160, -112: 0.0 m"
+    },
+    {
+      "name": "smith",
+      "group": "town",
+      "x": 44,
+      "z": -137,
+      "snap": {
+        "near": [
+          44,
+          -137
+        ],
+        "y": 0
+      },
+      "y": 0,
+      "source": "snapped from 44, -137: 0.0 m"
+    },
+    {
+      "name": "stable",
+      "group": "town",
+      "x": 40,
+      "z": -46,
+      "snap": {
+        "near": [
+          40,
+          -46
+        ],
+        "y": 0
+      },
+      "y": 0,
+      "source": "snapped from 40, -46: 0.0 m"
+    },
+    {
+      "name": "pond",
+      "group": "town",
+      "x": 214.5,
+      "z": -231.5,
+      "snap": {
+        "near": [
+          214.5,
+          -231.5
+        ],
+        "y": -2.44
+      },
+      "y": -2.44,
+      "source": "snapped from 214.5, -231.5: 0.0 m"
+    },
+    {
+      "name": "western-china-ferry",
+      "group": "fields",
+      "x": -1419.8,
+      "z": -344.3,
+      "snap": {
+        "area": "Western China Ferry"
+      },
+      "y": 10.54,
+      "source": "area 'Western China Ferry' (10 regions): the nearest open point in it to its mean centre, 354.0 m away"
+    },
+    {
+      "name": "jangan-south-beach",
+      "group": "coast",
+      "aliases": [
+        "beach-south"
+      ],
+      "x": 480,
+      "z": 1276,
+      "snap": {
+        "area": "Jangan South Beach",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 5.51,
+      "source": "area 'Jangan South Beach' (20 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (0.5 m), 78 m from its mean centre"
+    },
+    {
+      "name": "east-shelf-beach",
+      "group": "coast",
+      "x": 1328,
+      "z": 772,
+      "snap": {
+        "area": "East Shelf Beach",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 34.97,
+      "source": "area 'East Shelf Beach' (16 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (30.0 m), 440 m from its mean centre"
+    },
+    {
+      "name": "tomb-east-beach",
+      "group": "coast",
+      "x": 1268,
+      "z": -1040,
+      "snap": {
+        "area": "Tomb East Beach",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 5.52,
+      "source": "area 'Tomb East Beach' (8 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (0.5 m), 382 m from its mean centre"
+    },
+    {
+      "name": "qin-shi-tomb-beach",
+      "group": "coast",
+      "x": 1196,
+      "z": -1132,
+      "snap": {
+        "area": "Qin-Shi Tomb Beach",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 5.59,
+      "source": "area 'Qin-Shi Tomb Beach' (16 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (0.6 m), 299 m from its mean centre"
+    },
+    {
+      "name": "jangan-bay-shore",
+      "group": "coast",
+      "x": 544,
+      "z": -1136,
+      "snap": {
+        "area": "Jangan Bay Shore",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 5.64,
+      "source": "area 'Jangan Bay Shore' (2 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (0.6 m), 218 m from its mean centre"
+    },
+    {
+      "name": "western-strait",
+      "group": "coast",
+      "x": -2260,
+      "z": 320,
+      "snap": {
+        "area": "Western Strait",
+        "aboveSeaM": 0.5,
+        "shore": true
+      },
+      "y": 113.55,
+      "source": "area 'Western Strait' (10 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (108.6 m), 499 m from its mean centre"
+    },
+    {
+      "name": "tiger-camp-1",
+      "group": "bosses",
+      "x": -1482.7,
+      "z": 866.2,
+      "snap": {
+        "nest": 5656
+      },
+      "y": 139.06,
+      "source": "nest 5656 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-2",
+      "group": "bosses",
+      "x": -1602.5,
+      "z": 994.1,
+      "snap": {
+        "nest": 5657
+      },
+      "y": 138.62,
+      "source": "nest 5657 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-3",
+      "group": "bosses",
+      "x": -1495.9,
+      "z": 1082.9,
+      "snap": {
+        "nest": 5658
+      },
+      "y": 138.72,
+      "source": "nest 5658 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-4",
+      "group": "bosses",
+      "x": -1297.3,
+      "z": 988.3,
+      "snap": {
+        "nest": 5659
+      },
+      "y": 138.46,
+      "source": "nest 5659 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-5",
+      "group": "bosses",
+      "x": -2105.9,
+      "z": 758.6,
+      "snap": {
+        "nest": 5903
+      },
+      "y": 64.53,
+      "source": "nest 5903 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-6",
+      "group": "bosses",
+      "x": -1918.4,
+      "z": 360.8,
+      "snap": {
+        "nest": 5904
+      },
+      "y": 52.73,
+      "source": "nest 5904 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-7",
+      "group": "bosses",
+      "x": -1592.1,
+      "z": 545.5,
+      "snap": {
+        "nest": 5905
+      },
+      "y": 90.61,
+      "source": "nest 5905 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-8",
+      "group": "bosses",
+      "x": -1001.2,
+      "z": 600,
+      "snap": {
+        "nest": 5906
+      },
+      "y": 105.2,
+      "source": "nest 5906 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-9",
+      "group": "bosses",
+      "x": -981.1,
+      "z": 1183.6,
+      "snap": {
+        "nest": 5907
+      },
+      "y": 102.75,
+      "source": "nest 5907 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-10",
+      "group": "bosses",
+      "x": -1791.8,
+      "z": 1262.6,
+      "snap": {
+        "nest": 5908
+      },
+      "y": 100.27,
+      "source": "nest 5908 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "tiger-camp-11",
+      "group": "bosses",
+      "x": -2026.5,
+      "z": 1111.4,
+      "snap": {
+        "nest": 5909
+      },
+      "y": 70.13,
+      "source": "nest 5909 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    }
+  ]
+}

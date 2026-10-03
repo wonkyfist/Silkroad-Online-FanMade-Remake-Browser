@@ -1,0 +1,20 @@
+{
+  "id": "reeds",
+  "name": "Reeds",
+  "family": "other_reed",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\china\\dunhuang\\reed\\fw_cd_reeds_l.bsr",
+  "envelope": {"h": 2.21, "w": 15.41},
+  "seed": 63,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\reed\\w_cd_reeds.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\reed\\w_cd_reeds.ddj", "anchor": [0.5, 0.0], "aspect": 1.0, "grade": {"gain": 1.1}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\reed\\fw_cd_reeds_l.bsr"}
+  ],
+  "params": {"spread": [1.0, 0.7], "parts": [{"role": "leaf", "orient": "up", "count": [60, 20], "size": [0.16, 0.21], "tilt": [0, 20], "radius": 0.85}], "normalRule": "dim", "normalUp": 0.6, "normalBend": 0.0, "backDim": 0.35}
+}

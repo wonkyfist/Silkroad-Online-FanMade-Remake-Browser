@@ -1,0 +1,6 @@
+# Tool versions for this repo, for machines that use mise (https://mise.jdx.dev), e.g. the mini PC.
+# Keep in step with .npmrc (use-node-version) and package.json (packageManager): those are what
+# pnpm and deploy/remote/install.sh actually read.
+[tools]
+node = "24.21.0"
+pnpm = "10.34.4"

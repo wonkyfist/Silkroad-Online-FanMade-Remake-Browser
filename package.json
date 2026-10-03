@@ -1,0 +1,34 @@
+{
+  "name": "silkroad-web",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.4",
+  "scripts": {
+    "sro": "tsx packages/convert/src/cli.ts",
+    "texpipe": "tsx packages/texpipe/src/cli.ts",
+    "editor": "pnpm --filter @sro/viewer editor",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "viewer": "pnpm --filter @sro/viewer dev",
+    "server": "pnpm --filter @sro/server dev",
+    "game": "pnpm --filter @sro/game dev",
+    "gm": "pnpm --filter @sro/server gm",
+    "deploy": "tsx deploy/run.ts deploy.sh",
+    "deploy:gm": "tsx deploy/run.ts gm.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

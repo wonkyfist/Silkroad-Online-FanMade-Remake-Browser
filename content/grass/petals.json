@@ -1,0 +1,65 @@
+{
+  "size": 512,
+  "cell": 128,
+  "cells": [
+    {
+      "name": "flower5",
+      "x": 0,
+      "y": 0,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "flower6",
+      "x": 128,
+      "y": 0,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "flower4",
+      "x": 256,
+      "y": 0,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "daisy",
+      "x": 384,
+      "y": 0,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "broadleaf",
+      "x": 0,
+      "y": 128,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "broadleaf_m",
+      "x": 128,
+      "y": 128,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "lanceleaf",
+      "x": 256,
+      "y": 128,
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "lanceleaf_m",
+      "x": 384,
+      "y": 128,
+      "w": 128,
+      "h": 128
+    }
+  ],
+  "colour": "grey, multiplied by the grass palette; alpha is a cut-out",
+  "sha256": "71330f9ade09a09cccec7f20daf579368158d7c77c420e72e16dccefc657e7ed",
+  "generator": "packages/convert/src/grass/make-atlas.py"
+}

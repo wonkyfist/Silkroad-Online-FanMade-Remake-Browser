@@ -1,0 +1,23 @@
+{
+  "id": "flower_y",
+  "name": "Dandelions",
+  "family": "flower",
+  "archetype": "flower_bed",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\flower\\flw_g01_yall.bsr",
+  "envelope": {"h": 0.56, "w": 0.95},
+  "seed": 67,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj", "repeatM": 1.0},
+    "head": {"retail": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj", "anchor": [0.5, 0.5], "aspect": 1.0, "crop": [0.0, 0.0, 0.48, 0.5]},
+    "rosette": {"retail": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj", "anchor": [0.5, 0.5], "aspect": 1.05, "crop": [0.55, 0.05, 0.98, 0.5]},
+    "stem": {"retail": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj", "anchor": [0.5, 0.0], "aspect": 1.34, "crop": [0.3, 0.55, 0.62, 0.98]}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\flower\\flw_g01_yall.bsr"},
+    {"source": "res\\nature\\common\\flower\\flw_s01_y_ani.bsr"}
+  ],
+  "params": {"normalRule": "up", "normalUp": 1.0}
+}

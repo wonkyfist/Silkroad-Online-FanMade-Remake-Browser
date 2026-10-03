@@ -1,0 +1,26 @@
+{
+  "id": "grave_tree",
+  "name": "Graveyard pine",
+  "family": "graveyard",
+  "archetype": "conifer_layered",
+  "kind": "tree",
+  "batch": "B3",
+  "target": "res\\nature\\common\\tree\\cj_graveyard_tree01.bsr",
+  "envelope": {"h": 45.45, "w": 29.92},
+  "seed": 45,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree01.ddj", "repeatM": 4.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree02.ddj", "anchor": [0.0, 0.05], "aspect": 1.0, "crop": [1.0, 0.0, 0.0, 1.0], "grade": {"gain": 1.3}}
+  },
+  "tints": [
+    {"name": "grave05", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree06.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree05.ddj"}, "crops": {"leaf": [0.0, 0.0, 0.5, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\cj_graveyard_tree01.bsr"},
+    {"source": "res\\nature\\common\\tree\\cj_graveyard_tree02.bsr"},
+    {"source": "res\\nature\\common\\tree\\cj_graveyard_tree03.bsr", "tint": "grave05"},
+    {"source": "res\\nature\\common\\tree\\cj_graveyard_tree04.bsr", "tint": "grave05"},
+    {"source": "res\\nature\\common\\tree\\cj_graveyard_tree05.bsr", "tint": "grave05"}
+  ],
+  "params": {"whorls": 6, "padScale": 0.9, "barkSides": [[8, 4, 2], [5, 3, 0], [5, 3, 0]], "normalRule": "retail", "normalUp": 1.0}
+}

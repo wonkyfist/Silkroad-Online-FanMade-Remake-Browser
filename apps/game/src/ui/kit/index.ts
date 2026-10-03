@@ -1,0 +1,32 @@
+/**
+ * The UI component kit (docs/UI.md §5): the only import path lanes use, e.g.
+ *   import { Window, button, MessageBox } from '../ui/kit/index.ts'
+ * Every control draws the retail 2009 art (skins.ts) with live i18n text, degrades to a CSS stand-in when the art is
+ * missing, and is laid out in native px inside the zoomed HUD layers (scale.ts).
+ */
+export { button, iconButton, applyStates, type ButtonOptions, type KitButton } from './button.ts'
+export { Checkbox, Radio, RadioGroup } from './check.ts'
+export { setCursor, cursorKind, CURSOR_KINDS, type CursorKind } from './cursor.ts'
+export { MessageBox, countResult, promptResult, initialCount, type ConfirmOptions, type CountOptions, type PromptOptions } from './dialog.ts'
+export { Frame, setInset, type FrameOptions } from './frame.ts'
+export { Gauge, fraction, segmentFills, type GaugeOptions } from './gauge.ts'
+export { kitArt, setKitArt } from './host.ts'
+export { Icon, type IconOptions } from './icon.ts'
+export { NumberInput, TextInput, parseAmount, stepAmount, type NumberInputOptions, type TextInputOptions } from './input.ts'
+export { Label, Row, Value, setText, type TextStyle } from './label.ts'
+export { List, visibleRange, type ListOptions } from './list.ts'
+export { MainWindow, MAIN_H, MAIN_W, type MainTab } from './main-window.ts'
+export { fitWidth, fitsSkin, textWidth } from './measure.ts'
+export { nineSlice, nineSliceGeometry } from './nine.ts'
+export { Notice } from './notice.ts'
+export { artRendering, autoScale, layerScale, layerViewport, rootScale, uiScale, UI_SCALE_MODES, UI_STEPS, isUiScaleMode, type UiScaleMode } from './scale.ts'
+export { ScrollArea } from './scroll.ts'
+export { Section, type SectionOptions } from './section.ts'
+export { Select, type SelectChoice } from './select.ts'
+export { BUTTONS, CONTROLS, FRAMES, GAUGES, TABS, pick, variant, type ButtonName, type FrameName, type GaugeName, type TabName } from './skins.ts'
+export { Slider, type SliderOptions } from './slider.ts'
+export { Slot, SlotGrid, SLOT_SIZE, mergeSigns, signOf, type Durability, type SlotIcons, type SlotSigns } from './slot.ts'
+export { TabBar, type TabSpec } from './tabs.ts'
+export { ensureKitStyles, TOKENS } from './tokens.ts'
+export { Tooltip, TOOLTIP_STYLES, type KitTooltipLine, type TooltipLine } from './tooltip.ts'
+export { Window, topWindow, type WindowOptions } from './window.ts'

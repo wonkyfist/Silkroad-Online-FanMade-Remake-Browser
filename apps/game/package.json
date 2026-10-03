@@ -1,0 +1,23 @@
+{
+  "name": "@sro/game",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The browser game client: logo, login, server select, character select/create, world.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^9.28.0",
+    "@babylonjs/loaders": "^9.28.0",
+    "@sro/shared": "workspace:*",
+    "@sro/fx": "workspace:*",
+    "@sro/nav": "workspace:*",
+    "@sro/world-render": "workspace:*",
+    "@sro/appearance": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}

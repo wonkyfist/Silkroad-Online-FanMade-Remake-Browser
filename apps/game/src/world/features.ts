@@ -1,0 +1,193 @@
+/**
+ * World features: how the wave lanes plug into the world screen without editing it (docs/WAVE_PLAN.md §3.2).
+ * The world screen builds one WorldFeatureContext once the HUD exists, runs every factory in WORLD_FEATURES, and
+ * calls the hooks below from its own code paths. Every hook call is isolated: a feature that throws is logged and
+ * the world carries on. Lanes fill their own `world/features/<lane>.ts`; only W3-FC/W4-FC edit the list.
+ */
+import type { ArcRotateCamera, Scene } from '@babylonjs/core'
+import type { ClientMessage, ServerMessage } from '@sro/shared'
+import type { App } from '../app.ts'
+import type { Hud } from '../hud/index.ts'
+import type { KeyMap } from '../hud/keys.ts'
+import type { Session } from '../net/session.ts'
+import type { ActorMaterialDecorator } from '../three/models.ts'
+import type { ChatBox } from './chat.ts'
+import type { EntityAttachmentFactory, EntityView } from './entities.ts'
+import type { JanganGround } from './jangan/ground.ts'
+import type { HudMinimap } from './jangan/minimap.ts'
+import { alchemyFeature } from './features/alchemy.ts'
+import { berserkFeature } from './features/berserk.ts'
+import { coastFeature } from './features/coast.ts'
+import { durabilityFeature } from './features/durability.ts'
+import { editorsFeature } from './features/editors.ts'
+import { fxWorldFeature } from './features/fx-world.ts'
+import { guildFeature } from './features/guild.ts'
+import { mapFeature } from './features/map.ts'
+import { mountFeature } from './features/mount.ts'
+import { movementFeature } from './features/movement.ts'
+import { npcFeature } from './features/npc.ts'
+import { partyFeature } from './features/party.ts'
+import { postureFeature } from './features/posture.ts'
+import { questsFeature } from './features/quests.ts'
+import { skillsFeature } from './features/skills.ts'
+import { skyClockFeature } from './features/sky-clock.ts'
+import { soundFeature } from './features/sound.ts'
+import { soundZonesFeature } from './features/sound-zones.ts'
+import { stallFeature } from './features/stall.ts'
+import { townFeature } from './features/town.ts'
+import { townSoundFeature } from './features/town-sound.ts'
+import { tradeFeature } from './features/trade.ts'
+import { uxWorldFeature } from './features/ux-world.ts'
+import { weatherFeature } from './features/weather.ts'
+
+export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
+
+export interface WorldFeatureContext {
+  readonly app: App
+  readonly session: Session
+  readonly scene: Scene
+  readonly hud: Hud
+  /** Same as `hud.keys`. */
+  readonly keys: KeyMap
+  /** The chat log (add lines with `chat.add(kind, text)`). */
+  readonly chat: ChatBox
+  readonly camera: ArcRotateCamera
+  /** Sends when online and valid; builders must pass parseClientMessage (lane tests). False when not sent. */
+  send(msg: ClientMessage): boolean
+  /** Own entity id (null before worldEnter). */
+  selfId(): number | null
+  view(id: number): EntityView | undefined
+  views(): IterableIterator<EntityView>
+  target(): EntityView | null
+  /** null clears the target. Ground items cannot be targeted (ignored). */
+  setTarget(v: EntityView | null): void
+  serverNow(): number
+  /** The item of your last accepted `pickup` (from its actionResult on; null before any). */
+  acceptedPickup(): number | null
+  /** Loaded world-render handle (null while loading, or on the flat fallback). */
+  world(): JanganGround | null
+  /** The minimap (null until the world has loaded one). */
+  minimap(): HudMinimap | null
+  /**
+   * Shows hit `index` of a combat message now: hurt clip, HP, damage number, the death on the last hit of a kill,
+   * then every feature's `onCombatHit`. For features that time hits themselves (see `combat`).
+   */
+  presentHit(msg: CombatMessage, index: number): void
+  /** Adds a per-view attachment factory for views created from now on. Returns an unregister function. */
+  addAttachment(factory: EntityAttachmentFactory): () => void
+  /**
+   * Wave 9 (D9): a material decorator on every actor model the world screen's ModelLibrary loads (those loaded so far
+   * and every later one). Returns a remover. Optional: absent in lane tests' contexts.
+   */
+  addMaterialDecorator?(fn: ActorMaterialDecorator): () => void
+}
+
+export interface WorldFeature {
+  /** Every server message, after world.ts handled it. */
+  onMessage?(msg: ServerMessage): void
+  /**
+   * A `combat` message before the default presentation; true = this feature presents it (and calls
+   * `ctx.presentHit(msg, i)` at each hit), so the default attack clip and hit timeline are skipped.
+   */
+  combat?(msg: CombatMessage): boolean
+  /** When hit `index` is shown (after the default presentation of that hit). */
+  onCombatHit?(msg: CombatMessage, index: number): void
+  /** Every frame: server time (ms) and dt (seconds). */
+  onFrame?(now: number, dt: number): void
+  /** The own character entered or left the town (from the music check, about once a second). */
+  onTownChange?(inTown: boolean): void
+  /** true = consumed (runs before the default target/attack/pick-up). */
+  clickEntity?(v: EntityView): boolean
+  /** Esc: after the HUD windows and the Esc menu, before clearing the target. true = consumed. */
+  escape?(): boolean
+  onEntityAdded?(v: EntityView): void
+  onEntityRemoved?(v: EntityView): void
+  /**
+   * Before a ground click or a hold-to-move step sends `moveTo` (the only two senders: screens/world.ts and
+   * world/move-feedback.ts; docs/WAVE_PLAN2.md §4.3). true = consumed: nothing is sent (a stall owner's click).
+   */
+  beforeGroundMove?(): boolean
+  dispose?(): void
+}
+
+export type WorldFeatureFactory = (ctx: WorldFeatureContext) => WorldFeature
+
+/** One line per lane; W3-FC writes all wave-3 lines, W4-FC appends wave 4's. */
+export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
+  skillsFeature, // world/features/skills.ts (SK-C)
+  npcFeature, // world/features/npc.ts (NPC-C)
+  soundFeature, // world/features/sound.ts (SND-C)
+  uxWorldFeature, // world/features/ux-world.ts (UX-B)
+  mapFeature, // world/features/map.ts (FLD-C)
+  questsFeature, // world/features/quests.ts (QS-C)
+  partyFeature, // world/features/party.ts (PT-C)
+  editorsFeature, // world/features/editors.ts (ED-C)
+  fxWorldFeature, // world/features/fx-world.ts (FX-C2)
+  postureFeature, // world/features/posture.ts (FX-C2)
+  // Wave 8 (docs/WAVE_PLAN2.md §4.3; W8-FC writes these lines, append-only):
+  mountFeature, // world/features/mount.ts (MR-C)
+  berserkFeature, // world/features/berserk.ts (BZ)
+  durabilityFeature, // world/features/durability.ts (DR)
+  alchemyFeature, // world/features/alchemy.ts (AL)
+  tradeFeature, // world/features/trade.ts (TR-C)
+  stallFeature, // world/features/stall.ts (ST-C)
+  guildFeature, // world/features/guild.ts (GU-C)
+  // Wave 9 (docs/WAVE_PLAN3.md §4.3; W9A-S writes these lines):
+  skyClockFeature, // world/features/sky-clock.ts (GAME)
+  weatherFeature, // world/features/weather.ts (WX-C)
+  // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.
+  coastFeature, // world/features/coast.ts (CST-A)
+  // Wave 11 (docs/TOWN_LIFE.md §6, TL-S): after the sound and coast features (the area is set), before the town feature.
+  townSoundFeature, // world/features/town-sound.ts (TL-S)
+  // Wave 12 (docs/WAVE_PLAN8.md D9; W12-G writes this line, WE-R fills the feature): after the sound, coast and town
+  // sound features (the area and the town loops are set: the zone voice cap counts them), before the town feature.
+  soundZonesFeature, // world/features/sound-zones.ts (WE-R)
+  // Wave 11 (docs/WAVE_PLAN7.md D11; W11-G writes this line; before the jump, which stays last):
+  townFeature, // world/features/town.ts (TL-C)
+  // Wave 10 (docs/WAVE_PLAN6.md §4.2; W10-G writes this line):
+  movementFeature, // world/features/movement.ts (MV-C)
+]
+
+/** The features of one world visit, with every hook call isolated from the others. */
+export class WorldFeatures {
+  private readonly list: { name: string; f: WorldFeature }[] = []
+
+  constructor(ctx: WorldFeatureContext, factories: readonly WorldFeatureFactory[] = WORLD_FEATURES) {
+    factories.forEach((make, i) => {
+      const name = make.name || `feature${i}`
+      try {
+        this.list.push({ name, f: make(ctx) })
+      } catch (err) {
+        console.error(`[world] feature ${name} failed to start`, err)
+      }
+    })
+  }
+
+  /** Calls `fn` on every feature (errors logged per feature). */
+  each(fn: (f: WorldFeature) => void): void {
+    for (const { name, f } of this.list) {
+      try {
+        fn(f)
+      } catch (err) {
+        console.error(`[world] feature ${name} failed`, err)
+      }
+    }
+  }
+
+  /** True as soon as one feature's `fn` returns true (the rest are not asked). */
+  some(fn: (f: WorldFeature) => boolean | undefined): boolean {
+    for (const { name, f } of this.list) {
+      try {
+        if (fn(f)) return true
+      } catch (err) {
+        console.error(`[world] feature ${name} failed`, err)
+      }
+    }
+    return false
+  }
+
+  dispose(): void {
+    this.each(f => f.dispose?.())
+    this.list.length = 0
+  }
+}

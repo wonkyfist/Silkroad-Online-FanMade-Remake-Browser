@@ -1,0 +1,13 @@
+{
+  "name": "@sro/world-render",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Babylon.js renderer for converted Silkroad world regions (terrain splatting, instanced objects, water, sky, fog, lightmaps). Browser-side; shared by the game client and the viewer.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@babylonjs/core": "^9.28.0",
+    "@babylonjs/loaders": "^9.28.0",
+    "@sro/nav": "workspace:*"
+  }
+}

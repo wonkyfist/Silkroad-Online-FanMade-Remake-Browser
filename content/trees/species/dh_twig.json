@@ -1,0 +1,23 @@
+{
+  "id": "dh_twig",
+  "name": "Desert twig tree",
+  "family": "dunhuang_tree",
+  "archetype": "deadwood",
+  "kind": "tree",
+  "batch": "B4",
+  "target": "res\\nature\\china\\dunhuang\\tree2\\w_cd_twig02_tree01.bsr",
+  "envelope": {"h": 33.88, "w": 10.33},
+  "seed": 83,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_wood_01.ddj", "repeatM": 3.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_twig02_tree03.ddj", "anchor": [0.35, 0.0], "aspect": 2.0, "grade": {"gain": 0.8}}
+  },
+  "tints": [
+    {"name": "twig01", "textures": {"leaf": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_twig01_tree03.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\tree2\\w_cd_twig02_tree01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree2\\w_cd_twig01_tree01.bsr", "tint": "twig01"}
+  ],
+  "params": {"trunkFrac": 0.85, "trunkRadius": 0.06, "limbStart": [0.3, 1.0], "limbs": [6, 7], "limbTilt": [10, 30], "limbLen": [0.15, 0.25], "twigs": [3, 4], "wobble": 0.12, "cardScale": 0.7, "normalRule": "retail", "normalUp": 1.0, "frontShare": 0.4}
+}

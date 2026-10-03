@@ -1,0 +1,130 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\weed_tall.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "weed_tall.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "weed_tall_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed_tall_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    169,
+    128
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "weed_tall_leaf",
+   "vertices": 208,
+   "triangles": 104,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "weed_tall_leaf",
+   "vertices": 72,
+   "triangles": 36,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 280,
+  "triangles": 140,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 7.960000157356262,
+  "boundsMin": [
+   -7.2408857345581055,
+   -1.3114453554153442,
+   -7.437854290008545
+  ],
+  "boundsMax": [
+   7.356809616088867,
+   6.648554801940918,
+   7.992145538330078
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "weed_tall",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [
+   {
+    "name": "weed09_2",
+    "materials": {
+     "weed_tall_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed_tall_leaf_weed09_2.ddj",
+      "image": "tints/weed09_2-leaf.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed_tall_bark.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed_tall_leaf.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed_tall_leaf_weed09_2.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_flower05.ddj"
+  }
+ }
+}

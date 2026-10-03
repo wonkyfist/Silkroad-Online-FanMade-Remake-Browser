@@ -1,0 +1,20 @@
+{
+  "id": "lily_pads",
+  "name": "Lily pads",
+  "family": "water_plant",
+  "archetype": "water_plant",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\grs_water_big.bsr",
+  "envelope": {"h": 0.27, "w": 6.46},
+  "seed": 73,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_water.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_water.ddj", "anchor": [0.5, 0.5], "aspect": 1.0}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\grs_water_big.bsr"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "flat", "count": [8, 4], "size": [0.4, 0.55], "tilt": [0, 3], "radius": 0.45, "z": [0.3, 0.6]}], "normalRule": "up", "normalUp": 1.0}
+}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRO Effects</title>
+    <link rel="stylesheet" href="/src/fx/fx.css" />
+  </head>
+  <body>
+    <aside id="sidebar">
+      <header>
+        <h1>SRO Effects</h1>
+        <span id="engine-badge" class="badge">…</span>
+        <a href="./index.html" class="link" title="Model viewer">models</a>
+      </header>
+
+      <section>
+        <h2>Effect</h2>
+        <div class="row">
+          <select id="list-mode" aria-label="List">
+            <option value="skills">Chinese skills</option>
+            <option value="all">All effects</option>
+          </select>
+          <input id="filter" type="search" placeholder="Filter" autocomplete="off" />
+        </div>
+        <select id="effects" size="18" aria-label="Effects"></select>
+        <div id="effect-info" class="muted"></div>
+      </section>
+
+      <section>
+        <h2>Playback</h2>
+        <div class="row">
+          <button id="play">Play</button>
+          <button id="stop" title="Stop emitting; live elements finish">Stop</button>
+          <label><input id="loop" type="checkbox" checked /> Loop</label>
+        </div>
+        <label class="row">Speed
+          <select id="speed">
+            <option value="0.1">0.1x</option>
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+        <label class="row">Scale <input id="scale" type="number" min="0.1" max="10" step="0.1" value="1" /></label>
+      </section>
+
+      <section>
+        <h2>Attach</h2>
+        <label><input id="show-char" type="checkbox" checked /> Character (chinaman_adventurer)</label>
+        <label class="row">Clip <select id="clip"></select></label>
+        <label class="row">Bone
+          <select id="bone">
+            <option value="">world origin</option>
+            <option value="Bip01 R Hand">Bip01 R Hand</option>
+            <option value="Bip01 L Hand">Bip01 L Hand</option>
+            <option value="Bip01">Bip01 (body)</option>
+            <option value="Bip01 Spine1">Bip01 Spine1</option>
+            <option value="Bip01 Head">Bip01 Head</option>
+          </select>
+        </label>
+        <label class="row">Rotation
+          <select id="rotation">
+            <option value="none">effect frame (identity)</option>
+            <option value="bone">bone</option>
+          </select>
+        </label>
+      </section>
+
+      <section>
+        <h2>Stats</h2>
+        <pre id="stats"></pre>
+      </section>
+    </aside>
+    <main><canvas id="canvas" touch-action="none"></canvas></main>
+    <script type="module" src="/src/fx/main.ts"></script>
+  </body>
+</html>

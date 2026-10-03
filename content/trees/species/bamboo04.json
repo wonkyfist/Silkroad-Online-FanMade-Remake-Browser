@@ -1,0 +1,20 @@
+{
+  "id": "bamboo04",
+  "name": "Bamboo",
+  "family": "bamboo",
+  "archetype": "bamboo",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_bamboo04.bsr",
+  "envelope": {"h": 49.44, "w": 41.08},
+  "seed": 35,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_bam04_02 .ddj", "repeatM": 6.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_bam04_03 .ddj", "anchor": [0.3, 0.0], "aspect": 1.0, "grade": {"gain": 1.08}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_bamboo04.bsr"}
+  ],
+  "params": {"barkSides": [[0, 5], [0, 3], [0, 3]], "baseRadius": 0.32, "culmLean": [0, 6], "cardT0": 0.25, "normalRule": "retail", "normalUp": 1.0}
+}

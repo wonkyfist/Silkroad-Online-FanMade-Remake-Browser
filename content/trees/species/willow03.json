@@ -1,0 +1,41 @@
+{
+  "id": "willow03",
+  "name": "Willow",
+  "family": "willow",
+  "archetype": "weeping",
+  "kind": "tree",
+  "batch": "B1",
+  "target": "res\\nature\\common\\tree\\tre_willow03.bsr",
+  "envelope": { "h": 81.04, "w": 97.32 },
+  "seed": 11,
+  "textures": {
+    "bark": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_will01.ddj", "repeatM": 4.0, "base": 0.1 },
+    "leaf": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf01.ddj", "anchor": [0.02, 0.5], "aspect": 1.0, "grade": { "gain": 1.12 } },
+    "strand": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf02.ddj", "anchor": [0.5, 1.0], "aspect": 4.0, "grade": { "gain": 1.12 } }
+  },
+  "tints": [
+    {
+      "name": "willow02",
+      "textures": {
+        "bark": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_will01.ddj",
+        "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_leaf01.ddj",
+        "strand": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_leaf02.ddj"
+      }
+    },
+    {
+      "name": "willow01",
+      "textures": {
+        "bark": "prim\\mtrl\\nature\\common\\tre_willow01_brn.ddj",
+        "leaf": "prim\\mtrl\\nature\\common\\tre_willow01_leaf1.ddj",
+        "strand": "prim\\mtrl\\nature\\common\\tre_willow01_leaf1.ddj"
+      },
+      "crops": { "leaf": [0.0, 0.375, 1.0, 0.625] }
+    }
+  ],
+  "replaces": [
+    { "source": "res\\nature\\common\\tree\\tre_willow01.bsr", "tint": "willow01" },
+    { "source": "res\\nature\\common\\tree\\tre_willow02.bsr", "tint": "willow02" },
+    { "source": "res\\nature\\common\\tree\\tre_willow03.bsr" }
+  ],
+  "params": {"normalRule": "mirror", "normalUp": 0.3, "normalBend": 0.0}
+}

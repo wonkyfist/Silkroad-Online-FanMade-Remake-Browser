@@ -1,0 +1,130 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\weed10.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "weed10.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "weed10_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed10_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    169,
+    128
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "weed10_leaf",
+   "vertices": 80,
+   "triangles": 40,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "weed10_leaf",
+   "vertices": 32,
+   "triangles": 16,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 112,
+  "triangles": 56,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 1.8499999344348907,
+  "boundsMin": [
+   -1.1101086139678955,
+   -0.365888386964798,
+   -1.2742516994476318
+  ],
+  "boundsMax": [
+   1.3209505081176758,
+   1.4841115474700928,
+   1.455748200416565
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "weed10",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [
+   {
+    "name": "tarim",
+    "materials": {
+     "weed10_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed10_leaf_tarim.ddj",
+      "image": "tints/tarim-leaf.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed10_bark.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed10_leaf.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_weed10_leaf_tarim.ddj": "prim\\mtrl\\nature\\oasis\\tarim\\oas_tarim_dvweed.ddj"
+  }
+ }
+}

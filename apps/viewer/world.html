@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRO World Viewer</title>
+    <link rel="stylesheet" href="/src/world/world.css" />
+    <style>
+      /* Wave 9 render lab (src/world/render-panel.ts). */
+      #render-panel {
+        left: 10px;
+        bottom: 10px;
+        width: 300px;
+        padding: 0 10px 10px;
+        max-height: calc(100% - 380px);
+        min-height: 120px;
+        overflow-y: auto;
+      }
+      #render-panel.collapsed > :not(header) {
+        display: none;
+      }
+      #render-panel header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      #render-panel select {
+        max-width: 170px;
+      }
+      #render-panel details {
+        margin-top: 8px;
+      }
+      #render-panel summary {
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      #render-panel details .row {
+        margin: 2px 0;
+      }
+      .lab-info {
+        white-space: pre-wrap;
+        font: 10px/1.4 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+        margin-top: 6px;
+      }
+      .lab-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+      }
+      .lab-buttons button,
+      #render-panel header button {
+        font: inherit;
+        color: var(--text);
+        background: #2d3440;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 1px 6px;
+        cursor: pointer;
+      }
+      .lab-checks {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .lab-out {
+        font: 10px/1.35 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+        white-space: pre;
+        overflow: auto;
+        max-height: 220px;
+        margin: 6px 0 0;
+        user-select: text;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" touch-action="none"></canvas>
+
+    <div id="stats" class="panel" aria-live="off"></div>
+    <canvas id="minimap" class="panel" width="220" height="220" title="Client minimap tiles (north up). Dot = player, line = camera view."></canvas>
+
+    <aside id="controls" class="panel">
+      <header>
+        <h1>SRO World</h1>
+        <span id="engine-badge" class="badge">…</span>
+        <a href="./index.html" class="link" title="Model viewer">models</a>
+      </header>
+
+      <section>
+        <h2>Time of day</h2>
+        <label class="row">
+          <input id="time" type="range" min="0" max="1" step="0.005" value="0.5" />
+          <output id="time-out">12:00</output>
+        </label>
+        <div id="env-info" class="muted"></div>
+      </section>
+
+      <section>
+        <h2>Display</h2>
+        <div class="checks">
+          <label><input id="t-wire" type="checkbox" /> Wireframe</label>
+          <label><input id="t-nav" type="checkbox" /> Navmesh</label>
+          <label><input id="t-borders" type="checkbox" /> Region borders</label>
+          <label><input id="t-lightmap" type="checkbox" checked /> Terrain lightmap</label>
+          <label><input id="t-static" type="checkbox" checked /> Static objects</label>
+          <label><input id="t-animated" type="checkbox" checked /> Animated objects</label>
+          <label><input id="t-water" type="checkbox" checked /> Water</label>
+          <label><input id="t-fog" type="checkbox" checked /> Fog</label>
+          <label><input id="t-sky" type="checkbox" checked /> Sky</label>
+          <label><input id="t-lod" type="checkbox" checked /> Draw distance</label>
+          <label><input id="t-minimap" type="checkbox" checked /> Minimap</label>
+        </div>
+        <label class="row">Object lightmap
+          <select id="obj-lm" title="TERRAIN.md 3.3: combine unknown; texel statistics favour 1x">
+            <option value="0">off</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+        <label class="row">Terrain view
+          <select id="terrain-view">
+            <option value="0">textured</option>
+            <option value="1">layer count</option>
+            <option value="2">lightmap only</option>
+            <option value="3">first layer only</option>
+            <option value="4">tile ids</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="help muted">
+        <b>Click</b> the ground to walk · <b>drag</b> to orbit · <b>wheel</b> to zoom<br />
+        <b>F</b> free-fly (WASD, Q/E down/up, Shift fast) · <b>H</b> hide panels
+      </section>
+    </aside>
+
+    <aside id="render-panel" class="panel" aria-label="Render lab"></aside>
+
+    <div id="status" role="status"></div>
+
+    <script type="module" src="/src/world/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "id": "pond_flower",
+  "name": "Pond lotus",
+  "family": "water_plant",
+  "archetype": "water_plant",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\c_pondflower.bsr",
+  "envelope": {"h": 0.48, "w": 1.67},
+  "seed": 75,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\c_pondflower.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\c_pondflower.ddj", "anchor": [0.5, 0.5], "aspect": 1.0}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\c_pondflower.bsr"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "flat", "count": [6, 3], "size": [0.8, 0.95], "tilt": [10, 50], "radius": 0.06, "z": [0.05, 0.3]}], "normalRule": "up", "normalUp": 1.0}
+}

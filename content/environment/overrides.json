@@ -1,0 +1,26 @@
+{
+  "format": "sro-environment-overrides",
+  "version": 1,
+  "notes": [
+    "Replaces float graphs of Map/environment.ifo profiles in the world export's environment.json (packages/convert/src/world/environment-overrides.ts). Times: 0 = midnight, 0.5 = noon. graph10 / graph11 are the fog start / end as fractions of 250 m (world-render environment.ts FOG_RANGE_M); the weather's fog scale still multiplies them, so storms stay hazier.",
+    "P-DATA (wave 10r polish, decided while the user was away): retail Lake Forest (profile 18, the region row north of the S1 beach) starts its fog at the camera at noon (graph10 -0.147), which read as heavy haze on a clear day. Kept its mood (the fog colour, the night fog, a misty dawn and dusk), pushed the noon start out to 0.55 (137 m) and the noon end to 1.0 (250 m, every other profile's end), so the mountains read at noon. The plaza (profile 0) starts at 0.76."
+  ],
+  "profiles": [
+    {
+      "id": 18,
+      "name": "Lake Forest",
+      "graph10": [
+        { "time": 0, "value": 0.307 },
+        { "time": 0.25, "value": 0.15 },
+        { "time": 0.5, "value": 0.55 },
+        { "time": 0.75, "value": 0.12 },
+        { "time": 1, "value": 0.307 }
+      ],
+      "graph11": [
+        { "time": 0, "value": 0.467 },
+        { "time": 0.5, "value": 1 },
+        { "time": 1, "value": 0.467 }
+      ]
+    }
+  ]
+}

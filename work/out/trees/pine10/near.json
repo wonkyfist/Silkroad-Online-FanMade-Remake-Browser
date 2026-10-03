@@ -1,0 +1,160 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\pine10.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "pine10.near",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "pine10_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_pine10_02.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    64,
+    128
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "pine10_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine10_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "pine10_bark",
+   "vertices": 1212,
+   "triangles": 1528,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "pine10_leaf",
+   "vertices": 3352,
+   "triangles": 1676,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 4564,
+  "triangles": 3204,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 0,
+  "heightM": 46.25000088661909,
+  "boundsMin": [
+   -14.425972938537598,
+   -0.11303418129682541,
+   -16.257537841796875
+  ],
+  "boundsMax": [
+   21.88402557373047,
+   46.136966705322266,
+   11.170825958251953
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "pine10",
+  "kind": "tree",
+  "part": "near",
+  "tiers": {
+   "lod0": 0
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine10_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine10_01.ddj"
+  }
+ }
+}

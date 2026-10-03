@@ -1,0 +1,23 @@
+{
+  "id": "weed_mid",
+  "name": "Grass clump",
+  "family": "weed_tall",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\grs_weed06.bsr",
+  "envelope": {"h": 3.58, "w": 4.63},
+  "seed": 53,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed06.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed06.ddj", "anchor": [0.5, 0.0], "aspect": 2.0, "crop": [0.0, 0.0, 0.5, 1.0], "grade": {"gain": 0.8}}
+  },
+  "tints": [
+    {"name": "weed06_1", "textures": {"leaf": "prim\\mtrl\\nature\\common\\grass\\grs_weed06_01.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\grs_weed06.bsr"},
+    {"source": "res\\nature\\common\\grass\\grs_weed06_1.bsr", "tint": "weed06_1"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "up", "count": [20, 7], "size": [0.32, 0.42], "tilt": [0, 25], "radius": 0.4}], "normalRule": "retail", "normalUp": 1.0}
+}

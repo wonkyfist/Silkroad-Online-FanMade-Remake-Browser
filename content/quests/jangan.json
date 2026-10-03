@@ -1,0 +1,634 @@
+{
+  "schema": 1,
+  "kind": "quests",
+  "id": "jangan",
+  "title": "The Tiger's Shadow",
+  "world": "jangan",
+  "notes": "Original questline for levels 1-20 around Jangan (docs/QUESTS.md). Authored content, not retail data. NPC, mob and item codes are CodeName128 ids from work/out/data; QITEM_* quest items and LOC_* locations are defined in this file. Coordinates are glTF metres in the world manifest frame (docs/CONVENTIONS.md). Reward codes may use {G} (M/W, character gender) and {ARMOR} (CLOTHES/LIGHT/HEAVY, the character's armour class). Dialog text may use {name} (the character's name).",
+  "items": [
+    { "code": "QITEM_MEAT_BUN", "name": "Steamed Meat Bun", "description": "Still warm, if you hurry. A bribe for Sochil.", "iconItem": "ITEM_QNO_CH_CHEF_1" },
+    { "code": "QITEM_MANGYANG_HIDE", "name": "Mangyang Hide", "description": "Coarse and smelly. Herbalist Yangyun boils these into salve.", "iconItem": "ITEM_QNO_WC_ARMOR_1" },
+    { "code": "QITEM_GHOST_ASH", "name": "Ghost Ash", "description": "Grey ash left behind by a fading spirit. Cold to the touch.", "iconItem": "ITEM_QNO_CH_SHAMAN_1" },
+    { "code": "QITEM_WEASEL_CLAW", "name": "Old Weasel Claw", "description": "Hard as flint. Ground fine, it makes polishing grit.", "iconItem": "ITEM_QNO_CH_SMITH_1" },
+    { "code": "QITEM_SILK_POUCH", "name": "Torn Silk Pouch", "description": "Dropped by the thief. It holds a pinch of grey bone dust.", "iconItem": "ITEM_QNO_CH_HWAN_1_3_03" },
+    { "code": "QITEM_PRIEST_LETTER", "name": "Jeonghye's Letter", "description": "Sealed with temple wax. You were told not to read it.", "iconItem": "ITEM_QNO_CH_PRIEST_1_01" },
+    { "code": "QITEM_DROWNED_LANTERN", "name": "Drowned Lantern", "description": "A lantern that still glows under water. It holds a memory.", "iconItem": "ITEM_QNO_CH_HWAN_1_4_01" },
+    { "code": "QITEM_SPIRIT_SALT", "name": "Spirit Salt", "description": "Miaoryeong's jar of salted memories. Scatter it at the heart of the swamp.", "iconItem": "ITEM_QNO_CH_HWAN_1_4_03" },
+    { "code": "QITEM_TIGER_TALISMAN", "name": "Tiger-Bone Talisman", "description": "A tiger swallowing the moon, carved in old bone.", "iconItem": "ITEM_QNO_CH_PRIEST_1_05" },
+    { "code": "QITEM_FLORA_LETTER", "name": "Flora's Letter", "description": "Addressed to Ishyak in a very careful hand.", "iconItem": "ITEM_QNO_WC_ACCESSORY_1" },
+    { "code": "QITEM_WEASEL_PELT", "name": "Weasel Pelt", "description": "Soft winter fur for Mrs Jang's linings.", "iconItem": "ITEM_QNO_WC_ARMOR_1" },
+    { "code": "QITEM_SILK_BOLT", "name": "Stolen Silk Bolt", "description": "Jangan silk from Hwajung's lost caravan. Stained, but still fine.", "iconItem": "ITEM_QNO_CH_SPECIAL_1_01" },
+    { "code": "QITEM_PATROL_TAG", "name": "Patrol Tag", "description": "A bronze tag from Fengil's missing patrol.", "iconItem": "ITEM_QNO_WC_SOLDIER_SO_1_01" },
+    { "code": "QITEM_TIGER_WHISKER", "name": "Tiger Whisker", "description": "Stiff and springy. The old masters strung zithers with these.", "iconItem": "ITEM_QNO_CH_GENARAL_SW_1_01" },
+    { "code": "QITEM_BANDIT_LEDGER", "name": "Bandit Ledger", "description": "Rows of numbers in a moon cipher. Every tiger bone sold is written here.", "iconItem": "ITEM_QNO_WC_GENARAL_SP_1_01" },
+    { "code": "QITEM_WHITE_FANG", "name": "White Tiger Fang", "description": "It hums faintly when struck.", "iconItem": "ITEM_QNO_CH_GENARAL_SW_1_01" },
+    { "code": "QITEM_CHAKJI_SHARD", "name": "Chakji Iron Shard", "description": "Iron that a chakji ate and wore as hide. It rings like a bell.", "iconItem": "ITEM_QNO_CH_SMITH_1" },
+    { "code": "QITEM_BINDING_BELL", "name": "Binding Bell", "description": "Cast from white tiger fangs and chakji iron. Ring it at the Tiger Mountain Shrine.", "iconItem": "ITEM_QNO_CH_HWAN_1_3_01" },
+    { "code": "QITEM_JADE_SEAL", "name": "Jade Tiger Seal", "description": "Older than Jangan. It keeps the spirit of Tiger Mountain asleep.", "iconItem": "ITEM_QNO_CH_WHAN_2_3_01" },
+    { "code": "QITEM_SWAMP_REED", "name": "Swamp Reed", "description": "Bitter reed from the swamp north-west of town, good for fevers.", "iconItem": "ITEM_QNO_CH_WHAN_2_3_02" },
+    { "code": "QITEM_TIGER_PELT", "name": "Tiger Pelt", "description": "A clean pelt for the hunters' lodge.", "iconItem": "ITEM_QNO_WC_ARMOR_1" }
+  ],
+  "locations": [
+    { "id": "LOC_MILLET_FIELDS", "name": "Millet fields south of Jangan", "x": 109, "z": 132, "radius": 60 },
+    { "id": "LOC_SOUTH_GRASS", "name": "Southern grassland", "x": 167, "z": 362, "radius": 90 },
+    { "id": "LOC_EAST_GRASS", "name": "Eastern grassland", "x": 572, "z": 167, "radius": 100 },
+    { "id": "LOC_OLD_SHRINE", "name": "Old Tiger Shrine (Hill of Ye Mt.)", "x": 417, "z": -379, "radius": 35 },
+    { "id": "LOC_SWAMP_HEART", "name": "Heart of the Swamp", "x": -370, "z": -400, "radius": 80 },
+    { "id": "LOC_QIN_GATE", "name": "Entrance of the Qin-Shi Tomb", "x": 614, "z": -626, "radius": 90 },
+    { "id": "LOC_YEOHA_CAMP", "name": "Robbers' Camp (Yeoha's Forest)", "x": -723, "z": -88, "radius": 60 },
+    { "id": "LOC_BANDIT_TRAIL", "name": "Bandit supply trail", "x": -946, "z": 36, "radius": 70 },
+    { "id": "LOC_PATROL_AMBUSH", "name": "Ambushed patrol camp (North-Tiger Mt.)", "x": -988, "z": 130, "radius": 35 },
+    { "id": "LOC_BOWMEN_RIDGE", "name": "Bandit bowmen's ridge", "x": -997, "z": 517, "radius": 60 },
+    { "id": "LOC_STRONGHOLD", "name": "Bandit's Mountain Stronghold", "x": -1325, "z": 907, "radius": 40 },
+    { "id": "LOC_BLACK_TIGERS", "name": "Black tiger path", "x": -1156, "z": 438, "radius": 70 },
+    { "id": "LOC_WHITE_TIGERS", "name": "White tiger ridge (North-Tiger Mt.)", "x": -1486, "z": 521, "radius": 90 },
+    { "id": "LOC_CHAKJI_ROAD", "name": "Western ferry road", "x": -1304, "z": -82, "radius": 70 },
+    { "id": "LOC_TIGER_SHRINE", "name": "Tiger Mountain Shrine", "x": -1001, "z": 600, "radius": 30 },
+    { "id": "LOC_ARCHER_CAMP", "name": "Bandit archers' camp (South-Tiger Mt.)", "x": -1081, "z": 1145, "radius": 100 },
+    { "id": "LOC_TIGER_SLOPE", "name": "Tiger slope (North-Tiger Mt.)", "x": -1075, "z": 225, "radius": 90 }
+  ],
+  "quests": [
+    {
+      "id": "JG_001", "title": "Welcome to Jangan", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 1,
+      "giver": "NPC_CH_SOLDIER_EM2", "turnIn": "NPC_CH_CHEF",
+      "summary": "Report to Village Chief Hwangno, east of the plaza.",
+      "objectives": [],
+      "rewards": { "exp": 60, "sp": 1, "gold": 100, "items": [{ "item": "ITEM_ETC_HP_POTION_01", "count": 5 }] },
+      "dialog": {
+        "offer": "Another traveller off the Silk Road, and still in one piece. Welcome to Jangan, {name}. Chief Hwangno likes to meet every newcomer himself. His house is east of the plaza. Tell him Fengil sent you, and he might even pour you tea.",
+        "progress": "The Chief's house is east of the plaza. You can't miss the old man. He'll be complaining about the harvest.",
+        "complete": "Fengil sends me every stray cat that wanders through the gate. Still, you look useful. Sit. We have more trouble than hands in Jangan these days. And when Fengil waves you over again, listen to him: he has buried too many newcomers who went out in travelling clothes."
+      }
+    },
+    {
+      "id": "JG_S05", "title": "Dressed for the Road", "chapter": "Act I: A Stranger at the Gate", "kind": "side", "level": 1,
+      "giver": "NPC_CH_SOLDIER_EM2", "turnIn": "NPC_CH_SMITH", "requires": { "quests": ["JG_001"] },
+      "summary": "Meet Protector Trader Mrs Jang and Blacksmith Chulsan, just west of the plaza.",
+      "objectives": [
+        {
+          "id": "armour", "type": "talk", "npc": "NPC_CH_ARMOR", "label": "Ask Protector Trader Mrs Jang about armour",
+          "text": "Fengil sent you? Then you must look as bad as he says. Shells, gloves, boots: come back with a little coin and I'll fit you properly. Anything beats what you're wearing. Now go and let Chulsan grumble at you too."
+        }
+      ],
+      "rewards": { "exp": 40, "sp": 1, "gold": 300 },
+      "dialog": {
+        "offer": "One more thing, {name}. That gear won't last a week outside the walls. Mrs Jang sells protectors just west of the plaza, and Blacksmith Chulsan next to her sells weapons that don't bend. Say hello to both, Mrs Jang first. Tell them Fengil sent you. They owe me a drink.",
+        "progress": "Mrs Jang first, then Chulsan. They stand side by side, just west of the plaza.",
+        "complete": "Fengil's still sending me strays, is he? A bad weapon gets you killed faster than no weapon. Buy from me when you can, and come back when you're a little stronger: I'll have work for you. Here, Fengil left some coin for your first purchase. Don't drink it."
+      }
+    },
+    {
+      "id": "JG_002", "title": "Pests in the Millet", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 1,
+      "giver": "NPC_CH_CHEF", "turnIn": "NPC_CH_CHEF", "requires": { "quests": ["JG_001"] },
+      "summary": "Thin out the mangyang raiding the millet fields south of town.",
+      "objectives": [
+        { "id": "mangyang", "type": "kill", "mobs": ["MOB_CH_MANGNYANG"], "count": 8, "hint": "LOC_MILLET_FIELDS" }
+      ],
+      "rewards": { "exp": 120, "sp": 1, "gold": 150, "items": [{ "item": "ITEM_ETC_MP_POTION_01", "count": 5 }] },
+      "dialog": {
+        "offer": "The mangyang have found our millet fields south of the walls. Fat little thieves, and bolder every night. Thin their numbers. Eight should teach the rest some manners.",
+        "progress": "I can still hear squealing from the fields. Keep at it.",
+        "complete": "Quieter already. The farmers will sleep tonight, and so will I. Here, you've earned a little something."
+      }
+    },
+    {
+      "id": "JG_003", "title": "Herbs and Hides", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 2,
+      "giver": "NPC_CH_POTION", "turnIn": "NPC_CH_POTION", "requires": { "quests": ["JG_002"] },
+      "summary": "Bring Herbalist Yangyun six mangyang hides for her salve.",
+      "objectives": [
+        { "id": "hides", "type": "collect", "item": "QITEM_MANGYANG_HIDE", "count": 6, "from": [{ "mob": "MOB_CH_MANGNYANG", "chance": 0.5 }], "hint": "LOC_MILLET_FIELDS" }
+      ],
+      "rewards": { "exp": 200, "sp": 1, "gold": 150, "choice": [{ "item": "ITEM_ETC_HP_POTION_01", "count": 10 }, { "item": "ITEM_ETC_MP_POTION_01", "count": 10 }] },
+      "dialog": {
+        "offer": "You smell like mangyang. Good, that means you hunt them. Their hides boil down into the best salve for sword cuts. Bring me six clean hides and I'll pay you in medicine, which is worth more than coin out there.",
+        "progress": "Six hides. Clean ones, if you can manage. Torn hides make a runny salve.",
+        "complete": "Lovely. These will make a fine batch. Take your pick: red for the body, blue for the spirit."
+      }
+    },
+    {
+      "id": "JG_004", "title": "The Boy Who Hears Everything", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 2,
+      "giver": "NPC_CH_CHEF", "turnIn": "NPC_CH_CHEF", "requires": { "quests": ["JG_002"] },
+      "summary": "Bring Sochil a meat bun and hear what gossip he has for the Chief.",
+      "giveOnAccept": [{ "item": "QITEM_MEAT_BUN", "count": 1 }],
+      "objectives": [
+        {
+          "id": "bun", "type": "deliver", "npc": "NPC_CH_BEGGARBOY", "item": "QITEM_MEAT_BUN", "count": 1,
+          "text": "A meat bun? For me? ...The Chief wants gossip, doesn't he. Fine. Since the night the temple bell rang wrong, ghosts with big glowing eyes walk the southern grass. The priest won't talk about it. Tell the Chief that. And tell him the bun was cold."
+        }
+      ],
+      "rewards": { "exp": 120, "sp": 1, "gold": 200, "items": [{ "item": "ITEM_CH_RING_01_A", "count": 1 }, { "item": "ITEM_ETC_SCROLL_RETURN_01", "count": 2 }] },
+      "dialog": {
+        "offer": "If you want to know what's really happening in Jangan, don't ask me. Ask Sochil, the beggar boy by the west market. He hears everything, and he talks for food. Take him this bun and bring me whatever he says.",
+        "progress": "Sochil haunts the west side of town. Follow the smell of trouble.",
+        "complete": "Ghosts. Of course it's ghosts. And that bun was warm when it left my kitchen. The boy lies about everything except the news. Go and see this for yourself, then talk to Sochil again. Take these two return scrolls as well: read one out in the fields and you'll be home before your tea goes cold."
+      }
+    },
+    {
+      "id": "JG_005", "title": "Eyes in the Grass", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 3,
+      "giver": "NPC_CH_BEGGARBOY", "turnIn": "NPC_CH_PRIEST", "requires": { "quests": ["JG_004"] },
+      "summary": "Put down the ghosts in the southern grass, then tell Priest Jeonghye.",
+      "objectives": [
+        { "id": "small", "type": "kill", "mobs": ["MOB_CH_BIGEYEGHOST_CLON"], "count": 10, "hint": "LOC_SOUTH_GRASS" },
+        { "id": "big", "type": "kill", "mobs": ["MOB_CH_BIGEYEGHOST"], "count": 5, "hint": "LOC_SOUTH_GRASS" }
+      ],
+      "rewards": { "exp": 450, "sp": 1, "gold": 300, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_01_AA_B", "count": 1 }] },
+      "dialog": {
+        "offer": "You want to see the ghosts? Walk south past the millet fields at dusk. The small-eyed ones are harmless. Mostly. The big-eyed ones are not. If you live, tell Priest Jeonghye at the temple. She hasn't been sleeping either.",
+        "progress": "You have the look of someone who hasn't finished what they started.",
+        "complete": "Sochil sent you? Then the whole market knows. ...Yes. The dead are restless, and it is my fault. Sit down, {name}. I will tell you what I have told no one."
+      }
+    },
+    {
+      "id": "JG_006", "title": "Ash Beads", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 3,
+      "giver": "NPC_CH_PRIEST", "turnIn": "NPC_CH_PRIEST", "requires": { "quests": ["JG_005"] },
+      "summary": "Gather ghost ash so the priest can make calming beads for the guards.",
+      "objectives": [
+        { "id": "ash", "type": "collect", "item": "QITEM_GHOST_ASH", "count": 8, "from": [{ "mob": "MOB_CH_BIGEYEGHOST_CLON", "chance": 0.35 }, { "mob": "MOB_CH_BIGEYEGHOST", "chance": 0.5 }], "hint": "LOC_SOUTH_GRASS" }
+      ],
+      "rewards": { "exp": 350, "sp": 1, "gold": 300, "items": [{ "item": "ITEM_CH_EARRING_01_A", "count": 1 }] },
+      "dialog": {
+        "offer": "When a restless spirit fades, it leaves ash behind. Strung on prayer beads, that ash can calm others of its kind. Bring me eight handfuls and I'll make beads for the gate guards. It will buy us time.",
+        "progress": "Eight handfuls of ghost ash. Gather it before the wind does.",
+        "complete": "Enough for a dozen strings. The guards will laugh at the beads until the first night they need them. Thank you."
+      }
+    },
+    {
+      "id": "JG_007", "title": "A Blade Worth Carrying", "chapter": "Act I: A Stranger at the Gate", "kind": "side", "level": 4,
+      "giver": "NPC_CH_SMITH", "turnIn": "NPC_CH_SMITH",
+      "summary": "Bring Blacksmith Chulsan old weasel claws and choose a new weapon.",
+      "objectives": [
+        { "id": "claws", "type": "collect", "item": "QITEM_WEASEL_CLAW", "count": 8, "from": [{ "mob": "MOB_CH_GYO_CLON", "chance": 0.45 }], "hint": "LOC_EAST_GRASS" }
+      ],
+      "rewards": {
+        "exp": 700, "sp": 1, "gold": 0,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_01_C" }, { "item": "ITEM_CH_BLADE_01_C" }, { "item": "ITEM_CH_SPEAR_01_C" },
+          { "item": "ITEM_CH_TBLADE_01_C" }, { "item": "ITEM_CH_BOW_01_C" }, { "item": "ITEM_CH_SHIELD_01_C" }
+        ]
+      },
+      "dialog": {
+        "offer": "That starter weapon of yours bends if you look at it hard. The old weasels in the eastern grass have claws like flint. Ground fine, they're the best polishing grit there is. Bring me eight and I'll give you a weapon that deserves the name.",
+        "progress": "Eight claws. Old weasels, not young ones. The young ones' claws are soft as cheese.",
+        "complete": "Ha! Look at the edge on these. As promised, take your pick from the rack."
+      }
+    },
+    {
+      "id": "JG_008", "title": "The Stolen Seal", "chapter": "Act I: A Stranger at the Gate", "kind": "main", "level": 5,
+      "giver": "NPC_CH_PRIEST", "turnIn": "NPC_CH_PRIEST", "requires": { "quests": ["JG_006"] },
+      "summary": "Search the old tiger shrine and the weasel dens for traces of the thief.",
+      "objectives": [
+        { "id": "shrine", "type": "reach", "location": "LOC_OLD_SHRINE", "label": "Search the Old Tiger Shrine" },
+        { "id": "weasels", "type": "kill", "mobs": ["MOB_CH_GYO"], "count": 10, "hint": "LOC_OLD_SHRINE" },
+        { "id": "pouch", "type": "collect", "item": "QITEM_SILK_POUCH", "count": 1, "from": [{ "mob": "MOB_CH_GYO", "chance": 0.25 }], "hint": "LOC_OLD_SHRINE" }
+      ],
+      "rewards": { "exp": 1400, "sp": 2, "gold": 800, "items": [{ "item": "ITEM_CH_NECKLACE_01_A", "count": 1 }, { "item": "ITEM_ETC_HP_POTION_02", "count": 10 }] },
+      "dialog": {
+        "offer": "Twenty nights ago the temple's Jade Tiger Seal was stolen. It is older than Jangan, and it keeps a certain spirit on Tiger Mountain asleep. The thief ran east, toward the old tiger shrine on the slope of Ye Mountain. The weasels there drag off anything that shines. Search the shrine, and search the weasels.",
+        "progress": "Look at the old shrine, and look inside the weasel dens. Anything the thief dropped matters.",
+        "complete": "A silk pouch... and inside, bone dust. Tiger bone. This was no common thief, {name}. Whoever took the Seal knows exactly what it guards."
+      }
+    },
+    {
+      "id": "JG_009", "title": "The Exorcist Beyond the Wall", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 6,
+      "giver": "NPC_CH_PRIEST", "turnIn": "NPC_CH_SHAMAN", "requires": { "quests": ["JG_008"] },
+      "summary": "Carry the priest's letter to Exorcist Miaoryeong, west of town.",
+      "giveOnAccept": [{ "item": "QITEM_PRIEST_LETTER", "count": 1 }],
+      "objectives": [
+        {
+          "id": "letter", "type": "deliver", "npc": "NPC_CH_SHAMAN", "item": "QITEM_PRIEST_LETTER", "count": 1,
+          "text": "A letter from the temple? She must be desperate. ...The Seal? Stolen? That woman guards one stone for forty years and loses it in a night."
+        }
+      ],
+      "rewards": { "exp": 600, "sp": 1, "gold": 500, "items": [{ "item": "ITEM_ETC_SCROLL_RETURN_01", "count": 2 }] },
+      "dialog": {
+        "offer": "I need someone who knows more about the dead than I do, and it pains me to say who. Exorcist Miaoryeong lives past the west gate, where the grassland meets Yeoha's Forest. The yeoha have taken the forest edge, so these days she keeps watch at the river bridge instead of her hut. She and I disagree about most things. Take her this letter. Do not read it.",
+        "progress": "Follow the road west out of town to the river bridge. Miaoryeong stands on this side of it, glaring at the forest.",
+        "complete": "Fine. I'll help, but not for her sake. For Jangan's. And you, errand-runner, will be my hands."
+      }
+    },
+    {
+      "id": "JG_010", "title": "Salt for the Swamp", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 6,
+      "giver": "NPC_CH_SHAMAN", "turnIn": "NPC_CH_SHAMAN", "requires": { "quests": ["JG_009"] },
+      "summary": "Cut down water ghost slaves in the swamp north-west of town, and bring the exorcist some potions.",
+      "objectives": [
+        { "id": "slaves", "type": "kill", "mobs": ["MOB_CH_WATERGHOST_CLON"], "count": 12, "hint": "LOC_SWAMP_HEART" },
+        { "id": "potions", "type": "have", "item": "ITEM_ETC_HP_POTION_02", "count": 5, "consume": true, "label": "Bring 5 HP Recovery Potions (Small)" }
+      ],
+      "rewards": { "exp": 1400, "sp": 2, "gold": 700, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_01_SA_C", "count": 1 }] },
+      "dialog": {
+        "offer": "The swamp north-west of town, a short walk up this bank, is choking on its dead. Water ghost slaves, chained to whatever drowned them. Cut down twelve. It won't free them, but it will thin the chorus so I can hear what the swamp is saying. And bring me five small healing potions. I'm out, and I'm not walking to town.",
+        "progress": "Twelve slaves, five potions. The swamp is just north of this bridge, on our side of the river. Don't fall in.",
+        "complete": "Better. The water is quieter now. Now I can listen."
+      }
+    },
+    {
+      "id": "JG_011", "title": "Drowned Lanterns", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 7,
+      "giver": "NPC_CH_SHAMAN", "turnIn": "NPC_CH_SHAMAN", "requires": { "quests": ["JG_010"] },
+      "summary": "Take the lanterns that the water ghosts still carry.",
+      "objectives": [
+        { "id": "lanterns", "type": "collect", "item": "QITEM_DROWNED_LANTERN", "count": 8, "from": [{ "mob": "MOB_CH_WATERGHOST", "chance": 0.4 }], "hint": "LOC_SWAMP_HEART" }
+      ],
+      "rewards": { "exp": 1800, "sp": 3, "gold": 800, "choice": [{ "item": "ITEM_ETC_HP_POTION_02", "count": 15 }, { "item": "ITEM_ETC_MP_POTION_02", "count": 15 }] },
+      "dialog": {
+        "offer": "The water ghosts carry lanterns: the last light they saw before the water closed over them. I need eight. Each one holds a memory, and I intend to read them.",
+        "progress": "Eight lanterns. Keep them dry, if that's even possible.",
+        "complete": "Cold as the grave, all of them. Good. Now for the hard part."
+      }
+    },
+    {
+      "id": "JG_012", "title": "What the Water Remembers", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 7,
+      "giver": "NPC_CH_SHAMAN", "turnIn": "NPC_CH_SHAMAN", "requires": { "quests": ["JG_011"] },
+      "summary": "Scatter the Spirit Salt at the heart of the swamp and watch what the water shows.",
+      "giveOnAccept": [{ "item": "QITEM_SPIRIT_SALT", "count": 1 }],
+      "objectives": [
+        {
+          "id": "salt", "type": "useItem", "item": "QITEM_SPIRIT_SALT", "location": "LOC_SWAMP_HEART", "consume": true,
+          "label": "Scatter the Spirit Salt at the Heart of the Swamp",
+          "text": "The water stills. Shapes rise from it: men in tiger masks wading east with a bundle of bones, and behind them a woman whose shadow has a tail."
+        }
+      ],
+      "rewards": { "exp": 1500, "sp": 3, "gold": 800, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_01_FA_C", "count": 1 }, { "item": "ITEM_CH_{G}_{ARMOR}_01_HA_C", "count": 1 }, { "item": "ITEM_ETC_HP_POTION_02", "count": 20 }] },
+      "dialog": {
+        "offer": "I've salted the lanterns' memories into this jar. Scatter it at the heart of the swamp and the water will show you what it saw the night the Seal was stolen. You'll feel sick. Don't let go of the jar.",
+        "progress": "The heart of the swamp. Scatter the salt, then come back and tell me everything.",
+        "complete": "Tiger masks, bones, and a woman with a tail for a shadow. Grave robbers, then, working for something that isn't human. The old tombs east of here are full of tiger-bone talismans. That's where they went. Those tombs bite, so put this on your head and take these potions. I'd rather not bury my errand-runner."
+      }
+    },
+    {
+      "id": "JG_013", "title": "Grave Matters", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 9,
+      "giver": "NPC_CH_SHAMAN", "turnIn": "NPC_CH_INDIA", "requires": { "quests": ["JG_012"] },
+      "summary": "Put the stone guardians of the Qin-Shi Tomb back to sleep, then find Priest Kushyan.",
+      "objectives": [
+        { "id": "tombghosts", "type": "kill", "mobs": ["MOB_CH_TOMBSTONE_CLON"], "count": 10, "hint": "LOC_QIN_GATE" },
+        { "id": "brokenstones", "type": "kill", "mobs": ["MOB_CH_STONEGHOST_CLON"], "count": 8, "hint": "LOC_QIN_GATE" }
+      ],
+      "rewards": { "exp": 6000, "sp": 10, "gold": 1500, "items": [{ "item": "ITEM_CH_EARRING_01_C", "count": 1 }] },
+      "dialog": {
+        "offer": "The entrance of the Qin-Shi Tomb, northeast of town. The robbers woke the stone guardians when they dug. Put them back to sleep with your weapon, since they don't listen to prayers. They stand in fives, and the broken ones wake at a footstep. I salted the stones of the pack right at the entrance, so they only fight when struck: start there, and take the others from the edge of their group, one or two at a time. Then find Priest Kushyan in town. He's a scholar of burial rites from the far west, and he has been sketching those tombs for a year.",
+        "progress": "The stone guardians won't sleep on their own. Start with the salted pack at the entrance, and don't walk into the middle of a group.",
+        "complete": "Miaoryeong sent you to me? She once told me my sketches were a waste of paper. ...The stone guardians are awake, you say. Then the robbers opened the inner graves. That is very bad news, my friend."
+      }
+    },
+    {
+      "id": "JG_014", "title": "Talismans of Bone", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 10,
+      "giver": "NPC_CH_INDIA", "turnIn": "NPC_CH_INDIA", "requires": { "quests": ["JG_013"] },
+      "summary": "Recover the tiger-bone talismans the robbers left behind in the tombs.",
+      "objectives": [
+        { "id": "talismans", "type": "collect", "item": "QITEM_TIGER_TALISMAN", "count": 6, "from": [{ "mob": "MOB_CH_STONEGHOST", "chance": 0.35 }], "hint": "LOC_QIN_GATE" }
+      ],
+      "rewards": {
+        "exp": 3600, "sp": 6, "gold": 1500,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_02_A" }, { "item": "ITEM_CH_BLADE_02_A" }, { "item": "ITEM_CH_SPEAR_02_A" },
+          { "item": "ITEM_CH_TBLADE_02_A" }, { "item": "ITEM_CH_BOW_02_A" }, { "item": "ITEM_CH_SHIELD_02_A" }
+        ]
+      },
+      "dialog": {
+        "offer": "The old kings were buried with talismans carved from tiger bone. The robbers dropped some in their hurry, and now the stone ghosts carry them like treasure. Bring me six, and I'll tell you what they were for.",
+        "progress": "Six talismans. Look for the carving of a tiger swallowing the moon.",
+        "complete": "Look at the carving: a tiger swallowing the moon. These are not grave goods. They are keys. Enough of them in one place would wake the Tiger of the Mountain, and someone is gathering them. Take this news to Gwakwi at the hunters' lodge. He tracks everything that walks."
+      }
+    },
+    {
+      "id": "JG_S01", "title": "A Letter from Afar", "chapter": "Act II: The Restless Dead", "kind": "side", "level": 6,
+      "giver": "NPC_CH_EUROPE", "turnIn": "NPC_CH_ISLAM",
+      "summary": "Deliver Flora's letter to the merchant Ishyak, who is standing suspiciously close by.",
+      "giveOnAccept": [{ "item": "QITEM_FLORA_LETTER", "count": 1 }],
+      "objectives": [
+        {
+          "id": "letter", "type": "deliver", "npc": "NPC_CH_ISLAM", "item": "QITEM_FLORA_LETTER", "count": 1,
+          "text": "From Flora? No coins in here. Only an apology... and a very good poem. Hm. Tell her the debt can wait. The poem cannot."
+        }
+      ],
+      "rewards": { "exp": 700, "sp": 1, "gold": 1000, "items": [{ "item": "ITEM_ETC_ALL_POTION_01", "count": 10 }] },
+      "dialog": {
+        "offer": "You look like someone who walks places. I have a letter for Ishyak, the merchant. He's standing right over there. No, don't look! I owe him money, and I'd rather not be there for that conversation.",
+        "progress": "He's right there. Forty paces, no more. Go on.",
+        "complete": "Take this for your trouble. Flora's poems are worth more than her promises."
+      }
+    },
+    {
+      "id": "JG_S02", "title": "Mrs Jang's Order", "chapter": "Act II: The Restless Dead", "kind": "side", "level": 8,
+      "giver": "NPC_CH_ARMOR", "turnIn": "NPC_CH_ARMOR",
+      "summary": "Bring Mrs Jang ten weasel pelts for her winter linings.",
+      "objectives": [
+        { "id": "pelts", "type": "collect", "item": "QITEM_WEASEL_PELT", "count": 10, "from": [{ "mob": "MOB_CH_GYO", "chance": 0.4 }], "hint": "LOC_OLD_SHRINE" }
+      ],
+      "rewards": { "exp": 3950, "sp": 7, "gold": 600, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_02_SA_A", "count": 1 }] },
+      "dialog": {
+        "offer": "Winter orders are coming in, and I'm short on weasel pelts for lining. Ten good pelts, dear, and I'll fit you with something from the new stock. You look like you could use it.",
+        "progress": "Ten pelts, dear. Soft ones.",
+        "complete": "Soft as a cat. Here, try this on. No, it doesn't make you look slow."
+      }
+    },
+    {
+      "id": "JG_015", "title": "Tracks in Yeoha's Forest", "chapter": "Act II: The Restless Dead", "kind": "main", "level": 10,
+      "giver": "NPC_CH_GENARAL_SW", "turnIn": "NPC_CH_GENARAL", "requires": { "quests": ["JG_014"] },
+      "summary": "Find the robbers' camp in Yeoha's Forest, then report to General Sonhyeon.",
+      "objectives": [
+        { "id": "camp", "type": "reach", "location": "LOC_YEOHA_CAMP", "label": "Find the robbers' camp" },
+        { "id": "yeoha", "type": "kill", "mobs": ["MOB_CH_YEOHA"], "count": 8, "hint": "LOC_YEOHA_CAMP" },
+        { "id": "decayed", "type": "kill", "mobs": ["MOB_CH_YEOHA_CLON"], "count": 8, "hint": "LOC_YEOHA_CAMP" }
+      ],
+      "rewards": { "exp": 5400, "sp": 9, "gold": 3000, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_01_BA_C", "count": 1 }, { "item": "ITEM_CH_NECKLACE_01_C", "count": 1 }] },
+      "dialog": {
+        "offer": "Grave robbers, eh? My hunters found a cold camp in Yeoha's Forest, west across the exorcist's bridge. Boot prints, bone chips, and yeoha everywhere. Those fox-women flock to death like crows. Go and look. Kill what bites. Then report to General Sonhyeon. This is army business now.",
+        "progress": "Report what you found. Clearly, if you please.",
+        "complete": "Gwakwi's hunters found a robbers' camp, and he sends a stranger to tell me? ...Very well. Your report is clear, and clear reports are rare. The trail leads to the bandits of the southwest hills. I have a use for you."
+      }
+    },
+    {
+      "id": "JG_016", "title": "Cut the Supply Line", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 11,
+      "giver": "NPC_CH_GENARAL", "turnIn": "NPC_CH_GENARAL", "requires": { "quests": ["JG_015"] },
+      "summary": "Break the bandits' supply trail west of Yeoha's Forest.",
+      "objectives": [
+        { "id": "subordinates", "type": "kill", "mobs": ["MOB_CH_BANDIT_CLON"], "count": 15, "hint": "LOC_BANDIT_TRAIL" }
+      ],
+      "rewards": {
+        "exp": 10500, "sp": 18, "gold": 3500,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_02_B" }, { "item": "ITEM_CH_BLADE_02_B" }, { "item": "ITEM_CH_SPEAR_02_B" },
+          { "item": "ITEM_CH_TBLADE_02_B" }, { "item": "ITEM_CH_BOW_02_B" }, { "item": "ITEM_CH_SHIELD_02_B" }
+        ]
+      },
+      "dialog": {
+        "offer": "The bandits of the southwest hills have grown fat on our caravans, and fatter on whatever coin buys stolen tiger bone. Their subordinates run the supply trails west of Yeoha's Forest. Fifteen fewer of them, and the rest will go hungry.",
+        "progress": "Fifteen. I can count, soldier.",
+        "complete": "Fifteen. My own patrols couldn't manage five this month. You'll have a soldier's pay for it."
+      }
+    },
+    {
+      "id": "JG_017", "title": "Hwajung's Missing Caravan", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 12,
+      "giver": "NPC_CH_DOCTOR", "turnIn": "NPC_CH_DOCTOR", "requires": { "quests": ["JG_016"] },
+      "summary": "Take back the silk the bandits stole from Hwajung's caravan.",
+      "objectives": [
+        { "id": "silk", "type": "collect", "item": "QITEM_SILK_BOLT", "count": 6, "from": [{ "mob": "MOB_CH_BANDITARCHER", "chance": 0.35 }, { "mob": "MOB_CH_BANDIT_CLON", "chance": 0.25 }], "hint": "LOC_ARCHER_CAMP" }
+      ],
+      "rewards": { "exp": 8500, "sp": 14, "gold": 5000, "items": [{ "item": "ITEM_CH_RING_02_B", "count": 1 }] },
+      "dialog": {
+        "offer": "Three wagons of Jangan silk, gone on the southwest road. The Association will have my head. The archers who ambushed us wear my silk as sashes now. Can you believe it? Bring back six bolts. Even stained ones.",
+        "progress": "Six bolts. The archers wear them like trophies, so look for the ones dressed best.",
+        "complete": "Stained, torn... and mine. The Association will still have my head, but perhaps only half of it. Thank you."
+      }
+    },
+    {
+      "id": "JG_S03", "title": "Juho's Wager", "chapter": "Act III: The Bandit Road", "kind": "side", "level": 12,
+      "giver": "NPC_CH_GENARAL_BO", "turnIn": "NPC_CH_GENARAL_BO",
+      "summary": "Beat the mercenary Juho at his own bet: twenty bandit archers.",
+      "objectives": [
+        { "id": "archers", "type": "kill", "mobs": ["MOB_CH_BANDITARCHER"], "count": 20, "hint": "LOC_ARCHER_CAMP" }
+      ],
+      "rewards": { "exp": 6000, "sp": 10, "gold": 2500, "items": [{ "item": "ITEM_CH_EARRING_02_B", "count": 1 }] },
+      "dialog": {
+        "offer": "Name's Juho. Sword for hire, bets on the side. I say I can drop more bandit archers than you before the week is out. Twenty. Loser buys the wine. ...What do you get if you win? You won't.",
+        "progress": "How many so far? Doesn't matter, I'm ahead.",
+        "complete": "Twenty already? I'm at... well, never mind what I'm at. Here. A bet's a bet, and this beats wine."
+      }
+    },
+    {
+      "id": "JG_018", "title": "Fengil's Lost Patrol", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 13,
+      "giver": "NPC_CH_SOLDIER_EM2", "turnIn": "NPC_CH_SOLDIER_EM2", "requires": { "quests": ["JG_016"] },
+      "summary": "Find the camp of Fengil's missing patrol on North-Tiger Mountain and bring back their tags.",
+      "objectives": [
+        { "id": "camp", "type": "reach", "location": "LOC_PATROL_AMBUSH", "label": "Find the patrol's camp" },
+        { "id": "tags", "type": "collect", "item": "QITEM_PATROL_TAG", "count": 4, "from": [{ "mob": "MOB_CH_TIGER_CLON", "chance": 0.35 }], "hint": "LOC_PATROL_AMBUSH" }
+      ],
+      "rewards": { "exp": 18500, "sp": 31, "gold": 5000, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_02_BA_A", "count": 1 }] },
+      "dialog": {
+        "offer": "You remember me? Fengil, from the gate. My old patrol went up North-Tiger Mountain a week ago to scout the bandits. None came back. Young tigers have been seen wearing... things. Find where they camped. Bring back their tags. Please.",
+        "progress": "Four tags. I have to know.",
+        "complete": "Four tags. Four friends. ...Thank you for bringing them home, {name}. Their families will have these, and the General will hear how they died."
+      }
+    },
+    {
+      "id": "JG_019", "title": "Stripes on the Road", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 14,
+      "giver": "NPC_CH_GENARAL_SW", "turnIn": "NPC_CH_GENARAL_SW", "requires": { "quests": ["JG_018"] },
+      "summary": "Drive back the tigers that have gone mad on North-Tiger Mountain.",
+      "objectives": [
+        { "id": "tigers", "type": "kill", "mobs": ["MOB_CH_TIGER"], "count": 12, "hint": "LOC_TIGER_SLOPE" },
+        { "id": "young", "type": "kill", "mobs": ["MOB_CH_TIGER_CLON"], "count": 8, "hint": "LOC_TIGER_SLOPE" }
+      ],
+      "rewards": {
+        "exp": 15000, "sp": 25, "gold": 5500,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_02_C" }, { "item": "ITEM_CH_BLADE_02_C" }, { "item": "ITEM_CH_SPEAR_02_C" },
+          { "item": "ITEM_CH_TBLADE_02_C" }, { "item": "ITEM_CH_BOW_02_C" }, { "item": "ITEM_CH_SHIELD_02_C" }
+        ]
+      },
+      "dialog": {
+        "offer": "Tigers don't hunt soldiers. Not unless something is driving them. The whole mountain has gone mad since your robbers started digging. My hunters won't go up there. You will. Twelve grown tigers and a few young ones, and the road breathes again.",
+        "progress": "The mountain's still growling. I can hear it from here.",
+        "complete": "The lodge owes you. Take this: my grandfather's pattern, rebuilt in Chulsan's smithy. It has never missed a tiger yet."
+      }
+    },
+    {
+      "id": "JG_S04", "title": "Strings for a Zither", "chapter": "Act III: The Bandit Road", "kind": "side", "level": 14,
+      "giver": "NPC_CH_KISAENG1", "turnIn": "NPC_CH_KISAENG1",
+      "summary": "Bring Gisaeng So-Ok tiger whiskers to restring her zither.",
+      "objectives": [
+        { "id": "whiskers", "type": "collect", "item": "QITEM_TIGER_WHISKER", "count": 8, "from": [{ "mob": "MOB_CH_TIGER", "chance": 0.4 }, { "mob": "MOB_CH_TIGER_CLON", "chance": 0.3 }], "hint": "LOC_TIGER_SLOPE" }
+      ],
+      "rewards": { "exp": 8500, "sp": 14, "gold": 3000, "items": [{ "item": "ITEM_CH_NECKLACE_02_B", "count": 1 }] },
+      "dialog": {
+        "offer": "My zither lost two strings at the spring festival, and silk ones sound like wet rope. The old masters strung theirs with tiger whiskers. Eight would do. I'd play the first song for you, of course.",
+        "progress": "Eight whiskers. The tigers won't mind. Much.",
+        "complete": "Listen. ...Hear how bright that is? That note is yours, {name}. Come to the pavilion some evening."
+      }
+    },
+    {
+      "id": "JG_020", "title": "The Masked Buyer", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 15,
+      "giver": "NPC_CH_BEGGARBOY", "turnIn": "NPC_CH_MOONSHADOW", "requires": { "quests": ["JG_019"] },
+      "summary": "Take the bowmen's ledger and bring it to WalYoung, who can read bandit cipher.",
+      "objectives": [
+        { "id": "bowmen", "type": "kill", "mobs": ["MOB_CH_BANDITARCHER_CLON"], "count": 10, "hint": "LOC_BOWMEN_RIDGE" },
+        { "id": "ledger", "type": "collect", "item": "QITEM_BANDIT_LEDGER", "count": 1, "from": [{ "mob": "MOB_CH_BANDITARCHER_CLON", "chance": 0.2 }], "hint": "LOC_BOWMEN_RIDGE" }
+      ],
+      "rewards": { "exp": 29000, "sp": 48, "gold": 7000, "items": [{ "item": "ITEM_CH_RING_02_C", "count": 1 }, { "item": "ITEM_ETC_SCROLL_RETURN_02", "count": 1 }] },
+      "dialog": {
+        "offer": "Heard something worth a whole basket of buns. The bandit bowmen up on the ridge keep a ledger. Every tiger bone they sell, they write it down. And the buyer? A masked woman who pays in jade. Get the ledger, then take it to WalYoung, the quiet one who reads by moonlight near the Chief's house. Nobody else in Jangan can read bandit cipher.",
+        "progress": "Do you have the ledger? Give it here, and quietly.",
+        "complete": "Sochil talks too much, but his instincts are good. Give me the ledger. ...Yes. A moon cipher, the kind the hill clans use. This will take me a little while. Ask the General to strike while I read."
+      }
+    },
+    {
+      "id": "JG_021", "title": "Storm the Stronghold", "chapter": "Act III: The Bandit Road", "kind": "main", "level": 16,
+      "giver": "NPC_CH_GENARAL", "turnIn": "NPC_CH_GENARAL", "requires": { "quests": ["JG_020"] },
+      "summary": "Break the bandit line and reach the gate of their mountain stronghold.",
+      "objectives": [
+        { "id": "bandits", "type": "kill", "mobs": ["MOB_CH_BANDIT"], "count": 20, "hint": "LOC_STRONGHOLD" },
+        { "id": "gate", "type": "reach", "location": "LOC_STRONGHOLD", "label": "Reach the stronghold gate" }
+      ],
+      "rewards": { "exp": 38500, "sp": 64, "gold": 8000, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_03_AA_A", "count": 1 }] },
+      "dialog": {
+        "offer": "WalYoung tells me the bandits are the hands, not the head. Fine. We cut off the hands. Their stronghold sits high in the southwest hills. Break their line, walk through their gate, and let them see Jangan's banner behind you.",
+        "progress": "The stronghold still stands. Do something about that.",
+        "complete": "The stronghold is burning and the bandits are scattering into the hills. Well done, soldier. Whatever they were buying bone for, they won't be buying more."
+      }
+    },
+    {
+      "id": "JG_022", "title": "The Cipher of Bones", "chapter": "Act IV: The Tiger Girl", "kind": "main", "level": 17,
+      "giver": "NPC_CH_MOONSHADOW", "turnIn": "NPC_CH_SHAMAN", "requires": { "quests": ["JG_021"] },
+      "summary": "Clear the black tigers from the path, and bring WalYoung's reading to Miaoryeong.",
+      "objectives": [
+        { "id": "blacktigers", "type": "kill", "mobs": ["MOB_CH_WHITETIGER_CLON"], "count": 12, "hint": "LOC_BLACK_TIGERS" }
+      ],
+      "rewards": {
+        "exp": 48500, "sp": 81, "gold": 9000,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_03_A" }, { "item": "ITEM_CH_BLADE_03_A" }, { "item": "ITEM_CH_SPEAR_03_A" },
+          { "item": "ITEM_CH_TBLADE_03_A" }, { "item": "ITEM_CH_BOW_03_A" }, { "item": "ITEM_CH_SHIELD_03_A" }
+        ]
+      },
+      "dialog": {
+        "offer": "The ledger is read. The buyer signs herself 'the Daughter of the Mountain'. The bones went up to the heights of North-Tiger Mountain, and the black tigers guard that path now. The exorcist should hear this before anyone else. Clear the path on your way.",
+        "progress": "The black tigers still hold the path. And Miaoryeong is waiting.",
+        "complete": "The Daughter of the Mountain. I hoped I was wrong. There is an old story about a woman who made a bargain with the tiger spirit and never got her body back. The hunters call her the Tiger Girl. With the Seal gone and the bones gathered, she is waking fully."
+      }
+    },
+    {
+      "id": "JG_023", "title": "Fangs for a Bell", "chapter": "Act IV: The Tiger Girl", "kind": "main", "level": 18,
+      "giver": "NPC_CH_SHAMAN", "turnIn": "NPC_CH_SMITH", "requires": { "quests": ["JG_022"] },
+      "summary": "Tell Priest Jeonghye what you learned, and bring white tiger fangs to Chulsan.",
+      "objectives": [
+        {
+          "id": "priest", "type": "talk", "npc": "NPC_CH_PRIEST", "label": "Tell Priest Jeonghye about the Tiger Girl",
+          "text": "The Tiger Girl... then the Seal is in her hands. She could not bear to leave it with us. If you face her, {name}, bring it back to me. Please."
+        },
+        { "id": "fangs", "type": "collect", "item": "QITEM_WHITE_FANG", "count": 8, "from": [{ "mob": "MOB_CH_WHITETIGER", "chance": 0.35 }], "hint": "LOC_WHITE_TIGERS" }
+      ],
+      "rewards": { "exp": 59500, "sp": 99, "gold": 10000, "items": [{ "item": "ITEM_CH_{G}_{ARMOR}_02_BA_C", "count": 1 }, { "item": "ITEM_CH_EARRING_03_A", "count": 1 }] },
+      "dialog": {
+        "offer": "A spirit that wears a tiger can be bound by a tiger's own voice. A bell cast with white tiger fangs rings a note she cannot ignore. The white tigers roam the far side of the mountain. Bring eight fangs to Chulsan the smith. He owes me a favour, and he knows it. But tell Jeonghye first. She deserves to hear it from you.",
+        "progress": "Eight fangs. And don't forget the priest.",
+        "complete": "Miaoryeong wants a bell cast from fangs? That woman... Fine. Fine! I'll need iron that doesn't crack in the cold, though. And I know exactly where you'll find it."
+      }
+    },
+    {
+      "id": "JG_024", "title": "The Bell-Maker's Price", "chapter": "Act IV: The Tiger Girl", "kind": "main", "level": 19,
+      "giver": "NPC_CH_SMITH", "turnIn": "NPC_CH_SMITH", "requires": { "quests": ["JG_023"] },
+      "summary": "Bring Chulsan iron shards from the chakji workers on the western ferry road.",
+      "objectives": [
+        { "id": "shards", "type": "collect", "item": "QITEM_CHAKJI_SHARD", "count": 8, "from": [{ "mob": "MOB_CH_CHAKJI_CLON", "chance": 0.4 }], "hint": "LOC_CHAKJI_ROAD" }
+      ],
+      "rewards": { "exp": 30000, "sp": 50, "gold": 10000, "items": [{ "item": "ITEM_CH_RING_03_B", "count": 1 }] },
+      "dialog": {
+        "offer": "The chakji workers out on the western ferry road carry iron in their hides. They eat it, gods know why. That iron holds a note like nothing else. Eight shards. I'll have the forge hot when you get back.",
+        "progress": "The forge is hot. Where's my iron?",
+        "complete": "Fangs and chakji iron. Listen to it... every dog in Jangan just started howling. Come back when you're ready to use it. A bell like this shouldn't sit in a shop."
+      }
+    },
+    {
+      "id": "JG_025", "title": "Night on Tiger Mountain", "chapter": "Act IV: The Tiger Girl", "kind": "main", "level": 19,
+      "giver": "NPC_CH_SMITH", "turnIn": "NPC_CH_PRIEST", "requires": { "quests": ["JG_024"] },
+      "party": true,
+      "summary": "Ring the Binding Bell at the Tiger Mountain Shrine, defeat the Tiger Girl and recover the Jade Tiger Seal. Bring friends.",
+      "giveOnAccept": [{ "item": "QITEM_BINDING_BELL", "count": 1 }],
+      "objectives": [
+        {
+          "id": "bell", "type": "useItem", "item": "QITEM_BINDING_BELL", "location": "LOC_TIGER_SHRINE", "consume": false,
+          "label": "Ring the Binding Bell at the Tiger Mountain Shrine",
+          "text": "The bell's note rolls down the mountain. Every tiger falls silent. Then something laughs, low and close.",
+          "encounter": { "mob": "MOB_CH_TIGERWOMAN", "count": 1, "hpMul": 0.05, "expMul": 0.1, "attackMul": 0.8, "despawnSec": 600, "cooldownSec": 120 }
+        },
+        { "id": "tigergirl", "type": "kill", "mobs": ["MOB_CH_TIGERWOMAN"], "count": 1, "after": "bell", "label": "Defeat the Tiger Girl", "hint": "LOC_TIGER_SHRINE" },
+        { "id": "seal", "type": "collect", "item": "QITEM_JADE_SEAL", "count": 1, "after": "bell", "from": [{ "mob": "MOB_CH_TIGERWOMAN", "chance": 1 }], "label": "Recover the Jade Tiger Seal", "hint": "LOC_TIGER_SHRINE" }
+      ],
+      "rewards": {
+        "exp": 36000, "sp": 60, "gold": 15000,
+        "choice": [
+          { "item": "ITEM_CH_SWORD_03_B" }, { "item": "ITEM_CH_BLADE_03_B" }, { "item": "ITEM_CH_SPEAR_03_B" },
+          { "item": "ITEM_CH_TBLADE_03_B" }, { "item": "ITEM_CH_BOW_03_B" }, { "item": "ITEM_CH_SHIELD_03_B" }
+        ]
+      },
+      "dialog": {
+        "offer": "Here's your bell. Ring it at the Tiger Mountain Shrine, high on North-Tiger Mountain, where the bones were carried. She will come. Don't go alone, {name}. Take friends, as many as will follow you.",
+        "progress": "Is it done? The Seal... do you have the Seal?",
+        "complete": "The Jade Tiger Seal. Warm, as if someone held it for a long time. ...She was not always a monster, you know. The Seal will keep her sleeping again, for a while. Nothing on that mountain sleeps forever."
+      }
+    },
+    {
+      "id": "JG_026", "title": "Dawn over Jangan", "chapter": "Act IV: The Tiger Girl", "kind": "main", "level": 19,
+      "giver": "NPC_CH_PRIEST", "turnIn": "NPC_CH_CHEF", "requires": { "quests": ["JG_025"] },
+      "summary": "Tell Village Chief Hwangno that the mountain is quiet.",
+      "objectives": [],
+      "rewards": { "exp": 6000, "sp": 10, "gold": 20000, "items": [{ "item": "ITEM_CH_NECKLACE_03_A", "count": 1 }, { "item": "ITEM_CH_{G}_{ARMOR}_03_HA_A", "count": 1 }] },
+      "dialog": {
+        "offer": "Go to Chief Hwangno. Tell him the mountain is quiet. He'll pretend he wasn't worried.",
+        "progress": "The Chief is waiting. He won't admit it.",
+        "complete": "So the stranger Fengil sent me turned out to be worth the tea. Jangan owes you, {name}. The whole town knows your name now. Even Sochil says it without adding an insult. Take this, and come back often. Trouble always does."
+      }
+    },
+    {
+      "id": "JG_R01", "title": "Grassland Patrol", "chapter": "Jangan Notice Board", "kind": "repeatable", "level": 1, "maxLevel": 9,
+      "giver": "NPC_CH_SOLDIER_EM2", "turnIn": "NPC_CH_SOLDIER_EM2", "requires": { "quests": ["JG_002"] },
+      "repeat": { "reset": "daily" },
+      "summary": "Daily: clear twenty beasts from the grassland east of Jangan.",
+      "objectives": [
+        { "id": "beasts", "type": "kill", "mobs": ["MOB_CH_MANGNYANG", "MOB_CH_BIGEYEGHOST_CLON", "MOB_CH_BIGEYEGHOST", "MOB_CH_GYO_CLON", "MOB_CH_GYO"], "count": 20, "label": "Grassland beasts slain", "hint": "LOC_EAST_GRASS" }
+      ],
+      "rewards": { "exp": 0, "expPctOfLevel": 5, "sp": 2, "gold": 200, "items": [{ "item": "ITEM_ETC_HP_POTION_01", "count": 5 }] },
+      "dialog": {
+        "offer": "The grass never stops growing, and neither do the pests in it. Twenty beasts from the grassland east of town and the patrol log stays tidy. Come back tomorrow and I'll have the same list.",
+        "progress": "Twenty. The log doesn't fill itself.",
+        "complete": "Tidy log, happy captain. Same time tomorrow?"
+      }
+    },
+    {
+      "id": "JG_R02", "title": "Reeds for the Remedy", "chapter": "Jangan Notice Board", "kind": "repeatable", "level": 6, "maxLevel": 14,
+      "giver": "NPC_CH_POTION", "turnIn": "NPC_CH_POTION", "requires": { "quests": ["JG_010"] },
+      "repeat": { "reset": "daily" },
+      "summary": "Daily: gather swamp reeds for Yangyun's fever remedy.",
+      "objectives": [
+        { "id": "reeds", "type": "collect", "item": "QITEM_SWAMP_REED", "count": 10, "from": [{ "mob": "MOB_CH_WATERGHOST_CLON", "chance": 0.4 }, { "mob": "MOB_CH_WATERGHOST", "chance": 0.4 }], "hint": "LOC_SWAMP_HEART" }
+      ],
+      "rewards": { "exp": 0, "expPctOfLevel": 4, "sp": 5, "gold": 500, "items": [{ "item": "ITEM_ETC_HP_POTION_03", "count": 5 }] },
+      "dialog": {
+        "offer": "Fever season never really ends in Jangan. The reeds that grow where the water ghosts wander make the best remedy, and the ghosts tangle them in their chains. Ten reeds a day keeps my shelves full.",
+        "progress": "Ten reeds. They grow where the ghosts walk.",
+        "complete": "Bitter and fresh. Perfect. Here, a few of the good bottles."
+      }
+    },
+    {
+      "id": "JG_R03", "title": "Bandit Bounty", "chapter": "Jangan Notice Board", "kind": "repeatable", "level": 11, "maxLevel": 20,
+      "giver": "NPC_CH_GENARAL", "turnIn": "NPC_CH_GENARAL", "requires": { "quests": ["JG_016"] },
+      "repeat": { "reset": "daily" },
+      "summary": "Daily: the garrison pays for every bandit brought down.",
+      "objectives": [
+        { "id": "bandits", "type": "kill", "mobs": ["MOB_CH_BANDIT_CLON", "MOB_CH_BANDITARCHER", "MOB_CH_BANDITARCHER_CLON", "MOB_CH_BANDIT"], "count": 25, "label": "Bandits defeated", "hint": "LOC_ARCHER_CAMP" }
+      ],
+      "rewards": { "exp": 0, "expPctOfLevel": 5, "sp": 15, "gold": 3000 },
+      "dialog": {
+        "offer": "The garrison posts a bounty every morning. Twenty-five bandits, any rank. Their archers' camp on South-Tiger Mountain is the place to start. The treasury pays, I sign.",
+        "progress": "Twenty-five. The treasury doesn't pay for promises.",
+        "complete": "Signed. Collect your bounty, and be back tomorrow. They breed faster than we can hang them."
+      }
+    },
+    {
+      "id": "JG_R04", "title": "Pelts for the Lodge", "chapter": "Jangan Notice Board", "kind": "repeatable", "level": 14, "maxLevel": 20,
+      "giver": "NPC_CH_GENARAL_SW", "turnIn": "NPC_CH_GENARAL_SW", "requires": { "quests": ["JG_019"] },
+      "repeat": { "reset": "daily" },
+      "summary": "Daily: bring the hunters' lodge ten clean tiger pelts.",
+      "objectives": [
+        { "id": "pelts", "type": "collect", "item": "QITEM_TIGER_PELT", "count": 10, "from": [{ "mob": "MOB_CH_TIGER_CLON", "chance": 0.35 }, { "mob": "MOB_CH_TIGER", "chance": 0.35 }, { "mob": "MOB_CH_WHITETIGER_CLON", "chance": 0.35 }, { "mob": "MOB_CH_WHITETIGER", "chance": 0.35 }], "hint": "LOC_WHITE_TIGERS" }
+      ],
+      "rewards": { "exp": 0, "expPctOfLevel": 5, "sp": 15, "gold": 2500, "items": [{ "item": "ITEM_ETC_ALL_POTION_03", "count": 5 }] },
+      "dialog": {
+        "offer": "Merchants from three kingdoms want Jangan tiger pelts, and my hunters are still shaking. Ten clean pelts a day, and the lodge pays you what it would pay them.",
+        "progress": "Clean pelts, mind. Not the ones you've dragged through the mud.",
+        "complete": "Good work. Not a hole in them. The lodge thanks you."
+      }
+    }
+  ],
+  "lines": [
+    {
+      "id": "tiger_girl_rumour_gwakwi", "npc": "NPC_CH_GENARAL_SW", "when": { "uniqueAlive": "MOB_CH_TIGERWOMAN" },
+      "text": "My scouts came back pale. The Daughter of the Mountain was seen near {area}, riding her blue tiger. Go in numbers, or don't go at all.",
+      "textNoArea": "My scouts came back pale. The Daughter of the Mountain was seen in the hills, riding her blue tiger. Go in numbers, or don't go at all."
+    },
+    {
+      "id": "tiger_girl_rumour_jeonghye", "npc": "NPC_CH_PRIEST", "when": { "uniqueAlive": "MOB_CH_TIGERWOMAN" },
+      "text": "The temple bells rang wrong at dawn. The Daughter of the Mountain was seen near {area}, and the birds fell silent. If you go looking for her, pray first.",
+      "textNoArea": "The temple bells rang wrong at dawn. The Daughter of the Mountain was seen in the hills, and the birds fell silent. If you go looking for her, pray first."
+    }
+  ]
+}

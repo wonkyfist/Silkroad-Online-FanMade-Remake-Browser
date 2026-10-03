@@ -1,0 +1,25 @@
+{
+ "clip": "sit_chair",
+ "kind": "SIT_CHAIR",
+ "note": "TOWN_LIFE §3.1 (TL-A2): sitting on a stool or bench at a tea table, hands on the knees, breathing and looking around; a 3 s loop. Legs are ABSOLUTE on a STAND1 base like the jump (thigh = hip swing forward from the idle, knee = included bend, foot = + toes up, toe = toe joint bend) and stay the same on every key so the feet never slide. Arms REACH: the wrist is solved every frame to sit on the knee (from the calf's head: [forward, up, right] metres). lean = spine forward, head = nod forward (the keyer adds a gaze-keeping counter to the lean), headYaw = + looks left. The seat height is measured by the keyer (town_keys.json `seat`). Shared by both skeletons (the keyer measures each one's limbs).",
+ "fps": 30,
+ "lastFrame": 90,
+ "loop": true,
+ "base": "STAND1",
+ "lock": "fixed",
+ "seat": true,
+ "keys": [
+  { "f": 0, "pose": "sit", "lean": 15, "head": 0, "headYaw": 0,
+    "legs": { "L": [86, 88, 0, 0], "R": [84, 86, 0, 0] },
+    "arms": { "L": { "from": "Bip01 L Calf", "at": [-0.18, 0.06, -0.02] }, "R": { "from": "Bip01 R Calf", "at": [-0.18, 0.06, 0.02] } } },
+  { "f": 28, "pose": "breathe in", "lean": 12, "head": -3, "headYaw": 2,
+    "legs": { "L": [86, 88, 0, 0], "R": [84, 86, 0, 0] },
+    "arms": { "L": { "from": "Bip01 L Calf", "at": [-0.18, 0.06, -0.02] }, "R": { "from": "Bip01 R Calf", "at": [-0.18, 0.06, 0.02] } } },
+  { "f": 50, "pose": "look left", "lean": 14, "head": 2, "headYaw": 22,
+    "legs": { "L": [86, 88, 0, 0], "R": [84, 86, 0, 0] },
+    "arms": { "L": { "from": "Bip01 L Calf", "at": [-0.18, 0.06, -0.02] }, "R": { "from": "Bip01 R Calf", "at": [-0.18, 0.06, 0.02] } } },
+  { "f": 70, "pose": "settle", "lean": 16, "head": 1, "headYaw": 6,
+    "legs": { "L": [86, 88, 0, 0], "R": [84, 86, 0, 0] },
+    "arms": { "L": { "from": "Bip01 L Calf", "at": [-0.18, 0.06, -0.02] }, "R": { "from": "Bip01 R Calf", "at": [-0.18, 0.06, 0.02] } } }
+ ]
+}

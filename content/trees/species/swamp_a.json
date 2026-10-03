@@ -1,0 +1,26 @@
+{
+  "id": "swamp_a",
+  "name": "Swamp giant",
+  "family": "swamp",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B3",
+  "target": "res\\nature\\common\\tree\\c_hhm_tree_01.bsr",
+  "envelope": {"h": 66.37, "w": 76.22},
+  "seed": 47,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_04.ddj", "repeatM": 4.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.ddj", "anchor": [0.05, 0.05], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "swamp", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_01.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_04.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\c_hhm_tree_01.bsr"},
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree05.bsr", "tint": "swamp"},
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree_07_01.bsr", "tint": "swamp"},
+    {"source": "res\\nature\\common\\tree\\c_swamp_tree_08.bsr", "tint": "swamp"},
+    {"source": "res\\nature\\common\\tree\\swamp_tree01.bsr", "tint": "swamp"}
+  ],
+  "params": {"trunkFrac": 0.3, "lean": [0.2, 0.08], "trunkWobble": 0.1, "limbs": [5, 6], "limbTilt": [30, 70], "limbWobble": 0.16, "cardScale": 1.15, "normalRule": "mirror", "normalUp": 0.3, "normalBend": 0.0}
+}

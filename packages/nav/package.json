@@ -1,0 +1,13 @@
+{
+  "name": "@sro/nav",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Silkroad navigation: terrain + object navmeshes, ground height, straight-line movement with collision. Environment-neutral; shared by server, game client and viewer.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@sro/formats": "workspace:*"
+  }
+}

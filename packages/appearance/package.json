@@ -1,0 +1,11 @@
+{
+  "name": "@sro/appearance",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Character appearance rules (equipment composition, Height/Volume scaling). Environment-neutral; shared by game client, viewer and converter.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@sro/shared": "workspace:*"
+  }
+}

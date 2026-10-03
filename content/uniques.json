@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "kind": "uniques",
+  "uniques": [
+    {
+      "mob": "MOB_CH_TIGERWOMAN",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "respawnMin": [180, 360],
+      "firstSpawnMin": [10, 30],
+      "restartSpawnMin": [1, 2],
+      "tuning": { "hpMul": 0.08, "attackMul": 1.0, "expMul": 1.0 },
+      "summons": { "on": true, "perWave": 2, "maxAlive": 4, "variants": ["normal"] },
+      "enrage": { "hpPct": 20, "damageMul": 1.25 },
+      "fury": { "afterSec": 600, "damageMul": 2.0 },
+      "corpseSec": 8,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 120 },
+      "drops": "UNIQUE_TIGERWOMAN"
+    }
+  ],
+  "dropTables": {
+    "UNIQUE_TIGERWOMAN": {
+      "gold": { "chance": 1, "piles": 3, "amount": [2000, 4000] },
+      "groups": [
+        {
+          "chance": 1,
+          "rolls": 3,
+          "pool": { "degree": 3, "maxReqLevel": "levelCap", "gradeWeights": [60, 40] },
+          "plus": [
+            { "plus": 0, "weight": 55 },
+            { "plus": 1, "weight": 25 },
+            { "plus": 2, "weight": 15 },
+            { "plus": 3, "weight": 5 }
+          ]
+        },
+        {
+          "chance": 1,
+          "rolls": 2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        {
+          "chance": 0.5,
+          "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03", "weight": 1, "count": [1, 2] }]
+        },
+        {
+          "chance": 1,
+          "entries": [{ "item": "ITEM_ETC_HP_POTION_04", "weight": 1, "count": [10, 10] }]
+        },
+        {
+          "chance": 1,
+          "entries": [{ "item": "ITEM_ETC_MP_POTION_04", "weight": 1, "count": [10, 10] }]
+        },
+        {
+          "chance": 0.2,
+          "pool": { "degree": 3, "maxReqLevel": "levelCap", "gradeWeights": [60, 40], "rare": true }
+        }
+      ]
+    }
+  }
+}

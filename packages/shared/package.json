@@ -1,0 +1,10 @@
+{
+  "name": "@sro/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Protocol and data contracts shared by the game server and browser client. Environment-neutral.",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

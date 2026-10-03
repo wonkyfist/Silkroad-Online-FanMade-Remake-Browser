@@ -1,0 +1,23 @@
+{
+  "id": "dh_poplar",
+  "name": "Desert poplar",
+  "family": "dunhuang_tree",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B4",
+  "target": "res\\nature\\china\\dunhuang\\tree\\w_cd_gra_02.bsr",
+  "envelope": {"h": 40.22, "w": 11.86},
+  "seed": 81,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_wood_01.ddj", "repeatM": 3.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_lea_01.ddj", "anchor": [0.35, 0.0], "aspect": 2.0, "grade": {"gain": 0.85}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_gra_02.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_gra_01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_gra_03.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_gra_s01.bsr"}
+  ],
+  "params": {"trunkFrac": 0.92, "trunkRadius": 0.012, "lean": [0.02, 0.01], "limbStart": [0.2, 1.0], "limbs": [9, 10], "limbTilt": [10, 28], "limbLen": [0.12, 0.2], "limbTaper": 0.4, "twigs": [3, 4], "cardScale": 0.45, "normalRule": "mirror", "normalUp": 0.3, "normalBend": 0.0}
+}

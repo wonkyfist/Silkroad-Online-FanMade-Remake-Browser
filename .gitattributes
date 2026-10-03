@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.png binary
+*.glb binary
+# Converted assets, converter caches and the editor's base overlay are stored byte for byte: the World Editor's base
+# overlay and the deploy manifest compare SHA-256 hashes, so no line-ending normalisation may touch them.
+work/** -text
+# The deploy ships code with `git archive HEAD` and syncs work/out + work/out-opt separately (deploy/assets.ts):
+# keep the committed assets out of the code archive.
+/work export-ignore

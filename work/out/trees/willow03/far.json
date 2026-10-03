@@ -1,0 +1,285 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\willow03.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "willow03.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "willow03_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    64,
+    256
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "willow03_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "willow03_strand",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    512
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "willow03_bark",
+   "vertices": 149,
+   "triangles": 192,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "willow03_leaf",
+   "vertices": 80,
+   "triangles": 40,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "willow03_strand",
+   "vertices": 576,
+   "triangles": 288,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "willow03_bark",
+   "vertices": 102,
+   "triangles": 120,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "willow03_leaf",
+   "vertices": 40,
+   "triangles": 20,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "willow03_strand",
+   "vertices": 208,
+   "triangles": 104,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 1155,
+  "triangles": 764,
+  "joints": 0,
+  "meshes": 6,
+  "animations": 0,
+  "textures": 3,
+  "heightM": 81.35592782497406,
+  "boundsMin": [
+   -41.02389144897461,
+   -0.6676038503646851,
+   -47.37630081176758
+  ],
+  "boundsMax": [
+   45.64686965942383,
+   80.68832397460938,
+   49.94369888305664
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "willow03",
+  "kind": "tree",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [
+   {
+    "name": "willow02",
+    "materials": {
+     "willow03_bark": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark_willow02.ddj",
+      "image": "tints/willow02-bark.png"
+     },
+     "willow03_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf_willow02.ddj",
+      "image": "tints/willow02-leaf.png"
+     },
+     "willow03_strand": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand_willow02.ddj",
+      "image": "tints/willow02-strand.png"
+     }
+    }
+   },
+   {
+    "name": "willow01",
+    "materials": {
+     "willow03_bark": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark_willow01.ddj",
+      "image": "tints/willow01-bark.png"
+     },
+     "willow03_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf_willow01.ddj",
+      "image": "tints/willow01-leaf.png"
+     },
+     "willow03_strand": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand_willow01.ddj",
+      "image": "tints/willow01-strand.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_will01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf02.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark_willow02.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_will01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf_willow02.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_leaf01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand_willow02.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_willow02_leaf02.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_bark_willow01.ddj": "prim\\mtrl\\nature\\common\\tre_willow01_brn.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_leaf_willow01.ddj": "prim\\mtrl\\nature\\common\\tre_willow01_leaf1.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_willow03_strand_willow01.ddj": "prim\\mtrl\\nature\\common\\tre_willow01_leaf1.ddj"
+  }
+ }
+}

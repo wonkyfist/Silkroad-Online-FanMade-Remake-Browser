@@ -1,0 +1,57 @@
+node_modules/
+dist/
+
+# Local machine config (points at your own vSRO 1.188 client): copy sro.config.example.json to sro.config.json
+sro.config.json
+deploy/config.local.sh
+*.local.env
+
+# Retail client archives and raw extracts are never committed
+*.pk2
+work/extracted/
+
+# Databases (player accounts): the server creates a fresh work/server/game.db on first start
+*.db
+*.db-*
+work/server/
+
+# Local-only work folders (secrets, scratch, pipeline tools, deploy hash cache, Blender sessions)
+work/tmp/
+work/secrets/
+work/trailer/
+work/tools/
+work/.deploy/
+work/coast/
+work/editor/*/test-game/
+work/scratch/
+work/night/
+work/verify*/
+work/*.log
+
+# The converted assets in work/out and work/out-opt ARE committed (they are what the server serves). Ignored inside:
+# the convert lock and the World Editor's staging exports (<world>-edit), which Publish writes and Keep/Go back removes.
+work/out/.convert.lock
+work/out/world/*-edit/
+work/out-opt/world/*-edit/
+
+# The World Editor's private history (work/editor/<world>/base/ IS committed: the pre-edit overlay)
+work/editor/editor.lock
+work/editor/*/journal.ndjson
+work/editor/*/patches/
+work/editor/*/publish-*/
+work/editor/*/published.json
+work/editor/*/publish.log
+
+# Converter caches: prepass.json and incremental.json are committed; the coast snapshot is machine-specific (it is
+# keyed to your own Media.pk2) and is rebuilt on the first Publish
+work/cache/world/*/coast-snapshot.json
+
+# Texture pipeline working data: only the inventory index is committed
+work/texpipe/*
+!work/texpipe/inventory.json
+
+# Atomic-write leftovers
+work/**/*.tmp
+
+# Environment files with your own settings (the *.example files are committed)
+.env

@@ -1,0 +1,20 @@
+{
+  "id": "ricestraw",
+  "name": "Rice straw stook",
+  "family": "barley_rice",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\cj_ricestraw.bsr",
+  "envelope": {"h": 1.49, "w": 2.55},
+  "seed": 61,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\cj_ricestraw.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\cj_ricestraw.ddj", "anchor": [0.5, 0.0], "aspect": 1.2, "crop": [0.0, 0.4, 1.0, 1.0]}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\cj_ricestraw.bsr"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "box", "count": [5, 5], "depth": 0.68}], "normalRule": "mirror", "normalUp": 0.3, "normalBend": 0.0}
+}

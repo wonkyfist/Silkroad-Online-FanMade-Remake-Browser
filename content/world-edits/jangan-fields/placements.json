@@ -1,0 +1,454 @@
+{
+  "format": "sro-world-edits-placements",
+  "version": 1,
+  "world": "jangan-fields",
+  "move": [
+    {
+      "region": 23465,
+      "uid": 34817,
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "from": {
+        "position": [
+          273.949792,
+          58.307422,
+          1023.214331
+        ],
+        "yaw": 0
+      },
+      "to": {
+        "position": [
+          273.949792,
+          1.7908,
+          1023.214331
+        ],
+        "yaw": 0
+      }
+    },
+    {
+      "region": 23465,
+      "uid": 40961,
+      "source": "res\\nature\\common\\tree\\tre_pine10.bsr",
+      "from": {
+        "position": [
+          194.271959,
+          42.639496,
+          983.386597
+        ],
+        "yaw": -10.524337768554688
+      },
+      "to": {
+        "position": [
+          194.271959,
+          14.1536,
+          983.386597
+        ],
+        "yaw": -10.524337768554688
+      }
+    },
+    {
+      "region": 23465,
+      "uid": 40962,
+      "source": "res\\nature\\common\\tree\\tre_pine10.bsr",
+      "from": {
+        "position": [
+          214.567432,
+          34.092697,
+          973.661914
+        ],
+        "yaw": -10.524337768554688
+      },
+      "to": {
+        "position": [
+          214.567432,
+          1.7585,
+          973.661914
+        ],
+        "yaw": -10.524337768554688
+      }
+    },
+    {
+      "region": 23465,
+      "uid": 45057,
+      "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+      "from": {
+        "position": [
+          341.554077,
+          32.129269,
+          968.173669
+        ],
+        "yaw": -5.340708255767822
+      },
+      "to": {
+        "position": [
+          341.554077,
+          0.2878,
+          968.173669
+        ],
+        "yaw": -5.340708255767822
+      }
+    },
+    {
+      "region": 23465,
+      "uid": 46082,
+      "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+      "from": {
+        "position": [
+          361.083545,
+          29.471906,
+          968.036694
+        ],
+        "yaw": -5.969027042388916
+      },
+      "to": {
+        "position": [
+          361.083545,
+          -0.7703,
+          968.036694
+        ],
+        "yaw": -5.969027042388916
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 1,
+      "source": "res\\nature\\common\\tree\\tre_pine10.bsr",
+      "from": {
+        "position": [
+          205.797247,
+          1.388655,
+          947.609113
+        ],
+        "yaw": -11.466815948486328
+      },
+      "to": {
+        "position": [
+          205.797247,
+          -3.9695,
+          947.609113
+        ],
+        "yaw": -11.466815948486328
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 2,
+      "source": "res\\nature\\common\\grass\\grs_weed09_1.bsr",
+      "from": {
+        "position": [
+          214.623717,
+          -0.640606,
+          941.393982
+        ],
+        "yaw": 0
+      },
+      "to": {
+        "position": [
+          214.623717,
+          -1.385,
+          941.393982
+        ],
+        "yaw": 0
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 4,
+      "source": "res\\nature\\common\\grass\\grs_weed09_1.bsr",
+      "from": {
+        "position": [
+          201.311102,
+          -0.427485,
+          936.557866
+        ],
+        "yaw": 0
+      },
+      "to": {
+        "position": [
+          201.311102,
+          -1.216,
+          936.557866
+        ],
+        "yaw": 0
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 5,
+      "source": "res\\nature\\common\\grass\\grs_weed09_1.bsr",
+      "from": {
+        "position": [
+          223.219995,
+          -1.389791,
+          935.501065
+        ],
+        "yaw": 0
+      },
+      "to": {
+        "position": [
+          223.219995,
+          -1.3688,
+          935.501065
+        ],
+        "yaw": 0
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 1026,
+      "source": "res\\nature\\common\\grass\\grs_weed09_1.bsr",
+      "from": {
+        "position": [
+          231.657111,
+          -1.995756,
+          933.446106
+        ],
+        "yaw": 0
+      },
+      "to": {
+        "position": [
+          231.657111,
+          -2.3084,
+          933.446106
+        ],
+        "yaw": 0
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 5122,
+      "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+      "from": {
+        "position": [
+          364.351367,
+          16.070686,
+          938.928802
+        ],
+        "yaw": -5.183628559112549
+      },
+      "to": {
+        "position": [
+          364.351367,
+          15.9878,
+          938.928802
+        ],
+        "yaw": -5.183628559112549
+      }
+    },
+    {
+      "region": 23721,
+      "uid": 12290,
+      "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+      "from": {
+        "position": [
+          350.15531,
+          12.973177,
+          923.681708
+        ],
+        "yaw": -3.2986721992492676
+      },
+      "to": {
+        "position": [
+          350.15531,
+          9.5251,
+          923.681708
+        ],
+        "yaw": -3.2986721992492676
+      }
+    },
+    {
+      "region": 23722,
+      "uid": 1,
+      "source": "res\\nature\\common\\tree\\tre_pine07_04.bsr",
+      "from": {
+        "position": [
+          386.686426,
+          26.013449,
+          958.876756
+        ],
+        "yaw": -8.168142318725586
+      },
+      "to": {
+        "position": [
+          386.686426,
+          26.062,
+          958.876756
+        ],
+        "yaw": -8.168142318725586
+      }
+    },
+    {
+      "region": 25000,
+      "uid": 19457,
+      "source": "res\\bldg\\china\\jangan01\\cj_jang_gate_dragon.bsr",
+      "from": {
+        "position": [
+          100.843488,
+          -3.450566,
+          -83.8664
+        ],
+        "yaw": -3.141592502593994
+      },
+      "to": {
+        "position": [
+          100.9334,
+          -3.4506,
+          -83.8664
+        ],
+        "yaw": -3.141593
+      }
+    },
+    {
+      "region": 25000,
+      "uid": 35842,
+      "source": "res\\nature\\common\\tree\\tre_pine04.bsr",
+      "from": {
+        "position": [
+          121.401477,
+          -3.316561,
+          -140.733704
+        ],
+        "yaw": 4.398230075836182
+      },
+      "to": {
+        "position": [
+          118.5484,
+          -3.3166,
+          -143.9634
+        ],
+        "yaw": -1.884955
+      }
+    },
+    {
+      "region": 25000,
+      "uid": 36868,
+      "source": "res\\nature\\common\\tree\\tre_pine04.bsr",
+      "from": {
+        "position": [
+          128.395618,
+          -3.3,
+          -131.465601
+        ],
+        "yaw": 1.8849550485610962
+      },
+      "to": {
+        "position": [
+          129.9653,
+          -3.3,
+          -128.3209
+        ],
+        "yaw": 1.884955
+      }
+    }
+  ],
+  "drop": [],
+  "add": [
+    {
+      "id": "ed-1",
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "position": [
+        230.2705,
+        5.4962,
+        1092.5327
+      ],
+      "yaw": 1.379602,
+      "scale": 1.0391
+    },
+    {
+      "id": "ed-2",
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "position": [
+        310.384,
+        5.4607,
+        1115.3618
+      ],
+      "yaw": -1.05655,
+      "scale": 0.9343
+    },
+    {
+      "id": "ed-3",
+      "source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr",
+      "position": [
+        232.1388,
+        5.4314,
+        1119.6011
+      ],
+      "yaw": -0.338156,
+      "scale": 0.9548
+    },
+    {
+      "id": "ed-4",
+      "source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr",
+      "position": [
+        309.5267,
+        5.466,
+        1120.5496
+      ],
+      "yaw": -0.87435,
+      "scale": 1.0702
+    },
+    {
+      "id": "ed-5",
+      "source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr",
+      "position": [
+        275.0764,
+        3.236,
+        1038.3672
+      ],
+      "yaw": 0.022926,
+      "scale": 1.0277
+    },
+    {
+      "id": "ed-6",
+      "source": "res\\nature\\china\\dunhuang\\rock\\w_cd_rock_big_01.bsr",
+      "position": [
+        327.1978,
+        5.3871,
+        1136.0294
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "ed-7",
+      "source": "res\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge02_01.bsr",
+      "position": [
+        315.0381,
+        5.3027,
+        1133.204
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "ed-8",
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "position": [
+        131.8692,
+        -3.3,
+        -48.1571
+      ],
+      "yaw": -1.714234,
+      "scale": 1.0829
+    },
+    {
+      "id": "ed-9",
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "position": [
+        67.0281,
+        -3.3166,
+        -49.303
+      ],
+      "yaw": -0.540319,
+      "scale": 1.0654
+    },
+    {
+      "id": "ed-10",
+      "source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+      "position": [
+        67.5399,
+        -3.2078,
+        -130.1452
+      ],
+      "yaw": 1.454122,
+      "scale": 0.9334
+    }
+  ]
+}

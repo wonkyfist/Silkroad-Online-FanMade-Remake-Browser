@@ -1,0 +1,870 @@
+{
+ "schema": 1,
+ "kind": "townDressing",
+ "world": "jangan-fields",
+ "town": "jangan",
+ "props": [
+  {
+   "id": "plaza-bench-ne-a",
+   "model": "town/props/bench",
+   "x": 118.17,
+   "z": -117.12,
+   "yaw": -0.83
+  },
+  {
+   "id": "plaza-bench-ne-b",
+   "model": "town/props/bench",
+   "x": 128.28,
+   "z": -106.04,
+   "yaw": -0.83
+  },
+  {
+   "id": "plaza-planter-ne",
+   "model": "town/props/planter",
+   "x": 122.76,
+   "z": -111.6,
+   "yaw": -0.83,
+   "scale": 1.4
+  },
+  {
+   "id": "plaza-bench-se-a",
+   "model": "town/props/bench",
+   "x": 128.23,
+   "z": -65.51,
+   "yaw": -2.31
+  },
+  {
+   "id": "plaza-bench-se-b",
+   "model": "town/props/bench",
+   "x": 118.12,
+   "z": -55.43,
+   "yaw": -2.31
+  },
+  {
+   "id": "plaza-planter-se",
+   "model": "town/props/planter",
+   "x": 122.81,
+   "z": -61.31,
+   "yaw": -2.31,
+   "scale": 1.4
+  },
+  {
+   "id": "plaza-bench-sw-a",
+   "model": "town/props/bench",
+   "x": 75.34,
+   "z": -55.3,
+   "yaw": 2.31
+  },
+  {
+   "id": "plaza-bench-sw-b",
+   "model": "town/props/bench",
+   "x": 65.19,
+   "z": -66.35,
+   "yaw": 2.31
+  },
+  {
+   "id": "plaza-planter-sw",
+   "model": "town/props/planter",
+   "x": 70.63,
+   "z": -61.16,
+   "yaw": 2.31,
+   "scale": 1.4
+  },
+  {
+   "id": "plaza-bench-nw-a",
+   "model": "town/props/bench",
+   "x": 65.2,
+   "z": -106.18,
+   "yaw": 0.82
+  },
+  {
+   "id": "plaza-bench-nw-b",
+   "model": "town/props/bench",
+   "x": 75.42,
+   "z": -117.15,
+   "yaw": 0.82
+  },
+  {
+   "id": "plaza-planter-nw",
+   "model": "town/props/planter",
+   "x": 70.67,
+   "z": -111.32,
+   "yaw": 0.82,
+   "scale": 1.4
+  },
+  {
+   "id": "fountain-planter-se",
+   "model": "town/props/planter",
+   "x": 108.55,
+   "z": -74.96,
+   "yaw": -2.36,
+   "scale": 1.6
+  },
+  {
+   "id": "fountain-planter-ne",
+   "model": "town/props/planter",
+   "x": 108.3,
+   "z": -97.56,
+   "yaw": -0.79,
+   "scale": 1.6
+  },
+  {
+   "id": "fountain-planter-sw",
+   "model": "town/props/planter",
+   "x": 85.2,
+   "z": -74.38,
+   "yaw": 2.36,
+   "scale": 1.6
+  },
+  {
+   "id": "fountain-planter-nw",
+   "model": "town/props/planter",
+   "x": 85.16,
+   "z": -96.87,
+   "yaw": 0.79,
+   "scale": 1.6
+  },
+  {
+   "id": "entry-pot-n-w",
+   "model": "town/props/pot",
+   "x": 85.0,
+   "z": -121.5,
+   "yaw": 0.0,
+   "scale": 1.3
+  },
+  {
+   "id": "entry-pot-n-e",
+   "model": "town/props/pot",
+   "x": 108.6,
+   "z": -121.5,
+   "yaw": 0.0,
+   "scale": 1.3
+  },
+  {
+   "id": "entry-pot-s-w",
+   "model": "town/props/pot",
+   "x": 85.0,
+   "z": -51.0,
+   "yaw": 0.0,
+   "scale": 1.3
+  },
+  {
+   "id": "entry-pot-s-e",
+   "model": "town/props/pot",
+   "x": 108.6,
+   "z": -51.0,
+   "yaw": 0.0,
+   "scale": 1.3
+  },
+  {
+   "id": "lantern-nw1",
+   "model": "cj_pal_lamp",
+   "x": 84.5,
+   "z": -131.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-ne1",
+   "model": "cj_pal_lamp",
+   "x": 112.5,
+   "z": -131.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-nw2",
+   "model": "cj_pal_lamp",
+   "x": 84.21,
+   "z": -141.69,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-ne2",
+   "model": "cj_pal_lamp",
+   "x": 113.65,
+   "z": -140.52,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-w1",
+   "model": "cj_pal_lamp",
+   "x": 61.5,
+   "z": -94.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-w2",
+   "model": "cj_pal_lamp",
+   "x": 61.5,
+   "z": -78.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-e1",
+   "model": "cj_pal_lamp",
+   "x": 132.0,
+   "z": -94.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-e2",
+   "model": "cj_pal_lamp",
+   "x": 132.0,
+   "z": -78.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-n1",
+   "model": "cj_pal_lamp",
+   "x": 46.0,
+   "z": -160.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-n2",
+   "model": "cj_pal_lamp",
+   "x": 64.0,
+   "z": -160.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-n3",
+   "model": "cj_pal_lamp",
+   "x": 133.0,
+   "z": -160.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-n4",
+   "model": "cj_pal_lamp",
+   "x": 151.25,
+   "z": -160.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-south-w",
+   "model": "cj_pal_lamp",
+   "x": 83.81,
+   "z": -17.71,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-south-e",
+   "model": "cj_pal_lamp",
+   "x": 112.5,
+   "z": -18.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-s1",
+   "model": "cj_pal_lamp",
+   "x": 47.62,
+   "z": -30.92,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-rim-s2",
+   "model": "cj_pal_lamp",
+   "x": 146.0,
+   "z": -30.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "east-stall-2",
+   "model": "res/artifact/china/dunhuang/w_etc03.bsr",
+   "x": 144.68,
+   "z": -138.42,
+   "yaw": 1.57
+  },
+  {
+   "id": "east-goods-2-a",
+   "model": "res/bldg/europe/constantinople/etc/euro_fushop06.bsr",
+   "x": 147.6,
+   "z": -139.1,
+   "yaw": 1.27,
+   "scale": 0.5
+  },
+  {
+   "id": "east-goods-2-b",
+   "model": "res/bldg/europe/constantinople/etc/euro_fushop07.bsr",
+   "x": 147.6,
+   "z": -136.3,
+   "yaw": 1.57,
+   "scale": 0.5
+  },
+  {
+   "id": "east-stall-3",
+   "model": "res/artifact/china/dunhuang/w_etc03.bsr",
+   "x": 144.3,
+   "z": -129.0,
+   "yaw": 1.57
+  },
+  {
+   "id": "east-goods-3-a",
+   "model": "res/artifact/china/greenfield/cj_potato_basket.bsr",
+   "x": 147.6,
+   "z": -130.6,
+   "yaw": 1.87
+  },
+  {
+   "id": "east-goods-3-b",
+   "model": "res/bldg/oasis/hotang/minga/hot_minga_basket.bsr",
+   "x": 147.6,
+   "z": -127.8,
+   "yaw": 1.27,
+   "scale": 0.5
+  },
+  {
+   "id": "east-stall-4",
+   "model": "res/artifact/china/dunhuang/w_etc03.bsr",
+   "x": 144.3,
+   "z": -58.0,
+   "yaw": 1.57
+  },
+  {
+   "id": "east-goods-4-a",
+   "model": "res/bldg/europe/constantinople/etc/euro_fushop04.bsr",
+   "x": 147.6,
+   "z": -59.6,
+   "yaw": 1.57,
+   "scale": 0.5
+  },
+  {
+   "id": "east-goods-4-b",
+   "model": "res/bldg/europe/constantinople/etc/euro_fushop05.bsr",
+   "x": 147.6,
+   "z": -56.8,
+   "yaw": 1.87,
+   "scale": 0.5
+  },
+  {
+   "id": "east-barrel-1",
+   "model": "res/bldg/china/cj_ferry/cj_ferry_bottle.bsr",
+   "x": 143.6,
+   "z": -143.2,
+   "yaw": 0.4,
+   "scale": 0.55
+  },
+  {
+   "id": "east-crate-1",
+   "model": "town/props/crate",
+   "x": 143.4,
+   "z": -133.0,
+   "yaw": 0.15
+  },
+  {
+   "id": "east-sacks-1",
+   "model": "res/bldg/north africa/alexandria/deco/alex_sack02.bsr",
+   "x": 143.7,
+   "z": -53.75,
+   "yaw": 1.57,
+   "scale": 0.4
+  },
+  {
+   "id": "east-canopy-1",
+   "model": "cj_resta01_tent",
+   "x": 146.0,
+   "z": -118.0,
+   "yaw": 1.57
+  },
+  {
+   "id": "east-cart-1",
+   "model": "res/bldg/oasis/hotang/minga/hot_minga_handcart_02.bsr",
+   "x": 152.5,
+   "z": -104.0,
+   "yaw": 2.6,
+   "scale": 0.8
+  },
+  {
+   "id": "east-canopy-goods-b",
+   "model": "res/artifact/china/greenfield/cj_potato_basket.bsr",
+   "x": 145.4,
+   "z": -118.9,
+   "yaw": 0.3
+  },
+  {
+   "id": "lantern-market-1",
+   "model": "cj_pal_lamp",
+   "x": 143.4,
+   "z": -122.4,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-market-2",
+   "model": "cj_pal_lamp",
+   "x": 143.6,
+   "z": -64.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-market-3",
+   "model": "cj_pal_lamp",
+   "x": 157.5,
+   "z": -128.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "lantern-market-4",
+   "model": "cj_pal_lamp",
+   "x": 152.0,
+   "z": -93.0,
+   "yaw": 0.0
+  },
+  {
+   "id": "stable-hay-1",
+   "model": "res/artifact/oasis/karakorm/oas_kara_obj04.bsr",
+   "x": 30.0,
+   "z": -57.25,
+   "yaw": 0.3,
+   "scale": 0.8
+  },
+  {
+   "id": "stable-hay-2",
+   "model": "res/artifact/oasis/karakorm/oas_kara_obj05.bsr",
+   "x": 38.0,
+   "z": -31.0,
+   "yaw": -0.2,
+   "scale": 0.8
+  },
+  {
+   "id": "stable-cart-1",
+   "model": "res/artifact/china/greenfield/cj_strawcart.bsr",
+   "x": 37.82,
+   "z": -50.18,
+   "yaw": 0.5
+  },
+  {
+   "id": "stable-buckets-1",
+   "model": "res/bldg/europe/constantinople/etc/euro_esteuro_basketdummy.bsr",
+   "x": 29.0,
+   "z": -35.5,
+   "yaw": 0.0,
+   "scale": 0.8
+  },
+  {
+   "id": "west-well",
+   "model": "res/artifact/oasis/karakorm/oas_kara_well.bsr",
+   "x": -14.62,
+   "z": -94.08,
+   "yaw": 0.0,
+   "scale": 0.85
+  },
+  {
+   "id": "west-stall-1",
+   "model": "res/artifact/china/dunhuang/w_etc03.bsr",
+   "x": -70.53,
+   "z": -76.53,
+   "yaw": 0.0
+  },
+  {
+   "id": "west-stall-2",
+   "model": "res/artifact/china/dunhuang/w_etc03.bsr",
+   "x": -61.75,
+   "z": -76.0,
+   "yaw": 0.0
+  }
+ ],
+ "banners": [
+  {
+   "id": "banner-n1",
+   "model": "town/props/banner",
+   "x": 55.0,
+   "z": -160.0,
+   "yaw": 0.0,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-n2",
+   "model": "town/props/banner",
+   "x": 74.0,
+   "z": -160.0,
+   "yaw": 0.0,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-n3",
+   "model": "town/props/banner",
+   "x": 123.0,
+   "z": -160.0,
+   "yaw": 3.14,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-n4",
+   "model": "town/props/banner",
+   "x": 142.0,
+   "z": -160.0,
+   "yaw": 3.14,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-s1-w",
+   "model": "town/props/banner",
+   "x": 83.31,
+   "z": -26.46,
+   "yaw": 0.0,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-s1-e",
+   "model": "town/props/banner",
+   "x": 113.5,
+   "z": -26.0,
+   "yaw": 3.14,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-s2-w",
+   "model": "town/props/banner",
+   "x": 83.31,
+   "z": -11.54,
+   "yaw": 0.0,
+   "height": 2.4,
+   "kind": "hanging"
+  },
+  {
+   "id": "banner-s2-e",
+   "model": "town/props/banner",
+   "x": 113.79,
+   "z": -12.69,
+   "yaw": 3.14,
+   "height": 2.4,
+   "kind": "hanging"
+  }
+ ],
+ "lamps": [
+  {
+   "model": "cj_field_lamp",
+   "efp": "map/cj_pal_lamp_orange.efp",
+   "offset": [
+    -0.024,
+    1.726,
+    -0.008
+   ]
+  }
+ ],
+ "decals": [
+  {
+   "kind": "dirt",
+   "x": 148.2,
+   "z": -137.5,
+   "yaw": 0.0,
+   "size": [
+    3.2,
+    5.2
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 148.2,
+   "z": -129.0,
+   "yaw": 0.0,
+   "size": [
+    3.2,
+    5.2
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 148.2,
+   "z": -58.0,
+   "yaw": 0.0,
+   "size": [
+    3.2,
+    5.2
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 150.5,
+   "z": -104.0,
+   "yaw": 0.4,
+   "size": [
+    3.0,
+    4.5
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 33.0,
+   "z": -45.0,
+   "yaw": 0.0,
+   "size": [
+    5.0,
+    9.0
+   ]
+  },
+  {
+   "kind": "puddle",
+   "x": 90.0,
+   "z": -110.0,
+   "yaw": 0.3,
+   "size": [
+    3.0,
+    2.0
+   ]
+  },
+  {
+   "kind": "puddle",
+   "x": 118.0,
+   "z": -70.0,
+   "yaw": 1.1,
+   "size": [
+    2.5,
+    1.8
+   ]
+  },
+  {
+   "kind": "puddle",
+   "x": 75.0,
+   "z": -64.0,
+   "yaw": 0.7,
+   "size": [
+    2.0,
+    1.5
+   ]
+  },
+  {
+   "kind": "puddle",
+   "x": 106.0,
+   "z": -52.0,
+   "yaw": 0.2,
+   "size": [
+    2.6,
+    1.6
+   ]
+  },
+  {
+   "kind": "puddle",
+   "x": 98.0,
+   "z": -26.0,
+   "yaw": 0.5,
+   "size": [
+    2.4,
+    1.6
+   ]
+  },
+  {
+   "kind": "moss",
+   "x": 59.2,
+   "z": -118.0,
+   "yaw": 0.0,
+   "size": [
+    1.4,
+    7.0
+   ]
+  },
+  {
+   "kind": "moss",
+   "x": 59.2,
+   "z": -62.0,
+   "yaw": 0.0,
+   "size": [
+    1.4,
+    7.0
+   ]
+  },
+  {
+   "kind": "moss",
+   "x": 134.4,
+   "z": -118.0,
+   "yaw": 0.0,
+   "size": [
+    1.4,
+    7.0
+   ]
+  },
+  {
+   "kind": "moss",
+   "x": 134.4,
+   "z": -62.0,
+   "yaw": 0.0,
+   "size": [
+    1.4,
+    7.0
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 98.0,
+   "z": -164.0,
+   "yaw": 0.0,
+   "size": [
+    7.0,
+    3.0
+   ]
+  },
+  {
+   "kind": "dirt",
+   "x": 99.0,
+   "z": -4.0,
+   "yaw": 0.0,
+   "size": [
+    6.0,
+    9.0
+   ]
+  }
+ ],
+ "crackBands": [
+  {
+   "points": [
+    [
+     114.35,
+     -124.36
+    ],
+    [
+     135.13,
+     -101.57
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     135.23,
+     -71.13
+    ],
+    [
+     114.15,
+     -48.04
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     79.14,
+     -48.14
+    ],
+    [
+     58.37,
+     -70.73
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     58.38,
+     -101.86
+    ],
+    [
+     79.23,
+     -124.26
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     82.9,
+     -143.5
+    ],
+    [
+     82.9,
+     -126.5
+    ]
+   ],
+   "width": 0.5,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     115.2,
+     -143.5
+    ],
+    [
+     115.2,
+     -126.5
+    ]
+   ],
+   "width": 0.5,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     58.4,
+     -99.5
+    ],
+    [
+     58.4,
+     -73.0
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     135.2,
+     -99.5
+    ],
+    [
+     135.2,
+     -73.0
+    ]
+   ],
+   "width": 0.6,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     82.9,
+     -44.0
+    ],
+    [
+     82.9,
+     -21.0
+    ]
+   ],
+   "width": 0.5,
+   "density": 6
+  },
+  {
+   "points": [
+    [
+     115.2,
+     -44.0
+    ],
+    [
+     115.2,
+     -21.0
+    ]
+   ],
+   "width": 0.5,
+   "density": 6
+  }
+ ],
+ "pond": {
+  "regions": [
+   24999,
+   25001,
+   25256,
+   25257
+  ],
+  "color": [
+   0.02,
+   0.035,
+   0.03
+  ],
+  "turbidity": 0.65,
+  "reflection": 1.0
+ }
+}

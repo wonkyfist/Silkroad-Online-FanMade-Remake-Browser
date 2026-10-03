@@ -1,0 +1,20 @@
+{
+  "id": "barley",
+  "name": "Barley",
+  "family": "barley_rice",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\cj_barley_02.bsr",
+  "envelope": {"h": 1.93, "w": 11.24},
+  "seed": 59,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\cj_barley_01.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\cj_barley_01.ddj", "anchor": [0.5, 0.0], "aspect": 0.26, "crop": [0.0, 0.0, 1.0, 0.52], "grade": {"gain": 0.8}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\cj_barley_02.bsr"}
+  ],
+  "params": {"spread": [1.0, 0.12], "parts": [{"role": "leaf", "orient": "up", "count": [18, 7], "size": [0.38, 0.5], "tilt": [0, 12], "radius": 0.7, "axis": "x", "yaw": 0.35}], "normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}
+}

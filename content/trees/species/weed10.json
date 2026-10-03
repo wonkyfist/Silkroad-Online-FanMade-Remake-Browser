@@ -1,0 +1,23 @@
+{
+  "id": "weed10",
+  "name": "Small weed",
+  "family": "weed_tall",
+  "archetype": "clump",
+  "kind": "plant",
+  "batch": "B3",
+  "target": "res\\nature\\common\\grass\\grs_weed10.bsr",
+  "envelope": {"h": 1.85, "w": 2.73},
+  "seed": 57,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj", "repeatM": 1.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\grass\\grs_weed07.ddj", "anchor": [0.5, 0.0], "aspect": 0.76, "crop": [0.0, 0.02, 0.66, 0.52]}
+  },
+  "tints": [
+    {"name": "tarim", "textures": {"leaf": "prim\\mtrl\\nature\\oasis\\tarim\\oas_tarim_dvweed.ddj"}, "crops": {"leaf": [0.0, 0.24, 1.0, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\grass\\grs_weed10.bsr"},
+    {"source": "res\\nature\\oasis\\tarim\\oas_tarim_dvweed_02.bsr", "tint": "tarim"}
+  ],
+  "params": {"parts": [{"role": "leaf", "orient": "up", "count": [10, 4], "size": [0.6, 0.75], "tilt": [0, 30], "radius": 0.3}], "normalRule": "retail", "normalUp": 1.0}
+}

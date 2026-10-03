@@ -1,0 +1,26 @@
+{
+ "goldShare": 0.828,
+ "pearlShare": 0.0156,
+ "rockShare": 0.156,
+ "metalGoldMedian": 0.8,
+ "roughGoldMedian": 0.389,
+ "lift": 1.08,
+ "bytes": {
+  "albedo": [
+   1248826,
+   424968
+  ],
+  "normal": [
+   970476,
+   330314
+  ],
+  "metallic": [
+   281316,
+   128770
+  ],
+  "roughness": [
+   424352,
+   170658
+  ]
+ }
+}

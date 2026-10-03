@@ -1,0 +1,28 @@
+{
+  "id": "shrub02",
+  "name": "Green bush",
+  "family": "dry_dead",
+  "archetype": "shrub_dome",
+  "kind": "plant",
+  "batch": "B1",
+  "target": "res\\nature\\common\\tree\\tre_dry02_small.bsr",
+  "envelope": { "h": 4.22, "w": 6.2 },
+  "seed": 11,
+  "textures": {
+    "bark": { "retail": "prim\\mtrl\\nature\\common\\tre_maple_pin.ddj", "repeatM": 0.8 },
+    "leaf": { "retail": "prim\\mtrl\\nature\\common\\tree\\tre_dry02.ddj", "anchor": [0.5, 0.03], "aspect": 1.0 }
+  },
+  "tints": [
+    { "name": "dry02_1", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_dry02_1.ddj" } },
+    { "name": "dry03", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_dry03.ddj" } },
+    { "name": "dry04", "textures": { "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_dry04.ddj" } }
+  ],
+  "replaces": [
+    { "source": "res\\nature\\common\\tree\\tre_dry02.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_dry02_1.bsr", "tint": "dry02_1" },
+    { "source": "res\\nature\\common\\tree\\tre_dry02_small.bsr" },
+    { "source": "res\\nature\\common\\tree\\tre_dry03.bsr", "tint": "dry03" },
+    { "source": "res\\nature\\common\\tree\\tre_dry04.bsr", "tint": "dry04" }
+  ],
+  "params": {"normalRule": "retail", "normalUp": 1.0}
+}

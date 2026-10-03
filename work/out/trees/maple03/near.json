@@ -1,0 +1,191 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\maple03.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "maple03.near",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "maple03_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tre_maple_pin.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    128
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "maple03_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "maple03_bark",
+   "vertices": 732,
+   "triangles": 928,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "maple03_leaf",
+   "vertices": 2000,
+   "triangles": 1000,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 2732,
+  "triangles": 1928,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 0,
+  "heightM": 16.680000960826874,
+  "boundsMin": [
+   -7.76778507232666,
+   -0.06940525770187378,
+   -9.587305068969727
+  ],
+  "boundsMax": [
+   9.493014335632324,
+   16.610595703125,
+   7.952695369720459
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "maple03",
+  "kind": "tree",
+  "part": "near",
+  "tiers": {
+   "lod0": 0
+  },
+  "tints": [
+   {
+    "name": "green2",
+    "materials": {
+     "maple03_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_green2.ddj",
+      "image": "tints/green2-leaf.png"
+     }
+    }
+   },
+   {
+    "name": "middle",
+    "materials": {
+     "maple03_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_middle.ddj",
+      "image": "tints/middle-leaf.png"
+     }
+    }
+   },
+   {
+    "name": "red",
+    "materials": {
+     "maple03_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_red.ddj",
+      "image": "tints/red-leaf.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf.ddj": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_green.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_green2.ddj": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_green2.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_middle.ddj": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_middle.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_maple03_leaf_red.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_maple_leaf_red.ddj"
+  }
+ }
+}

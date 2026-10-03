@@ -1,0 +1,14 @@
+{
+  "name": "@sro/fx",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Silkroad skill/visual effects (EFP) interpreted for Babylon.js particle systems. Browser-side.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^9.28.0",
+    "@sro/formats": "workspace:*"
+  }
+}

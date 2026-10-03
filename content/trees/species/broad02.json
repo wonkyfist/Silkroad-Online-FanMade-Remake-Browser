@@ -1,0 +1,25 @@
+{
+  "id": "broad02",
+  "name": "Spreading tree",
+  "family": "broadleaf",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_tree02.bsr",
+  "envelope": {"h": 48.34, "w": 61.3},
+  "seed": 31,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_tree02_02.ddj", "repeatM": 3.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_tree02_01.ddj", "anchor": [0.05, 0.05], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "leaf01", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_leaf_01_1.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\tre_wood_01.ddj"}},
+    {"name": "leaf02", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_lea02_03.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\tre_lea02_wood01.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_tree02.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_leaf01.bsr", "tint": "leaf01"},
+    {"source": "res\\nature\\common\\tree\\tre_leaf02.bsr", "tint": "leaf02"}
+  ],
+  "params": {"trunkFrac": 0.28, "limbs": [6, 7], "limbTilt": [25, 68], "cardScale": 1.15, "normalRule": "mirror", "normalUp": 0.6, "normalBend": 0.0}
+}

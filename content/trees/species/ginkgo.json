@@ -1,0 +1,27 @@
+{
+  "id": "ginkgo",
+  "name": "Ginkgo",
+  "family": "ginkgo",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_bank02.bsr",
+  "envelope": {"h": 21.94, "w": 26.32},
+  "seed": 33,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_bank_pilla.ddj", "repeatM": 3.0, "base": 0.25},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_bank_leaf02.ddj", "anchor": [0.05, 0.05], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "bank01", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_bank_leaf.ddj"}},
+    {"name": "bank01big", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\leaf04.ddj"}},
+    {"name": "blossom", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\tre_frie_leaf.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\tre_frie_body.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_bank02.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_bank01.bsr", "tint": "bank01"},
+    {"source": "res\\nature\\common\\tree\\tre_bank01_big.bsr", "tint": "bank01big"},
+    {"source": "res\\nature\\common\\tree\\tre_frie01.bsr", "tint": "blossom"}
+  ],
+  "params": {"trunkFrac": 0.3, "lean": [0.05, 0.03], "limbs": [6, 7], "limbTilt": [25, 62], "cardScale": 1.1, "normalRule": "mirror", "normalUp": 0.62, "normalBend": 0.0}
+}

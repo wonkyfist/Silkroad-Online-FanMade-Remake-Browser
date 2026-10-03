@@ -1,0 +1,19 @@
+{
+ "format": "sro-remaster",
+ "version": 1,
+ "$note": "The Jangan plaza dragon's gold set (DRAGON-INT): merged into out/remaster/manifest.json; the files are out/remaster/sets/jangan_dragon_m1/*.webp. Key = the dragon's remaster variant glb (models/bldg/china/jangan01/cj_jang_gate_dragon.remaster.glb, packages/convert/src/world/remaster-models.ts) under the asset root without .glb + '#' + the glTF image name every staged dragon LOD embeds (cj_jang_dragon_m1). Full files are 2048 (Ultra); sizes [1024] serves Medium and High the @1024 files. Low / Classic draws the retail statue (no remaster lookup).",
+ "textures": {
+  "world/jangan-fields/models/bldg/china/jangan01/cj_jang_gate_dragon.remaster#cj_jang_dragon_m1": {
+   "albedo": "sets/jangan_dragon_m1/albedo.webp",
+   "normal": "sets/jangan_dragon_m1/normal.webp",
+   "metallic": "sets/jangan_dragon_m1/metallic.webp",
+   "roughness": "sets/jangan_dragon_m1/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original",
+   "class": "metal",
+   "sizes": [
+    1024
+   ]
+  }
+ }
+}

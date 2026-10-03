@@ -1,0 +1,33 @@
+{
+  "id": "bigleaf",
+  "name": "Great maple",
+  "family": "bigmaple",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr",
+  "envelope": {"h": 56.82, "w": 72.02},
+  "seed": 27,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_pine08_03.ddj", "repeatM": 4.0},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree09_01.ddj", "anchor": [0.08, 0.04], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "tree03", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree03_01.ddj"}},
+    {"name": "tree04", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree04_01.ddj"}},
+    {"name": "tree05", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree05_01.ddj"}},
+    {"name": "tree08", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree08_01.ddj"}},
+    {"name": "tree06", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_01.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_02.ddj"}, "crops": {"leaf": [0.0, 0.0, 0.5, 1.0]}},
+    {"name": "tree07", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree07_01.ddj", "bark": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_02.ddj"}, "crops": {"leaf": [0.0, 0.0, 0.5, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree09.bsr"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree03.bsr", "tint": "tree03"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree04.bsr", "tint": "tree04"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree05.bsr", "tint": "tree05"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree08.bsr", "tint": "tree08"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree06.bsr", "tint": "tree06"},
+    {"source": "res\\nature\\common\\tree\\new-maple\\tre_tree07.bsr", "tint": "tree07"}
+  ],
+  "params": {"trunkFrac": 0.3, "limbs": [6, 7], "limbTilt": [25, 65], "twigs": [7, 8], "cardScale": 1.5, "cardRule": {"2": {"1": [8, 0.42]}}, "normalRule": "retail", "normalUp": 1.0}
+}

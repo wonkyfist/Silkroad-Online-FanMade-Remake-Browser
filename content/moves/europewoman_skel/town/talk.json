@@ -1,0 +1,18 @@
+{
+ "clip": "talk",
+ "kind": "TALK",
+ "note": "TOWN_LIFE §3.1 (TL-A2): talking while standing in a group: the right hand leads the gestures (an open-palm beat, an offer outward), the left joins for a two-handed explain and an open-palm shrug, with nods and a glance; a 3 s loop. The hands are open and turn palm-up while they gesture (so it never reads as a fighting guard, TOWN_LIFE §3.1). Legs stay on the idle (STAND1 frame 0), so the feet never move. Arms are ABSOLUTE angles on the idle: [swing forward, elbow bend, abduct out]. hands: [open 0..1 (the fingers toward the bind pose's open hand), palm (deg, + turns the palm up)]. lean = spine forward, head = nod forward, headYaw = + looks left, twist = + turns the chest left. Shared by both skeletons.",
+ "fps": 30,
+ "lastFrame": 90,
+ "loop": true,
+ "base": "STAND1",
+ "lock": "fixed",
+ "keys": [
+  {"f": 0, "pose": "speak", "lean": 2, "head": 0, "headYaw": 0, "twist": 0, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [4, 14, 6], "R": [22, 58, 14]}, "hands": {"L": [0.3, 0], "R": [1, 50]}},
+  {"f": 17, "pose": "offer out", "lean": 1, "head": 5, "headYaw": -4, "twist": -5, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [6, 18, 8], "R": [30, 46, 36]}, "hands": {"L": [0.3, 0], "R": [1, 75]}},
+  {"f": 33, "pose": "beat", "lean": 3, "head": -2, "headYaw": 0, "twist": -2, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [10, 24, 8], "R": [20, 62, 12]}, "hands": {"L": [0.4, 5], "R": [0.8, 30]}},
+  {"f": 51, "pose": "explain", "lean": 4, "head": 3, "headYaw": 4, "twist": 3, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [20, 60, 16], "R": [18, 62, 18]}, "hands": {"L": [1, 55], "R": [1, 55]}},
+  {"f": 68, "pose": "shrug", "lean": -1, "head": -3, "headYaw": -8, "twist": 1, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [14, 56, 30], "R": [15, 54, 32]}, "hands": {"L": [1, 80], "R": [1, 80]}},
+  {"f": 80, "pose": "settle", "lean": 2, "head": 1, "headYaw": -2, "twist": 0, "legs": {"L": [0, 0, 0, 0], "R": [0, 0, 0, 0]}, "arms": {"L": [7, 22, 8], "R": [18, 50, 12]}, "hands": {"L": [0.5, 10], "R": [0.8, 30]}}
+ ]
+}

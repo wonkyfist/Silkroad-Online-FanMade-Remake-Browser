@@ -1,0 +1,25 @@
+{
+  "id": "dh_hotree",
+  "name": "Desert elm",
+  "family": "dunhuang_tree",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B4",
+  "target": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree03big.bsr",
+  "envelope": {"h": 40.72, "w": 38.55},
+  "seed": 87,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_03.ddj", "repeatM": 2.5},
+    "leaf": {"retail": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_leaf01.ddj", "anchor": [0.05, 0.05], "aspect": 1.0, "grade": {"gain": 0.85}}
+  },
+  "tints": [
+    {"name": "bare", "textures": {"leaf": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_al02.ddj"}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_tree03big.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_hotree03_1.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_hotree01.bsr", "tint": "bare"},
+    {"source": "res\\nature\\china\\dunhuang\\tree\\w_cd_hotree02.bsr", "tint": "bare"}
+  ],
+  "params": {"trunkFrac": 0.3, "trunkWobble": 0.1, "limbs": [5, 6], "limbTilt": [30, 70], "limbWobble": 0.18, "cardScale": 0.38, "twigs": [3, 4], "normalRule": "retail", "normalUp": 1.0}
+}

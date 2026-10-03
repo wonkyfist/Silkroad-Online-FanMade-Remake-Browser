@@ -1,0 +1,27 @@
+{
+  "id": "pine_small",
+  "name": "Town pine",
+  "family": "pine_small",
+  "archetype": "conifer_cone",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_pine03.bsr",
+  "envelope": {"h": 7.1, "w": 7.95},
+  "seed": 25,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tre_pine01_pin.ddj", "repeatM": 1.2},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tre_pine03.ddj", "anchor": [0.0, 0.35], "aspect": 0.87, "crop": [0.0, 0.13, 1.0, 1.0]}
+  },
+  "tints": [
+    {"name": "pine04", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tre_pine04.ddj"}},
+    {"name": "pine01", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tre_pine01_leaf.ddj"}, "crops": {"leaf": [0.0, 0.15, 1.0, 1.0]}},
+    {"name": "pine02", "textures": {"leaf": "prim\\mtrl\\nature\\common\\tre_pine02_leaf.ddj"}, "crops": {"leaf": [0.0, 0.15, 1.0, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_pine03.bsr"},
+    {"source": "res\\nature\\common\\tree\\tre_pine04.bsr", "tint": "pine04"},
+    {"source": "res\\nature\\common\\tree\\tre_pine01.bsr", "tint": "pine01"},
+    {"source": "res\\nature\\common\\tree\\tre_pine02.bsr", "tint": "pine02"}
+  ],
+  "params": {"whorls": 5, "padScale": 1.35, "barkSides": [[8, 4, 2], [5, 3, 0], [5, 3, 0]], "cardRule": {"2": {"1": [1, 0.42]}}, "normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}
+}

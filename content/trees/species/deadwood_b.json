@@ -1,0 +1,24 @@
+{
+  "id": "deadwood_b",
+  "name": "Stump",
+  "family": "dry_dead",
+  "archetype": "deadwood",
+  "kind": "tree",
+  "batch": "B3",
+  "target": "res\\nature\\common\\tree\\tre_dead_tre01.bsr",
+  "envelope": {"h": 3.08, "w": 8.49},
+  "seed": 43,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tre_dead_tre01.ddj", "repeatM": 2.0, "crop": [0.0, 0.3, 1.0, 0.75]},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_dry_leaf.ddj", "anchor": [0.12, 0.0], "aspect": 1.0}
+  },
+  "tints": [
+    {"name": "dunhuang", "textures": {"bark": "prim\\mtrl\\nature\\china\\dunhuang\\tree3\\w_cd_stump01.ddj", "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_dry_leaf.ddj"}, "crops": {"bark": [0.0, 0.45, 1.0, 1.0]}}
+  ],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr"},
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp03.bsr", "tint": "dunhuang"},
+    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp05.bsr", "tint": "dunhuang"}
+  ],
+  "params": {"form": "stump", "rootLen": [0.26, 0.34], "rootTaper": 0.75, "stumpRadius": 0.15, "barkSides": [[10, 5], [6, 4], [5, 3]], "normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}
+}

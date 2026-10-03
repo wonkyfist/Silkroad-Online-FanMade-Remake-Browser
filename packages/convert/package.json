@@ -1,0 +1,20 @@
+{
+  "name": "@sro/convert",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline converter CLI: Silkroad client -> web-ready assets and data. Node only.",
+  "dependencies": {
+    "@gltf-transform/core": "^4.5.0",
+    "@sro/formats": "workspace:*",
+    "@sro/nav": "workspace:*",
+    "@gltf-transform/functions": "^4.5.0",
+    "@gltf-transform/extensions": "^4.5.0",
+    "sharp": "^0.35.5",
+    "meshoptimizer": "^1.3.0",
+    "@sro/appearance": "workspace:*"
+  },
+  "devDependencies": {
+    "gltf-validator": "2.0.0-dev.3.10"
+  }
+}

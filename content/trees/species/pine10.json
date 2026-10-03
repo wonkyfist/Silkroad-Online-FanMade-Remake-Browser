@@ -1,0 +1,20 @@
+{
+  "id": "pine10",
+  "name": "Leafy pine",
+  "family": "pine_tall",
+  "archetype": "broadleaf",
+  "kind": "tree",
+  "batch": "B2",
+  "target": "res\\nature\\common\\tree\\tre_pine10.bsr",
+  "envelope": {"h": 46.25, "w": 36.31},
+  "seed": 23,
+  "textures": {
+    "bark": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine10_02.ddj", "repeatM": 2.5},
+    "leaf": {"retail": "prim\\mtrl\\nature\\common\\tree\\tre_pine10_01.ddj", "anchor": [0.1, 0.02], "aspect": 1.0, "grade": {"gain": 1.15}}
+  },
+  "tints": [],
+  "replaces": [
+    {"source": "res\\nature\\common\\tree\\tre_pine10.bsr"}
+  ],
+  "params": {"trunkFrac": 0.55, "limbStart": [0.35, 1.0], "limbTilt": [50, 80], "limbLen": [0.28, 0.36], "limbTaper": 0.5, "twigs": [4, 6], "cardScale": 0.7, "lean": [0.03, 0.02], "limbs": [7, 8], "normalRule": "dim", "normalUp": 0.6, "normalBend": 0.0, "backDim": 0.35}
+}

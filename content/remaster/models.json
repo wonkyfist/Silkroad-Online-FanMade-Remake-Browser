@@ -1,0 +1,18 @@
+{
+  "format": "sro-model-remaster",
+  "version": 1,
+  "$note": "Remastered world models (packages/convert/src/world/remaster-models.ts, docs/REMASTER.md). Each key is a retail .bsr; the converter keeps the retail model and appends the staged glb as its `remasterVariant`, which the PBR path (Medium and up) draws in its place; Low / Classic keeps the retail model. The staged files are git-ignored (work/), this file is the record. Fallback tiers: cj_jang_gate_dragon_lod1 and cj_jang_gate.lod1 sit beside the LOD0 files (same remaster key).",
+  "models": {
+    "res\\bldg\\china\\jangan01\\cj_jang_gate_dragon.bsr": {
+      "glb": "work/remaster/models/jangan-plaza/cj_jang_gate_dragon_lod0.glb",
+      "sidecar": "work/remaster/models/jangan-plaza/cj_jang_gate_dragon_lod0.json",
+      "why": "plaza dragon: Meshy M1 fitted to the retail statue, gold sro-remaster set (work/remaster/models/jangan-plaza/manifest.json)"
+    },
+    "res\\bldg\\china\\jangan01\\cj_jang_gate.bsr": {
+      "glb": "work/remaster/models/jangan-plaza/cj_jang_gate.lod0.glb",
+      "sidecar": "work/remaster/models/jangan-plaza/cj_jang_gate.lod0.json",
+      "lightmaps": { "lightmaps/remaster/plaza/": "work/remaster/models/jangan-plaza/lightmaps/remaster/plaza/" },
+      "why": "plaza model with the new fountain basin replacing cj_jang_pondFen / cj_jang_pondFen02 (gate06/07/08 byte-identical to retail)"
+    }
+  }
+}

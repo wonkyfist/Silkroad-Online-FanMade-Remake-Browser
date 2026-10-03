@@ -1,0 +1,171 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\dh_twig.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "dh_twig.near",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "dh_twig_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_wood_01.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    256
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "dh_twig_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_dh_twig_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "dh_twig_bark",
+   "vertices": 837,
+   "triangles": 1072,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "dh_twig_leaf",
+   "vertices": 416,
+   "triangles": 208,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 1253,
+  "triangles": 1280,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 0,
+  "heightM": 33.880000196397305,
+  "boundsMin": [
+   -5.41428804397583,
+   -0.12271412461996078,
+   -4.911947250366211
+  ],
+  "boundsMax": [
+   4.915712356567383,
+   33.757286071777344,
+   5.291106224060059
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "dh_twig",
+  "kind": "tree",
+  "part": "near",
+  "tiers": {
+   "lod0": 0
+  },
+  "tints": [
+   {
+    "name": "twig01",
+    "materials": {
+     "dh_twig_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_dh_twig_leaf_twig01.ddj",
+      "image": "tints/twig01-leaf.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_dh_twig_leaf.ddj": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_twig02_tree03.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_dh_twig_leaf_twig01.ddj": "prim\\mtrl\\nature\\china\\dunhuang\\tree2\\w_cd_twig01_tree03.ddj"
+  }
+ }
+}

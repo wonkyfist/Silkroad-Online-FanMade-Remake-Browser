@@ -1,0 +1,9 @@
+# Copy to deploy/config.local.sh (gitignored) and fill in your own server. It is sourced AFTER deploy/config.sh,
+# so use plain assignments (not the `: "${X:=...}"` form) and set DEPLOY_BIND too.
+# The deploy needs a Linux host you can reach over SSH with a key, with systemd user services (see docs/DEPLOY.md).
+
+DEPLOY_HOST=100.64.0.10            # your server's private IP, e.g. its Tailscale IP (`tailscale ip -4` on the server)
+DEPLOY_USER=youruser               # the SSH login user on the server
+DEPLOY_KEY="$HOME/.ssh/sro_deploy" # a private key authorised in that user's ~/.ssh/authorized_keys
+DEPLOY_BIND="$DEPLOY_HOST"         # the address the game server listens on: keep it private (the tailnet)
+# DEPLOY_PORT=7000
