@@ -201,3 +201,10 @@ troubleshooting. Its host names and addresses are placeholders.
   [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 - Built with Babylon.js, Vite, better-sqlite3, sharp, meshoptimizer and the other packages in `pnpm-lock.yaml`,
   under their own licences.
+
+## License
+
+The source code in this repository is released under the MIT License (see `LICENSE`).
+The converted game assets under `work/` (world, models, textures, sounds, music) are derived from Silkroad Online's
+vSRO 1.188 client and remain the property of their owners; they are not covered by the MIT License and are included
+only so this non-commercial fan project can run.
