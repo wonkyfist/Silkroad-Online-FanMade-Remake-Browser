@@ -1,0 +1,103 @@
+{
+  "source": "res/bldg/china/jangan03/cj3_lion02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj3_lion02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ3_lion",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj3_lion02.bmt",
+      "flags": 324,
+      "flagNames": [
+        "specular",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_lion.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        0.501960813999176,
+        0.250980406999588,
+        1
+      ],
+      "specular": [
+        0.501960813999176,
+        0.501960813999176,
+        0.501960813999176,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 118
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ3_lion02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj3_lion02.bms",
+      "material": "CJ3_lion",
+      "vertices": 272,
+      "triangles": 339,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 272,
+    "triangles": 339,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.902228832244873,
+    "boundsMin": [
+      -0.8429242968559265,
+      2.2703661918640137,
+      -1.4491831064224243
+    ],
+    "boundsMax": [
+      1.0308912992477417,
+      5.172595024108887,
+      1.4204890727996826
+    ]
+  },
+  "warnings": [
+    "CJ3_lion02: rebuilt 16 zero/non-finite normal(s) from faces"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

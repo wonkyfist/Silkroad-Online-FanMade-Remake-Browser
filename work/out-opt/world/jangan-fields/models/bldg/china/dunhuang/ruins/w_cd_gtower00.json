@@ -1,0 +1,100 @@
+{
+  "source": "res/bldg/china/dunhuang/ruins/w_cd_gtower00.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_gtower00",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_gtower00",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_gtower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_gtower00.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_gtower00",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_gtower00.bms",
+      "material": "w_cd_gtower00",
+      "vertices": 280,
+      "triangles": 264,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 280,
+    "triangles": 264,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 13.071745306253433,
+    "boundsMin": [
+      -11.094276428222656,
+      -0.2071165144443512,
+      -10.874330520629883
+    ],
+    "boundsMax": [
+      11.094276428222656,
+      12.864628791809082,
+      10.8743314743042
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

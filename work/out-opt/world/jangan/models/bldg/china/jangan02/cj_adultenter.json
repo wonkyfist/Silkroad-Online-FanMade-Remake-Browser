@@ -1,0 +1,641 @@
+{
+  "source": "res/bldg/china/jangan02/cj_adultenter.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_adultente",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_adultenter_column",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_columnlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_columnlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.847058892250061,
+        0.847058892250061,
+        0.847058892250061,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_alpha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (52.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_alphalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_column2side",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_column2sidelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_column2sidelightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_column_light",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 328,
+      "flagNames": [
+        "selfIlluminated",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_column_light.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_column_lightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_column_lightlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_etc",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_etc.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_etclightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_etclightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_etc2side",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_etc.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_etc2sidelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_etc2sidelightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_toy_light",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 328,
+      "flagNames": [
+        "selfIlluminated",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_toy_light.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_toy_lightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_toy_lightlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.4705882668495178,
+        0.4705882668495178,
+        0.4705882668495178,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_lamp",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_lamp.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_lamplightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_lamplightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_adultenter_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adultenter_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.8078432083129883,
+        0.8078432083129883,
+        0.8078432083129883,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_adultenter_column",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_column.bms",
+      "material": "cj_adultenter_column",
+      "vertices": 170,
+      "triangles": 82,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_columnlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_columnlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_alpha.bms",
+      "material": "cj_adultenter_alpha",
+      "vertices": 56,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_alphalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_column2side",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_column2side.bms",
+      "material": "cj_adultenter_column2side",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_column2sidelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_column2sidelightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_column_light",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_column_light.bms",
+      "material": "cj_adultenter_column_light",
+      "vertices": 341,
+      "triangles": 192,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_column_lightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_column_lightlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_etc",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_etc.bms",
+      "material": "cj_adultenter_etc",
+      "vertices": 568,
+      "triangles": 300,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_etclightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_etclightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_etc2side",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_etc2side.bms",
+      "material": "cj_adultenter_etc2side",
+      "vertices": 44,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_etc2sidelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_etc2sidelightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_toy_light",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_toy_light.bms",
+      "material": "cj_adultenter_toy_light",
+      "vertices": 605,
+      "triangles": 418,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_toy_lightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_toy_lightlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_lamp",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_lamp.bms",
+      "material": "cj_adultenter_lamp",
+      "vertices": 28,
+      "triangles": 24,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_lamplightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_lamplightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_adultenter_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adultenter_roof.bms",
+      "material": "cj_adultenter_roof",
+      "vertices": 460,
+      "triangles": 248,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan02\\cj_adultenter_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan02/cj_adultenter_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2280,
+    "triangles": 1324,
+    "joints": 0,
+    "meshes": 9,
+    "animations": 0,
+    "textures": 7,
+    "heightM": 10.581780624575913,
+    "boundsMin": [
+      -1.6177198886871338,
+      0.012133407406508923,
+      -6.406141757965088
+    ],
+    "boundsMax": [
+      1.7338688373565674,
+      10.593914031982422,
+      6.618777275085449
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 9,
+    "issues": []
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_lamp_orange_s.efp",
+      "bone": null,
+      "position": [
+        -1.1891,
+        7.78499,
+        3.51828
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_lamp_orange_s.efp",
+      "bone": null,
+      "position": [
+        -1.1891,
+        7.75129,
+        -2.98606
+      ],
+      "birthMs": 0,
+      "night": true
+    }
+  ]
+}

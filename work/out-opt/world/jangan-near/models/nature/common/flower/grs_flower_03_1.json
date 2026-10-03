@@ -1,0 +1,103 @@
+{
+  "source": "res/nature/common/flower/grs_flower_03_1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "grs_flower_03_1",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "grs_weed07",
+      "bmt": "prim\\mtrl\\nature\\common\\flower\\grs_flower_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\flower\\grs_weed07.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (88.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "specular": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "grs_flower_03_1",
+      "bms": "prim\\mesh\\nature\\common\\flower\\grs_flower_03_1.bms",
+      "material": "grs_weed07",
+      "vertices": 60,
+      "triangles": 30,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 60,
+    "triangles": 30,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.143554002046585,
+    "boundsMin": [
+      -2.751643657684326,
+      -0.1337818205356598,
+      -3.3494644165039062
+    ],
+    "boundsMax": [
+      2.732962131500244,
+      1.0097721815109253,
+      3.6219303607940674
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

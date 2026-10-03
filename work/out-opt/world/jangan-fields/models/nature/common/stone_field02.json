@@ -1,0 +1,100 @@
+{
+  "source": "res/nature/common/stone_field02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "stone_field02",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ston_field02",
+      "bmt": "prim\\mtrl\\nature\\common\\stone_field02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\ston_field01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "stone_field02",
+      "bms": "prim\\mesh\\nature\\common\\stone_field02.bms",
+      "material": "ston_field02",
+      "vertices": 37,
+      "triangles": 41,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 37,
+    "triangles": 41,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 6.279288150370121,
+    "boundsMin": [
+      -5.5483574867248535,
+      0.12346615642309189,
+      -4.181214809417725
+    ],
+    "boundsMax": [
+      6.334664344787598,
+      6.402754306793213,
+      5.746173858642578
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

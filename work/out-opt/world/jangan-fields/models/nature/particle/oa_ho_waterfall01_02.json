@@ -1,0 +1,106 @@
+{
+  "source": "res/nature/particle/oa_ho_waterfall01_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oa_ho_waterfall01_02",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "bigwaterfall02",
+      "bmt": "prim\\mtrl\\particle\\bigwaterfall02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo1.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (95.6% partial, 4.4% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "uvScroll": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "oa_ho_waterfall01_02",
+      "bms": "prim\\mesh\\particle\\oa_ho_waterfall01_02.bms",
+      "material": "bigwaterfall02",
+      "vertices": 49,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 49,
+    "triangles": 72,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 37.697893500328064,
+    "boundsMin": [
+      -11.518388748168945,
+      -36.83140563964844,
+      -5.0623698234558105
+    ],
+    "boundsMax": [
+      7.953571319580078,
+      0.8664878606796265,
+      5.055226802825928
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

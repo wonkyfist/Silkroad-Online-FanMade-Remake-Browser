@@ -1,0 +1,100 @@
+{
+  "source": "res/nature/china/dunhuang/rock/w_cd_rock_s_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_rock_s_02",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_rock_L_01",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\rock\\w_cd_rock_l_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\rock\\w_cd_rock_l_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_rock_S_02",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\rock\\w_cd_rock_s_02.bms",
+      "material": "w_cd_rock_L_01",
+      "vertices": 215,
+      "triangles": 177,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 215,
+    "triangles": 177,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.699513554573059,
+    "boundsMin": [
+      -4.422654151916504,
+      -0.38955509662628174,
+      -3.748534679412842
+    ],
+    "boundsMax": [
+      4.442047119140625,
+      2.3099584579467773,
+      3.7485337257385254
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

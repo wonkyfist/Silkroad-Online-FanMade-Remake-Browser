@@ -1,0 +1,216 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\ginkgo.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "ginkgo.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ginkgo_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_bark.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ginkgo_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "ginkgo_bark",
+      "vertices": 168,
+      "triangles": 210,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "ginkgo_leaf",
+      "vertices": 1616,
+      "triangles": 808,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "ginkgo_bark",
+      "vertices": 132,
+      "triangles": 154,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "ginkgo_leaf",
+      "vertices": 336,
+      "triangles": 168,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2252,
+    "triangles": 1340,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 21.93965996056795,
+    "boundsMin": [
+      -12.809764862060547,
+      -0.09173858910799026,
+      -11.061542510986328
+    ],
+    "boundsMax": [
+      13.510236740112305,
+      21.84792137145996,
+      13.92559814453125
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "ginkgo",
+    "kind": "tree",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "bank01",
+        "materials": {
+          "ginkgo_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_bank01.ddj",
+            "image": "tints/bank01-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "bank01big",
+        "materials": {
+          "ginkgo_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_bank01big.ddj",
+            "image": "tints/bank01big-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "blossom",
+        "materials": {
+          "ginkgo_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_blossom.ddj",
+            "image": "tints/blossom-leaf.webp"
+          },
+          "ginkgo_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_bark_blossom.ddj",
+            "image": "tints/blossom-bark.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_bank_pilla.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_bank_leaf02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_bank01.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_bank_leaf.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_bank01big.ddj": "prim\\mtrl\\nature\\common\\tree\\leaf04.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_leaf_blossom.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_frie_leaf.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_ginkgo_bark_blossom.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_frie_body.ddj"
+    }
+  }
+}

@@ -1,0 +1,1711 @@
+{
+  "source": "res/bldg/china/dunhuang/ferry/naruter_buil.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "naruter_buil",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "naru_pilla01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_pilla02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_01_pilla02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_roof .ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_01_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_pilla01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_02_pilla01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_roof .ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_02_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_desk02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_desk02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil01_chailightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil01_chailightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_desk01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_desk.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil01_desklightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil01_desklightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_pilla01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_pilla01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_floor02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil02_fioorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil02_fioorlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla04.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.4% zero, 4.8% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil02_ladder02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil02_ladder02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil03_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil03_pillalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_dan01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_dan01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_dan01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9215686917304993,
+        0.9215686917304993,
+        0.9215686917304993,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_door_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_door_pillalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_rope",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_rope.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.8% zero, 10.3% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_door_ropelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_door_ropelightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_fence",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_fence.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (50.1% zero, 12.9% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence01_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence01_pillalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_fence",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_fence.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (50.1% zero, 12.9% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_rope",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_rope.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.8% zero, 10.3% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fish02_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fish02_02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla04.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.4% zero, 4.8% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_floor01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_floor01_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_floor01_part01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_floor03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_floor03_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_floor03_part01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla01_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla01_part01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9647059440612793,
+        0.9647059440612793,
+        0.9647059440612793,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla01_part01_1lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_pilla03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (48.1% zero, 51.9% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla03_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla03_part01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_box",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_boxslightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_boxslightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_box",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_drum_tonglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_drum_tonglightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_obj",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_obj.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_obj_foodslightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_obj_foodslightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "naru_buil_01_pilla02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_pilla02.bms",
+      "material": "naru_pilla01",
+      "vertices": 614,
+      "triangles": 304,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_pilla02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_01_pilla02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil_01_roof",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_roof.bms",
+      "material": "naru_roof",
+      "vertices": 58,
+      "triangles": 32,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_01_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_01_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil_02_pilla01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_pilla01.bms",
+      "material": "naru_pilla02",
+      "vertices": 672,
+      "triangles": 302,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_pilla01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_02_pilla01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil_02_roof",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_roof.bms",
+      "material": "naru_roof",
+      "vertices": 52,
+      "triangles": 32,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_02_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_02_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil01_chai",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil01_chai.bms",
+      "material": "naru_desk02",
+      "vertices": 566,
+      "triangles": 228,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil01_chailightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil01_chailightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil01_desk",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil01_desk.bms",
+      "material": "naru_desk01",
+      "vertices": 52,
+      "triangles": 26,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil01_desklightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil01_desklightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil_pilla01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil_pilla01.bms",
+      "material": "naru_pilla02",
+      "vertices": 312,
+      "triangles": 152,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil_pilla01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil_pilla01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil02_fioor",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil02_fioor.bms",
+      "material": "naru_floor02",
+      "vertices": 66,
+      "triangles": 38,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil02_fioorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil02_fioorlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil02_ladder02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil02_ladder02.bms",
+      "material": "naru_pilla04",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil02_ladder02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil02_ladder02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil03_pilla",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil03_pilla.bms",
+      "material": "naru_pilla02",
+      "vertices": 444,
+      "triangles": 202,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_buil03_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_buil03_pillalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_dan01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_dan01.bms",
+      "material": "naru_dan01",
+      "vertices": 216,
+      "triangles": 96,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_dan01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_dan01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_door_pilla",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_door_pilla.bms",
+      "material": "naru_pilla02",
+      "vertices": 62,
+      "triangles": 36,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_door_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_door_pillalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_door_rope",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_door_rope.bms",
+      "material": "naru_rope",
+      "vertices": 16,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_door_ropelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_door_ropelightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_fence01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fence01.bms",
+      "material": "naru_fence",
+      "vertices": 20,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_fence01_pilla",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fence01_pilla.bms",
+      "material": "naru_pilla02",
+      "vertices": 470,
+      "triangles": 196,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence01_pillalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence01_pillalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_fence02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fence02.bms",
+      "material": "naru_fence",
+      "vertices": 56,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fence02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fence02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_fish02_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fish02_02.bms",
+      "material": "naru_rope",
+      "vertices": 12,
+      "triangles": 6,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_fish02_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_fish02_02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_flag01_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_flag01_02.bms",
+      "material": "naru_pilla04",
+      "vertices": 6,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_flag02_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_flag02_02.bms",
+      "material": "naru_pilla04",
+      "vertices": 6,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_floor01_part01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_floor01_part01.bms",
+      "material": "naru_floor01",
+      "vertices": 14,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_floor01_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_floor01_part01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_floor03_part01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_floor03_part01.bms",
+      "material": "naru_floor03",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_floor03_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_floor03_part01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_pilla01_part01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01.bms",
+      "material": "naru_pilla01_2sid",
+      "vertices": 64,
+      "triangles": 32,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla01_part01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_pilla01_part01_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01_1.bms",
+      "material": "naru_pilla01",
+      "vertices": 561,
+      "triangles": 276,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla01_part01_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla01_part01_1lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_pilla03_part01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_pilla03_part01.bms",
+      "material": "naru_pilla03",
+      "vertices": 60,
+      "triangles": 30,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_pilla03_part01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_pilla03_part01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_boxs",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_boxs.bms",
+      "material": "naru_box",
+      "vertices": 439,
+      "triangles": 208,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_boxslightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_boxslightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_drum_tong",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_drum_tong.bms",
+      "material": "naru_box",
+      "vertices": 1150,
+      "triangles": 868,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_drum_tonglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_drum_tonglightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_obj_foods",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_obj_foods.bms",
+      "material": "naru_obj",
+      "vertices": 869,
+      "triangles": 483,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\ferry\\naru_obj_foodslightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/ferry/naru_obj_foodslightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "naru_buil02_ladder01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil02_ladder01.bms",
+      "material": "naru_pilla04",
+      "vertices": 6,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_ladder01_02_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_ladder01_02_1.bms",
+      "material": "naru_pilla04",
+      "vertices": 10,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 6913,
+    "triangles": 3647,
+    "joints": 0,
+    "meshes": 29,
+    "animations": 0,
+    "textures": 14,
+    "heightM": 23.9645357131958,
+    "boundsMin": [
+      -28.549789428710938,
+      -5.592282295227051,
+      -18.3088436126709
+    ],
+    "boundsMax": [
+      24.595172882080078,
+      18.37225341796875,
+      12.361116409301758
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 25,
+    "issues": []
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "source": "res/artifact/china/dunhuang/cliff/w_cd_bridge02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_bridge02",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_CD_brid01",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_bridge.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_brid01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "10 - Default",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_bridge.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_rock02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_rock03",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_bridge.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_rock03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_rock04",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_bridge.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\cliff\\w_cd_rock04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_CD_brid02",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\cliff\\w_cd_brid02.bms",
+      "material": "w_CD_brid01",
+      "vertices": 217,
+      "triangles": 154,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_CD_brid02_rock02",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\cliff\\w_cd_brid02_rock02.bms",
+      "material": "10 - Default",
+      "vertices": 384,
+      "triangles": 464,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_CD_brid02_rock03",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\cliff\\w_cd_brid02_rock03.bms",
+      "material": "W_CD_rock03",
+      "vertices": 133,
+      "triangles": 196,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_CD_brid02_rock04",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\cliff\\w_cd_brid02_rock04.bms",
+      "material": "W_CD_rock04",
+      "vertices": 60,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 794,
+    "triangles": 864,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 27.898292258381844,
+    "boundsMin": [
+      -31.1527042388916,
+      0.08104734122753143,
+      -17.43511962890625
+    ],
+    "boundsMax": [
+      33.34621810913086,
+      27.979339599609375,
+      17.094898223876953
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

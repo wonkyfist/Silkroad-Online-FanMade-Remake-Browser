@@ -1,0 +1,117 @@
+{
+  "source": "res/bldg/china/jangan_enter/cj_enter_fire.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_enter_fire",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_west_door",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_enter_fire.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_east_door.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (8.2% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_enter_fire",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_enter_fire.bms",
+      "material": "CJ_west_door",
+      "vertices": 135,
+      "triangles": 68,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 135,
+    "triangles": 68,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.026097715133801,
+    "boundsMin": [
+      -0.5669362545013428,
+      -0.0005661847535520792,
+      -0.6374035477638245
+    ],
+    "boundsMax": [
+      0.5669352412223816,
+      2.025531530380249,
+      0.6374029517173767
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame2.efp",
+      "bone": null,
+      "position": [
+        0.00578,
+        1.85422,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ]
+}

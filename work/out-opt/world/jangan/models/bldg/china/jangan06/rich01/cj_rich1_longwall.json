@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan06/rich01/cj_rich1_longwall.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich1_longwall",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich1_longwall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich01\\cj_rich1_longwall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich01\\cj_rich_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich01\\cj_rich1_longwalllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich01/cj_rich1_longwalllightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich1_longwall",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich01\\cj_rich1_longwall.bms",
+      "material": "CJ_rich1_longwall",
+      "vertices": 68,
+      "triangles": 38,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich01\\cj_rich1_longwalllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich01/cj_rich1_longwalllightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 68,
+    "triangles": 38,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.3027618885038237,
+    "boundsMin": [
+      -0.7998573184013367,
+      -0.000001525878701613692,
+      -33.122955322265625
+    ],
+    "boundsMax": [
+      0.7998550534248352,
+      2.302760362625122,
+      33.12291717529297
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

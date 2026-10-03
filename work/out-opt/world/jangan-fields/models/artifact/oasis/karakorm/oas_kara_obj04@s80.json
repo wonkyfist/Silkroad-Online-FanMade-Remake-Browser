@@ -1,0 +1,103 @@
+{
+  "source": "res/artifact/oasis/karakorm/oas_kara_obj04.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oas_kara_obj04",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "oas_kara_obj04",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_obj04.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_straw.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (14.2% zero, 0.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "oas_kara_obj04",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_obj04.bms",
+      "material": "oas_kara_obj04",
+      "vertices": 85,
+      "triangles": 54,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 85,
+    "triangles": 54,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.02266,
+    "boundsMin": [
+      -1.04436,
+      0.01521,
+      -0.90603
+    ],
+    "boundsMax": [
+      1.04803,
+      2.03787,
+      0.90603
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

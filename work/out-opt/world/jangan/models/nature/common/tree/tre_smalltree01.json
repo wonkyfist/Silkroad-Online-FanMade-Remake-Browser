@@ -1,0 +1,192 @@
+{
+  "source": "res/nature/common/tree/tre_smalltree01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_smalltree01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\tre_smalltree01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.367376474969433e-7,
+      "maxHierarchyError": 1.7763568394002505e-15,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_smalltree01",
+      "bmt": "prim\\mtrl\\nature\\common\\tre_smalltree01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_tree01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (62.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_smalltree01_bran",
+      "bmt": "prim\\mtrl\\nature\\common\\tre_smalltree01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_tree_bran.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_smalltree01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_smalltree01.bms",
+      "material": "tre_smalltree01",
+      "vertices": 78,
+      "triangles": 42,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone01",
+        "Bone03"
+      ]
+    },
+    {
+      "name": "tre_smalltree01_bran",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_smalltree01_bran.bms",
+      "material": "tre_smalltree01_bran",
+      "vertices": 71,
+      "triangles": 78,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\tree\\tre_smalltree01.ban",
+      "banName": "tre_smalltree01",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4
+    }
+  ],
+  "stats": {
+    "vertices": 149,
+    "triangles": 120,
+    "joints": 4,
+    "meshes": 2,
+    "animations": 1,
+    "textures": 2,
+    "heightM": 14.254412442445755,
+    "boundsMin": [
+      -5.351876258850098,
+      -0.048476964235305786,
+      -5.237086772918701
+    ],
+    "boundsMax": [
+      5.174036026000977,
+      14.20593547821045,
+      4.749869346618652
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

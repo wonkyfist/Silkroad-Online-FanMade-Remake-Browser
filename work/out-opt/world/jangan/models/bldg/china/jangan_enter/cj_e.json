@@ -1,0 +1,925 @@
+{
+  "source": "res/bldg/china/jangan_enter/cj_e.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_e",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_w_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (28.7% zero, 0.5% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_alphalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_door",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_door.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_doorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_doorlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_stair",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_stair.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_stairlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_stairlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall03lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall04",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall04lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall05",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall05lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (28.7% zero, 0.5% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_alphalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_stair",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_stair.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_stairlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_stairlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_wall01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_w_wall02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_e.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan_enter\\cj_wall02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_wall02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_e_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_alpha.bms",
+      "material": "CJ_w_alpha",
+      "vertices": 1056,
+      "triangles": 416,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_alphalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_door",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_door.bms",
+      "material": "CJ_w_door",
+      "vertices": 739,
+      "triangles": 276,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_doorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_doorlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_roof.bms",
+      "material": "CJ_w_roof",
+      "vertices": 231,
+      "triangles": 87,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_stair",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_stair.bms",
+      "material": "CJ_w_stair",
+      "vertices": 96,
+      "triangles": 48,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_stairlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_stairlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_wall01.bms",
+      "material": "CJ_w_wall01",
+      "vertices": 782,
+      "triangles": 328,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_wall02.bms",
+      "material": "CJ_w_wall02",
+      "vertices": 1128,
+      "triangles": 454,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_wall03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_wall03.bms",
+      "material": "CJ_w_wall03",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall03lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_wall04",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_wall04.bms",
+      "material": "CJ_w_wall04",
+      "vertices": 50,
+      "triangles": 24,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall04lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_e_wall05",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_e_wall05.bms",
+      "material": "CJ_w_wall05",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_e_wall05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_e_wall05lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_se_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_se_alpha.bms",
+      "material": "CJ_w_alpha",
+      "vertices": 566,
+      "triangles": 224,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_alphalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_se_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_se_roof.bms",
+      "material": "CJ_w_roof",
+      "vertices": 650,
+      "triangles": 228,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_se_stair",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_se_stair.bms",
+      "material": "CJ_w_stair",
+      "vertices": 24,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_stairlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_stairlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_se_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_se_wall01.bms",
+      "material": "CJ_w_wall01",
+      "vertices": 74,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_wall01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_se_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan_enter\\cj_se_wall02.bms",
+      "material": "CJ_w_wall02",
+      "vertices": 586,
+      "triangles": 224,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan_enter\\cj_se_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan_enter/cj_se_wall02lightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 5990,
+    "triangles": 2349,
+    "joints": 0,
+    "meshes": 14,
+    "animations": 0,
+    "textures": 9,
+    "heightM": 39.19991912832484,
+    "boundsMin": [
+      -15.771624565124512,
+      -0.0060333251021802425,
+      -220.0830078125
+    ],
+    "boundsMax": [
+      17.480579376220703,
+      39.193885803222656,
+      220.0830078125
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 14,
+    "issues": []
+  }
+}

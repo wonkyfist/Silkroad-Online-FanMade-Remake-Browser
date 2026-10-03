@@ -1,0 +1,193 @@
+{
+  "source": "res/nature/common/tree/tre_maple03_big01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_maple03_big01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\tre_maple03_big.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000015303258997789726,
+      "maxHierarchyError": 7.105427357601002e-15,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_maple03_big01_brn",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_maple03_big01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_maple_pin.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_maple03_big01_leaf",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_maple03_big01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_maple01_leaf_green.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_maple03_big01_brn",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_maple03_big01_brn.bms",
+      "material": "tre_maple03_big01_brn",
+      "vertices": 137,
+      "triangles": 79,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone02",
+        "Bone04",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "tre_maple03_big01_leaf",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_maple03_big01_leaf.bms",
+      "material": "tre_maple03_big01_leaf",
+      "vertices": 75,
+      "triangles": 60,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\tree\\tre_maple03_big.ban",
+      "banName": "tre_maple03_big",
+      "durationMs": 17000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 5
+    }
+  ],
+  "stats": {
+    "vertices": 212,
+    "triangles": 139,
+    "joints": 5,
+    "meshes": 2,
+    "animations": 1,
+    "textures": 2,
+    "heightM": 31.598765168339014,
+    "boundsMin": [
+      -17.73986053466797,
+      -0.04345778003334999,
+      -17.0664119720459
+    ],
+    "boundsMax": [
+      16.09564208984375,
+      31.555307388305664,
+      16.77954864501953
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

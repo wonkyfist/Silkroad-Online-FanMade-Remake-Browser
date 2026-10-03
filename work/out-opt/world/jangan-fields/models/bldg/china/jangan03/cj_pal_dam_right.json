@@ -1,0 +1,152 @@
+{
+  "source": "res/bldg/china/jangan03/cj_pal_dam_right.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_pal_dam_right",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_pal_dam_right_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_dam_right.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_pal_dam_right_wall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_dam_right.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_dam.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_pal_dam_right_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_dam_right_roof.bms",
+      "material": "CJ_pal_dam_right_roof",
+      "vertices": 97,
+      "triangles": 70,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_pal_dam_right_wall",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_dam_right_wall.bms",
+      "material": "CJ_pal_dam_right_wall",
+      "vertices": 48,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 145,
+    "triangles": 94,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 10.557211481034756,
+    "boundsMin": [
+      -1.9313247203826904,
+      -0.018962465226650238,
+      -96.59010314941406
+    ],
+    "boundsMax": [
+      1.9313013553619385,
+      10.538249015808105,
+      96.59010314941406
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

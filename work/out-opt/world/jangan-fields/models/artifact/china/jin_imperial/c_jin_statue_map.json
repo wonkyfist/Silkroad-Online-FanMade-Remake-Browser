@@ -1,0 +1,100 @@
+{
+  "source": "res/artifact/china/jin_imperial/c_jin_statue_map.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_jin_statue_map",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_jin_statue_map",
+      "bmt": "prim\\mtrl\\artifact\\china\\jin_imperial\\c_jin_statue_map.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\jin_imperial\\c_jin_statue_map.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_jin_statue_map",
+      "bms": "prim\\mesh\\artifact\\china\\jin_imperial\\c_jin_statue_map.bms",
+      "material": "C_jin_statue_map",
+      "vertices": 401,
+      "triangles": 490,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 401,
+    "triangles": 490,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 20.564681624993682,
+    "boundsMin": [
+      -3.2796740531921387,
+      0.022083664312958717,
+      -3.402758836746216
+    ],
+    "boundsMax": [
+      3.2819607257843018,
+      20.58676528930664,
+      3.3013720512390137
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

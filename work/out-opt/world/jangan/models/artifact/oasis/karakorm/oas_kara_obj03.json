@@ -1,0 +1,100 @@
+{
+  "source": "res/artifact/oasis/karakorm/oas_kara_obj03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oas_kara_obj03",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "oas_kara_obj01_02",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_obj01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_fire_stone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "oas_kara_obj03",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_obj03.bms",
+      "material": "oas_kara_obj01_02",
+      "vertices": 130,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 130,
+    "triangles": 80,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.5225311890244484,
+    "boundsMin": [
+      -0.2620459794998169,
+      -0.11923161894083023,
+      -0.2620459794998169
+    ],
+    "boundsMax": [
+      0.6775165796279907,
+      0.40329957008361816,
+      0.2620459794998169
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "source": "res/nature/particle/cj_wf_dr_05.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_wf_dr_05",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/multigi.efp",
+      "bone": null,
+      "position": [
+        1.65244,
+        -10.07757,
+        -1.6721
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_WF_dr_02",
+      "bmt": "prim\\mtrl\\particle\\cj_wf_dr_02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo1test.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (95.6% partial, 4.4% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "uvScroll": [
+        0,
+        -2
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_WF_dr_05",
+      "bms": "prim\\mesh\\particle\\cj_wf_dr_05.bms",
+      "material": "CJ_WF_dr_02",
+      "vertices": 20,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 20,
+    "triangles": 24,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 6.308780908584595,
+    "boundsMin": [
+      0.25926390290260315,
+      -10.177842140197754,
+      -1.7675044536590576
+    ],
+    "boundsMax": [
+      1.8997812271118164,
+      -3.869061231613159,
+      0.5462217330932617
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

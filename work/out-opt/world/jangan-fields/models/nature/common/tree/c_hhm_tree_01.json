@@ -1,0 +1,207 @@
+{
+  "source": "res/nature/common/tree/c_hhm_tree_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_hhm_tree_01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_hhm_tree_01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (68.0% zero, 0.5% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_hhm_tree_03",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_hhm_tree_04",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_hhm_tree_01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\c_hhm_tree_01.bms",
+      "material": "C_hhm_tree_01",
+      "vertices": 240,
+      "triangles": 120,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_hhm_tree_03",
+      "bms": "prim\\mesh\\nature\\common\\tree\\c_hhm_tree_03.bms",
+      "material": "C_hhm_tree_03",
+      "vertices": 45,
+      "triangles": 44,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_hhm_tree_04",
+      "bms": "prim\\mesh\\nature\\common\\tree\\c_hhm_tree_04.bms",
+      "material": "C_hhm_tree_04",
+      "vertices": 251,
+      "triangles": 263,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 536,
+    "triangles": 427,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 66.36867535114288,
+    "boundsMin": [
+      -33.89720153808594,
+      -0.2102128267288208,
+      -40.308692932128906
+    ],
+    "boundsMax": [
+      33.59419631958008,
+      66.15846252441406,
+      35.91429901123047
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

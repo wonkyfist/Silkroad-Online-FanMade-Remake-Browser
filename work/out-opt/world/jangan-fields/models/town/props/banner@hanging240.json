@@ -1,0 +1,131 @@
+{
+  "source": "town/props/banner",
+  "version": "sro-town-prop 1",
+  "generator": "packages/convert/src/world/town/dressing-io.ts (from packages/convert/tools/blender/town/props/build.py)",
+  "name": "banner",
+  "type": "town prop",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "town_banner_pole",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/banner.png",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "town_banner_cloth",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/banner.png",
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "town_banner_pole",
+      "bms": "",
+      "material": "town_banner_pole",
+      "vertices": 104,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "town_banner_cloth",
+      "bms": "",
+      "material": "town_banner_cloth",
+      "vertices": 66,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 170,
+    "triangles": 130,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 6.48,
+    "boundsMin": [
+      -0.21,
+      0,
+      -0.21
+    ],
+    "boundsMax": [
+      1.15,
+      6.48,
+      0.21
+    ]
+  },
+  "warnings": []
+}

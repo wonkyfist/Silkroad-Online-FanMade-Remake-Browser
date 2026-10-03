@@ -1,0 +1,245 @@
+{
+  "source": "res/nature/common/tree/tre_frie01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_frie01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\tree\\tre_frie_pilla01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 2.4948387533640926e-7,
+      "maxHierarchyError": 1.7763568394002505e-15,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_frie_body",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_frie01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_frie_body.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_frie_leaf",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_frie01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_frie_leaf.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (78.0% zero, 0.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_frie_pilla",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_frie01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_bank_pilla.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_frie_body01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_frie_body01.bms",
+      "material": "tre_frie_body",
+      "vertices": 46,
+      "triangles": 31,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "tre_frie_leaf01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_frie_leaf01.bms",
+      "material": "tre_frie_leaf",
+      "vertices": 75,
+      "triangles": 60,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "tre_frie_pilla01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_frie_pilla01.bms",
+      "material": "tre_frie_pilla",
+      "vertices": 14,
+      "triangles": 10,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\tree\\tre_frie_pilla01.ban",
+      "banName": "tre_frie_pilla01",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4
+    }
+  ],
+  "stats": {
+    "vertices": 135,
+    "triangles": 101,
+    "joints": 4,
+    "meshes": 3,
+    "animations": 1,
+    "textures": 3,
+    "heightM": 15.668691101484,
+    "boundsMin": [
+      -6.358461856842041,
+      -0.01340812724083662,
+      -7.068238735198975
+    ],
+    "boundsMax": [
+      7.042059421539307,
+      15.655282974243164,
+      8.061075210571289
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

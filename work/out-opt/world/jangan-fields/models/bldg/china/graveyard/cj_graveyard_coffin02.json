@@ -1,0 +1,100 @@
+{
+  "source": "res/bldg/china/graveyard/cj_graveyard_coffin02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_graveyard_coffin02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_graveyard_coffin02",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_coffin02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_coffin01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_graveyard_coffin02",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_coffin02.bms",
+      "material": "cj_graveyard_coffin02",
+      "vertices": 205,
+      "triangles": 258,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 205,
+    "triangles": 258,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.3721209220821038,
+    "boundsMin": [
+      -0.8947294354438782,
+      -0.0017918400699272752,
+      -0.5440189838409424
+    ],
+    "boundsMax": [
+      0.8947294354438782,
+      0.3703290820121765,
+      0.6453031301498413
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

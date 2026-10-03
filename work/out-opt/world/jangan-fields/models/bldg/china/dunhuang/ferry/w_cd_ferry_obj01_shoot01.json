@@ -1,0 +1,259 @@
+{
+  "source": "res/bldg/china/dunhuang/ferry/w_cd_ferry_obj01_shoot01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_ferry_obj01_shoot01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_ferry_obj01_shoot_00",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_00.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        560
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (58.0% zero, 2.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_ferry_obj01_shoot_00",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_00.bms",
+      "material": "w_cd_ferry_obj01_shoot_00",
+      "vertices": 802,
+      "triangles": 634,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_01.bms",
+      "material": "w_cd_ferry_obj01_shoot_01",
+      "vertices": 112,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_02.bms",
+      "material": "w_cd_ferry_obj01_shoot_02",
+      "vertices": 324,
+      "triangles": 162,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ferry_obj01_shoot_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\w_cd_ferry_obj01_shoot_03.bms",
+      "material": "w_cd_ferry_obj01_shoot_03",
+      "vertices": 25,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1263,
+    "triangles": 908,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 20.144094467163086,
+    "boundsMin": [
+      -15.93932056427002,
+      -0.8989677429199219,
+      -4.941216468811035
+    ],
+    "boundsMax": [
+      28.854877471923828,
+      19.245126724243164,
+      4.941218376159668
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

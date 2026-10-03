@@ -1,0 +1,196 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\swamp_a.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "swamp_a.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "swamp_a_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_bark.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "swamp_a_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "swamp_a_bark",
+      "vertices": 136,
+      "triangles": 174,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "swamp_a_leaf",
+      "vertices": 1136,
+      "triangles": 568,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "swamp_a_bark",
+      "vertices": 108,
+      "triangles": 130,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "swamp_a_leaf",
+      "vertices": 240,
+      "triangles": 120,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1620,
+    "triangles": 992,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 66.40612703561783,
+    "boundsMin": [
+      -31.916902542114258,
+      -0.5253515839576721,
+      -36.59380340576172
+    ],
+    "boundsMax": [
+      44.30309295654297,
+      65.88077545166016,
+      38.37961196899414
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "swamp_a",
+    "kind": "tree",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "swamp",
+        "materials": {
+          "swamp_a_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_leaf_swamp.ddj",
+            "image": "tints/swamp-leaf.webp"
+          },
+          "swamp_a_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_bark_swamp.ddj",
+            "image": "tints/swamp-bark.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_04.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\c_hhm_tree_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_leaf_swamp.ddj": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_swamp_a_bark_swamp.ddj": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_04.ddj"
+    }
+  }
+}

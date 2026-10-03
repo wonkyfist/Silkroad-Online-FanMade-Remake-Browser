@@ -1,0 +1,86 @@
+{
+  "source": "town/props/crate",
+  "version": "sro-town-prop 1",
+  "generator": "packages/convert/src/world/town/dressing-io.ts (from packages/convert/tools/blender/town/props/build.py)",
+  "name": "crate",
+  "type": "town prop",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "town_crate",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/crate.png",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "town_crate",
+      "bms": "",
+      "material": "town_crate",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 24,
+    "triangles": 12,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.6,
+    "boundsMin": [
+      -0.3,
+      0,
+      -0.3
+    ],
+    "boundsMax": [
+      0.3,
+      0.6,
+      0.3
+    ]
+  },
+  "warnings": []
+}

@@ -1,0 +1,207 @@
+{
+  "source": "res/artifact/ruins/tent/ruin_takla_tentportal13_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "ruin_takla_tentportal13_01",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ruin_takla_tent13_01",
+      "bmt": "prim\\mtrl\\artifact\\ruins\\tent\\ruin_takla_tentportal13_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\ruins\\tent\\ruin_takla_tent13_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ruin_takla_tent02_03",
+      "bmt": "prim\\mtrl\\artifact\\ruins\\tent\\ruin_takla_tentportal13_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\ruins\\tent\\ruin_takla_tent02_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "thief_vill_mtent_01",
+      "bmt": "prim\\mtrl\\artifact\\ruins\\tent\\ruin_takla_tentportal13_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\ruins\\tent\\thief_vill_mtent_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ruin_takla_tentportal13_01",
+      "bms": "prim\\mesh\\artifact\\ruins\\tent\\ruin_takla_tentportal13_01.bms",
+      "material": "ruin_takla_tent13_01",
+      "vertices": 19,
+      "triangles": 20,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "ruin_takla_tentportal13_02",
+      "bms": "prim\\mesh\\artifact\\ruins\\tent\\ruin_takla_tentportal13_02.bms",
+      "material": "ruin_takla_tent02_03",
+      "vertices": 139,
+      "triangles": 78,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "ruin_takla_tentportal13_03",
+      "bms": "prim\\mesh\\artifact\\ruins\\tent\\ruin_takla_tentportal13_03.bms",
+      "material": "thief_vill_mtent_01",
+      "vertices": 72,
+      "triangles": 52,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 230,
+    "triangles": 150,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 1.872604489326477,
+    "boundsMin": [
+      -2.1721670627593994,
+      -0.11980831623077393,
+      -1.7295507192611694
+    ],
+    "boundsMax": [
+      2.172166585922241,
+      1.7527961730957031,
+      1.6687567234039307
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

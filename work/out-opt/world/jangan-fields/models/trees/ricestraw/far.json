@@ -1,0 +1,109 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\ricestraw.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "ricestraw.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "ricestraw_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_ricestraw_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    154
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "ricestraw_leaf",
+   "vertices": 40,
+   "triangles": 20,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 40,
+  "triangles": 20,
+  "joints": 0,
+  "meshes": 1,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 1.4900000095367432,
+  "boundsMin": [
+   -1.274999976158142,
+   0,
+   -0.8669999837875366
+  ],
+  "boundsMax": [
+   1.274999976158142,
+   1.4900000095367432,
+   0.8669999837875366
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "ricestraw",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_ricestraw_leaf.ddj": "prim\\mtrl\\nature\\common\\cj_ricestraw.ddj"
+  }
+ }
+}

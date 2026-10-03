@@ -1,0 +1,187 @@
+{
+  "source": "res/npc/animal/cj_goldfish03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_goldfish03",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\animal\\cj_goldfish.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.516792450117492e-7,
+      "maxHierarchyError": 5.551115123125783e-17,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "cj_goldfish03"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "cj_goldfish03_al"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "cj_goldfish01",
+      "bmt": "prim\\mtrl\\npc\\animal\\cj_goldfish.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\animal\\cj_goldfish.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (32.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_goldfish03",
+      "bms": "prim\\mesh\\npc\\animal\\cj_goldfish03.bms",
+      "material": "cj_goldfish01",
+      "vertices": 28,
+      "triangles": 52,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Head"
+      ]
+    },
+    {
+      "name": "cj_goldfish03_al",
+      "bms": "prim\\mesh\\npc\\animal\\cj_goldfish03_al.bms",
+      "material": "cj_goldfish01",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 L Thigh",
+        "Bip01 Spine1",
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\animal\\cj_goldfish_swim.ban",
+      "banName": "cj_goldfish_swim",
+      "durationMs": 15000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 54,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 22
+    }
+  ],
+  "stats": {
+    "vertices": 36,
+    "triangles": 56,
+    "joints": 23,
+    "meshes": 2,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 0.17522339359857142,
+    "boundsMin": [
+      -0.0358901172876358,
+      -0.17268243432044983,
+      -0.2693139910697937
+    ],
+    "boundsMax": [
+      0.03477790579199791,
+      0.0025409592781215906,
+      0.20984041690826416
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

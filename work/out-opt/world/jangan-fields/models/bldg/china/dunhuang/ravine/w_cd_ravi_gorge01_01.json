@@ -1,0 +1,421 @@
+{
+  "source": "res/bldg/china/dunhuang/ravine/w_cd_ravi_gorge01_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_ravi_gorge01_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_CD_ravi_gorge01_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_earthgst_dexit01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_earthgst_dexit02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (35.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w-earthgst_entr_door_stone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_05",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_06",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_06.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (62.1% zero, 5.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_ravi_gorge01_07",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_07.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (69.3% zero, 23.4% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_CD_ravi_gorge01_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_01.bms",
+      "material": "W_CD_ravi_gorge01_01",
+      "vertices": 174,
+      "triangles": 179,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_02.bms",
+      "material": "W_CD_ravi_gorge01_02",
+      "vertices": 124,
+      "triangles": 102,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_03.bms",
+      "material": "W_CD_ravi_gorge01_03",
+      "vertices": 63,
+      "triangles": 88,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_04",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_04.bms",
+      "material": "W_CD_ravi_gorge01_04",
+      "vertices": 27,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_05",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_05.bms",
+      "material": "W_CD_ravi_gorge01_05",
+      "vertices": 125,
+      "triangles": 125,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_06",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_06.bms",
+      "material": "W_CD_ravi_gorge01_06",
+      "vertices": 20,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_ravi_gorge01_07",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge01_07.bms",
+      "material": "W_CD_ravi_gorge01_07",
+      "vertices": 54,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 587,
+    "triangles": 592,
+    "joints": 0,
+    "meshes": 7,
+    "animations": 0,
+    "textures": 7,
+    "heightM": 32.69708123803139,
+    "boundsMin": [
+      -4.228639602661133,
+      -0.20297494530677795,
+      -4.3284101486206055
+    ],
+    "boundsMax": [
+      4.256768226623535,
+      32.49410629272461,
+      4.31827974319458
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,958 @@
+{
+  "source": "res/bldg/china/cj_thiefvill/cj_thiefvill_front_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_thiefvill_front_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -0.59669,
+        15.60863,
+        0.19559
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -0.64282,
+        17.71082,
+        -5.2438
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -0.58402,
+        17.69102,
+        5.40667
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -7.67213,
+        2.89053,
+        12.92629
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -7.75808,
+        2.96857,
+        -12.52005
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.01159,
+        27.85613,
+        35.69641
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        5.85938,
+        28.94153,
+        70.21359
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        3.12492,
+        28.26276,
+        104.19763
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        5.87041,
+        28.21862,
+        160.86528
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.27351,
+        27.86436,
+        195.4775
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.35962,
+        28.09866,
+        230.77595
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.26692,
+        27.8811,
+        -35.46014
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        5.77834,
+        29.38271,
+        -70.285
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        3.12535,
+        28.21446,
+        -104.21711
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        5.95622,
+        28.22539,
+        -160.90775
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.19624,
+        27.92606,
+        -195.60723
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        1.36171,
+        28.05933,
+        -230.66426
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_thiefvill_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (9.7% zero, 0.4% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_10",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_10.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_14_14",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_14.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_20",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_20.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_21",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_21.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (47.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_22",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_22.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        64,
+        32
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (66.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_23",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_23.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_24",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_24.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (52.9% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_16",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_16.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_19",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_19.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_thiefvill_25",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_thiefvill\\cj_thiefvill_25.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_thiefvill_front_01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_01.bms",
+      "material": "cj_thiefvill_01",
+      "vertices": 3950,
+      "triangles": 2750,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_10",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_10.bms",
+      "material": "cj_thiefvill_10",
+      "vertices": 208,
+      "triangles": 176,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_14",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_14.bms",
+      "material": "cj_thiefvill_14_14",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_20",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_20.bms",
+      "material": "cj_thiefvill_20",
+      "vertices": 5376,
+      "triangles": 3352,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_21",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_21.bms",
+      "material": "cj_thiefvill_21",
+      "vertices": 1260,
+      "triangles": 770,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_22",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_22.bms",
+      "material": "cj_thiefvill_22",
+      "vertices": 304,
+      "triangles": 152,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_23",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_23.bms",
+      "material": "cj_thiefvill_23",
+      "vertices": 70,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_24",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_24.bms",
+      "material": "cj_thiefvill_24",
+      "vertices": 360,
+      "triangles": 360,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_02.bms",
+      "material": "cj_thiefvill_02",
+      "vertices": 104,
+      "triangles": 76,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_04",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_04.bms",
+      "material": "cj_thiefvill_04",
+      "vertices": 20,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_16",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_16.bms",
+      "material": "cj_thiefvill_16",
+      "vertices": 540,
+      "triangles": 290,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_19",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_19.bms",
+      "material": "cj_thiefvill_19",
+      "vertices": 2976,
+      "triangles": 2640,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_thiefvill_front_25",
+      "bms": "prim\\mesh\\bldg\\china\\cj_thiefvill\\cj_thiefvill_front_25.bms",
+      "material": "cj_thiefvill_25",
+      "vertices": 64,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 15248,
+    "triangles": 10672,
+    "joints": 0,
+    "meshes": 13,
+    "animations": 0,
+    "textures": 13,
+    "heightM": 43.17518663406372,
+    "boundsMin": [
+      -8.621172904968262,
+      -4.046928882598877,
+      -231.9807891845703
+    ],
+    "boundsMax": [
+      8.728187561035156,
+      39.128257751464844,
+      231.9807891845703
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

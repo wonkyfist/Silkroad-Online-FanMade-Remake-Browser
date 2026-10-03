@@ -1,0 +1,151 @@
+{
+  "source": "res/bldg/china/jangan01/cj_luxu_light.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_luxu_light",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\bldg\\china\\jangan01\\cj_luxu_light.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 5.037148262942992e-7,
+      "maxHierarchyError": 8.881784197001252e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_lamp_red_b.efp",
+      "bone": null,
+      "position": [
+        0,
+        5.38276,
+        0
+      ],
+      "birthMs": 0,
+      "night": true
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_luxu_desk_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_desk.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (25.2% zero, 1.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_luxu_light",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_light.bms",
+      "material": "CJ_luxu_desk_alpha",
+      "vertices": 70,
+      "triangles": 38,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\bldg\\china\\jangan01\\cj_luxu_light.ban",
+      "banName": "cj_luxu_light",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4
+    }
+  ],
+  "stats": {
+    "vertices": 70,
+    "triangles": 38,
+    "joints": 4,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 4.995726823806763,
+    "boundsMin": [
+      -0.9568856358528137,
+      2.555349588394165,
+      -1.0082963705062866
+    ],
+    "boundsMax": [
+      0.8387664556503296,
+      7.551076412200928,
+      0.9717854261398315
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,118 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\lily_pads.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "lily_pads.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "lily_pads_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\grass\\grs_water.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "lily_pads_leaf",
+   "vertices": 64,
+   "triangles": 32,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "lily_pads_leaf",
+   "vertices": 32,
+   "triangles": 16,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 96,
+  "triangles": 48,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 0.27000001072883606,
+  "boundsMin": [
+   -3.1861937046051025,
+   0.031065380200743675,
+   -3.4508447647094727
+  ],
+  "boundsMax": [
+   3.0605628490448,
+   0.27000001072883606,
+   3.009155035018921
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "lily_pads",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_lily_pads_bark.ddj": "prim\\mtrl\\nature\\common\\grass\\grs_water.ddj"
+  }
+ }
+}

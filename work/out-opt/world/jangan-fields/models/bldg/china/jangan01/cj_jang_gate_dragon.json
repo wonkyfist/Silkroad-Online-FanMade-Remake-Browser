@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan01/cj_jang_gate_dragon.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_jang_gate_dragon",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_jang_dragon",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_dragon.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_dragonlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_dragonlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.33725491166114807,
+        0.21176472306251526,
+        0.05098039656877518,
+        1
+      ],
+      "ambient": [
+        0.5921568870544434,
+        0.37254902720451355,
+        0.08627451211214066,
+        1
+      ],
+      "specular": [
+        0.9843137860298157,
+        0.9529412388801575,
+        0.8823530077934265,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 1.4800000190734863
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_jang_dragon",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_jang_dragon.bms",
+      "material": "cj_jang_dragon",
+      "vertices": 3157,
+      "triangles": 2384,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_dragonlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_dragonlightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 3157,
+    "triangles": 2384,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 18.7175452709198,
+    "boundsMin": [
+      -3.1896352767944336,
+      -1.2437751293182373,
+      -5.329837322235107
+    ],
+    "boundsMax": [
+      8.85532283782959,
+      17.473770141601562,
+      7.845546722412109
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

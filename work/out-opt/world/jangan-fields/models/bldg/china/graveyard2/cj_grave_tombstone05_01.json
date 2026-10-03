@@ -1,0 +1,207 @@
+{
+  "source": "res/bldg/china/graveyard2/cj_grave_tombstone05_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_grave_tombstone05_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_grave_tombstone05_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone05_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_normal_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_grave_tombstone05_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone05_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\w_cd_ravi_gorge01_07.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (69.3% zero, 23.4% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_grave_tombstone05_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone05_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_big_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_grave_tombstone05_01",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone05_01.bms",
+      "material": "cj_grave_tombstone05_01",
+      "vertices": 52,
+      "triangles": 42,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_grave_tombstone05_02",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone05_02.bms",
+      "material": "cj_grave_tombstone05_02",
+      "vertices": 18,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_grave_tombstone05_03",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone05_03.bms",
+      "material": "cj_grave_tombstone05_03",
+      "vertices": 44,
+      "triangles": 36,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 114,
+    "triangles": 94,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 2.2387798726558685,
+    "boundsMin": [
+      -0.82683926820755,
+      -0.28731784224510193,
+      -0.503785252571106
+    ],
+    "boundsMax": [
+      0.8378168940544128,
+      1.9514620304107666,
+      0.4804888367652893
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

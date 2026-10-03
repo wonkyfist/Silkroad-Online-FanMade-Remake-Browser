@@ -1,0 +1,201 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\shrub02.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "shrub02.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "shrub02_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_maple_pin.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "shrub02_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "shrub02_bark",
+      "vertices": 140,
+      "triangles": 168,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "shrub02_leaf",
+      "vertices": 272,
+      "triangles": 136,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "shrub02_leaf",
+      "vertices": 80,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 492,
+    "triangles": 344,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 4.220000088214874,
+    "boundsMin": [
+      -3.0844669342041016,
+      -0.4461672902107239,
+      -2.9788637161254883
+    ],
+    "boundsMax": [
+      3.1155333518981934,
+      3.7738327980041504,
+      2.8598992824554443
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "shrub02",
+    "kind": "plant",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "dry02_1",
+        "materials": {
+          "shrub02_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry02_1.ddj",
+            "image": "tints/dry02_1-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "dry03",
+        "materials": {
+          "shrub02_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry03.ddj",
+            "image": "tints/dry03-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "dry04",
+        "materials": {
+          "shrub02_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry04.ddj",
+            "image": "tints/dry04-leaf.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_dry02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry02_1.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_dry02_1.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry03.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_dry03.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_shrub02_leaf_dry04.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_dry04.ddj"
+    }
+  }
+}

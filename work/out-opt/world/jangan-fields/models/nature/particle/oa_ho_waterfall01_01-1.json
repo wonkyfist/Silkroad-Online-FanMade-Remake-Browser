@@ -1,0 +1,134 @@
+{
+  "source": "res/nature/particle/oa_ho_waterfall01_01-1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oa_ho_waterfall01_01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/multugu-b.efp",
+      "bone": null,
+      "position": [
+        7.83211,
+        -38.17209,
+        -0.06744
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/pokpomulbangul-m.efp",
+      "bone": null,
+      "position": [
+        -8.82037,
+        0.63045,
+        -0.10361
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "bigwaterfall03",
+      "bmt": "prim\\mtrl\\particle\\bigwaterfall03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo1test.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (95.6% partial, 4.4% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "uvScroll": [
+        0,
+        -1.91
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "oa_ho_waterfall01_01",
+      "bms": "prim\\mesh\\particle\\oa_ho_waterfall01_01.bms",
+      "material": "bigwaterfall03",
+      "vertices": 49,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 49,
+    "triangles": 72,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 39.094367265701294,
+    "boundsMin": [
+      -11.93693733215332,
+      -38.08070373535156,
+      -5.8914875984191895
+    ],
+    "boundsMax": [
+      6.269437313079834,
+      1.0136635303497314,
+      5.81540584564209
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

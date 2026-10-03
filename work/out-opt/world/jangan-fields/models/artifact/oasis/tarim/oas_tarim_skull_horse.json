@@ -1,0 +1,160 @@
+{
+  "source": "res/artifact/oasis/tarim/oas_tarim_skull_horse.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oas_tarim_skull_horse",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "Oas_tarim_skull_horse",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_skull_horse.bmt",
+      "flags": 837,
+      "flagNames": [
+        "twoSided",
+        "specular",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_skull_horse.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (41.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        1,
+        1,
+        0.501960813999176,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 114
+    },
+    {
+      "name": "Oas_tarim_skull_horse_2sid",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_skull_horse.bmt",
+      "flags": 837,
+      "flagNames": [
+        "twoSided",
+        "specular",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_skull_02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (19.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        1,
+        1,
+        0.501960813999176,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 95
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Oas_tarim_skull_horse",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_skull_horse.bms",
+      "material": "Oas_tarim_skull_horse",
+      "vertices": 263,
+      "triangles": 230,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_tarim_skull_horse_2sid",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_skull_horse_2sid.bms",
+      "material": "Oas_tarim_skull_horse_2sid",
+      "vertices": 36,
+      "triangles": 20,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 299,
+    "triangles": 250,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 1.0421102344989777,
+    "boundsMin": [
+      -1.3559751510620117,
+      -0.26175740361213684,
+      -2.35764217376709
+    ],
+    "boundsMax": [
+      1.3559750318527222,
+      0.7803528308868408,
+      2.357642650604248
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

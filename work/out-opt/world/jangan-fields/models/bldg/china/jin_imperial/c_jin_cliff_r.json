@@ -1,0 +1,172 @@
+{
+  "source": "res/bldg/china/jin_imperial/c_jin_cliff_r.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_jin_cliff_r",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_jin_cliff",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_cliff.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_cliff.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_cliff_rlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_cliff_rlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_cliff_R_Pic",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_cliff.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_cliff_r_pic.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        1024,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_cliff_r_piclightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_cliff_r_piclightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_jin_cliff_R",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_cliff_r.bms",
+      "material": "C_jin_cliff",
+      "vertices": 118,
+      "triangles": 171,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_cliff_rlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_cliff_rlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_cliff_R_Pic",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_cliff_r_pic.bms",
+      "material": "C_jin_cliff_R_Pic",
+      "vertices": 30,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_cliff_r_piclightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_cliff_r_piclightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 148,
+    "triangles": 199,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 99.23181533813477,
+    "boundsMin": [
+      -58.45177459716797,
+      -49.615909576416016,
+      -121.20722961425781
+    ],
+    "boundsMax": [
+      58.45177459716797,
+      49.61590576171875,
+      121.20723724365234
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "issues": []
+  }
+}

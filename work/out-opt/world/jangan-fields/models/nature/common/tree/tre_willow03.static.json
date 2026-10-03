@@ -1,0 +1,212 @@
+{
+  "source": "res/nature/common/tree/tre_willow03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf); static variant: frame 0 of STAND1 (BATCHING §3.5)",
+  "name": "tre_willow03",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_willow02_leaf02",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_willow03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (77.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_willow02_leaf01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_willow03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_leaf01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (79.8% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_willow02_will01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_willow03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_willow03_will01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_willow03_leaf01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_willow03_leaf01.bms",
+      "material": "tre_willow02_leaf02",
+      "vertices": 156,
+      "triangles": 130,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "tre_willow03_leaf02",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_willow03_leaf02.bms",
+      "material": "tre_willow02_leaf01",
+      "vertices": 68,
+      "triangles": 67,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "tre_willow03_will01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_willow03_will01.bms",
+      "material": "tre_willow02_will01",
+      "vertices": 141,
+      "triangles": 85,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 365,
+    "triangles": 282,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 81.0434,
+    "boundsMin": [
+      -44.83925,
+      -1.08561,
+      -40.59069
+    ],
+    "boundsMax": [
+      52.47786,
+      79.95779,
+      41.54271
+    ]
+  },
+  "warnings": [
+    "2 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

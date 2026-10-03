@@ -1,0 +1,100 @@
+{
+  "source": "res/bldg/china/jangan02/cj2_brg_wall04.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj2_brg_wall04",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ2_brg_wall2",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj2_brg_wall2.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj2_brg_wall2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4705882668495178,
+        0.4705882668495178,
+        0.4705882668495178,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ2_brg_wall04",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj2_brg_wall04.bms",
+      "material": "CJ2_brg_wall2",
+      "vertices": 29,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 29,
+    "triangles": 16,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 3.99939685408026,
+    "boundsMin": [
+      -15.412381172180176,
+      0.010480827651917934,
+      -9.557905197143555
+    ],
+    "boundsMax": [
+      15.470980644226074,
+      4.009877681732178,
+      6.38524055480957
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

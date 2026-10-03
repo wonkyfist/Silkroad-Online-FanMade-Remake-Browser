@@ -1,0 +1,375 @@
+{
+  "source": "res/artifact/oasis/tarim/oas_tarim_xbone.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "a",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "oas_tarim_xbone01_1",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "oas_tarim_xbone01_2",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (53.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "oas_tarim_xbone01_3",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_3.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (43.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "oas_tarim_xbone01_4",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_4.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (24.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "oas_tarim_xbone01_5",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_5.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (47.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "oas_tarim_xbone01_6",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_xbone01_6.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (31.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "oas_tarim_xbone01_1",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_1.bms",
+      "material": "oas_tarim_xbone01_1",
+      "vertices": 69,
+      "triangles": 36,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "oas_tarim_xbone01_2",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_2.bms",
+      "material": "oas_tarim_xbone01_2",
+      "vertices": 48,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "oas_tarim_xbone01_3",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_3.bms",
+      "material": "oas_tarim_xbone01_3",
+      "vertices": 207,
+      "triangles": 222,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "oas_tarim_xbone01_4",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_4.bms",
+      "material": "oas_tarim_xbone01_4",
+      "vertices": 18,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "oas_tarim_xbone01_5",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_5.bms",
+      "material": "oas_tarim_xbone01_5",
+      "vertices": 41,
+      "triangles": 27,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "oas_tarim_xbone01_6",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_xbone01_6.bms",
+      "material": "oas_tarim_xbone01_6",
+      "vertices": 88,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 471,
+    "triangles": 381,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 6,
+    "heightM": 6.995453253388405,
+    "boundsMin": [
+      -2.264910936355591,
+      -0.07857407629489899,
+      -1.8634837865829468
+    ],
+    "boundsMax": [
+      2.182183265686035,
+      6.916879177093506,
+      1.831845998764038
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

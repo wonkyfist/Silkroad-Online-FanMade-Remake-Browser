@@ -1,0 +1,476 @@
+{
+  "source": "res/artifact/china/dunhuang/w_etc03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_etc03",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_stor_box",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_box_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_chun",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_stor_chun.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.4% zero, 0.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_food_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_stor_food.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_food02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (12.2% zero, 1.5% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_food02_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (12.2% zero, 1.5% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_food",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_stor_food.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_pilla",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_stor_pilla.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_etc03_1",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_1.bms",
+      "material": "w_cd_stor_box",
+      "vertices": 36,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_2",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_2.bms",
+      "material": "w_cd_stor_box_2sid",
+      "vertices": 19,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_3",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_3.bms",
+      "material": "w_cd_stor_chun",
+      "vertices": 12,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_4",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_4.bms",
+      "material": "w_cd_stor_food_2sid",
+      "vertices": 104,
+      "triangles": 94,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_5",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_5.bms",
+      "material": "w_cd_stor_food02",
+      "vertices": 101,
+      "triangles": 84,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_6",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_6.bms",
+      "material": "w_cd_stor_food02_2sid",
+      "vertices": 73,
+      "triangles": 69,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_7",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_7.bms",
+      "material": "w_cd_stor_food",
+      "vertices": 110,
+      "triangles": 102,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc03_8",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc03_8.bms",
+      "material": "w_cd_stor_pilla",
+      "vertices": 168,
+      "triangles": 118,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 623,
+    "triangles": 517,
+    "joints": 0,
+    "meshes": 8,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 2.846129024401307,
+    "boundsMin": [
+      -2.9210946559906006,
+      -0.025468910112977028,
+      -2.161125898361206
+    ],
+    "boundsMax": [
+      2.648367404937744,
+      2.82066011428833,
+      0.6789409518241882
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "source": "res/bldg/oasis/hotang/minga/hot_minga_basket.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "hot_minga_basket ",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "hot_minga_basket",
+      "bmt": "prim\\mtrl\\bldg\\oasis\\hotang\\minga\\hot_minga_basket.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\oasis\\hotang\\minga\\hot_minga_basket.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.7% zero, 0.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hot_minga_basket",
+      "bms": "prim\\mesh\\bldg\\oasis\\hotang\\minga\\hot_minga_basket.bms",
+      "material": "hot_minga_basket",
+      "vertices": 64,
+      "triangles": 44,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 64,
+    "triangles": 44,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.0816549477167428,
+    "boundsMin": [
+      -0.8836802244186401,
+      -0.004633110482245684,
+      -0.7652875185012817
+    ],
+    "boundsMax": [
+      0.8836795687675476,
+      1.077021837234497,
+      0.7652883529663086
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

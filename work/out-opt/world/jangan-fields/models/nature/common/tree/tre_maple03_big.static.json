@@ -1,0 +1,155 @@
+{
+  "source": "res/nature/common/tree/tre_maple03_big.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf); static variant: frame 0 of STAND1 (BATCHING §3.5)",
+  "name": "tre_maple03_big",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_maple03_big_brn",
+      "bmt": "prim\\mtrl\\nature\\common\\tre_maple03_big.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_maple_pin.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_maple03_big_leaf",
+      "bmt": "prim\\mtrl\\nature\\common\\tre_maple03_big.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_maple01_leaf_green2.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.501960813999176,
+        0.501960813999176,
+        0.501960813999176,
+        1
+      ],
+      "specular": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_maple03_big_brn",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_maple03_big_brn.bms",
+      "material": "tre_maple03_big_brn",
+      "vertices": 137,
+      "triangles": 79,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "tre_maple03_big_leaf",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_maple03_big_leaf.bms",
+      "material": "tre_maple03_big_leaf",
+      "vertices": 75,
+      "triangles": 60,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 212,
+    "triangles": 139,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 31.59877,
+    "boundsMin": [
+      -17.73986,
+      -0.04346,
+      -17.06641
+    ],
+    "boundsMax": [
+      16.09564,
+      31.55531,
+      16.77955
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,416 @@
+{
+  "source": "res/bldg/china/jangan01/cj_jang_gate.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_jang_gate",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_jang_gate06",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate06lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_jang_gate07",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate07.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate07lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7843137979507446,
+        0.7843137979507446,
+        0.7843137979507446,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_jang_gate08",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate08.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate08lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.6745098233222961,
+        0.6745098233222961,
+        0.6745098233222961,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "FT_stone_l0",
+      "flags": 320,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate06.ddj",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      },
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "FT_trim_l0",
+      "flags": 320,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_pondfen.ddj",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      },
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "FT_carve_l0",
+      "flags": 320,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_gate08.ddj",
+      "alphaMode": "OPAQUE",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      },
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_jang_gate06",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_jang_gate06.bms",
+      "material": "cj_jang_gate06",
+      "vertices": 670,
+      "triangles": 280,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate06lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_jang_gate07",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_jang_gate07.bms",
+      "material": "cj_jang_gate07",
+      "vertices": 96,
+      "triangles": 50,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate07lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "cj_jang_gate08",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_jang_gate08.bms",
+      "material": "cj_jang_gate08",
+      "vertices": 256,
+      "triangles": 124,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_jang_gate08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_jang_gate08lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "basin_lod0:FT_stone_l0",
+      "bms": null,
+      "material": "FT_stone_l0",
+      "vertices": 48,
+      "triangles": 32,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "basin_lod0:FT_trim_l0",
+      "bms": null,
+      "material": "FT_trim_l0",
+      "vertices": 1090,
+      "triangles": 560,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "pillar_base_lod0:FT_stone_l0",
+      "bms": null,
+      "material": "FT_stone_l0",
+      "vertices": 489,
+      "triangles": 280,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "pillar_base_lod0:FT_carve_l0",
+      "bms": null,
+      "material": "FT_carve_l0",
+      "vertices": 64,
+      "triangles": 32,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "rail_lod0",
+      "bms": null,
+      "material": "FT_trim_l0",
+      "vertices": 9146,
+      "triangles": 6944,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "remaster\\plaza\\fountain_lod0_lightmap",
+        "uri": "lightmaps/remaster/plaza/fountain_lod0_lightmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 11859,
+    "triangles": 8302,
+    "joints": 0,
+    "meshes": 8,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 4.7142133712768555,
+    "boundsMin": [
+      -49.90406799316406,
+      -1.308896541595459,
+      -54.879981994628906
+    ],
+    "boundsMax": [
+      55.90201950073242,
+      3.4053168296813965,
+      76.97252655029297
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 5,
+    "issues": []
+  },
+  "remaster": "plaza with the new fountain (fountain LOD0); work/tmp/dragon/final/manifest.json"
+}

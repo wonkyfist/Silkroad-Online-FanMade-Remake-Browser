@@ -1,0 +1,246 @@
+{
+  "source": "res/bldg/china/jin_imperial/enter/cj_jin_entdoor01_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_jin_entdoor01_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "system/system_dungeonpotal.efp",
+      "bone": null,
+      "position": [
+        -0.03415,
+        3.87825,
+        -2.15171
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame3.efp",
+      "bone": null,
+      "position": [
+        2.86286,
+        7.75473,
+        -5.71395
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame3.efp",
+      "bone": null,
+      "position": [
+        -2.92655,
+        7.73857,
+        -5.71395
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_jin_imp_door01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\cj_jin_imp_door01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent02_dan02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\c_jin_ent02_dan02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent02_dan01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\enter\\c_jin_ent02_dan01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_jin_entdoor01_01",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_01.bms",
+      "material": "CJ_jin_imp_door01",
+      "vertices": 394,
+      "triangles": 387,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_jin_entdoor01_stair01",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_stair01.bms",
+      "material": "C_jin_Ent02_dan02",
+      "vertices": 38,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_jin_entdoor01_stair02",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\enter\\cj_jin_entdoor01_stair02.bms",
+      "material": "C_jin_Ent02_dan01",
+      "vertices": 138,
+      "triangles": 58,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 570,
+    "triangles": 463,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 27.03025694936514,
+    "boundsMin": [
+      -7.069005489349365,
+      -0.06647177785634995,
+      -12.166540145874023
+    ],
+    "boundsMax": [
+      7.033729553222656,
+      26.96378517150879,
+      12.123517036437988
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

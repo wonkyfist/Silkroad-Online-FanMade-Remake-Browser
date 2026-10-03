@@ -1,0 +1,314 @@
+{
+  "source": "res/artifact/oasis/karakorm/oas_kara_well.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oas_kara_well",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "Oas_kara_well_alpha",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        32,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (79.9% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_kara_well_column",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_kara_well_pot",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well_pot.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_kara_well_roof",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well_roof.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_kara_well_roof2",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\karakorm\\oas_kara_well_roof.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Oas_kara_well_alpha",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_well_alpha.bms",
+      "material": "Oas_kara_well_alpha",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_kara_well_column",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_well_column.bms",
+      "material": "Oas_kara_well_column",
+      "vertices": 152,
+      "triangles": 76,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_kara_well_pot",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_well_pot.bms",
+      "material": "Oas_kara_well_pot",
+      "vertices": 258,
+      "triangles": 270,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_kara_well_roof",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_well_roof.bms",
+      "material": "Oas_kara_well_roof",
+      "vertices": 146,
+      "triangles": 112,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_kara_well_roof2",
+      "bms": "prim\\mesh\\artifact\\oasis\\karakorm\\oas_kara_well_roof2.bms",
+      "material": "Oas_kara_well_roof2",
+      "vertices": 54,
+      "triangles": 28,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 614,
+    "triangles": 488,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 2.81135,
+    "boundsMin": [
+      -1.25285,
+      -0.0458,
+      -0.9448
+    ],
+    "boundsMax": [
+      1.27392,
+      2.76554,
+      0.66647
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "source": "res/nature/particle/cj_waterfall02_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oa_ho_waterfall01_01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/multugu-b.efp",
+      "bone": null,
+      "position": [
+        29.01793,
+        -79.97123,
+        5.08942
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/multugu-b.efp",
+      "bone": null,
+      "position": [
+        29.00119,
+        -79.96995,
+        -5.09272
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/pokpomulbangul.efp",
+      "bone": null,
+      "position": [
+        -2.96891,
+        0,
+        -2.54664
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/pokpomulbangul.efp",
+      "bone": null,
+      "position": [
+        -2.99142,
+        0,
+        4.23704
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "bigwaterfall03-1",
+      "bmt": "prim\\mtrl\\particle\\bigwaterfall03-1.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo1test.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (95.6% partial, 4.4% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "uvScroll": [
+        0,
+        -1.91
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_waterfall02_01",
+      "bms": "prim\\mesh\\particle\\cj_waterfall02_01.bms",
+      "material": "bigwaterfall03-1",
+      "vertices": 49,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 49,
+    "triangles": 72,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 86.10795998573303,
+    "boundsMin": [
+      -6.608833312988281,
+      -84.50350189208984,
+      -11.069681167602539
+    ],
+    "boundsMax": [
+      25.574148178100586,
+      1.6044580936431885,
+      12.344104766845703
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

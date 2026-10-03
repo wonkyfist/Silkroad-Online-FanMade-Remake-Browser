@@ -1,0 +1,210 @@
+{
+  "source": "res/nature/china/dunhuang/tree/w_cd_tree03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_tree03",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_tree03_01",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree02_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (58.9% zero, 8.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_tree03_02",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree02_02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (62.0% zero, 6.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_tree03_03",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree02_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_tree03_01",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_tree03_01.bms",
+      "material": "w_cd_tree03_01",
+      "vertices": 32,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_tree03_02",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_tree03_02.bms",
+      "material": "w_cd_tree03_02",
+      "vertices": 252,
+      "triangles": 224,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_tree03_03",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_tree03_03.bms",
+      "material": "w_cd_tree03_03",
+      "vertices": 56,
+      "triangles": 46,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 340,
+    "triangles": 286,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 19.891977459192276,
+    "boundsMin": [
+      -3.037689685821533,
+      -0.2785321772098541,
+      -3.442288637161255
+    ],
+    "boundsMax": [
+      3.653672695159912,
+      19.613445281982422,
+      3.74525785446167
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

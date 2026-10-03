@@ -1,0 +1,202 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\pine08.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "pine08.near",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "pine08_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "pine08_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod0",
+      "bms": "",
+      "material": "pine08_bark",
+      "vertices": 1277,
+      "triangles": 1600,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod0",
+      "bms": "",
+      "material": "pine08_leaf",
+      "vertices": 3680,
+      "triangles": 1840,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 4957,
+    "triangles": 3440,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 0,
+    "heightM": 57.49000170826912,
+    "boundsMin": [
+      -31.328397750854492,
+      -0.391544371843338,
+      -38.00939178466797
+    ],
+    "boundsMax": [
+      40.204917907714844,
+      57.09845733642578,
+      35.590606689453125
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "pine08",
+    "kind": "tree",
+    "part": "near",
+    "tiers": {
+      "lod0": 0
+    },
+    "tints": [
+      {
+        "name": "pine09",
+        "materials": {
+          "pine08_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine09.ddj",
+            "image": "tints/pine09-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "pine05",
+        "materials": {
+          "pine08_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine05.ddj",
+            "image": "tints/pine05-leaf.webp"
+          },
+          "pine08_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark_pine05.ddj",
+            "image": "tints/pine05-bark.webp"
+          }
+        }
+      },
+      {
+        "name": "pine06",
+        "materials": {
+          "pine08_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine06.ddj",
+            "image": "tints/pine06-leaf.webp"
+          },
+          "pine08_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark_pine06.ddj",
+            "image": "tints/pine06-bark.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_03.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine09.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine08_04.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine05.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine05_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark_pine05.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine05_02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_leaf_pine06.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_pine06_02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine08_bark_pine06.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_lea02_wood00.ddj"
+    }
+  }
+}

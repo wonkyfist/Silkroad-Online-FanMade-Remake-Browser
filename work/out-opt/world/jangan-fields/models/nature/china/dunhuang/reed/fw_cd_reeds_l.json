@@ -1,0 +1,175 @@
+{
+  "source": "res/nature/china/dunhuang/reed/fw_cd_reeds_l.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_reeds_m",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\china\\dunhuang\\w_cd_reeds_l.bsk",
+    "joints": [
+      "[root]",
+      "Bone42",
+      "Bone43",
+      "Bone44",
+      "Bone45",
+      "Bone46",
+      "Bone47",
+      "Bone48",
+      "Bone49",
+      "Bone50",
+      "Bone51",
+      "Bone52",
+      "Bone53",
+      "Bone54",
+      "Bone55",
+      "Bone56",
+      "Bone57",
+      "Bone58",
+      "Bone59",
+      "Bone60",
+      "Bone61",
+      "Bone62",
+      "Bone63",
+      "Bone64",
+      "Bone65",
+      "Bone66",
+      "Bone67",
+      "Bone68",
+      "Bone69",
+      "Bone70",
+      "Bone71"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.805989537563619e-7,
+      "maxHierarchyError": 8.881784197001252e-16,
+      "staleToLocal": [
+        "[root]"
+      ]
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_cd_reeds",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\reed\\w_cd_reeds_m.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\reed\\w_cd_reeds.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (82.1% zero, 1.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.3529411852359772,
+        0.3529411852359772,
+        0.3529411852359772,
+        1
+      ],
+      "specular": [
+        0.6117647290229797,
+        0.6117647290229797,
+        0.6117647290229797,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_cd_reeds_L",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\reed\\w_cd_reeds_l.bms",
+      "material": "W_cd_reeds",
+      "vertices": 136,
+      "triangles": 86,
+      "skinned": true,
+      "bones": [
+        "Bone46",
+        "Bone64",
+        "Bone67",
+        "Bone52",
+        "Bone61",
+        "Bone55",
+        "Bone70",
+        "Bone49",
+        "Bone43",
+        "Bone58"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\china\\dunhuang\\w_cd_reeds_l.ban",
+      "banName": "w_cd_reeds_l",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 31
+    }
+  ],
+  "stats": {
+    "vertices": 136,
+    "triangles": 86,
+    "joints": 31,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 2.214576408267021,
+    "boundsMin": [
+      -7.778172969818115,
+      -0.014880821108818054,
+      -6.358459949493408
+    ],
+    "boundsMax": [
+      7.63071346282959,
+      2.199695587158203,
+      4.080216407775879
+    ]
+  },
+  "warnings": [
+    "1 joint(s) with a stale stored toLocal; inverse binds use the toParent chain",
+    "W_cd_reeds_L: 69 vertex(es) without influences bound to Bone46"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

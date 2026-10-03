@@ -1,0 +1,131 @@
+{
+  "source": "town/props/planter",
+  "version": "sro-town-prop 1",
+  "generator": "packages/convert/src/world/town/dressing-io.ts (from packages/convert/tools/blender/town/props/build.py)",
+  "name": "planter",
+  "type": "town prop",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "town_planter",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/planter.png",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "town_planter_flowers",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/planter.png",
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "town_planter",
+      "bms": "",
+      "material": "town_planter",
+      "vertices": 100,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "town_planter_flowers",
+      "bms": "",
+      "material": "town_planter_flowers",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 124,
+    "triangles": 62,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.26,
+    "boundsMin": [
+      -0.882,
+      0,
+      -0.854
+    ],
+    "boundsMax": [
+      0.882,
+      1.26,
+      0.854
+    ]
+  },
+  "warnings": []
+}

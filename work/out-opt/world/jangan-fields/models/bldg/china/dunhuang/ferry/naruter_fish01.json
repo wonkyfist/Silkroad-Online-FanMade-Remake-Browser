@@ -1,0 +1,310 @@
+{
+  "source": "res/bldg/china/dunhuang/ferry/naruter_fish01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "naruter_fish01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\bldg\\china\\dunhuang\\ferry\\naru_fish01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000011648016275955797,
+      "maxHierarchyError": 3.552713678800501e-15,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "naru_rope",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_rope.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.8% zero, 10.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_pilla04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla04.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.4% zero, 4.8% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_fish",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_fish.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (37.4% zero, 62.6% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_fish_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_naru.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_fish.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (37.4% zero, 62.6% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "naru_buil02_chain",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil02_chain.bms",
+      "material": "naru_rope",
+      "vertices": 58,
+      "triangles": 68,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02"
+      ]
+    },
+    {
+      "name": "naru_buil02_ladder",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_buil02_ladder.bms",
+      "material": "naru_pilla04",
+      "vertices": 42,
+      "triangles": 31,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone02"
+      ]
+    },
+    {
+      "name": "naru_fish",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fish.bms",
+      "material": "naru_fish",
+      "vertices": 99,
+      "triangles": 122,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone04"
+      ]
+    },
+    {
+      "name": "naru_fish_al",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_fish_al.bms",
+      "material": "naru_fish_al",
+      "vertices": 28,
+      "triangles": 14,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone04"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\bldg\\china\\dunhuang\\ferry\\naru_fish.ban",
+      "banName": "naru_fish",
+      "durationMs": 14000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 5
+    }
+  ],
+  "stats": {
+    "vertices": 227,
+    "triangles": 235,
+    "joints": 5,
+    "meshes": 4,
+    "animations": 1,
+    "textures": 3,
+    "heightM": 9.739161014556885,
+    "boundsMin": [
+      -1.8086299896240234,
+      5.338046550750732,
+      -0.9518318176269531
+    ],
+    "boundsMax": [
+      1.8086309432983398,
+      15.077207565307617,
+      0.9518330693244934
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

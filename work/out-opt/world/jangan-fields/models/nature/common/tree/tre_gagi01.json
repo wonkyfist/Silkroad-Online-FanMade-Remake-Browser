@@ -1,0 +1,101 @@
+{
+  "source": "res/nature/common/tree/tre_gagi01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_gagi01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_gagi01",
+      "bmt": "prim\\mtrl\\nature\\common\\tre_gagi01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tre_gagi01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0.05000000074505806
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_gagi01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_gagi01.bms",
+      "material": "tre_gagi01",
+      "vertices": 112,
+      "triangles": 144,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 112,
+    "triangles": 144,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.3325719833374023,
+    "boundsMin": [
+      -3.7471985816955566,
+      -0.24772942066192627,
+      -0.9381140470504761
+    ],
+    "boundsMax": [
+      3.314767360687256,
+      1.084842562675476,
+      2.9745161533355713
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

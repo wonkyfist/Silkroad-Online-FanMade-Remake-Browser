@@ -1,0 +1,251 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\bigleaf.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "bigleaf.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "bigleaf_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "bigleaf_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "bigleaf_bark",
+      "vertices": 152,
+      "triangles": 192,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "bigleaf_leaf",
+      "vertices": 1600,
+      "triangles": 800,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "bigleaf_bark",
+      "vertices": 120,
+      "triangles": 142,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "bigleaf_leaf",
+      "vertices": 384,
+      "triangles": 192,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2256,
+    "triangles": 1326,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 56.833081379532814,
+    "boundsMin": [
+      -37.03277587890625,
+      -0.23896516859531403,
+      -34.03679656982422
+    ],
+    "boundsMax": [
+      34.98722839355469,
+      56.5941162109375,
+      33.56025695800781
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "bigleaf",
+    "kind": "tree",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "tree03",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree03.ddj",
+            "image": "tints/tree03-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "tree04",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree04.ddj",
+            "image": "tints/tree04-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "tree05",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree05.ddj",
+            "image": "tints/tree05-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "tree08",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree08.ddj",
+            "image": "tints/tree08-leaf.webp"
+          }
+        }
+      },
+      {
+        "name": "tree06",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree06.ddj",
+            "image": "tints/tree06-leaf.webp"
+          },
+          "bigleaf_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark_tree06.ddj",
+            "image": "tints/tree06-bark.webp"
+          }
+        }
+      },
+      {
+        "name": "tree07",
+        "materials": {
+          "bigleaf_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree07.ddj",
+            "image": "tints/tree07-leaf.webp"
+          },
+          "bigleaf_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark_tree07.ddj",
+            "image": "tints/tree07-bark.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_pine08_03.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree09_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree03.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree03_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree04.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree04_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree05.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree05_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree08.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree08_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree06.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark_tree06.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_leaf_tree07.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree07_01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_bigleaf_bark_tree07.ddj": "prim\\mtrl\\nature\\common\\tree\\new-maple\\tre_tree06_02.ddj"
+    }
+  }
+}

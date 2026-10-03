@@ -1,0 +1,1068 @@
+{
+  "source": "res/bldg/china/jangan01/monsterstadium/cj_monstad_door01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_monstad_door01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -18.23154,
+        6.65979,
+        13.94574
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        -18.11533,
+        6.65979,
+        -11.73766
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        15.35444,
+        6.65979,
+        13.94574
+      ],
+      "birthMs": 0,
+      "night": true
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame.efp",
+      "bone": null,
+      "position": [
+        15.35444,
+        6.65979,
+        -11.73766
+      ],
+      "birthMs": 0,
+      "night": true
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_monstad_door01_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_03lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_04lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_05",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_05lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_06",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_06lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_status",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_07lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_08",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_08.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_08lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_10",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_10.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_10lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_10lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_11",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_11.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (2.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_12",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_12.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (22.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_11",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_11.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (2.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_13lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_13lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_14",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_14.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (72.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_15",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_15.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_15lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_15lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_16",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_16.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (57.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_door01_17",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_17.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_17lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_17lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_monstad_door01_01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_01.bms",
+      "material": "CJ_monstad_door01_01",
+      "vertices": 2027,
+      "triangles": 1175,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_02.bms",
+      "material": "CJ_monstad_door01_02",
+      "vertices": 120,
+      "triangles": 62,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_03.bms",
+      "material": "CJ_monstad_door01_03",
+      "vertices": 26,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_03lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_04",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_04.bms",
+      "material": "CJ_monstad_door01_04",
+      "vertices": 892,
+      "triangles": 462,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_04lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_05",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_05.bms",
+      "material": "CJ_monstad_door01_05",
+      "vertices": 172,
+      "triangles": 100,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_05lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_06",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_06.bms",
+      "material": "CJ_monstad_door01_06",
+      "vertices": 361,
+      "triangles": 165,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_06lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_07",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_07.bms",
+      "material": "CJ_monstad_status",
+      "vertices": 128,
+      "triangles": 60,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_07lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_08",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_08.bms",
+      "material": "CJ_monstad_door01_08",
+      "vertices": 180,
+      "triangles": 88,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_08lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_10",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_10.bms",
+      "material": "CJ_monstad_door01_10",
+      "vertices": 834,
+      "triangles": 336,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_10lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_10lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_11",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_11.bms",
+      "material": "CJ_monstad_door01_11",
+      "vertices": 256,
+      "triangles": 128,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_door01_12",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_12.bms",
+      "material": "CJ_monstad_door01_12",
+      "vertices": 9,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_door01_13",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_13.bms",
+      "material": "CJ_monstad_door01_11",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_13lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_13lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_14",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_14.bms",
+      "material": "CJ_monstad_door01_14",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_door01_15",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_15.bms",
+      "material": "CJ_monstad_door01_15",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_15lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_15lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_door01_16",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_16.bms",
+      "material": "CJ_monstad_door01_16",
+      "vertices": 100,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_door01_17",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_17.bms",
+      "material": "CJ_monstad_door01_17",
+      "vertices": 26,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_door01_17lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_door01_17lightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 5167,
+    "triangles": 2680,
+    "joints": 0,
+    "meshes": 16,
+    "animations": 0,
+    "textures": 15,
+    "heightM": 25.581374168395996,
+    "boundsMin": [
+      -44.40110397338867,
+      -6.851588249206543,
+      -30.562236785888672
+    ],
+    "boundsMax": [
+      44.396541595458984,
+      18.729785919189453,
+      30.562236785888672
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 12,
+    "issues": []
+  }
+}

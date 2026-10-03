@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan06/rich02/cj_rich2_rightdam02_1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich2_rightdam02_1",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich2_rightdam02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich2_rightdam02_1.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_rightdam02_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_rightdam02_1lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.37254902720451355,
+        0.37254902720451355,
+        0.37254902720451355,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich2_rightdam02_1",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich02\\cj_rich2_rightdam02_1.bms",
+      "material": "CJ_rich2_rightdam02",
+      "vertices": 68,
+      "triangles": 38,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_rightdam02_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_rightdam02_1lightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 68,
+    "triangles": 38,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.3090657709981315,
+    "boundsMin": [
+      -12.212337493896484,
+      -0.0008642195607535541,
+      -0.7998531460762024
+    ],
+    "boundsMax": [
+      12.213327407836914,
+      2.308201551437378,
+      0.8061069250106812
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

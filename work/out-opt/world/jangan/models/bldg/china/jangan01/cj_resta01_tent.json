@@ -1,0 +1,177 @@
+{
+  "source": "res/bldg/china/jangan01/cj_resta01_tent.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_resta01_tent",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_resta01_tent",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_resta01_table.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_resta01_tent.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.3% zero, 0.2% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_resta01_tentlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_resta01_tentlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_resta01_tent01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_resta01_table.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_resta01_tent.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.3% zero, 0.2% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_resta01_tentuplightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_resta01_tentuplightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_resta01_tent",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_resta01_tent.bms",
+      "material": "CJ_resta01_tent",
+      "vertices": 144,
+      "triangles": 72,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_resta01_tentlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_resta01_tentlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_resta01_tentup",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_resta01_tentup.bms",
+      "material": "CJ_resta01_tent01",
+      "vertices": 9,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_resta01_tentuplightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_resta01_tentuplightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 153,
+    "triangles": 80,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.806988906861079,
+    "boundsMin": [
+      -1.9653379917144775,
+      0.00002651214526849799,
+      1.281585693359375
+    ],
+    "boundsMax": [
+      1.2863752841949463,
+      2.8070154190063477,
+      5.591395378112793
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "issues": []
+  }
+}

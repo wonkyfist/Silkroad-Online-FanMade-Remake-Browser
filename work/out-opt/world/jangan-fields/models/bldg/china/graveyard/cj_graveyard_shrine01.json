@@ -1,0 +1,739 @@
+{
+  "source": "res/bldg/china/graveyard/cj_graveyard_shrine01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_graveyard_shrine01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_shri_column",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_floor.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4862745404243469,
+        0.4862745404243469,
+        0.4862745404243469,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_property1",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_property.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_column1",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.8% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine03",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine05",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.3921568989753723,
+        0.3921568989753723,
+        0.3921568989753723,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_property",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_property.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_tombstone",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_tombstone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4705882668495178,
+        0.4862745404243469,
+        0.5372549295425415,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine01",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine02",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (50.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine04",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.37254902720451355,
+        0.37254902720451355,
+        0.37254902720451355,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_graveyard_shrine06",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.3960784673690796,
+        0.3960784673690796,
+        0.3960784673690796,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_shri_sign",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard\\w_cd_shri_sign.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (16.1% zero, 3.4% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_graveyard_shri_column",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_column.bms",
+      "material": "w_cd_shri_column",
+      "vertices": 140,
+      "triangles": 88,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shri_floor",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_floor.bms",
+      "material": "w_cd_shri_floor",
+      "vertices": 28,
+      "triangles": 14,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shri_property1",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_property1.bms",
+      "material": "w_cd_shri_property1",
+      "vertices": 78,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrii_column1",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrii_column1.bms",
+      "material": "w_cd_shri_column1",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine03",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine03.bms",
+      "material": "cj_graveyard_shrine03",
+      "vertices": 1099,
+      "triangles": 745,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine05",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine05.bms",
+      "material": "cj_graveyard_shrine05",
+      "vertices": 20,
+      "triangles": 14,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shri_property",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_property.bms",
+      "material": "w_cd_shri_property",
+      "vertices": 790,
+      "triangles": 644,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shri_tombstone",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_tombstone.bms",
+      "material": "w_cd_shri_tombstone",
+      "vertices": 116,
+      "triangles": 60,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine01",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine01.bms",
+      "material": "cj_graveyard_shrine01",
+      "vertices": 509,
+      "triangles": 422,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine02",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine02.bms",
+      "material": "cj_graveyard_shrine02",
+      "vertices": 66,
+      "triangles": 36,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine04",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine04.bms",
+      "material": "cj_graveyard_shrine04",
+      "vertices": 90,
+      "triangles": 60,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shrine06",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shrine06.bms",
+      "material": "cj_graveyard_shrine06",
+      "vertices": 12,
+      "triangles": 6,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_graveyard_shri_sign",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard\\cj_graveyard_shri_sign.bms",
+      "material": "w_cd_shri_sign",
+      "vertices": 122,
+      "triangles": 63,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 3086,
+    "triangles": 2208,
+    "joints": 0,
+    "meshes": 13,
+    "animations": 0,
+    "textures": 11,
+    "heightM": 37.5064292922616,
+    "boundsMin": [
+      -32.774688720703125,
+      -0.061605073511600494,
+      -18.08420753479004
+    ],
+    "boundsMax": [
+      32.77469253540039,
+      37.44482421875,
+      18.08420181274414
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

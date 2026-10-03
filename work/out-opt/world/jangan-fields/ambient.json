@@ -1,0 +1,1590 @@
+{
+ "format": "sro-world-ambient",
+ "version": 1,
+ "source": "BSR mod palettes (ambient sets) + town lamps (the dressing file)",
+ "models": {
+  "7": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red_b.efp",
+    "bone": null,
+    "position": [
+     0,
+     5.38276,
+     0
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "8": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     10.29364,
+     9.81443,
+     4.91348
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     10.39823,
+     9.28336,
+     10.74334
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red_b.efp",
+    "bone": null,
+    "position": [
+     -0.53549,
+     4.07243,
+     1.01272
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     10.73609,
+     8.13792,
+     16.95578
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "9": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     -0.57289,
+     5.78522,
+     3.64736
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_b.efp",
+    "bone": null,
+    "position": [
+     -0.53133,
+     0.94012,
+     7.47975
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_b.efp",
+    "bone": null,
+    "position": [
+     -0.59569,
+     5.57266,
+     3.1878
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "11": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     7.5896,
+     4.06269,
+     7.38927
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_light.efp",
+    "bone": null,
+    "position": [
+     2.94981,
+     2.30581,
+     4.80634
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_light.efp",
+    "bone": null,
+    "position": [
+     6.50082,
+     2.43473,
+     4.92084
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "27": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     3.92155,
+     17.00014,
+     -7.22424
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange02_b.efp",
+    "bone": null,
+    "position": [
+     3.58063,
+     0.36359,
+     -2.72689
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/oas_hot_etc_b.efp",
+    "bone": null,
+    "position": [
+     3.21541,
+     17.00014,
+     -7.77125
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame2.efp",
+    "bone": null,
+    "position": [
+     14.37084,
+     0.0204,
+     -3.91387
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange02_b.efp",
+    "bone": null,
+    "position": [
+     14.35309,
+     0.64556,
+     -3.74017
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     3.58063,
+     -0.11846,
+     -3.91387
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "29": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     7.59234,
+     4.29229,
+     9.75208
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     16.97986,
+     4.30073,
+     9.73253
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "64": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     -5.19259,
+     4.45566,
+     8.07687
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     -4.85257,
+     14.83652,
+     5.11384
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_blue.efp",
+    "bone": null,
+    "position": [
+     -5.37172,
+     1.81885,
+     9.90618
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     4.43565,
+     14.83652,
+     5.10009
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     4.67865,
+     4.45566,
+     8.06672
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_blue.efp",
+    "bone": null,
+    "position": [
+     4.88252,
+     1.81885,
+     9.90618
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "66": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange.efp",
+    "bone": null,
+    "position": [
+     -0.06361,
+     9.33977,
+     3.67755
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "67": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_potal_blue.efp",
+    "bone": null,
+    "position": [
+     0,
+     2.68701,
+     0.11434
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_potal_blue_g.efp",
+    "bone": null,
+    "position": [
+     0,
+     2.18534,
+     0.11005
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "68": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     -4.35942,
+     3.79446,
+     -4.0941
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     -4.35537,
+     3.77791,
+     -11.39626
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "69": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_light.efp",
+    "bone": null,
+    "position": [
+     3.75936,
+     8.71426,
+     -9.77061
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "71": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     0,
+     2.98996,
+     -0.57969
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     0,
+     3.00522,
+     0.65596
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "72": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_light.efp",
+    "bone": null,
+    "position": [
+     0.64597,
+     3.60354,
+     -10.43067
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_light.efp",
+    "bone": null,
+    "position": [
+     -11.16751,
+     3.59318,
+     -10.4277
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "79": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0,
+     9.40571,
+     0.03064
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0,
+     5.45348,
+     0.03064
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "80": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0,
+     3.41823,
+     0.04558
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "81": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0,
+     8.44115,
+     0
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "83": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0,
+     2.08322,
+     0.04295
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "88": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red_b.efp",
+    "bone": null,
+    "position": [
+     0,
+     4.65731,
+     0
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "127": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     0,
+     1.63221,
+     0.01074
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "141": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_potal_blue.efp",
+    "bone": null,
+    "position": [
+     -0.77071,
+     2.82138,
+     -0.10128
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_potal_blue_g.efp",
+    "bone": null,
+    "position": [
+     0,
+     2.81249,
+     -0.09868
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_potal_blue_g.efp",
+    "bone": null,
+    "position": [
+     -0.69682,
+     9.0951,
+     0
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "167": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -0.07854,
+     2.56943,
+     0
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "173": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange.efp",
+    "bone": null,
+    "position": [
+     -0.02363,
+     1.72649,
+     -0.00829
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "175": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame2.efp",
+    "bone": null,
+    "position": [
+     0.00578,
+     1.85422,
+     0
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "183": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     -1.1891,
+     7.78499,
+     3.51828
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange_s.efp",
+    "bone": null,
+    "position": [
+     -1.1891,
+     7.75129,
+     -2.98606
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "194": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pajang.efp",
+    "bone": null,
+    "position": [
+     1.51175,
+     -0.01634,
+     0
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pokpopapyun.efp",
+    "bone": null,
+    "position": [
+     1.49493,
+     0,
+     0.00563
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "198": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pajang.efp",
+    "bone": null,
+    "position": [
+     0.89888,
+     -0.01634,
+     -0.00817
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pokpopapyun.efp",
+    "bone": null,
+    "position": [
+     0.8984,
+     0,
+     -0.00254
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "213": [
+   {
+    "set": "townLamp",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_orange.efp",
+    "bone": null,
+    "position": [
+     -0.024,
+     1.726,
+     -0.008
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "215": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     -3.28497,
+     2.77973,
+     0.91756
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/light.efp",
+    "bone": null,
+    "position": [
+     1.8485,
+     3.82716,
+     -0.82814
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "223": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_shri.efp",
+    "bone": null,
+    "position": [
+     -1.15973,
+     0.5047,
+     1.08456
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/w_cd_shri.efp",
+    "bone": null,
+    "position": [
+     -0.30067,
+     1.39597,
+     -0.76242
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "227": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multugu-b.efp",
+    "bone": null,
+    "position": [
+     7.83211,
+     -38.17209,
+     -0.06744
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pokpomulbangul-m.efp",
+    "bone": null,
+    "position": [
+     -8.82037,
+     0.63045,
+     -0.10361
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "232": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multugu-b.efp",
+    "bone": null,
+    "position": [
+     29.01793,
+     -79.97123,
+     5.08942
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multugu-b.efp",
+    "bone": null,
+    "position": [
+     29.00119,
+     -79.96995,
+     -5.09272
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pokpomulbangul.efp",
+    "bone": null,
+    "position": [
+     -2.96891,
+     0,
+     -2.54664
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/pokpomulbangul.efp",
+    "bone": null,
+    "position": [
+     -2.99142,
+     0,
+     4.23704
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "263": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/cj_pal_lamp_red.efp",
+    "bone": null,
+    "position": [
+     0.06273,
+     11.21535,
+     0.0101
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "367": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -31.82599,
+     41.74334,
+     -25.08491
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -31.83758,
+     41.73248,
+     24.75072
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     30.37832,
+     41.79208,
+     24.76617
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     30.44327,
+     41.7618,
+     -25.0854
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "374": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     16.92315,
+     27.84065,
+     1.91182
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     51.89833,
+     31.413,
+     0
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     85.58411,
+     28.32273,
+     0.03408
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     142.37192,
+     28.27528,
+     -2.74202
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     176.98492,
+     27.8543,
+     1.92587
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     212.22117,
+     28.12648,
+     1.87714
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -52.18797,
+     27.90981,
+     0.83826
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -86.76508,
+     31.16348,
+     -3.94758
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -120.61012,
+     28.28571,
+     -1.26362
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -177.3894,
+     28.29617,
+     -4.00619
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -211.9207,
+     27.88321,
+     0.58888
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "375": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -0.59669,
+     15.60863,
+     0.19559
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -0.64282,
+     17.71082,
+     -5.2438
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -0.58402,
+     17.69102,
+     5.40667
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -7.67213,
+     2.89053,
+     12.92629
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -7.75808,
+     2.96857,
+     -12.52005
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.01159,
+     27.85613,
+     35.69641
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     5.85938,
+     28.94153,
+     70.21359
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     3.12492,
+     28.26276,
+     104.19763
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     5.87041,
+     28.21862,
+     160.86528
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.27351,
+     27.86436,
+     195.4775
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.35962,
+     28.09866,
+     230.77595
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.26692,
+     27.8811,
+     -35.46014
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     5.77834,
+     29.38271,
+     -70.285
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     3.12535,
+     28.21446,
+     -104.21711
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     5.95622,
+     28.22539,
+     -160.90775
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.19624,
+     27.92606,
+     -195.60723
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     1.36171,
+     28.05933,
+     -230.66426
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "406": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multigi.efp",
+    "bone": null,
+    "position": [
+     0.02289,
+     -3.91416,
+     0.29185
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "408": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multigi.efp",
+    "bone": null,
+    "position": [
+     -0.89468,
+     -9.9938,
+     -2.10472
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "409": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multigi.efp",
+    "bone": null,
+    "position": [
+     0.70407,
+     -10.11127,
+     -1.9731
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "410": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/multigi.efp",
+    "bone": null,
+    "position": [
+     1.65244,
+     -10.07757,
+     -1.6721
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "415": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame2.efp",
+    "bone": null,
+    "position": [
+     14.325,
+     2.14967,
+     15.11443
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame2.efp",
+    "bone": null,
+    "position": [
+     -17.95012,
+     2.14704,
+     15.11899
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "431": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "dun/red_orange_flame.efp",
+    "bone": null,
+    "position": [
+     -3.75548,
+     18.01203,
+     6.45328
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "dun/red_orange_flame_glow_3small.efp",
+    "bone": null,
+    "position": [
+     -3.75548,
+     18.01203,
+     6.45328
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "456": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -18.23154,
+     6.65979,
+     13.94574
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     -18.11533,
+     6.65979,
+     -11.73766
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     15.35444,
+     6.65979,
+     13.94574
+    ],
+    "birthMs": 0,
+    "night": true
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame.efp",
+    "bone": null,
+    "position": [
+     15.35444,
+     6.65979,
+     -11.73766
+    ],
+    "birthMs": 0,
+    "night": true
+   }
+  ],
+  "476": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/guild/gate_potal.efp",
+    "bone": null,
+    "position": [
+     0.00298,
+     4.13111,
+     -0.03693
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/guild/waterup_blue_small_01.efp",
+    "bone": null,
+    "position": [
+     -0.00859,
+     -2.44657,
+     0
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ],
+  "477": [
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "system/system_dungeonpotal.efp",
+    "bone": null,
+    "position": [
+     -0.03415,
+     3.87825,
+     -2.15171
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame3.efp",
+    "bone": null,
+    "position": [
+     2.86286,
+     7.75473,
+     -5.71395
+    ],
+    "birthMs": 0,
+    "night": false
+   },
+   {
+    "set": "ambient",
+    "kind": "ambient",
+    "efp": "map/frame3.efp",
+    "bone": null,
+    "position": [
+     -2.92655,
+     7.73857,
+     -5.71395
+    ],
+    "birthMs": 0,
+    "night": false
+   }
+  ]
+ }
+}

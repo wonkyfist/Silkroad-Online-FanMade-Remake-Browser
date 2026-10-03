@@ -1,0 +1,814 @@
+{
+  "source": "res/bldg/china/dunhuang/association/w_cd_hunter_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_hunter_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame2.efp",
+      "bone": null,
+      "position": [
+        14.325,
+        2.14967,
+        15.11443
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/frame2.efp",
+      "bone": null,
+      "position": [
+        -17.95012,
+        2.14704,
+        15.11899
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_hunter_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_01lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (48.7% zero, 0.2% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_04lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_05",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_05lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_06",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_06lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_07",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_07.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_07lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_08",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_08.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_08lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_09",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_09.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_09lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_09lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_10",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\thief_vill_bigtent_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_10lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_10lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_11",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\thief_vill_bigtent_07.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_11lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_11lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hunter_12",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\association\\thief_vill_bigtent_06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_12lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_12lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_hunter_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01.bms",
+      "material": "w_cd_hunter_01",
+      "vertices": 308,
+      "triangles": 110,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_01lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_02.bms",
+      "material": "w_cd_hunter_02",
+      "vertices": 650,
+      "triangles": 262,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_03.bms",
+      "material": "w_cd_hunter_03",
+      "vertices": 240,
+      "triangles": 172,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_hunter_04",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_04.bms",
+      "material": "w_cd_hunter_04",
+      "vertices": 1212,
+      "triangles": 452,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_04lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_05",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_05.bms",
+      "material": "w_cd_hunter_05",
+      "vertices": 183,
+      "triangles": 72,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_05lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_06",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_06.bms",
+      "material": "w_cd_hunter_06",
+      "vertices": 192,
+      "triangles": 90,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_06lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_07",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_07.bms",
+      "material": "w_cd_hunter_07",
+      "vertices": 20,
+      "triangles": 14,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_07lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_07lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_08",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_08.bms",
+      "material": "w_cd_hunter_08",
+      "vertices": 14,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_08lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_08lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_09",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_09.bms",
+      "material": "w_cd_hunter_09",
+      "vertices": 18,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_09lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_09lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_10",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_10.bms",
+      "material": "w_cd_hunter_10",
+      "vertices": 716,
+      "triangles": 240,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_10lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_10lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_11",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_11.bms",
+      "material": "w_cd_hunter_11",
+      "vertices": 768,
+      "triangles": 256,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_11lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_11lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "w_cd_hunter_12",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\association\\w_cd_hunter_12.bms",
+      "material": "w_cd_hunter_12",
+      "vertices": 1156,
+      "triangles": 400,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\association\\w_cd_hunter_12lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/association/w_cd_hunter_12lightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 5477,
+    "triangles": 2084,
+    "joints": 0,
+    "meshes": 12,
+    "animations": 0,
+    "textures": 12,
+    "heightM": 38.482933070510626,
+    "boundsMin": [
+      -31.136287689208984,
+      -0.031757380813360214,
+      -18.267414093017578
+    ],
+    "boundsMax": [
+      32.40313720703125,
+      38.451175689697266,
+      18.456727981567383
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 11,
+    "issues": []
+  }
+}

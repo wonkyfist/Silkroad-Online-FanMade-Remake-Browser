@@ -1,0 +1,156 @@
+{
+  "source": "res/nature/common/tree/tre_pine07_03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_pine07_03",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_pine07_01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_pine07_02",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_pine07_02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (51.8% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_pine07_03_01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_pine07_03_01.bms",
+      "material": "tre_pine07_01",
+      "vertices": 68,
+      "triangles": 58,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "tre_pine07_03_02",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_pine07_03_02.bms",
+      "material": "tre_pine07_02",
+      "vertices": 345,
+      "triangles": 252,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 413,
+    "triangles": 310,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 32.40443193912506,
+    "boundsMin": [
+      -12.644164085388184,
+      0.14491117000579834,
+      -35.512428283691406
+    ],
+    "boundsMax": [
+      23.03121566772461,
+      32.54934310913086,
+      10.47099494934082
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

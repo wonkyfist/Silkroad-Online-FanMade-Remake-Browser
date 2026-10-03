@@ -1,0 +1,259 @@
+{
+  "source": "res/bldg/china/jin_imperial/dan/c_jin_wall3_orwall2.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_jin_wall3_orwall2",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_jin_bb_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_orwall2.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_bb_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (19.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall3_fire",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_orwall2.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_enter_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_master",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_orwall2.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall_master.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_orwall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_orwall2.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\dan\\c_jin_wall_orwall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_jin_wall3_ealpha2",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_ealpha2.bms",
+      "material": "C_jin_bb_alpha",
+      "vertices": 96,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_wall3_fire2",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_fire2.bms",
+      "material": "C_jin_wall3_fire",
+      "vertices": 1368,
+      "triangles": 1116,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_wall3_master2",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_master2.bms",
+      "material": "C_jin_wall_master",
+      "vertices": 407,
+      "triangles": 542,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_wall3_orwall2",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\dan\\c_jin_wall3_orwall2.bms",
+      "material": "C_jin_wall_orwall",
+      "vertices": 188,
+      "triangles": 94,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2059,
+    "triangles": 1800,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 86.19097077846527,
+    "boundsMin": [
+      -138.7843475341797,
+      1.0655065774917603,
+      -7.860379219055176
+    ],
+    "boundsMax": [
+      138.78436279296875,
+      87.25647735595703,
+      7.860378265380859
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

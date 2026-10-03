@@ -1,0 +1,792 @@
+{
+  "source": "res/bldg/china/jangan01/cj_luxury.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_luxury",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_luxu_deco",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_deco_tiger01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (17.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_decolightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_decolightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_deco_tiger02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_deco_tiger02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_deco_tiger02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_deco_tiger02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.6274510025978088,
+        0.6274510025978088,
+        0.6274510025978088,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_desk_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_desk.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (25.2% zero, 1.3% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_desk_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_desk_alphalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_desk_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_desk.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (25.2% zero, 1.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_floor.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_floorlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7843137979507446,
+        0.7843137979507446,
+        0.7843137979507446,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (18.2% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_rooflightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4705882668495178,
+        0.4705882668495178,
+        0.4705882668495178,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (18.2% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_roof_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_roof_alphalightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4705882668495178,
+        0.4705882668495178,
+        0.4705882668495178,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_door_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_door_sign.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_tiger",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_deco_tiger01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (17.2% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_tigerlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_tigerlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.3529411852359772,
+        0.3529411852359772,
+        0.3529411852359772,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_door",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_door_sign.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_walllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_walllightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.41568630933761597,
+        0.41568630933761597,
+        0.41568630933761597,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_winlight",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 840,
+      "flagNames": [
+        "selfIlluminated",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_winlight.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (59.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_winlightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_winlightlightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_luxu_winlight02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxury.bmt",
+      "flags": 328,
+      "flagNames": [
+        "selfIlluminated",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_luxu_winlight02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_winlight02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_winlight02lightingmap.webp",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_luxu_deco",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_deco.bms",
+      "material": "CJ_luxu_deco",
+      "vertices": 52,
+      "triangles": 26,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_decolightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_decolightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_deco_tiger02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_deco_tiger02.bms",
+      "material": "CJ_luxu_deco_tiger02",
+      "vertices": 430,
+      "triangles": 268,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_deco_tiger02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_deco_tiger02lightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_desk_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_desk_alpha.bms",
+      "material": "CJ_luxu_desk_alpha",
+      "vertices": 72,
+      "triangles": 36,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_desk_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_desk_alphalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_desk_alpha01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_desk_alpha01.bms",
+      "material": "CJ_luxu_desk_alpha",
+      "vertices": 50,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_luxu_floor",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_floor.bms",
+      "material": "CJ_luxu_floor",
+      "vertices": 15,
+      "triangles": 10,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_floorlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_roof.bms",
+      "material": "CJ_luxu_roof",
+      "vertices": 1997,
+      "triangles": 835,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_rooflightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_roof_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_roof_alpha.bms",
+      "material": "CJ_luxu_roof",
+      "vertices": 18,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_roof_alphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_roof_alphalightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_sign",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_sign.bms",
+      "material": "CJ_luxu_door_al",
+      "vertices": 84,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_luxu_tiger",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_tiger.bms",
+      "material": "CJ_luxu_tiger",
+      "vertices": 249,
+      "triangles": 156,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_tigerlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_tigerlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_wall",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_wall.bms",
+      "material": "CJ_luxu_door",
+      "vertices": 170,
+      "triangles": 80,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_walllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_walllightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_winlight",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_winlight.bms",
+      "material": "CJ_luxu_winlight",
+      "vertices": 510,
+      "triangles": 238,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_winlightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_winlightlightingmap.webp",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_luxu_winlight02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_luxu_winlight02.bms",
+      "material": "CJ_luxu_winlight02",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\cj_luxu_winlight02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/cj_luxu_winlight02lightingmap.webp",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 3651,
+    "triangles": 1771,
+    "joints": 0,
+    "meshes": 12,
+    "animations": 0,
+    "textures": 8,
+    "heightM": 26.695177586749196,
+    "boundsMin": [
+      -26.948360443115234,
+      -0.017956288531422615,
+      -19.839412689208984
+    ],
+    "boundsMax": [
+      33.272518157958984,
+      26.677221298217773,
+      17.542600631713867
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 10,
+    "issues": []
+  }
+}

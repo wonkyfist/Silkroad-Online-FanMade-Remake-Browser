@@ -1,0 +1,119 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\barley.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "barley.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "barley_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_barley_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    512,
+    133
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "barley_leaf",
+   "vertices": 144,
+   "triangles": 72,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "barley_leaf",
+   "vertices": 56,
+   "triangles": 28,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 200,
+  "triangles": 100,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 1.9300000667572021,
+  "boundsMin": [
+   -5.723208904266357,
+   -0.36901652812957764,
+   -1.031410813331604
+  ],
+  "boundsMax": [
+   5.516791343688965,
+   1.5609835386276245,
+   1.3469222784042358
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "barley",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_barley_bark.ddj": "prim\\mtrl\\nature\\common\\grass\\cj_barley_01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_barley_leaf.ddj": "prim\\mtrl\\nature\\common\\grass\\cj_barley_01.ddj"
+  }
+ }
+}

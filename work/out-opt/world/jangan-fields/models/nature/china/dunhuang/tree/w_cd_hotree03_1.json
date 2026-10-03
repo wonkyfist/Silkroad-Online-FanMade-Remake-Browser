@@ -1,0 +1,314 @@
+{
+  "source": "res/nature/china/dunhuang/tree/w_cd_hotree03_1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_hotree03_1",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_hotree03_01",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hotree03_02",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hotree03_03",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hotree03_al02",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_al02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (87.8% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_hotree03_leaf",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_hotree_leaf01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (71.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_hotree03_1_01",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_hotree03_1_01.bms",
+      "material": "w_cd_hotree03_01",
+      "vertices": 37,
+      "triangles": 23,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_hotree03_1_02",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_hotree03_1_02.bms",
+      "material": "w_cd_hotree03_02",
+      "vertices": 14,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_hotree03_1_03",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_hotree03_1_03.bms",
+      "material": "w_cd_hotree03_03",
+      "vertices": 111,
+      "triangles": 76,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_hotree03_1_al02",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_hotree03_1_al02.bms",
+      "material": "w_cd_hotree03_al02",
+      "vertices": 5,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_hotree03_1_leaf",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_hotree03_1_leaf.bms",
+      "material": "w_cd_hotree03_leaf",
+      "vertices": 60,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 227,
+    "triangles": 163,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 9.803921647369862,
+    "boundsMin": [
+      -4.293201923370361,
+      -0.07165903598070145,
+      -3.0160415172576904
+    ],
+    "boundsMax": [
+      4.2932024002075195,
+      9.73226261138916,
+      3.0160412788391113
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

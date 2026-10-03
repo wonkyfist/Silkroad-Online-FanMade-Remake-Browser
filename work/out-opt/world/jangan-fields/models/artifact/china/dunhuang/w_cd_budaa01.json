@@ -1,0 +1,152 @@
+{
+  "source": "res/artifact/china/dunhuang/w_cd_budaa01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_budaa01",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_CD_budawal",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\w_cd_buda_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\w_cd_buda_base.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.501960813999176,
+        0.501960813999176,
+        0.501960813999176,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_buda_01",
+      "bmt": "prim\\mtrl\\artifact\\china\\dunhuang\\w_cd_buda_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\dunhuang\\w_cd_buda_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.501960813999176,
+        0.501960813999176,
+        0.501960813999176,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_CD_budawal",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_cd_budawal.bms",
+      "material": "W_CD_budawal",
+      "vertices": 135,
+      "triangles": 213,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_buda_01",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_cd_buda_01.bms",
+      "material": "w_cd_buda_01",
+      "vertices": 331,
+      "triangles": 404,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 466,
+    "triangles": 617,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 43.48146504163742,
+    "boundsMin": [
+      -28.915172576904297,
+      -0.5083433985710144,
+      -25.028488159179688
+    ],
+    "boundsMax": [
+      28.69803810119629,
+      42.973121643066406,
+      8.969589233398438
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

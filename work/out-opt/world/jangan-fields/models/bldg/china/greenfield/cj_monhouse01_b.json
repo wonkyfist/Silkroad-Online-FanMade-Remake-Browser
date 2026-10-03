@@ -1,0 +1,581 @@
+{
+  "source": "res/bldg/china/greenfield/cj_monhouse01_b.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_monhouse01_b",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_monhouse_alpha1",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_alpha1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (79.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_bigcolumn",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_bigcolumn.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_fruit",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_fruit.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_leaf",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_leaf.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (51.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_line",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_line.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_ground",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_ground.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (41.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_ground2",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_ground2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_stone",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_stone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_tree2",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_tree2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_monhouse_wall",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_monhouse_wall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (26.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_monhouse_b_alpha1",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_alpha1.bms",
+      "material": "cj_monhouse_alpha1",
+      "vertices": 12,
+      "triangles": 6,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_bigcolumn",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_bigcolumn.bms",
+      "material": "cj_monhouse_bigcolumn",
+      "vertices": 522,
+      "triangles": 262,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_fruit",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_fruit.bms",
+      "material": "cj_monhouse_fruit",
+      "vertices": 18,
+      "triangles": 16,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_leaf",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_leaf.bms",
+      "material": "cj_monhouse_leaf",
+      "vertices": 418,
+      "triangles": 214,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_line",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_line.bms",
+      "material": "cj_monhouse_line",
+      "vertices": 52,
+      "triangles": 44,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_ground",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_ground.bms",
+      "material": "cj_monhouse_ground",
+      "vertices": 33,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_ground2",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_ground2.bms",
+      "material": "cj_monhouse_ground2",
+      "vertices": 20,
+      "triangles": 10,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_stone",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_stone.bms",
+      "material": "cj_monhouse_stone",
+      "vertices": 154,
+      "triangles": 147,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_tree2",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_tree2.bms",
+      "material": "cj_monhouse_tree2",
+      "vertices": 40,
+      "triangles": 20,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_monhouse_b_wall",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_monhouse_b_wall.bms",
+      "material": "cj_monhouse_wall",
+      "vertices": 32,
+      "triangles": 42,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1301,
+    "triangles": 785,
+    "joints": 0,
+    "meshes": 10,
+    "animations": 0,
+    "textures": 10,
+    "heightM": 11.008356541395187,
+    "boundsMin": [
+      -6.102760314941406,
+      -0.3095659911632538,
+      -5.746097087860107
+    ],
+    "boundsMax": [
+      6.057206630706787,
+      10.698790550231934,
+      5.711386203765869
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

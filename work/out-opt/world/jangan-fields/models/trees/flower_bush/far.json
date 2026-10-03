@@ -1,0 +1,199 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\flower_bush.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "flower_bush.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "flower_bush_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        169,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "flower_bush_bloom",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_bloom.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        41,
+        41
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "flower_bush_leaf",
+      "vertices": 240,
+      "triangles": 120,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "flower_bush_bloom",
+      "vertices": 128,
+      "triangles": 64,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "flower_bush_leaf",
+      "vertices": 80,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "flower_bush_bloom",
+      "vertices": 48,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 496,
+    "triangles": 248,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 0.8199999779462814,
+    "boundsMin": [
+      -3.2763760089874268,
+      -0.14641337096691132,
+      -4.336174964904785
+    ],
+    "boundsMax": [
+      3.8059799671173096,
+      0.6735866069793701,
+      4.0538249015808105
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "flower_bush",
+    "kind": "plant",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "flower05",
+        "materials": {
+          "flower_bush_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_leaf_flower05.ddj",
+            "image": "tints/flower05-leaf.webp"
+          },
+          "flower_bush_bloom": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_bloom_flower05.ddj",
+            "image": "tints/flower05-bloom.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_bark.ddj": "prim\\mtrl\\nature\\common\\flower\\grs_weed07.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_leaf.ddj": "prim\\mtrl\\nature\\common\\flower\\grs_weed07.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_bloom.ddj": "prim\\mtrl\\nature\\common\\flower\\grs_weed07.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_leaf_flower05.ddj": "prim\\mtrl\\nature\\common\\flower\\grs_flower05.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_bush_bloom_flower05.ddj": "prim\\mtrl\\nature\\common\\flower\\grs_flower05.ddj"
+    }
+  }
+}

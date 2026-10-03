@@ -1,0 +1,84 @@
+{
+ "source": "res/bldg/china/jangan01/cj_jang_gate_dragon.bsr",
+ "version": "remaster (work/tmp/dragon)",
+ "generator": "work/tmp/dragon/scripts/package_final.ts (critique pass)",
+ "name": "cj_jang_gate_dragon_lod0",
+ "type": "BUILDING",
+ "units": {
+  "metresPerUnit": 0.1,
+  "sourceUnit": "decimetre",
+  "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "remaster": "Meshy M1 (multi-image-to-3d of the retail statue), fitted to the retail mesh; the gold maps are the sro-remaster set dragon/remaster/ (work/tmp/dragon/final/manifest.json)",
+ "materials": [
+  {
+   "name": "cj_jang_dragon_m1",
+   "flags": 320,
+   "diffuse": [
+    0.33725491166114807,
+    0.21176472306251526,
+    0.05098039656877518,
+    1
+   ],
+   "ambient": [
+    0.5921568870544434,
+    0.37254902720451355,
+    0.08627451211214066,
+    1
+   ],
+   "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_jang_dragon_m1.ddj",
+   "alphaMode": "OPAQUE",
+   "doubleSided": false,
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "cj_jang_dragon_m1",
+   "bms": null,
+   "material": "cj_jang_dragon_m1",
+   "vertices": 37421,
+   "triangles": 29998,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 37421,
+  "triangles": 29998,
+  "joints": 0,
+  "meshes": 1,
+  "animations": 0,
+  "textures": 1,
+  "heightM": 18.581696152687073,
+  "boundsMin": [
+   -3.214707612991333,
+   -1.2122236490249634,
+   -5.255643367767334
+  ],
+  "boundsMax": [
+   8.89608097076416,
+   17.36947250366211,
+   7.57993221282959
+  ]
+ },
+ "warnings": []
+}

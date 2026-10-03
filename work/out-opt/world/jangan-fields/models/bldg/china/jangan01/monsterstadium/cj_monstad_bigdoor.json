@@ -1,0 +1,366 @@
+{
+  "source": "res/bldg/china/jangan01/monsterstadium/cj_monstad_bigdoor.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_monstad_bigenter",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_monstad_enter_alph",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (55.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_enter_alpha2",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_alpha2.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (93.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_enter_buil",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigent02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_enter_office",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigent01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_enter_office1",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_office1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_enter_pig",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_pig.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_monstad_bigenter_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_alpha.bms",
+      "material": "CJ_monstad_enter_alph",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_bigenter_alpha2",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_alpha2.bms",
+      "material": "CJ_monstad_enter_alpha2",
+      "vertices": 64,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_bigenter_buil",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_buil.bms",
+      "material": "CJ_monstad_enter_buil",
+      "vertices": 64,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_bigenter_office",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_office.bms",
+      "material": "CJ_monstad_enter_office",
+      "vertices": 242,
+      "triangles": 174,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_bigenter_office1",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_office1.bms",
+      "material": "CJ_monstad_enter_office1",
+      "vertices": 585,
+      "triangles": 354,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_monstad_bigenter_pig",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_bigenter_pig.bms",
+      "material": "CJ_monstad_enter_pig",
+      "vertices": 227,
+      "triangles": 201,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1206,
+    "triangles": 821,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 6,
+    "heightM": 13.935048580169678,
+    "boundsMin": [
+      -7.761778354644775,
+      3.6103272438049316,
+      -2.9937751293182373
+    ],
+    "boundsMax": [
+      7.761778831481934,
+      17.54537582397461,
+      2.993776321411133
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

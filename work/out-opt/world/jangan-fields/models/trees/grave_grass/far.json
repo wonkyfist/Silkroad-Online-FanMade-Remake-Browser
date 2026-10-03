@@ -1,0 +1,130 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\grave_grass.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "grave_grass.far",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "grave_grass_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_grass_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        169,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod1",
+      "bms": "",
+      "material": "grave_grass_leaf",
+      "vertices": 128,
+      "triangles": 64,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod2",
+      "bms": "",
+      "material": "grave_grass_leaf",
+      "vertices": 48,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 176,
+    "triangles": 88,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 4.279999911785126,
+    "boundsMin": [
+      -2.8754918575286865,
+      -0.6057283282279968,
+      -4.313204288482666
+    ],
+    "boundsMax": [
+      3.5646097660064697,
+      3.674271583557129,
+      3.9767961502075195
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "grave_grass",
+    "kind": "plant",
+    "part": "far",
+    "tiers": {
+      "lod1": 1,
+      "lod2": 2
+    },
+    "tints": [
+      {
+        "name": "grass03",
+        "materials": {
+          "grave_grass_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_grass_leaf_grass03.ddj",
+            "image": "tints/grass03-leaf.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_grass_bark.ddj": "prim\\mtrl\\nature\\common\\grass\\cj_graveyard_grass01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_grass_leaf.ddj": "prim\\mtrl\\nature\\common\\grass\\cj_graveyard_grass01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_grass_leaf_grass03.ddj": "prim\\mtrl\\nature\\common\\grass\\cj_graveyard_grass03.ddj"
+    }
+  }
+}

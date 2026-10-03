@@ -1,0 +1,177 @@
+{
+  "source": "res\\nature\\common\\tree\\w12\\grave_tree.bsr#species",
+  "version": "sro-trees 1",
+  "generator": "silkroad-web trees (packages/convert/src/trees)",
+  "name": "grave_tree.near",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "grave_tree_bark",
+      "bmt": "",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        64,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "tree tool: bark",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "grave_tree_leaf",
+      "bmt": "",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf.ddj",
+      "textureFormat": "PNG",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "lod0",
+      "bms": "",
+      "material": "grave_tree_bark",
+      "vertices": 1299,
+      "triangles": 1560,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "lod0",
+      "bms": "",
+      "material": "grave_tree_leaf",
+      "vertices": 4000,
+      "triangles": 2000,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 5299,
+    "triangles": 3560,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 0,
+    "heightM": 45.450001299381256,
+    "boundsMin": [
+      -14.784536361694336,
+      -0.08634239435195923,
+      -13.946677207946777
+    ],
+    "boundsMax": [
+      14.597784042358398,
+      45.3636589050293,
+      15.973322868347168
+    ]
+  },
+  "warnings": [],
+  "trees": {
+    "species": "grave_tree",
+    "kind": "tree",
+    "part": "near",
+    "tiers": {
+      "lod0": 0
+    },
+    "tints": [
+      {
+        "name": "grave05",
+        "materials": {
+          "grave_tree_leaf": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf_grave05.ddj",
+            "image": "tints/grave05-leaf.webp"
+          },
+          "grave_tree_bark": {
+            "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark_grave05.ddj",
+            "image": "tints/grave05-bark.webp"
+          }
+        }
+      }
+    ],
+    "sources": {
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree01.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree02.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf_grave05.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree06.ddj",
+      "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark_grave05.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree05.ddj"
+    }
+  }
+}

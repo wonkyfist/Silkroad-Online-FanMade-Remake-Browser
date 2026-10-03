@@ -1,0 +1,153 @@
+{
+  "source": "res/bldg/europe/constantinople/etc/euro_fushop06.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "euro_fushop06",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "euro_est euro_constan_hanggu_fushop03_04",
+      "bmt": "prim\\mtrl\\bldg\\europe\\constantinople\\etc\\euro_fushop06_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\europe\\constantinople\\etc\\euro_est euro_constan_hanggu_fushop01_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "euro_est euro_constan_hanggu_fushop03_05",
+      "bmt": "prim\\mtrl\\bldg\\europe\\constantinople\\etc\\euro_fushop06_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\europe\\constantinople\\etc\\euro_est euro_constan_hanggu_fushop01_03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "euro_fushop06_01",
+      "bms": "prim\\mesh\\bldg\\europe\\constantinople\\etc\\euro_fushop06_01.bms",
+      "material": "euro_est euro_constan_hanggu_fushop03_04",
+      "vertices": 7,
+      "triangles": 6,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "euro_fushop06_02",
+      "bms": "prim\\mesh\\bldg\\europe\\constantinople\\etc\\euro_fushop06_02.bms",
+      "material": "euro_est euro_constan_hanggu_fushop03_05",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 31,
+    "triangles": 18,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 0.6615016320720315,
+    "boundsMin": [
+      -0.85736083984375,
+      0.004149331711232662,
+      -0.7424907684326172
+    ],
+    "boundsMax": [
+      0.8573606610298157,
+      0.6656509637832642,
+      0.7424908876419067
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

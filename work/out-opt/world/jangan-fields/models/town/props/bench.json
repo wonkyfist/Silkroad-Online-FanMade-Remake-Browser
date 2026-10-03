@@ -1,0 +1,86 @@
+{
+  "source": "town/props/bench",
+  "version": "sro-town-prop 1",
+  "generator": "packages/convert/src/world/town/dressing-io.ts (from packages/convert/tools/blender/town/props/build.py)",
+  "name": "bench",
+  "type": "town prop",
+  "units": {
+    "metresPerUnit": 1,
+    "sourceUnit": "metre",
+    "handedness": "right-handed",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "town_bench",
+      "bmt": "",
+      "flags": 0,
+      "flagNames": [],
+      "texture": "town/props/bench.png",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "town prop (content/town/props)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "ambient": [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1
+      ],
+      "specular": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "town_bench",
+      "bms": "",
+      "material": "town_bench",
+      "vertices": 60,
+      "triangles": 30,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 60,
+    "triangles": 30,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.45,
+    "boundsMin": [
+      -0.9,
+      0,
+      -0.21
+    ],
+    "boundsMax": [
+      0.9,
+      0.45,
+      0.21
+    ]
+  },
+  "warnings": []
+}

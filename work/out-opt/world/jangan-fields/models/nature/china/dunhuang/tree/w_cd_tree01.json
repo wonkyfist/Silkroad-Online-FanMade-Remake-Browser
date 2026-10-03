@@ -1,0 +1,148 @@
+{
+  "source": "res/nature/china/dunhuang/tree/w_cd_tree01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_tree01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_CD_tree01",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무01.ddj",
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag, no texture to inspect",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_tree02",
+      "bmt": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\w_cd_tree01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무02.ddj",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_CD_tree01",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_tree01.bms",
+      "material": "W_CD_tree01",
+      "vertices": 28,
+      "triangles": 14,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "W_CD_tree02",
+      "bms": "prim\\mesh\\nature\\china\\dunghuang\\tree\\w_cd_tree02.bms",
+      "material": "W_CD_tree02",
+      "vertices": 215,
+      "triangles": 206,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 243,
+    "triangles": 220,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 0,
+    "heightM": 4.080499195028096,
+    "boundsMin": [
+      -1.9032771587371826,
+      0.002991176676005125,
+      -1.8241183757781982
+    ],
+    "boundsMax": [
+      1.9032764434814453,
+      4.083490371704102,
+      1.824120283126831
+    ]
+  },
+  "warnings": [
+    "texture prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무01.ddj: PK2: no such file prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무01.ddj",
+    "texture prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무02.ddj: PK2: no such file prim\\mtrl\\nature\\china\\dunhuang\\tree\\나무02.ddj"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "issues": []
+  }
+}
