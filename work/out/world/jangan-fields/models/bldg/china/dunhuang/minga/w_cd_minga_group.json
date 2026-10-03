@@ -1,0 +1,595 @@
+{
+  "source": "res/bldg/china/dunhuang/minga/w_cd_minga_group.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_minga_group",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_god",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_god.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga01_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (39.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga05",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_minga05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_minga_g_01_6",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_mingagroup.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_stab_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_minga_corner_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_corner_03.bms",
+      "material": "w_cd_god",
+      "vertices": 30,
+      "triangles": 20,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_corner_03_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_corner_03_1.bms",
+      "material": "w_cd_minga01",
+      "vertices": 20,
+      "triangles": 10,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_1.bms",
+      "material": "w_cd_minga04",
+      "vertices": 159,
+      "triangles": 85,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_02_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_02_1.bms",
+      "material": "w_cd_minga03",
+      "vertices": 592,
+      "triangles": 324,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_4",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_4.bms",
+      "material": "w_cd_minga02",
+      "vertices": 266,
+      "triangles": 136,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_02_2",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_02_2.bms",
+      "material": "w_cd_minga02",
+      "vertices": 634,
+      "triangles": 327,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_02_3",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_02_3.bms",
+      "material": "w_cd_minga01_2sid",
+      "vertices": 92,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_02_4",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_02_4.bms",
+      "material": "w_cd_minga_al",
+      "vertices": 180,
+      "triangles": 96,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_02_6",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_02_6.bms",
+      "material": "w_cd_minga04",
+      "vertices": 76,
+      "triangles": 38,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_04_4",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_04_4.bms",
+      "material": "w_cd_minga03",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_2",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_2.bms",
+      "material": "w_cd_minga05",
+      "vertices": 122,
+      "triangles": 66,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_3",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_3.bms",
+      "material": "w_cd_minga_al",
+      "vertices": 114,
+      "triangles": 56,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_5",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_5.bms",
+      "material": "w_cd_minga03",
+      "vertices": 160,
+      "triangles": 88,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_01_6",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_01_6.bms",
+      "material": "w_cd_minga_g_01_6",
+      "vertices": 42,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_04_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_04_1.bms",
+      "material": "w_cd_minga03",
+      "vertices": 130,
+      "triangles": 68,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_04_2",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_04_2.bms",
+      "material": "w_cd_minga_al",
+      "vertices": 32,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_minga_g_04_3",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\minga\\w_cd_minga_g_04_3.bms",
+      "material": "w_cd_minga02",
+      "vertices": 136,
+      "triangles": 70,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2789,
+    "triangles": 1486,
+    "joints": 0,
+    "meshes": 17,
+    "animations": 0,
+    "textures": 8,
+    "heightM": 7.079884756356478,
+    "boundsMin": [
+      -22.220836639404297,
+      -0.0596768744289875,
+      -32.88555145263672
+    ],
+    "boundsMax": [
+      22.28594398498535,
+      7.02020788192749,
+      32.710289001464844
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

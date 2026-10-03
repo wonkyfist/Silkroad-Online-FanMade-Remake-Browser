@@ -1,0 +1,101 @@
+{
+  "source": "res/nature/particle/waterfall-turtle01-3.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "waterfall-turtle01-3",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "waterfall03",
+      "bmt": "prim\\mtrl\\particle\\waterfall03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo3-a.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (76.6% partial, 23.4% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "waterfall04",
+      "bms": "prim\\mesh\\particle\\waterfall03.bms",
+      "material": "waterfall03",
+      "vertices": 52,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 52,
+    "triangles": 72,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.9527844786643982,
+    "boundsMin": [
+      0.3642021119594574,
+      -0.0740399956703186,
+      -2.417069911956787
+    ],
+    "boundsMax": [
+      2.483604907989502,
+      0.8787444829940796,
+      2.411406993865967
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

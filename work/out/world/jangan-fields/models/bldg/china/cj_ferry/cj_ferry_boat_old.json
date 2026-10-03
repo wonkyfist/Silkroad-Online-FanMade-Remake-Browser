@@ -1,0 +1,136 @@
+{
+  "source": "res/bldg/china/cj_ferry/cj_ferry_boat_old.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_ferry_boat_old",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\bldg\\china\\cj_ferry\\cj_ferry_boat_old.bsk",
+    "joints": [
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.818060978488802e-8,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_ferry_boat_old",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_boat_old.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_boat_old.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_ferry_boat_old",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_boat_old.bms",
+      "material": "CJ_ferry_boat_old",
+      "vertices": 112,
+      "triangles": 106,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone02",
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\bldg\\china\\cj_ferry\\cj_ferry_boat_old.ban",
+      "banName": "cj_ferry_boat_old",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 1
+    }
+  ],
+  "stats": {
+    "vertices": 112,
+    "triangles": 106,
+    "joints": 1,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 1.202754721045494,
+    "boundsMin": [
+      -1.4748039245605469,
+      0.037176623940467834,
+      -2.4880001544952393
+    ],
+    "boundsMax": [
+      2.356903076171875,
+      1.239931344985962,
+      2.4552526473999023
+    ]
+  },
+  "warnings": [
+    "CJ_ferry_boat_old: bone \"Bone03\" is not in the skeleton; mapped to the root",
+    "CJ_ferry_boat_old: bone \"Bone02\" is not in the skeleton; mapped to the root",
+    "CJ_ferry_boat_old: bone \"Bone01\" is not in the skeleton; mapped to the root"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

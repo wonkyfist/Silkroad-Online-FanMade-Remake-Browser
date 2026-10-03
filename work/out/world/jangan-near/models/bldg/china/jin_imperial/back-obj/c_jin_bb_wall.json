@@ -1,0 +1,578 @@
+{
+  "source": "res/bldg/china/jin_imperial/back-obj/c_jin_bb_wall.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_jin_bb_wall",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_jin_bb_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (19.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_bb_bwall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_bwall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_door",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_door.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_master",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_master.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_nangan",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_nangan.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (60.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_soldier",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_soldier.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (40.8% zero, 0.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_twall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_twall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_wall_orwall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\back-obj\\c_jin_wall_orwall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_jin_bb_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_alpha.bms",
+      "material": "C_jin_bb_alpha",
+      "vertices": 64,
+      "triangles": 32,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_bwall",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_bwall.bms",
+      "material": "C_jin_bb_bwall",
+      "vertices": 1988,
+      "triangles": 1644,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_door",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_door.bms",
+      "material": "C_jin_wall_door",
+      "vertices": 112,
+      "triangles": 56,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_master",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_master.bms",
+      "material": "C_jin_wall_master",
+      "vertices": 814,
+      "triangles": 1084,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_nangan",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_nangan.bms",
+      "material": "C_jin_wall_nangan",
+      "vertices": 80,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_roof.bms",
+      "material": "C_jin_wall_roof",
+      "vertices": 1246,
+      "triangles": 694,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_soldier",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_soldier.bms",
+      "material": "C_jin_wall_soldier",
+      "vertices": 20,
+      "triangles": 10,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_top",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_top.bms",
+      "material": "C_jin_wall_alpha",
+      "vertices": 40,
+      "triangles": 20,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_twall",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_twall.bms",
+      "material": "C_jin_wall_twall",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_jin_bb_wall",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\back-obj\\c_jin_bb_wall.bms",
+      "material": "C_jin_wall_orwall",
+      "vertices": 113,
+      "triangles": 61,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 4485,
+    "triangles": 3645,
+    "joints": 0,
+    "meshes": 10,
+    "animations": 0,
+    "textures": 10,
+    "heightM": 46.88387107849121,
+    "boundsMin": [
+      -44.858604431152344,
+      20.244592666625977,
+      -212.8464813232422
+    ],
+    "boundsMax": [
+      44.85862350463867,
+      67.12846374511719,
+      213.0066375732422
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

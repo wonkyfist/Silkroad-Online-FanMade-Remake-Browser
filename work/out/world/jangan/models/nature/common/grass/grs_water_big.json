@@ -1,0 +1,133 @@
+{
+  "source": "res/nature/common/grass/grs_water_big.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "grs_water_big",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\grass\\grs_water_big.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.434399280521916e-7,
+      "maxHierarchyError": 1.942890293094024e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "grs_water_big",
+      "bmt": "prim\\mtrl\\nature\\common\\grass\\grs_water_big.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\grass\\grs_water.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (41.3% zero, 5.6% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "grs_water_big",
+      "bms": "prim\\mesh\\nature\\common\\grass\\grs_water_big.bms",
+      "material": "grs_water_big",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\grass\\grs_water_big.ban",
+      "banName": "grs_water_big",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    }
+  ],
+  "stats": {
+    "vertices": 8,
+    "triangles": 4,
+    "joints": 3,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 0.2746461406350136,
+    "boundsMin": [
+      -2.215820789337158,
+      -0.10147794336080551,
+      -2.549651861190796
+    ],
+    "boundsMax": [
+      4.175764083862305,
+      0.17316819727420807,
+      3.915252208709717
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

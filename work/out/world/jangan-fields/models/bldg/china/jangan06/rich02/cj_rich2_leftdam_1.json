@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan06/rich02/cj_rich2_leftdam_1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich2_leftdam_1",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich2_leftdam",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich2_leftdam_1.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_leftdam_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_leftdam_1lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.37254902720451355,
+        0.37254902720451355,
+        0.37254902720451355,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich2_leftdam_1",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich02\\cj_rich2_leftdam_1.bms",
+      "material": "CJ_rich2_leftdam",
+      "vertices": 53,
+      "triangles": 29,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_leftdam_1lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_leftdam_1lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 53,
+    "triangles": 29,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.3069492782233283,
+    "boundsMin": [
+      -9.623141288757324,
+      -0.0008613074896857142,
+      -0.7998592257499695
+    ],
+    "boundsMax": [
+      10.909646987915039,
+      2.3060879707336426,
+      0.7998477816581726
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

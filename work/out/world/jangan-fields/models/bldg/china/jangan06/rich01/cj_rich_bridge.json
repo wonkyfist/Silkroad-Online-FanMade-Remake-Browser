@@ -1,0 +1,157 @@
+{
+  "source": "res/bldg/china/jangan06/rich01/cj_rich_bridge.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich_bridge",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich_bridge_fence_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\obj\\cj_rich_bridge.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\obj\\cj_rich_bridge.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (2.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_rich_bridge_wall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\obj\\cj_rich_bridge.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\obj\\cj_rich_bridge.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (2.5% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich_bridge_fence_al",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\obj\\cj_rich_bridge_fence_al.bms",
+      "material": "CJ_rich_bridge_fence_al",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_rich_bridge_wall",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\obj\\cj_rich_bridge_wall.bms",
+      "material": "CJ_rich_bridge_wall",
+      "vertices": 168,
+      "triangles": 90,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 176,
+    "triangles": 94,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 3.934274524450302,
+    "boundsMin": [
+      -6.472204685211182,
+      0.038810402154922485,
+      -2.2403178215026855
+    ],
+    "boundsMax": [
+      6.472202301025391,
+      3.9730849266052246,
+      2.2403175830841064
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

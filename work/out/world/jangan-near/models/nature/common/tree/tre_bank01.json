@@ -1,0 +1,197 @@
+{
+  "source": "res/nature/common/tree/tre_bank01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tre_bank01",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\tree\\tre_bank01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06",
+      "Bone07"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.000001773273366367789,
+      "maxHierarchyError": 3.1086244689504383e-15,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tre_bank_leaf01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_bank01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_bank_leaf.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (65.8% zero, 0.4% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tre_bank_pilla",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\tre_bank01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_bank_pilla.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tre_bank_leaf05",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_bank_leaf05.bms",
+      "material": "tre_bank_leaf01",
+      "vertices": 95,
+      "triangles": 76,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone06",
+        "Bone01",
+        "Bone03"
+      ]
+    },
+    {
+      "name": "tre_bank_pilla05",
+      "bms": "prim\\mesh\\nature\\common\\tree\\tre_bank_pilla05.bms",
+      "material": "tre_bank_pilla",
+      "vertices": 192,
+      "triangles": 139,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone03",
+        "Bone02",
+        "Bone06"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\tree\\tre_bank01.ban",
+      "banName": "tre_bank01",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 7
+    }
+  ],
+  "stats": {
+    "vertices": 287,
+    "triangles": 215,
+    "joints": 7,
+    "meshes": 2,
+    "animations": 1,
+    "textures": 2,
+    "heightM": 20.928296267986298,
+    "boundsMin": [
+      -12.6873197555542,
+      -0.5878974795341492,
+      -11.917403221130371
+    ],
+    "boundsMax": [
+      13.735486030578613,
+      20.34039878845215,
+      9.422636985778809
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

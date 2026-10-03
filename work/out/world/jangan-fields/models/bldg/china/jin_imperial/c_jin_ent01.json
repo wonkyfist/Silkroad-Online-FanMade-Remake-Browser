@@ -1,0 +1,613 @@
+{
+  "source": "res/bldg/china/jin_imperial/c_jin_ent01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_jin_ent01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_jin_Ent01_door01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_door01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_door02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_door02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_door03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_door03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (73.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.7058823704719543,
+        0.7058823704719543,
+        0.7058823704719543,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent02_dan01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent02_dan01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.7058823704719543,
+        0.7058823704719543,
+        0.7058823704719543,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_wall03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_wall03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent02_dan02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent02_dan02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall04lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_wall05",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_wall05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (26.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall05lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_jin_Ent01_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jin_imperial\\c_jin_ent01_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall06lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.7058823704719543,
+        0.7058823704719543,
+        0.7058823704719543,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_jin_Ent01_door01",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_door01.bms",
+      "material": "C_jin_Ent01_door01",
+      "vertices": 264,
+      "triangles": 102,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_door02",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_door02.bms",
+      "material": "C_jin_Ent01_door02",
+      "vertices": 1244,
+      "triangles": 766,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_door03",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_door03.bms",
+      "material": "C_jin_Ent01_door03",
+      "vertices": 108,
+      "triangles": 54,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_door03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_door03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall01.bms",
+      "material": "C_jin_Ent01_wall01",
+      "vertices": 2170,
+      "triangles": 1044,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall02.bms",
+      "material": "C_jin_Ent02_dan01",
+      "vertices": 226,
+      "triangles": 120,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall03",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall03.bms",
+      "material": "C_jin_Ent01_wall03",
+      "vertices": 228,
+      "triangles": 108,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall04",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall04.bms",
+      "material": "C_jin_Ent02_dan02",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall04lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall05",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall05.bms",
+      "material": "C_jin_Ent01_wall05",
+      "vertices": 40,
+      "triangles": 28,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall05lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "C_jin_Ent01_wall06",
+      "bms": "prim\\mesh\\bldg\\china\\jin_imperial\\c_jin_ent01_wall06.bms",
+      "material": "C_jin_Ent01_wall01",
+      "vertices": 9770,
+      "triangles": 4248,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jin_imperial\\c_jin_ent01_wall06lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jin_imperial/c_jin_ent01_wall06lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 14066,
+    "triangles": 6478,
+    "joints": 0,
+    "meshes": 9,
+    "animations": 0,
+    "textures": 8,
+    "heightM": 35.51432800292969,
+    "boundsMin": [
+      -97.76579284667969,
+      -0.11464309692382812,
+      -44.20317840576172
+    ],
+    "boundsMax": [
+      97.8008804321289,
+      35.39968490600586,
+      24.21698570251465
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 9,
+    "issues": []
+  }
+}

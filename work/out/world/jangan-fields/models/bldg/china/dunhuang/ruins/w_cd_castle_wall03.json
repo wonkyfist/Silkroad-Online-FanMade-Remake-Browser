@@ -1,0 +1,152 @@
+{
+  "source": "res/bldg/china/dunhuang/ruins/w_cd_castle_wall03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_castle_wall03",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_castle_wall03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall06.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle_wall03_1",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall06_1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_castle_wall03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall03.bms",
+      "material": "w_cd_castle_wall03",
+      "vertices": 48,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_castle_wall03_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_castle_wall03_1.bms",
+      "material": "w_cd_castle_wall03_1",
+      "vertices": 60,
+      "triangles": 56,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 108,
+    "triangles": 104,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 10.663919791579247,
+    "boundsMin": [
+      -3.553269863128662,
+      -0.16620860993862152,
+      -11.190181732177734
+    ],
+    "boundsMax": [
+      3.553262233734131,
+      10.497711181640625,
+      10.593173027038574
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

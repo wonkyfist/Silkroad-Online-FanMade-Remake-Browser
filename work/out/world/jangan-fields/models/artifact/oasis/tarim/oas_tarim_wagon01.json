@@ -1,0 +1,312 @@
+{
+  "source": "res/artifact/oasis/tarim/oas_tarim_wagon01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "oas_tarim_wagon01",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "Oas_tarim_wagon1_alpha",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon1_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.2% zero, 2.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_tarim_wagon1_etc",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon1_etc.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_tarim_wagon1_umb",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon1_umb.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_tarim_wagon1_wheel",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon1_wheel.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Oas_tarim_wagon1_wood",
+      "bmt": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\oasis\\tarim\\oas_tarim_wagon1_wood.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Oas_tarim_wagon1_alpha",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_wagon1_alpha.bms",
+      "material": "Oas_tarim_wagon1_alpha",
+      "vertices": 86,
+      "triangles": 50,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_tarim_wagon1_etc",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_wagon1_etc.bms",
+      "material": "Oas_tarim_wagon1_etc",
+      "vertices": 152,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_tarim_wagon1_umb",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_wagon1_umb.bms",
+      "material": "Oas_tarim_wagon1_umb",
+      "vertices": 72,
+      "triangles": 36,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_tarim_wagon1_wheel",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_wagon1_wheel.bms",
+      "material": "Oas_tarim_wagon1_wheel",
+      "vertices": 600,
+      "triangles": 352,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "Oas_tarim_wagon1_wood",
+      "bms": "prim\\mesh\\artifact\\oasis\\tarim\\oas_tarim_wagon1_wood.bms",
+      "material": "Oas_tarim_wagon1_wood",
+      "vertices": 125,
+      "triangles": 64,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1035,
+    "triangles": 582,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 4.852330446243286,
+    "boundsMin": [
+      -1.5237396955490112,
+      -0.13549447059631348,
+      -2.502530336380005
+    ],
+    "boundsMax": [
+      1.4895907640457153,
+      4.716835975646973,
+      3.042701005935669
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

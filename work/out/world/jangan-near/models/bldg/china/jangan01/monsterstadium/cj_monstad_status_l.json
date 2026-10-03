@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan01/monsterstadium/cj_monstad_status_l.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_monstad_status",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_monstad_status",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status_llightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_status_llightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_monstad_status_L",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status_l.bms",
+      "material": "CJ_monstad_status",
+      "vertices": 491,
+      "triangles": 320,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_status_llightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_status_llightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 491,
+    "triangles": 320,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 6.770057190209627,
+    "boundsMin": [
+      -0.7393049001693726,
+      -0.05307577922940254,
+      -1.2578208446502686
+    ],
+    "boundsMax": [
+      0.7393077611923218,
+      6.716981410980225,
+      1.2578202486038208
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

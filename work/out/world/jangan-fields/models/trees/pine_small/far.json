@@ -1,0 +1,210 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\pine_small.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "pine_small.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "pine_small_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tre_pine01_pin.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    128,
+    128
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "pine_small_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    223
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "pine_small_bark",
+   "vertices": 274,
+   "triangles": 334,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "pine_small_leaf",
+   "vertices": 624,
+   "triangles": 312,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "pine_small_bark",
+   "vertices": 222,
+   "triangles": 256,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "pine_small_leaf",
+   "vertices": 104,
+   "triangles": 52,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 1224,
+  "triangles": 954,
+  "joints": 0,
+  "meshes": 4,
+  "animations": 0,
+  "textures": 2,
+  "heightM": 7.099999837577343,
+  "boundsMin": [
+   -3.678628921508789,
+   -0.0147661492228508,
+   -3.477083444595337
+  ],
+  "boundsMax": [
+   4.2713704109191895,
+   7.085233688354492,
+   3.4168097972869873
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "pine_small",
+  "kind": "tree",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [
+   {
+    "name": "pine04",
+    "materials": {
+     "pine_small_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine04.ddj",
+      "image": "tints/pine04-leaf.png"
+     }
+    }
+   },
+   {
+    "name": "pine01",
+    "materials": {
+     "pine_small_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine01.ddj",
+      "image": "tints/pine01-leaf.png"
+     }
+    }
+   },
+   {
+    "name": "pine02",
+    "materials": {
+     "pine_small_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine02.ddj",
+      "image": "tints/pine02-leaf.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf.ddj": "prim\\mtrl\\nature\\common\\tre_pine03.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine04.ddj": "prim\\mtrl\\nature\\common\\tre_pine04.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine01.ddj": "prim\\mtrl\\nature\\common\\tre_pine01_leaf.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_pine_small_leaf_pine02.ddj": "prim\\mtrl\\nature\\common\\tre_pine02_leaf.ddj"
+  }
+ }
+}

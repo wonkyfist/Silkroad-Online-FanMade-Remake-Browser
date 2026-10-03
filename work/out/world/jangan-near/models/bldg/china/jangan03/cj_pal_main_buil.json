@@ -1,0 +1,432 @@
+{
+  "source": "res/bldg/china/jangan03/cj_pal_main_buil.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_pal_main_buil",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_pal_main_buil_roof01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_pal_main_buil_roof02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_dan.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.5% zero, 0.4% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_pal_main_buil_roof03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_ndoor.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (16.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_pal_main_buil_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 836,
+      "flagNames": [
+        "specular",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_wall.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.7% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        1,
+        0.501960813999176,
+        0,
+        1
+      ],
+      "specular": [
+        0.501960813999176,
+        0.250980406999588,
+        0,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 131
+    },
+    {
+      "name": "CJ_pal_main_buil_wall02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_dam.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_pal_main_buil_wall03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_main_buil.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan03\\cj_pal_wall.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_pal_main_buil_roof01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_roof01.bms",
+      "material": "CJ_pal_main_buil_roof01",
+      "vertices": 758,
+      "triangles": 268,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_pal_main_buil_roof02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_roof02.bms",
+      "material": "CJ_pal_main_buil_roof02",
+      "vertices": 32,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_pal_main_buil_roof03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_roof03.bms",
+      "material": "CJ_pal_main_buil_roof03",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_roof03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_roof03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_pal_main_buil_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_wall01.bms",
+      "material": "CJ_pal_main_buil_wall01",
+      "vertices": 496,
+      "triangles": 268,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_pal_main_buil_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_wall02.bms",
+      "material": "CJ_pal_main_buil_wall02",
+      "vertices": 32,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_pal_main_buil_wall03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan03\\cj_pal_main_buil_wall03.bms",
+      "material": "CJ_pal_main_buil_wall03",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan03\\cj_pal_main_buil_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan03/cj_pal_main_buil_wall03lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1334,
+    "triangles": 576,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 21.352773927152157,
+    "boundsMin": [
+      -24.894798278808594,
+      0.10958073288202286,
+      -12.913798332214355
+    ],
+    "boundsMax": [
+      24.894790649414062,
+      21.46235466003418,
+      12.913801193237305
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 6,
+    "issues": []
+  }
+}

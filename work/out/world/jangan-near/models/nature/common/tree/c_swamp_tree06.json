@@ -1,0 +1,155 @@
+{
+  "source": "res/nature/common/tree/c_swamp_tree06.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "c_swamp_tree06",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "C_swamp_tree_06_01",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree05.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_06_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (66.6% zero, 2.4% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "C_swamp_tree_06_02",
+      "bmt": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree05.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\tree\\c_swamp_tree_06_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "C_swamp_tree_06_01",
+      "bms": "prim\\mesh\\nature\\common\\tree\\c_swamp_tree_06_01.bms",
+      "material": "C_swamp_tree_06_01",
+      "vertices": 112,
+      "triangles": 112,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "C_swamp_tree_06_02",
+      "bms": "prim\\mesh\\nature\\common\\tree\\c_swamp_tree_06_02.bms",
+      "material": "C_swamp_tree_06_02",
+      "vertices": 50,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 162,
+    "triangles": 160,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 11.12184852361679,
+    "boundsMin": [
+      -6.294857978820801,
+      -0.6915764212608337,
+      -8.87673568725586
+    ],
+    "boundsMax": [
+      7.342903137207031,
+      10.430272102355957,
+      6.950943946838379
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "source": "res/artifact/china/dunhuang/w_etc01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_etc01",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_stor_box_2sid",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_box",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_stor_food",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cdstore01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\minga\\w_cd_stor_food.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_etc01_1",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc01_1.bms",
+      "material": "w_cd_stor_box_2sid",
+      "vertices": 24,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc01_2",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc01_2.bms",
+      "material": "w_cd_stor_box",
+      "vertices": 182,
+      "triangles": 156,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_etc01_3",
+      "bms": "prim\\mesh\\artifact\\china\\dunhuang\\w_etc01_3.bms",
+      "material": "w_cd_stor_food",
+      "vertices": 14,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 220,
+    "triangles": 192,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 1.2026575058698654,
+    "boundsMin": [
+      -1.0902302265167236,
+      -0.07105188071727753,
+      -0.9963030815124512
+    ],
+    "boundsMax": [
+      1.09023118019104,
+      1.131605625152588,
+      0.9963027834892273
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

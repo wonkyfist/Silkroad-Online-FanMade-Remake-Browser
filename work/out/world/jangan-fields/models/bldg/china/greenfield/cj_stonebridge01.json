@@ -1,0 +1,365 @@
+{
+  "source": "res/bldg/china/greenfield/cj_stonebridge01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_stonebridge01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_stoneb_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (26.8% zero, 0.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_stoneb_alpha2",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (26.8% zero, 0.3% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_stoneb_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_floor.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_stoneb_side",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_side.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_stoneb_side2",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_side2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_stoneb_floor2",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stonebridge01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_stoneb_floor2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_stoneb_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_alpha.bms",
+      "material": "cj_stoneb_alpha",
+      "vertices": 572,
+      "triangles": 320,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_stoneb_alpha2",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_alpha2.bms",
+      "material": "cj_stoneb_alpha2",
+      "vertices": 1200,
+      "triangles": 600,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_stoneb_floor",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_floor.bms",
+      "material": "cj_stoneb_floor",
+      "vertices": 154,
+      "triangles": 102,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_stoneb_side",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_side.bms",
+      "material": "cj_stoneb_side",
+      "vertices": 108,
+      "triangles": 120,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_stoneb_side2",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_side2.bms",
+      "material": "cj_stoneb_side2",
+      "vertices": 44,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_stoneb_floor2",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_stoneb_floor2.bms",
+      "material": "cj_stoneb_floor2",
+      "vertices": 18,
+      "triangles": 10,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2096,
+    "triangles": 1192,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 10.249989748001099,
+    "boundsMin": [
+      -20.382328033447266,
+      -7.6982741355896,
+      -7.061326026916504
+    ],
+    "boundsMax": [
+      20.382328033447266,
+      2.551715612411499,
+      7.061326026916504
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

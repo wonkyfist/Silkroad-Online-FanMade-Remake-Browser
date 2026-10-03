@@ -1,0 +1,147 @@
+{
+  "source": "res/bldg/china/jangan02/cj_adult04_light01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_adult04_light01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\bldg\\china\\jangan02\\cj_adult04_light01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.117169354243796e-8,
+      "maxHierarchyError": 8.88178432935015e-17,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_lamp_red_b.efp",
+      "bone": null,
+      "position": [
+        0,
+        4.65731,
+        0
+      ],
+      "birthMs": 0,
+      "night": true
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_adult04_brg",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adult04_light01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_adult04_brg.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (12.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_adult04_light01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_adult04_light01.bms",
+      "material": "CJ_adult04_brg",
+      "vertices": 42,
+      "triangles": 24,
+      "skinned": true,
+      "bones": [
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\bldg\\china\\jangan02\\cj_adult04_light01.ban",
+      "banName": "cj_adult04_light01",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    }
+  ],
+  "stats": {
+    "vertices": 42,
+    "triangles": 24,
+    "joints": 3,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 1.9352710247039795,
+    "boundsMin": [
+      -0.5833316445350647,
+      3.8452770709991455,
+      -0.6653769612312317
+    ],
+    "boundsMax": [
+      0.5833327174186707,
+      5.780548095703125,
+      0.9211589694023132
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

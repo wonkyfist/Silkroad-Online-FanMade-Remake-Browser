@@ -1,0 +1,110 @@
+{
+  "source": "res/bldg/china/jangan06/rich02/cj_rich2_rounddam_1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich2_rounddam_1",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich2_rounddam",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich2_rounddam_1.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich02\\cj_rich_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_rounddamlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_rounddamlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich2_rounddam",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich02\\cj_rich2_rounddam_1.bms",
+      "material": "CJ_rich2_rounddam",
+      "vertices": 307,
+      "triangles": 175,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich02\\cj_rich2_rounddamlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich02/cj_rich2_rounddamlightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 307,
+    "triangles": 175,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 4.229642104997765,
+    "boundsMin": [
+      -12.657820701599121,
+      -0.0008642195607535541,
+      -16.709558486938477
+    ],
+    "boundsMax": [
+      12.657965660095215,
+      4.228777885437012,
+      16.709562301635742
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

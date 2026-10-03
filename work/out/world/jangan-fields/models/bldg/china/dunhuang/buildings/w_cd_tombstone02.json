@@ -1,0 +1,109 @@
+{
+  "source": "res/bldg/china/dunhuang/buildings/w_cd_tombstone02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_tombstone02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_tombstone02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_tombstone.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_tombstone02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_tombstone02_1",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_tombstone02_1.bms",
+      "material": "w_cd_tombstone02",
+      "vertices": 44,
+      "triangles": 30,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_tombstone02_2",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_tombstone02_2.bms",
+      "material": "w_cd_tombstone02",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 60,
+    "triangles": 38,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 2.472522895783186,
+    "boundsMin": [
+      -0.42599955201148987,
+      -0.021417301148176193,
+      -0.12519699335098267
+    ],
+    "boundsMax": [
+      0.44128018617630005,
+      2.4511055946350098,
+      0.12432415783405304
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

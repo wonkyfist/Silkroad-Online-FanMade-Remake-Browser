@@ -1,0 +1,238 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\flower_y.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "flower_y.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "flower_y_head",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_head.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    123,
+    128
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "flower_y_rosette",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_rosette.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    110,
+    115
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "flower_y_stem",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_stem.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    82,
+    110
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "flower_y_head",
+   "vertices": 64,
+   "triangles": 32,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "flower_y_rosette",
+   "vertices": 48,
+   "triangles": 24,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "flower_y_stem",
+   "vertices": 64,
+   "triangles": 32,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "flower_y_head",
+   "vertices": 32,
+   "triangles": 16,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "flower_y_rosette",
+   "vertices": 24,
+   "triangles": 12,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 232,
+  "triangles": 116,
+  "joints": 0,
+  "meshes": 5,
+  "animations": 0,
+  "textures": 3,
+  "heightM": 0.5599999725818634,
+  "boundsMin": [
+   -0.4688858687877655,
+   -0.06465038657188416,
+   -0.5055633187294006
+  ],
+  "boundsMax": [
+   0.4811141788959503,
+   0.49534958600997925,
+   0.44037237763404846
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "flower_y",
+  "kind": "plant",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_bark.ddj": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_head.ddj": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_rosette.ddj": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_flower_y_stem.ddj": "prim\\mtrl\\nature\\common\\flower\\flw_g01_y.ddj"
+  }
+ }
+}

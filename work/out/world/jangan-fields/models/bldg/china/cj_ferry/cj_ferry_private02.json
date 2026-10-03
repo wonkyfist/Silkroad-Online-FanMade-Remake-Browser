@@ -1,0 +1,483 @@
+{
+  "source": "res/bldg/china/cj_ferry/cj_ferry_private02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_ferry_private02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_ferry_deco",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_deco.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (64.7% zero, 8.3% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_deco_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_deco_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_deco_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_deco_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_private_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private_04.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (65.4% zero, 4.5% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_private_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private_03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (1.0% partial, 0.4% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_private_03_a",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private_03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (1.0% partial, 0.4% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_FrameCarrier",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_framecarrier.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (17.4% zero, 3.1% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry_private_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry_private_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_ferry_deco",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_deco.bms",
+      "material": "CJ_ferry_deco",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_deco_01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_deco_01.bms",
+      "material": "CJ_ferry_deco_01",
+      "vertices": 540,
+      "triangles": 338,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_deco_02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_deco_02.bms",
+      "material": "CJ_ferry_deco_02",
+      "vertices": 540,
+      "triangles": 352,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_private02_02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_private02_02.bms",
+      "material": "CJ_ferry_private_04",
+      "vertices": 60,
+      "triangles": 30,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_private02_03",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_private02_03.bms",
+      "material": "CJ_ferry_private_03",
+      "vertices": 39,
+      "triangles": 26,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_private02_04",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_private02_04.bms",
+      "material": "CJ_ferry_private_03",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_private02_a01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_private02_a01.bms",
+      "material": "CJ_ferry_private_03_a",
+      "vertices": 28,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_FrameCarrier",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_framecarrier.bms",
+      "material": "CJ_FrameCarrier",
+      "vertices": 140,
+      "triangles": 120,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry_private02_01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry_private02_01.bms",
+      "material": "CJ_ferry_private_01",
+      "vertices": 127,
+      "triangles": 73,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1494,
+    "triangles": 961,
+    "joints": 0,
+    "meshes": 9,
+    "animations": 0,
+    "textures": 7,
+    "heightM": 13.385406732559204,
+    "boundsMin": [
+      -4.146519184112549,
+      -3.841813325881958,
+      -12.404804229736328
+    ],
+    "boundsMax": [
+      8.58012580871582,
+      9.543593406677246,
+      7.9690260887146
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

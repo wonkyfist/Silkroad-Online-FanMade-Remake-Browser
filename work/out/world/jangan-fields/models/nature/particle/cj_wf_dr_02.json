@@ -1,0 +1,105 @@
+{
+  "source": "res/nature/particle/cj_wf_dr_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_wf_dr_02",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_WF_dr_02",
+      "bmt": "prim\\mtrl\\particle\\cj_wf_dr_02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\particle\\pokpo1test.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (95.6% partial, 4.4% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "uvScroll": [
+        0,
+        -2.3
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_WF_dr_02",
+      "bms": "prim\\mesh\\particle\\cj_wf_dr_02.bms",
+      "material": "CJ_WF_dr_02",
+      "vertices": 20,
+      "triangles": 24,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 20,
+    "triangles": 24,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 4.4950332045555115,
+    "boundsMin": [
+      -0.42708468437194824,
+      -3.9791388511657715,
+      0.49247369170188904
+    ],
+    "boundsMax": [
+      0.4145527482032776,
+      0.51589435338974,
+      1.8293097019195557
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

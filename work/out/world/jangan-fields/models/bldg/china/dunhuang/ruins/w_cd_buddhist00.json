@@ -1,0 +1,256 @@
+{
+  "source": "res/bldg/china/dunhuang/ruins/w_cd_buddhist00.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_buddhist00",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_Buddhist00",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_Buddhist01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_Buddhist02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_Buddhist03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_Buddhist00",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist00.bms",
+      "material": "w_cd_Buddhist00",
+      "vertices": 550,
+      "triangles": 479,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_Buddhist01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist01.bms",
+      "material": "w_cd_Buddhist01",
+      "vertices": 50,
+      "triangles": 58,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_Buddhist02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist02.bms",
+      "material": "w_cd_Buddhist02",
+      "vertices": 63,
+      "triangles": 67,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_Buddhist03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_buddhist03.bms",
+      "material": "w_cd_Buddhist03",
+      "vertices": 82,
+      "triangles": 54,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 745,
+    "triangles": 658,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 10.665240585803986,
+    "boundsMin": [
+      -8.277524948120117,
+      -0.3143485188484192,
+      -5.668528079986572
+    ],
+    "boundsMax": [
+      15.474568367004395,
+      10.350892066955566,
+      11.364373207092285
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

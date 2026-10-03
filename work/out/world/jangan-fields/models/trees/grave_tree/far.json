@@ -1,0 +1,196 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\grave_tree.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "grave_tree.far",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "grave_tree_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    64,
+    512
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "grave_tree_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "grave_tree_bark",
+   "vertices": 386,
+   "triangles": 460,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod1",
+   "bms": "",
+   "material": "grave_tree_leaf",
+   "vertices": 960,
+   "triangles": 480,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "grave_tree_bark",
+   "vertices": 306,
+   "triangles": 340,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod2",
+   "bms": "",
+   "material": "grave_tree_leaf",
+   "vertices": 160,
+   "triangles": 80,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 1812,
+  "triangles": 1360,
+  "joints": 0,
+  "meshes": 4,
+  "animations": 0,
+  "textures": 2,
+  "heightM": 45.43961937725544,
+  "boundsMin": [
+   -14.784537315368652,
+   -0.07596047222614288,
+   -13.946677207946777
+  ],
+  "boundsMax": [
+   14.597784042358398,
+   45.3636589050293,
+   15.866082191467285
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "grave_tree",
+  "kind": "tree",
+  "part": "far",
+  "tiers": {
+   "lod1": 1,
+   "lod2": 2
+  },
+  "tints": [
+   {
+    "name": "grave05",
+    "materials": {
+     "grave_tree_leaf": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf_grave05.ddj",
+      "image": "tints/grave05-leaf.png"
+     },
+     "grave_tree_bark": {
+      "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark_grave05.ddj",
+      "image": "tints/grave05-bark.png"
+     }
+    }
+   }
+  ],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree01.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree02.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_leaf_grave05.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree06.ddj",
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_grave_tree_bark_grave05.ddj": "prim\\mtrl\\nature\\common\\tree\\cj_graveyard_tree05.ddj"
+  }
+ }
+}

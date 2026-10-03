@@ -1,0 +1,1122 @@
+{
+  "source": "res/bldg/china/cj_ferry/cj_ferry01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_ferry01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_ferry01_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.8627451658248901,
+        0.8627451658248901,
+        0.8627451658248901,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_flag01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry011_flag01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.0% zero, 0.5% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_flag01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_flag01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7843137979507446,
+        0.7843137979507446,
+        0.7843137979507446,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.8627451658248901,
+        0.8627451658248901,
+        0.8627451658248901,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_roofa",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_roofa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        32
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (88.9% zero, 2.5% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_roofalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_roofalightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_tower01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_tower01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_tower02",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_tower02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_tower03",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_tower03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        32,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_toweralpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_toweralpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.6% zero, 2.7% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_toweralphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_toweralphalightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_buil1_door",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_door.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (12.1% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_doorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_doorlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_buil1_gidung",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (13.2% zero, 0.7% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidunglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_gidunglightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_buil1_gidung_a",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (13.2% zero, 0.7% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung_alightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_gidung_alightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_buil1_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_rooflightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_flag01_a",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry011_flag01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.0% zero, 0.5% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7843137979507446,
+        0.7843137979507446,
+        0.7843137979507446,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_pavilion01_a",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (16.8% zero, 0.5% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01_alightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion01_alightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_pavilion01",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (16.8% zero, 0.5% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_pavilion02",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (61.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_ferry01_winlight",
+      "bmt": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01.bmt",
+      "flags": 840,
+      "flagNames": [
+        "selfIlluminated",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\cj_ferry\\cj_ferry01_winlight.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (47.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_winlightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_winlightlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.9803922176361084,
+        0.9803922176361084,
+        0.9803922176361084,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_ferry01_01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_01.bms",
+      "material": "CJ_ferry01_01",
+      "vertices": 34,
+      "triangles": 20,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_flag01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_flag01.bms",
+      "material": "CJ_ferry01_flag01",
+      "vertices": 370,
+      "triangles": 180,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_flag01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_flag01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_02.bms",
+      "material": "CJ_ferry01_02",
+      "vertices": 1634,
+      "triangles": 812,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_roofa",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_roofa.bms",
+      "material": "CJ_ferry01_roofa",
+      "vertices": 228,
+      "triangles": 114,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_roofalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_roofalightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_tower01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_tower01.bms",
+      "material": "CJ_ferry01_tower01",
+      "vertices": 268,
+      "triangles": 140,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_tower02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_tower02.bms",
+      "material": "CJ_ferry01_tower02",
+      "vertices": 24,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_tower03",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_tower03.bms",
+      "material": "CJ_ferry01_tower03",
+      "vertices": 189,
+      "triangles": 96,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_tower03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_tower03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_toweralpha",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_toweralpha.bms",
+      "material": "CJ_ferry01_toweralpha",
+      "vertices": 116,
+      "triangles": 58,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_toweralphalightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_toweralphalightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_buil1_door",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_door.bms",
+      "material": "CJ_ferry01_buil1_door",
+      "vertices": 117,
+      "triangles": 62,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_doorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_doorlightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_buil1_gidung",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung.bms",
+      "material": "CJ_ferry01_buil1_gidung",
+      "vertices": 508,
+      "triangles": 274,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidunglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_gidunglightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_buil1_gidung_a",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung_a.bms",
+      "material": "CJ_ferry01_buil1_gidung_a",
+      "vertices": 136,
+      "triangles": 68,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_gidung_alightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_gidung_alightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_buil1_roof",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_roof.bms",
+      "material": "CJ_ferry01_buil1_roof",
+      "vertices": 939,
+      "triangles": 513,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_buil1_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_buil1_rooflightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_flag01_a",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_flag01_a.bms",
+      "material": "CJ_ferry01_flag01_a",
+      "vertices": 160,
+      "triangles": 180,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_ferry01_pavilion01_a",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01_a.bms",
+      "material": "CJ_ferry01_pavilion01_a",
+      "vertices": 28,
+      "triangles": 14,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01_alightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion01_alightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_pavilion01",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01.bms",
+      "material": "CJ_ferry01_pavilion01",
+      "vertices": 144,
+      "triangles": 72,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_pavilion02",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion02.bms",
+      "material": "CJ_ferry01_pavilion02",
+      "vertices": 32,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_pavilion02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_pavilion02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_ferry01_winlight",
+      "bms": "prim\\mesh\\bldg\\china\\cj_ferry\\cj_ferry01_winlight.bms",
+      "material": "CJ_ferry01_winlight",
+      "vertices": 40,
+      "triangles": 20,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\cj_ferry\\cj_ferry01_winlightlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/cj_ferry/cj_ferry01_winlightlightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 4967,
+    "triangles": 2655,
+    "joints": 0,
+    "meshes": 17,
+    "animations": 0,
+    "textures": 14,
+    "heightM": 36.217617988586426,
+    "boundsMin": [
+      -46.24320602416992,
+      -11.159701347351074,
+      -27.265384674072266
+    ],
+    "boundsMax": [
+      46.24320983886719,
+      25.05791664123535,
+      27.260211944580078
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 16,
+    "issues": []
+  }
+}

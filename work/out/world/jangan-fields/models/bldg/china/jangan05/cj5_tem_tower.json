@@ -1,0 +1,301 @@
+{
+  "source": "res/bldg/china/jangan05/cj5_tem_tower.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj5_tem_tower",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_tem_tower01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (10.4% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.6549019813537598,
+        0.6549019813537598,
+        0.6549019813537598,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_tem_tower02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_tem_tower03",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_tem_tower_fence",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan05\\cj_tem_tower01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (10.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower_fencelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower_fencelightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.8313726186752319,
+        0.8313726186752319,
+        0.8313726186752319,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_tem_tower01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan05\\cj_tem_tower01.bms",
+      "material": "CJ_tem_tower01",
+      "vertices": 328,
+      "triangles": 168,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_tem_tower02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan05\\cj_tem_tower02.bms",
+      "material": "CJ_tem_tower02",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_tem_tower03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan05\\cj_tem_tower03.bms",
+      "material": "CJ_tem_tower03",
+      "vertices": 56,
+      "triangles": 44,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_tem_tower_fence",
+      "bms": "prim\\mesh\\bldg\\china\\jangan05\\cj_tem_tower_fence.bms",
+      "material": "CJ_tem_tower_fence",
+      "vertices": 28,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan05\\cj_tem_tower_fencelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan05/cj_tem_tower_fencelightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 416,
+    "triangles": 230,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 45.42760630697012,
+    "boundsMin": [
+      -9.213644027709961,
+      0.056265152990818024,
+      -9.00024700164795
+    ],
+    "boundsMax": [
+      9.215819358825684,
+      45.48387145996094,
+      9.00019359588623
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 4,
+    "issues": []
+  }
+}

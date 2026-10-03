@@ -1,0 +1,184 @@
+{
+  "source": "res/npc/animal/cj_chicken.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_chicken",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\animal\\cj_chicken.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.188623682985451e-7,
+      "maxHierarchyError": 5.551115123125783e-17,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "cj_chicken"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "cj_chicken",
+      "bmt": "prim\\mtrl\\npc\\animal\\cj_chicken.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\animal\\cj_chicken.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (19.6% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_chicken",
+      "bms": "prim\\mesh\\npc\\animal\\cj_chicken.bms",
+      "material": "cj_chicken",
+      "vertices": 146,
+      "triangles": 204,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Neck1",
+        "Bip01 Neck",
+        "Bip01 Tail",
+        "Bip01 R Thigh",
+        "Bip01 Pelvis",
+        "Bip01 Tail1",
+        "Bip01 Head",
+        "Bip01 Tail2",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\animal\\cj_chicken_walk.ban",
+      "banName": "cj_chicken_walk",
+      "durationMs": 9833,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 129,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 27
+    }
+  ],
+  "stats": {
+    "vertices": 146,
+    "triangles": 204,
+    "joints": 28,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 0.4934378342004493,
+    "boundsMin": [
+      -0.07883835583925247,
+      -0.0011594371171668172,
+      -0.4314381182193756
+    ],
+    "boundsMax": [
+      0.08138541877269745,
+      0.49227839708328247,
+      0.05471176654100418
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

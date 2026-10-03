@@ -1,0 +1,801 @@
+{
+  "source": "res/bldg/china/dunhuang/buildings/w_cd_acce.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_acce",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_CD_acce_dan01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_floor02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_dan01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_dan02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_weap_wall02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_dan02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_roof_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_rooflightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_dan01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\naru_floor02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_roof02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_sphe",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_sphe.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_sphelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_sphelightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_wall02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_cera",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_cera.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_ceralightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_ceralightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\cj_minga06_wall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_floorlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_man",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_man.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_manlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_manlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_roof_al",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof_allightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_roof_allightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "W_CD_acce_wall03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_acce.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\buildings\\w_cd_weap_wall03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_CD_acce_dan01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan01.bms",
+      "material": "W_CD_acce_dan01",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_dan01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_dan02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan02.bms",
+      "material": "W_CD_acce_dan02",
+      "vertices": 116,
+      "triangles": 52,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_dan02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_dan02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_roof",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof.bms",
+      "material": "W_CD_acce_roof_al",
+      "vertices": 3392,
+      "triangles": 1298,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_rooflightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_roof02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof02.bms",
+      "material": "W_CD_acce_dan01",
+      "vertices": 20,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_roof02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_sphe",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_sphe.bms",
+      "material": "W_CD_acce_sphe",
+      "vertices": 269,
+      "triangles": 290,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_sphelightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_sphelightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall02.bms",
+      "material": "W_CD_acce_wall02",
+      "vertices": 258,
+      "triangles": 108,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_cera",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_cera.bms",
+      "material": "W_CD_acce_cera",
+      "vertices": 614,
+      "triangles": 520,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_ceralightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_ceralightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_floor",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_floor.bms",
+      "material": "W_CD_acce_floor",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_floorlightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_man",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_man.bms",
+      "material": "W_CD_acce_man",
+      "vertices": 407,
+      "triangles": 304,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_manlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_manlightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_roof_al",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof_al.bms",
+      "material": "W_CD_acce_roof_al",
+      "vertices": 142,
+      "triangles": 62,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_roof_allightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_roof_allightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall01.bms",
+      "material": "W_CD_acce_wall01",
+      "vertices": 410,
+      "triangles": 160,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "W_CD_acce_wall03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall03.bms",
+      "material": "W_CD_acce_wall03",
+      "vertices": 30,
+      "triangles": 10,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\dunhuang\\buildings\\w_cd_acce_wall03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/dunhuang/buildings/w_cd_acce_wall03lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 5706,
+    "triangles": 2836,
+    "joints": 0,
+    "meshes": 12,
+    "animations": 0,
+    "textures": 10,
+    "heightM": 19.86082762479782,
+    "boundsMin": [
+      -17.749237060546875,
+      -0.12855452299118042,
+      -12.814523696899414
+    ],
+    "boundsMax": [
+      19.01828384399414,
+      19.73227310180664,
+      14.19139575958252
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 12,
+    "issues": []
+  }
+}

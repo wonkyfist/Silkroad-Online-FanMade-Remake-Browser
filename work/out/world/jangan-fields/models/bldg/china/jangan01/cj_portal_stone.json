@@ -1,0 +1,159 @@
+{
+  "source": "res/bldg/china/jangan01/cj_portal_stone.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_portal_stone",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\bldg\\china\\jangan01\\cj_por_stone.bsk",
+    "joints": [
+      "Bone03",
+      "Bone02",
+      "Bone01"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 5.948531462962592e-7,
+      "maxHierarchyError": 2.255140518769849e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_potal_blue.efp",
+      "bone": null,
+      "position": [
+        0,
+        2.68701,
+        0.11434
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/w_cd_potal_blue_g.efp",
+      "bone": null,
+      "position": [
+        0,
+        2.18534,
+        0.11005
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_por_stone",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\cj_portal_stone.bmt",
+      "flags": 324,
+      "flagNames": [
+        "specular",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\cj_por_stone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.501960813999176,
+        1,
+        1,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 7
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_por_stone",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\cj_por_stone.bms",
+      "material": "CJ_por_stone",
+      "vertices": 47,
+      "triangles": 90,
+      "skinned": true,
+      "bones": [
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\bldg\\china\\jangan01\\cj_por_stone.ban",
+      "banName": "cj_por_stone",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    }
+  ],
+  "stats": {
+    "vertices": 47,
+    "triangles": 90,
+    "joints": 3,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 2.696370840072632,
+    "boundsMin": [
+      -0.7806172966957092,
+      1.519331693649292,
+      -0.735223114490509
+    ],
+    "boundsMax": [
+      0.7871879935264587,
+      4.215702533721924,
+      0.6424570679664612
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

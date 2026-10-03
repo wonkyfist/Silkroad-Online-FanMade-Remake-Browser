@@ -1,0 +1,364 @@
+{
+  "source": "res/bldg/china/jangan06/rich04/cj_rich4_buil04.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_rich4_buil04",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_rich04_buil04_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich_buil01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.0% zero, 0.2% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich04_buil04_wall01_allightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich04_buil04_wall01_allightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_rich04_buil04_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich_buil02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_floorlightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_rich04_buil04_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_rooflightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_rich04_buil04_wall01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich_buil01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.0% zero, 0.2% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_wall01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.4117647409439087,
+        0.4117647409439087,
+        0.4117647409439087,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_rich04_buil04_wall02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan06\\rich04\\cj_rich_buil03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.0% zero, 0.2% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_wall02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_rich04_buil04_wall01_al",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich04\\cj_rich04_buil04_wall01_al.bms",
+      "material": "CJ_rich04_buil04_wall01",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich04_buil04_wall01_allightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich04_buil04_wall01_allightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_rich4_buil04_floor",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_floor.bms",
+      "material": "CJ_rich04_buil04_floor",
+      "vertices": 36,
+      "triangles": 20,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_floorlightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_floorlightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_rich4_buil04_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_roof.bms",
+      "material": "CJ_rich04_buil04_roof",
+      "vertices": 150,
+      "triangles": 94,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_rooflightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_rich4_buil04_wall01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall01.bms",
+      "material": "CJ_rich04_buil04_wall01",
+      "vertices": 108,
+      "triangles": 54,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_wall01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_rich4_buil04_wall02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall02.bms",
+      "material": "CJ_rich04_buil04_wall02",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan06\\rich04\\cj_rich4_buil04_wall02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan06/rich04/cj_rich4_buil04_wall02lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 322,
+    "triangles": 182,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 7.595216751098633,
+    "boundsMin": [
+      -4.28186559677124,
+      -0.3115382194519043,
+      -6.533143520355225
+    ],
+    "boundsMax": [
+      4.281869888305664,
+      7.2836785316467285,
+      6.533149719238281
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 5,
+    "issues": []
+  }
+}

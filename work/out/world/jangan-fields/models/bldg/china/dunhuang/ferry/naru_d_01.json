@@ -1,0 +1,850 @@
+{
+  "source": "res/bldg/china/dunhuang/ferry/naru_d_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "naru_d_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "naru_d_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_roof_d .ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_fence.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (50.1% zero, 12.9% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_desk.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_05",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_06",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_07",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_09",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_floor03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_10",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_box_.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_11",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla04.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.4% zero, 4.8% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_12",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_pilla03.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (48.1% zero, 51.9% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_13",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_rope.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (63.8% zero, 10.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_14",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_desk02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_15",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_obj.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "naru_d_16",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ferry\\w_cd_ravi_gorge01_06.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (62.1% zero, 5.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "naru_d_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_01.bms",
+      "material": "naru_d_01",
+      "vertices": 156,
+      "triangles": 112,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_02.bms",
+      "material": "naru_d_02",
+      "vertices": 2051,
+      "triangles": 1494,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_03.bms",
+      "material": "naru_d_03",
+      "vertices": 134,
+      "triangles": 78,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_04",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_04.bms",
+      "material": "naru_d_04",
+      "vertices": 108,
+      "triangles": 76,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_05",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_05.bms",
+      "material": "naru_d_05",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_06",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_06.bms",
+      "material": "naru_d_06",
+      "vertices": 1765,
+      "triangles": 1386,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_07",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_07.bms",
+      "material": "naru_d_07",
+      "vertices": 76,
+      "triangles": 48,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_09",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_09.bms",
+      "material": "naru_d_09",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_10",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_10.bms",
+      "material": "naru_d_10",
+      "vertices": 1613,
+      "triangles": 1728,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_11",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_11.bms",
+      "material": "naru_d_11",
+      "vertices": 118,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_12",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_12.bms",
+      "material": "naru_d_12",
+      "vertices": 88,
+      "triangles": 46,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_13",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_13.bms",
+      "material": "naru_d_13",
+      "vertices": 44,
+      "triangles": 30,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_14",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_14.bms",
+      "material": "naru_d_14",
+      "vertices": 1824,
+      "triangles": 1368,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_15",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_15.bms",
+      "material": "naru_d_15",
+      "vertices": 1516,
+      "triangles": 1173,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "naru_d_16",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ferry\\naru_d_16.bms",
+      "material": "naru_d_16",
+      "vertices": 252,
+      "triangles": 196,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 9785,
+    "triangles": 7835,
+    "joints": 0,
+    "meshes": 15,
+    "animations": 0,
+    "textures": 15,
+    "heightM": 25.539021492004395,
+    "boundsMin": [
+      -41.58122634887695,
+      -7.166766166687012,
+      -21.251161575317383
+    ],
+    "boundsMax": [
+      41.781227111816406,
+      18.372255325317383,
+      21.25116539001465
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

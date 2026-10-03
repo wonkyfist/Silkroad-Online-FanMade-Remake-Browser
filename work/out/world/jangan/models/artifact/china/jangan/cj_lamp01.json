@@ -1,0 +1,228 @@
+{
+  "source": "res/artifact/china/jangan/cj_lamp01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_lamp01",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_lamp02",
+      "bmt": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_lamp02_1",
+      "bmt": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_lamp02_al",
+      "bmt": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\china\\jangan\\cj_lamp02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (5.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_lamp02",
+      "bms": "prim\\mesh\\artifact\\china\\jangan\\cj_lamp02.bms",
+      "material": "CJ_lamp02",
+      "vertices": 92,
+      "triangles": 54,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_lamp02_1",
+      "bms": "prim\\mesh\\artifact\\china\\jangan\\cj_lamp02_1.bms",
+      "material": "CJ_lamp02_1",
+      "vertices": 34,
+      "triangles": 26,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_lamp02_al",
+      "bms": "prim\\mesh\\artifact\\china\\jangan\\cj_lamp02_al.bms",
+      "material": "CJ_lamp02_al",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 142,
+    "triangles": 88,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.991695523262024,
+    "boundsMin": [
+      -0.300615519285202,
+      0.003673076629638672,
+      -0.2998049855232239
+    ],
+    "boundsMax": [
+      0.29979056119918823,
+      1.9953685998916626,
+      0.300601065158844
+    ]
+  },
+  "warnings": [
+    "CJ_lamp02: replaced 14 non-finite uv component(s) by 0"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/cj_pal_lamp_orange_s.efp",
+      "bone": null,
+      "position": [
+        0,
+        1.63221,
+        0.01074
+      ],
+      "birthMs": 0,
+      "night": true
+    }
+  ]
+}

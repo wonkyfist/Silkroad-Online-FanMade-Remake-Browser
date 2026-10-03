@@ -1,0 +1,160 @@
+{
+ "source": "res\\nature\\common\\tree\\w12\\bamboo04.bsr#species",
+ "version": "sro-trees 1",
+ "generator": "silkroad-web trees (packages/convert/src/trees)",
+ "name": "bamboo04.near",
+ "type": "NATURE",
+ "units": {
+  "metresPerUnit": 1,
+  "sourceUnit": "metre",
+  "handedness": "right-handed",
+  "up": "+Y",
+  "forward": "+Z"
+ },
+ "skeleton": null,
+ "attachBone": null,
+ "attachable": null,
+ "materials": [
+  {
+   "name": "bamboo04_bark",
+   "bmt": "",
+   "flags": 320,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_bam04_02 .ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    64,
+    256
+   ],
+   "alphaMode": "OPAQUE",
+   "alphaReason": "tree tool: bark",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  },
+  {
+   "name": "bamboo04_leaf",
+   "bmt": "",
+   "flags": 832,
+   "flagNames": [
+    "colorTint",
+    "diffuseMap",
+    "alpha"
+   ],
+   "texture": "prim\\mtrl\\nature\\common\\tree\\tre_w12_bamboo04_leaf.ddj",
+   "textureFormat": "PNG",
+   "textureSize": [
+    256,
+    256
+   ],
+   "alphaMode": "MASK",
+   "alphaCutoff": 0.5,
+   "alphaReason": "tree tool: leaf cards, authored front + back (single-sided)",
+   "doubleSided": false,
+   "diffuse": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "ambient": [
+    0.5882352941176471,
+    0.5882352941176471,
+    0.5882352941176471,
+    1
+   ],
+   "specular": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "emissive": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "power": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "bamboo04_bark",
+   "vertices": 972,
+   "triangles": 1440,
+   "skinned": false,
+   "bones": []
+  },
+  {
+   "name": "lod0",
+   "bms": "",
+   "material": "bamboo04_leaf",
+   "vertices": 864,
+   "triangles": 432,
+   "skinned": false,
+   "bones": []
+  }
+ ],
+ "animations": [],
+ "stats": {
+  "vertices": 1836,
+  "triangles": 1872,
+  "joints": 0,
+  "meshes": 2,
+  "animations": 0,
+  "textures": 0,
+  "heightM": 49.44000137411058,
+  "boundsMin": [
+   -21.24795150756836,
+   -0.029536133632063866,
+   -21.216938018798828
+  ],
+  "boundsMax": [
+   17.52678108215332,
+   49.410465240478516,
+   19.86306381225586
+  ]
+ },
+ "warnings": [],
+ "trees": {
+  "species": "bamboo04",
+  "kind": "tree",
+  "part": "near",
+  "tiers": {
+   "lod0": 0
+  },
+  "tints": [],
+  "sources": {
+   "prim\\mtrl\\nature\\common\\tree\\tre_w12_bamboo04_leaf.ddj": "prim\\mtrl\\nature\\common\\tree\\tre_bam04_03 .ddj"
+  }
+ }
+}

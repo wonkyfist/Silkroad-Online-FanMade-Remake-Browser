@@ -1,0 +1,366 @@
+{
+  "source": "res/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_monstad_martbuil02_02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_monstad_martbuil02_02_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_01lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (36.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_02lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (36.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_03lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_04lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_05lightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_monstad_martbuil02_02_01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_01.bms",
+      "material": "CJ_monstad_martbuil02_02_01",
+      "vertices": 288,
+      "triangles": 128,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_01lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_01lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_02",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_02.bms",
+      "material": "CJ_monstad_martbuil02_02_02",
+      "vertices": 16,
+      "triangles": 8,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_02lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_02lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_03",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_03.bms",
+      "material": "CJ_monstad_martbuil02_02_02",
+      "vertices": 12,
+      "triangles": 6,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_03lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_03lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_04",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_04.bms",
+      "material": "CJ_monstad_martbuil02_02_04",
+      "vertices": 140,
+      "triangles": 58,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_04lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_04lightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_monstad_martbuil02_02_05",
+      "bms": "prim\\mesh\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_05.bms",
+      "material": "CJ_monstad_martbuil02_02_04",
+      "vertices": 4,
+      "triangles": 2,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan01\\monsterstadium\\cj_monstad_martbuil02_02_05lightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan01/monsterstadium/cj_monstad_martbuil02_02_05lightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 460,
+    "triangles": 202,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 3,
+    "heightM": 12.143392562866211,
+    "boundsMin": [
+      -5.830780029296875,
+      -0.25718212127685547,
+      -4.745042324066162
+    ],
+    "boundsMax": [
+      5.811886787414551,
+      11.886210441589355,
+      4.745042324066162
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 5,
+    "issues": []
+  }
+}

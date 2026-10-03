@@ -1,0 +1,341 @@
+{
+  "source": "res/artifact/guild/gate_4/fort_gate.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "fort_gate",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/guild/gate_potal.efp",
+      "bone": null,
+      "position": [
+        0.00298,
+        4.13111,
+        -0.03693
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/guild/waterup_blue_small_01.efp",
+      "bone": null,
+      "position": [
+        -0.00859,
+        -2.44657,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "fort_gate_01",
+      "bmt": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.6% zero, 0.1% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "fort_gate_02",
+      "bmt": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "fort_gate_03",
+      "bmt": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "fort_gate_04",
+      "bmt": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "fort_gate_05",
+      "bmt": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\artifact\\guild\\gate_4\\fort_gate_05.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        16,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (35.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "fort_gate_00_01",
+      "bms": "prim\\mesh\\artifact\\guild\\gate_4\\fort_gate_00_01.bms",
+      "material": "fort_gate_01",
+      "vertices": 1750,
+      "triangles": 764,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "fort_gate_00_02",
+      "bms": "prim\\mesh\\artifact\\guild\\gate_4\\fort_gate_00_02.bms",
+      "material": "fort_gate_02",
+      "vertices": 42,
+      "triangles": 22,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "fort_gate_00_03",
+      "bms": "prim\\mesh\\artifact\\guild\\gate_4\\fort_gate_00_03.bms",
+      "material": "fort_gate_03",
+      "vertices": 1193,
+      "triangles": 544,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "fort_gate_00_04",
+      "bms": "prim\\mesh\\artifact\\guild\\gate_4\\fort_gate_00_04.bms",
+      "material": "fort_gate_04",
+      "vertices": 50,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "fort_gate_00_05",
+      "bms": "prim\\mesh\\artifact\\guild\\gate_4\\fort_gate_00_05.bms",
+      "material": "fort_gate_05",
+      "vertices": 208,
+      "triangles": 96,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 3243,
+    "triangles": 1444,
+    "joints": 0,
+    "meshes": 5,
+    "animations": 0,
+    "textures": 5,
+    "heightM": 24.0285315066576,
+    "boundsMin": [
+      -10.223429679870605,
+      -0.08934159576892853,
+      -8.42382526397705
+    ],
+    "boundsMax": [
+      10.223424911499023,
+      23.939189910888672,
+      8.423826217651367
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

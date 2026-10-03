@@ -1,0 +1,259 @@
+{
+  "source": "res/bldg/china/graveyard2/cj_grave_tombstone07_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_grave_tombstone07_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_grave_tombstone07_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone07_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_common_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_grave_tombstone07_02",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone07_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_common_05.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_grave_tombstone07_03",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone07_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_big_04.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_grave_tombstone07_04",
+      "bmt": "prim\\mtrl\\bldg\\china\\graveyard2\\cj_grave_tombstone07_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\graveyard2\\w_cd_ravi_gorge01_07.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (69.3% zero, 23.4% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_grave_tombstone07_01",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone07_01.bms",
+      "material": "cj_grave_tombstone07_01",
+      "vertices": 80,
+      "triangles": 60,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_grave_tombstone07_02",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone07_02.bms",
+      "material": "cj_grave_tombstone07_02",
+      "vertices": 460,
+      "triangles": 330,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_grave_tombstone07_03",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone07_03.bms",
+      "material": "cj_grave_tombstone07_03",
+      "vertices": 132,
+      "triangles": 108,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_grave_tombstone07_04",
+      "bms": "prim\\mesh\\bldg\\china\\graveyard2\\cj_grave_tombstone07_04.bms",
+      "material": "cj_grave_tombstone07_04",
+      "vertices": 90,
+      "triangles": 80,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 762,
+    "triangles": 578,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 1.8185877948999405,
+    "boundsMin": [
+      -4.2648725509643555,
+      -0.1655280739068985,
+      -2.494631767272949
+    ],
+    "boundsMax": [
+      4.2648539543151855,
+      1.653059720993042,
+      2.494631767272949
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

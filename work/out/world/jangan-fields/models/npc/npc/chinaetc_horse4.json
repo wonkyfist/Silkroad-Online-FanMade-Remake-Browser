@@ -1,0 +1,328 @@
+{
+  "source": "res/npc/npc/chinaetc_horse4.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaetc_horse4",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaetc_horse4.bsk",
+    "joints": [
+      "Bip02",
+      "Bip02 Pelvis",
+      "Bip02 Spine",
+      "Bip02 Spine1",
+      "Bip02 Neck",
+      "Bip02 Neck1",
+      "Bip02 Head",
+      "Bip02 L Clavicle",
+      "Bip02 L UpperArm",
+      "Bip02 L Forearm",
+      "Bip02 L Hand",
+      "Bip02 L Finger0",
+      "Bip02 R Clavicle",
+      "Bip02 R UpperArm",
+      "Bip02 R Forearm",
+      "Bip02 R Hand",
+      "Bip02 R Finger0",
+      "Bip02 L Thigh",
+      "Bip02 L Calf",
+      "Bip02 L HorseLink",
+      "Bip02 L Foot",
+      "Bip02 L Toe0",
+      "Bip02 R Thigh",
+      "Bip02 R Calf",
+      "Bip02 R HorseLink",
+      "Bip02 R Foot",
+      "Bip02 R Toe0",
+      "Bip02 Tail",
+      "Bip02 Tail1",
+      "Bip02 Tail2",
+      "Bip02 Tail3"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.426335946192353e-7,
+      "maxHierarchyError": 6.661338147750939e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "chinaetc_horse4_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_horse4.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_horse4.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinaetc_horse4_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_horse4.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_horse4_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (35.8% zero, 29.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinaetc_horse4",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_horse4.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_horse4.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "chinaetc_horse4_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_horse4_2s.bms",
+      "material": "chinaetc_horse4_2s",
+      "vertices": 30,
+      "triangles": 28,
+      "skinned": true,
+      "bones": [
+        "Bip02 Neck1",
+        "Bip02 Head",
+        "Bip02 Neck"
+      ]
+    },
+    {
+      "name": "chinaetc_horse4_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_horse4_al_2s.bms",
+      "material": "chinaetc_horse4_al_2s",
+      "vertices": 40,
+      "triangles": 32,
+      "skinned": true,
+      "bones": [
+        "Bip02 Neck1",
+        "Bip02 Spine1",
+        "Bip02 Head",
+        "Bip02 Spine",
+        "Bip02 Tail",
+        "Bip02 Tail1",
+        "Bip02 Tail2",
+        "Bip02 Tail3"
+      ]
+    },
+    {
+      "name": "chinaetc_horse4_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_horse4_part1.bms",
+      "material": "chinaetc_horse4",
+      "vertices": 192,
+      "triangles": 280,
+      "skinned": true,
+      "bones": [
+        "Bip02 Spine1",
+        "Bip02 Neck",
+        "Bip02 Spine",
+        "Bip02 R Thigh",
+        "Bip02 Pelvis",
+        "Bip02 R Foot",
+        "Bip02 R HorseLink",
+        "Bip02 R Calf",
+        "Bip02 L Calf",
+        "Bip02 L HorseLink",
+        "Bip02 L Foot",
+        "Bip02 L Thigh",
+        "Bip02 Tail"
+      ]
+    },
+    {
+      "name": "chinaetc_horse4_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_horse4_part2.bms",
+      "material": "chinaetc_horse4",
+      "vertices": 276,
+      "triangles": 404,
+      "skinned": true,
+      "bones": [
+        "Bip02 Spine1",
+        "Bip02 Neck",
+        "Bip02 Neck1",
+        "Bip02 Head",
+        "Bip02 R UpperArm",
+        "Bip02 R Forearm",
+        "Bip02 R Clavicle",
+        "Bip02 R Hand",
+        "Bip02 L Hand",
+        "Bip02 L UpperArm",
+        "Bip02 L Forearm",
+        "Bip02 L Clavicle"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_horse4_basic.ban",
+      "banName": "chinaetc_horse4_basic",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 31
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_horse4_basic.ban",
+      "banName": "chinaetc_horse4_basic",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 31
+    }
+  ],
+  "stats": {
+    "vertices": 538,
+    "triangles": 744,
+    "joints": 31,
+    "meshes": 4,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 1.975177947897464,
+    "boundsMin": [
+      -0.2720676064491272,
+      -0.002982680220156908,
+      -0.9332159161567688
+    ],
+    "boundsMax": [
+      0.2690514922142029,
+      1.9721952676773071,
+      1.3343605995178223
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

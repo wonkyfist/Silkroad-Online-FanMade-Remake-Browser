@@ -1,0 +1,103 @@
+{
+  "source": "res/bldg/china/dunhuang/ravine/w_cd_ravi_gorge04_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_ravi_gorge04_01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "W_CD_ravi_gorge04_01",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge04_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge04_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (93.4% zero, 0.2% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "W_CD_ravi_gorge04_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ravine\\w_cd_ravi_gorge04_01.bms",
+      "material": "W_CD_ravi_gorge04_01",
+      "vertices": 10,
+      "triangles": 8,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 10,
+    "triangles": 8,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 6.526166915893555,
+    "boundsMin": [
+      -53.8701057434082,
+      22.130001068115234,
+      -2.2584318060125952e-7
+    ],
+    "boundsMax": [
+      53.8701057434082,
+      28.65616798400879,
+      5.942460035157637e-8
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "source": "res/bldg/china/jangan04/cj_mili_main02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_mili_main02",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_mili_main1_deco",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_fence_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (43.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_decolightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_decolightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_mili_main1_gidung",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main_gidund.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_gidunglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_gidunglightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_mili_main1_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_rooflightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_mili_main1_wall",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan04\\cj_mili_main_wall.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_walllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_walllightingmap.png",
+        "texCoord": 1
+      },
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_mili_main1_deco",
+      "bms": "prim\\mesh\\bldg\\china\\jangan04\\cj_mili_main1_deco.bms",
+      "material": "CJ_mili_main1_deco",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_decolightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_decolightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_mili_main1_gidung",
+      "bms": "prim\\mesh\\bldg\\china\\jangan04\\cj_mili_main1_gidung.bms",
+      "material": "CJ_mili_main1_gidung",
+      "vertices": 136,
+      "triangles": 72,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_gidunglightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_gidunglightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_mili_main1_roof",
+      "bms": "prim\\mesh\\bldg\\china\\jangan04\\cj_mili_main1_roof.bms",
+      "material": "CJ_mili_main1_roof",
+      "vertices": 205,
+      "triangles": 104,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_rooflightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_rooflightingmap.png",
+        "texCoord": 1
+      }
+    },
+    {
+      "name": "CJ_mili_main1_wall",
+      "bms": "prim\\mesh\\bldg\\china\\jangan04\\cj_mili_main1_wall.bms",
+      "material": "CJ_mili_main1_wall",
+      "vertices": 32,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [],
+      "lightmap": {
+        "path": "prim\\lightmap\\bldg\\china\\jangan04\\cj_mili_main1_walllightingmap.ddj",
+        "uri": "lightmaps/prim/lightmap/bldg/china/jangan04/cj_mili_main1_walllightingmap.png",
+        "texCoord": 1
+      }
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 397,
+    "triangles": 204,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 4,
+    "heightM": 12.041095733642578,
+    "boundsMin": [
+      -6.393649578094482,
+      2.998213768005371,
+      -11.054632186889648
+    ],
+    "boundsMax": [
+      6.393646240234375,
+      15.03930950164795,
+      11.054634094238281
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 4,
+    "issues": []
+  }
+}

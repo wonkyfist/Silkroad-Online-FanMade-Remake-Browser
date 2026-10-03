@@ -1,0 +1,136 @@
+{
+  "source": "res/nature/common/flower/flw_s01_w_ani.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "flw_s01_w_ani",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\flower\\flw_s01_w.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 1.8311893490441378e-7,
+      "maxHierarchyError": 2.949029909160572e-17,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "flw_g01_w",
+      "bmt": "prim\\mtrl\\nature\\common\\flower\\flw_s01_w.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\flower\\flw_g01_w.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (72.4% zero, 5.9% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "flw_s01_w",
+      "bms": "prim\\mesh\\nature\\common\\flower\\flw_s01_w.bms",
+      "material": "flw_g01_w",
+      "vertices": 41,
+      "triangles": 36,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\flower\\flw_s01_w.ban",
+      "banName": "flw_s01_w",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4
+    }
+  ],
+  "stats": {
+    "vertices": 41,
+    "triangles": 36,
+    "joints": 4,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 0.3021538604516536,
+    "boundsMin": [
+      -0.15091243386268616,
+      -0.0029244471807032824,
+      -0.15625913441181183
+    ],
+    "boundsMax": [
+      0.16324569284915924,
+      0.2992294132709503,
+      0.15625914931297302
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

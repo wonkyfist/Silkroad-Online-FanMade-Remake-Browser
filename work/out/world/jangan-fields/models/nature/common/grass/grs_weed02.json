@@ -1,0 +1,134 @@
+{
+  "source": "res/nature/common/grass/grs_weed02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "grs_weed02",
+  "type": "NATURE",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\nature\\common\\grass\\grs_weed02.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 2.4447069923994036e-8,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "grs_weed02",
+      "bmt": "prim\\mtrl\\nature\\common\\grass\\grs_weed02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\nature\\common\\grass\\grs-weed02.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (83.1% zero, 10.8% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.7529412508010864,
+        0.7529412508010864,
+        0.7529412508010864,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 93
+    }
+  ],
+  "meshes": [
+    {
+      "name": "grs_weed02",
+      "bms": "prim\\mesh\\nature\\common\\grass\\grs_weed02.bms",
+      "material": "grs_weed02",
+      "vertices": 36,
+      "triangles": 48,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\nature\\common\\grass\\grs_weed02.ban",
+      "banName": "grs_weed02",
+      "durationMs": 10000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    }
+  ],
+  "stats": {
+    "vertices": 36,
+    "triangles": 48,
+    "joints": 3,
+    "meshes": 1,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 2.0156113654375076,
+    "boundsMin": [
+      -0.9899080991744995,
+      -0.10623045265674591,
+      -1.0391324758529663
+    ],
+    "boundsMax": [
+      1.0154147148132324,
+      1.9093809127807617,
+      1.0477392673492432
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

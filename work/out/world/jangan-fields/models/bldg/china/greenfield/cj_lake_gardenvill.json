@@ -1,0 +1,366 @@
+{
+  "source": "res/bldg/china/greenfield/cj_lake_gardenvill.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_lake_gardenvill",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "cj_lake_gardenvill_alpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_alpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (38.9% zero, 2.1% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_lake_gardenvill_column",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_column.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_lake_gardenvill_floor",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_floor.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_lake_gardenvill_roof",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_roof.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_lake_gardenvill_roofde",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_roofde.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (54.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "cj_lake_gardenvill_wood",
+      "bmt": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\greenfield\\cj_lake_gardenvill_wood.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cj_lake_gardenvill_alpha",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_alpha.bms",
+      "material": "cj_lake_gardenvill_alpha",
+      "vertices": 70,
+      "triangles": 38,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_lake_gardenvill_column",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_column.bms",
+      "material": "cj_lake_gardenvill_column",
+      "vertices": 394,
+      "triangles": 260,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_lake_gardenvill_floor",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_floor.bms",
+      "material": "cj_lake_gardenvill_floor",
+      "vertices": 21,
+      "triangles": 15,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_lake_gardenvill_roof",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_roof.bms",
+      "material": "cj_lake_gardenvill_roof",
+      "vertices": 382,
+      "triangles": 264,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_lake_gardenvill_roofde",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_roofde.bms",
+      "material": "cj_lake_gardenvill_roofde",
+      "vertices": 80,
+      "triangles": 40,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "cj_lake_gardenvill_wood",
+      "bms": "prim\\mesh\\bldg\\china\\greenfield\\cj_lake_gardenvill_wood.bms",
+      "material": "cj_lake_gardenvill_wood",
+      "vertices": 761,
+      "triangles": 506,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1708,
+    "triangles": 1123,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 6,
+    "heightM": 15.219728827476501,
+    "boundsMin": [
+      -5.727747440338135,
+      -1.660915732383728,
+      -11.901422500610352
+    ],
+    "boundsMax": [
+      5.727746963500977,
+      13.558813095092773,
+      11.901421546936035
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

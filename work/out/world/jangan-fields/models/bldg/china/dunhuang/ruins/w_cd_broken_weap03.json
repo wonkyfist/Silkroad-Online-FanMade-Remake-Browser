@@ -1,0 +1,520 @@
+{
+  "source": "res/bldg/china/dunhuang/ruins/w_cd_broken_weap03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_broken_weap03",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_castle19",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle19.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle21",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle21.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle20",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle20.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle24",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle24.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle26",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle26.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle18",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle18.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle23",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle23.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        36
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (43.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle25",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle25.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (47.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_castle22",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_castle22.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_broken_weap03_01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_01.bms",
+      "material": "w_cd_castle19",
+      "vertices": 151,
+      "triangles": 100,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_02",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_02.bms",
+      "material": "w_cd_castle21",
+      "vertices": 472,
+      "triangles": 236,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_03",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_03.bms",
+      "material": "w_cd_castle20",
+      "vertices": 674,
+      "triangles": 372,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_09",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_09.bms",
+      "material": "w_cd_castle24",
+      "vertices": 64,
+      "triangles": 64,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_04",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_04.bms",
+      "material": "w_cd_castle26",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_05",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_05.bms",
+      "material": "w_cd_castle18",
+      "vertices": 678,
+      "triangles": 504,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_06",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_06.bms",
+      "material": "w_cd_castle23",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_07",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_07.bms",
+      "material": "w_cd_castle25",
+      "vertices": 528,
+      "triangles": 376,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_broken_weap03_08",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_broken_weap03_08.bms",
+      "material": "w_cd_castle22",
+      "vertices": 31,
+      "triangles": 18,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 2630,
+    "triangles": 1686,
+    "joints": 0,
+    "meshes": 9,
+    "animations": 0,
+    "textures": 9,
+    "heightM": 8.397387884557247,
+    "boundsMin": [
+      -5.549466133117676,
+      -0.12299957126379013,
+      -6.944835662841797
+    ],
+    "boundsMax": [
+      5.549465179443359,
+      8.274388313293457,
+      6.944835662841797
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": []
+  }
+}

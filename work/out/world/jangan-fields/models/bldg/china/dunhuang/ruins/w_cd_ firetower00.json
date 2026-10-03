@@ -1,0 +1,360 @@
+{
+  "source": "res/bldg/china/dunhuang/ruins/w_cd_ firetower00.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "w_cd_ firetower00",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "w_cd_ firetower00",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ firetower00_2",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_2.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ firetower00_3",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_3.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ firetower00_4",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_4.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ firetower00_5",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_5.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "w_cd_ firetower00_1",
+      "bmt": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "w_cd_ firetower00",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00.bms",
+      "material": "w_cd_ firetower00",
+      "vertices": 222,
+      "triangles": 188,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ firetower00_2",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_2.bms",
+      "material": "w_cd_ firetower00_2",
+      "vertices": 232,
+      "triangles": 163,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ firetower00_3",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_3.bms",
+      "material": "w_cd_ firetower00_3",
+      "vertices": 75,
+      "triangles": 84,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ firetower00_4",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_4.bms",
+      "material": "w_cd_ firetower00_4",
+      "vertices": 80,
+      "triangles": 72,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ firetower00_5",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower00_5.bms",
+      "material": "w_cd_ firetower00_5",
+      "vertices": 159,
+      "triangles": 110,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "w_cd_ firetower01",
+      "bms": "prim\\mesh\\bldg\\china\\dunhuang\\ruins\\w_cd_ firetower01.bms",
+      "material": "w_cd_ firetower00_1",
+      "vertices": 292,
+      "triangles": 189,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1060,
+    "triangles": 806,
+    "joints": 0,
+    "meshes": 6,
+    "animations": 0,
+    "textures": 6,
+    "heightM": 20.893409430980682,
+    "boundsMin": [
+      -11.441082000732422,
+      -0.7516075968742371,
+      -16.85370635986328
+    ],
+    "boundsMax": [
+      11.441083908081055,
+      20.141801834106445,
+      16.79741859436035
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "source": "res/bldg/china/jangan02/cj_brazier_etc01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cj_brazier_etc01",
+  "type": "BUILDING",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/w_cd_shri.efp",
+      "bone": null,
+      "position": [
+        -1.15973,
+        0.5047,
+        1.08456
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "map/w_cd_shri.efp",
+      "bone": null,
+      "position": [
+        -0.30067,
+        1.39597,
+        -0.76242
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "CJ_brazier_etc01",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_brazier_etc01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_brazier_etc01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "CJ_brazier_etcalpha",
+      "bmt": "prim\\mtrl\\bldg\\china\\jangan02\\cj_brazier_etc01.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\bldg\\china\\jangan02\\cj_brazier_etcalpha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (52.0% zero, 8.5% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CJ_brazier_etc01",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_brazier_etc01.bms",
+      "material": "CJ_brazier_etc01",
+      "vertices": 218,
+      "triangles": 221,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "CJ_brazier_etcalpha",
+      "bms": "prim\\mesh\\bldg\\china\\jangan02\\cj_brazier_etcalpha.bms",
+      "material": "CJ_brazier_etcalpha",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": []
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 226,
+    "triangles": 225,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 1.603353001177311,
+    "boundsMin": [
+      -1.6924984455108643,
+      -0.03422150760889053,
+      -1.9894905090332031
+    ],
+    "boundsMax": [
+      1.6924978494644165,
+      1.5691314935684204,
+      1.9894895553588867
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}
