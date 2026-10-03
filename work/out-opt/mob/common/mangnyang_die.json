@@ -1,0 +1,300 @@
+{
+  "source": "res/mob/common/mangnyang_die.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "mangnyang_cut",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\mangnyang_cut.bsk",
+    "joints": [
+      "[root]",
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Spine2",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip02",
+      "Bip02 Pelvis",
+      "Bip02 Spine",
+      "Bip02 Spine1",
+      "Bip02 Spine2",
+      "Bip02 Neck",
+      "Bip02 Head",
+      "Bip02 L Clavicle",
+      "Bip02 L UpperArm",
+      "Bip02 L Forearm",
+      "Bip02 L Hand",
+      "Bip02 L Finger0",
+      "Bip02 R Clavicle",
+      "Bip02 R UpperArm",
+      "Bip02 R Forearm",
+      "Bip02 R Hand",
+      "Bip02 R Finger0",
+      "Bip02 L Thigh",
+      "Bip02 L Calf",
+      "Bip02 L Foot",
+      "Bip02 L Toe0",
+      "Bip02 R Thigh",
+      "Bip02 R Calf",
+      "Bip02 R Foot",
+      "Bip02 R Toe0",
+      "Bone03",
+      "Bone04",
+      "Bone01",
+      "Bone02",
+      "Bone05",
+      "Bone06",
+      "Bone07",
+      "Bone08"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.55089356538241e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": -1,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "Mangnyang",
+      "bmt": "prim\\mtrl\\mob\\china\\mangnyang.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\mangnyang.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mangnyang_die01",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_die01.bms",
+      "material": "Mangnyang",
+      "vertices": 237,
+      "triangles": 253,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Spine2",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 Head",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Forearm",
+        "Bip01 R Forearm",
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "Mangnyang_die02",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_die02.bms",
+      "material": "Mangnyang",
+      "vertices": 175,
+      "triangles": 192,
+      "skinned": true,
+      "bones": [
+        "Bip02 Pelvis",
+        "Bip02 Spine",
+        "Bip02 R Thigh",
+        "Bip02 Spine1",
+        "Bip02 L Thigh",
+        "Bip02 R Calf",
+        "Bip02 R Foot",
+        "Bip02 L Calf",
+        "Bip02 L Foot"
+      ]
+    },
+    {
+      "name": "Mangnyang_nail01",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_nail01.bms",
+      "material": "Mangnyang",
+      "vertices": 22,
+      "triangles": 16,
+      "skinned": true,
+      "bones": [
+        "Bone05"
+      ]
+    },
+    {
+      "name": "Mangnyang_nail02",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_nail02.bms",
+      "material": "Mangnyang",
+      "vertices": 22,
+      "triangles": 16,
+      "skinned": true,
+      "bones": [
+        "Bone01"
+      ]
+    },
+    {
+      "name": "Mangnyang_nail03",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_nail03.bms",
+      "material": "Mangnyang",
+      "vertices": 22,
+      "triangles": 20,
+      "skinned": true,
+      "bones": [
+        "Bone07"
+      ]
+    },
+    {
+      "name": "Mangnyang_weapon",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_weapon.bms",
+      "material": "Mangnyang",
+      "vertices": 16,
+      "triangles": 15,
+      "skinned": true,
+      "bones": [
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_cut.ban",
+      "banName": "mangnyang_cut",
+      "durationMs": 1700,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 59
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_cut_loop.ban",
+      "banName": "mangnyang_cut_loop",
+      "durationMs": 300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 59
+    }
+  ],
+  "stats": {
+    "vertices": 494,
+    "triangles": 512,
+    "joints": 60,
+    "meshes": 6,
+    "animations": 2,
+    "textures": 1,
+    "heightM": 1.522811079310486,
+    "boundsMin": [
+      -0.9607990980148315,
+      -0.00028409986407496035,
+      -0.26726293563842773
+    ],
+    "boundsMax": [
+      0.4333585202693939,
+      1.5225269794464111,
+      0.7548543214797974
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "mangnyang_cut",
+    "packs": {
+      "default": "mob/_anims/mangnyang_cut/default.glb"
+    },
+    "clips": {
+      "DIE1": [
+        "default",
+        "mangnyang_cut"
+      ],
+      "DIE1_RM": [
+        "default",
+        "mangnyang_cut_loop"
+      ]
+    }
+  }
+}

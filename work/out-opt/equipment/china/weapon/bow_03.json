@@ -1,0 +1,160 @@
+{
+  "source": "res/item/china/weapon/bow_03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "bow_03",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\bow_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": "Bip01 L Hand",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 6,
+    "attachPointName": "LEFT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 7,
+        "slotName": "LEFT_HAND",
+        "mesh": "bow_03"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "bow_1_5",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\bow_1_5.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\bow_1_5.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaReason": "equipment: BMT alpha test (reference 128) cuts 49% of the surface",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0,
+      "alphaCutoff": 0.5
+    }
+  ],
+  "meshes": [
+    {
+      "name": "bow_03",
+      "bms": "prim\\mesh\\item\\china\\weapon\\bow_03.bms",
+      "material": "bow_1_5",
+      "vertices": 120,
+      "triangles": 196,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 120,
+    "triangles": 196,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.036252064630389214,
+    "boundsMin": [
+      -0.1788606345653534,
+      -0.021912630647420883,
+      -0.63040691614151
+    ],
+    "boundsMax": [
+      0.24995753169059753,
+      0.01433943398296833,
+      0.6043370366096497
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_BOW_03_A",
+      "ITEM_CH_BOW_03_B",
+      "ITEM_CH_BOW_03_C"
+    ],
+    "bsr": "res/item/china/weapon/bow_03.bsr",
+    "gender": null,
+    "kind": "socket",
+    "method": "ADD",
+    "attachPoint": "LEFT_HAND",
+    "slots": [
+      "LEFT_HAND"
+    ],
+    "attachBone": "Bip01 L Hand",
+    "hides": [],
+    "skeleton": null,
+    "joints": [],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  },
+  "dummies": {
+    "Bone01": [
+      0,
+      0,
+      0
+    ],
+    "Bone02": [
+      0.21454,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "source": "res/item/china/woman_item/heavy_03_fa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "heavy_03_fa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 3,
+    "attachPointName": "_fa",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "Heavy_03_fa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Heavy_03_fa",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\heavy_03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_fa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Heavy_03_fa",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\heavy_03_fa.bms",
+      "material": "Heavy_03_fa",
+      "vertices": 124,
+      "triangles": 148,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Calf",
+        "Bip01 R Thigh",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf",
+        "Bip01 L Thigh",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 124,
+    "triangles": 148,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.43273685732856393,
+    "boundsMin": [
+      -0.2568381130695343,
+      -0.002938582096248865,
+      -0.12188456207513809
+    ],
+    "boundsMax": [
+      0.2568381130695343,
+      0.42979827523231506,
+      0.12917909026145935
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "source": "res/item/china/weapon/tblade_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tblade_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\tblade_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone01": [
+      -0.00007,
+      0,
+      -0.00015
+    ],
+    "ai_start": [
+      -0.00929,
+      -0.0095,
+      1.07367
+    ],
+    "ai_end": [
+      -0.00601,
+      -0.0096,
+      1.90774
+    ]
+  },
+  "attachBone": "Bip01 R HandMid",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 7,
+    "attachPointName": "RIGHT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 9,
+        "slotName": "RIGHT_HAND",
+        "mesh": "tblade_01"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "tblade_1_5",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\tblade_1_5.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\tblade_1_5.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (89.8% partial, 7.0% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tblade_01",
+      "bms": "prim\\mesh\\item\\china\\weapon\\tblade_01.bms",
+      "material": "tblade_1_5",
+      "vertices": 57,
+      "triangles": 58,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 57,
+    "triangles": 58,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.029228709172457457,
+    "boundsMin": [
+      -0.13295841217041016,
+      -0.02355130761861801,
+      -0.3055253326892853
+    ],
+    "boundsMax": [
+      0.01987527869641781,
+      0.005677401553839445,
+      1.910346269607544
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

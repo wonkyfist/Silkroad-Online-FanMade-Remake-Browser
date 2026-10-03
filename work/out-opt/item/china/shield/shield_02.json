@@ -1,0 +1,198 @@
+{
+  "source": "res/item/china/shield/shield_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "shield_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\armor\\shield_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone01": [
+      -0.00004,
+      0,
+      -0.00048
+    ],
+    "Bone02": [
+      -0.27231,
+      0,
+      -0.00048
+    ]
+  },
+  "attachBone": "Bip01 L Hand",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 6,
+    "attachPointName": "LEFT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 7,
+        "slotName": "LEFT_HAND",
+        "mesh": "Shield_02_1"
+      },
+      {
+        "slot": 8,
+        "slotName": null,
+        "mesh": "Shield_02_2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Shield_02_1",
+      "bmt": "prim\\mtrl\\item\\china\\armor\\shield_02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\armor\\shield_02_1.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "Shield_01_2",
+      "bmt": "prim\\mtrl\\item\\china\\armor\\shield_02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\armor\\shield_02_2.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (70.8% partial, 29.2% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Shield_02_1",
+      "bms": "prim\\mesh\\item\\china\\armor\\shield_02_1.bms",
+      "material": "Shield_02_1",
+      "vertices": 42,
+      "triangles": 44,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    },
+    {
+      "name": "Shield_02_2",
+      "bms": "prim\\mesh\\item\\china\\armor\\shield_02_2.bms",
+      "material": "Shield_01_2",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 50,
+    "triangles": 48,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 2,
+    "heightM": 0.11108295642770827,
+    "boundsMin": [
+      -0.22742876410484314,
+      -0.00020396732725203037,
+      -0.2905675768852234
+    ],
+    "boundsMax": [
+      0.2247166633605957,
+      0.11087898910045624,
+      0.28370046615600586
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

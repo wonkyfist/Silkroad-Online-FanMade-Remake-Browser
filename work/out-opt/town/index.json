@@ -1,0 +1,1005 @@
+{
+ "schema": 1,
+ "format": "sro-town-assets",
+ "generator": "pnpm sro town (packages/convert/src/town/export-town.ts)",
+ "vats": {
+  "europeman_skel": {
+   "json": "vat/europeman_skel.json",
+   "bin": "vat/europeman_skel.bin",
+   "bytes": 2226048,
+   "frames": 1581,
+   "bones": 43,
+   "clips": [
+    "STAND1",
+    "STAND3",
+    "WALK",
+    "RUN",
+    "SIT_DOWN",
+    "SIT",
+    "STAND_UP",
+    "EMOTION01",
+    "EMOTION02",
+    "EMOTION04",
+    "EMOTION07",
+    "VENDOR01",
+    "PICK",
+    "HAMMER",
+    "CART_STAND",
+    "CART_WALK",
+    "STAND1@fighter",
+    "WALK@fighter",
+    "STAND1@tattoo",
+    "WALK@tattoo",
+    "SIT_CHAIR",
+    "CARRY",
+    "TALK",
+    "SWEEP"
+   ]
+  },
+  "europewoman_skel": {
+   "json": "vat/europewoman_skel.json",
+   "bin": "vat/europewoman_skel.bin",
+   "bytes": 2032832,
+   "frames": 1381,
+   "bones": 45,
+   "clips": [
+    "STAND1",
+    "STAND3",
+    "WALK",
+    "RUN",
+    "SIT_DOWN",
+    "SIT",
+    "STAND_UP",
+    "EMOTION01",
+    "EMOTION02",
+    "EMOTION04",
+    "EMOTION07",
+    "VENDOR01",
+    "PICK",
+    "HAMMER",
+    "CART_STAND",
+    "CART_WALK",
+    "STAND1@fighter",
+    "WALK@fighter",
+    "SIT_CHAIR",
+    "CARRY",
+    "TALK",
+    "SWEEP"
+   ]
+  },
+  "ch_guard": {
+   "json": "vat/ch_guard.json",
+   "bin": "vat/ch_guard.bin",
+   "bytes": 223776,
+   "frames": 189,
+   "bones": 36,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN",
+    "STAND2"
+   ]
+  },
+  "npc_ch_event_grandfather": {
+   "json": "vat/npc_ch_event_grandfather.json",
+   "bin": "vat/npc_ch_event_grandfather.bin",
+   "bytes": 129280,
+   "frames": 101,
+   "bones": 39,
+   "clips": [
+    "STAND1"
+   ]
+  },
+  "npc_ch_event_grandmother": {
+   "json": "vat/npc_ch_event_grandmother.json",
+   "bin": "vat/npc_ch_event_grandmother.bin",
+   "bytes": 112128,
+   "frames": 73,
+   "bones": 47,
+   "clips": [
+    "STAND1"
+   ]
+  },
+  "npc_ch_event_child": {
+   "json": "vat/npc_ch_event_child.json",
+   "bin": "vat/npc_ch_event_child.bin",
+   "bytes": 219200,
+   "frames": 137,
+   "bones": 49,
+   "clips": [
+    "STAND1"
+   ]
+  },
+  "cj_chicken": {
+   "json": "vat/cj_chicken.json",
+   "bin": "vat/cj_chicken.bin",
+   "bytes": 137344,
+   "frames": 148,
+   "bones": 28,
+   "clips": [
+    "STAND1"
+   ]
+  },
+  "p_cat": {
+   "json": "vat/p_cat.json",
+   "bin": "vat/p_cat.bin",
+   "bytes": 393312,
+   "frames": 241,
+   "bones": 50,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN",
+    "EMOTION01",
+    "PICK"
+   ]
+  },
+  "p_raccoondog": {
+   "json": "vat/p_raccoondog.json",
+   "bin": "vat/p_raccoondog.bin",
+   "bytes": 229120,
+   "frames": 179,
+   "bones": 39,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN",
+    "EMOTION01",
+    "PICK"
+   ]
+  },
+  "t_horse1": {
+   "json": "vat/t_horse1.json",
+   "bin": "vat/t_horse1.bin",
+   "bytes": 201600,
+   "frames": 150,
+   "bones": 41,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN"
+   ]
+  },
+  "trade_cart_donkey": {
+   "json": "vat/trade_cart_donkey.json",
+   "bin": "vat/trade_cart_donkey.bin",
+   "bytes": 201600,
+   "frames": 150,
+   "bones": 41,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN"
+   ]
+  },
+  "c_horse": {
+   "json": "vat/c_horse.json",
+   "bin": "vat/c_horse.bin",
+   "bytes": 141440,
+   "frames": 130,
+   "bones": 33,
+   "clips": [
+    "STAND1",
+    "WALK",
+    "RUN"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "id": "m01",
+   "glb": "variants/m01.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.867,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1628,
+   "vertices": 1238,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_merchant",
+    "character": "CHAR_CH_MAN_MERCHANT",
+    "items": [
+     "ITEM_CH_M_CLOTHES_01_BA_A",
+     "ITEM_CH_M_CLOTHES_01_LA_A",
+     "ITEM_CH_M_CLOTHES_01_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "m02",
+   "glb": "variants/m02.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.844,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1499,
+   "vertices": 1094,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_scholar",
+    "character": "CHAR_CH_MAN_SCHOLAR",
+    "items": [
+     "ITEM_CH_M_CLOTHES_02_BA_A",
+     "ITEM_CH_M_CLOTHES_02_LA_A",
+     "ITEM_CH_M_CLOTHES_02_FA_A",
+     "ITEM_CH_M_CLOTHES_02_HA_A"
+    ]
+   }
+  },
+  {
+   "id": "m03",
+   "glb": "variants/m03.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.852,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 2084,
+   "vertices": 1671,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_monk",
+    "character": "CHAR_CH_MAN_MONK",
+    "items": [
+     "ITEM_CH_M_CLOTHES_03_BA_A",
+     "ITEM_CH_M_CLOTHES_03_LA_A",
+     "ITEM_CH_M_CLOTHES_03_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "m04",
+   "glb": "variants/m04.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.869,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1548,
+   "vertices": 1160,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_nobleboy",
+    "character": "CHAR_CH_MAN_NOBLEBOY",
+    "items": [
+     "ITEM_CH_M_CLOTHES_01_BA_A",
+     "ITEM_CH_M_CLOTHES_01_LA_A",
+     "ITEM_CH_M_CLOTHES_01_FA_A",
+     "ITEM_CH_M_CLOTHES_01_HA_A",
+     "ITEM_CH_M_CLOTHES_01_AA_A"
+    ]
+   }
+  },
+  {
+   "id": "m05",
+   "glb": "variants/m05.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.859,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1858,
+   "vertices": 1359,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_warrior",
+    "character": "CHAR_CH_MAN_WARRIOR",
+    "items": [
+     "ITEM_CH_M_CLOTHES_02_BA_A",
+     "ITEM_CH_M_CLOTHES_02_LA_A",
+     "ITEM_CH_M_CLOTHES_02_FA_A",
+     "ITEM_CH_M_CLOTHES_02_AA_A"
+    ]
+   }
+  },
+  {
+   "id": "m06",
+   "glb": "variants/m06.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.892,
+   "rank": "high",
+   "class": "person",
+   "triangles": 1724,
+   "vertices": 1371,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_adventurer",
+    "character": "CHAR_CH_MAN_ADVENTURER",
+    "items": [
+     "ITEM_CH_M_CLOTHES_03_BA_A",
+     "ITEM_CH_M_CLOTHES_03_LA_A",
+     "ITEM_CH_M_CLOTHES_03_FA_A",
+     "ITEM_CH_M_CLOTHES_03_HA_A"
+    ]
+   }
+  },
+  {
+   "id": "m07",
+   "glb": "variants/m07.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.809,
+   "rank": "high",
+   "class": "person",
+   "triangles": 1502,
+   "vertices": 1179,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_performer",
+    "character": "CHAR_CH_MAN_PERFORMER",
+    "items": [
+     "ITEM_CH_M_LIGHT_01_BA_A",
+     "ITEM_CH_M_LIGHT_01_LA_A",
+     "ITEM_CH_M_LIGHT_01_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "m08",
+   "glb": "variants/m08.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.803,
+   "rank": "ultra",
+   "class": "person",
+   "triangles": 1614,
+   "vertices": 1213,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_priest",
+    "character": "CHAR_CH_MAN_PRIEST",
+    "items": [
+     "ITEM_CH_M_CLOTHES_02_BA_A",
+     "ITEM_CH_M_CLOTHES_02_LA_A",
+     "ITEM_CH_M_CLOTHES_02_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "m09",
+   "glb": "variants/m09.glb",
+   "skeleton": "europeman_skel",
+   "kind": "folk",
+   "female": false,
+   "height": 1.874,
+   "rank": "ultra",
+   "class": "person",
+   "triangles": 1942,
+   "vertices": 1501,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinaman_tattoo",
+    "character": "CHAR_CH_MAN_TATTOO",
+    "items": [
+     "ITEM_CH_M_CLOTHES_01_BA_A",
+     "ITEM_CH_M_CLOTHES_01_LA_A",
+     "ITEM_CH_M_CLOTHES_01_FA_A",
+     "ITEM_CH_M_CLOTHES_01_AA_A"
+    ]
+   }
+  },
+  {
+   "id": "w01",
+   "glb": "variants/w01.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.776,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 2066,
+   "vertices": 1526,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_merchant",
+    "character": "CHAR_CH_WOMAN_MERCHANT",
+    "items": [
+     "ITEM_CH_W_CLOTHES_01_BA_A",
+     "ITEM_CH_W_CLOTHES_01_LA_A",
+     "ITEM_CH_W_CLOTHES_01_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "w02",
+   "glb": "variants/w02.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.74,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1613,
+   "vertices": 1178,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_noblegirl",
+    "character": "CHAR_CH_WOMAN_NOBLEGIRL",
+    "items": [
+     "ITEM_CH_W_CLOTHES_02_BA_A",
+     "ITEM_CH_W_CLOTHES_02_LA_A",
+     "ITEM_CH_W_CLOTHES_02_FA_A",
+     "ITEM_CH_W_CLOTHES_02_HA_A"
+    ]
+   }
+  },
+  {
+   "id": "w03",
+   "glb": "variants/w03.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.775,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 2030,
+   "vertices": 1539,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_kisaeng",
+    "character": "CHAR_CH_WOMAN_KISAENG",
+    "items": [
+     "ITEM_CH_W_CLOTHES_03_BA_A",
+     "ITEM_CH_W_CLOTHES_03_LA_A",
+     "ITEM_CH_W_CLOTHES_03_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "w04",
+   "glb": "variants/w04.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.748,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 1756,
+   "vertices": 1294,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_scholar",
+    "character": "CHAR_CH_WOMAN_SCHOLAR",
+    "items": [
+     "ITEM_CH_W_CLOTHES_01_BA_A",
+     "ITEM_CH_W_CLOTHES_01_LA_A",
+     "ITEM_CH_W_CLOTHES_01_FA_A",
+     "ITEM_CH_W_CLOTHES_01_HA_A"
+    ]
+   }
+  },
+  {
+   "id": "w05",
+   "glb": "variants/w05.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.72,
+   "rank": "medium",
+   "class": "person",
+   "triangles": 2046,
+   "vertices": 1529,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_adventurer",
+    "character": "CHAR_CH_WOMAN_ADVENTURER",
+    "items": [
+     "ITEM_CH_W_CLOTHES_02_BA_A",
+     "ITEM_CH_W_CLOTHES_02_LA_A",
+     "ITEM_CH_W_CLOTHES_02_FA_A",
+     "ITEM_CH_W_CLOTHES_02_AA_A"
+    ]
+   }
+  },
+  {
+   "id": "w06",
+   "glb": "variants/w06.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.789,
+   "rank": "high",
+   "class": "person",
+   "triangles": 1854,
+   "vertices": 1501,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_fox",
+    "character": "CHAR_CH_WOMAN_FOX",
+    "items": [
+     "ITEM_CH_W_CLOTHES_03_BA_A",
+     "ITEM_CH_W_CLOTHES_03_LA_A",
+     "ITEM_CH_W_CLOTHES_03_FA_A",
+     "ITEM_CH_W_CLOTHES_03_HA_A"
+    ]
+   }
+  },
+  {
+   "id": "w07",
+   "glb": "variants/w07.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.721,
+   "rank": "high",
+   "class": "person",
+   "triangles": 1706,
+   "vertices": 1270,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_warrior",
+    "character": "CHAR_CH_WOMAN_WARRIOR",
+    "items": [
+     "ITEM_CH_W_LIGHT_01_BA_A",
+     "ITEM_CH_W_LIGHT_01_LA_A",
+     "ITEM_CH_W_LIGHT_01_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "w08",
+   "glb": "variants/w08.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.72,
+   "rank": "ultra",
+   "class": "person",
+   "triangles": 1792,
+   "vertices": 1297,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_assassin",
+    "character": "CHAR_CH_WOMAN_ASSASSIN",
+    "items": [
+     "ITEM_CH_W_CLOTHES_02_BA_A",
+     "ITEM_CH_W_CLOTHES_02_LA_A",
+     "ITEM_CH_W_CLOTHES_02_FA_A"
+    ]
+   }
+  },
+  {
+   "id": "w09",
+   "glb": "variants/w09.glb",
+   "skeleton": "europewoman_skel",
+   "kind": "folk",
+   "female": true,
+   "height": 1.719,
+   "rank": "ultra",
+   "class": "person",
+   "triangles": 2008,
+   "vertices": 1488,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "body": "chinawoman_necromencerw",
+    "character": "CHAR_CH_WOMAN_NECROMENCERW",
+    "items": [
+     "ITEM_CH_W_CLOTHES_01_BA_A",
+     "ITEM_CH_W_CLOTHES_01_LA_A",
+     "ITEM_CH_W_CLOTHES_01_FA_A",
+     "ITEM_CH_W_CLOTHES_01_AA_A"
+    ]
+   }
+  },
+  {
+   "id": "guard_spear",
+   "glb": "variants/guard_spear.glb",
+   "skeleton": "ch_guard",
+   "kind": "guard",
+   "female": false,
+   "height": 1.842,
+   "rank": "medium",
+   "class": "guard",
+   "triangles": 1003,
+   "vertices": 788,
+   "atlas": [
+    512,
+    256
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/ch_guard_spear.bsr"
+   }
+  },
+  {
+   "id": "guard_bow",
+   "glb": "variants/guard_bow.glb",
+   "skeleton": "ch_guard",
+   "kind": "guard",
+   "female": false,
+   "height": 1.842,
+   "rank": "medium",
+   "class": "guard",
+   "triangles": 1149,
+   "vertices": 920,
+   "atlas": [
+    1024,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/ch_guard_bow.bsr"
+   }
+  },
+  {
+   "id": "elder_m",
+   "glb": "variants/elder_m.glb",
+   "skeleton": "npc_ch_event_grandfather",
+   "kind": "elder",
+   "female": false,
+   "height": 1.623,
+   "rank": "high",
+   "class": "elder",
+   "triangles": 990,
+   "vertices": 842,
+   "atlas": [
+    512,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/npc/npc/npc_ch_event_ grandfather.bsr"
+   }
+  },
+  {
+   "id": "elder_w",
+   "glb": "variants/elder_w.glb",
+   "skeleton": "npc_ch_event_grandmother",
+   "kind": "elder",
+   "female": true,
+   "height": 1.641,
+   "rank": "high",
+   "class": "elder",
+   "triangles": 998,
+   "vertices": 852,
+   "atlas": [
+    512,
+    256
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/npc/npc/npc_ch_event_ grandmother.bsr"
+   }
+  },
+  {
+   "id": "child",
+   "glb": "variants/child.glb",
+   "skeleton": "npc_ch_event_child",
+   "kind": "elder",
+   "female": true,
+   "height": 1.232,
+   "rank": "high",
+   "class": "elder",
+   "triangles": 1266,
+   "vertices": 1013,
+   "atlas": [
+    512,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/npc/npc/npc_ch_event_ child.bsr"
+   }
+  },
+  {
+   "id": "chicken",
+   "glb": "variants/chicken.glb",
+   "skeleton": "cj_chicken",
+   "kind": "chicken",
+   "female": false,
+   "height": 0.493,
+   "rank": "medium",
+   "class": "animal",
+   "triangles": 204,
+   "vertices": 146,
+   "atlas": [
+    128,
+    128
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/npc/animal/cj_chicken.bsr"
+   }
+  },
+  {
+   "id": "cat",
+   "glb": "variants/cat.glb",
+   "skeleton": "p_cat",
+   "kind": "cat",
+   "female": false,
+   "height": 0.703,
+   "rank": "medium",
+   "class": "animal",
+   "triangles": 1170,
+   "vertices": 831,
+   "atlas": [
+    256,
+    256
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/p_cat.bsr"
+   }
+  },
+  {
+   "id": "dog",
+   "glb": "variants/dog.glb",
+   "skeleton": "p_raccoondog",
+   "kind": "dog",
+   "female": false,
+   "height": 1.106,
+   "rank": "medium",
+   "class": "animal",
+   "triangles": 1294,
+   "vertices": 942,
+   "atlas": [
+    256,
+    256
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/p_raccoondog.bsr"
+   }
+  },
+  {
+   "id": "packhorse",
+   "glb": "variants/packhorse.glb",
+   "skeleton": "t_horse1",
+   "kind": "horse",
+   "female": false,
+   "height": 2.529,
+   "rank": "high",
+   "class": "animal",
+   "triangles": 1032,
+   "vertices": 871,
+   "atlas": [
+    512,
+    256
+   ],
+   "selfLit": [
+    0.5882,
+    0.5882,
+    0.5882
+   ],
+   "source": {
+    "bsr": "res/cos/t_horse1.bsr"
+   }
+  },
+  {
+   "id": "donkey",
+   "glb": "variants/donkey.glb",
+   "skeleton": "trade_cart_donkey",
+   "kind": "horse",
+   "female": false,
+   "height": 1.899,
+   "rank": "ultra",
+   "class": "animal",
+   "triangles": 912,
+   "vertices": 847,
+   "atlas": [
+    512,
+    512
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/t_donkey.bsr"
+   }
+  },
+  {
+   "id": "horse",
+   "glb": "variants/horse.glb",
+   "skeleton": "c_horse",
+   "kind": "horse",
+   "female": false,
+   "height": 2.529,
+   "rank": "high",
+   "class": "animal",
+   "triangles": 818,
+   "vertices": 586,
+   "atlas": [
+    512,
+    256
+   ],
+   "selfLit": [
+    0,
+    0,
+    0
+   ],
+   "source": {
+    "bsr": "res/cos/c_horse1.bsr"
+   }
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+  "source": "res/item/china/man_item/heavy_03_ba.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "heavy_03_ba",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "heavy_03_ba"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "heavy_03_ba"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "heavy_03_ba"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "heavy_03_ba",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\heavy_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_ba.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (86.0% partial, 14.0% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.2587200105190277,
+        0.2587200105190277,
+        0.2587200105190277,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "heavy_03_ba",
+      "bms": "prim\\mesh\\item\\china\\man_item\\heavy_03_ba.bms",
+      "material": "heavy_03_ba",
+      "vertices": 325,
+      "triangles": 492,
+      "skinned": false,
+      "bones": [
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 Head",
+        "Bip01 R UpperArm",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Forearm",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 325,
+    "triangles": 492,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.5432248115539551,
+    "boundsMin": [
+      -0.5236214399337769,
+      1.0845580101013184,
+      -0.12276671081781387
+    ],
+    "boundsMax": [
+      0.5236471891403198,
+      1.6277828216552734,
+      0.15257874131202698
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

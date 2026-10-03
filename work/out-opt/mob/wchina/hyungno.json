@@ -1,0 +1,598 @@
+{
+  "source": "res/mob/wchina/hyungno.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "hyungno",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\wchina\\hyungno.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger02",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger12",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L Finger22",
+      "Bip01 L Finger3",
+      "Bip01 L Finger31",
+      "Bip01 L Finger32",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger02",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger12",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R Finger22",
+      "Bip01 R Finger3",
+      "Bip01 R Finger31",
+      "Bip01 R Finger32",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.236544183302328e-7,
+      "maxHierarchyError": 8.881784197001252e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "hyungno",
+      "bmt": "prim\\mtrl\\mob\\wchina\\hyungno.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\wchina\\hyungno.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.7% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0.11999999731779099
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hyungno_sword",
+      "bms": "prim\\mesh\\mob\\wchina\\hyungno_sword.bms",
+      "material": "hyungno",
+      "vertices": 39,
+      "triangles": 60,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "hyungno_part1",
+      "bms": "prim\\mesh\\mob\\wchina\\hyungno_part1.bms",
+      "material": "hyungno",
+      "vertices": 269,
+      "triangles": 323,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Hand",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger02",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger12",
+        "Bip01 L Finger3",
+        "Bip01 L Finger32",
+        "Bip01 L Finger31",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger22",
+        "Bip01 L Clavicle"
+      ]
+    },
+    {
+      "name": "hyungno_part2_part1",
+      "bms": "prim\\mesh\\mob\\wchina\\hyungno_part2_part1.bms",
+      "material": "hyungno",
+      "vertices": 118,
+      "triangles": 144,
+      "skinned": true,
+      "bones": [
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 Spine1",
+        "Bip01 R Hand",
+        "Bip01 R Finger01",
+        "Bip01 R Finger02",
+        "Bip01 R Finger0",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger3",
+        "Bip01 R Finger31"
+      ]
+    },
+    {
+      "name": "hyungno_part2_part2",
+      "bms": "prim\\mesh\\mob\\wchina\\hyungno_part2_part2.bms",
+      "material": "hyungno",
+      "vertices": 839,
+      "triangles": 1082,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Ponytail1",
+        "Bip01 Neck",
+        "Bip01 Spine1",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Thigh",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_stand01.ban",
+      "banName": "hyungno_stand01",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_walk.ban",
+      "banName": "hyungno_walk",
+      "durationMs": 1400,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 22,
+      "walkLength": 14,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_attack01.ban",
+      "banName": "hyungno_attack01",
+      "durationMs": 1600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 227,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 876,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_damage01.ban",
+      "banName": "hyungno_damage01",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_die_teen.ban",
+      "banName": "hyungno_die_teen",
+      "durationMs": 1766,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_attack02.ban",
+      "banName": "hyungno_attack02",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 791,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 47
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_run.ban",
+      "banName": "hyungno_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 33.965999603271484,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_damage02.ban",
+      "banName": "hyungno_damage02",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_attack03.ban",
+      "banName": "hyungno_attack03",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1328,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_die_rm_teen.ban",
+      "banName": "hyungno_die_rm_teen",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_down.ban",
+      "banName": "hyungno_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_down_rm.ban",
+      "banName": "hyungno_down_rm",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_down_damage.ban",
+      "banName": "hyungno_down_damage",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_down_up.ban",
+      "banName": "hyungno_down_up",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_down_die.ban",
+      "banName": "hyungno_down_die",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_stand01.ban",
+      "banName": "hyungno_stand01",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\mob\\wchina\\hyungno\\hyungno_stand02.ban",
+      "banName": "hyungno_stand02",
+      "durationMs": 4333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 48,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 47
+    }
+  ],
+  "stats": {
+    "vertices": 1265,
+    "triangles": 1609,
+    "joints": 48,
+    "meshes": 4,
+    "animations": 17,
+    "textures": 1,
+    "heightM": 2.4258515601977706,
+    "boundsMin": [
+      -0.985432505607605,
+      -0.007431006990373135,
+      -0.3925958573818207
+    ],
+    "boundsMax": [
+      1.1906299591064453,
+      2.4184205532073975,
+      1.8206043243408203
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "hyungno",
+    "packs": {
+      "default": "mob/_anims/hyungno/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "hyungno_stand01"
+      ],
+      "WALK": [
+        "default",
+        "hyungno_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "hyungno_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "hyungno_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "hyungno_die_teen"
+      ],
+      "ATTACK2": [
+        "default",
+        "hyungno_attack02"
+      ],
+      "RUN": [
+        "default",
+        "hyungno_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "hyungno_damage02"
+      ],
+      "ATTACK3": [
+        "default",
+        "hyungno_attack03"
+      ],
+      "DIE1_RM": [
+        "default",
+        "hyungno_die_rm_teen"
+      ],
+      "DOWN": [
+        "default",
+        "hyungno_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "hyungno_down_rm"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "hyungno_down_damage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "hyungno_down_up"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "hyungno_down_die"
+      ],
+      "STUN": [
+        "default",
+        "hyungno_stand01"
+      ],
+      "STAND2": [
+        "default",
+        "hyungno_stand02"
+      ]
+    }
+  }
+}

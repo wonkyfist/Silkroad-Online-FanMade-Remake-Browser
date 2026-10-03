@@ -1,0 +1,186 @@
+{
+  "source": "res/item/china/woman_item/clothes_01_ba.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "clothes_01_ba",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "clothes_01_ba"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "clothes_01_ba_2s"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_01_ba",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clother_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_ba.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "clothes_01_la_2s",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clother_01.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_ba.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_01_ba",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_01_ba.bms",
+      "material": "clothes_01_ba",
+      "vertices": 253,
+      "triangles": 328,
+      "skinned": false,
+      "bones": [
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bip01 Spine1",
+        "Bone01",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 L Clavicle",
+        "Bip01 L Thigh",
+        "Bip01 R Clavicle",
+        "Bip01 R Thigh"
+      ]
+    },
+    {
+      "name": "clothes_01_ba_2s",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_01_ba_2s.bms",
+      "material": "clothes_01_la_2s",
+      "vertices": 35,
+      "triangles": 48,
+      "skinned": false,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 288,
+    "triangles": 376,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.0124908089637756,
+    "boundsMin": [
+      -0.14744168519973755,
+      0.4933404326438904,
+      -0.19427528977394104
+    ],
+    "boundsMax": [
+      0.14743857085704803,
+      1.505831241607666,
+      0.12367083877325058
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

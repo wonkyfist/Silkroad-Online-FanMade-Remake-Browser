@@ -1,0 +1,634 @@
+{
+  "source": "res/mob/china/tiger_clon.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tiger",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\tiger.bsk",
+    "joints": [
+      "Bip02",
+      "Bip02 Pelvis",
+      "Bip02 Spine",
+      "Bip02 Spine1",
+      "Bip02 Spine2",
+      "Bip02 Neck",
+      "Bip02 Neck1",
+      "Bip02 Head",
+      "Bip02 Ponytail1",
+      "Bip02 L Clavicle",
+      "Bip02 L UpperArm",
+      "Bip02 L Forearm",
+      "Bip02 L Hand",
+      "Bip02 L Finger0",
+      "Bip02 R Clavicle",
+      "Bip02 R UpperArm",
+      "Bip02 R Forearm",
+      "Bip02 R Hand",
+      "Bip02 R Finger0",
+      "Bip02 L Thigh",
+      "Bip02 L Calf",
+      "Bip02 L HorseLink",
+      "Bip02 L Foot",
+      "Bip02 L Toe0",
+      "Bip02 R Thigh",
+      "Bip02 R Calf",
+      "Bip02 R HorseLink",
+      "Bip02 R Foot",
+      "Bip02 R Toe0",
+      "Bip02 Tail",
+      "Bip02 Tail1",
+      "Bip02 Tail2",
+      "Bip02 Tail3",
+      "Bip02 Tail4"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000010790771818314226,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off_m.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on_m.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        -0.00109,
+        0,
+        0.00327
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": {
+    "kind": -1,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "tiger_2side",
+      "bmt": "prim\\mtrl\\mob\\china\\tiger.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\tiger.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tiger",
+      "bmt": "prim\\mtrl\\mob\\china\\tiger.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\tiger.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.4% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tiger_01",
+      "bms": "prim\\mesh\\mob\\china\\tiger_01.bms",
+      "material": "tiger_2side",
+      "vertices": 89,
+      "triangles": 63,
+      "skinned": true,
+      "bones": [
+        "Bip02 Ponytail1",
+        "Bip02 Head",
+        "Bip02 Neck1",
+        "Bip02 R HorseLink",
+        "Bip02 R Calf",
+        "Bip02 R UpperArm",
+        "Bip02 R Forearm",
+        "Bip02 Spine2",
+        "Bip02 Spine1",
+        "Bip02 Neck",
+        "Bip02 L HorseLink",
+        "Bip02 L Calf",
+        "Bip02 L UpperArm",
+        "Bip02 L Forearm"
+      ]
+    },
+    {
+      "name": "tiger_part1",
+      "bms": "prim\\mesh\\mob\\china\\tiger_part1.bms",
+      "material": "tiger",
+      "vertices": 206,
+      "triangles": 262,
+      "skinned": true,
+      "bones": [
+        "Bip02 Spine",
+        "Bip02 Pelvis",
+        "Bip02 R Thigh",
+        "Bip02 R Calf",
+        "Bip02 R HorseLink",
+        "Bip02 R Foot",
+        "Bip02 R Toe0",
+        "Bip02 Spine1",
+        "Bip02 L Thigh",
+        "Bip02 L Calf",
+        "Bip02 L HorseLink",
+        "Bip02 L Foot",
+        "Bip02 L Toe0",
+        "Bip02 Tail",
+        "Bip02 Tail1",
+        "Bip02 Tail2",
+        "Bip02 Tail3",
+        "Bip02 Tail4"
+      ]
+    },
+    {
+      "name": "tiger_part2",
+      "bms": "prim\\mesh\\mob\\china\\tiger_part2.bms",
+      "material": "tiger",
+      "vertices": 401,
+      "triangles": 499,
+      "skinned": true,
+      "bones": [
+        "Bip02 Head",
+        "Bip02 Ponytail1",
+        "Bip02 Neck1",
+        "Bip02 Neck",
+        "Bip02 R UpperArm",
+        "Bip02 R Clavicle",
+        "Bip02 Spine2",
+        "Bip02 Spine1",
+        "Bip02 R Forearm",
+        "Bip02 R Hand",
+        "Bip02 R Finger0",
+        "Bip02 L UpperArm",
+        "Bip02 L Clavicle",
+        "Bip02 L Forearm",
+        "Bip02 L Hand",
+        "Bip02 L Finger0",
+        "Bip02 Tail4",
+        "Bip02 Tail3"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_stand01.ban",
+      "banName": "tiger_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_walk.ban",
+      "banName": "tiger_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 21.067100524902344,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_attack01.ban",
+      "banName": "tiger_attack01",
+      "durationMs": 2233,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 82,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1164,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_damage01.ban",
+      "banName": "tiger_damage01",
+      "durationMs": 433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 2,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_die.ban",
+      "banName": "tiger_die",
+      "durationMs": 3100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 71,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_stand02.ban",
+      "banName": "tiger_stand02",
+      "durationMs": 5333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_run.ban",
+      "banName": "tiger_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 15,
+      "walkLength": 50.650001525878906,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_damage02.ban",
+      "banName": "tiger_damage02",
+      "durationMs": 1800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 64,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_die_loop.ban",
+      "banName": "tiger_die_loop",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_down.ban",
+      "banName": "tiger_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_downwait.ban",
+      "banName": "tiger_downwait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_downdamage.ban",
+      "banName": "tiger_downdamage",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_wakeup.ban",
+      "banName": "tiger_wakeup",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\tiger\\tiger_downdie.ban",
+      "banName": "tiger_downdie",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    }
+  ],
+  "stats": {
+    "vertices": 696,
+    "triangles": 824,
+    "joints": 34,
+    "meshes": 3,
+    "animations": 14,
+    "textures": 1,
+    "heightM": 1.9658919593784958,
+    "boundsMin": [
+      -0.5346915125846863,
+      0.0026355960872024298,
+      -3.0413899421691895
+    ],
+    "boundsMax": [
+      0.5347148776054382,
+      1.9685275554656982,
+      1.193885087966919
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "tiger",
+    "packs": {
+      "default": "mob/_anims/tiger/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "tiger_stand01"
+      ],
+      "WALK": [
+        "default",
+        "tiger_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "tiger_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "tiger_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "tiger_die"
+      ],
+      "ATTREADY": [
+        "default",
+        "tiger_stand02"
+      ],
+      "RUN": [
+        "default",
+        "tiger_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "tiger_damage02"
+      ],
+      "DIE1_RM": [
+        "default",
+        "tiger_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "tiger_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "tiger_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "tiger_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "tiger_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "tiger_downdie"
+      ]
+    }
+  }
+}

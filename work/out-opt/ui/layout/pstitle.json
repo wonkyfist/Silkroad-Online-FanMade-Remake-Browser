@@ -1,0 +1,723 @@
+{
+  "source": "Media/resinfo/pstitle.txt",
+  "space": [
+    1600,
+    1200
+  ],
+  "sections": {
+    "Validate": [
+      {
+        "name": "GDR_CMB_CONFIRMBOX",
+        "class": "CIFConfirmbox",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "text": "",
+        "id": 47
+      }
+    ],
+    "Login": [
+      {
+        "name": "GDR_STA_CHANNELMESSAGE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/login_deco_gradation.ddj"
+        ],
+        "rect": [
+          -26,
+          226,
+          339,
+          24
+        ],
+        "text": "",
+        "id": 15
+      },
+      {
+        "name": "GDR_BTN_CHANNEL",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/list_button.ddj"
+        ],
+        "rect": [
+          203,
+          116,
+          48,
+          24
+        ],
+        "text": "",
+        "id": 46
+      },
+      {
+        "name": "GDR_STA_CHANNEL",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          110,
+          116,
+          86,
+          20
+        ],
+        "text": "",
+        "id": 45
+      },
+      {
+        "name": "GDR_STATIC4",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          36,
+          116,
+          59,
+          15
+        ],
+        "text": "UILM_STT_CHANNEL_SELECT",
+        "id": 104
+      },
+      {
+        "name": "GDR_BTN_SERVER",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/list_button.ddj"
+        ],
+        "rect": [
+          203,
+          86,
+          48,
+          24
+        ],
+        "text": "",
+        "id": 44
+      },
+      {
+        "name": "GDR_STA_SERVER",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          110,
+          88,
+          86,
+          20
+        ],
+        "text": "",
+        "id": 43
+      },
+      {
+        "name": "GDR_EDIT_PASS",
+        "class": "CIFEdit",
+        "ddj": [],
+        "rect": [
+          110,
+          60,
+          135,
+          20
+        ],
+        "text": "",
+        "id": 42
+      },
+      {
+        "name": "GDR_EDIT_ID",
+        "class": "CIFEdit",
+        "ddj": [],
+        "rect": [
+          110,
+          32,
+          135,
+          20
+        ],
+        "text": "",
+        "id": 41
+      },
+      {
+        "name": "GDR_STATIC3",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          36,
+          89,
+          59,
+          15
+        ],
+        "text": "UIO_CTL_SELECT_SERVER",
+        "id": 103
+      },
+      {
+        "name": "GDR_STATIC2",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          36,
+          62,
+          59,
+          15
+        ],
+        "text": "UIO_CTL_PASSWORD",
+        "id": 102
+      },
+      {
+        "name": "GDR_STATIC1",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          36,
+          35,
+          53,
+          15
+        ],
+        "text": "UIO_CTL_ID",
+        "id": 101
+      }
+    ],
+    "Server": [
+      {
+        "name": "GDR_SLI_SERVER",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          214,
+          28,
+          20,
+          306
+        ],
+        "text": "",
+        "id": 54
+      },
+      {
+        "name": "GDR_LIST_SERVER",
+        "class": "CIFOListCtrl",
+        "ddj": [],
+        "rect": [
+          7,
+          32,
+          200,
+          300
+        ],
+        "text": "",
+        "id": 51
+      }
+    ],
+    "UnityServer": [
+      {
+        "name": "GDR_STA_UNITY_CHAHGE_TITLE",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          6,
+          6,
+          238,
+          15
+        ],
+        "text": "UIO_STT_UNITY_SERVER_CHANGE_SERVER_LIST",
+        "id": 80
+      },
+      {
+        "name": "GDR_STA_UNITY_AFTER",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          129,
+          35,
+          84,
+          11
+        ],
+        "text": "UIO_STT_UNITY_SERVER_CHANGE_AFTER",
+        "id": 79
+      },
+      {
+        "name": "GDR_STA_UNITY_BEFORE",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          14,
+          35,
+          84,
+          11
+        ],
+        "text": "UIO_STT_UNITY_SERVER_CHANGE_BEFORE",
+        "id": 78
+      },
+      {
+        "name": "GDR_STA_UNITY_STOP",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/server_stop.ddj"
+        ],
+        "rect": [
+          224,
+          30,
+          0,
+          0
+        ],
+        "text": "",
+        "id": 77
+      },
+      {
+        "name": "GDR_SLI_UNITY_PML",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          224,
+          55,
+          20,
+          280
+        ],
+        "text": "",
+        "id": 76
+      },
+      {
+        "name": "GDR_VSC_UNITY_SERVER",
+        "class": "CIFVerticalScroll",
+        "ddj": [],
+        "rect": [
+          222,
+          45,
+          24,
+          280
+        ],
+        "text": "",
+        "id": 71
+      },
+      {
+        "name": "GDR_PML_UNITY_SERVER",
+        "class": "CIFPML",
+        "ddj": [],
+        "rect": [
+          11,
+          54,
+          204,
+          290
+        ],
+        "text": "",
+        "id": 72
+      }
+    ],
+    "Unity_Slider": [
+      {
+        "name": "GDR_BTN_US_THUMB",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_mov.ddj"
+        ],
+        "rect": [
+          0,
+          20,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 75
+      },
+      {
+        "name": "GDR_BTN_US_DOWN",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_down.ddj"
+        ],
+        "rect": [
+          0,
+          273,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 74
+      },
+      {
+        "name": "GDR_BTN_US_UP",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_up.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 73
+      }
+    ],
+    "Slider": [
+      {
+        "name": "GDR_BTN_THUMB",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_mov.ddj"
+        ],
+        "rect": [
+          0,
+          20,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 63
+      },
+      {
+        "name": "GDR_BTN_NEXT",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_down.ddj"
+        ],
+        "rect": [
+          0,
+          286,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 62
+      },
+      {
+        "name": "GDR_BTN_PREV",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/server_up.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 61
+      }
+    ],
+    "ChannelList": [
+      {
+        "name": "GDR_BTN_CYAHOO",
+        "class": "CIFButton",
+        "ddj": [],
+        "rect": [
+          17,
+          30,
+          124,
+          24
+        ],
+        "text": "UILM_STT_CHANNEL_01",
+        "id": 58
+      },
+      {
+        "name": "GDR_BTN_CNEOWIZE",
+        "class": "CIFButton",
+        "ddj": [],
+        "rect": [
+          17,
+          69,
+          124,
+          24
+        ],
+        "text": "UILM_STT_CHANNEL_02",
+        "id": 59
+      },
+      {
+        "name": "GDR_STA_SELECT_CHANNEL",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/login_select.ddj"
+        ],
+        "rect": [
+          17,
+          30,
+          124,
+          24
+        ],
+        "text": "",
+        "id": 81
+      }
+    ],
+    "Channel": [
+      {
+        "name": "GDR_STA_CHANNELLIST",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/login_chanel_window_01.ddj"
+        ],
+        "rect": [
+          12,
+          40,
+          153,
+          183
+        ],
+        "text": "",
+        "id": 60
+      },
+      {
+        "name": "GDR_BTN_CACCEPT",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          51,
+          232,
+          91,
+          30
+        ],
+        "text": "UILM_STT_CHANNEL_SELECT",
+        "id": 57
+      }
+    ],
+    "Title": [
+      {
+        "name": "GDR_STA_CHANNELWINDOW",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/login_chanel_window_02.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          178,
+          270
+        ],
+        "text": "",
+        "id": 14
+      },
+      {
+        "name": "GDR_FADE",
+        "class": "CIFFade",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1600,
+          1200
+        ],
+        "text": "",
+        "id": 13
+      },
+      {
+        "name": "GDR_BTN_CANCEL",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          91,
+          41
+        ],
+        "text": "UIO_CTL_EXIT",
+        "id": 12
+      },
+      {
+        "name": "GDR_BTN_OK",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button_europe.ddj",
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          91,
+          41
+        ],
+        "text": "UIO_CTL_CONNECT",
+        "id": 11
+      },
+      {
+        "name": "GDR_STA_UNITY_SERVERWINDOW",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/serverchange_window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "text": "",
+        "id": 70
+      },
+      {
+        "name": "GDR_STA_SERVERWINDOW",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/server_window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          240,
+          340
+        ],
+        "text": "",
+        "id": 10
+      },
+      {
+        "name": "GDR_BTN_SACCEPT",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button_europe.ddj",
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          91,
+          40
+        ],
+        "text": "UIO_CTL_SELECT",
+        "id": 56
+      },
+      {
+        "name": "GDR_BTN_SCANCEL",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button_europe.ddj",
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          91,
+          40
+        ],
+        "text": "UIO_COMMON_CTL_CANCEL",
+        "id": 55
+      },
+      {
+        "name": "GDR_STA_LOGINWINDOW",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/login_window_europe.ddj",
+          "interface/outer/login_window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          288,
+          140
+        ],
+        "text": "",
+        "id": 9
+      },
+      {
+        "name": "GDR_STA_LOGO",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/logo.ddj"
+        ],
+        "rect": [
+          540,
+          403,
+          508,
+          172
+        ],
+        "text": "",
+        "id": 8
+      },
+      {
+        "name": "GDR_STA_BIGLOGO",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/logo-big.ddj"
+        ],
+        "rect": [
+          360,
+          448,
+          896,
+          300
+        ],
+        "text": "",
+        "id": 7
+      },
+      {
+        "name": "GDR_TEXT_MESSAGE",
+        "class": "CIFTextBox",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "text": "",
+        "id": 500
+      },
+      {
+        "name": "GDR_STA_TITLE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/text-connect.ddj"
+        ],
+        "rect": [
+          47,
+          110,
+          184,
+          36
+        ],
+        "text": "",
+        "id": 5
+      },
+      {
+        "name": "GDR_STA_BSCREENDOWN",
+        "class": "CIFFade",
+        "ddj": [],
+        "rect": [
+          0,
+          1030,
+          1600,
+          170
+        ],
+        "text": "",
+        "id": 4
+      },
+      {
+        "name": "GDR_STA_BSCREENUP",
+        "class": "CIFFade",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1600,
+          170
+        ],
+        "text": "",
+        "id": 3
+      },
+      {
+        "name": "GDR_STA_SCREENDOWN",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/blackbar_down_copyright_europe.ddj",
+          "interface/outer/blackbar_down_copyright.ddj"
+        ],
+        "rect": [
+          0,
+          1030,
+          1600,
+          172
+        ],
+        "text": "",
+        "id": 2
+      },
+      {
+        "name": "GDR_STA_SCREENUP",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/blackbar_up_18.ddj",
+          "interface/outer/blackbar_up_18_europe.ddj",
+          "interface/outer/blackbar_up_18.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          1600,
+          172
+        ],
+        "text": "",
+        "id": 1
+      }
+    ]
+  }
+}

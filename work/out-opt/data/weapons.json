@@ -1,0 +1,73 @@
+[
+  {
+    "family": "sword",
+    "code": "ITEM_CH_SWORD_01_A_DEF",
+    "baseCode": "ITEM_CH_SWORD_01_A",
+    "name": "Copper Sword",
+    "familyName": "Sword",
+    "degree": 1,
+    "reqLevel": 1,
+    "twoHanded": false,
+    "range": 6,
+    "bsr": "res/item/china/weapon/sword_01.bsr",
+    "glb": "/out/item/china/weapon/sword_01.glb",
+    "sidecar": "/out/item/china/weapon/sword_01.json"
+  },
+  {
+    "family": "blade",
+    "code": "ITEM_CH_BLADE_01_A_DEF",
+    "baseCode": "ITEM_CH_BLADE_01_A",
+    "name": "Copper Blade",
+    "familyName": "Blade",
+    "degree": 1,
+    "reqLevel": 1,
+    "twoHanded": false,
+    "range": 6,
+    "bsr": "res/item/china/weapon/blade_01.bsr",
+    "glb": "/out/item/china/weapon/blade_01.glb",
+    "sidecar": "/out/item/china/weapon/blade_01.json"
+  },
+  {
+    "family": "spear",
+    "code": "ITEM_CH_SPEAR_01_A_DEF",
+    "baseCode": "ITEM_CH_SPEAR_01_A",
+    "name": "Crescent",
+    "familyName": "Spear",
+    "degree": 1,
+    "reqLevel": 1,
+    "twoHanded": true,
+    "range": 18,
+    "bsr": "res/item/china/weapon/spear_01.bsr",
+    "glb": "/out/item/china/weapon/spear_01.glb",
+    "sidecar": "/out/item/china/weapon/spear_01.json"
+  },
+  {
+    "family": "glaive",
+    "code": "ITEM_CH_TBLADE_01_A_DEF",
+    "baseCode": "ITEM_CH_TBLADE_01_A",
+    "name": "Glaive",
+    "familyName": "Glaive",
+    "degree": 1,
+    "reqLevel": 1,
+    "twoHanded": true,
+    "range": 18,
+    "bsr": "res/item/china/weapon/tblade_01.bsr",
+    "glb": "/out/item/china/weapon/tblade_01.glb",
+    "sidecar": "/out/item/china/weapon/tblade_01.json"
+  },
+  {
+    "family": "bow",
+    "code": "ITEM_CH_BOW_01_A_DEF",
+    "baseCode": "ITEM_CH_BOW_01_A",
+    "name": "Copper Bow",
+    "familyName": "Bow",
+    "degree": 1,
+    "reqLevel": 1,
+    "twoHanded": true,
+    "range": 180,
+    "bsr": "res/item/china/weapon/bow_01.bsr",
+    "glb": "/out/item/china/weapon/bow_01.glb",
+    "sidecar": "/out/item/china/weapon/bow_01.json",
+    "ammo": "ITEM_ETC_AMMO_ARROW_01_DEF"
+  }
+]

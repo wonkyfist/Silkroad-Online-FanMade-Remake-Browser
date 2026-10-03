@@ -1,0 +1,3333 @@
+{
+  "schema": 1,
+  "kind": "zones",
+  "generatedAt": "2026-10-01T20:05:14.344Z",
+  "worldExport": "jangan-fields",
+  "sources": [
+    "client:textzonename.txt",
+    "client:refregion.txt",
+    "world:jangan-fields/manifest.json (regions)",
+    "towns.json (town regions)",
+    "content/coast/coast.json (coast area names)"
+  ],
+  "entries": [
+    {
+      "region": 22425,
+      "rx": 153,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22426,
+      "rx": 154,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22427,
+      "rx": 155,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22428,
+      "rx": 156,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22429,
+      "rx": 157,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22430,
+      "rx": 158,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22431,
+      "rx": 159,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22432,
+      "rx": 160,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22433,
+      "rx": 161,
+      "rz": 87,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22434,
+      "rx": 162,
+      "rz": 87,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22435,
+      "rx": 163,
+      "rz": 87,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22436,
+      "rx": 164,
+      "rz": 87,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22681,
+      "rx": 153,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22682,
+      "rx": 154,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22683,
+      "rx": 155,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22684,
+      "rx": 156,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22685,
+      "rx": 157,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22686,
+      "rx": 158,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22687,
+      "rx": 159,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22688,
+      "rx": 160,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22689,
+      "rx": 161,
+      "rz": 88,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22690,
+      "rx": 162,
+      "rz": 88,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22691,
+      "rx": 163,
+      "rz": 88,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22692,
+      "rx": 164,
+      "rz": 88,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22693,
+      "rx": 165,
+      "rz": 88,
+      "name": "River Mouth",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22702,
+      "rx": 174,
+      "rz": 88,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22703,
+      "rx": 175,
+      "rz": 88,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22704,
+      "rx": 176,
+      "rz": 88,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22937,
+      "rx": 153,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22938,
+      "rx": 154,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22939,
+      "rx": 155,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22940,
+      "rx": 156,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22941,
+      "rx": 157,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22942,
+      "rx": 158,
+      "rz": 89,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 22943,
+      "rx": 159,
+      "rz": 89,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 22944,
+      "rx": 160,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22945,
+      "rx": 161,
+      "rz": 89,
+      "name": "Tiger Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22946,
+      "rx": 162,
+      "rz": 89,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22947,
+      "rx": 163,
+      "rz": 89,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22948,
+      "rx": 164,
+      "rz": 89,
+      "name": "Tomb Ridge Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22949,
+      "rx": 165,
+      "rz": 89,
+      "name": "River Mouth",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22950,
+      "rx": 166,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22951,
+      "rx": 167,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22952,
+      "rx": 168,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22953,
+      "rx": 169,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22954,
+      "rx": 170,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22955,
+      "rx": 171,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22956,
+      "rx": 172,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22957,
+      "rx": 173,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22958,
+      "rx": 174,
+      "rz": 89,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22959,
+      "rx": 175,
+      "rz": 89,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 22960,
+      "rx": 176,
+      "rz": 89,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23193,
+      "rx": 153,
+      "rz": 90,
+      "name": "Tiger Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23194,
+      "rx": 154,
+      "rz": 90,
+      "name": "Tiger Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23195,
+      "rx": 155,
+      "rz": 90,
+      "name": "Tiger Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23196,
+      "rx": 156,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23197,
+      "rx": 157,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23198,
+      "rx": 158,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23199,
+      "rx": 159,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23200,
+      "rx": 160,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23201,
+      "rx": 161,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23202,
+      "rx": 162,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23203,
+      "rx": 163,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23204,
+      "rx": 164,
+      "rz": 90,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23205,
+      "rx": 165,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23206,
+      "rx": 166,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23207,
+      "rx": 167,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23208,
+      "rx": 168,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23209,
+      "rx": 169,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23210,
+      "rx": 170,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23211,
+      "rx": 171,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23212,
+      "rx": 172,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23213,
+      "rx": 173,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23214,
+      "rx": 174,
+      "rz": 90,
+      "name": "Jangan South Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23215,
+      "rx": 175,
+      "rz": 90,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23216,
+      "rx": 176,
+      "rz": 90,
+      "name": "South-East Cape",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23449,
+      "rx": 153,
+      "rz": 91,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23450,
+      "rx": 154,
+      "rz": 91,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23451,
+      "rx": 155,
+      "rz": 91,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23452,
+      "rx": 156,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23453,
+      "rx": 157,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23454,
+      "rx": 158,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23455,
+      "rx": 159,
+      "rz": 91,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23456,
+      "rx": 160,
+      "rz": 91,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23457,
+      "rx": 161,
+      "rz": 91,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23458,
+      "rx": 162,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23459,
+      "rx": 163,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23460,
+      "rx": 164,
+      "rz": 91,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23461,
+      "rx": 165,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23462,
+      "rx": 166,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23463,
+      "rx": 167,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23464,
+      "rx": 168,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23465,
+      "rx": 169,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23466,
+      "rx": 170,
+      "rz": 91,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23467,
+      "rx": 171,
+      "rz": 91,
+      "name": "Chinese tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23468,
+      "rx": 172,
+      "rz": 91,
+      "name": "Chinese tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23469,
+      "rx": 173,
+      "rz": 91,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23470,
+      "rx": 174,
+      "rz": 91,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23471,
+      "rx": 175,
+      "rz": 91,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23472,
+      "rx": 176,
+      "rz": 91,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23706,
+      "rx": 154,
+      "rz": 92,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23707,
+      "rx": 155,
+      "rz": 92,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23708,
+      "rx": 156,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23709,
+      "rx": 157,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23710,
+      "rx": 158,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23711,
+      "rx": 159,
+      "rz": 92,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23712,
+      "rx": 160,
+      "rz": 92,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23713,
+      "rx": 161,
+      "rz": 92,
+      "name": "Bandit's Mountain Stronghold",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23714,
+      "rx": 162,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23715,
+      "rx": 163,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23716,
+      "rx": 164,
+      "rz": 92,
+      "name": "South-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23717,
+      "rx": 165,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23718,
+      "rx": 166,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23719,
+      "rx": 167,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23720,
+      "rx": 168,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23721,
+      "rx": 169,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23722,
+      "rx": 170,
+      "rz": 92,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23723,
+      "rx": 171,
+      "rz": 92,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23724,
+      "rx": 172,
+      "rz": 92,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23725,
+      "rx": 173,
+      "rz": 92,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23726,
+      "rx": 174,
+      "rz": 92,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23727,
+      "rx": 175,
+      "rz": 92,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23728,
+      "rx": 176,
+      "rz": 92,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23962,
+      "rx": 154,
+      "rz": 93,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23963,
+      "rx": 155,
+      "rz": 93,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23964,
+      "rx": 156,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23965,
+      "rx": 157,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23966,
+      "rx": 158,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23967,
+      "rx": 159,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23968,
+      "rx": 160,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23969,
+      "rx": 161,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23970,
+      "rx": 162,
+      "rz": 93,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23971,
+      "rx": 163,
+      "rz": 93,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23972,
+      "rx": 164,
+      "rz": 93,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23973,
+      "rx": 165,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23974,
+      "rx": 166,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23975,
+      "rx": 167,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23976,
+      "rx": 168,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23977,
+      "rx": 169,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23978,
+      "rx": 170,
+      "rz": 93,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23979,
+      "rx": 171,
+      "rz": 93,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23980,
+      "rx": 172,
+      "rz": 93,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23981,
+      "rx": 173,
+      "rz": 93,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 23982,
+      "rx": 174,
+      "rz": 93,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23983,
+      "rx": 175,
+      "rz": 93,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 23984,
+      "rx": 176,
+      "rz": 93,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24217,
+      "rx": 153,
+      "rz": 94,
+      "name": "Canyon Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24218,
+      "rx": 154,
+      "rz": 94,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24219,
+      "rx": 155,
+      "rz": 94,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24220,
+      "rx": 156,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24221,
+      "rx": 157,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24222,
+      "rx": 158,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24223,
+      "rx": 159,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24224,
+      "rx": 160,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24225,
+      "rx": 161,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24226,
+      "rx": 162,
+      "rz": 94,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24227,
+      "rx": 163,
+      "rz": 94,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24228,
+      "rx": 164,
+      "rz": 94,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24229,
+      "rx": 165,
+      "rz": 94,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24230,
+      "rx": 166,
+      "rz": 94,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24231,
+      "rx": 167,
+      "rz": 94,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24232,
+      "rx": 168,
+      "rz": 94,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24233,
+      "rx": 169,
+      "rz": 94,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24234,
+      "rx": 170,
+      "rz": 94,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24235,
+      "rx": 171,
+      "rz": 94,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24236,
+      "rx": 172,
+      "rz": 94,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24237,
+      "rx": 173,
+      "rz": 94,
+      "name": "Chinese Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24238,
+      "rx": 174,
+      "rz": 94,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24239,
+      "rx": 175,
+      "rz": 94,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24240,
+      "rx": 176,
+      "rz": 94,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24473,
+      "rx": 153,
+      "rz": 95,
+      "name": "Canyon Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24474,
+      "rx": 154,
+      "rz": 95,
+      "name": "Canyon Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24475,
+      "rx": 155,
+      "rz": 95,
+      "name": "Western Strait",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24476,
+      "rx": 156,
+      "rz": 95,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24477,
+      "rx": 157,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24478,
+      "rx": 158,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24479,
+      "rx": 159,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24480,
+      "rx": 160,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24481,
+      "rx": 161,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24482,
+      "rx": 162,
+      "rz": 95,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24483,
+      "rx": 163,
+      "rz": 95,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24484,
+      "rx": 164,
+      "rz": 95,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24485,
+      "rx": 165,
+      "rz": 95,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24486,
+      "rx": 166,
+      "rz": 95,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24487,
+      "rx": 167,
+      "rz": 95,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24488,
+      "rx": 168,
+      "rz": 95,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24489,
+      "rx": 169,
+      "rz": 95,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24490,
+      "rx": 170,
+      "rz": 95,
+      "name": "Lake Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24491,
+      "rx": 171,
+      "rz": 95,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24492,
+      "rx": 172,
+      "rz": 95,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24493,
+      "rx": 173,
+      "rz": 95,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24494,
+      "rx": 174,
+      "rz": 95,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24495,
+      "rx": 175,
+      "rz": 95,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24496,
+      "rx": 176,
+      "rz": 95,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24729,
+      "rx": 153,
+      "rz": 96,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 24730,
+      "rx": 154,
+      "rz": 96,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 24731,
+      "rx": 155,
+      "rz": 96,
+      "name": "Canyon Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24732,
+      "rx": 156,
+      "rz": 96,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24733,
+      "rx": 157,
+      "rz": 96,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24734,
+      "rx": 158,
+      "rz": 96,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24735,
+      "rx": 159,
+      "rz": 96,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24736,
+      "rx": 160,
+      "rz": 96,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24737,
+      "rx": 161,
+      "rz": 96,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24738,
+      "rx": 162,
+      "rz": 96,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24739,
+      "rx": 163,
+      "rz": 96,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24740,
+      "rx": 164,
+      "rz": 96,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24741,
+      "rx": 165,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24742,
+      "rx": 166,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24743,
+      "rx": 167,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24744,
+      "rx": 168,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24745,
+      "rx": 169,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24746,
+      "rx": 170,
+      "rz": 96,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24747,
+      "rx": 171,
+      "rz": 96,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24748,
+      "rx": 172,
+      "rz": 96,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24749,
+      "rx": 173,
+      "rz": 96,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24750,
+      "rx": 174,
+      "rz": 96,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24751,
+      "rx": 175,
+      "rz": 96,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24752,
+      "rx": 176,
+      "rz": 96,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24985,
+      "rx": 153,
+      "rz": 97,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 24986,
+      "rx": 154,
+      "rz": 97,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 24987,
+      "rx": 155,
+      "rz": 97,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 24988,
+      "rx": 156,
+      "rz": 97,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24989,
+      "rx": 157,
+      "rz": 97,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 24990,
+      "rx": 158,
+      "rz": 97,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24991,
+      "rx": 159,
+      "rz": 97,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24992,
+      "rx": 160,
+      "rz": 97,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24993,
+      "rx": 161,
+      "rz": 97,
+      "name": "Jangan Ferry",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24994,
+      "rx": 162,
+      "rz": 97,
+      "name": "North-Tiger Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24995,
+      "rx": 163,
+      "rz": 97,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24996,
+      "rx": 164,
+      "rz": 97,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24997,
+      "rx": 165,
+      "rz": 97,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24998,
+      "rx": 166,
+      "rz": 97,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 24999,
+      "rx": 167,
+      "rz": 97,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25000,
+      "rx": 168,
+      "rz": 97,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25001,
+      "rx": 169,
+      "rz": 97,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25002,
+      "rx": 170,
+      "rz": 97,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25003,
+      "rx": 171,
+      "rz": 97,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25004,
+      "rx": 172,
+      "rz": 97,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25005,
+      "rx": 173,
+      "rz": 97,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25006,
+      "rx": 174,
+      "rz": 97,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25007,
+      "rx": 175,
+      "rz": 97,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25008,
+      "rx": 176,
+      "rz": 97,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25241,
+      "rx": 153,
+      "rz": 98,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25242,
+      "rx": 154,
+      "rz": 98,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25243,
+      "rx": 155,
+      "rz": 98,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25244,
+      "rx": 156,
+      "rz": 98,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25245,
+      "rx": 157,
+      "rz": 98,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25246,
+      "rx": 158,
+      "rz": 98,
+      "name": "",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25247,
+      "rx": 159,
+      "rz": 98,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25248,
+      "rx": 160,
+      "rz": 98,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25249,
+      "rx": 161,
+      "rz": 98,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25250,
+      "rx": 162,
+      "rz": 98,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25251,
+      "rx": 163,
+      "rz": 98,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25252,
+      "rx": 164,
+      "rz": 98,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25253,
+      "rx": 165,
+      "rz": 98,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25254,
+      "rx": 166,
+      "rz": 98,
+      "name": "Grassland",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25255,
+      "rx": 167,
+      "rz": 98,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25256,
+      "rx": 168,
+      "rz": 98,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25257,
+      "rx": 169,
+      "rz": 98,
+      "name": "Jangan",
+      "area": "Town_Jangan",
+      "continent": "CHINA",
+      "town": "JANGAN"
+    },
+    {
+      "region": 25258,
+      "rx": 170,
+      "rz": 98,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25259,
+      "rx": 171,
+      "rz": 98,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25260,
+      "rx": 172,
+      "rz": 98,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25261,
+      "rx": 173,
+      "rz": 98,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25262,
+      "rx": 174,
+      "rz": 98,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25263,
+      "rx": 175,
+      "rz": 98,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25264,
+      "rx": 176,
+      "rz": 98,
+      "name": "East Shelf Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25497,
+      "rx": 153,
+      "rz": 99,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25498,
+      "rx": 154,
+      "rz": 99,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25499,
+      "rx": 155,
+      "rz": 99,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25500,
+      "rx": 156,
+      "rz": 99,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25501,
+      "rx": 157,
+      "rz": 99,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25502,
+      "rx": 158,
+      "rz": 99,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25503,
+      "rx": 159,
+      "rz": 99,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25504,
+      "rx": 160,
+      "rz": 99,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25505,
+      "rx": 161,
+      "rz": 99,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25506,
+      "rx": 162,
+      "rz": 99,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25507,
+      "rx": 163,
+      "rz": 99,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25508,
+      "rx": 164,
+      "rz": 99,
+      "name": "Yeoha's Forest",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25509,
+      "rx": 165,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25510,
+      "rx": 166,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25511,
+      "rx": 167,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25512,
+      "rx": 168,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25513,
+      "rx": 169,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25514,
+      "rx": 170,
+      "rz": 99,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25515,
+      "rx": 171,
+      "rz": 99,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25516,
+      "rx": 172,
+      "rz": 99,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25517,
+      "rx": 173,
+      "rz": 99,
+      "name": "Hill of Ye Mt.",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25518,
+      "rx": 174,
+      "rz": 99,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25519,
+      "rx": 175,
+      "rz": 99,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25520,
+      "rx": 176,
+      "rz": 99,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25753,
+      "rx": 153,
+      "rz": 100,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25754,
+      "rx": 154,
+      "rz": 100,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25755,
+      "rx": 155,
+      "rz": 100,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25756,
+      "rx": 156,
+      "rz": 100,
+      "name": "Earth Ghost Canyon",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25757,
+      "rx": 157,
+      "rz": 100,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25758,
+      "rx": 158,
+      "rz": 100,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25759,
+      "rx": 159,
+      "rz": 100,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25760,
+      "rx": 160,
+      "rz": 100,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25761,
+      "rx": 161,
+      "rz": 100,
+      "name": "Western China Ferry",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 25762,
+      "rx": 162,
+      "rz": 100,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25763,
+      "rx": 163,
+      "rz": 100,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25764,
+      "rx": 164,
+      "rz": 100,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25765,
+      "rx": 165,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25766,
+      "rx": 166,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25767,
+      "rx": 167,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25768,
+      "rx": 168,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25769,
+      "rx": 169,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25770,
+      "rx": 170,
+      "rz": 100,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25771,
+      "rx": 171,
+      "rz": 100,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25772,
+      "rx": 172,
+      "rz": 100,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25773,
+      "rx": 173,
+      "rz": 100,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25774,
+      "rx": 174,
+      "rz": 100,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 25775,
+      "rx": 175,
+      "rz": 100,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 25776,
+      "rx": 176,
+      "rz": 100,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26009,
+      "rx": 153,
+      "rz": 101,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26010,
+      "rx": 154,
+      "rz": 101,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26011,
+      "rx": 155,
+      "rz": 101,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26012,
+      "rx": 156,
+      "rz": 101,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26013,
+      "rx": 157,
+      "rz": 101,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26014,
+      "rx": 158,
+      "rz": 101,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26015,
+      "rx": 159,
+      "rz": 101,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26016,
+      "rx": 160,
+      "rz": 101,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26017,
+      "rx": 161,
+      "rz": 101,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26018,
+      "rx": 162,
+      "rz": 101,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26019,
+      "rx": 163,
+      "rz": 101,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26020,
+      "rx": 164,
+      "rz": 101,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26021,
+      "rx": 165,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26022,
+      "rx": 166,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26023,
+      "rx": 167,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26024,
+      "rx": 168,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26025,
+      "rx": 169,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26026,
+      "rx": 170,
+      "rz": 101,
+      "name": "Swamp area",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26027,
+      "rx": 171,
+      "rz": 101,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26028,
+      "rx": 172,
+      "rz": 101,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26029,
+      "rx": 173,
+      "rz": 101,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26030,
+      "rx": 174,
+      "rz": 101,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26031,
+      "rx": 175,
+      "rz": 101,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26032,
+      "rx": 176,
+      "rz": 101,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26265,
+      "rx": 153,
+      "rz": 102,
+      "name": "Western China Donwhang",
+      "area": "Town_Dunhwang",
+      "continent": "West_China"
+    },
+    {
+      "region": 26266,
+      "rx": 154,
+      "rz": 102,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26267,
+      "rx": 155,
+      "rz": 102,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26268,
+      "rx": 156,
+      "rz": 102,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26269,
+      "rx": 157,
+      "rz": 102,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26270,
+      "rx": 158,
+      "rz": 102,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26271,
+      "rx": 159,
+      "rz": 102,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26272,
+      "rx": 160,
+      "rz": 102,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26273,
+      "rx": 161,
+      "rz": 102,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26274,
+      "rx": 162,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26275,
+      "rx": 163,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26276,
+      "rx": 164,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26277,
+      "rx": 165,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26278,
+      "rx": 166,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26279,
+      "rx": 167,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26280,
+      "rx": 168,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26281,
+      "rx": 169,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26282,
+      "rx": 170,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26283,
+      "rx": 171,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26284,
+      "rx": 172,
+      "rz": 102,
+      "name": "Enterance of Qin-Shi Tomb",
+      "area": null,
+      "continent": "CHINA"
+    },
+    {
+      "region": 26285,
+      "rx": 173,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26286,
+      "rx": 174,
+      "rz": 102,
+      "name": "",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26287,
+      "rx": 175,
+      "rz": 102,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26288,
+      "rx": 176,
+      "rz": 102,
+      "name": "Tomb East Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26521,
+      "rx": 153,
+      "rz": 103,
+      "name": "Western China Donwhang",
+      "area": "Town_Dunhwang",
+      "continent": "West_China"
+    },
+    {
+      "region": 26522,
+      "rx": 154,
+      "rz": 103,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26523,
+      "rx": 155,
+      "rz": 103,
+      "name": "Entrance-Western China Donwhang",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26524,
+      "rx": 156,
+      "rz": 103,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26525,
+      "rx": 157,
+      "rz": 103,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26526,
+      "rx": 158,
+      "rz": 103,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26527,
+      "rx": 159,
+      "rz": 103,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26528,
+      "rx": 160,
+      "rz": 103,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26529,
+      "rx": 161,
+      "rz": 103,
+      "name": "Western China Main Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26530,
+      "rx": 162,
+      "rz": 103,
+      "name": "Spur Cove",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26531,
+      "rx": 163,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26532,
+      "rx": 164,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26533,
+      "rx": 165,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26534,
+      "rx": 166,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26535,
+      "rx": 167,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26536,
+      "rx": 168,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26537,
+      "rx": 169,
+      "rz": 103,
+      "name": "Jangan Bay",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26538,
+      "rx": 170,
+      "rz": 103,
+      "name": "Jangan Bay Shore",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26539,
+      "rx": 171,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26540,
+      "rx": 172,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26541,
+      "rx": 173,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26542,
+      "rx": 174,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26543,
+      "rx": 175,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26544,
+      "rx": 176,
+      "rz": 103,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26777,
+      "rx": 153,
+      "rz": 104,
+      "name": "Okmungwan Field",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26778,
+      "rx": 154,
+      "rz": 104,
+      "name": "Okmungwan Field",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26779,
+      "rx": 155,
+      "rz": 104,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26780,
+      "rx": 156,
+      "rz": 104,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26781,
+      "rx": 157,
+      "rz": 104,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26782,
+      "rx": 158,
+      "rz": 104,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26783,
+      "rx": 159,
+      "rz": 104,
+      "name": "Western China Ruins",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26784,
+      "rx": 160,
+      "rz": 104,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26785,
+      "rx": 161,
+      "rz": 104,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 26786,
+      "rx": 162,
+      "rz": 104,
+      "name": "Spur Cove",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26794,
+      "rx": 170,
+      "rz": 104,
+      "name": "Jangan Bay Shore",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26795,
+      "rx": 171,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26796,
+      "rx": 172,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26797,
+      "rx": 173,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26798,
+      "rx": 174,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26799,
+      "rx": 175,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 26800,
+      "rx": 176,
+      "rz": 104,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 27033,
+      "rx": 153,
+      "rz": 105,
+      "name": "Okmungwan Field",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27034,
+      "rx": 154,
+      "rz": 105,
+      "name": "Okmungwan Field",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27035,
+      "rx": 155,
+      "rz": 105,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27036,
+      "rx": 156,
+      "rz": 105,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27039,
+      "rx": 159,
+      "rz": 105,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27040,
+      "rx": 160,
+      "rz": 105,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27041,
+      "rx": 161,
+      "rz": 105,
+      "name": "Western China Northern Road",
+      "area": null,
+      "continent": "West_China"
+    },
+    {
+      "region": 27051,
+      "rx": 171,
+      "rz": 105,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 27052,
+      "rx": 172,
+      "rz": 105,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 27053,
+      "rx": 173,
+      "rz": 105,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    },
+    {
+      "region": 27054,
+      "rx": 174,
+      "rz": 105,
+      "name": "Qin-Shi Tomb Beach",
+      "area": null,
+      "continent": null
+    }
+  ]
+}

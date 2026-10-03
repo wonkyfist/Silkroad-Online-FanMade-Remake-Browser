@@ -1,0 +1,120 @@
+{
+  "source": "res/item/china/man_item/clothes_02_aa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "clothes_02_aa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 5,
+    "attachPointName": "_aa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "clothes_02_aa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_02_aa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\clothes_02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_aa.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.0% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_02_aa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\clothes_02_aa.bms",
+      "material": "clothes_02_aa",
+      "vertices": 62,
+      "triangles": 64,
+      "skinned": false,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Hand"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 62,
+    "triangles": 64,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.08782958984375,
+    "boundsMin": [
+      -0.7879267930984497,
+      1.4499704837799072,
+      -0.08181639760732651
+    ],
+    "boundsMax": [
+      0.7879266738891602,
+      1.5378000736236572,
+      0.020104017108678818
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

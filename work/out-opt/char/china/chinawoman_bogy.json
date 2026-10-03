@@ -1,0 +1,6532 @@
+{
+  "source": "res/char/china/chinawoman_bogy.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinawoman_bogy",
+  "type": "CHARACTER",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\char\\europe\\europewoman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone01",
+      "Bone02",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.242945916363652e-7,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "chinawoman_Bogy_hair01"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "woman_torso_upper"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "woman_torso_lower"
+      },
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "woman_pelvis"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "woman_thigh"
+      },
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "woman_calf"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "woman_arm_upper"
+      },
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "woman_arm_fore"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "chinawoman_Bogy_face"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "chinawoman_body",
+      "bmt": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy_body.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.5% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinawoman_hair",
+      "bmt": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy_hair.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (14.6% zero, 4.6% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "woman_arm_fore",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_arm_fore.bms",
+      "material": "chinawoman_body",
+      "vertices": 168,
+      "triangles": 200,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R UpperArm",
+        "Bip01 R Finger2",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L UpperArm",
+        "Bip01 L Finger2",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21"
+      ]
+    },
+    {
+      "name": "woman_arm_upper",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_arm_upper.bms",
+      "material": "chinawoman_body",
+      "vertices": 160,
+      "triangles": 212,
+      "skinned": true,
+      "bones": [
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Clavicle"
+      ]
+    },
+    {
+      "name": "woman_calf",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_calf.bms",
+      "material": "chinawoman_body",
+      "vertices": 126,
+      "triangles": 140,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    },
+    {
+      "name": "woman_pelvis",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_pelvis.bms",
+      "material": "chinawoman_body",
+      "vertices": 73,
+      "triangles": 114,
+      "skinned": true,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 Spine",
+        "Bip01 R Thigh"
+      ]
+    },
+    {
+      "name": "woman_thigh",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_thigh.bms",
+      "material": "chinawoman_body",
+      "vertices": 100,
+      "triangles": 150,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Calf",
+        "Bip01 R Thigh",
+        "Bip01 Pelvis",
+        "Bip01 L Calf",
+        "Bip01 L Thigh"
+      ]
+    },
+    {
+      "name": "woman_torso_lower",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_torso_lower.bms",
+      "material": "chinawoman_body",
+      "vertices": 60,
+      "triangles": 88,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Pelvis"
+      ]
+    },
+    {
+      "name": "woman_torso_upper",
+      "bms": "prim\\mesh\\char\\china\\woman\\woman_torso_upper.bms",
+      "material": "chinawoman_body",
+      "vertices": 99,
+      "triangles": 156,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bone01",
+        "Bip01 R Clavicle"
+      ]
+    },
+    {
+      "name": "chinawoman_Bogy_face",
+      "bms": "prim\\mesh\\char\\china\\woman\\chinawoman_bogy_face.bms",
+      "material": "chinawoman_body",
+      "vertices": 182,
+      "triangles": 268,
+      "skinned": true,
+      "bones": [
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bip01 Head",
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm"
+      ]
+    },
+    {
+      "name": "chinawoman_Bogy_hair01",
+      "bms": "prim\\mesh\\char\\china\\woman\\chinawoman_bogy_hair.bms",
+      "material": "chinawoman_hair",
+      "vertices": 128,
+      "triangles": 184,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_fighter_standcity.ban",
+      "banName": "chinawoman_fighter_standcity",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_fighter_walkforward.ban",
+      "banName": "chinawoman_fighter_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 32,
+      "walkLength": 17,
+      "events": [
+        {
+          "timeMs": 392,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 974,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_handstraightl.ban",
+      "banName": "chinawoman_a_handstraightl",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 208,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_benormalhit.ban",
+      "banName": "chinawoman_a_benormalhit",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_diehardhit.ban",
+      "banName": "chinawoman_a_diehardhit",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_handstraightr.ban",
+      "banName": "chinawoman_a_handstraightr",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 146,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_standbattle.ban",
+      "banName": "chinawoman_standbattle",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_fighter_runforward.ban",
+      "banName": "chinawoman_fighter_runforward",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 21,
+      "walkLength": 33.29999923706055,
+      "events": [
+        {
+          "timeMs": 313,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 638,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_behardhit.ban",
+      "banName": "chinawoman_a_behardhit",
+      "durationMs": 1100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SIT_DOWN",
+      "group": "default",
+      "type": 13,
+      "typeName": "SIT_DOWN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_sitground.ban",
+      "banName": "chinawoman_a_sitground",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SIT",
+      "group": "default",
+      "type": 14,
+      "typeName": "SIT",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_sitbreath.ban",
+      "banName": "chinawoman_a_sitbreath",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "STAND_UP",
+      "group": "default",
+      "type": 15,
+      "typeName": "STAND_UP",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_sitstand.ban",
+      "banName": "chinawoman_a_sitstand",
+      "durationMs": 1833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_handhookl.ban",
+      "banName": "chinawoman_a_handhookl",
+      "durationMs": 433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 222,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK4",
+      "group": "default",
+      "type": 17,
+      "typeName": "ATTACK4",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_handhookr.ban",
+      "banName": "chinawoman_a_handhookr",
+      "durationMs": 466,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 128,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DEFENCE",
+      "group": "default",
+      "type": 22,
+      "typeName": "DEFENCE",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_blocking.ban",
+      "banName": "chinawoman_a_blocking",
+      "durationMs": 433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WALK_BACK",
+      "group": "default",
+      "type": 23,
+      "typeName": "WALK_BACK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_walkbackward.ban",
+      "banName": "chinawoman_a_walkbackward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 1.1660000085830688,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "TURN_L",
+      "group": "default",
+      "type": 24,
+      "typeName": "TURN_L",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_standroll.ban",
+      "banName": "chinawoman_a_standroll",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "TURN_R",
+      "group": "default",
+      "type": 25,
+      "typeName": "TURN_R",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_standroll.ban",
+      "banName": "chinawoman_a_standroll",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_1",
+      "group": "default",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_shoot_a.ban",
+      "banName": "skill_china_gigong_shoot_a",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 202,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_2",
+      "group": "default",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_shoot_b.ban",
+      "banName": "skill_china_gigong_shoot_b",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 96,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_3",
+      "group": "default",
+      "type": 28,
+      "typeName": "SKILL_3",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_shoot_c.ban",
+      "banName": "skill_china_gigong_shoot_c",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 107,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_4",
+      "group": "default",
+      "type": 29,
+      "typeName": "SKILL_4",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_shoot_d.ban",
+      "banName": "skill_china_gigong_shoot_d",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 106,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_5",
+      "group": "default",
+      "type": 30,
+      "typeName": "SKILL_5",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_fire_shield.ban",
+      "banName": "skill_china_fire_shield",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 900,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1100,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_6",
+      "group": "default",
+      "type": 31,
+      "typeName": "SKILL_6",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_ice_ground.ban",
+      "banName": "skill_china_ice_ground",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 61,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1130,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_7",
+      "group": "default",
+      "type": 32,
+      "typeName": "SKILL_7",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_lightning_bobeop.ban",
+      "banName": "skill_china_lightning_bobeop",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_diehardhit_loop.ban",
+      "banName": "chinawoman_a_diehardhit_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "PICK",
+      "group": "default",
+      "type": 38,
+      "typeName": "PICK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_pickup.ban",
+      "banName": "chinawoman_pickup",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY01",
+      "group": "default",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_ready_a.ban",
+      "banName": "skill_china_gigong_ready_a",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY02",
+      "group": "default",
+      "type": 41,
+      "typeName": "READY02",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_ready_b.ban",
+      "banName": "skill_china_gigong_ready_b",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY03",
+      "group": "default",
+      "type": 42,
+      "typeName": "READY03",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_ready_c.ban",
+      "banName": "skill_china_gigong_ready_c",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY04",
+      "group": "default",
+      "type": 43,
+      "typeName": "READY04",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_ready_d.ban",
+      "banName": "skill_china_gigong_ready_d",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION01",
+      "group": "default",
+      "type": 50,
+      "typeName": "EMOTION01",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_greeting.ban",
+      "banName": "cw_emot_act_greeting",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION02",
+      "group": "default",
+      "type": 51,
+      "typeName": "EMOTION02",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_pokun.ban",
+      "banName": "cw_emot_act_pokun",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION03",
+      "group": "default",
+      "type": 52,
+      "typeName": "EMOTION03",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_rush.ban",
+      "banName": "cw_emot_act_rush",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION04",
+      "group": "default",
+      "type": 53,
+      "typeName": "EMOTION04",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_joy.ban",
+      "banName": "cw_emot_act_joy",
+      "durationMs": 1900,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION05",
+      "group": "default",
+      "type": 54,
+      "typeName": "EMOTION05",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_no.ban",
+      "banName": "cw_emot_act_no",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION06",
+      "group": "default",
+      "type": 55,
+      "typeName": "EMOTION06",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_yes.ban",
+      "banName": "cw_emot_act_yes",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION07",
+      "group": "default",
+      "type": 56,
+      "typeName": "EMOTION07",
+      "ban": "prim\\ani\\char\\china\\woman\\cw_emot_act_laugh.ban",
+      "banName": "cw_emot_act_laugh",
+      "durationMs": 3666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "EMOTION08",
+      "group": "default",
+      "type": 57,
+      "typeName": "EMOTION08",
+      "ban": "prim\\ani\\char\\china\\woman\\cm_emot_act_bow.ban",
+      "banName": "cm_emot_act_bow",
+      "durationMs": 5966,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 86,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "POSE",
+      "group": "default",
+      "type": 60,
+      "typeName": "POSE",
+      "ban": "prim\\ani\\char\\china\\woman\\woman_pose.ban",
+      "banName": "woman_pose",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND3",
+      "group": "default",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_merchant_standcity02.ban",
+      "banName": "chinawoman_merchant_standcity02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 28,
+      "partial": true
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_down.ban",
+      "banName": "chinawoman_a_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_downwait.ban",
+      "banName": "chinawoman_a_downwait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_downdamage.ban",
+      "banName": "chinawoman_a_downdamage",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_wakeup.ban",
+      "banName": "chinawoman_a_wakeup",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_a_downdie.ban",
+      "banName": "chinawoman_a_downdie",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_stun.ban",
+      "banName": "chinawoman_stun",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "VENDOR01",
+      "group": "default",
+      "type": 80,
+      "typeName": "VENDOR01",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_vendor01.ban",
+      "banName": "chinawoman_vendor01",
+      "durationMs": 10333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 58,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT01",
+      "group": "default",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_wait_a.ban",
+      "banName": "skill_china_gigong_wait_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT02",
+      "group": "default",
+      "type": 92,
+      "typeName": "WAIT02",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_wait_b.ban",
+      "banName": "skill_china_gigong_wait_b",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT03",
+      "group": "default",
+      "type": 93,
+      "typeName": "WAIT03",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_wait_c.ban",
+      "banName": "skill_china_gigong_wait_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT04",
+      "group": "default",
+      "type": 94,
+      "typeName": "WAIT04",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_china_gigong_wait_d.ban",
+      "banName": "skill_china_gigong_wait_d",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "REVIVAL",
+      "group": "default",
+      "type": 121,
+      "typeName": "REVIVAL",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_reborn.ban",
+      "banName": "chinawoman_reborn",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "HANDLOOF",
+      "group": "default",
+      "type": 188,
+      "typeName": "HANDLOOF",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_cast_hand_loop.ban",
+      "banName": "skill_ch_cast_hand_loop",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "TROW",
+      "group": "default",
+      "type": 189,
+      "typeName": "TROW",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_throw.ban",
+      "banName": "skill_ch_throw",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 425,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND1_spear_stand_city",
+      "group": "spear",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\woman\\spear_stand_city.ban",
+      "banName": "spear_stand_city",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WALK_spear_walk",
+      "group": "spear",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\spear_walk.ban",
+      "banName": "spear_walk",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 17,
+      "events": [
+        {
+          "timeMs": 382,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 968,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK1_skill_ch_spear_base_a",
+      "group": "spear",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_base_a.ban",
+      "banName": "skill_ch_spear_base_a",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 21,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 338,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK2_skill_ch_spear_base_b",
+      "group": "spear",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_base_b.ban",
+      "banName": "skill_ch_spear_base_b",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 352,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTREADY_spear_stand",
+      "group": "spear",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\china\\woman\\spear_stand.ban",
+      "banName": "spear_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_spear_run_fighter",
+      "group": "spear",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\spear_run_fighter.ban",
+      "banName": "spear_run_fighter",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 21,
+      "walkLength": 33.29999923706055,
+      "events": [
+        {
+          "timeMs": 312,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 638,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK3_skill_ch_spear_base_c",
+      "group": "spear",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_base_c.ban",
+      "banName": "skill_ch_spear_base_c",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 299,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK4_skill_ch_spear_base_d",
+      "group": "spear",
+      "type": 17,
+      "typeName": "ATTACK4",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_base_d.ban",
+      "banName": "skill_ch_spear_base_d",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 549,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_1_skill_ch_spear_pierce_a",
+      "group": "spear",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_a.ban",
+      "banName": "skill_ch_spear_pierce_a",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 566,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_2_skill_ch_spear_spin_wait",
+      "group": "spear",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_3_skill_ch_spear_frontarea_a",
+      "group": "spear",
+      "type": 28,
+      "typeName": "SKILL_3",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_a.ban",
+      "banName": "skill_ch_spear_frontarea_a",
+      "durationMs": 2100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 32,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 863,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_5_skill_ch_spear_stun_a",
+      "group": "spear",
+      "type": 30,
+      "typeName": "SKILL_5",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_a.ban",
+      "banName": "skill_ch_spear_stun_a",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1127,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_6_skill_ch_spear_roundarea_a",
+      "group": "spear",
+      "type": 31,
+      "typeName": "SKILL_6",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_a.ban",
+      "banName": "skill_ch_spear_roundarea_a",
+      "durationMs": 2100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 48,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 250,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_7_skill_ch_spear_chain_a",
+      "group": "spear",
+      "type": 32,
+      "typeName": "SKILL_7",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_a.ban",
+      "banName": "skill_ch_spear_chain_a",
+      "durationMs": 2866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 54,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 355,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 890,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1663,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_8",
+      "group": "spear",
+      "type": 33,
+      "typeName": "SKILL_8",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_b.ban",
+      "banName": "skill_ch_spear_pierce_b",
+      "durationMs": 1633,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 563,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_9",
+      "group": "spear",
+      "type": 34,
+      "typeName": "SKILL_9",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_10",
+      "group": "spear",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_shoot_a.ban",
+      "banName": "skill_ch_spear_shoot_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 835,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY01_skill_ch_spear_spin_wait",
+      "group": "spear",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "STAND3_spear_stand_city02",
+      "group": "spear",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\char\\china\\woman\\spear_stand_city02.ban",
+      "banName": "spear_stand_city02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 28,
+      "partial": true
+    },
+    {
+      "name": "SKILL_11",
+      "group": "spear",
+      "type": 68,
+      "typeName": "SKILL_11",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_b.ban",
+      "banName": "skill_ch_spear_frontarea_b",
+      "durationMs": 2466,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 44,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 590,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1430,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_12",
+      "group": "spear",
+      "type": 69,
+      "typeName": "SKILL_12",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_b.ban",
+      "banName": "skill_ch_spear_stun_b",
+      "durationMs": 2833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1250,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_13",
+      "group": "spear",
+      "type": 70,
+      "typeName": "SKILL_13",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_b.ban",
+      "banName": "skill_ch_spear_roundarea_b",
+      "durationMs": 2233,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 48,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 279,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_14",
+      "group": "spear",
+      "type": 71,
+      "typeName": "SKILL_14",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_b.ban",
+      "banName": "skill_ch_spear_chain_b",
+      "durationMs": 2300,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 49,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 291,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 564,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 847,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1427,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_15",
+      "group": "spear",
+      "type": 72,
+      "typeName": "SKILL_15",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_c.ban",
+      "banName": "skill_ch_spear_chain_c",
+      "durationMs": 3933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 137,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 462,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 908,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1449,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2292,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2868,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_16",
+      "group": "spear",
+      "type": 73,
+      "typeName": "SKILL_16",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_c.ban",
+      "banName": "skill_ch_spear_pierce_c",
+      "durationMs": 1700,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 896,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_17",
+      "group": "spear",
+      "type": 74,
+      "typeName": "SKILL_17",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_18",
+      "group": "spear",
+      "type": 75,
+      "typeName": "SKILL_18",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_c.ban",
+      "banName": "skill_ch_spear_frontarea_c",
+      "durationMs": 1900,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 32,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1023,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_19",
+      "group": "spear",
+      "type": 76,
+      "typeName": "SKILL_19",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_shoot_b.ban",
+      "banName": "skill_ch_spear_shoot_b",
+      "durationMs": 2166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1044,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_20",
+      "group": "spear",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_c.ban",
+      "banName": "skill_ch_spear_stun_c",
+      "durationMs": 3233,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1039,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2077,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT01_skill_ch_spear_spin_wait",
+      "group": "spear",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_21",
+      "group": "spear",
+      "type": 101,
+      "typeName": "SKILL_21",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_c.ban",
+      "banName": "skill_ch_spear_roundarea_c",
+      "durationMs": 2800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 60,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 478,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_22",
+      "group": "spear",
+      "type": 102,
+      "typeName": "SKILL_22",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_d.ban",
+      "banName": "skill_ch_spear_chain_d",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 103,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 742,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1412,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2123,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2715,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_23",
+      "group": "spear",
+      "type": 103,
+      "typeName": "SKILL_23",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_e.ban",
+      "banName": "skill_ch_spear_chain_e",
+      "durationMs": 5166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 74,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 575,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1158,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2078,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2894,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 3569,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 4294,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_24",
+      "group": "spear",
+      "type": 104,
+      "typeName": "SKILL_24",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_d.ban",
+      "banName": "skill_ch_spear_pierce_d",
+      "durationMs": 2833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1431,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1791,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_25",
+      "group": "spear",
+      "type": 105,
+      "typeName": "SKILL_25",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_26",
+      "group": "spear",
+      "type": 106,
+      "typeName": "SKILL_26",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_d.ban",
+      "banName": "skill_ch_spear_frontarea_d",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1014,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2024,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_27",
+      "group": "spear",
+      "type": 107,
+      "typeName": "SKILL_27",
+      "ban": "prim\\ani\\char\\china\\man\\skill_ch_spear_shoot_b.ban",
+      "banName": "skill_ch_spear_shoot_b",
+      "durationMs": 2200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 32,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1030,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SKILL_28",
+      "group": "spear",
+      "type": 108,
+      "typeName": "SKILL_28",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_d.ban",
+      "banName": "skill_ch_spear_stun_d",
+      "durationMs": 3500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1021,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2063,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_29",
+      "group": "spear",
+      "type": 109,
+      "typeName": "SKILL_29",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_c.ban",
+      "banName": "skill_ch_spear_roundarea_c",
+      "durationMs": 2800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 60,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 473,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_30",
+      "group": "spear",
+      "type": 110,
+      "typeName": "SKILL_30",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_f.ban",
+      "banName": "skill_ch_spear_chain_f",
+      "durationMs": 5500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 101,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 745,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1417,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2138,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2726,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 3926,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 4603,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_31",
+      "group": "spear",
+      "type": 111,
+      "typeName": "SKILL_31",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_e.ban",
+      "banName": "skill_ch_spear_pierce_e",
+      "durationMs": 3166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1414,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1724,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2064,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_32",
+      "group": "spear",
+      "type": 112,
+      "typeName": "SKILL_32",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_33",
+      "group": "spear",
+      "type": 113,
+      "typeName": "SKILL_33",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_e.ban",
+      "banName": "skill_ch_spear_frontarea_e",
+      "durationMs": 2833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 53,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 890,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1040,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_34",
+      "group": "spear",
+      "type": 114,
+      "typeName": "SKILL_34",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_shoot_d.ban",
+      "banName": "skill_ch_spear_shoot_d",
+      "durationMs": 3600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 55,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1032,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2398,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_35",
+      "group": "spear",
+      "type": 115,
+      "typeName": "SKILL_35",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_e.ban",
+      "banName": "skill_ch_spear_stun_e",
+      "durationMs": 3433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 74,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 225,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 759,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2192,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_36",
+      "group": "spear",
+      "type": 116,
+      "typeName": "SKILL_36",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_spin_wait.ban",
+      "banName": "skill_ch_spear_spin_wait",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_37",
+      "group": "spear",
+      "type": 117,
+      "typeName": "SKILL_37",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_c.ban",
+      "banName": "skill_ch_spear_roundarea_c",
+      "durationMs": 2800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 60,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 471,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_38",
+      "group": "spear",
+      "type": 118,
+      "typeName": "SKILL_38",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_pierce_f.ban",
+      "banName": "skill_ch_spear_pierce_f",
+      "durationMs": 2400,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1056,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1226,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1391,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_39",
+      "group": "spear",
+      "type": 119,
+      "typeName": "SKILL_39",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_frontarea_f.ban",
+      "banName": "skill_ch_spear_frontarea_f",
+      "durationMs": 2366,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 579,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1130,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1602,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_40",
+      "group": "spear",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_chain_g.ban",
+      "banName": "skill_ch_spear_chain_g",
+      "durationMs": 6000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 76,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 566,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1161,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2068,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2910,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 3571,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 4306,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        },
+        {
+          "timeMs": 5234,
+          "type": 1,
+          "p1": 6,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_41",
+      "group": "spear",
+      "type": 123,
+      "typeName": "SKILL_41",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_stun_f.ban",
+      "banName": "skill_ch_spear_stun_f",
+      "durationMs": 3966,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 907,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1799,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2660,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_42",
+      "group": "spear",
+      "type": 124,
+      "typeName": "SKILL_42",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_roundarea_c.ban",
+      "banName": "skill_ch_spear_roundarea_c",
+      "durationMs": 2800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 60,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 470,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_43",
+      "group": "spear",
+      "type": 125,
+      "typeName": "SKILL_43",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_spear_shoot_d.ban",
+      "banName": "skill_ch_spear_shoot_d",
+      "durationMs": 3600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 55,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1028,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2401,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK1_skill_ch_bow_normal",
+      "group": "bow",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_normal.ban",
+      "banName": "skill_ch_bow_normal",
+      "durationMs": 766,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 445,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTREADY_bow_stand",
+      "group": "bow",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\china\\woman\\bow_stand.ban",
+      "banName": "bow_stand",
+      "durationMs": 2300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_bow_run_fighter",
+      "group": "bow",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\bow_run_fighter.ban",
+      "banName": "bow_run_fighter",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 21,
+      "walkLength": 33.29999923706055,
+      "events": [
+        {
+          "timeMs": 308,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 640,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_1_skill_ch_bow_critical_a",
+      "group": "bow",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_a.ban",
+      "banName": "skill_ch_bow_critical_a",
+      "durationMs": 1533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1013,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_2_skill_ch_bow_chain_a",
+      "group": "bow",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_a.ban",
+      "banName": "skill_ch_bow_chain_a",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 30,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 440,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 790,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_3_skill_ch_bow_call_a",
+      "group": "bow",
+      "type": 28,
+      "typeName": "SKILL_3",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call_a.ban",
+      "banName": "skill_ch_bow_call_a",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 499,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_5_skill_ch_bow_pierce_a",
+      "group": "bow",
+      "type": 30,
+      "typeName": "SKILL_5",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_a.ban",
+      "banName": "skill_ch_bow_pierce_a",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1010,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_7_skill_ch_bow_area_a",
+      "group": "bow",
+      "type": 32,
+      "typeName": "SKILL_7",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_area_a.ban",
+      "banName": "skill_ch_bow_area_a",
+      "durationMs": 2033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1518,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_8_skill_ch_bow_critical_b",
+      "group": "bow",
+      "type": 33,
+      "typeName": "SKILL_8",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_b.ban",
+      "banName": "skill_ch_bow_critical_b",
+      "durationMs": 2033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1518,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_9_skill_ch_bow_chain_b",
+      "group": "bow",
+      "type": 34,
+      "typeName": "SKILL_9",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_b.ban",
+      "banName": "skill_ch_bow_chain_b",
+      "durationMs": 1566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 591,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 876,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1153,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_10_skill_ch_bow_power_a",
+      "group": "bow",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_power_a.ban",
+      "banName": "skill_ch_bow_power_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2507,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY01_skill_ch_bow_ready",
+      "group": "bow",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_ready.ban",
+      "banName": "skill_ch_bow_ready",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_11_skill_ch_bow_call_a",
+      "group": "bow",
+      "type": 68,
+      "typeName": "SKILL_11",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call_a.ban",
+      "banName": "skill_ch_bow_call_a",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 500,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_12_skill_ch_bow_pierce_b",
+      "group": "bow",
+      "type": 69,
+      "typeName": "SKILL_12",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_b.ban",
+      "banName": "skill_ch_bow_pierce_b",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 32,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1504,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_14_skill_ch_bow_area_b",
+      "group": "bow",
+      "type": 71,
+      "typeName": "SKILL_14",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_area_b.ban",
+      "banName": "skill_ch_bow_area_b",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2009,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_15_skill_ch_bow_critical_c",
+      "group": "bow",
+      "type": 72,
+      "typeName": "SKILL_15",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_c.ban",
+      "banName": "skill_ch_bow_critical_c",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2014,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_16_skill_ch_bow_chain_c",
+      "group": "bow",
+      "type": 73,
+      "typeName": "SKILL_16",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_c.ban",
+      "banName": "skill_ch_bow_chain_c",
+      "durationMs": 1800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 49,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 522,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 809,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1083,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1340,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_17_skill_ch_bow_call_a",
+      "group": "bow",
+      "type": 74,
+      "typeName": "SKILL_17",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call_a.ban",
+      "banName": "skill_ch_bow_call_a",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 500,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_18_skill_ch_bow_power_a",
+      "group": "bow",
+      "type": 75,
+      "typeName": "SKILL_18",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_power_a.ban",
+      "banName": "skill_ch_bow_power_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2508,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_19_skill_ch_bow_pierce_c",
+      "group": "bow",
+      "type": 76,
+      "typeName": "SKILL_19",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_c.ban",
+      "banName": "skill_ch_bow_pierce_c",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2014,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_20_skill_ch_bow_area_b",
+      "group": "bow",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_area_b.ban",
+      "banName": "skill_ch_bow_area_b",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2013,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT01_skill_ch_bow_wait",
+      "group": "bow",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_wait.ban",
+      "banName": "skill_ch_bow_wait",
+      "durationMs": 1300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_21_skill_ch_bow_critical_c",
+      "group": "bow",
+      "type": 101,
+      "typeName": "SKILL_21",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_c.ban",
+      "banName": "skill_ch_bow_critical_c",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2012,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_22_skill_ch_bow_chain_d",
+      "group": "bow",
+      "type": 102,
+      "typeName": "SKILL_22",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_d.ban",
+      "banName": "skill_ch_bow_chain_d",
+      "durationMs": 2066,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 53,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 517,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 806,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1082,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1340,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1607,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_23_skill_ch_bow_call_a",
+      "group": "bow",
+      "type": 103,
+      "typeName": "SKILL_23",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call_a.ban",
+      "banName": "skill_ch_bow_call_a",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 432,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_24_skill_ch_bow_power_a",
+      "group": "bow",
+      "type": 104,
+      "typeName": "SKILL_24",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_power_a.ban",
+      "banName": "skill_ch_bow_power_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2512,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_25_skill_ch_bow_pierce_c",
+      "group": "bow",
+      "type": 105,
+      "typeName": "SKILL_25",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_c.ban",
+      "banName": "skill_ch_bow_pierce_c",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2009,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_26_skill_ch_bow_critical_c",
+      "group": "bow",
+      "type": 106,
+      "typeName": "SKILL_26",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_c.ban",
+      "banName": "skill_ch_bow_critical_c",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2015,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_27_skill_ch_bow_area_b",
+      "group": "bow",
+      "type": 107,
+      "typeName": "SKILL_27",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_area_b.ban",
+      "banName": "skill_ch_bow_area_b",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2012,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_28_skill_ch_bow_chain_e",
+      "group": "bow",
+      "type": 108,
+      "typeName": "SKILL_28",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_e.ban",
+      "banName": "skill_ch_bow_chain_e",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 59,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 523,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 807,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1087,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1341,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1645,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 2047,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_29_skill_ch_bow_power_a",
+      "group": "bow",
+      "type": 109,
+      "typeName": "SKILL_29",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_power_a.ban",
+      "banName": "skill_ch_bow_power_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2512,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_30_skill_ch_bow_pierce_c",
+      "group": "bow",
+      "type": 110,
+      "typeName": "SKILL_30",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_c.ban",
+      "banName": "skill_ch_bow_pierce_c",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2012,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_31_skill_ch_bow_call",
+      "group": "bow",
+      "type": 111,
+      "typeName": "SKILL_31",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call.ban",
+      "banName": "skill_ch_bow_call",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 432,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_32_skill_ch_bow_critical_c",
+      "group": "bow",
+      "type": 112,
+      "typeName": "SKILL_32",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_c.ban",
+      "banName": "skill_ch_bow_critical_c",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2014,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_33_skill_ch_bow_chain_f",
+      "group": "bow",
+      "type": 113,
+      "typeName": "SKILL_33",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_chain_f.ban",
+      "banName": "skill_ch_bow_chain_f",
+      "durationMs": 2900,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 63,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 525,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 813,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1084,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1344,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1636,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 1963,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        },
+        {
+          "timeMs": 2485,
+          "type": 1,
+          "p1": 6,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_34_skill_ch_bow_area_b",
+      "group": "bow",
+      "type": 114,
+      "typeName": "SKILL_34",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_area_b.ban",
+      "banName": "skill_ch_bow_area_b",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2016,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_35_skill_ch_bow_critical_c",
+      "group": "bow",
+      "type": 115,
+      "typeName": "SKILL_35",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_critical_c.ban",
+      "banName": "skill_ch_bow_critical_c",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2020,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_36_skill_ch_bow_call",
+      "group": "bow",
+      "type": 116,
+      "typeName": "SKILL_36",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_call.ban",
+      "banName": "skill_ch_bow_call",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 429,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_37_skill_ch_bow_pierce_c",
+      "group": "bow",
+      "type": 117,
+      "typeName": "SKILL_37",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_pierce_c.ban",
+      "banName": "skill_ch_bow_pierce_c",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2018,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_38_skill_ch_bow_power_a",
+      "group": "bow",
+      "type": 118,
+      "typeName": "SKILL_38",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_power_a.ban",
+      "banName": "skill_ch_bow_power_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 2511,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_40_skill_ch_bow_shoot",
+      "group": "bow",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_bow_shoot.ban",
+      "banName": "skill_ch_bow_shoot",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 30,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK1_sword_base_01",
+      "group": "sword",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\china\\woman\\sword_base_01.ban",
+      "banName": "sword_base_01",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 200,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 566,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK2_sword_base_02",
+      "group": "sword",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\china\\woman\\sword_base_02.ban",
+      "banName": "sword_base_02",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 201,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 572,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_chinawoman_fighter_runforward_sword",
+      "group": "sword",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_fighter_runforward_sword.ban",
+      "banName": "chinawoman_fighter_runforward_sword",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 21,
+      "walkLength": 33.29999923706055,
+      "events": [
+        {
+          "timeMs": 317,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 639,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK3_sword_base_03",
+      "group": "sword",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\china\\woman\\sword_base_03.ban",
+      "banName": "sword_base_03",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 266,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 570,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "ATTACK4_sword_base_04",
+      "group": "sword",
+      "type": 17,
+      "typeName": "ATTACK4",
+      "ban": "prim\\ani\\char\\china\\woman\\sword_base_04.ban",
+      "banName": "sword_base_04",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 200,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 567,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_1_skill_ch_sword_smash_a",
+      "group": "sword",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_a.ban",
+      "banName": "skill_ch_sword_smash_a",
+      "durationMs": 1433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 410,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_2_skill_ch_sword_chain_a",
+      "group": "sword",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_a.ban",
+      "banName": "skill_ch_sword_chain_a",
+      "durationMs": 2033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 211,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 428,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1038,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_3_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 28,
+      "typeName": "SKILL_3",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_5_skill_ch_sword_geomgi_a",
+      "group": "sword",
+      "type": 30,
+      "typeName": "SKILL_5",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_a.ban",
+      "banName": "skill_ch_sword_geomgi_a",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 21,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 86,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 341,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_6_skill_ch_sword_knockdown_a",
+      "group": "sword",
+      "type": 31,
+      "typeName": "SKILL_6",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_a.ban",
+      "banName": "skill_ch_sword_knockdown_a",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 466,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 753,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_7_skill_ch_sword_downattack_a",
+      "group": "sword",
+      "type": 32,
+      "typeName": "SKILL_7",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_a.ban",
+      "banName": "skill_ch_sword_downattack_a",
+      "durationMs": 1933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 697,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_8_skill_ch_sword_smash_b",
+      "group": "sword",
+      "type": 33,
+      "typeName": "SKILL_8",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_b.ban",
+      "banName": "skill_ch_sword_smash_b",
+      "durationMs": 1600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 500,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_9_skill_ch_sword_chain_b",
+      "group": "sword",
+      "type": 34,
+      "typeName": "SKILL_9",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_b.ban",
+      "banName": "skill_ch_sword_chain_b",
+      "durationMs": 2433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 62,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 266,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 596,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1198,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1803,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_10_skill_ch_sword_chain_c",
+      "group": "sword",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_c.ban",
+      "banName": "skill_ch_sword_chain_c",
+      "durationMs": 3433,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 93,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 256,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 585,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1562,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1827,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2203,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2470,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "READY01_skill_ch_sword_special_ready",
+      "group": "sword",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_special_ready.ban",
+      "banName": "skill_ch_sword_special_ready",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_11_skill_ch_sword_knockdown_a",
+      "group": "sword",
+      "type": 68,
+      "typeName": "SKILL_11",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_a.ban",
+      "banName": "skill_ch_sword_knockdown_a",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 760,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_12_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 69,
+      "typeName": "SKILL_12",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_13_skill_ch_sword_geomgi_b",
+      "group": "sword",
+      "type": 70,
+      "typeName": "SKILL_13",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_b.ban",
+      "banName": "skill_ch_sword_geomgi_b",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 135,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 428,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_14_skill_ch_sword_knockdown_b",
+      "group": "sword",
+      "type": 71,
+      "typeName": "SKILL_14",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_b.ban",
+      "banName": "skill_ch_sword_knockdown_b",
+      "durationMs": 2200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 306,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 909,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_15_skill_ch_sword_downattack_b",
+      "group": "sword",
+      "type": 72,
+      "typeName": "SKILL_15",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_b.ban",
+      "banName": "skill_ch_sword_downattack_b",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 51,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 801,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_16_skill_ch_sword_smash_c",
+      "group": "sword",
+      "type": 73,
+      "typeName": "SKILL_16",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_c.ban",
+      "banName": "skill_ch_sword_smash_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 658,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1157,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_17_skill_ch_sword_chain_d",
+      "group": "sword",
+      "type": 74,
+      "typeName": "SKILL_17",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_d.ban",
+      "banName": "skill_ch_sword_chain_d",
+      "durationMs": 3033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 101,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 454,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 921,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1344,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2198,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_18_skill_ch_sword_chain_e",
+      "group": "sword",
+      "type": 75,
+      "typeName": "SKILL_18",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_e.ban",
+      "banName": "skill_ch_sword_chain_e",
+      "durationMs": 4600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 151,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1216,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1427,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2145,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2600,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2975,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_19_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 76,
+      "typeName": "SKILL_19",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1214,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1425,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2141,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2596,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2983,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_20_skill_ch_sword_knockdown_a",
+      "group": "sword",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_a.ban",
+      "banName": "skill_ch_sword_knockdown_a",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 761,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WAIT01_skill_ch_sword_special_wait",
+      "group": "sword",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_special_wait.ban",
+      "banName": "skill_ch_sword_special_wait",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_21_skill_ch_sword_geomgi_c",
+      "group": "sword",
+      "type": 101,
+      "typeName": "SKILL_21",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_c.ban",
+      "banName": "skill_ch_sword_geomgi_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 131,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 433,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 902,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1173,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_22_skill_ch_sword_knockdown_c",
+      "group": "sword",
+      "type": 102,
+      "typeName": "SKILL_22",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_c.ban",
+      "banName": "skill_ch_sword_knockdown_c",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 52,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 320,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1132,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_23_skill_ch_sword_downattack_c",
+      "group": "sword",
+      "type": 103,
+      "typeName": "SKILL_23",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_c.ban",
+      "banName": "skill_ch_sword_downattack_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 52,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 395,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1203,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_24_skill_ch_sword_smash_d",
+      "group": "sword",
+      "type": 104,
+      "typeName": "SKILL_24",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_d.ban",
+      "banName": "skill_ch_sword_smash_d",
+      "durationMs": 1833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 296,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1130,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_25_skill_ch_sword_chain_f",
+      "group": "sword",
+      "type": 105,
+      "typeName": "SKILL_25",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_f.ban",
+      "banName": "skill_ch_sword_chain_f",
+      "durationMs": 4100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 109,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 261,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 588,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1782,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2254,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 2641,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 3430,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_26_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 106,
+      "typeName": "SKILL_26",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_27_skill_ch_sword_knockdown_a",
+      "group": "sword",
+      "type": 107,
+      "typeName": "SKILL_27",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_a.ban",
+      "banName": "skill_ch_sword_knockdown_a",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 750,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_28_skill_ch_sword_geomgi_d",
+      "group": "sword",
+      "type": 108,
+      "typeName": "SKILL_28",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_d.ban",
+      "banName": "skill_ch_sword_geomgi_d",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 403,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 726,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1101,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1411,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_29_skill_ch_sword_knockdown_d",
+      "group": "sword",
+      "type": 109,
+      "typeName": "SKILL_29",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_d.ban",
+      "banName": "skill_ch_sword_knockdown_d",
+      "durationMs": 2166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1062,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_30_skill_ch_sword_downattack_c",
+      "group": "sword",
+      "type": 110,
+      "typeName": "SKILL_30",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_c.ban",
+      "banName": "skill_ch_sword_downattack_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 52,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 394,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1201,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_31_skill_ch_sword_smash_e",
+      "group": "sword",
+      "type": 111,
+      "typeName": "SKILL_31",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_e.ban",
+      "banName": "skill_ch_sword_smash_e",
+      "durationMs": 2166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 264,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 484,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1196,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_32_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 112,
+      "typeName": "SKILL_32",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_33_skill_ch_sword_knockdown_a",
+      "group": "sword",
+      "type": 113,
+      "typeName": "SKILL_33",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_a.ban",
+      "banName": "skill_ch_sword_knockdown_a",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 750,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_34_skill_ch_sword_chain_g",
+      "group": "sword",
+      "type": 114,
+      "typeName": "SKILL_34",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_g.ban",
+      "banName": "skill_ch_sword_chain_g",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 140,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1223,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1423,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2141,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2600,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 2973,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 3992,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_35_skill_ch_sword_geomgi_e",
+      "group": "sword",
+      "type": 115,
+      "typeName": "SKILL_35",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_e.ban",
+      "banName": "skill_ch_sword_geomgi_e",
+      "durationMs": 2866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 489,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 769,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 849,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1161,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1761,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 1937,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_36_skill_ch_sword_shield_wait",
+      "group": "sword",
+      "type": 116,
+      "typeName": "SKILL_36",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_shield_wait.ban",
+      "banName": "skill_ch_sword_shield_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_37_skill_ch_sword_downattack_e",
+      "group": "sword",
+      "type": 117,
+      "typeName": "SKILL_37",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_e.ban",
+      "banName": "skill_ch_sword_downattack_e",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 55,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 525,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1557,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_38_skill_ch_sword_knockdown_e",
+      "group": "sword",
+      "type": 118,
+      "typeName": "SKILL_38",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_knockdown_e.ban",
+      "banName": "skill_ch_sword_knockdown_e",
+      "durationMs": 2533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 54,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 523,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1562,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_39_skill_ch_sword_smash_f",
+      "group": "sword",
+      "type": 119,
+      "typeName": "SKILL_39",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_smash_f.ban",
+      "banName": "skill_ch_sword_smash_f",
+      "durationMs": 2066,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 263,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 488,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1160,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_40_skill_ch_sword_chain_h",
+      "group": "sword",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_chain_h.ban",
+      "banName": "skill_ch_sword_chain_h",
+      "durationMs": 3466,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 106,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 452,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 924,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1340,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2200,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 2864,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_41_skill_ch_sword_geomgi_f",
+      "group": "sword",
+      "type": 123,
+      "typeName": "SKILL_41",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_f.ban",
+      "banName": "skill_ch_sword_geomgi_f",
+      "durationMs": 3266,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 57,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 243,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 428,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 952,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1165,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2152,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 2357,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_42_skill_ch_sword_downattack_f",
+      "group": "sword",
+      "type": 124,
+      "typeName": "SKILL_42",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_downattack_f.ban",
+      "banName": "skill_ch_sword_downattack_f",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 861,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2009,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "SKILL_43_skill_ch_sword_geomgi_c",
+      "group": "sword",
+      "type": 125,
+      "typeName": "SKILL_43",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_sword_geomgi_c.ban",
+      "banName": "skill_ch_sword_geomgi_c",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 428,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1170,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 39
+    },
+    {
+      "name": "HAMMER",
+      "group": "sword",
+      "type": 187,
+      "typeName": "HAMMER",
+      "ban": "prim\\ani\\char\\china\\woman\\skill_ch_fortresshammer.ban",
+      "banName": "skill_ch_fortresshammer",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 519,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND1_cart_stand01",
+      "group": "cart",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\woman\\cart_stand01.ban",
+      "banName": "cart_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "WALK_cart_walk",
+      "group": "cart",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\cart_walk.ban",
+      "banName": "cart_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_cart_walk",
+      "group": "cart",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\cart_walk.ban",
+      "banName": "cart_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_chinawoman_kangsi_runforward",
+      "group": "avatar_wing",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_kangsi_runforward.ban",
+      "banName": "chinawoman_kangsi_runforward",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 66.6500015258789,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "STAND1_nasrun1_woman_stand",
+      "group": "avatar_nasrun1",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WALK_chinawoman_merchant_walkforward",
+      "group": "avatar_nasrun1",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_merchant_walkforward.ban",
+      "banName": "chinawoman_merchant_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_nasrun1_woman_run",
+      "group": "avatar_nasrun1",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_run.ban",
+      "banName": "123123",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "READY01_nasrun1_woman_ready",
+      "group": "avatar_nasrun1",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_ready.ban",
+      "banName": "nasrun1_woman_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND3_nasrun1_woman_stand",
+      "group": "avatar_nasrun1",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WAIT01_nasrun1_woman_wait",
+      "group": "avatar_nasrun1",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_wait.ban",
+      "banName": "nasrun1_woman_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "SHOT",
+      "group": "avatar_nasrun1",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_shot.ban",
+      "banName": "nasrun1_woman_shot",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND1_nasrun1_woman_stand_2",
+      "group": "avatar_nasrun2",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WALK_chinawoman_merchant_walkforward_2",
+      "group": "avatar_nasrun2",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_merchant_walkforward.ban",
+      "banName": "chinawoman_merchant_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_nasrun1_woman_run_2",
+      "group": "avatar_nasrun2",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_run.ban",
+      "banName": "123123",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "READY01_nasrun1_woman_ready_2",
+      "group": "avatar_nasrun2",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_ready.ban",
+      "banName": "nasrun1_woman_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND3_nasrun1_woman_stand_2",
+      "group": "avatar_nasrun2",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WAIT01_nasrun1_woman_wait_2",
+      "group": "avatar_nasrun2",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_wait.ban",
+      "banName": "nasrun1_woman_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "SHOT_nasrun1_woman_shot",
+      "group": "avatar_nasrun2",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_shot.ban",
+      "banName": "nasrun1_woman_shot",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND1_nasrun1_woman_stand_3",
+      "group": "avatar_nasrun3",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WALK_chinawoman_merchant_walkforward_3",
+      "group": "avatar_nasrun3",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\woman\\chinawoman_merchant_walkforward.ban",
+      "banName": "chinawoman_merchant_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 39
+    },
+    {
+      "name": "RUN_nasrun1_woman_run_3",
+      "group": "avatar_nasrun3",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_run.ban",
+      "banName": "123123",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "READY01_nasrun1_woman_ready_3",
+      "group": "avatar_nasrun3",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_ready.ban",
+      "banName": "nasrun1_woman_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "STAND3_nasrun1_woman_stand_3",
+      "group": "avatar_nasrun3",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_stand.ban",
+      "banName": "nasrun1_woman_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 44
+    },
+    {
+      "name": "WAIT01_nasrun1_woman_wait_3",
+      "group": "avatar_nasrun3",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_wait.ban",
+      "banName": "nasrun1_woman_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    },
+    {
+      "name": "SHOT_nasrun1_woman_shot_2",
+      "group": "avatar_nasrun3",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_woman_shot.ban",
+      "banName": "nasrun1_woman_shot",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 44
+    }
+  ],
+  "stats": {
+    "vertices": 1096,
+    "triangles": 1512,
+    "joints": 45,
+    "meshes": 9,
+    "animations": 224,
+    "textures": 2,
+    "heightM": 1.7204704725591,
+    "boundsMin": [
+      -0.7860954999923706,
+      -0.0004219257680233568,
+      -0.1524425446987152
+    ],
+    "boundsMax": [
+      0.7861165404319763,
+      1.7200485467910767,
+      0.1267947554588318
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "europewoman_skel",
+    "packs": {
+      "default": "char/_anims/europewoman_skel/default.glb",
+      "spear": "char/_anims/europewoman_skel/spear.glb",
+      "bow": "char/_anims/europewoman_skel/bow.glb",
+      "sword": "char/_anims/europewoman_skel/sword.glb",
+      "cart": "char/_anims/europewoman_skel/cart.glb",
+      "avatar_nasrun1": "char/_anims/europewoman_skel/avatar_nasrun1.glb",
+      "avatar_nasrun2": "char/_anims/europewoman_skel/avatar_nasrun2.glb",
+      "avatar_nasrun3": "char/_anims/europewoman_skel/avatar_nasrun3.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "chinawoman_fighter_standcity"
+      ],
+      "WALK": [
+        "default",
+        "chinawoman_fighter_walkforward"
+      ],
+      "ATTACK1": [
+        "default",
+        "chinawoman_a_handstraightl"
+      ],
+      "DAMAGE1": [
+        "default",
+        "chinawoman_a_benormalhit"
+      ],
+      "DIE1": [
+        "default",
+        "chinawoman_a_diehardhit"
+      ],
+      "ATTACK2": [
+        "default",
+        "chinawoman_a_handstraightr"
+      ],
+      "ATTREADY": [
+        "default",
+        "chinawoman_standbattle"
+      ],
+      "RUN": [
+        "default",
+        "chinawoman_fighter_runforward"
+      ],
+      "DAMAGE2": [
+        "default",
+        "chinawoman_a_behardhit"
+      ],
+      "SIT_DOWN": [
+        "default",
+        "chinawoman_a_sitground"
+      ],
+      "SIT": [
+        "default",
+        "chinawoman_a_sitbreath"
+      ],
+      "STAND_UP": [
+        "default",
+        "chinawoman_a_sitstand"
+      ],
+      "ATTACK3": [
+        "default",
+        "chinawoman_a_handhookl"
+      ],
+      "ATTACK4": [
+        "default",
+        "chinawoman_a_handhookr"
+      ],
+      "DEFENCE": [
+        "default",
+        "chinawoman_a_blocking"
+      ],
+      "WALK_BACK": [
+        "default",
+        "chinawoman_a_walkbackward"
+      ],
+      "TURN_L": [
+        "default",
+        "chinawoman_a_standroll"
+      ],
+      "TURN_R": [
+        "default",
+        "chinawoman_a_standroll"
+      ],
+      "SKILL_1": [
+        "default",
+        "skill_china_gigong_shoot_a"
+      ],
+      "SKILL_2": [
+        "default",
+        "skill_china_gigong_shoot_b"
+      ],
+      "SKILL_3": [
+        "default",
+        "skill_china_gigong_shoot_c"
+      ],
+      "SKILL_4": [
+        "default",
+        "skill_china_gigong_shoot_c"
+      ],
+      "SKILL_5": [
+        "default",
+        "skill_china_fire_shield"
+      ],
+      "SKILL_6": [
+        "default",
+        "skill_china_ice_ground"
+      ],
+      "SKILL_7": [
+        "default",
+        "skill_china_lightning_bobeop"
+      ],
+      "DIE1_RM": [
+        "default",
+        "chinawoman_a_diehardhit_loop"
+      ],
+      "PICK": [
+        "default",
+        "chinawoman_pickup"
+      ],
+      "READY01": [
+        "default",
+        "skill_china_gigong_ready_a"
+      ],
+      "READY02": [
+        "default",
+        "skill_china_gigong_ready_b"
+      ],
+      "READY03": [
+        "default",
+        "skill_china_gigong_ready_a"
+      ],
+      "READY04": [
+        "default",
+        "skill_china_gigong_ready_a"
+      ],
+      "EMOTION01": [
+        "default",
+        "cw_emot_act_greeting"
+      ],
+      "EMOTION02": [
+        "default",
+        "cw_emot_act_pokun"
+      ],
+      "EMOTION03": [
+        "default",
+        "cw_emot_act_rush"
+      ],
+      "EMOTION04": [
+        "default",
+        "cw_emot_act_joy"
+      ],
+      "EMOTION05": [
+        "default",
+        "cw_emot_act_no"
+      ],
+      "EMOTION06": [
+        "default",
+        "cw_emot_act_yes"
+      ],
+      "EMOTION07": [
+        "default",
+        "cw_emot_act_laugh"
+      ],
+      "EMOTION08": [
+        "default",
+        "cm_emot_act_bow"
+      ],
+      "POSE": [
+        "default",
+        "woman_pose"
+      ],
+      "STAND3": [
+        "default",
+        "chinawoman_merchant_standcity02"
+      ],
+      "DOWN": [
+        "default",
+        "chinawoman_a_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "chinawoman_a_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "chinawoman_a_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "chinawoman_a_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "chinawoman_a_downdie"
+      ],
+      "STUN": [
+        "default",
+        "chinawoman_stun"
+      ],
+      "VENDOR01": [
+        "default",
+        "chinawoman_vendor01"
+      ],
+      "WAIT01": [
+        "default",
+        "skill_china_gigong_wait_a"
+      ],
+      "WAIT02": [
+        "default",
+        "skill_china_gigong_wait_a"
+      ],
+      "WAIT03": [
+        "default",
+        "skill_china_gigong_wait_a"
+      ],
+      "WAIT04": [
+        "default",
+        "skill_china_gigong_wait_a"
+      ],
+      "REVIVAL": [
+        "default",
+        "chinawoman_reborn"
+      ],
+      "HANDLOOF": [
+        "default",
+        "skill_ch_cast_hand_loop"
+      ],
+      "TROW": [
+        "default",
+        "skill_ch_throw"
+      ],
+      "STAND1_spear_stand_city": [
+        "spear",
+        "spear_stand_city"
+      ],
+      "WALK_spear_walk": [
+        "spear",
+        "spear_walk"
+      ],
+      "ATTACK1_skill_ch_spear_base_a": [
+        "spear",
+        "skill_ch_spear_base_a"
+      ],
+      "ATTACK2_skill_ch_spear_base_b": [
+        "spear",
+        "skill_ch_spear_base_b"
+      ],
+      "ATTREADY_spear_stand": [
+        "spear",
+        "spear_stand"
+      ],
+      "RUN_spear_run_fighter": [
+        "spear",
+        "spear_run_fighter"
+      ],
+      "ATTACK3_skill_ch_spear_base_c": [
+        "spear",
+        "skill_ch_spear_base_c"
+      ],
+      "ATTACK4_skill_ch_spear_base_d": [
+        "spear",
+        "skill_ch_spear_base_d"
+      ],
+      "SKILL_1_skill_ch_spear_pierce_a": [
+        "spear",
+        "skill_ch_spear_pierce_a"
+      ],
+      "SKILL_2_skill_ch_spear_spin_wait": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_3_skill_ch_spear_frontarea_a": [
+        "spear",
+        "skill_ch_spear_frontarea_a"
+      ],
+      "SKILL_5_skill_ch_spear_stun_a": [
+        "spear",
+        "skill_ch_spear_stun_a"
+      ],
+      "SKILL_6_skill_ch_spear_roundarea_a": [
+        "spear",
+        "skill_ch_spear_roundarea_a"
+      ],
+      "SKILL_7_skill_ch_spear_chain_a": [
+        "spear",
+        "skill_ch_spear_chain_a"
+      ],
+      "SKILL_8": [
+        "spear",
+        "skill_ch_spear_pierce_b"
+      ],
+      "SKILL_9": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_10": [
+        "spear",
+        "skill_ch_spear_shoot_a"
+      ],
+      "READY01_skill_ch_spear_spin_wait": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "STAND3_spear_stand_city02": [
+        "spear",
+        "spear_stand_city02"
+      ],
+      "SKILL_11": [
+        "spear",
+        "skill_ch_spear_frontarea_b"
+      ],
+      "SKILL_12": [
+        "spear",
+        "skill_ch_spear_stun_b"
+      ],
+      "SKILL_13": [
+        "spear",
+        "skill_ch_spear_roundarea_b"
+      ],
+      "SKILL_14": [
+        "spear",
+        "skill_ch_spear_chain_b"
+      ],
+      "SKILL_15": [
+        "spear",
+        "skill_ch_spear_chain_c"
+      ],
+      "SKILL_16": [
+        "spear",
+        "skill_ch_spear_pierce_c"
+      ],
+      "SKILL_17": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_18": [
+        "spear",
+        "skill_ch_spear_frontarea_c"
+      ],
+      "SKILL_19": [
+        "spear",
+        "skill_ch_spear_shoot_b"
+      ],
+      "SKILL_20": [
+        "spear",
+        "skill_ch_spear_stun_c"
+      ],
+      "WAIT01_skill_ch_spear_spin_wait": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_21": [
+        "spear",
+        "skill_ch_spear_roundarea_c"
+      ],
+      "SKILL_22": [
+        "spear",
+        "skill_ch_spear_chain_d"
+      ],
+      "SKILL_23": [
+        "spear",
+        "skill_ch_spear_chain_e"
+      ],
+      "SKILL_24": [
+        "spear",
+        "skill_ch_spear_pierce_d"
+      ],
+      "SKILL_25": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_26": [
+        "spear",
+        "skill_ch_spear_frontarea_d"
+      ],
+      "SKILL_27": [
+        "spear",
+        "skill_ch_spear_shoot_b~f14503"
+      ],
+      "SKILL_28": [
+        "spear",
+        "skill_ch_spear_stun_d"
+      ],
+      "SKILL_29": [
+        "spear",
+        "skill_ch_spear_roundarea_c"
+      ],
+      "SKILL_30": [
+        "spear",
+        "skill_ch_spear_chain_f"
+      ],
+      "SKILL_31": [
+        "spear",
+        "skill_ch_spear_pierce_e"
+      ],
+      "SKILL_32": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_33": [
+        "spear",
+        "skill_ch_spear_frontarea_e"
+      ],
+      "SKILL_34": [
+        "spear",
+        "skill_ch_spear_shoot_d"
+      ],
+      "SKILL_35": [
+        "spear",
+        "skill_ch_spear_stun_e"
+      ],
+      "SKILL_36": [
+        "spear",
+        "skill_ch_spear_spin_wait"
+      ],
+      "SKILL_37": [
+        "spear",
+        "skill_ch_spear_roundarea_c"
+      ],
+      "SKILL_38": [
+        "spear",
+        "skill_ch_spear_pierce_f"
+      ],
+      "SKILL_39": [
+        "spear",
+        "skill_ch_spear_frontarea_f"
+      ],
+      "SKILL_40": [
+        "spear",
+        "skill_ch_spear_chain_g"
+      ],
+      "SKILL_41": [
+        "spear",
+        "skill_ch_spear_stun_f"
+      ],
+      "SKILL_42": [
+        "spear",
+        "skill_ch_spear_roundarea_c"
+      ],
+      "SKILL_43": [
+        "spear",
+        "skill_ch_spear_shoot_d"
+      ],
+      "ATTACK1_skill_ch_bow_normal": [
+        "bow",
+        "skill_ch_bow_normal"
+      ],
+      "ATTREADY_bow_stand": [
+        "bow",
+        "bow_stand"
+      ],
+      "RUN_bow_run_fighter": [
+        "bow",
+        "bow_run_fighter"
+      ],
+      "SKILL_1_skill_ch_bow_critical_a": [
+        "bow",
+        "skill_ch_bow_critical_a"
+      ],
+      "SKILL_2_skill_ch_bow_chain_a": [
+        "bow",
+        "skill_ch_bow_chain_a"
+      ],
+      "SKILL_3_skill_ch_bow_call_a": [
+        "bow",
+        "skill_ch_bow_call_a"
+      ],
+      "SKILL_5_skill_ch_bow_pierce_a": [
+        "bow",
+        "skill_ch_bow_pierce_a"
+      ],
+      "SKILL_7_skill_ch_bow_area_a": [
+        "bow",
+        "skill_ch_bow_area_a"
+      ],
+      "SKILL_8_skill_ch_bow_critical_b": [
+        "bow",
+        "skill_ch_bow_critical_b"
+      ],
+      "SKILL_9_skill_ch_bow_chain_b": [
+        "bow",
+        "skill_ch_bow_chain_b"
+      ],
+      "SKILL_10_skill_ch_bow_power_a": [
+        "bow",
+        "skill_ch_bow_power_a"
+      ],
+      "READY01_skill_ch_bow_ready": [
+        "bow",
+        "skill_ch_bow_ready"
+      ],
+      "SKILL_11_skill_ch_bow_call_a": [
+        "bow",
+        "skill_ch_bow_call_a"
+      ],
+      "SKILL_12_skill_ch_bow_pierce_b": [
+        "bow",
+        "skill_ch_bow_pierce_b"
+      ],
+      "SKILL_14_skill_ch_bow_area_b": [
+        "bow",
+        "skill_ch_bow_area_b"
+      ],
+      "SKILL_15_skill_ch_bow_critical_c": [
+        "bow",
+        "skill_ch_bow_critical_c"
+      ],
+      "SKILL_16_skill_ch_bow_chain_c": [
+        "bow",
+        "skill_ch_bow_chain_c"
+      ],
+      "SKILL_17_skill_ch_bow_call_a": [
+        "bow",
+        "skill_ch_bow_call_a"
+      ],
+      "SKILL_18_skill_ch_bow_power_a": [
+        "bow",
+        "skill_ch_bow_power_a"
+      ],
+      "SKILL_19_skill_ch_bow_pierce_c": [
+        "bow",
+        "skill_ch_bow_pierce_c"
+      ],
+      "SKILL_20_skill_ch_bow_area_b": [
+        "bow",
+        "skill_ch_bow_area_b"
+      ],
+      "WAIT01_skill_ch_bow_wait": [
+        "bow",
+        "skill_ch_bow_wait"
+      ],
+      "SKILL_21_skill_ch_bow_critical_c": [
+        "bow",
+        "skill_ch_bow_critical_c"
+      ],
+      "SKILL_22_skill_ch_bow_chain_d": [
+        "bow",
+        "skill_ch_bow_chain_d"
+      ],
+      "SKILL_23_skill_ch_bow_call_a": [
+        "bow",
+        "skill_ch_bow_call_a"
+      ],
+      "SKILL_24_skill_ch_bow_power_a": [
+        "bow",
+        "skill_ch_bow_power_a"
+      ],
+      "SKILL_25_skill_ch_bow_pierce_c": [
+        "bow",
+        "skill_ch_bow_pierce_c"
+      ],
+      "SKILL_26_skill_ch_bow_critical_c": [
+        "bow",
+        "skill_ch_bow_critical_c"
+      ],
+      "SKILL_27_skill_ch_bow_area_b": [
+        "bow",
+        "skill_ch_bow_area_b"
+      ],
+      "SKILL_28_skill_ch_bow_chain_e": [
+        "bow",
+        "skill_ch_bow_chain_e"
+      ],
+      "SKILL_29_skill_ch_bow_power_a": [
+        "bow",
+        "skill_ch_bow_power_a"
+      ],
+      "SKILL_30_skill_ch_bow_pierce_c": [
+        "bow",
+        "skill_ch_bow_pierce_c"
+      ],
+      "SKILL_31_skill_ch_bow_call": [
+        "bow",
+        "skill_ch_bow_call"
+      ],
+      "SKILL_32_skill_ch_bow_critical_c": [
+        "bow",
+        "skill_ch_bow_critical_c"
+      ],
+      "SKILL_33_skill_ch_bow_chain_f": [
+        "bow",
+        "skill_ch_bow_chain_f"
+      ],
+      "SKILL_34_skill_ch_bow_area_b": [
+        "bow",
+        "skill_ch_bow_area_b"
+      ],
+      "SKILL_35_skill_ch_bow_critical_c": [
+        "bow",
+        "skill_ch_bow_critical_c"
+      ],
+      "SKILL_36_skill_ch_bow_call": [
+        "bow",
+        "skill_ch_bow_call"
+      ],
+      "SKILL_37_skill_ch_bow_pierce_c": [
+        "bow",
+        "skill_ch_bow_pierce_c"
+      ],
+      "SKILL_38_skill_ch_bow_power_a": [
+        "bow",
+        "skill_ch_bow_power_a"
+      ],
+      "SKILL_40_skill_ch_bow_shoot": [
+        "bow",
+        "skill_ch_bow_shoot"
+      ],
+      "ATTACK1_sword_base_01": [
+        "sword",
+        "sword_base_01"
+      ],
+      "ATTACK2_sword_base_02": [
+        "sword",
+        "sword_base_02"
+      ],
+      "RUN_chinawoman_fighter_runforward_sword": [
+        "sword",
+        "chinawoman_fighter_runforward_sword"
+      ],
+      "ATTACK3_sword_base_03": [
+        "sword",
+        "sword_base_03"
+      ],
+      "ATTACK4_sword_base_04": [
+        "sword",
+        "sword_base_01"
+      ],
+      "SKILL_1_skill_ch_sword_smash_a": [
+        "sword",
+        "skill_ch_sword_smash_a"
+      ],
+      "SKILL_2_skill_ch_sword_chain_a": [
+        "sword",
+        "skill_ch_sword_chain_a"
+      ],
+      "SKILL_3_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_5_skill_ch_sword_geomgi_a": [
+        "sword",
+        "skill_ch_sword_geomgi_a"
+      ],
+      "SKILL_6_skill_ch_sword_knockdown_a": [
+        "sword",
+        "skill_ch_sword_knockdown_a"
+      ],
+      "SKILL_7_skill_ch_sword_downattack_a": [
+        "sword",
+        "skill_ch_sword_downattack_a"
+      ],
+      "SKILL_8_skill_ch_sword_smash_b": [
+        "sword",
+        "skill_ch_sword_smash_b"
+      ],
+      "SKILL_9_skill_ch_sword_chain_b": [
+        "sword",
+        "skill_ch_sword_chain_b"
+      ],
+      "SKILL_10_skill_ch_sword_chain_c": [
+        "sword",
+        "skill_ch_sword_chain_c"
+      ],
+      "READY01_skill_ch_sword_special_ready": [
+        "sword",
+        "skill_ch_sword_special_ready"
+      ],
+      "SKILL_11_skill_ch_sword_knockdown_a": [
+        "sword",
+        "skill_ch_sword_knockdown_a"
+      ],
+      "SKILL_12_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_13_skill_ch_sword_geomgi_b": [
+        "sword",
+        "skill_ch_sword_geomgi_b"
+      ],
+      "SKILL_14_skill_ch_sword_knockdown_b": [
+        "sword",
+        "skill_ch_sword_knockdown_b"
+      ],
+      "SKILL_15_skill_ch_sword_downattack_b": [
+        "sword",
+        "skill_ch_sword_downattack_b"
+      ],
+      "SKILL_16_skill_ch_sword_smash_c": [
+        "sword",
+        "skill_ch_sword_smash_c"
+      ],
+      "SKILL_17_skill_ch_sword_chain_d": [
+        "sword",
+        "skill_ch_sword_chain_d"
+      ],
+      "SKILL_18_skill_ch_sword_chain_e": [
+        "sword",
+        "skill_ch_sword_chain_e"
+      ],
+      "SKILL_19_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_20_skill_ch_sword_knockdown_a": [
+        "sword",
+        "skill_ch_sword_knockdown_a"
+      ],
+      "WAIT01_skill_ch_sword_special_wait": [
+        "sword",
+        "skill_ch_sword_special_wait"
+      ],
+      "SKILL_21_skill_ch_sword_geomgi_c": [
+        "sword",
+        "skill_ch_sword_geomgi_c"
+      ],
+      "SKILL_22_skill_ch_sword_knockdown_c": [
+        "sword",
+        "skill_ch_sword_knockdown_c"
+      ],
+      "SKILL_23_skill_ch_sword_downattack_c": [
+        "sword",
+        "skill_ch_sword_downattack_c"
+      ],
+      "SKILL_24_skill_ch_sword_smash_d": [
+        "sword",
+        "skill_ch_sword_smash_d"
+      ],
+      "SKILL_25_skill_ch_sword_chain_f": [
+        "sword",
+        "skill_ch_sword_chain_f"
+      ],
+      "SKILL_26_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_27_skill_ch_sword_knockdown_a": [
+        "sword",
+        "skill_ch_sword_knockdown_a"
+      ],
+      "SKILL_28_skill_ch_sword_geomgi_d": [
+        "sword",
+        "skill_ch_sword_geomgi_d"
+      ],
+      "SKILL_29_skill_ch_sword_knockdown_d": [
+        "sword",
+        "skill_ch_sword_knockdown_d"
+      ],
+      "SKILL_30_skill_ch_sword_downattack_c": [
+        "sword",
+        "skill_ch_sword_downattack_c"
+      ],
+      "SKILL_31_skill_ch_sword_smash_e": [
+        "sword",
+        "skill_ch_sword_smash_e"
+      ],
+      "SKILL_32_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_33_skill_ch_sword_knockdown_a": [
+        "sword",
+        "skill_ch_sword_knockdown_a"
+      ],
+      "SKILL_34_skill_ch_sword_chain_g": [
+        "sword",
+        "skill_ch_sword_chain_g"
+      ],
+      "SKILL_35_skill_ch_sword_geomgi_e": [
+        "sword",
+        "skill_ch_sword_geomgi_e"
+      ],
+      "SKILL_36_skill_ch_sword_shield_wait": [
+        "sword",
+        "skill_ch_sword_shield_wait"
+      ],
+      "SKILL_37_skill_ch_sword_downattack_e": [
+        "sword",
+        "skill_ch_sword_downattack_e"
+      ],
+      "SKILL_38_skill_ch_sword_knockdown_e": [
+        "sword",
+        "skill_ch_sword_knockdown_e"
+      ],
+      "SKILL_39_skill_ch_sword_smash_f": [
+        "sword",
+        "skill_ch_sword_smash_f"
+      ],
+      "SKILL_40_skill_ch_sword_chain_h": [
+        "sword",
+        "skill_ch_sword_chain_h"
+      ],
+      "SKILL_41_skill_ch_sword_geomgi_f": [
+        "sword",
+        "skill_ch_sword_geomgi_f"
+      ],
+      "SKILL_42_skill_ch_sword_downattack_f": [
+        "sword",
+        "skill_ch_sword_downattack_f"
+      ],
+      "SKILL_43_skill_ch_sword_geomgi_c": [
+        "sword",
+        "skill_ch_sword_geomgi_c"
+      ],
+      "HAMMER": [
+        "sword",
+        "skill_ch_fortresshammer"
+      ],
+      "STAND1_cart_stand01": [
+        "cart",
+        "cart_stand01"
+      ],
+      "WALK_cart_walk": [
+        "cart",
+        "cart_walk"
+      ],
+      "RUN_cart_walk": [
+        "cart",
+        "cart_walk"
+      ],
+      "RUN_chinawoman_kangsi_runforward": [
+        "default",
+        "chinawoman_kangsi_runforward"
+      ],
+      "STAND1_nasrun1_woman_stand": [
+        "avatar_nasrun1",
+        "nasrun1_woman_stand"
+      ],
+      "WALK_chinawoman_merchant_walkforward": [
+        "default",
+        "chinawoman_merchant_walkforward"
+      ],
+      "RUN_nasrun1_woman_run": [
+        "avatar_nasrun1",
+        "123123"
+      ],
+      "READY01_nasrun1_woman_ready": [
+        "avatar_nasrun1",
+        "nasrun1_woman_ready"
+      ],
+      "STAND3_nasrun1_woman_stand": [
+        "avatar_nasrun1",
+        "nasrun1_woman_stand"
+      ],
+      "WAIT01_nasrun1_woman_wait": [
+        "avatar_nasrun1",
+        "nasrun1_woman_wait"
+      ],
+      "SHOT": [
+        "avatar_nasrun1",
+        "nasrun1_woman_shot"
+      ],
+      "STAND1_nasrun1_woman_stand_2": [
+        "avatar_nasrun2",
+        "nasrun1_woman_stand"
+      ],
+      "WALK_chinawoman_merchant_walkforward_2": [
+        "default",
+        "chinawoman_merchant_walkforward"
+      ],
+      "RUN_nasrun1_woman_run_2": [
+        "avatar_nasrun2",
+        "123123"
+      ],
+      "READY01_nasrun1_woman_ready_2": [
+        "avatar_nasrun2",
+        "nasrun1_woman_ready"
+      ],
+      "STAND3_nasrun1_woman_stand_2": [
+        "avatar_nasrun2",
+        "nasrun1_woman_stand"
+      ],
+      "WAIT01_nasrun1_woman_wait_2": [
+        "avatar_nasrun2",
+        "nasrun1_woman_wait"
+      ],
+      "SHOT_nasrun1_woman_shot": [
+        "avatar_nasrun2",
+        "nasrun1_woman_shot"
+      ],
+      "STAND1_nasrun1_woman_stand_3": [
+        "avatar_nasrun3",
+        "nasrun1_woman_stand"
+      ],
+      "WALK_chinawoman_merchant_walkforward_3": [
+        "default",
+        "chinawoman_merchant_walkforward"
+      ],
+      "RUN_nasrun1_woman_run_3": [
+        "avatar_nasrun3",
+        "123123"
+      ],
+      "READY01_nasrun1_woman_ready_3": [
+        "avatar_nasrun3",
+        "nasrun1_woman_ready"
+      ],
+      "STAND3_nasrun1_woman_stand_3": [
+        "avatar_nasrun3",
+        "nasrun1_woman_stand"
+      ],
+      "WAIT01_nasrun1_woman_wait_3": [
+        "avatar_nasrun3",
+        "nasrun1_woman_wait"
+      ],
+      "SHOT_nasrun1_woman_shot_2": [
+        "avatar_nasrun3",
+        "nasrun1_woman_shot"
+      ]
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "source": "res/item/china/weapon/sword_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "sword_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\sword_02.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": "Bip01 R HandMid",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 7,
+    "attachPointName": "RIGHT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 9,
+        "slotName": "RIGHT_HAND",
+        "mesh": "sword_02"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "sword1_2_3",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "equipment: BMT alpha flag but 84% of the surface samples alpha < 128 (0% zero): the alpha is a mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "sword_02",
+      "bms": "prim\\mesh\\item\\china\\weapon\\sword_02.bms",
+      "material": "sword1_2_3",
+      "vertices": 125,
+      "triangles": 170,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 125,
+    "triangles": 170,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.05467883311212063,
+    "boundsMin": [
+      -0.09639956057071686,
+      -0.046065378934144974,
+      -0.10693161189556122
+    ],
+    "boundsMax": [
+      0.06229193136096001,
+      0.008613454177975655,
+      0.8093043565750122
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_SWORD_02_A",
+      "ITEM_CH_SWORD_02_B",
+      "ITEM_CH_SWORD_02_C"
+    ],
+    "bsr": "res/item/china/weapon/sword_02.bsr",
+    "gender": null,
+    "kind": "socket",
+    "method": "ADD",
+    "attachPoint": "RIGHT_HAND",
+    "slots": [
+      "RIGHT_HAND"
+    ],
+    "attachBone": "Bip01 R HandMid",
+    "hides": [],
+    "skeleton": null,
+    "joints": [],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  },
+  "dummies": {
+    "Bone01": [
+      0,
+      0,
+      -0.00039
+    ],
+    "ai_start": [
+      -0.01355,
+      -0.01913,
+      0.10107
+    ],
+    "ai_end": [
+      -0.01575,
+      -0.01913,
+      0.75903
+    ]
+  }
+}

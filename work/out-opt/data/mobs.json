@@ -1,0 +1,2994 @@
+{
+  "schema": 1,
+  "kind": "mobs",
+  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "sources": [
+    "client:characterdata.txt",
+    "client:skilldata.txt",
+    "client:textdataname.txt",
+    "port:spawns.json",
+    "port:mobs.json"
+  ],
+  "entries": [
+    {
+      "code": "MOB_CH_MANGNYANG",
+      "id": 1933,
+      "name": "Mangyang",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 1,
+      "hp": 54,
+      "mp": 0,
+      "physAttack": [
+        17,
+        19
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 7,
+      "magDefence": 10,
+      "physAbsorb": 1,
+      "magAbsorb": 1,
+      "hitRate": 27,
+      "parryRate": 27,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1,
+      "attackIntervalMs": 3000,
+      "radius": 0.6,
+      "walkSpeed": 0.8,
+      "runSpeed": 2.2,
+      "aggressive": false,
+      "exp": 24,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/mangnyang.bsr",
+        "glb": "/out/mob/china/mangnyang.glb",
+        "sidecar": "/out/mob/china/mangnyang.json"
+      },
+      "skills": [
+        "MSKILL_CH_MANGNYANG_ATTACK01",
+        "MSKILL_CH_MANGNYANG_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_MANGNYANG_ATTACK01",
+          "castMs": 0,
+          "actionMs": 2400,
+          "cooldownMs": 3000,
+          "range": 1,
+          "damage": {
+            "physPct": 200,
+            "magPct": 0,
+            "flat": [
+              17,
+              19
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_MANGNYANG_ATTACK02",
+          "castMs": 0,
+          "actionMs": 2500,
+          "cooldownMs": 3000,
+          "range": 1,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              17,
+              19
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/mangnyang_champ.bsr",
+        "glb": "/out/mob/china/mangnyang_champ.glb",
+        "sidecar": "/out/mob/china/mangnyang_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_MANGNYANG_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 55 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_mangyang.variants",
+        "championModel": "client: res/mob/china/mangnyang_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BIGEYEGHOST_CLON",
+      "id": 1934,
+      "name": "Small-Eyed Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 2,
+      "hp": 55,
+      "mp": 0,
+      "physAttack": [
+        21,
+        23
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 9,
+      "magDefence": 14,
+      "physAbsorb": 2,
+      "magAbsorb": 2,
+      "hitRate": 29,
+      "parryRate": 29,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 2000,
+      "radius": 0.6,
+      "walkSpeed": 1.4,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 47,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/bigeyeghost_clon.bsr",
+        "glb": "/out/mob/china/bigeyeghost_clon.glb",
+        "sidecar": "/out/mob/china/bigeyeghost_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_BIGEYEGHOST_CLON_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BIGEYEGHOST_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1300,
+          "cooldownMs": 2000,
+          "range": 0.4,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              21,
+              23
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/bigeyeghost_champ.bsr",
+        "glb": "/out/mob/china/bigeyeghost_champ.glb",
+        "sidecar": "/out/mob/china/bigeyeghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BIGEYEGHOST_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 37 nests (0 = aggressive)",
+        "model": "client: MOB_CH_BIGEYEGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost_clon.variants",
+        "championModel": "client: res/mob/china/bigeyeghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BIGEYEGHOST",
+      "id": 1935,
+      "name": "Big-Eyed Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 3,
+      "hp": 85,
+      "mp": 0,
+      "physAttack": [
+        25,
+        29
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 9,
+      "magDefence": 15,
+      "physAbsorb": 3,
+      "magAbsorb": 3,
+      "hitRate": 31,
+      "parryRate": 31,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 1500,
+      "radius": 0.6,
+      "walkSpeed": 1.4,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 71,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/bigeyeghost.bsr",
+        "glb": "/out/mob/china/bigeyeghost.glb",
+        "sidecar": "/out/mob/china/bigeyeghost.json"
+      },
+      "skills": [
+        "MSKILL_CH_BIGEYEGHOST_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BIGEYEGHOST_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1200,
+          "cooldownMs": 1500,
+          "range": 0.4,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              25,
+              29
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/bigeyeghost_champ.bsr",
+        "glb": "/out/mob/china/bigeyeghost_champ.glb",
+        "sidecar": "/out/mob/china/bigeyeghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BIGEYEGHOST_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 37 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost.variants",
+        "championModel": "client: res/mob/china/bigeyeghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_GYO_CLON",
+      "id": 1936,
+      "name": "Old Weasel",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 4,
+      "hp": 83,
+      "mp": 0,
+      "physAttack": [
+        30,
+        34
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 12,
+      "magDefence": 18,
+      "physAbsorb": 4,
+      "magAbsorb": 4,
+      "hitRate": 33,
+      "parryRate": 33,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.7,
+      "attackIntervalMs": 2000,
+      "radius": 1,
+      "walkSpeed": 1.2,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 94,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/gyo_clon.bsr",
+        "glb": "/out/mob/china/gyo_clon.glb",
+        "sidecar": "/out/mob/china/gyo_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_GYO_CLON_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_GYO_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1300,
+          "cooldownMs": 2000,
+          "range": 0.7,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              30,
+              34
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/gyo_champ.bsr",
+        "glb": "/out/mob/china/gyo_champ.glb",
+        "sidecar": "/out/mob/china/gyo_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_GYO_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 41 nests (0 = aggressive)",
+        "model": "client: MOB_CH_GYO model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_gyo_clon.variants",
+        "championModel": "client: res/mob/china/gyo_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_GYO",
+      "id": 1937,
+      "name": "Weasel",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 5,
+      "hp": 119,
+      "mp": 0,
+      "physAttack": [
+        35,
+        40
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 12,
+      "magDefence": 19,
+      "physAbsorb": 5,
+      "magAbsorb": 5,
+      "hitRate": 35,
+      "parryRate": 35,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.7,
+      "attackIntervalMs": 2000,
+      "radius": 1,
+      "walkSpeed": 1.2,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 118,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/gyo.bsr",
+        "glb": "/out/mob/china/gyo.glb",
+        "sidecar": "/out/mob/china/gyo.json"
+      },
+      "skills": [
+        "MSKILL_CH_GYO_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_GYO_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1700,
+          "cooldownMs": 2000,
+          "range": 0.7,
+          "damage": {
+            "physPct": 67,
+            "magPct": 0,
+            "flat": [
+              35,
+              40
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/gyo_champ.bsr",
+        "glb": "/out/mob/china/gyo_champ.glb",
+        "sidecar": "/out/mob/china/gyo_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_GYO_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 30 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_gyo.variants",
+        "championModel": "client: res/mob/china/gyo_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_WATERGHOST_CLON",
+      "id": 1938,
+      "name": "Water Ghost Slave",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 6,
+      "hp": 114,
+      "mp": 0,
+      "physAttack": [
+        41,
+        47
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 15,
+      "magDefence": 19,
+      "physAbsorb": 6,
+      "magAbsorb": 6,
+      "hitRate": 37,
+      "parryRate": 37,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.6,
+      "attackIntervalMs": 2000,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 141,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/waterghost_clon.bsr",
+        "glb": "/out/mob/china/waterghost_clon.glb",
+        "sidecar": "/out/mob/china/waterghost_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_WATERGHOST_CLON_ATTACK01",
+        "MSKILL_CH_WATERGHOST_CLON_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_WATERGHOST_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1666,
+          "cooldownMs": 2000,
+          "range": 1.6,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              41,
+              47
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_WATERGHOST_CLON_ATTACK03",
+          "castMs": 0,
+          "actionMs": 1866,
+          "cooldownMs": 2500,
+          "range": 1.6,
+          "damage": {
+            "physPct": 167,
+            "magPct": 0,
+            "flat": [
+              41,
+              47
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/waterghost_champ.bsr",
+        "glb": "/out/mob/china/waterghost_champ.glb",
+        "sidecar": "/out/mob/china/waterghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_WATERGHOST_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 20 nests (0 = aggressive)",
+        "model": "client: MOB_CH_WATERGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_waterghost_clon.variants",
+        "championModel": "client: res/mob/china/waterghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_WATERGHOST",
+      "id": 1939,
+      "name": "Water Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 7,
+      "hp": 156,
+      "mp": 0,
+      "physAttack": [
+        47,
+        54
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 15,
+      "magDefence": 29,
+      "physAbsorb": 7,
+      "magAbsorb": 7,
+      "hitRate": 39,
+      "parryRate": 39,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.6,
+      "attackIntervalMs": 2000,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 165,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/waterghost.bsr",
+        "glb": "/out/mob/china/waterghost.glb",
+        "sidecar": "/out/mob/china/waterghost.json"
+      },
+      "skills": [
+        "MSKILL_CH_WATERGHOST_ATTACK01",
+        "MSKILL_CH_WATERGHOST_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_WATERGHOST_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1666,
+          "cooldownMs": 2000,
+          "range": 1.6,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              47,
+              54
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_WATERGHOST_ATTACK02",
+          "castMs": 1196,
+          "actionMs": 2470,
+          "cooldownMs": 4000,
+          "range": 1.6,
+          "damage": {
+            "physPct": 0,
+            "magPct": 0,
+            "flat": [
+              0,
+              0
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/waterghost_champ.bsr",
+        "glb": "/out/mob/china/waterghost_champ.glb",
+        "sidecar": "/out/mob/china/waterghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_WATERGHOST_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 31 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_waterghost.variants",
+        "championModel": "client: res/mob/china/waterghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_STONEGHOST_CLON",
+      "id": 1940,
+      "name": "Broken Stone Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 8,
+      "hp": 204,
+      "mp": 0,
+      "physAttack": [
+        53,
+        62
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 22,
+      "magDefence": 24,
+      "physAbsorb": 8,
+      "magAbsorb": 8,
+      "hitRate": 41,
+      "parryRate": 41,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1,
+      "attackIntervalMs": 1500,
+      "radius": 1,
+      "walkSpeed": 1.4,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 188,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/stoneghost_clon.bsr",
+        "glb": "/out/mob/china/stoneghost_clon.glb",
+        "sidecar": "/out/mob/china/stoneghost_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_STONEGHOST_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_STONEGHOST_CLON_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1000,
+          "cooldownMs": 1500,
+          "range": 1,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              53,
+              62
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/stoneghost_champ.bsr",
+        "glb": "/out/mob/china/stoneghost_champ.glb",
+        "sidecar": "/out/mob/china/stoneghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_STONEGHOST_CLON_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 30 nests (0 = aggressive)",
+        "model": "client: MOB_CH_STONEGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_stoneghost_clon.variants",
+        "championModel": "client: res/mob/china/stoneghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_TOMBSTONE_CLON",
+      "id": 1950,
+      "name": "Tomb Stone Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 8,
+      "hp": 204,
+      "mp": 0,
+      "physAttack": [
+        0,
+        0
+      ],
+      "magAttack": [
+        74,
+        83
+      ],
+      "physDefence": 15,
+      "magDefence": 35,
+      "physAbsorb": 8,
+      "magAbsorb": 8,
+      "hitRate": 41,
+      "parryRate": 41,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 10,
+      "attackIntervalMs": 2500,
+      "radius": 0.4,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 188,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/tombstone.bsr",
+        "glb": "/out/mob/china/tombstone.glb",
+        "sidecar": "/out/mob/china/tombstone.json"
+      },
+      "skills": [
+        "MSKILL_CH_TOMBSTONE_CLON_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_TOMBSTONE_CLON_ATTACK01",
+          "castMs": 1265,
+          "actionMs": 735,
+          "cooldownMs": 2500,
+          "range": 10,
+          "damage": {
+            "physPct": 0,
+            "magPct": 167,
+            "flat": [
+              74,
+              83
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "fieldSources": {
+        "magAttack": "client: MSKILL_CH_TOMBSTONE_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 35 nests (0 = aggressive)",
+        "model": "client: MOB_CH_TOMBSTONE model (col 4 base code; no _clon sibling in Data.pk2)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_tombstone_clon.variants"
+      }
+    },
+    {
+      "code": "MOB_CH_STONEGHOST",
+      "id": 1941,
+      "name": "Stone Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 9,
+      "hp": 194,
+      "mp": 0,
+      "physAttack": [
+        60,
+        70
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 22,
+      "magDefence": 35,
+      "physAbsorb": 9,
+      "magAbsorb": 9,
+      "hitRate": 43,
+      "parryRate": 43,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1,
+      "attackIntervalMs": 2500,
+      "radius": 1,
+      "walkSpeed": 1.4,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 212,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/stoneghost.bsr",
+        "glb": "/out/mob/china/stoneghost.glb",
+        "sidecar": "/out/mob/china/stoneghost.json"
+      },
+      "skills": [
+        "MSKILL_CH_STONEGHOST_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_STONEGHOST_ATTACK01",
+          "castMs": 0,
+          "actionMs": 2200,
+          "cooldownMs": 2500,
+          "range": 1,
+          "damage": {
+            "physPct": 83,
+            "magPct": 0,
+            "flat": [
+              60,
+              70
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/stoneghost_champ.bsr",
+        "glb": "/out/mob/china/stoneghost_champ.glb",
+        "sidecar": "/out/mob/china/stoneghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_STONEGHOST_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 36 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_stoneghost.variants",
+        "championModel": "client: res/mob/china/stoneghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_TOMBSTONE",
+      "id": 1951,
+      "name": "Tomb Stone",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 9,
+      "hp": 194,
+      "mp": 0,
+      "physAttack": [
+        0,
+        0
+      ],
+      "magAttack": [
+        84,
+        94
+      ],
+      "physDefence": 22,
+      "magDefence": 29,
+      "physAbsorb": 9,
+      "magAbsorb": 9,
+      "hitRate": 43,
+      "parryRate": 43,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 10,
+      "attackIntervalMs": 2500,
+      "radius": 0.4,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 212,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/tombstone.bsr",
+        "glb": "/out/mob/china/tombstone.glb",
+        "sidecar": "/out/mob/china/tombstone.json"
+      },
+      "skills": [
+        "MSKILL_CH_TOMBSTONE_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_TOMBSTONE_ATTACK02",
+          "castMs": 1265,
+          "actionMs": 735,
+          "cooldownMs": 2500,
+          "range": 10,
+          "damage": {
+            "physPct": 0,
+            "magPct": 167,
+            "flat": [
+              84,
+              94
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "fieldSources": {
+        "magAttack": "client: MSKILL_CH_TOMBSTONE_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 35 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_tombstone.variants"
+      }
+    },
+    {
+      "code": "MOB_CH_YEOHA_CLON",
+      "id": 1942,
+      "name": "Decayed Yeoha",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 10,
+      "hp": 249,
+      "mp": 0,
+      "physAttack": [
+        67,
+        79
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 26,
+      "magDefence": 35,
+      "physAbsorb": 10,
+      "magAbsorb": 10,
+      "hitRate": 45,
+      "parryRate": 45,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.7,
+      "attackIntervalMs": 2500,
+      "radius": 1.1,
+      "walkSpeed": 0.9,
+      "runSpeed": 2,
+      "aggressive": false,
+      "exp": 235,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/yeoha_clon.bsr",
+        "glb": "/out/mob/china/yeoha_clon.glb",
+        "sidecar": "/out/mob/china/yeoha_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_YEOHA_CLON_ATTACK01",
+        "MSKILL_CH_YEOHA_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_YEOHA_CLON_ATTACK01",
+          "castMs": 1070,
+          "actionMs": 830,
+          "cooldownMs": 2500,
+          "range": 0.7,
+          "damage": {
+            "physPct": 167,
+            "magPct": 0,
+            "flat": [
+              67,
+              79
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_YEOHA_CLON_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1900,
+          "cooldownMs": 2500,
+          "range": 0.7,
+          "damage": {
+            "physPct": 83,
+            "magPct": 0,
+            "flat": [
+              67,
+              79
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/yeoha_champ.bsr",
+        "glb": "/out/mob/china/yeoha_champ.glb",
+        "sidecar": "/out/mob/china/yeoha_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_YEOHA_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 28 nests (0 = aggressive)",
+        "model": "client: MOB_CH_YEOHA model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_yeoha_clon.variants",
+        "championModel": "client: res/mob/china/yeoha_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_YEOHA",
+      "id": 1943,
+      "name": "Yeoha",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 10,
+      "hp": 249,
+      "mp": 0,
+      "physAttack": [
+        67,
+        79
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 22,
+      "magDefence": 41,
+      "physAbsorb": 10,
+      "magAbsorb": 10,
+      "hitRate": 45,
+      "parryRate": 45,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.7,
+      "attackIntervalMs": 2500,
+      "radius": 1.1,
+      "walkSpeed": 0.9,
+      "runSpeed": 2,
+      "aggressive": true,
+      "exp": 235,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/yeoha.bsr",
+        "glb": "/out/mob/china/yeoha.glb",
+        "sidecar": "/out/mob/china/yeoha.json"
+      },
+      "skills": [
+        "MSKILL_CH_YEOHA_ATTACK01",
+        "MSKILL_CH_YEOHA_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_YEOHA_ATTACK01",
+          "castMs": 1070,
+          "actionMs": 830,
+          "cooldownMs": 2500,
+          "range": 0.7,
+          "damage": {
+            "physPct": 167,
+            "magPct": 0,
+            "flat": [
+              67,
+              79
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_YEOHA_ATTACK03",
+          "castMs": 1184,
+          "actionMs": 816,
+          "cooldownMs": 2500,
+          "range": 10,
+          "damage": {
+            "physPct": 0,
+            "magPct": 167,
+            "flat": [
+              94,
+              105
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/yeoha_champ.bsr",
+        "glb": "/out/mob/china/yeoha_champ.glb",
+        "sidecar": "/out/mob/china/yeoha_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_YEOHA_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 26 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_yeoha.variants",
+        "championModel": "client: res/mob/china/yeoha_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BANDIT_CLON",
+      "id": 1948,
+      "name": "Bandit Subordinate",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 11,
+      "hp": 310,
+      "mp": 0,
+      "physAttack": [
+        71,
+        84
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 29,
+      "magDefence": 34,
+      "physAbsorb": 11,
+      "magAbsorb": 11,
+      "hitRate": 47,
+      "parryRate": 47,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.1,
+      "attackIntervalMs": 1500,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 259,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/bandit_clon.bsr",
+        "glb": "/out/mob/china/bandit_clon.glb",
+        "sidecar": "/out/mob/china/bandit_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_BANDIT_CLON_ATTACK01",
+        "MSKILL_CH_BANDIT_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BANDIT_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1100,
+          "cooldownMs": 1500,
+          "range": 1.1,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              71,
+              84
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_BANDIT_CLON_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 2000,
+          "range": 1.1,
+          "damage": {
+            "physPct": 67,
+            "magPct": 0,
+            "flat": [
+              71,
+              84
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/bandit_champ.bsr",
+        "glb": "/out/mob/china/bandit_champ.glb",
+        "sidecar": "/out/mob/china/bandit_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BANDIT_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 23 nests (0 = aggressive)",
+        "model": "client: MOB_CH_BANDIT model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_bandit_clon.variants",
+        "championModel": "client: res/mob/china/bandit_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BANDITARCHER",
+      "id": 1945,
+      "name": "Bandit Archer",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 12,
+      "hp": 324,
+      "mp": 0,
+      "physAttack": [
+        77,
+        92
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 29,
+      "magDefence": 46,
+      "physAbsorb": 12,
+      "magAbsorb": 12,
+      "hitRate": 49,
+      "parryRate": 49,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 13,
+      "attackIntervalMs": 2500,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 7.5,
+      "aggressive": true,
+      "exp": 282,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/banditarcher.bsr",
+        "glb": "/out/mob/china/banditarcher.glb",
+        "sidecar": "/out/mob/china/banditarcher.json"
+      },
+      "skills": [
+        "MSKILL_CH_BANDITARCHER_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BANDITARCHER_ATTACK01",
+          "castMs": 1383,
+          "actionMs": 617,
+          "cooldownMs": 2500,
+          "range": 13,
+          "damage": {
+            "physPct": 167,
+            "magPct": 0,
+            "flat": [
+              77,
+              92
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/banditarcher_champ.bsr",
+        "glb": "/out/mob/china/banditarcher_champ.glb",
+        "sidecar": "/out/mob/china/banditarcher_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BANDITARCHER_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 29 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_banditarcher.variants",
+        "championModel": "client: res/mob/china/banditarcher_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_TIGER_CLON",
+      "id": 1946,
+      "name": "Young Tiger",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 13,
+      "hp": 387,
+      "mp": 0,
+      "physAttack": [
+        85,
+        101
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 29,
+      "magDefence": 56,
+      "physAbsorb": 13,
+      "magAbsorb": 13,
+      "hitRate": 51,
+      "parryRate": 51,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.9,
+      "attackIntervalMs": 1500,
+      "radius": 1.2,
+      "walkSpeed": 1.6,
+      "runSpeed": 7.5,
+      "aggressive": false,
+      "exp": 306,
+      "scale": 80,
+      "model": {
+        "bsr": "res/mob/china/tiger_clon.bsr",
+        "glb": "/out/mob/china/tiger_clon.glb",
+        "sidecar": "/out/mob/china/tiger_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_TIGER_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_TIGER_CLON_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1000,
+          "cooldownMs": 1500,
+          "range": 0.9,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              85,
+              101
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/tiger_champ.bsr",
+        "glb": "/out/mob/china/tiger_champ.glb",
+        "sidecar": "/out/mob/china/tiger_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_TIGER_CLON_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 29 nests (0 = aggressive)",
+        "model": "client: MOB_CH_TIGER model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_tiger_clon.variants",
+        "championModel": "client: res/mob/china/tiger_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_TIGER",
+      "id": 1947,
+      "name": "Tiger",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 14,
+      "hp": 509,
+      "mp": 0,
+      "physAttack": [
+        87,
+        104
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 35,
+      "magDefence": 56,
+      "physAbsorb": 14,
+      "magAbsorb": 14,
+      "hitRate": 53,
+      "parryRate": 53,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.9,
+      "attackIntervalMs": 1500,
+      "radius": 1.5,
+      "walkSpeed": 1.6,
+      "runSpeed": 7.5,
+      "aggressive": true,
+      "exp": 329,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/tiger.bsr",
+        "glb": "/out/mob/china/tiger.glb",
+        "sidecar": "/out/mob/china/tiger.json"
+      },
+      "skills": [
+        "MSKILL_CH_TIGER_ATTACK01",
+        "MSKILL_CH_TIGER_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_TIGER_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 1500,
+          "range": 0.9,
+          "damage": {
+            "physPct": 50,
+            "magPct": 0,
+            "flat": [
+              87,
+              104
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_CH_TIGER_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1000,
+          "cooldownMs": 1500,
+          "range": 0.9,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              87,
+              104
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/tiger_champ.bsr",
+        "glb": "/out/mob/china/tiger_champ.glb",
+        "sidecar": "/out/mob/china/tiger_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_TIGER_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 34 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_tiger.variants",
+        "championModel": "client: res/mob/china/tiger_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BANDITARCHER_CLON",
+      "id": 1944,
+      "name": "Bandit Bowman",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 15,
+      "hp": 514,
+      "mp": 0,
+      "physAttack": [
+        94,
+        113
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 44,
+      "magDefence": 70,
+      "physAbsorb": 15,
+      "magAbsorb": 15,
+      "hitRate": 55,
+      "parryRate": 55,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 13,
+      "attackIntervalMs": 2500,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 7.5,
+      "aggressive": false,
+      "exp": 353,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/banditarcher_clon.bsr",
+        "glb": "/out/mob/china/banditarcher_clon.glb",
+        "sidecar": "/out/mob/china/banditarcher_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_BANDITARCHER_CLON_ATTACK01",
+        "MSKILL_CH_BANDITARCHER_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BANDITARCHER_CLON_ATTACK01",
+          "castMs": 1383,
+          "actionMs": 617,
+          "cooldownMs": 2500,
+          "range": 13,
+          "damage": {
+            "physPct": 167,
+            "magPct": 0,
+            "flat": [
+              94,
+              113
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_BANDITARCHER_CLON_ATTACK02",
+          "castMs": 1556,
+          "actionMs": 944,
+          "cooldownMs": 3000,
+          "range": 15,
+          "damage": {
+            "physPct": 200,
+            "magPct": 0,
+            "flat": [
+              94,
+              113
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/banditarcher_champ.bsr",
+        "glb": "/out/mob/china/banditarcher_champ.glb",
+        "sidecar": "/out/mob/china/banditarcher_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BANDITARCHER_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 11 nests (0 = aggressive)",
+        "model": "client: MOB_CH_BANDITARCHER model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_banditarcher_clon.variants",
+        "championModel": "client: res/mob/china/banditarcher_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_BANDIT",
+      "id": 1949,
+      "name": "Bandit",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 16,
+      "hp": 755,
+      "mp": 0,
+      "physAttack": [
+        102,
+        123
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 51,
+      "magDefence": 70,
+      "physAbsorb": 16,
+      "magAbsorb": 16,
+      "hitRate": 57,
+      "parryRate": 57,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 1500,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 376,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/bandit.bsr",
+        "glb": "/out/mob/china/bandit.glb",
+        "sidecar": "/out/mob/china/bandit.json"
+      },
+      "skills": [
+        "MSKILL_CH_BANDIT_ATTACK02",
+        "MSKILL_CH_BANDIT_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_BANDIT_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1100,
+          "cooldownMs": 1500,
+          "range": 0.4,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              102,
+              123
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_BANDIT_ATTACK03",
+          "castMs": 0,
+          "actionMs": 1300,
+          "cooldownMs": 2000,
+          "range": 0.4,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              139,
+              160
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/bandit_champ.bsr",
+        "glb": "/out/mob/china/bandit_champ.glb",
+        "sidecar": "/out/mob/china/bandit_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_BANDIT_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 60 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_bandit.variants",
+        "championModel": "client: res/mob/china/bandit_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_WHITETIGER_CLON",
+      "id": 1952,
+      "name": "Black Tiger",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 17,
+      "hp": 749,
+      "mp": 0,
+      "physAttack": [
+        111,
+        133
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 42,
+      "magDefence": 89,
+      "physAbsorb": 17,
+      "magAbsorb": 17,
+      "hitRate": 59,
+      "parryRate": 59,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 1500,
+      "radius": 1.2,
+      "walkSpeed": 1.6,
+      "runSpeed": 7.5,
+      "aggressive": true,
+      "exp": 400,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/whitetiger_clon.bsr",
+        "glb": "/out/mob/china/whitetiger_clon.glb",
+        "sidecar": "/out/mob/china/whitetiger_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_WHITETIGER_CLON_ATTACK01",
+        "MSKILL_CH_WHITETIGER_CLON_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_WHITETIGER_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 1500,
+          "range": 0.4,
+          "damage": {
+            "physPct": 50,
+            "magPct": 0,
+            "flat": [
+              111,
+              133
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_CH_WHITETIGER_CLON_ATTACK03",
+          "castMs": 1044,
+          "actionMs": 1456,
+          "cooldownMs": 3000,
+          "range": 0.4,
+          "damage": {
+            "physPct": 200,
+            "magPct": 0,
+            "flat": [
+              151,
+              173
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/whitetiger_champ.bsr",
+        "glb": "/out/mob/china/whitetiger_champ.glb",
+        "sidecar": "/out/mob/china/whitetiger_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_WHITETIGER_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 24 nests (0 = aggressive)",
+        "model": "client: MOB_CH_WHITETIGER model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_whitetiger_clon.variants",
+        "championModel": "client: res/mob/china/whitetiger_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_WHITETIGER",
+      "id": 1953,
+      "name": "White Tiger",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 18,
+      "hp": 809,
+      "mp": 0,
+      "physAttack": [
+        120,
+        143
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 55,
+      "magDefence": 89,
+      "physAbsorb": 18,
+      "magAbsorb": 18,
+      "hitRate": 61,
+      "parryRate": 61,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.9,
+      "attackIntervalMs": 1500,
+      "radius": 1.2,
+      "walkSpeed": 1.6,
+      "runSpeed": 7.5,
+      "aggressive": true,
+      "exp": 423,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/whitetiger.bsr",
+        "glb": "/out/mob/china/whitetiger.glb",
+        "sidecar": "/out/mob/china/whitetiger.json"
+      },
+      "skills": [
+        "MSKILL_CH_WHITETIGER_ATTACK01",
+        "MSKILL_CH_WHITETIGER_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_WHITETIGER_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 1500,
+          "range": 0.9,
+          "damage": {
+            "physPct": 50,
+            "magPct": 0,
+            "flat": [
+              120,
+              143
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_CH_WHITETIGER_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1000,
+          "cooldownMs": 1500,
+          "range": 0.9,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              120,
+              143
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/whitetiger_champ.bsr",
+        "glb": "/out/mob/china/whitetiger_champ.glb",
+        "sidecar": "/out/mob/china/whitetiger_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_WHITETIGER_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 30 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_whitetiger.variants",
+        "championModel": "client: res/mob/china/whitetiger_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_CHAKJI_CLON",
+      "id": 1955,
+      "name": "Chakji Worker",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 19,
+      "hp": 958,
+      "mp": 0,
+      "physAttack": [
+        129,
+        154
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 59,
+      "magDefence": 95,
+      "physAbsorb": 19,
+      "magAbsorb": 19,
+      "hitRate": 63,
+      "parryRate": 63,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 2000,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 447,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/chakji_clon.bsr",
+        "glb": "/out/mob/china/chakji_clon.glb",
+        "sidecar": "/out/mob/china/chakji_clon.json"
+      },
+      "skills": [
+        "MSKILL_CH_CHAKJI_CLON_ATTACK01",
+        "MSKILL_CH_CHAKJI_CLON_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_CHAKJI_CLON_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1266,
+          "cooldownMs": 2000,
+          "range": 0.4,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              129,
+              154
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_CHAKJI_CLON_ATTACK03",
+          "castMs": 1145,
+          "actionMs": 855,
+          "cooldownMs": 2000,
+          "range": 0.4,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              129,
+              154
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/chakji_champ.bsr",
+        "glb": "/out/mob/china/chakji_champ.glb",
+        "sidecar": "/out/mob/china/chakji_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_CHAKJI_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 22 nests (0 = aggressive)",
+        "model": "client: MOB_CH_CHAKJI model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_chakji_clon.variants",
+        "championModel": "client: res/mob/china/chakji_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_CH_TIGERWOMAN",
+      "id": 1954,
+      "name": "Tiger Girl",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "unique",
+      "level": 20,
+      "hp": 598720,
+      "mp": 0,
+      "physAttack": [
+        181,
+        217
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 42,
+      "magDefence": 51,
+      "physAbsorb": 20,
+      "magAbsorb": 20,
+      "hitRate": 65,
+      "parryRate": 65,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 2.8,
+      "attackIntervalMs": 3000,
+      "radius": 2.8,
+      "walkSpeed": 2,
+      "runSpeed": 9,
+      "aggressive": true,
+      "exp": 451200,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/tigerwoman.bsr",
+        "glb": "/out/mob/china/tigerwoman.glb",
+        "sidecar": "/out/mob/china/tigerwoman.json"
+      },
+      "skills": [
+        "MSKILL_CH_TIGERWOMAN_ATTACK01",
+        "MSKILL_CH_TIGERWOMAN_ATTACK02",
+        "MSKILL_CH_TIGERWOMAN_ATTACK03",
+        "MSKILL_CH_TIGERWOMAN_SUMMON01",
+        "MSKILL_CH_TIGERWOMAN_SUMMON02",
+        "MSKILL_CH_TIGERWOMAN_SUMMON03",
+        "MSKILL_CH_TIGERWOMAN_SUMMON04"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_ATTACK01",
+          "castMs": 1109,
+          "actionMs": 1391,
+          "cooldownMs": 3000,
+          "range": 2.8,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              181,
+              217
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_ATTACK02",
+          "castMs": 0,
+          "actionMs": 4000,
+          "cooldownMs": 4500,
+          "range": 2.8,
+          "damage": {
+            "physPct": 300,
+            "magPct": 0,
+            "flat": [
+              281,
+              321
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_ATTACK03",
+          "castMs": 3003,
+          "actionMs": 1997,
+          "cooldownMs": 5500,
+          "range": 15,
+          "damage": {
+            "physPct": 0,
+            "magPct": 367,
+            "flat": [
+              281,
+              321
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_SUMMON01",
+          "castMs": 0,
+          "actionMs": 0,
+          "cooldownMs": 500,
+          "range": 0
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_SUMMON02",
+          "castMs": 0,
+          "actionMs": 0,
+          "cooldownMs": 500,
+          "range": 0
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_SUMMON03",
+          "castMs": 0,
+          "actionMs": 0,
+          "cooldownMs": 500,
+          "range": 0
+        },
+        {
+          "code": "MSKILL_CH_TIGERWOMAN_SUMMON04",
+          "castMs": 0,
+          "actionMs": 0,
+          "cooldownMs": 500,
+          "range": 0
+        }
+      ],
+      "ride": {
+        "model": {
+          "bsr": "res/mob/china/bluetiger.bsr",
+          "glb": "/out/mob/china/bluetiger.glb",
+          "sidecar": "/out/mob/china/bluetiger.json"
+        },
+        "joint": "saddle"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_TIGERWOMAN_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 11 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "ride": "client: skilleffect.txt characterInfo ride (col 4) res/mob/china/bluetiger.bsr; joint 'saddle' checked in /out/mob/china/bluetiger.json"
+      }
+    },
+    {
+      "code": "MOB_CH_CHAKJI",
+      "id": 1956,
+      "name": "Chakji",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 20,
+      "hp": 1031,
+      "mp": 0,
+      "physAttack": [
+        138,
+        166
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 64,
+      "magDefence": 102,
+      "physAbsorb": 20,
+      "magAbsorb": 20,
+      "hitRate": 65,
+      "parryRate": 65,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 2.4,
+      "attackIntervalMs": 2000,
+      "radius": 0.6,
+      "walkSpeed": 1.5,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 470,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/china/chakji.bsr",
+        "glb": "/out/mob/china/chakji.glb",
+        "sidecar": "/out/mob/china/chakji.json"
+      },
+      "skills": [
+        "MSKILL_CH_CHAKJI_ATTACK01",
+        "MSKILL_CH_CHAKJI_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_CH_CHAKJI_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1266,
+          "cooldownMs": 2000,
+          "range": 2.4,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              138,
+              166
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_CH_CHAKJI_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1733,
+          "cooldownMs": 2000,
+          "range": 2.4,
+          "damage": {
+            "physPct": 67,
+            "magPct": 0,
+            "flat": [
+              138,
+              166
+            ],
+            "hits": 2
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/china/chakji_champ.bsr",
+        "glb": "/out/mob/china/chakji_champ.glb",
+        "sidecar": "/out/mob/china/chakji_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_CH_CHAKJI_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 27 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_chakji.variants",
+        "championModel": "client: res/mob/china/chakji_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_WC_GHOSTBUG",
+      "id": 1958,
+      "name": "Ghost Bug",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 21,
+      "hp": 1106,
+      "mp": 0,
+      "physAttack": [
+        148,
+        178
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 73,
+      "magDefence": 102,
+      "physAbsorb": 21,
+      "magAbsorb": 21,
+      "hitRate": 67,
+      "parryRate": 67,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.4,
+      "attackIntervalMs": 1500,
+      "radius": 0.4,
+      "walkSpeed": 2,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 498,
+      "scale": 80,
+      "model": {
+        "bsr": "res/mob/wchina/ghostbug.bsr",
+        "glb": "/out/mob/wchina/ghostbug.glb",
+        "sidecar": "/out/mob/wchina/ghostbug.json"
+      },
+      "skills": [
+        "MSKILL_WC_GHOSTBUG_ATTACK01"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_GHOSTBUG_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1000,
+          "cooldownMs": 1500,
+          "range": 0.4,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              148,
+              178
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/wchina/ghostbug_champ.bsr",
+        "glb": "/out/mob/wchina/ghostbug_champ.glb",
+        "sidecar": "/out/mob/wchina/ghostbug_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_GHOSTBUG_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 20 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_ghostbug.variants",
+        "championModel": "client: res/mob/wchina/ghostbug_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_WC_DEVILBUG",
+      "id": 1960,
+      "name": "Devil Bug",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 22,
+      "hp": 1184,
+      "mp": 0,
+      "physAttack": [
+        159,
+        190
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 68,
+      "magDefence": 124,
+      "physAbsorb": 22,
+      "magAbsorb": 22,
+      "hitRate": 69,
+      "parryRate": 69,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.5,
+      "attackIntervalMs": 1500,
+      "radius": 0.4,
+      "walkSpeed": 2,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 528,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/devilbug.bsr",
+        "glb": "/out/mob/wchina/devilbug.glb",
+        "sidecar": "/out/mob/wchina/devilbug.json"
+      },
+      "skills": [
+        "MSKILL_WC_DEVILBUG_ATTACK01",
+        "MSKILL_WC_DEVILBUG_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_DEVILBUG_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 1500,
+          "range": 0.5,
+          "damage": {
+            "physPct": 100,
+            "magPct": 0,
+            "flat": [
+              159,
+              190
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_WC_DEVILBUG_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1600,
+          "cooldownMs": 2000,
+          "range": 8,
+          "damage": {
+            "physPct": 0,
+            "magPct": 133,
+            "flat": [
+              217,
+              248
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/wchina/devilbug_champ.bsr",
+        "glb": "/out/mob/wchina/devilbug_champ.glb",
+        "sidecar": "/out/mob/wchina/devilbug_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_DEVILBUG_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 20 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_devilbug.variants",
+        "championModel": "client: res/mob/wchina/devilbug_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_WC_HYUNGNO",
+      "id": 2097,
+      "name": "Hyungno Ghost Soldier",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 23,
+      "hp": 1264,
+      "mp": 0,
+      "physAttack": [
+        170,
+        203
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 77,
+      "magDefence": 124,
+      "physAbsorb": 23,
+      "magAbsorb": 23,
+      "hitRate": 71,
+      "parryRate": 71,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.8,
+      "attackIntervalMs": 2000,
+      "radius": 0.7,
+      "walkSpeed": 1,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 560,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/hyungno.bsr",
+        "glb": "/out/mob/wchina/hyungno.glb",
+        "sidecar": "/out/mob/wchina/hyungno.json"
+      },
+      "skills": [
+        "MSKILL_WC_HYUNGNO_ATTACK01",
+        "MSKILL_WC_HYUNGNO_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_HYUNGNO_ATTACK01",
+          "castMs": 0,
+          "actionMs": 1700,
+          "cooldownMs": 2000,
+          "range": 1.8,
+          "damage": {
+            "physPct": 67,
+            "magPct": 0,
+            "flat": [
+              170,
+              203
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_WC_HYUNGNO_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 2000,
+          "range": 1.8,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              170,
+              203
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_HYUNGNO_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 26 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_hyungno.variants"
+      }
+    },
+    {
+      "code": "MOB_WC_HYUNGNO_CLON",
+      "id": 2098,
+      "name": "Hyungno Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 24,
+      "hp": 1347,
+      "mp": 0,
+      "physAttack": [
+        181,
+        217
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 77,
+      "magDefence": 140,
+      "physAbsorb": 24,
+      "magAbsorb": 24,
+      "hitRate": 73,
+      "parryRate": 73,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.8,
+      "attackIntervalMs": 2000,
+      "radius": 0.7,
+      "walkSpeed": 1,
+      "runSpeed": 5.5,
+      "aggressive": false,
+      "exp": 593,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/hyungno.bsr",
+        "glb": "/out/mob/wchina/hyungno.glb",
+        "sidecar": "/out/mob/wchina/hyungno.json"
+      },
+      "skills": [
+        "MSKILL_WC_HYUNGNO_CLON_ATTACK02",
+        "MSKILL_WC_HYUNGNO_CLON_ATTACK03"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_HYUNGNO_CLON_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1500,
+          "cooldownMs": 2000,
+          "range": 1.8,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              181,
+              217
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_WC_HYUNGNO_CLON_ATTACK03",
+          "castMs": 1330,
+          "actionMs": 670,
+          "cooldownMs": 2000,
+          "range": 1.8,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              181,
+              217
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_HYUNGNO_CLON_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 33 nests (0 = aggressive)",
+        "model": "client: MOB_WC_HYUNGNO model (col 4 base code; no _clon sibling in Data.pk2)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_hyungno_clon.variants"
+      }
+    },
+    {
+      "code": "MOB_WC_EARTHGHOST",
+      "id": 1963,
+      "name": "Earth Ghost",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 27,
+      "hp": 1451,
+      "mp": 0,
+      "physAttack": [
+        219,
+        261
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 103,
+      "magDefence": 148,
+      "physAbsorb": 27,
+      "magAbsorb": 27,
+      "hitRate": 79,
+      "parryRate": 79,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 0.7,
+      "attackIntervalMs": 2000,
+      "radius": 0.4,
+      "walkSpeed": 1.1,
+      "runSpeed": 7.5,
+      "aggressive": true,
+      "exp": 707,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/earthghost.bsr",
+        "glb": "/out/mob/wchina/earthghost.glb",
+        "sidecar": "/out/mob/wchina/earthghost.json"
+      },
+      "skills": [
+        "MSKILL_WC_EARTHGHOST_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_EARTHGHOST_ATTACK02",
+          "castMs": 0,
+          "actionMs": 1533,
+          "cooldownMs": 2000,
+          "range": 0.7,
+          "damage": {
+            "physPct": 133,
+            "magPct": 0,
+            "flat": [
+              219,
+              261
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/wchina/earthghost_champ.bsr",
+        "glb": "/out/mob/wchina/earthghost_champ.glb",
+        "sidecar": "/out/mob/wchina/earthghost_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_EARTHGHOST_ATTACK02 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 65 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_earthghost.variants",
+        "championModel": "client: res/mob/wchina/earthghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_WC_GUNPOWDERGHOST_CLON",
+      "id": 1964,
+      "name": "Meek Gun Powder",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 27,
+      "hp": 1451,
+      "mp": 0,
+      "physAttack": [
+        0,
+        0
+      ],
+      "magAttack": [
+        299,
+        342
+      ],
+      "physDefence": 92,
+      "magDefence": 165,
+      "physAbsorb": 27,
+      "magAbsorb": 27,
+      "hitRate": 79,
+      "parryRate": 79,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 13,
+      "attackIntervalMs": 3500,
+      "radius": 0.3,
+      "walkSpeed": 1.1,
+      "runSpeed": 7.5,
+      "aggressive": false,
+      "exp": 707,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/gunpowderghost_clon.bsr",
+        "glb": "/out/mob/wchina/gunpowderghost_clon.glb",
+        "sidecar": "/out/mob/wchina/gunpowderghost_clon.json"
+      },
+      "skills": [
+        "MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK01",
+        "MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK01",
+          "castMs": 1734,
+          "actionMs": 1099,
+          "cooldownMs": 3500,
+          "range": 13,
+          "damage": {
+            "physPct": 0,
+            "magPct": 233,
+            "flat": [
+              299,
+              342
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK02",
+          "castMs": 1735,
+          "actionMs": 931,
+          "cooldownMs": 3000,
+          "range": 13,
+          "damage": {
+            "physPct": 0,
+            "magPct": 200,
+            "flat": [
+              299,
+              342
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/wchina/gunpowderghost_champ.bsr",
+        "glb": "/out/mob/wchina/gunpowderghost_champ.glb",
+        "sidecar": "/out/mob/wchina/gunpowderghost_champ.json"
+      },
+      "fieldSources": {
+        "magAttack": "client: MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 1 on all 17 nests (0 = aggressive)",
+        "model": "client: MOB_WC_GUNPOWDERGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_gunpowderghost_clon.variants",
+        "championModel": "client: res/mob/wchina/gunpowderghost_champ.bsr (the _champ sibling of the model)"
+      }
+    },
+    {
+      "code": "MOB_WC_EARTHKING",
+      "id": 1966,
+      "name": "Earth Taoist",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 30,
+      "hp": 1513,
+      "mp": 0,
+      "physAttack": [
+        0,
+        0
+      ],
+      "magAttack": [
+        357,
+        408
+      ],
+      "physDefence": 109,
+      "magDefence": 194,
+      "physAbsorb": 30,
+      "magAbsorb": 30,
+      "hitRate": 85,
+      "parryRate": 85,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 13,
+      "attackIntervalMs": 2500,
+      "radius": 0.7,
+      "walkSpeed": 2.5,
+      "runSpeed": 5.5,
+      "aggressive": true,
+      "exp": 842,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/earthking.bsr",
+        "glb": "/out/mob/wchina/earthking.glb",
+        "sidecar": "/out/mob/wchina/earthking.json"
+      },
+      "skills": [
+        "MSKILL_WC_EARTHKING_ATTACK01",
+        "MSKILL_WC_EARTHKING_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_EARTHKING_ATTACK01",
+          "castMs": 1112,
+          "actionMs": 788,
+          "cooldownMs": 2500,
+          "range": 13,
+          "damage": {
+            "physPct": 0,
+            "magPct": 83,
+            "flat": [
+              357,
+              408
+            ],
+            "hits": 2
+          }
+        },
+        {
+          "code": "MSKILL_WC_EARTHKING_ATTACK02",
+          "castMs": 0,
+          "actionMs": 3000,
+          "cooldownMs": 3500,
+          "range": 13,
+          "damage": {
+            "physPct": 0,
+            "magPct": 233,
+            "flat": [
+              357,
+              408
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "fieldSources": {
+        "magAttack": "client: MSKILL_WC_EARTHKING_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 27 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_earthking.variants"
+      }
+    },
+    {
+      "code": "MOB_WC_HYEONGCHEON",
+      "id": 1970,
+      "name": "Hyeongcheon",
+      "typeId": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "rarity": "normal",
+      "level": 30,
+      "hp": 1909,
+      "mp": 0,
+      "physAttack": [
+        261,
+        312
+      ],
+      "magAttack": [
+        0,
+        0
+      ],
+      "physDefence": 121,
+      "magDefence": 175,
+      "physAbsorb": 30,
+      "magAbsorb": 30,
+      "hitRate": 85,
+      "parryRate": 85,
+      "blockRate": 0,
+      "critRate": 2,
+      "attackRange": 1.4,
+      "attackIntervalMs": 3000,
+      "radius": 1.1,
+      "walkSpeed": 1.2,
+      "runSpeed": 3.5,
+      "aggressive": true,
+      "exp": 842,
+      "scale": 100,
+      "model": {
+        "bsr": "res/mob/wchina/hyeongcheon.bsr",
+        "glb": "/out/mob/wchina/hyeongcheon.glb",
+        "sidecar": "/out/mob/wchina/hyeongcheon.json"
+      },
+      "skills": [
+        "MSKILL_WC_HYEONGCHEON_ATTACK01",
+        "MSKILL_WC_HYEONGCHEON_ATTACK02"
+      ],
+      "attacks": [
+        {
+          "code": "MSKILL_WC_HYEONGCHEON_ATTACK01",
+          "castMs": 1496,
+          "actionMs": 1204,
+          "cooldownMs": 3000,
+          "range": 1.4,
+          "damage": {
+            "physPct": 200,
+            "magPct": 0,
+            "flat": [
+              261,
+              312
+            ],
+            "hits": 1
+          }
+        },
+        {
+          "code": "MSKILL_WC_HYEONGCHEON_ATTACK02",
+          "castMs": 1516,
+          "actionMs": 1184,
+          "cooldownMs": 3000,
+          "range": 1.4,
+          "damage": {
+            "physPct": 200,
+            "magPct": 0,
+            "flat": [
+              261,
+              312
+            ],
+            "hits": 1
+          }
+        }
+      ],
+      "variants": [
+        "normal",
+        "champion",
+        "giant"
+      ],
+      "championModel": {
+        "bsr": "res/mob/wchina/hyeongcheon_champ.bsr",
+        "glb": "/out/mob/wchina/hyeongcheon_champ.glb",
+        "sidecar": "/out/mob/wchina/hyeongcheon_champ.json"
+      },
+      "fieldSources": {
+        "physAttack": "client: MSKILL_WC_HYEONGCHEON_ATTACK01 'att' flat min/max",
+        "aggressive": "port: tactics aggressTypeRaw 0 on all 30 nests (0 = aggressive)",
+        "model": "client: AssocFileObj128 (col 52)",
+        "variants": "vsro-server-db via third-party port: mobs.json mob_hyeongcheon.variants",
+        "championModel": "client: res/mob/wchina/hyeongcheon_champ.bsr (the _champ sibling of the model)"
+      }
+    }
+  ]
+}

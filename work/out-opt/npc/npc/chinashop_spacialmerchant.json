@@ -1,0 +1,330 @@
+{
+  "source": "res/npc/npc/chinashop_spacialmerchant.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinashop_spacialmerchant",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinashop_spacialmerchant.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 4.987462179917301e-7,
+      "maxHierarchyError": 3.3306690738754696e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaShop_SpacialMerchant_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_spacialmerchant.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_spacialmerchant.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_SpacialMerchant",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_spacialmerchant.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_spacialmerchant.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaShop_SpacialMerchant_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_spacialmerchant_2s.bms",
+      "material": "ChinaShop_SpacialMerchant_2s",
+      "vertices": 8,
+      "triangles": 4,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head"
+      ]
+    },
+    {
+      "name": "ChinaShop_SpacialMerchant_jupan",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_spacialmerchant_jupan.bms",
+      "material": "ChinaShop_SpacialMerchant",
+      "vertices": 24,
+      "triangles": 12,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Hand"
+      ]
+    },
+    {
+      "name": "ChinaShop_SpacialMerchant_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_spacialmerchant_part1.bms",
+      "material": "ChinaShop_SpacialMerchant",
+      "vertices": 256,
+      "triangles": 294,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Forearm",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 L Hand",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Finger2"
+      ]
+    },
+    {
+      "name": "ChinaShop_SpacialMerchant_part2_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_spacialmerchant_part2_part1.bms",
+      "material": "ChinaShop_SpacialMerchant",
+      "vertices": 252,
+      "triangles": 280,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 L Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Neck1",
+        "Bip01 Spine",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 R Clavicle"
+      ]
+    },
+    {
+      "name": "ChinaShop_SpacialMerchant_part2_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_spacialmerchant_part2_part2.bms",
+      "material": "ChinaShop_SpacialMerchant",
+      "vertices": 184,
+      "triangles": 210,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Finger21",
+        "Bip01 L Finger2",
+        "Bip01 Head",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Spine1",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger2",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0",
+        "Bip01 Spine",
+        "Bip01 L Hand"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinashop_spacialmerchant_basic.ban",
+      "banName": "chinashop_spacialmerchant_basic",
+      "durationMs": 5666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinashop_spacialmerchant_time.ban",
+      "banName": "chinashop_spacialmerchant_time",
+      "durationMs": 2266,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 724,
+    "triangles": 800,
+    "joints": 36,
+    "meshes": 5,
+    "animations": 2,
+    "textures": 1,
+    "heightM": 1.4168443963862956,
+    "boundsMin": [
+      -0.43860045075416565,
+      0.0013389303348958492,
+      -0.36089086532592773
+    ],
+    "boundsMax": [
+      0.4126451909542084,
+      1.4181833267211914,
+      0.6673426628112793
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "chinashop_spacialmerchant",
+    "packs": {
+      "default": "npc/_anims/chinashop_spacialmerchant/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "chinashop_spacialmerchant_basic"
+      ],
+      "STAND2": [
+        "default",
+        "chinashop_spacialmerchant_time"
+      ]
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "source": "res/item/china/man_item/heavy_03_la.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "heavy_03_la",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim/skel/char/europe/europeman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.298164658691263e-7,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 2,
+    "attachPointName": "_la",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "heavy_03_la"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "heavy_03_la"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "heavy_03_la",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\heavy_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_la.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "equipment: BMT alpha flag but 95% of the surface samples alpha < 128 (19% zero): the alpha is a mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "heavy_03_la",
+      "bms": "prim\\mesh\\item\\china\\man_item\\heavy_03_la.bms",
+      "material": "heavy_03_la",
+      "vertices": 286,
+      "triangles": 430,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 Spine1",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 L Calf"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 286,
+    "triangles": 430,
+    "joints": 43,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.8564858734607697,
+    "boundsMin": [
+      -0.2969270348548889,
+      0.34032806754112244,
+      -0.12583783268928528
+    ],
+    "boundsMax": [
+      0.29695481061935425,
+      1.196813941001892,
+      0.1701813042163849
+    ]
+  },
+  "warnings": [
+    "equipment: base colour texture reused as the emissive texture of heavy_03_la (D3D emissive is modulated by the texture)"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_M_HEAVY_03_LA_A",
+      "ITEM_CH_M_HEAVY_03_LA_B",
+      "ITEM_CH_M_HEAVY_03_LA_C"
+    ],
+    "bsr": "res/item/china/man_item/heavy_03_la.bsr",
+    "gender": "male",
+    "kind": "skinned",
+    "method": "REPLACE",
+    "attachPoint": "_la",
+    "slots": [
+      "PELVIS",
+      "THIGH"
+    ],
+    "attachBone": null,
+    "hides": [
+      "man_pelvis",
+      "man_thigh"
+    ],
+    "skeleton": "prim/skel/char/europe/europeman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "coverage": [
+      {
+        "slot": "PELVIS",
+        "mesh": "man_pelvis",
+        "vertices": 79,
+        "gaps": 0,
+        "maxOffsetM": 0.0367
+      },
+      {
+        "slot": "THIGH",
+        "mesh": "man_thigh",
+        "vertices": 82,
+        "gaps": 0,
+        "maxOffsetM": 0.0221
+      }
+    ],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  }
+}

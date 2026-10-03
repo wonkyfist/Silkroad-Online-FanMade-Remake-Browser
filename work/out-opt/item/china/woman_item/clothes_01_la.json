@@ -1,0 +1,118 @@
+{
+  "source": "res/item/china/woman_item/clothes_01_la.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "clothes_01_la",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 2,
+    "attachPointName": "_la",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "clothes_01_la"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_01_la",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clother_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_la.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_01_la",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_01_la.bms",
+      "material": "clothes_01_la",
+      "vertices": 125,
+      "triangles": 194,
+      "skinned": false,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 125,
+    "triangles": 194,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.22423607110977173,
+    "boundsMin": [
+      -0.1674305498600006,
+      0.8793352246284485,
+      -0.15491747856140137
+    ],
+    "boundsMax": [
+      0.1674218475818634,
+      1.1035712957382202,
+      0.07469958811998367
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

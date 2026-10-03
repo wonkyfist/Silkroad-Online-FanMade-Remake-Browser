@@ -1,0 +1,477 @@
+{
+  "source": "res/mob/wchina/ghostbug_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "ghostbug",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\ghostbug.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bone21",
+      "Bone22",
+      "Bone23",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "Bip01 Tail3",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.216350440015674e-7,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "GhostBug"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "ghostbug",
+      "bmt": "prim\\mtrl\\mob\\china\\ghostbug_champ.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\ghostbug_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "GhostBug",
+      "bms": "prim\\mesh\\mob\\china\\ghostbug.bms",
+      "material": "GhostBug",
+      "vertices": 337,
+      "triangles": 436,
+      "skinned": true,
+      "bones": [
+        "Bone04",
+        "Bone05",
+        "Bip01 Spine",
+        "Bip01 R Thigh",
+        "Bip01 Pelvis",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bone02",
+        "Bone01",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bone22",
+        "Bone21",
+        "Bip01 Head",
+        "Bip01 Neck1",
+        "Bip01 Spine1",
+        "Bip01 R UpperArm",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Tail2",
+        "Bip01 Tail3",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_stand01.ban",
+      "banName": "ghostbug_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_walk.ban",
+      "banName": "ghostbug_walk",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 133.3000030517578,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_attack01.ban",
+      "banName": "ghostbug_attack01",
+      "durationMs": 866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 501,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_damage01.ban",
+      "banName": "ghostbug_damage01",
+      "durationMs": 266,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 7,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_die.ban",
+      "banName": "ghostbug_die",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 35,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_stand02.ban",
+      "banName": "ghostbug_stand02",
+      "durationMs": 4500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 73,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_walk.ban",
+      "banName": "ghostbug_walk",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 133.3000030517578,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_damage02.ban",
+      "banName": "ghostbug_damage02",
+      "durationMs": 633,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_die_loop.ban",
+      "banName": "ghostbug_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_down.ban",
+      "banName": "ghostbug_down",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_downwait.ban",
+      "banName": "ghostbug_downwait",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_downdamage.ban",
+      "banName": "ghostbug_downdamage",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_wakeup.ban",
+      "banName": "ghostbug_wakeup",
+      "durationMs": 1033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\ghostbug\\ghostbug_downdie.ban",
+      "banName": "ghostbug_downdie",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 38
+    }
+  ],
+  "stats": {
+    "vertices": 337,
+    "triangles": 436,
+    "joints": 39,
+    "meshes": 1,
+    "animations": 14,
+    "textures": 1,
+    "heightM": 1.596247673034668,
+    "boundsMin": [
+      -0.9216889142990112,
+      1.0098662376403809,
+      -0.5098201036453247
+    ],
+    "boundsMax": [
+      0.9216890335083008,
+      2.606113910675049,
+      0.3386012315750122
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "ghostbug",
+    "packs": {
+      "default": "mob/_anims/ghostbug/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "ghostbug_stand01"
+      ],
+      "WALK": [
+        "default",
+        "ghostbug_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "ghostbug_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "ghostbug_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "ghostbug_die"
+      ],
+      "ATTREADY": [
+        "default",
+        "ghostbug_stand02"
+      ],
+      "RUN": [
+        "default",
+        "ghostbug_walk"
+      ],
+      "DAMAGE2": [
+        "default",
+        "ghostbug_damage02"
+      ],
+      "DIE1_RM": [
+        "default",
+        "ghostbug_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "ghostbug_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "ghostbug_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "ghostbug_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "ghostbug_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "ghostbug_downdie"
+      ]
+    }
+  }
+}

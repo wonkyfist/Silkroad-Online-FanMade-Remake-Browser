@@ -1,0 +1,4271 @@
+{
+  "source": "res/char/europe/europeman_adventurer.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "europeman_adventurer",
+  "type": "CHARACTER",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\char\\europe\\europeman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.298164658691263e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "europeman_adventurer_hair"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "man_torso_upper"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "man_torso_lower"
+      },
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "man_pelvis"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "man_thigh"
+      },
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "man_calf"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "man_arm_upper"
+      },
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "man_arm_lower"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "europeman_adventurer_face"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "chinaman_body",
+      "bmt": "prim\\mtrl\\char\\europe\\man\\europeman_adventurer.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\char\\europe\\man\\europeman_adventurer_body.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.1% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinaman_hair",
+      "bmt": "prim\\mtrl\\char\\europe\\man\\europeman_adventurer.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\char\\europe\\man\\europeman_adventurer_hair.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (25.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "man_arm_lower",
+      "bms": "prim\\mesh\\char\\china\\man\\man_arm_lower.bms",
+      "material": "chinaman_body",
+      "vertices": 168,
+      "triangles": 200,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger2",
+        "Bip01 L Finger01",
+        "Bip01 L Finger0",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Finger1",
+        "Bip01 R Finger2",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21"
+      ]
+    },
+    {
+      "name": "man_arm_upper",
+      "bms": "prim\\mesh\\char\\china\\man\\man_arm_upper.bms",
+      "material": "chinaman_body",
+      "vertices": 144,
+      "triangles": 182,
+      "skinned": true,
+      "bones": [
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 Spine1",
+        "Bip01 L Clavicle",
+        "Bip01 Head",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle"
+      ]
+    },
+    {
+      "name": "man_calf",
+      "bms": "prim\\mesh\\char\\china\\man\\man_calf.bms",
+      "material": "chinaman_body",
+      "vertices": 118,
+      "triangles": 142,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Foot",
+        "Bip01 R Calf",
+        "Bip01 R Toe0"
+      ]
+    },
+    {
+      "name": "man_pelvis",
+      "bms": "prim\\mesh\\char\\china\\man\\man_pelvis.bms",
+      "material": "chinaman_body",
+      "vertices": 79,
+      "triangles": 120,
+      "skinned": true,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh"
+      ]
+    },
+    {
+      "name": "man_thigh",
+      "bms": "prim\\mesh\\char\\china\\man\\man_thigh.bms",
+      "material": "chinaman_body",
+      "vertices": 82,
+      "triangles": 112,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 L Calf",
+        "Bip01 R Thigh",
+        "Bip01 R Calf"
+      ]
+    },
+    {
+      "name": "man_torso_lower",
+      "bms": "prim\\mesh\\char\\china\\man\\man_torso_lower.bms",
+      "material": "chinaman_body",
+      "vertices": 63,
+      "triangles": 94,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Pelvis"
+      ]
+    },
+    {
+      "name": "man_torso_upper",
+      "bms": "prim\\mesh\\char\\china\\man\\man_torso_upper.bms",
+      "material": "chinaman_body",
+      "vertices": 64,
+      "triangles": 74,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Clavicle",
+        "Bip01 Spine1",
+        "Bip01 L UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm"
+      ]
+    },
+    {
+      "name": "europeman_adventurer_face",
+      "bms": "prim\\mesh\\char\\europe\\man\\europeman_adventurer_face.bms",
+      "material": "chinaman_body",
+      "vertices": 166,
+      "triangles": 238,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 L Clavicle"
+      ]
+    },
+    {
+      "name": "europeman_adventurer_hair",
+      "bms": "prim\\mesh\\char\\europe\\man\\europeman_adventurer_hair.bms",
+      "material": "chinaman_hair",
+      "vertices": 268,
+      "triangles": 324,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_fighter_standcity.ban",
+      "banName": "chinaman_fighter_standcity",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_fighter_walkforward.ban",
+      "banName": "chinaman_fighter_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 26,
+      "walkLength": 17,
+      "events": [
+        {
+          "timeMs": 406,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 932,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_handstraightl.ban",
+      "banName": "chinaman_a_handstraightl",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 208,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_benormalhit.ban",
+      "banName": "chinaman_a_benormalhit",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_diehardhit.ban",
+      "banName": "chinaman_a_diehardhit",
+      "durationMs": 3100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 58,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_handstraightr.ban",
+      "banName": "chinaman_a_handstraightr",
+      "durationMs": 566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 146,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_standbattle.ban",
+      "banName": "chinaman_standbattle",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_run.ban",
+      "banName": "europe_man_fighter_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [
+        {
+          "timeMs": 293,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 625,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_behardhit.ban",
+      "banName": "chinaman_a_behardhit",
+      "durationMs": 1100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SIT_DOWN",
+      "group": "default",
+      "type": 13,
+      "typeName": "SIT_DOWN",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_sitground.ban",
+      "banName": "chinaman_a_sitground",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SIT",
+      "group": "default",
+      "type": 14,
+      "typeName": "SIT",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_sitbreath.ban",
+      "banName": "chinaman_a_sitbreath",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND_UP",
+      "group": "default",
+      "type": 15,
+      "typeName": "STAND_UP",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_sitstand.ban",
+      "banName": "chinaman_a_sitstand",
+      "durationMs": 1600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 30,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_handhookl.ban",
+      "banName": "chinaman_a_handhookl",
+      "durationMs": 566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 222,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK4",
+      "group": "default",
+      "type": 17,
+      "typeName": "ATTACK4",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_handhookr.ban",
+      "banName": "chinaman_a_handhookr",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 128,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DEFENCE",
+      "group": "default",
+      "type": 22,
+      "typeName": "DEFENCE",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_blocking.ban",
+      "banName": "chinaman_a_blocking",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 11,
+      "partial": true
+    },
+    {
+      "name": "WALK_BACK",
+      "group": "default",
+      "type": 23,
+      "typeName": "WALK_BACK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_walkbackward.ban",
+      "banName": "chinaman_walkbackward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "TURN_L",
+      "group": "default",
+      "type": 24,
+      "typeName": "TURN_L",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_standroll.ban",
+      "banName": "chinaman_a_standroll",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "TURN_R",
+      "group": "default",
+      "type": 25,
+      "typeName": "TURN_R",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_standroll.ban",
+      "banName": "chinaman_a_standroll",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SKILL_1",
+      "group": "default",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_cast_b_punch_02_shot.ban",
+      "banName": "skill_eu_cast_b_punch_02_shot",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 300,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_2",
+      "group": "default",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_cast_b_punch_01.ban",
+      "banName": "skill_eu_cast_b_punch_01",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 140,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_diehardhit_loop.ban",
+      "banName": "chinaman_a_diehardhit_loop",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "PICK",
+      "group": "default",
+      "type": 38,
+      "typeName": "PICK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_pickup.ban",
+      "banName": "chinaman_pickup",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "READY01",
+      "group": "default",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_cast_b_punch_02_ready.ban",
+      "banName": "skill_eu_cast_b_punch_02_ready",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "EMOTION01",
+      "group": "default",
+      "type": 50,
+      "typeName": "EMOTION01",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_greeting.ban",
+      "banName": "cm_emot_act_greeting",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "EMOTION02",
+      "group": "default",
+      "type": 51,
+      "typeName": "EMOTION02",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_pokun.ban",
+      "banName": "cm_emot_act_pokun",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "EMOTION03",
+      "group": "default",
+      "type": 52,
+      "typeName": "EMOTION03",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_rush.ban",
+      "banName": "cm_emot_act_rush",
+      "durationMs": 3133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 53,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "EMOTION04",
+      "group": "default",
+      "type": 53,
+      "typeName": "EMOTION04",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_joy.ban",
+      "banName": "cm_emot_act_joy",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "EMOTION05",
+      "group": "default",
+      "type": 54,
+      "typeName": "EMOTION05",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_no_tattoo.ban",
+      "banName": "cm_emot_act_no_tattoo",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 55,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "EMOTION06",
+      "group": "default",
+      "type": 55,
+      "typeName": "EMOTION06",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_yes_tattoo.ban",
+      "banName": "cm_emot_act_yes_tattoo",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 53,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "EMOTION07",
+      "group": "default",
+      "type": 56,
+      "typeName": "EMOTION07",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_laugh.ban",
+      "banName": "cm_emot_act_laugh",
+      "durationMs": 3666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "EMOTION08",
+      "group": "default",
+      "type": 57,
+      "typeName": "EMOTION08",
+      "ban": "prim\\ani\\char\\china\\man\\cm_emot_act_bow.ban",
+      "banName": "cm_emot_act_bow",
+      "durationMs": 6166,
+      "fps": 24,
+      "cyclic": false,
+      "keys": 61,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "POSE",
+      "group": "default",
+      "type": 60,
+      "typeName": "POSE",
+      "ban": "prim\\ani\\char\\china\\man\\man_pose.ban",
+      "banName": "1111",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND3",
+      "group": "default",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_merchant_standcity02.ban",
+      "banName": "chinaman_merchant_standcity02",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 26,
+      "partial": true
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_down.ban",
+      "banName": "chinaman_a_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_downwait.ban",
+      "banName": "chinaman_a_downwait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_downdamage.ban",
+      "banName": "chinaman_a_downdamage",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_wakeup.ban",
+      "banName": "chinaman_a_wakeup",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_a_downdie.ban",
+      "banName": "chinaman_a_downdie",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_stun.ban",
+      "banName": "chinaman_stun",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "VENDOR01",
+      "group": "default",
+      "type": 80,
+      "typeName": "VENDOR01",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_vendor01.ban",
+      "banName": "chinaman_vendor01",
+      "durationMs": 13333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 116,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WAIT01",
+      "group": "default",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_cast_b_punch_02_wait.ban",
+      "banName": "skill_eu_cast_b_punch_02_wait",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_24",
+      "group": "default",
+      "type": 104,
+      "typeName": "SKILL_24",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_bard_dancea_cleric_a.ban",
+      "banName": "skill_eu_bard_dancea_cleric_a",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 56,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1508,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_30",
+      "group": "default",
+      "type": 110,
+      "typeName": "SKILL_30",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_frenzya_tount_sprint.ban",
+      "banName": "skill_eu_warrior_frenzya_tount_sprint",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 278,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "REVIVAL",
+      "group": "default",
+      "type": 121,
+      "typeName": "REVIVAL",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_reborn.ban",
+      "banName": "chinaman_reborn",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "HANDLOOF",
+      "group": "default",
+      "type": 188,
+      "typeName": "HANDLOOF",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_cast_hand_loop.ban",
+      "banName": "skill_eu_cast_hand_loop",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "TROW",
+      "group": "default",
+      "type": 189,
+      "typeName": "TROW",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_throw.ban",
+      "banName": "skill_eu_throw",
+      "durationMs": 1133,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 427,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "STAND1_chinaman_merchant_standcity",
+      "group": "onehand_staff",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_merchant_standcity.ban",
+      "banName": "chinaman_merchant_standcity",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK_chinaman_merchant_walkforward",
+      "group": "onehand_staff",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_merchant_walkforward.ban",
+      "banName": "chinaman_merchant_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 17,
+      "events": [
+        {
+          "timeMs": 918,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK1_skill_eu_wizard_onehand_attack_01",
+      "group": "onehand_staff",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_attack_01.ban",
+      "banName": "skill_eu_wizard_onehand_attack_01",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 801,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_wizard_onehand_attack_ready",
+      "group": "onehand_staff",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_attack_ready.ban",
+      "banName": "skill_eu_wizard_onehand_attack_ready",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_sword_run",
+      "group": "onehand_staff",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_sword_run.ban",
+      "banName": "europe_man_fighter_sword_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [
+        {
+          "timeMs": 291,
+          "type": 2,
+          "p1": 0,
+          "p2": 1
+        },
+        {
+          "timeMs": 623,
+          "type": 2,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_1_skill_eu_wizard_onehand_target_shot",
+      "group": "onehand_staff",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_target_shot.ban",
+      "banName": "skill_eu_wizard_onehand_target_shot",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 235,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_2_skill_eu_wizard_onehand_area_shot",
+      "group": "onehand_staff",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_area_shot.ban",
+      "banName": "skill_eu_wizard_onehand_area_shot",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 268,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "READY01_skill_eu_wizard_onehand_target_ready",
+      "group": "onehand_staff",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_target_ready.ban",
+      "banName": "skill_eu_wizard_onehand_target_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "READY02",
+      "group": "onehand_staff",
+      "type": 41,
+      "typeName": "READY02",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_area_ready.ban",
+      "banName": "skill_eu_wizard_onehand_area_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WAIT01_skill_eu_wizard_onehand_target_wait",
+      "group": "onehand_staff",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_target_wait.ban",
+      "banName": "skill_eu_wizard_onehand_target_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WAIT02",
+      "group": "onehand_staff",
+      "type": 92,
+      "typeName": "WAIT02",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_onehand_area_wait.ban",
+      "banName": "skill_eu_wizard_onehand_area_wait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "STAND1_skill_eu_rog_bowa_stand01",
+      "group": "bow",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_stand01.ban",
+      "banName": "skill_eu_rog_bowa_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1_skill_eu_rog_bowa_attack01",
+      "group": "bow",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_attack01.ban",
+      "banName": "skill_eu_rog_bowa_attack01",
+      "durationMs": 1933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1213,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2_skill_eu_rog_bowa_attack02",
+      "group": "bow",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_attack02.ban",
+      "banName": "skill_eu_rog_bowa_attack02",
+      "durationMs": 1900,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1204,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_rog_bowa_attack_ready",
+      "group": "bow",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_attack_ready.ban",
+      "banName": "skill_eu_rog_bowa_attack_ready",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_skill_eu_rog_bowa_run",
+      "group": "bow",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_run.ban",
+      "banName": "skill_eu_rog_bowa_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 15,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "ATTACK3_skill_eu_rog_bowa_attack03",
+      "group": "bow",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_attack03.ban",
+      "banName": "skill_eu_rog_bowa_attack03",
+      "durationMs": 1900,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1210,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_1_skill_eu_rog_bowa_target_shot",
+      "group": "bow",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_target_shot.ban",
+      "banName": "skill_eu_rog_bowa_target_shot",
+      "durationMs": 733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 60,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "READY01_skill_eu_rog_bowa_target_ready",
+      "group": "bow",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_target_ready.ban",
+      "banName": "skill_eu_rog_bowa_target_ready",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WAIT01_skill_eu_rog_bowa_target_wait",
+      "group": "bow",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_target_wait.ban",
+      "banName": "skill_eu_rog_bowa_target_wait",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 4,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_50",
+      "group": "bow",
+      "type": 132,
+      "typeName": "SKILL_50",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_power_b.ban",
+      "banName": "skill_eu_rog_bowa_power_b",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 84,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 423,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_80",
+      "group": "bow",
+      "type": 162,
+      "typeName": "SKILL_80",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_bowa_power_b.ban",
+      "banName": "skill_eu_rog_bowa_power_b",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 412,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 795,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1_skill_eu_warrior_onehanda_attack01",
+      "group": "onehand_sword",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_attack01.ban",
+      "banName": "skill_eu_warrior_onehanda_attack01",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 437,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2_skill_eu_warrior_onehanda_attack02",
+      "group": "onehand_sword",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_attack02.ban",
+      "banName": "skill_eu_warrior_onehanda_attack02",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 567,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_sword_run_2",
+      "group": "onehand_sword",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_sword_run.ban",
+      "banName": "europe_man_fighter_sword_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_4",
+      "group": "onehand_sword",
+      "type": 29,
+      "typeName": "SKILL_4",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_strike_a.ban",
+      "banName": "skill_eu_warrior_onehanda_strike_a",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 630,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_10",
+      "group": "onehand_sword",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_shield_a.ban",
+      "banName": "skill_eu_warrior_onehanda_shield_a",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 620,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_20",
+      "group": "onehand_sword",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_pierce_a.ban",
+      "banName": "skill_eu_warrior_onehanda_pierce_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 597,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1134,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_40",
+      "group": "onehand_sword",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_critical_a.ban",
+      "banName": "skill_eu_warrior_onehanda_critical_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 463,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1228,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_60",
+      "group": "onehand_sword",
+      "type": 142,
+      "typeName": "SKILL_60",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_shield_b.ban",
+      "banName": "skill_eu_warrior_onehanda_shield_b",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 428,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1058,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_70",
+      "group": "onehand_sword",
+      "type": 152,
+      "typeName": "SKILL_70",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_pierce_b.ban",
+      "banName": "skill_eu_warrior_onehanda_pierce_b",
+      "durationMs": 3500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 69,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 861,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1142,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1551,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2259,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_80_skill_eu_warrior_onehanda_critical_b",
+      "group": "onehand_sword",
+      "type": 162,
+      "typeName": "SKILL_80",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_critical_b.ban",
+      "banName": "skill_eu_warrior_onehanda_critical_b",
+      "durationMs": 3066,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 56,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 765,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 993,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1305,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 2127,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "HAMMER",
+      "group": "onehand_sword",
+      "type": 187,
+      "typeName": "HAMMER",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_fortresshammer.ban",
+      "banName": "skill_eu_fortresshammer",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 520,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "STAND1_cart_stand01",
+      "group": "cart",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\man\\cart_stand01.ban",
+      "banName": "cart_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK_cart_walk",
+      "group": "cart",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\cart_walk.ban",
+      "banName": "cart_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN_cart_walk",
+      "group": "cart",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\man\\cart_walk.ban",
+      "banName": "cart_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND1_skill_eu_warrior_twohanda_stand01",
+      "group": "twohand_sword",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_stand01.ban",
+      "banName": "skill_eu_warrior_twohanda_stand01",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1_skill_eu_warrior_twohanda_attack01",
+      "group": "twohand_sword",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_attack01.ban",
+      "banName": "skill_eu_warrior_twohanda_attack01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 638,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2_skill_eu_warrior_twohanda_attack02",
+      "group": "twohand_sword",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_attack02.ban",
+      "banName": "skill_eu_warrior_twohanda_attack02",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 452,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_warrior_twohanda_attack_ready",
+      "group": "twohand_sword",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_attack_ready.ban",
+      "banName": "skill_eu_warrior_twohanda_attack_ready",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_tsword_run",
+      "group": "twohand_sword",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_tsword_run.ban",
+      "banName": "europe_man_fighter_tsword_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "ATTACK3_skill_eu_warrior_twohanda_attack03",
+      "group": "twohand_sword",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_attack03.ban",
+      "banName": "skill_eu_warrior_twohanda_attack03",
+      "durationMs": 2033,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 777,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_4_skill_eu_warrior_twohanda_dash_a",
+      "group": "twohand_sword",
+      "type": 29,
+      "typeName": "SKILL_4",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_dash_a.ban",
+      "banName": "skill_eu_warrior_twohanda_dash_a",
+      "durationMs": 2466,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 52,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1297,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_10_skill_eu_warrior_twohanda_rising_a",
+      "group": "twohand_sword",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_rising_a.ban",
+      "banName": "skill_eu_warrior_twohanda_rising_a",
+      "durationMs": 1600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 513,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "skippedTracks": [
+        "Bone001",
+        "Bone002"
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_20_skill_eu_warrior_twohanda_charge_a",
+      "group": "twohand_sword",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_charge_a.ban",
+      "banName": "skill_eu_warrior_twohanda_charge_a",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 597,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1369,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_40_skill_eu_warrior_twohanda_cry_a",
+      "group": "twohand_sword",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_cry_a.ban",
+      "banName": "skill_eu_warrior_twohanda_cry_a",
+      "durationMs": 3566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 40,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 845,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2400,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "skippedTracks": [
+        "claok01",
+        "claok02",
+        "claok03",
+        "claok04"
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SKILL_70_skill_eu_warrior_twohanda_charge_b",
+      "group": "twohand_sword",
+      "type": 152,
+      "typeName": "SKILL_70",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_charge_b.ban",
+      "banName": "skill_eu_warrior_twohanda_charge_b",
+      "durationMs": 3166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 558,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1278,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2151,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_80_skill_eu_warrior_twohanda_cry_b",
+      "group": "twohand_sword",
+      "type": 162,
+      "typeName": "SKILL_80",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_twohanda_cry_b.ban",
+      "banName": "skill_eu_warrior_twohanda_cry_b",
+      "durationMs": 4166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 71,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 840,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 2340,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 3216,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "skippedTracks": [
+        "claok01",
+        "claok02",
+        "claok03",
+        "claok04"
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK1_skill_eu_rog_daggera_attack01",
+      "group": "dagger",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_attack01.ban",
+      "banName": "skill_eu_rog_daggera_attack01",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 200,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 533,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2_skill_eu_rog_daggera_attack02",
+      "group": "dagger",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_attack02.ban",
+      "banName": "skill_eu_rog_daggera_attack02",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 21,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 220,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 565,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_rog_daggera_attack_ready",
+      "group": "dagger",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_attack_ready.ban",
+      "banName": "skill_eu_rog_daggera_attack_ready",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_dagger_run",
+      "group": "dagger",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_dagger_run.ban",
+      "banName": "europe_man_fighter_dagger_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_4_skill_eu_rog_daggera_chain_a",
+      "group": "dagger",
+      "type": 29,
+      "typeName": "SKILL_4",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_chain_a.ban",
+      "banName": "skill_eu_rog_daggera_chain_a",
+      "durationMs": 1600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 351,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 518,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 684,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 964,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_10_skill_eu_rog_daggera_wound_a",
+      "group": "dagger",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_wound_a.ban",
+      "banName": "skill_eu_rog_daggera_wound_a",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 250,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 640,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_20_skill_eu_rog_daggera_screw_a",
+      "group": "dagger",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_screw_a.ban",
+      "banName": "skill_eu_rog_daggera_screw_a",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 763,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_40_skill_eu_rog_daggera_slash_a",
+      "group": "dagger",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_slash_a.ban",
+      "banName": "skill_eu_rog_daggera_slash_a",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 45,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 337,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 588,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1045,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1204,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1787,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_41",
+      "group": "dagger",
+      "type": 123,
+      "typeName": "SKILL_41",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_stealtha_point_a.ban",
+      "banName": "skill_eu_rog_stealtha_point_a",
+      "durationMs": 2566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1441,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_60_skill_eu_rog_daggera_wound_b",
+      "group": "dagger",
+      "type": 142,
+      "typeName": "SKILL_60",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_wound_b.ban",
+      "banName": "skill_eu_rog_daggera_wound_b",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 57,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 394,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 786,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1363,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1477,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1804,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_80_skill_eu_rog_daggera_slash_b",
+      "group": "dagger",
+      "type": 162,
+      "typeName": "SKILL_80",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_rog_daggera_slash_b.ban",
+      "banName": "skill_eu_rog_daggera_slash_b",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 44,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 344,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 596,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 947,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1344,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1798,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1_skill_eu_warrior_duala_attack01",
+      "group": "dual_axe",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_attack01.ban",
+      "banName": "skill_eu_warrior_duala_attack01",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 290,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 740,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2_skill_eu_warrior_duala_attack02",
+      "group": "dual_axe",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_attack02.ban",
+      "banName": "skill_eu_warrior_duala_attack02",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 30,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 328,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 844,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_warrior_onehanda_attack_ready",
+      "group": "dual_axe",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_onehanda_attack_ready.ban",
+      "banName": "skill_eu_warrior_onehanda_attack_ready",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_dagger_run_2",
+      "group": "dual_axe",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_dagger_run.ban",
+      "banName": "europe_man_fighter_dagger_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_4_skill_eu_warrior_duala_cross_a",
+      "group": "dual_axe",
+      "type": 29,
+      "typeName": "SKILL_4",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_cross_a.ban",
+      "banName": "skill_eu_warrior_duala_cross_a",
+      "durationMs": 1966,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1250,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_10_skill_eu_warrior_duala_twist_a",
+      "group": "dual_axe",
+      "type": 35,
+      "typeName": "SKILL_10",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_twist_a.ban",
+      "banName": "skill_eu_warrior_duala_twist_a",
+      "durationMs": 1833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 40,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 434,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1107,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_15",
+      "group": "dual_axe",
+      "type": 72,
+      "typeName": "SKILL_15",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_stun_a.ban",
+      "banName": "skill_eu_warrior_duala_stun_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 929,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_20_skill_eu_warrior_duala_counter_a",
+      "group": "dual_axe",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_counter_a.ban",
+      "banName": "skill_eu_warrior_duala_counter_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 461,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 850,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1331,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_40_skill_eu_warrior_duala_whirlwind_a",
+      "group": "dual_axe",
+      "type": 120,
+      "typeName": "SKILL_40",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_whirlwind_a.ban",
+      "banName": "skill_eu_warrior_duala_whirlwind_a",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 634,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 771,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 896,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1339,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_60_skill_eu_warrior_duala_twist_b",
+      "group": "dual_axe",
+      "type": 142,
+      "typeName": "SKILL_60",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_twist_b.ban",
+      "banName": "skill_eu_warrior_duala_twist_b",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 95,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 360,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 735,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1512,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_70_skill_eu_warrior_duala_counter_b",
+      "group": "dual_axe",
+      "type": 152,
+      "typeName": "SKILL_70",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_counter_b.ban",
+      "banName": "skill_eu_warrior_duala_counter_b",
+      "durationMs": 2733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 49,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 476,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 912,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1021,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1854,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_80_skill_eu_warrior_duala_whirlwind_b",
+      "group": "dual_axe",
+      "type": 162,
+      "typeName": "SKILL_80",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_warrior_duala_whirlwind_b.ban",
+      "banName": "skill_eu_warrior_duala_whirlwind_b",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 325,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 414,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 509,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 1131,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1600,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1_skill_eu_bard_harf_attack01",
+      "group": "harf",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_bard_harf_attack01.ban",
+      "banName": "skill_eu_bard_harf_attack01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 493,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_bard_harf_attack_ready",
+      "group": "harf",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_bard_harf_attack_ready.ban",
+      "banName": "skill_eu_bard_harf_attack_ready",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_harp_run",
+      "group": "harf",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_harp_run.ban",
+      "banName": "europe_man_fighter_harp_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 15,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_1_skill_eu_bard_harf_skill_loop",
+      "group": "harf",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_bard_harf_skill_loop.ban",
+      "banName": "skill_eu_bard_harf_skill_loop",
+      "durationMs": 1033,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "STAND1_chinaman_merchant_standcity_2",
+      "group": "twohand_staff",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_merchant_standcity.ban",
+      "banName": "chinaman_merchant_standcity",
+      "durationMs": 2333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK1_skill_eu_wizard_twohand_attack01",
+      "group": "twohand_staff",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_attack01.ban",
+      "banName": "skill_eu_wizard_twohand_attack01",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 933,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTREADY_skill_eu_wizard_twohand_attack_ready",
+      "group": "twohand_staff",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_attack_ready.ban",
+      "banName": "skill_eu_wizard_twohand_attack_ready",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_europe_man_fighter_tstaff_run",
+      "group": "twohand_staff",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\europe\\man\\europe_man_fighter_tstaff_run.ban",
+      "banName": "europe_man_fighter_tstaff_run",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 40,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "SKILL_1_skill_eu_wizard_twohand_target_shot",
+      "group": "twohand_staff",
+      "type": 26,
+      "typeName": "SKILL_1",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_target_shot.ban",
+      "banName": "skill_eu_wizard_twohand_target_shot",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 329,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 474,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 600,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 796,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 995,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1149,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_2_skill_eu_wizard_twohand_area_shot",
+      "group": "twohand_staff",
+      "type": 27,
+      "typeName": "SKILL_2",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_area_shot.ban",
+      "banName": "skill_eu_wizard_twohand_area_shot",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 426,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 582,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 761,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 922,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 1077,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 1204,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "READY01_skill_eu_wizard_twohand_target_ready",
+      "group": "twohand_staff",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_target_ready.ban",
+      "banName": "skill_eu_wizard_twohand_target_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "READY02_skill_eu_wizard_twohand_area_ready",
+      "group": "twohand_staff",
+      "type": 41,
+      "typeName": "READY02",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_area_ready.ban",
+      "banName": "skill_eu_wizard_twohand_area_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "SKILL_20_skill_eu_wizard_firea_spray_a",
+      "group": "twohand_staff",
+      "type": 77,
+      "typeName": "SKILL_20",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_firea_spray_a.ban",
+      "banName": "skill_eu_wizard_firea_spray_a",
+      "durationMs": 7833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 305,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1516,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2503,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        },
+        {
+          "timeMs": 3502,
+          "type": 1,
+          "p1": 3,
+          "p2": 0
+        },
+        {
+          "timeMs": 4508,
+          "type": 1,
+          "p1": 4,
+          "p2": 0
+        },
+        {
+          "timeMs": 5488,
+          "type": 1,
+          "p1": 5,
+          "p2": 0
+        },
+        {
+          "timeMs": 6501,
+          "type": 1,
+          "p1": 6,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WAIT01_skill_eu_wizard_twohand_target_wait",
+      "group": "twohand_staff",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_target_wait.ban",
+      "banName": "skill_eu_wizard_twohand_target_wait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WAIT02_skill_eu_wizard_twohand_area_wait",
+      "group": "twohand_staff",
+      "type": 92,
+      "typeName": "WAIT02",
+      "ban": "prim\\ani\\char\\europe\\man\\skill_eu_wizard_twohand_area_wait.ban",
+      "banName": "skill_eu_wizard_twohand_area_wait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN_man_avatar_fly",
+      "group": "avatar_wing",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\char\\china\\man\\man_avatar_fly.ban",
+      "banName": "man_avatar_fly",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 133.3000030517578,
+      "events": [],
+      "skippedTracks": [
+        "Bone23",
+        "Bone10",
+        "Bone11",
+        "Bone12",
+        "Bone13",
+        "Bone14",
+        "Bone15",
+        "Bone16",
+        "Bone17",
+        "Bone18",
+        "Bone19",
+        "Bone20",
+        "Bone01",
+        "Bone02",
+        "Bone03",
+        "Bone04",
+        "Bone05",
+        "Bone06",
+        "Bone07",
+        "Bone08",
+        "Bone09",
+        "Bone21",
+        "Bone22"
+      ],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND1_nasrun1_man_stand",
+      "group": "avatar_nasrun1",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK_chinaman_fighter_walkforward",
+      "group": "avatar_nasrun1",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_fighter_walkforward.ban",
+      "banName": "chinaman_fighter_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN_nasrun1_man_run",
+      "group": "avatar_nasrun1",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_run.ban",
+      "banName": "남자나스룬뛰기",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "READY01_nasrun1_man_ready",
+      "group": "avatar_nasrun1",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_ready.ban",
+      "banName": "nasrun1_man_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND3_nasrun1_man_stand",
+      "group": "avatar_nasrun1",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WAIT01_nasrun1_man_wait",
+      "group": "avatar_nasrun1",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_wait.ban",
+      "banName": "nasrun1_man_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SHOT",
+      "group": "avatar_nasrun1",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_shot.ban",
+      "banName": "nasrun1_man_shot",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND1_nasrun1_man_stand_2",
+      "group": "avatar_nasrun2",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK_chinaman_fighter_walkforward_2",
+      "group": "avatar_nasrun2",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_fighter_walkforward.ban",
+      "banName": "chinaman_fighter_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN_nasrun1_man_run_2",
+      "group": "avatar_nasrun2",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_run.ban",
+      "banName": "남자나스룬뛰기",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "READY01_nasrun1_man_ready_2",
+      "group": "avatar_nasrun2",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_ready.ban",
+      "banName": "nasrun1_man_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND3_nasrun1_man_stand_2",
+      "group": "avatar_nasrun2",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WAIT01_nasrun1_man_wait_2",
+      "group": "avatar_nasrun2",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_wait.ban",
+      "banName": "nasrun1_man_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SHOT_nasrun1_man_shot",
+      "group": "avatar_nasrun2",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_shot.ban",
+      "banName": "nasrun1_man_shot",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND1_nasrun1_man_stand_3",
+      "group": "avatar_nasrun3",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK_chinaman_fighter_walkforward_3",
+      "group": "avatar_nasrun3",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\char\\china\\man\\chinaman_fighter_walkforward.ban",
+      "banName": "chinaman_fighter_walkforward",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN_nasrun1_man_run_3",
+      "group": "avatar_nasrun3",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_run.ban",
+      "banName": "남자나스룬뛰기",
+      "durationMs": 4800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "READY01_nasrun1_man_ready_3",
+      "group": "avatar_nasrun3",
+      "type": 40,
+      "typeName": "READY01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_ready.ban",
+      "banName": "nasrun1_man_ready",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND3_nasrun1_man_stand_3",
+      "group": "avatar_nasrun3",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_stand.ban",
+      "banName": "nasrun1_man_stand",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WAIT01_nasrun1_man_wait_3",
+      "group": "avatar_nasrun3",
+      "type": 91,
+      "typeName": "WAIT01",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_wait.ban",
+      "banName": "nasrun1_man_wait",
+      "durationMs": 33,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "SHOT_nasrun1_man_shot_2",
+      "group": "avatar_nasrun3",
+      "type": 191,
+      "typeName": "SHOT",
+      "ban": "prim\\ani\\avatar\\nasrun1_man_shot.ban",
+      "banName": "nasrun1_man_shot",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    }
+  ],
+  "stats": {
+    "vertices": 1152,
+    "triangles": 1486,
+    "joints": 43,
+    "meshes": 9,
+    "animations": 154,
+    "textures": 2,
+    "heightM": 1.8046709757763892,
+    "boundsMin": [
+      -0.9127972722053528,
+      -0.00048224744386970997,
+      -0.1498958170413971
+    ],
+    "boundsMax": [
+      0.9128235578536987,
+      1.8041887283325195,
+      0.19695232808589935
+    ]
+  },
+  "warnings": [
+    "80 aniGroup entries have no clip (fileIndex -1)"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "europeman_skel",
+    "packs": {
+      "default": "char/_anims/europeman_skel/default.glb",
+      "onehand_staff": "char/_anims/europeman_skel/onehand_staff.glb",
+      "bow": "char/_anims/europeman_skel/bow.glb",
+      "onehand_sword": "char/_anims/europeman_skel/onehand_sword.glb",
+      "cart": "char/_anims/europeman_skel/cart.glb",
+      "twohand_sword": "char/_anims/europeman_skel/twohand_sword.glb",
+      "dagger": "char/_anims/europeman_skel/dagger.glb",
+      "dual_axe": "char/_anims/europeman_skel/dual_axe.glb",
+      "harf": "char/_anims/europeman_skel/harf.glb",
+      "twohand_staff": "char/_anims/europeman_skel/twohand_staff.glb",
+      "avatar_wing": "char/_anims/europeman_skel/avatar_wing.glb",
+      "avatar_nasrun1": "char/_anims/europeman_skel/avatar_nasrun1.glb",
+      "avatar_nasrun2": "char/_anims/europeman_skel/avatar_nasrun2.glb",
+      "avatar_nasrun3": "char/_anims/europeman_skel/avatar_nasrun3.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "chinaman_fighter_standcity"
+      ],
+      "WALK": [
+        "default",
+        "chinaman_fighter_walkforward"
+      ],
+      "ATTACK1": [
+        "default",
+        "chinaman_a_handstraightl"
+      ],
+      "DAMAGE1": [
+        "default",
+        "chinaman_a_benormalhit"
+      ],
+      "DIE1": [
+        "default",
+        "chinaman_a_diehardhit"
+      ],
+      "ATTACK2": [
+        "default",
+        "chinaman_a_handstraightr"
+      ],
+      "ATTREADY": [
+        "default",
+        "chinaman_standbattle"
+      ],
+      "RUN": [
+        "default",
+        "europe_man_fighter_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "chinaman_a_behardhit"
+      ],
+      "SIT_DOWN": [
+        "default",
+        "chinaman_a_sitground"
+      ],
+      "SIT": [
+        "default",
+        "chinaman_a_sitbreath"
+      ],
+      "STAND_UP": [
+        "default",
+        "chinaman_a_sitstand"
+      ],
+      "ATTACK3": [
+        "default",
+        "chinaman_a_handhookl"
+      ],
+      "ATTACK4": [
+        "default",
+        "chinaman_a_handhookr"
+      ],
+      "DEFENCE": [
+        "default",
+        "chinaman_a_blocking"
+      ],
+      "WALK_BACK": [
+        "default",
+        "chinaman_walkbackward"
+      ],
+      "TURN_L": [
+        "default",
+        "chinaman_a_standroll"
+      ],
+      "TURN_R": [
+        "default",
+        "chinaman_a_standroll"
+      ],
+      "SKILL_1": [
+        "default",
+        "skill_eu_cast_b_punch_02_shot"
+      ],
+      "SKILL_2": [
+        "default",
+        "skill_eu_cast_b_punch_01"
+      ],
+      "DIE1_RM": [
+        "default",
+        "chinaman_a_diehardhit_loop"
+      ],
+      "PICK": [
+        "default",
+        "chinaman_pickup"
+      ],
+      "READY01": [
+        "default",
+        "skill_eu_cast_b_punch_02_ready"
+      ],
+      "EMOTION01": [
+        "default",
+        "cm_emot_act_greeting"
+      ],
+      "EMOTION02": [
+        "default",
+        "cm_emot_act_pokun"
+      ],
+      "EMOTION03": [
+        "default",
+        "cm_emot_act_rush"
+      ],
+      "EMOTION04": [
+        "default",
+        "cm_emot_act_joy"
+      ],
+      "EMOTION05": [
+        "default",
+        "cm_emot_act_no_tattoo"
+      ],
+      "EMOTION06": [
+        "default",
+        "cm_emot_act_yes_tattoo"
+      ],
+      "EMOTION07": [
+        "default",
+        "cm_emot_act_laugh"
+      ],
+      "EMOTION08": [
+        "default",
+        "cm_emot_act_bow"
+      ],
+      "POSE": [
+        "default",
+        "1111"
+      ],
+      "STAND3": [
+        "default",
+        "chinaman_merchant_standcity02"
+      ],
+      "DOWN": [
+        "default",
+        "chinaman_a_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "chinaman_a_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "chinaman_a_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "chinaman_a_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "chinaman_a_downdie"
+      ],
+      "STUN": [
+        "default",
+        "chinaman_stun"
+      ],
+      "VENDOR01": [
+        "default",
+        "chinaman_vendor01"
+      ],
+      "WAIT01": [
+        "default",
+        "skill_eu_cast_b_punch_02_wait"
+      ],
+      "SKILL_24": [
+        "default",
+        "skill_eu_bard_dancea_cleric_a"
+      ],
+      "SKILL_30": [
+        "default",
+        "skill_eu_warrior_frenzya_tount_sprint"
+      ],
+      "REVIVAL": [
+        "default",
+        "chinaman_reborn"
+      ],
+      "HANDLOOF": [
+        "default",
+        "skill_ch_cast_hand_loop"
+      ],
+      "TROW": [
+        "default",
+        "skill_eu_throw"
+      ],
+      "STAND1_chinaman_merchant_standcity": [
+        "default",
+        "chinaman_merchant_standcity"
+      ],
+      "WALK_chinaman_merchant_walkforward": [
+        "default",
+        "chinaman_merchant_walkforward"
+      ],
+      "ATTACK1_skill_eu_wizard_onehand_attack_01": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_attack_01"
+      ],
+      "ATTREADY_skill_eu_wizard_onehand_attack_ready": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_attack_ready"
+      ],
+      "RUN_europe_man_fighter_sword_run": [
+        "onehand_staff",
+        "europe_man_fighter_sword_run"
+      ],
+      "SKILL_1_skill_eu_wizard_onehand_target_shot": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_target_shot"
+      ],
+      "SKILL_2_skill_eu_wizard_onehand_area_shot": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_area_shot"
+      ],
+      "READY01_skill_eu_wizard_onehand_target_ready": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_target_ready"
+      ],
+      "READY02": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_area_ready"
+      ],
+      "WAIT01_skill_eu_wizard_onehand_target_wait": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_target_wait"
+      ],
+      "WAIT02": [
+        "onehand_staff",
+        "skill_eu_wizard_onehand_area_wait"
+      ],
+      "STAND1_skill_eu_rog_bowa_stand01": [
+        "bow",
+        "skill_eu_rog_bowa_stand01"
+      ],
+      "ATTACK1_skill_eu_rog_bowa_attack01": [
+        "bow",
+        "skill_eu_rog_bowa_attack01"
+      ],
+      "ATTACK2_skill_eu_rog_bowa_attack02": [
+        "bow",
+        "skill_eu_rog_bowa_attack02"
+      ],
+      "ATTREADY_skill_eu_rog_bowa_attack_ready": [
+        "bow",
+        "skill_eu_rog_bowa_attack_ready"
+      ],
+      "RUN_skill_eu_rog_bowa_run": [
+        "bow",
+        "skill_eu_rog_bowa_run"
+      ],
+      "ATTACK3_skill_eu_rog_bowa_attack03": [
+        "bow",
+        "skill_eu_rog_bowa_attack03"
+      ],
+      "SKILL_1_skill_eu_rog_bowa_target_shot": [
+        "bow",
+        "skill_eu_rog_bowa_target_shot"
+      ],
+      "READY01_skill_eu_rog_bowa_target_ready": [
+        "bow",
+        "skill_eu_rog_bowa_target_ready"
+      ],
+      "WAIT01_skill_eu_rog_bowa_target_wait": [
+        "bow",
+        "skill_eu_rog_bowa_target_wait"
+      ],
+      "SKILL_50": [
+        "bow",
+        "skill_eu_rog_bowa_power_b"
+      ],
+      "SKILL_80": [
+        "bow",
+        "skill_eu_rog_bowa_power_b"
+      ],
+      "ATTACK1_skill_eu_warrior_onehanda_attack01": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_attack01"
+      ],
+      "ATTACK2_skill_eu_warrior_onehanda_attack02": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_attack02"
+      ],
+      "RUN_europe_man_fighter_sword_run_2": [
+        "onehand_sword",
+        "europe_man_fighter_sword_run"
+      ],
+      "SKILL_4": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_strike_a"
+      ],
+      "SKILL_10": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_shield_a"
+      ],
+      "SKILL_20": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_pierce_a"
+      ],
+      "SKILL_40": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_critical_a"
+      ],
+      "SKILL_60": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_shield_b"
+      ],
+      "SKILL_70": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_pierce_b"
+      ],
+      "SKILL_80_skill_eu_warrior_onehanda_critical_b": [
+        "onehand_sword",
+        "skill_eu_warrior_onehanda_critical_b"
+      ],
+      "HAMMER": [
+        "onehand_sword",
+        "skill_ch_fortresshammer"
+      ],
+      "STAND1_cart_stand01": [
+        "cart",
+        "cart_stand01"
+      ],
+      "WALK_cart_walk": [
+        "cart",
+        "cart_walk"
+      ],
+      "RUN_cart_walk": [
+        "cart",
+        "cart_walk"
+      ],
+      "STAND1_skill_eu_warrior_twohanda_stand01": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_stand01"
+      ],
+      "ATTACK1_skill_eu_warrior_twohanda_attack01": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_attack01"
+      ],
+      "ATTACK2_skill_eu_warrior_twohanda_attack02": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_attack02"
+      ],
+      "ATTREADY_skill_eu_warrior_twohanda_attack_ready": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_attack_ready"
+      ],
+      "RUN_europe_man_fighter_tsword_run": [
+        "twohand_sword",
+        "europe_man_fighter_tsword_run"
+      ],
+      "ATTACK3_skill_eu_warrior_twohanda_attack03": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_attack03"
+      ],
+      "SKILL_4_skill_eu_warrior_twohanda_dash_a": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_dash_a"
+      ],
+      "SKILL_10_skill_eu_warrior_twohanda_rising_a": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_rising_a"
+      ],
+      "SKILL_20_skill_eu_warrior_twohanda_charge_a": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_charge_a"
+      ],
+      "SKILL_40_skill_eu_warrior_twohanda_cry_a": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_cry_a"
+      ],
+      "SKILL_70_skill_eu_warrior_twohanda_charge_b": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_charge_b"
+      ],
+      "SKILL_80_skill_eu_warrior_twohanda_cry_b": [
+        "twohand_sword",
+        "skill_eu_warrior_twohanda_cry_b"
+      ],
+      "ATTACK1_skill_eu_rog_daggera_attack01": [
+        "dagger",
+        "skill_eu_rog_daggera_attack01"
+      ],
+      "ATTACK2_skill_eu_rog_daggera_attack02": [
+        "dagger",
+        "skill_eu_rog_daggera_attack02"
+      ],
+      "ATTREADY_skill_eu_rog_daggera_attack_ready": [
+        "dagger",
+        "skill_eu_rog_daggera_attack_ready"
+      ],
+      "RUN_europe_man_fighter_dagger_run": [
+        "dagger",
+        "europe_man_fighter_dagger_run"
+      ],
+      "SKILL_4_skill_eu_rog_daggera_chain_a": [
+        "dagger",
+        "skill_eu_rog_daggera_chain_a"
+      ],
+      "SKILL_10_skill_eu_rog_daggera_wound_a": [
+        "dagger",
+        "skill_eu_rog_daggera_wound_a"
+      ],
+      "SKILL_20_skill_eu_rog_daggera_screw_a": [
+        "dagger",
+        "skill_eu_rog_daggera_screw_a"
+      ],
+      "SKILL_40_skill_eu_rog_daggera_slash_a": [
+        "dagger",
+        "skill_eu_rog_daggera_slash_a"
+      ],
+      "SKILL_41": [
+        "dagger",
+        "skill_eu_rog_stealtha_point_a"
+      ],
+      "SKILL_60_skill_eu_rog_daggera_wound_b": [
+        "dagger",
+        "skill_eu_rog_daggera_wound_b"
+      ],
+      "SKILL_80_skill_eu_rog_daggera_slash_b": [
+        "dagger",
+        "skill_eu_rog_daggera_slash_b"
+      ],
+      "ATTACK1_skill_eu_warrior_duala_attack01": [
+        "dual_axe",
+        "skill_eu_warrior_duala_attack01"
+      ],
+      "ATTACK2_skill_eu_warrior_duala_attack02": [
+        "dual_axe",
+        "skill_eu_warrior_duala_attack02"
+      ],
+      "ATTREADY_skill_eu_warrior_onehanda_attack_ready": [
+        "dual_axe",
+        "skill_eu_warrior_onehanda_attack_ready"
+      ],
+      "RUN_europe_man_fighter_dagger_run_2": [
+        "dual_axe",
+        "europe_man_fighter_dagger_run"
+      ],
+      "SKILL_4_skill_eu_warrior_duala_cross_a": [
+        "dual_axe",
+        "skill_eu_warrior_duala_cross_a"
+      ],
+      "SKILL_10_skill_eu_warrior_duala_twist_a": [
+        "dual_axe",
+        "skill_eu_warrior_duala_twist_a"
+      ],
+      "SKILL_15": [
+        "dual_axe",
+        "skill_eu_warrior_duala_stun_a"
+      ],
+      "SKILL_20_skill_eu_warrior_duala_counter_a": [
+        "dual_axe",
+        "skill_eu_warrior_duala_counter_a"
+      ],
+      "SKILL_40_skill_eu_warrior_duala_whirlwind_a": [
+        "dual_axe",
+        "skill_eu_warrior_duala_whirlwind_a"
+      ],
+      "SKILL_60_skill_eu_warrior_duala_twist_b": [
+        "dual_axe",
+        "skill_eu_warrior_duala_twist_b"
+      ],
+      "SKILL_70_skill_eu_warrior_duala_counter_b": [
+        "dual_axe",
+        "skill_eu_warrior_duala_counter_b"
+      ],
+      "SKILL_80_skill_eu_warrior_duala_whirlwind_b": [
+        "dual_axe",
+        "skill_eu_warrior_duala_whirlwind_b"
+      ],
+      "ATTACK1_skill_eu_bard_harf_attack01": [
+        "harf",
+        "skill_eu_bard_harf_attack01"
+      ],
+      "ATTREADY_skill_eu_bard_harf_attack_ready": [
+        "harf",
+        "skill_eu_bard_harf_attack_ready"
+      ],
+      "RUN_europe_man_fighter_harp_run": [
+        "harf",
+        "europe_man_fighter_harp_run"
+      ],
+      "SKILL_1_skill_eu_bard_harf_skill_loop": [
+        "harf",
+        "skill_eu_bard_harf_skill_loop"
+      ],
+      "STAND1_chinaman_merchant_standcity_2": [
+        "default",
+        "chinaman_merchant_standcity"
+      ],
+      "ATTACK1_skill_eu_wizard_twohand_attack01": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_attack01"
+      ],
+      "ATTREADY_skill_eu_wizard_twohand_attack_ready": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_attack_ready"
+      ],
+      "RUN_europe_man_fighter_tstaff_run": [
+        "twohand_staff",
+        "europe_man_fighter_tstaff_run"
+      ],
+      "SKILL_1_skill_eu_wizard_twohand_target_shot": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_target_shot"
+      ],
+      "SKILL_2_skill_eu_wizard_twohand_area_shot": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_area_shot"
+      ],
+      "READY01_skill_eu_wizard_twohand_target_ready": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_target_ready"
+      ],
+      "READY02_skill_eu_wizard_twohand_area_ready": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_area_ready"
+      ],
+      "SKILL_20_skill_eu_wizard_firea_spray_a": [
+        "twohand_staff",
+        "skill_eu_wizard_firea_spray_a"
+      ],
+      "WAIT01_skill_eu_wizard_twohand_target_wait": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_target_wait"
+      ],
+      "WAIT02_skill_eu_wizard_twohand_area_wait": [
+        "twohand_staff",
+        "skill_eu_wizard_twohand_area_wait"
+      ],
+      "RUN_man_avatar_fly": [
+        "avatar_wing",
+        "man_avatar_fly"
+      ],
+      "STAND1_nasrun1_man_stand": [
+        "avatar_nasrun1",
+        "nasrun1_man_stand"
+      ],
+      "WALK_chinaman_fighter_walkforward": [
+        "default",
+        "chinaman_fighter_walkforward"
+      ],
+      "RUN_nasrun1_man_run": [
+        "avatar_nasrun1",
+        "남자나스룬뛰기"
+      ],
+      "READY01_nasrun1_man_ready": [
+        "avatar_nasrun1",
+        "nasrun1_man_ready"
+      ],
+      "STAND3_nasrun1_man_stand": [
+        "avatar_nasrun1",
+        "nasrun1_man_stand"
+      ],
+      "WAIT01_nasrun1_man_wait": [
+        "avatar_nasrun1",
+        "nasrun1_man_wait"
+      ],
+      "SHOT": [
+        "avatar_nasrun1",
+        "nasrun1_man_shot"
+      ],
+      "STAND1_nasrun1_man_stand_2": [
+        "avatar_nasrun2",
+        "nasrun1_man_stand"
+      ],
+      "WALK_chinaman_fighter_walkforward_2": [
+        "default",
+        "chinaman_fighter_walkforward"
+      ],
+      "RUN_nasrun1_man_run_2": [
+        "avatar_nasrun2",
+        "남자나스룬뛰기"
+      ],
+      "READY01_nasrun1_man_ready_2": [
+        "avatar_nasrun2",
+        "nasrun1_man_ready"
+      ],
+      "STAND3_nasrun1_man_stand_2": [
+        "avatar_nasrun2",
+        "nasrun1_man_stand"
+      ],
+      "WAIT01_nasrun1_man_wait_2": [
+        "avatar_nasrun2",
+        "nasrun1_man_wait"
+      ],
+      "SHOT_nasrun1_man_shot": [
+        "avatar_nasrun2",
+        "nasrun1_man_shot"
+      ],
+      "STAND1_nasrun1_man_stand_3": [
+        "avatar_nasrun3",
+        "nasrun1_man_stand"
+      ],
+      "WALK_chinaman_fighter_walkforward_3": [
+        "default",
+        "chinaman_fighter_walkforward"
+      ],
+      "RUN_nasrun1_man_run_3": [
+        "avatar_nasrun3",
+        "남자나스룬뛰기"
+      ],
+      "READY01_nasrun1_man_ready_3": [
+        "avatar_nasrun3",
+        "nasrun1_man_ready"
+      ],
+      "STAND3_nasrun1_man_stand_3": [
+        "avatar_nasrun3",
+        "nasrun1_man_stand"
+      ],
+      "WAIT01_nasrun1_man_wait_3": [
+        "avatar_nasrun3",
+        "nasrun1_man_wait"
+      ],
+      "SHOT_nasrun1_man_shot_2": [
+        "avatar_nasrun3",
+        "nasrun1_man_shot"
+      ]
+    }
+  }
+}

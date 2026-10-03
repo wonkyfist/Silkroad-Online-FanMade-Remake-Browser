@@ -1,0 +1,147 @@
+{
+  "source": "res/item/china/woman_item/clothes_01_sa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "clothes_01_sa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\clothes_sa.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": "Bip01 Neck1",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 4,
+    "attachPointName": "_sa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "clothes_01_sa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_01_sa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\clothes_01_sa.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_sa.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_01_sa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\clothes_01_sa.bms",
+      "material": "clothes_01_sa",
+      "vertices": 16,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [
+        "Bone05",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 16,
+    "triangles": 12,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.14264877140522003,
+    "boundsMin": [
+      -0.34651869535446167,
+      0.09127764403820038,
+      -0.029696697369217873
+    ],
+    "boundsMax": [
+      0.31722864508628845,
+      0.2339264154434204,
+      0.022604478523135185
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "issues": [
+      "NODE_EMPTY x2"
+    ]
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_W_CLOTHES_01_SA_A",
+      "ITEM_CH_W_CLOTHES_01_SA_B",
+      "ITEM_CH_W_CLOTHES_01_SA_C"
+    ],
+    "bsr": "res/item/china/woman_item/clothes_01_sa.bsr",
+    "gender": "female",
+    "kind": "socket",
+    "method": "ADD",
+    "attachPoint": "_sa",
+    "slots": [
+      "OVERRIDE"
+    ],
+    "attachBone": "Bip01 Neck1",
+    "hides": [],
+    "skeleton": null,
+    "joints": [],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  }
+}

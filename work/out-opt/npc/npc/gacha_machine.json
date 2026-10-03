@@ -1,0 +1,116 @@
+{
+  "source": "res/npc/npc/gacha_machine.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "gacha_machine",
+  "type": "ARTIFACT",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\npc\\gacha_machine.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.790235850320016e-8,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "gacha_machine",
+      "bmt": "prim\\mtrl\\npc\\npc\\gacha_machine.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\npc\\gacha_machine.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5843137502670288,
+        0.5843137502670288,
+        0.5843137502670288,
+        1
+      ],
+      "ambient": [
+        0.5843137502670288,
+        0.5843137502670288,
+        0.5843137502670288,
+        1
+      ],
+      "specular": [
+        0.8980392813682556,
+        0.8980392813682556,
+        0.8980392813682556,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "gacha_machine",
+      "bms": "prim\\mesh\\npc\\npc\\gacha_machine.bms",
+      "material": "gacha_machine",
+      "vertices": 1259,
+      "triangles": 962,
+      "skinned": true,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1259,
+    "triangles": 962,
+    "joints": 2,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.970472400804283,
+    "boundsMin": [
+      -0.5436455011367798,
+      -0.00021976770949549973,
+      -0.4089537560939789
+    ],
+    "boundsMax": [
+      0.5368911027908325,
+      1.9702526330947876,
+      0.3987251818180084
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

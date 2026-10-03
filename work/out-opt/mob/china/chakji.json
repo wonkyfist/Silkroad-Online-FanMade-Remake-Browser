@@ -1,0 +1,725 @@
+{
+  "source": "res/mob/china/chakji.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chakji",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\chakji.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L HorseLink",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R HorseLink",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "Bip01 Tail3",
+      "Bip01 Tail4"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000017378605854379003,
+      "maxHierarchyError": 3.3306690738754696e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "Chakji_part2_part2"
+      },
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "Chakji_weapon"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "Chakji_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "Chakji_part2_part1"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "chakji",
+      "bmt": "prim\\mtrl\\mob\\china\\chakji.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\chakji_weapon.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "leatherdark",
+      "bmt": "prim\\mtrl\\mob\\china\\chakji.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\chakji.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.4862745404243469,
+        0.4862745404243469,
+        0.4862745404243469,
+        1
+      ],
+      "ambient": [
+        0.4862745404243469,
+        0.4862745404243469,
+        0.4862745404243469,
+        1
+      ],
+      "specular": [
+        0.9921569228172302,
+        0.9921569228172302,
+        0.9921569228172302,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Chakji_weapon",
+      "bms": "prim\\mesh\\mob\\china\\chakji_weapon.bms",
+      "material": "Chakji",
+      "vertices": 70,
+      "triangles": 112,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "Chakji_part1",
+      "bms": "prim\\mesh\\mob\\china\\chakji_part1.bms",
+      "material": "leatherdark",
+      "vertices": 166,
+      "triangles": 252,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger2",
+        "Bip01 R Finger1",
+        "Bip01 R Finger21",
+        "Bip01 R Finger11",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 L Finger21",
+        "Bip01 L Finger11"
+      ]
+    },
+    {
+      "name": "Chakji_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\chakji_part2_part1.bms",
+      "material": "leatherdark",
+      "vertices": 196,
+      "triangles": 250,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Calf",
+        "Bip01 R HorseLink",
+        "Bip01 R Foot",
+        "Bip01 Tail2",
+        "Bip01 Tail3",
+        "Bip01 Tail1",
+        "Bip01 L Calf",
+        "Bip01 L HorseLink",
+        "Bip01 L Foot",
+        "Bip01 Tail",
+        "Bip01 Tail4"
+      ]
+    },
+    {
+      "name": "Chakji_part2_part2",
+      "bms": "prim\\mesh\\mob\\china\\chakji_part2_part2.bms",
+      "material": "leatherdark",
+      "vertices": 317,
+      "triangles": 496,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Spine",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 Pelvis",
+        "Bip01 R Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_stand01.ban",
+      "banName": "chakji_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_walk.ban",
+      "banName": "chakji_walk",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 33,
+      "walkLength": 17,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_attack01.ban",
+      "banName": "chakji_attack01",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 657,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1175,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_damage01.ban",
+      "banName": "chakji_damage01",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 8,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_die.ban",
+      "banName": "chakji_die",
+      "durationMs": 1800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 44,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_attack02.ban",
+      "banName": "chakji_attack02",
+      "durationMs": 1266,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 602,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_run.ban",
+      "banName": "chakji_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 45,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_damage02.ban",
+      "banName": "chakji_damage02",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_attack03.ban",
+      "banName": "chakji_attack03",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1143,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_die_loop.ban",
+      "banName": "chakji_die_loop",
+      "durationMs": 200,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_down.ban",
+      "banName": "chakji_down",
+      "durationMs": 866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 22,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_downwait.ban",
+      "banName": "chakji_downwait",
+      "durationMs": 1800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_downdamage.ban",
+      "banName": "chakji_downdamage",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_wakeup.ban",
+      "banName": "chakji_wakeup",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_downdie.ban",
+      "banName": "chakji_downdie",
+      "durationMs": 266,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\china\\chakji\\chakji_stand01.ban",
+      "banName": "chakji_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 41
+    }
+  ],
+  "stats": {
+    "vertices": 749,
+    "triangles": 1110,
+    "joints": 42,
+    "meshes": 4,
+    "animations": 16,
+    "textures": 2,
+    "heightM": 2.319038281268149,
+    "boundsMin": [
+      -1.2420978546142578,
+      -0.00008095247176242992,
+      -1.2336314916610718
+    ],
+    "boundsMax": [
+      1.1483150720596313,
+      2.3189573287963867,
+      2.4154164791107178
+    ]
+  },
+  "warnings": [
+    "particle monster/system_appear.efp (set system_appear) is not in Particles.pk2; dropped"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "chakji",
+    "packs": {
+      "default": "mob/_anims/chakji/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "chakji_stand01"
+      ],
+      "WALK": [
+        "default",
+        "chakji_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "chakji_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "chakji_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "chakji_die"
+      ],
+      "ATTACK2": [
+        "default",
+        "chakji_attack02"
+      ],
+      "RUN": [
+        "default",
+        "chakji_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "chakji_damage02"
+      ],
+      "ATTACK3": [
+        "default",
+        "chakji_attack03"
+      ],
+      "DIE1_RM": [
+        "default",
+        "chakji_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "chakji_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "chakji_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "chakji_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "chakji_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "chakji_downdie"
+      ],
+      "STUN": [
+        "default",
+        "chakji_stand01"
+      ]
+    }
+  }
+}

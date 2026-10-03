@@ -1,0 +1,359 @@
+{
+  "source": "res/npc/npc/chinasystem_bookmakerman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinasystem_bookmakerman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinasystem_bookmakerman.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 5.512228191673074e-7,
+      "maxHierarchyError": 3.3306690738754696e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaSystem_BookmakerMan_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman .ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaSystem_BookmakerMan_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (15.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaSystem_BookmakerMan",
+      "bmt": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinasystem_bookmakerman .ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaSystem_BookmakerMan_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinasystem_bookmakerman_2s.bms",
+      "material": "ChinaSystem_BookmakerMan_2s",
+      "vertices": 43,
+      "triangles": 34,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Thigh",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh"
+      ]
+    },
+    {
+      "name": "ChinaSystem_BookmakerMan_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinasystem_bookmakerman_al_2s.bms",
+      "material": "ChinaSystem_BookmakerMan_al_2s",
+      "vertices": 26,
+      "triangles": 18,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 R Finger1",
+        "Bip01 L Finger1"
+      ]
+    },
+    {
+      "name": "ChinaSystem_BookmakerMan_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinasystem_bookmakerman_part2.bms",
+      "material": "ChinaSystem_BookmakerMan",
+      "vertices": 165,
+      "triangles": 199,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R Finger01",
+        "Bip01 R Finger2",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger2",
+        "Bip01 L Finger01",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21"
+      ]
+    },
+    {
+      "name": "ChinaSystem_BookmakerMan_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinasystem_bookmakerman_part1.bms",
+      "material": "ChinaSystem_BookmakerMan",
+      "vertices": 429,
+      "triangles": 567,
+      "skinned": true,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 Spine1",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 R Clavicle",
+        "Bip01 L Clavicle",
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinasystem_bookmakerman_basic.ban",
+      "banName": "chinasystem_bookmakerman_basic",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinasystem_bookmakerman_time.ban",
+      "banName": "chinasystem_bookmakerman_time",
+      "durationMs": 6000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 663,
+    "triangles": 818,
+    "joints": 36,
+    "meshes": 4,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 1.5931459974963218,
+    "boundsMin": [
+      -0.2812335789203644,
+      -0.0034629416186362505,
+      -0.20328716933727264
+    ],
+    "boundsMax": [
+      0.33235785365104675,
+      1.5896830558776855,
+      0.4199994206428528
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "chinasystem_bookmakerman",
+    "packs": {
+      "default": "npc/_anims/chinasystem_bookmakerman/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "chinasystem_bookmakerman_basic"
+      ],
+      "STAND2": [
+        "default",
+        "chinasystem_bookmakerman_time"
+      ]
+    }
+  }
+}

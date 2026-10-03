@@ -1,0 +1,126 @@
+{
+  "source": "res/item/china/man_item/light_03_ba.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_03_ba",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "light_03_ba"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "light_03_ba"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "light_03_ba",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\light_03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_ba.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "light_03_ba",
+      "bms": "prim\\mesh\\item\\china\\man_item\\light_03_ba.bms",
+      "material": "light_03_ba",
+      "vertices": 154,
+      "triangles": 242,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 L Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 154,
+    "triangles": 242,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.5220274925231934,
+    "boundsMin": [
+      -0.20586442947387695,
+      1.0845580101013184,
+      -0.13140708208084106
+    ],
+    "boundsMax": [
+      0.20825524628162384,
+      1.6065855026245117,
+      0.15257875621318817
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,677 @@
+{
+  "source": "res/mob/china/tigerwoman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tigerwoman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\tigerwoman.bsk",
+    "joints": [
+      "Bip03",
+      "Bip03 Pelvis",
+      "Bip03 Spine",
+      "Bip03 Spine1",
+      "Bip03 Neck",
+      "Bip03 Head",
+      "Bip03 Ponytail1",
+      "Bip03 Ponytail11",
+      "Bip03 Ponytail12",
+      "Bip03 Ponytail13",
+      "Bip03 Ponytail14",
+      "Bip03 Ponytail2",
+      "Bip03 Ponytail21",
+      "Bip03 Ponytail22",
+      "Bip03 Ponytail23",
+      "Bip03 Ponytail24",
+      "Bone07",
+      "Bone08",
+      "Bone09",
+      "Bone10",
+      "Bone11",
+      "Bone12",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06",
+      "Bip03 L Clavicle",
+      "Bip03 L UpperArm",
+      "Bip03 L Forearm",
+      "Bip03 L Hand",
+      "Bip03 L Finger0",
+      "Bip03 L Finger01",
+      "Bip03 L Finger02",
+      "Bip03 L Finger1",
+      "Bip03 L Finger11",
+      "Bip03 L Finger12",
+      "Bip03 L Finger2",
+      "Bip03 L Finger21",
+      "Bip03 L Finger22",
+      "Bip03 L Finger3",
+      "Bip03 L Finger31",
+      "Bip03 L Finger32",
+      "Bip03 R Clavicle",
+      "Bip03 R UpperArm",
+      "Bip03 R Forearm",
+      "Bip03 R Hand",
+      "Bip03 R Finger0",
+      "Bip03 R Finger01",
+      "Bip03 R Finger02",
+      "Bip03 R Finger1",
+      "Bip03 R Finger11",
+      "Bip03 R Finger12",
+      "Bip03 R Finger2",
+      "Bip03 R Finger21",
+      "Bip03 R Finger22",
+      "Bip03 R Finger3",
+      "Bip03 R Finger31",
+      "Bip03 R Finger32",
+      "wand_bone",
+      "Bip03 L Thigh",
+      "Bip03 L Calf",
+      "Bip03 L Foot",
+      "Bip03 L Toe0",
+      "Bip03 R Thigh",
+      "Bip03 R Calf",
+      "Bip03 R Foot",
+      "Bip03 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.861319849007288e-7,
+      "maxHierarchyError": 8.881784197001252e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "tigerwoman_2side",
+      "bmt": "prim\\mtrl\\mob\\china\\tigerwoman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\tigerwoman.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "tigerwoman",
+      "bmt": "prim\\mtrl\\mob\\china\\tigerwoman.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\tigerwoman.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.2% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tigerwoman_2side",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_2side.bms",
+      "material": "tigerwoman_2side",
+      "vertices": 127,
+      "triangles": 138,
+      "skinned": true,
+      "bones": [
+        "Bip03 Head"
+      ]
+    },
+    {
+      "name": "tigerwoman_wand",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_wand.bms",
+      "material": "tigerwoman",
+      "vertices": 38,
+      "triangles": 52,
+      "skinned": true,
+      "bones": [
+        "Bip03 R Hand"
+      ]
+    },
+    {
+      "name": "tigerwoman_wand_2side",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_wand_2side.bms",
+      "material": "tigerwoman_2side",
+      "vertices": 126,
+      "triangles": 156,
+      "skinned": true,
+      "bones": [
+        "Bip03 R Hand"
+      ]
+    },
+    {
+      "name": "tigerwoman_body_part1",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_body_part1.bms",
+      "material": "tigerwoman",
+      "vertices": 152,
+      "triangles": 176,
+      "skinned": true,
+      "bones": [
+        "Bip03 Ponytail2",
+        "Bip03 Ponytail21",
+        "Bip03 Ponytail22",
+        "Bip03 Ponytail23",
+        "Bip03 Ponytail24",
+        "Bone01",
+        "Bone02",
+        "Bone03",
+        "Bone04",
+        "Bone05",
+        "Bip03 Ponytail11",
+        "Bip03 Ponytail12",
+        "Bip03 Ponytail1",
+        "Bip03 Ponytail13",
+        "Bip03 Ponytail14",
+        "Bone09",
+        "Bone08",
+        "Bone07",
+        "Bone10",
+        "Bone11"
+      ]
+    },
+    {
+      "name": "tigerwoman_body_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_body_part2_part1.bms",
+      "material": "tigerwoman",
+      "vertices": 197,
+      "triangles": 247,
+      "skinned": true,
+      "bones": [
+        "Bip03 L Calf",
+        "Bip03 L Thigh",
+        "Bip03 L Foot",
+        "Bip03 L Toe0",
+        "Bip03 Pelvis",
+        "Bip03 L Forearm",
+        "Bip03 L Hand",
+        "Bip03 L Finger02",
+        "Bip03 L Finger01",
+        "Bip03 L Finger1",
+        "Bip03 L Finger11",
+        "Bip03 L Finger2",
+        "Bip03 L Finger0",
+        "Bip03 L Finger12",
+        "Bip03 L Finger22",
+        "Bip03 L Finger3",
+        "Bip03 L Finger31",
+        "Bip03 L Finger32",
+        "Bip03 L Finger21"
+      ]
+    },
+    {
+      "name": "tigerwoman_body_part2_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_body_part2_part2_part1.bms",
+      "material": "tigerwoman",
+      "vertices": 197,
+      "triangles": 247,
+      "skinned": true,
+      "bones": [
+        "Bip03 R Hand",
+        "Bip03 R Forearm",
+        "Bip03 R Finger02",
+        "Bip03 R Finger01",
+        "Bip03 R Finger11",
+        "Bip03 R Finger1",
+        "Bip03 R Finger2",
+        "Bip03 R Finger0",
+        "Bip03 R Finger12",
+        "Bip03 R Finger21",
+        "Bip03 R Finger3",
+        "Bip03 R Finger22",
+        "Bip03 R Finger31",
+        "Bip03 R Finger32",
+        "Bip03 R Calf",
+        "Bip03 R Thigh",
+        "Bip03 R Foot",
+        "Bip03 R Toe0",
+        "Bip03 Pelvis"
+      ]
+    },
+    {
+      "name": "tigerwoman_body_part2_part2_part2",
+      "bms": "prim\\mesh\\mob\\china\\tigerwoman_body_part2_part2_part2.bms",
+      "material": "tigerwoman",
+      "vertices": 650,
+      "triangles": 921,
+      "skinned": true,
+      "bones": [
+        "Bip03 Head",
+        "Bip03 Ponytail2",
+        "Bone01",
+        "Bone02",
+        "Bip03 Ponytail1",
+        "Bip03 Pelvis",
+        "Bip03 R Thigh",
+        "Bip03 Spine",
+        "Bip03 L Thigh",
+        "Bip03 L Forearm",
+        "Bip03 L UpperArm",
+        "Bip03 L Clavicle",
+        "Bip03 Spine1",
+        "Bip03 Neck",
+        "Bip03 R UpperArm",
+        "Bip03 R Forearm",
+        "Bip03 R Clavicle",
+        "Bone07",
+        "Bone08"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_stand01.ban",
+      "banName": "tigerwoman_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 45,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_walk.ban",
+      "banName": "tigerwoman_walk",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_attack01.ban",
+      "banName": "tigerwoman_attack01",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1109,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1379,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 68
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_damage01.ban",
+      "banName": "tigerwoman_damage01",
+      "durationMs": 966,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_die.ban",
+      "banName": "tigerwoman_die",
+      "durationMs": 5533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 115,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_attack02.ban",
+      "banName": "tigerwoman_attack02",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 930,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 69
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_run.ban",
+      "banName": "tigerwoman_run",
+      "durationMs": 900,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 21,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_damage02.ban",
+      "banName": "tigerwoman_damage02",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 30,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_attack03.ban",
+      "banName": "tigerwoman_attack03",
+      "durationMs": 5000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 84,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 341,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 3004,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 68
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_die_loop.ban",
+      "banName": "tigerwoman_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "HELP",
+      "group": "default",
+      "type": 67,
+      "typeName": "HELP",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_help.ban",
+      "banName": "tigerwoman_help",
+      "durationMs": 3733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 66,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "FIND",
+      "group": "default",
+      "type": 78,
+      "typeName": "FIND",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_find.ban",
+      "banName": "tigerwoman_find",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 58,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_stand01.ban",
+      "banName": "tigerwoman_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 45,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\mob\\china\\tigerwoman\\tigerwoman_stand02.ban",
+      "banName": "tigerwoman_stand02",
+      "durationMs": 5333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 54,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 68
+    }
+  ],
+  "stats": {
+    "vertices": 1487,
+    "triangles": 1937,
+    "joints": 69,
+    "meshes": 7,
+    "animations": 14,
+    "textures": 1,
+    "heightM": 2.110055967383232,
+    "boundsMin": [
+      -1.070388674736023,
+      0.000009015984687721357,
+      -1.1463481187820435
+    ],
+    "boundsMax": [
+      1.0703994035720825,
+      2.11006498336792,
+      1.1314988136291504
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "tigerwoman",
+    "packs": {
+      "default": "mob/_anims/tigerwoman/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "tigerwoman_stand01"
+      ],
+      "WALK": [
+        "default",
+        "tigerwoman_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "tigerwoman_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "tigerwoman_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "tigerwoman_die"
+      ],
+      "ATTACK2": [
+        "default",
+        "tigerwoman_attack02"
+      ],
+      "RUN": [
+        "default",
+        "tigerwoman_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "tigerwoman_damage02"
+      ],
+      "ATTACK3": [
+        "default",
+        "tigerwoman_attack03"
+      ],
+      "DIE1_RM": [
+        "default",
+        "tigerwoman_die_loop"
+      ],
+      "HELP": [
+        "default",
+        "tigerwoman_help"
+      ],
+      "FIND": [
+        "default",
+        "tigerwoman_find"
+      ],
+      "STUN": [
+        "default",
+        "tigerwoman_stand01"
+      ],
+      "STAND2": [
+        "default",
+        "tigerwoman_stand02"
+      ]
+    }
+  }
+}

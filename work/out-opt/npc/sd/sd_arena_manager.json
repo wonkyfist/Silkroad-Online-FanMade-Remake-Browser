@@ -1,0 +1,229 @@
+{
+  "source": "res/npc/sd/sd_arena_manager.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "sd_arena_manager",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\sd\\sd_arena_manager.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bone01",
+      "Bone02",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 4.886094999712043e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "SD_arena_manager",
+      "bmt": "prim\\mtrl\\npc\\sd\\sd_arena_manager.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\sd\\sd_arena_manager.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "SD_arena_manager_part1",
+      "bms": "prim\\mesh\\npc\\sd\\sd_arena_manager_part1.bms",
+      "material": "SD_arena_manager",
+      "vertices": 520,
+      "triangles": 723,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Neck",
+        "Bip01 Head",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Spine_Base",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 L Finger21",
+        "Bip01 L Finger0",
+        "Bip01 L Finger11",
+        "Bip01 L Finger01",
+        "Bone01",
+        "Bip01 R Hand",
+        "Bip01 R Finger2"
+      ]
+    },
+    {
+      "name": "SD_arena_manager_part2",
+      "bms": "prim\\mesh\\npc\\sd\\sd_arena_manager_part2.bms",
+      "material": "SD_arena_manager",
+      "vertices": 388,
+      "triangles": 543,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Spine_Base",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bone01",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Finger1",
+        "Bip01 R Finger0",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger01",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Clavicle"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\sd\\sd_arena_manager_stand01.ban",
+      "banName": "sd_arena_manager_stand01",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 36
+    }
+  ],
+  "stats": {
+    "vertices": 908,
+    "triangles": 1266,
+    "joints": 37,
+    "meshes": 2,
+    "animations": 1,
+    "textures": 1,
+    "heightM": 2.025698269251734,
+    "boundsMin": [
+      -0.947056770324707,
+      -0.00025924528017640114,
+      -0.38712215423583984
+    ],
+    "boundsMax": [
+      1.0170204639434814,
+      2.0254390239715576,
+      0.41550612449645996
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "sd_arena_manager",
+    "packs": {
+      "default": "npc/_anims/sd_arena_manager/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "sd_arena_manager_stand01"
+      ]
+    }
+  }
+}

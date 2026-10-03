@@ -1,0 +1,2808 @@
+[
+  {
+    "id": "test/skinned-test",
+    "name": "Skinned test (3 joints, 2 clips)",
+    "category": "test",
+    "glb": "test/skinned-test.glb",
+    "sidecar": "test/skinned-test.json"
+  },
+  {
+    "id": "test/test-blade",
+    "name": "Test blade (static)",
+    "category": "test",
+    "glb": "test/test-blade.glb"
+  },
+  {
+    "id": "char/china/chinaman_adventurer",
+    "name": "chinaman_adventurer",
+    "category": "char/china",
+    "glb": "char/china/chinaman_adventurer.glb",
+    "sidecar": "char/china/chinaman_adventurer.json"
+  },
+  {
+    "id": "char/china/chinawoman_adventurer",
+    "name": "chinawoman_adventurer",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_adventurer.glb",
+    "sidecar": "char/china/chinawoman_adventurer.json"
+  },
+  {
+    "id": "char/europe/europeman_adventurer",
+    "name": "europeman_adventurer",
+    "category": "char/europe",
+    "glb": "char/europe/europeman_adventurer.glb",
+    "sidecar": "char/europe/europeman_adventurer.json"
+  },
+  {
+    "id": "item/china/weapon/blade_01",
+    "name": "blade_01",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/blade_01.glb",
+    "sidecar": "item/china/weapon/blade_01.json"
+  },
+  {
+    "id": "mob/china/mangnyang",
+    "name": "mangnyang",
+    "category": "mob/china",
+    "glb": "mob/china/mangnyang.glb",
+    "sidecar": "mob/china/mangnyang.json"
+  },
+  {
+    "id": "mob/china/tiger",
+    "name": "tiger",
+    "category": "mob/china",
+    "glb": "mob/china/tiger.glb",
+    "sidecar": "mob/china/tiger.json"
+  },
+  {
+    "id": "mob/china/tigerwoman",
+    "name": "tigerwoman",
+    "category": "mob/china",
+    "glb": "mob/china/tigerwoman.glb",
+    "sidecar": "mob/china/tigerwoman.json"
+  },
+  {
+    "id": "char/china/chinaman_bogy",
+    "name": "chinaman_bogy",
+    "category": "char/china",
+    "glb": "char/china/chinaman_bogy.glb",
+    "sidecar": "char/china/chinaman_bogy.json"
+  },
+  {
+    "id": "char/china/chinaman_fighter",
+    "name": "chinaman_fighter",
+    "category": "char/china",
+    "glb": "char/china/chinaman_fighter.glb",
+    "sidecar": "char/china/chinaman_fighter.json"
+  },
+  {
+    "id": "char/china/chinaman_merchant",
+    "name": "chinaman_merchant",
+    "category": "char/china",
+    "glb": "char/china/chinaman_merchant.glb",
+    "sidecar": "char/china/chinaman_merchant.json"
+  },
+  {
+    "id": "char/china/chinaman_monk",
+    "name": "chinaman_monk",
+    "category": "char/china",
+    "glb": "char/china/chinaman_monk.glb",
+    "sidecar": "char/china/chinaman_monk.json"
+  },
+  {
+    "id": "char/china/chinaman_monkey",
+    "name": "chinaman_monkey",
+    "category": "char/china",
+    "glb": "char/china/chinaman_monkey.glb",
+    "sidecar": "char/china/chinaman_monkey.json"
+  },
+  {
+    "id": "char/china/chinaman_necromancer",
+    "name": "chinaman_necromancer",
+    "category": "char/china",
+    "glb": "char/china/chinaman_necromancer.glb",
+    "sidecar": "char/china/chinaman_necromancer.json"
+  },
+  {
+    "id": "char/china/chinaman_nobleboy",
+    "name": "chinaman_nobleboy",
+    "category": "char/china",
+    "glb": "char/china/chinaman_nobleboy.glb",
+    "sidecar": "char/china/chinaman_nobleboy.json"
+  },
+  {
+    "id": "char/china/chinaman_performer",
+    "name": "chinaman_performer",
+    "category": "char/china",
+    "glb": "char/china/chinaman_performer.glb",
+    "sidecar": "char/china/chinaman_performer.json"
+  },
+  {
+    "id": "char/china/chinaman_priest",
+    "name": "chinaman_priest",
+    "category": "char/china",
+    "glb": "char/china/chinaman_priest.glb",
+    "sidecar": "char/china/chinaman_priest.json"
+  },
+  {
+    "id": "char/china/chinaman_scholar",
+    "name": "chinaman_scholar",
+    "category": "char/china",
+    "glb": "char/china/chinaman_scholar.glb",
+    "sidecar": "char/china/chinaman_scholar.json"
+  },
+  {
+    "id": "char/china/chinaman_tattoo",
+    "name": "chinaman_tattoo",
+    "category": "char/china",
+    "glb": "char/china/chinaman_tattoo.glb",
+    "sidecar": "char/china/chinaman_tattoo.json"
+  },
+  {
+    "id": "char/china/chinaman_warrior",
+    "name": "chinaman_warrior",
+    "category": "char/china",
+    "glb": "char/china/chinaman_warrior.glb",
+    "sidecar": "char/china/chinaman_warrior.json"
+  },
+  {
+    "id": "char/china/chinawoman_assassin",
+    "name": "chinawoman_assassin",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_assassin.glb",
+    "sidecar": "char/china/chinawoman_assassin.json"
+  },
+  {
+    "id": "char/china/chinawoman_bogy",
+    "name": "chinawoman_bogy",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_bogy.glb",
+    "sidecar": "char/china/chinawoman_bogy.json"
+  },
+  {
+    "id": "char/china/chinawoman_fighter",
+    "name": "chinawoman_fighter",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_fighter.glb",
+    "sidecar": "char/china/chinawoman_fighter.json"
+  },
+  {
+    "id": "char/china/chinawoman_fox",
+    "name": "chinawoman_fox",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_fox.glb",
+    "sidecar": "char/china/chinawoman_fox.json"
+  },
+  {
+    "id": "char/china/chinawoman_kangsi",
+    "name": "chinawoman_kangsi",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_kangsi.glb",
+    "sidecar": "char/china/chinawoman_kangsi.json"
+  },
+  {
+    "id": "char/china/chinawoman_kisaeng",
+    "name": "chinawoman_kisaeng",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_kisaeng.glb",
+    "sidecar": "char/china/chinawoman_kisaeng.json"
+  },
+  {
+    "id": "char/china/chinawoman_merchant",
+    "name": "chinawoman_merchant",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_merchant.glb",
+    "sidecar": "char/china/chinawoman_merchant.json"
+  },
+  {
+    "id": "char/china/chinawoman_necromencerb",
+    "name": "chinawoman_necromencerb",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_necromencerb.glb",
+    "sidecar": "char/china/chinawoman_necromencerb.json"
+  },
+  {
+    "id": "char/china/chinawoman_necromencerw",
+    "name": "chinawoman_necromencerw",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_necromencerw.glb",
+    "sidecar": "char/china/chinawoman_necromencerw.json"
+  },
+  {
+    "id": "char/china/chinawoman_noblegirl",
+    "name": "chinawoman_noblegirl",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_noblegirl.glb",
+    "sidecar": "char/china/chinawoman_noblegirl.json"
+  },
+  {
+    "id": "char/china/chinawoman_scholar",
+    "name": "chinawoman_scholar",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_scholar.glb",
+    "sidecar": "char/china/chinawoman_scholar.json"
+  },
+  {
+    "id": "char/china/chinawoman_warrior",
+    "name": "chinawoman_warrior",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_warrior.glb",
+    "sidecar": "char/china/chinawoman_warrior.json"
+  },
+  {
+    "id": "item/china/weapon/sword_01",
+    "name": "sword_01",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/sword_01.glb",
+    "sidecar": "item/china/weapon/sword_01.json"
+  },
+  {
+    "id": "item/china/weapon/spear_01",
+    "name": "spear_01",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/spear_01.glb",
+    "sidecar": "item/china/weapon/spear_01.json"
+  },
+  {
+    "id": "item/china/weapon/tblade_01",
+    "name": "tblade_01",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/tblade_01.glb",
+    "sidecar": "item/china/weapon/tblade_01.json"
+  },
+  {
+    "id": "item/china/weapon/bow_01",
+    "name": "bow_01",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/bow_01.glb",
+    "sidecar": "item/china/weapon/bow_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/sword_01",
+    "name": "sword_01",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/sword_01.glb",
+    "sidecar": "equipment/china/weapon/sword_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/sword_02",
+    "name": "sword_02",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/sword_02.glb",
+    "sidecar": "equipment/china/weapon/sword_02.json"
+  },
+  {
+    "id": "equipment/china/weapon/sword_03",
+    "name": "sword_03",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/sword_03.glb",
+    "sidecar": "equipment/china/weapon/sword_03.json"
+  },
+  {
+    "id": "equipment/china/weapon/blade_01",
+    "name": "blade_01",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/blade_01.glb",
+    "sidecar": "equipment/china/weapon/blade_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/blade_02",
+    "name": "blade_02",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/blade_02.glb",
+    "sidecar": "equipment/china/weapon/blade_02.json"
+  },
+  {
+    "id": "equipment/china/weapon/blade_03",
+    "name": "blade_03",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/blade_03.glb",
+    "sidecar": "equipment/china/weapon/blade_03.json"
+  },
+  {
+    "id": "equipment/china/weapon/spear_01",
+    "name": "spear_01",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/spear_01.glb",
+    "sidecar": "equipment/china/weapon/spear_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/spear_02",
+    "name": "spear_02",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/spear_02.glb",
+    "sidecar": "equipment/china/weapon/spear_02.json"
+  },
+  {
+    "id": "equipment/china/weapon/spear_03",
+    "name": "spear_03",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/spear_03.glb",
+    "sidecar": "equipment/china/weapon/spear_03.json"
+  },
+  {
+    "id": "equipment/china/weapon/tblade_01",
+    "name": "tblade_01",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/tblade_01.glb",
+    "sidecar": "equipment/china/weapon/tblade_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/tblade_02",
+    "name": "tblade_02",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/tblade_02.glb",
+    "sidecar": "equipment/china/weapon/tblade_02.json"
+  },
+  {
+    "id": "equipment/china/weapon/tblade_03",
+    "name": "tblade_03",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/tblade_03.glb",
+    "sidecar": "equipment/china/weapon/tblade_03.json"
+  },
+  {
+    "id": "equipment/china/weapon/bow_01",
+    "name": "bow_01",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/bow_01.glb",
+    "sidecar": "equipment/china/weapon/bow_01.json"
+  },
+  {
+    "id": "equipment/china/weapon/bow_02",
+    "name": "bow_02",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/bow_02.glb",
+    "sidecar": "equipment/china/weapon/bow_02.json"
+  },
+  {
+    "id": "equipment/china/weapon/bow_03",
+    "name": "bow_03",
+    "category": "equipment/china/weapon",
+    "glb": "equipment/china/weapon/bow_03.glb",
+    "sidecar": "equipment/china/weapon/bow_03.json"
+  },
+  {
+    "id": "equipment/china/shield/shield_01",
+    "name": "shield_01",
+    "category": "equipment/china/shield",
+    "glb": "equipment/china/shield/shield_01.glb",
+    "sidecar": "equipment/china/shield/shield_01.json"
+  },
+  {
+    "id": "equipment/china/shield/shield_02",
+    "name": "shield_02",
+    "category": "equipment/china/shield",
+    "glb": "equipment/china/shield/shield_02.glb",
+    "sidecar": "equipment/china/shield/shield_02.json"
+  },
+  {
+    "id": "equipment/china/shield/shield_03",
+    "name": "shield_03",
+    "category": "equipment/china/shield",
+    "glb": "equipment/china/shield/shield_03.glb",
+    "sidecar": "equipment/china/shield/shield_03.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_ha",
+    "name": "heavy_01_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_ha.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_ha",
+    "name": "heavy_02_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_ha.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_ha",
+    "name": "heavy_03_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_ha.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_sa",
+    "name": "heavy_01_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_sa.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_sa",
+    "name": "heavy_02_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_sa.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_sa",
+    "name": "heavy_03_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_sa.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_ba",
+    "name": "heavy_01_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_ba.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_ba",
+    "name": "heavy_02_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_ba.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_ba",
+    "name": "heavy_03_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_ba.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_la",
+    "name": "heavy_01_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_la.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_la",
+    "name": "heavy_02_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_la.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_la",
+    "name": "heavy_03_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_la.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_aa",
+    "name": "heavy_01_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_aa.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_aa",
+    "name": "heavy_02_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_aa.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_aa",
+    "name": "heavy_03_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_aa.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_01_fa",
+    "name": "heavy_01_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_01_fa.glb",
+    "sidecar": "equipment/china/man_item/heavy_01_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_02_fa",
+    "name": "heavy_02_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_02_fa.glb",
+    "sidecar": "equipment/china/man_item/heavy_02_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/heavy_03_fa",
+    "name": "heavy_03_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/heavy_03_fa.glb",
+    "sidecar": "equipment/china/man_item/heavy_03_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_ha",
+    "name": "light_01_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_ha.glb",
+    "sidecar": "equipment/china/man_item/light_01_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_ha",
+    "name": "light_02_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_ha.glb",
+    "sidecar": "equipment/china/man_item/light_02_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_ha",
+    "name": "light_03_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_ha.glb",
+    "sidecar": "equipment/china/man_item/light_03_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_sa",
+    "name": "light_01_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_sa.glb",
+    "sidecar": "equipment/china/man_item/light_01_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_sa",
+    "name": "light_02_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_sa.glb",
+    "sidecar": "equipment/china/man_item/light_02_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_sa",
+    "name": "light_03_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_sa.glb",
+    "sidecar": "equipment/china/man_item/light_03_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_ba",
+    "name": "light_01_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_ba.glb",
+    "sidecar": "equipment/china/man_item/light_01_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_ba",
+    "name": "light_02_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_ba.glb",
+    "sidecar": "equipment/china/man_item/light_02_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_ba",
+    "name": "light_03_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_ba.glb",
+    "sidecar": "equipment/china/man_item/light_03_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_la",
+    "name": "light_01_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_la.glb",
+    "sidecar": "equipment/china/man_item/light_01_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_la",
+    "name": "light_02_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_la.glb",
+    "sidecar": "equipment/china/man_item/light_02_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_la",
+    "name": "light_03_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_la.glb",
+    "sidecar": "equipment/china/man_item/light_03_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_aa",
+    "name": "light_01_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_aa.glb",
+    "sidecar": "equipment/china/man_item/light_01_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_aa",
+    "name": "light_02_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_aa.glb",
+    "sidecar": "equipment/china/man_item/light_02_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_aa",
+    "name": "light_03_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_aa.glb",
+    "sidecar": "equipment/china/man_item/light_03_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_01_fa",
+    "name": "light_01_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_01_fa.glb",
+    "sidecar": "equipment/china/man_item/light_01_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_02_fa",
+    "name": "light_02_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_02_fa.glb",
+    "sidecar": "equipment/china/man_item/light_02_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/light_03_fa",
+    "name": "light_03_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/light_03_fa.glb",
+    "sidecar": "equipment/china/man_item/light_03_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_ha",
+    "name": "clothes_01_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_ha.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_ha",
+    "name": "clothes_02_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_ha.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_ha",
+    "name": "clothes_03_ha",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_ha.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_ha.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_sa",
+    "name": "clothes_01_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_sa.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_sa",
+    "name": "clothes_02_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_sa.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_sa",
+    "name": "clothes_03_sa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_sa.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_sa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_ba",
+    "name": "clothes_01_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_ba.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_ba",
+    "name": "clothes_02_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_ba.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_ba",
+    "name": "clothes_03_ba",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_ba.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_ba.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_la",
+    "name": "clothes_01_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_la.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_la",
+    "name": "clothes_02_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_la.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_la",
+    "name": "clothes_03_la",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_la.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_la.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_aa",
+    "name": "clothes_01_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_aa.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_aa",
+    "name": "clothes_02_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_aa.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_aa",
+    "name": "clothes_03_aa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_aa.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_aa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_01_fa",
+    "name": "clothes_01_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_01_fa.glb",
+    "sidecar": "equipment/china/man_item/clothes_01_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_02_fa",
+    "name": "clothes_02_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_02_fa.glb",
+    "sidecar": "equipment/china/man_item/clothes_02_fa.json"
+  },
+  {
+    "id": "equipment/china/man_item/clothes_03_fa",
+    "name": "clothes_03_fa",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/clothes_03_fa.glb",
+    "sidecar": "equipment/china/man_item/clothes_03_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_ha",
+    "name": "heavy_01_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_ha.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_ha",
+    "name": "heavy_02_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_ha.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_ha",
+    "name": "heavy_03_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_ha.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_sa",
+    "name": "heavy_01_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_sa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_sa",
+    "name": "heavy_02_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_sa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_sa",
+    "name": "heavy_03_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_sa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_ba",
+    "name": "heavy_01_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_ba.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_ba",
+    "name": "heavy_02_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_ba.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_ba",
+    "name": "heavy_03_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_ba.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_la",
+    "name": "heavy_01_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_la.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_la",
+    "name": "heavy_02_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_la.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_la",
+    "name": "heavy_03_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_la.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_aa",
+    "name": "heavy_01_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_aa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_aa",
+    "name": "heavy_02_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_aa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_aa",
+    "name": "heavy_03_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_aa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_01_fa",
+    "name": "heavy_01_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_01_fa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_01_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_02_fa",
+    "name": "heavy_02_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_02_fa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_02_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/heavy_03_fa",
+    "name": "heavy_03_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/heavy_03_fa.glb",
+    "sidecar": "equipment/china/woman_item/heavy_03_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_ha",
+    "name": "light_01_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_ha.glb",
+    "sidecar": "equipment/china/woman_item/light_01_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_ha",
+    "name": "light_02_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_ha.glb",
+    "sidecar": "equipment/china/woman_item/light_02_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_ha",
+    "name": "light_03_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_ha.glb",
+    "sidecar": "equipment/china/woman_item/light_03_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_sa",
+    "name": "light_01_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_sa.glb",
+    "sidecar": "equipment/china/woman_item/light_01_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_sa",
+    "name": "light_02_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_sa.glb",
+    "sidecar": "equipment/china/woman_item/light_02_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_sa",
+    "name": "light_03_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_sa.glb",
+    "sidecar": "equipment/china/woman_item/light_03_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_ba",
+    "name": "light_01_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_ba.glb",
+    "sidecar": "equipment/china/woman_item/light_01_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_ba",
+    "name": "light_02_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_ba.glb",
+    "sidecar": "equipment/china/woman_item/light_02_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_ba",
+    "name": "light_03_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_ba.glb",
+    "sidecar": "equipment/china/woman_item/light_03_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_la",
+    "name": "light_01_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_la.glb",
+    "sidecar": "equipment/china/woman_item/light_01_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_la",
+    "name": "light_02_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_la.glb",
+    "sidecar": "equipment/china/woman_item/light_02_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_la",
+    "name": "light_03_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_la.glb",
+    "sidecar": "equipment/china/woman_item/light_03_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_aa",
+    "name": "light_01_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_aa.glb",
+    "sidecar": "equipment/china/woman_item/light_01_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_aa",
+    "name": "light_02_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_aa.glb",
+    "sidecar": "equipment/china/woman_item/light_02_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_aa",
+    "name": "light_03_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_aa.glb",
+    "sidecar": "equipment/china/woman_item/light_03_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_01_fa",
+    "name": "light_01_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_01_fa.glb",
+    "sidecar": "equipment/china/woman_item/light_01_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_02_fa",
+    "name": "light_02_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_02_fa.glb",
+    "sidecar": "equipment/china/woman_item/light_02_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/light_03_fa",
+    "name": "light_03_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/light_03_fa.glb",
+    "sidecar": "equipment/china/woman_item/light_03_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_ha",
+    "name": "clothes_01_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_ha.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_ha",
+    "name": "clothes_02_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_ha.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_ha",
+    "name": "clothes_03_ha",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_ha.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_ha.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_sa",
+    "name": "clothes_01_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_sa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_sa",
+    "name": "clothes_02_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_sa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_sa",
+    "name": "clothes_03_sa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_sa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_sa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_ba",
+    "name": "clothes_01_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_ba.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_ba",
+    "name": "clothes_02_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_ba.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_ba",
+    "name": "clothes_03_ba",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_ba.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_ba.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_la",
+    "name": "clothes_01_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_la.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_la",
+    "name": "clothes_02_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_la.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_la",
+    "name": "clothes_03_la",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_la.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_la.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_aa",
+    "name": "clothes_01_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_aa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_aa",
+    "name": "clothes_02_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_aa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_aa",
+    "name": "clothes_03_aa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_aa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_aa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_01_fa",
+    "name": "clothes_01_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_01_fa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_01_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_02_fa",
+    "name": "clothes_02_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_02_fa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_02_fa.json"
+  },
+  {
+    "id": "equipment/china/woman_item/clothes_03_fa",
+    "name": "clothes_03_fa",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/clothes_03_fa.glb",
+    "sidecar": "equipment/china/woman_item/clothes_03_fa.json"
+  },
+  {
+    "id": "mob/china/bandit",
+    "name": "bandit",
+    "category": "mob/china",
+    "glb": "mob/china/bandit.glb",
+    "sidecar": "mob/china/bandit.json"
+  },
+  {
+    "id": "mob/china/bandit_champ",
+    "name": "bandit_champ",
+    "category": "mob/china",
+    "glb": "mob/china/bandit_champ.glb",
+    "sidecar": "mob/china/bandit_champ.json"
+  },
+  {
+    "id": "mob/china/bandit_clon",
+    "name": "bandit_clon",
+    "category": "mob/china",
+    "glb": "mob/china/bandit_clon.glb",
+    "sidecar": "mob/china/bandit_clon.json"
+  },
+  {
+    "id": "mob/china/banditarcher",
+    "name": "banditarcher",
+    "category": "mob/china",
+    "glb": "mob/china/banditarcher.glb",
+    "sidecar": "mob/china/banditarcher.json"
+  },
+  {
+    "id": "mob/china/banditarcher_champ",
+    "name": "banditarcher_champ",
+    "category": "mob/china",
+    "glb": "mob/china/banditarcher_champ.glb",
+    "sidecar": "mob/china/banditarcher_champ.json"
+  },
+  {
+    "id": "mob/china/banditarcher_clon",
+    "name": "banditarcher_clon",
+    "category": "mob/china",
+    "glb": "mob/china/banditarcher_clon.glb",
+    "sidecar": "mob/china/banditarcher_clon.json"
+  },
+  {
+    "id": "mob/china/bigeyeghost",
+    "name": "bigeyeghost",
+    "category": "mob/china",
+    "glb": "mob/china/bigeyeghost.glb",
+    "sidecar": "mob/china/bigeyeghost.json"
+  },
+  {
+    "id": "mob/china/bigeyeghost_champ",
+    "name": "bigeyeghost_champ",
+    "category": "mob/china",
+    "glb": "mob/china/bigeyeghost_champ.glb",
+    "sidecar": "mob/china/bigeyeghost_champ.json"
+  },
+  {
+    "id": "mob/china/bigeyeghost_clon",
+    "name": "bigeyeghost_clon",
+    "category": "mob/china",
+    "glb": "mob/china/bigeyeghost_clon.glb",
+    "sidecar": "mob/china/bigeyeghost_clon.json"
+  },
+  {
+    "id": "mob/china/chakji",
+    "name": "chakji",
+    "category": "mob/china",
+    "glb": "mob/china/chakji.glb",
+    "sidecar": "mob/china/chakji.json"
+  },
+  {
+    "id": "mob/china/chakji_champ",
+    "name": "chakji_champ",
+    "category": "mob/china",
+    "glb": "mob/china/chakji_champ.glb",
+    "sidecar": "mob/china/chakji_champ.json"
+  },
+  {
+    "id": "mob/china/chakji_clon",
+    "name": "chakji_clon",
+    "category": "mob/china",
+    "glb": "mob/china/chakji_clon.glb",
+    "sidecar": "mob/china/chakji_clon.json"
+  },
+  {
+    "id": "mob/china/gyo",
+    "name": "gyo",
+    "category": "mob/china",
+    "glb": "mob/china/gyo.glb",
+    "sidecar": "mob/china/gyo.json"
+  },
+  {
+    "id": "mob/china/gyo_champ",
+    "name": "gyo_champ",
+    "category": "mob/china",
+    "glb": "mob/china/gyo_champ.glb",
+    "sidecar": "mob/china/gyo_champ.json"
+  },
+  {
+    "id": "mob/china/gyo_clon",
+    "name": "gyo_clon",
+    "category": "mob/china",
+    "glb": "mob/china/gyo_clon.glb",
+    "sidecar": "mob/china/gyo_clon.json"
+  },
+  {
+    "id": "mob/china/mangnyang_champ",
+    "name": "mangnyang_champ",
+    "category": "mob/china",
+    "glb": "mob/china/mangnyang_champ.glb",
+    "sidecar": "mob/china/mangnyang_champ.json"
+  },
+  {
+    "id": "mob/china/stoneghost",
+    "name": "stoneghost",
+    "category": "mob/china",
+    "glb": "mob/china/stoneghost.glb",
+    "sidecar": "mob/china/stoneghost.json"
+  },
+  {
+    "id": "mob/china/stoneghost_champ",
+    "name": "stoneghost_champ",
+    "category": "mob/china",
+    "glb": "mob/china/stoneghost_champ.glb",
+    "sidecar": "mob/china/stoneghost_champ.json"
+  },
+  {
+    "id": "mob/china/stoneghost_clon",
+    "name": "stoneghost_clon",
+    "category": "mob/china",
+    "glb": "mob/china/stoneghost_clon.glb",
+    "sidecar": "mob/china/stoneghost_clon.json"
+  },
+  {
+    "id": "mob/china/tiger_champ",
+    "name": "tiger_champ",
+    "category": "mob/china",
+    "glb": "mob/china/tiger_champ.glb",
+    "sidecar": "mob/china/tiger_champ.json"
+  },
+  {
+    "id": "mob/china/tiger_clon",
+    "name": "tiger_clon",
+    "category": "mob/china",
+    "glb": "mob/china/tiger_clon.glb",
+    "sidecar": "mob/china/tiger_clon.json"
+  },
+  {
+    "id": "mob/china/tombstone",
+    "name": "tombstone",
+    "category": "mob/china",
+    "glb": "mob/china/tombstone.glb",
+    "sidecar": "mob/china/tombstone.json"
+  },
+  {
+    "id": "mob/china/waterghost",
+    "name": "waterghost",
+    "category": "mob/china",
+    "glb": "mob/china/waterghost.glb",
+    "sidecar": "mob/china/waterghost.json"
+  },
+  {
+    "id": "mob/china/waterghost_champ",
+    "name": "waterghost_champ",
+    "category": "mob/china",
+    "glb": "mob/china/waterghost_champ.glb",
+    "sidecar": "mob/china/waterghost_champ.json"
+  },
+  {
+    "id": "mob/china/waterghost_clon",
+    "name": "waterghost_clon",
+    "category": "mob/china",
+    "glb": "mob/china/waterghost_clon.glb",
+    "sidecar": "mob/china/waterghost_clon.json"
+  },
+  {
+    "id": "mob/china/whitetiger",
+    "name": "whitetiger",
+    "category": "mob/china",
+    "glb": "mob/china/whitetiger.glb",
+    "sidecar": "mob/china/whitetiger.json"
+  },
+  {
+    "id": "mob/china/whitetiger_champ",
+    "name": "whitetiger_champ",
+    "category": "mob/china",
+    "glb": "mob/china/whitetiger_champ.glb",
+    "sidecar": "mob/china/whitetiger_champ.json"
+  },
+  {
+    "id": "mob/china/whitetiger_clon",
+    "name": "whitetiger_clon",
+    "category": "mob/china",
+    "glb": "mob/china/whitetiger_clon.glb",
+    "sidecar": "mob/china/whitetiger_clon.json"
+  },
+  {
+    "id": "mob/china/yeoha",
+    "name": "yeoha",
+    "category": "mob/china",
+    "glb": "mob/china/yeoha.glb",
+    "sidecar": "mob/china/yeoha.json"
+  },
+  {
+    "id": "mob/china/yeoha_champ",
+    "name": "yeoha_champ",
+    "category": "mob/china",
+    "glb": "mob/china/yeoha_champ.glb",
+    "sidecar": "mob/china/yeoha_champ.json"
+  },
+  {
+    "id": "mob/china/yeoha_clon",
+    "name": "yeoha_clon",
+    "category": "mob/china",
+    "glb": "mob/china/yeoha_clon.glb",
+    "sidecar": "mob/china/yeoha_clon.json"
+  },
+  {
+    "id": "mob/wchina/devilbug",
+    "name": "devilbug",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/devilbug.glb",
+    "sidecar": "mob/wchina/devilbug.json"
+  },
+  {
+    "id": "mob/wchina/devilbug_champ",
+    "name": "devilbug_champ",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/devilbug_champ.glb",
+    "sidecar": "mob/wchina/devilbug_champ.json"
+  },
+  {
+    "id": "mob/wchina/earthghost",
+    "name": "earthghost",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/earthghost.glb",
+    "sidecar": "mob/wchina/earthghost.json"
+  },
+  {
+    "id": "mob/wchina/earthghost_champ",
+    "name": "earthghost_champ",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/earthghost_champ.glb",
+    "sidecar": "mob/wchina/earthghost_champ.json"
+  },
+  {
+    "id": "mob/wchina/earthking",
+    "name": "earthking",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/earthking.glb",
+    "sidecar": "mob/wchina/earthking.json"
+  },
+  {
+    "id": "mob/wchina/ghostbug",
+    "name": "ghostbug",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/ghostbug.glb",
+    "sidecar": "mob/wchina/ghostbug.json"
+  },
+  {
+    "id": "mob/wchina/ghostbug_champ",
+    "name": "ghostbug_champ",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/ghostbug_champ.glb",
+    "sidecar": "mob/wchina/ghostbug_champ.json"
+  },
+  {
+    "id": "mob/wchina/gunpowderghost_champ",
+    "name": "gunpowderghost_champ",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/gunpowderghost_champ.glb",
+    "sidecar": "mob/wchina/gunpowderghost_champ.json"
+  },
+  {
+    "id": "mob/wchina/gunpowderghost_clon",
+    "name": "gunpowderghost_clon",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/gunpowderghost_clon.glb",
+    "sidecar": "mob/wchina/gunpowderghost_clon.json"
+  },
+  {
+    "id": "mob/wchina/hyeongcheon",
+    "name": "hyeongcheon",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/hyeongcheon.glb",
+    "sidecar": "mob/wchina/hyeongcheon.json"
+  },
+  {
+    "id": "mob/wchina/hyeongcheon_champ",
+    "name": "hyeongcheon_champ",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/hyeongcheon_champ.glb",
+    "sidecar": "mob/wchina/hyeongcheon_champ.json"
+  },
+  {
+    "id": "mob/wchina/hyungno",
+    "name": "hyungno",
+    "category": "mob/wchina",
+    "glb": "mob/wchina/hyungno.glb",
+    "sidecar": "mob/wchina/hyungno.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_europegirl",
+    "name": "chinaetc_europegirl",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_europegirl.glb",
+    "sidecar": "npc/npc/chinaetc_europegirl.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_gamblingplaceman",
+    "name": "chinaetc_gamblingplaceman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_gamblingplaceman.glb",
+    "sidecar": "npc/npc/chinaetc_gamblingplaceman.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_indiapriest",
+    "name": "chinaetc_indiapriest",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_indiapriest.glb",
+    "sidecar": "npc/npc/chinaetc_indiapriest.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_islamman",
+    "name": "chinaetc_islamman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_islamman.glb",
+    "sidecar": "npc/npc/chinaetc_islamman.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng1",
+    "name": "chinaetc_kisaeng1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng1.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng1.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng2",
+    "name": "chinaetc_kisaeng2",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng2.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng2.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng3",
+    "name": "chinaetc_kisaeng3",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng3.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng3.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng4",
+    "name": "chinaetc_kisaeng4",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng4.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng4.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng5",
+    "name": "chinaetc_kisaeng5",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng5.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng5.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_kisaeng6",
+    "name": "chinaetc_kisaeng6",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_kisaeng6.glb",
+    "sidecar": "npc/npc/chinaetc_kisaeng6.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_qinshiquest",
+    "name": "chinaetc_qinshiquest",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_qinshiquest.glb",
+    "sidecar": "npc/npc/chinaetc_qinshiquest.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_slumboy",
+    "name": "chinaetc_slumboy",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_slumboy.glb",
+    "sidecar": "npc/npc/chinaetc_slumboy.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldiereast1",
+    "name": "chinaetc_soldiereast1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldiereast1.glb",
+    "sidecar": "npc/npc/chinaetc_soldiereast1.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldiereast2",
+    "name": "chinaetc_soldiereast2",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldiereast2.glb",
+    "sidecar": "npc/npc/chinaetc_soldiereast2.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldierpalace1",
+    "name": "chinaetc_soldierpalace1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldierpalace1.glb",
+    "sidecar": "npc/npc/chinaetc_soldierpalace1.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldierpalace2",
+    "name": "chinaetc_soldierpalace2",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldierpalace2.glb",
+    "sidecar": "npc/npc/chinaetc_soldierpalace2.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldiersouth1",
+    "name": "chinaetc_soldiersouth1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldiersouth1.glb",
+    "sidecar": "npc/npc/chinaetc_soldiersouth1.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldiersouth2",
+    "name": "chinaetc_soldiersouth2",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldiersouth2.glb",
+    "sidecar": "npc/npc/chinaetc_soldiersouth2.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldierwest1",
+    "name": "chinaetc_soldierwest1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldierwest1.glb",
+    "sidecar": "npc/npc/chinaetc_soldierwest1.json"
+  },
+  {
+    "id": "npc/npc/chinaetc_soldierwest2",
+    "name": "chinaetc_soldierwest2",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaetc_soldierwest2.glb",
+    "sidecar": "npc/npc/chinaetc_soldierwest2.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_doctor",
+    "name": "chinaquest_doctor",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_doctor.glb",
+    "sidecar": "npc/npc/chinaquest_doctor.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_merchant",
+    "name": "chinaquest_merchant",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_merchant.glb",
+    "sidecar": "npc/npc/chinaquest_merchant.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_merchant_bow",
+    "name": "chinaquest_merchant_bow",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_merchant_bow.glb",
+    "sidecar": "npc/npc/chinaquest_merchant_bow.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_merchant_spear",
+    "name": "chinaquest_merchant_spear",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_merchant_spear.glb",
+    "sidecar": "npc/npc/chinaquest_merchant_spear.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_merchant_sword",
+    "name": "chinaquest_merchant_sword",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_merchant_sword.glb",
+    "sidecar": "npc/npc/chinaquest_merchant_sword.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_priest",
+    "name": "chinaquest_priest",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_priest.glb",
+    "sidecar": "npc/npc/chinaquest_priest.json"
+  },
+  {
+    "id": "npc/npc/chinaquest_villageheadman",
+    "name": "chinaquest_villageheadman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinaquest_villageheadman.glb",
+    "sidecar": "npc/npc/chinaquest_villageheadman.json"
+  },
+  {
+    "id": "npc/npc/chinashop_accessoryshopgirl",
+    "name": "chinashop_accessoryshopgirl",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_accessoryshopgirl.glb",
+    "sidecar": "npc/npc/chinashop_accessoryshopgirl.json"
+  },
+  {
+    "id": "npc/npc/chinashop_dignifiedgirl",
+    "name": "chinashop_dignifiedgirl",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_dignifiedgirl.glb",
+    "sidecar": "npc/npc/chinashop_dignifiedgirl.json"
+  },
+  {
+    "id": "npc/npc/chinashop_herbalistman",
+    "name": "chinashop_herbalistman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_herbalistman.glb",
+    "sidecar": "npc/npc/chinashop_herbalistman.json"
+  },
+  {
+    "id": "npc/npc/chinashop_smith",
+    "name": "chinashop_smith",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_smith.glb",
+    "sidecar": "npc/npc/chinashop_smith.json"
+  },
+  {
+    "id": "npc/npc/chinashop_spacialmerchant",
+    "name": "chinashop_spacialmerchant",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_spacialmerchant.glb",
+    "sidecar": "npc/npc/chinashop_spacialmerchant.json"
+  },
+  {
+    "id": "npc/npc/chinashop_stableman",
+    "name": "chinashop_stableman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinashop_stableman.glb",
+    "sidecar": "npc/npc/chinashop_stableman.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_boatman1",
+    "name": "chinasystem_boatman1",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_boatman1.glb",
+    "sidecar": "npc/npc/chinasystem_boatman1.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_bookmakergirl",
+    "name": "chinasystem_bookmakergirl",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_bookmakergirl.glb",
+    "sidecar": "npc/npc/chinasystem_bookmakergirl.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_bookmakerman",
+    "name": "chinasystem_bookmakerman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_bookmakerman.glb",
+    "sidecar": "npc/npc/chinasystem_bookmakerman.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_shaman",
+    "name": "chinasystem_shaman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_shaman.glb",
+    "sidecar": "npc/npc/chinasystem_shaman.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_warehousekeeper",
+    "name": "chinasystem_warehousekeeper",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_warehousekeeper.glb",
+    "sidecar": "npc/npc/chinasystem_warehousekeeper.json"
+  },
+  {
+    "id": "npc/npc/chinasystem_warehousekeeper_woman",
+    "name": "chinasystem_warehousekeeper_woman",
+    "category": "npc/npc",
+    "glb": "npc/npc/chinasystem_warehousekeeper_woman.glb",
+    "sidecar": "npc/npc/chinasystem_warehousekeeper_woman.json"
+  },
+  {
+    "id": "npc/npc/event_kisaeng1",
+    "name": "event_kisaeng1",
+    "category": "npc/npc",
+    "glb": "npc/npc/event_kisaeng1.glb",
+    "sidecar": "npc/npc/event_kisaeng1.json"
+  },
+  {
+    "id": "npc/npc/gacha_machine",
+    "name": "gacha_machine",
+    "category": "npc/npc",
+    "glb": "npc/npc/gacha_machine.glb",
+    "sidecar": "npc/npc/gacha_machine.json"
+  },
+  {
+    "id": "npc/npc/thiefden_thief_e",
+    "name": "thiefden_thief_e",
+    "category": "npc/npc",
+    "glb": "npc/npc/thiefden_thief_e.glb",
+    "sidecar": "npc/npc/thiefden_thief_e.json"
+  },
+  {
+    "id": "npc/npc/westchinashop_herbalistman",
+    "name": "westchinashop_herbalistman",
+    "category": "npc/npc",
+    "glb": "npc/npc/westchinashop_herbalistman.glb",
+    "sidecar": "npc/npc/westchinashop_herbalistman.json"
+  },
+  {
+    "id": "npc/sd/sd_arena_manager",
+    "name": "sd_arena_manager",
+    "category": "npc/sd",
+    "glb": "npc/sd/sd_arena_manager.glb",
+    "sidecar": "npc/sd/sd_arena_manager.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_aa",
+    "name": "clothes_01_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_aa.glb",
+    "sidecar": "item/china/man_item/clothes_01_aa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_ba",
+    "name": "clothes_01_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_ba.glb",
+    "sidecar": "item/china/man_item/clothes_01_ba.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_fa",
+    "name": "clothes_01_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_fa.glb",
+    "sidecar": "item/china/man_item/clothes_01_fa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_ha",
+    "name": "clothes_01_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_ha.glb",
+    "sidecar": "item/china/man_item/clothes_01_ha.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_la",
+    "name": "clothes_01_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_la.glb",
+    "sidecar": "item/china/man_item/clothes_01_la.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_01_sa",
+    "name": "clothes_01_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_01_sa.glb",
+    "sidecar": "item/china/man_item/clothes_01_sa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_aa",
+    "name": "clothes_02_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_aa.glb",
+    "sidecar": "item/china/man_item/clothes_02_aa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_ba",
+    "name": "clothes_02_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_ba.glb",
+    "sidecar": "item/china/man_item/clothes_02_ba.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_fa",
+    "name": "clothes_02_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_fa.glb",
+    "sidecar": "item/china/man_item/clothes_02_fa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_ha",
+    "name": "clothes_02_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_ha.glb",
+    "sidecar": "item/china/man_item/clothes_02_ha.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_la",
+    "name": "clothes_02_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_la.glb",
+    "sidecar": "item/china/man_item/clothes_02_la.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_02_sa",
+    "name": "clothes_02_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_02_sa.glb",
+    "sidecar": "item/china/man_item/clothes_02_sa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_aa",
+    "name": "clothes_03_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_aa.glb",
+    "sidecar": "item/china/man_item/clothes_03_aa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_ba",
+    "name": "clothes_03_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_ba.glb",
+    "sidecar": "item/china/man_item/clothes_03_ba.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_fa",
+    "name": "clothes_03_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_fa.glb",
+    "sidecar": "item/china/man_item/clothes_03_fa.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_ha",
+    "name": "clothes_03_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_ha.glb",
+    "sidecar": "item/china/man_item/clothes_03_ha.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_la",
+    "name": "clothes_03_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_la.glb",
+    "sidecar": "item/china/man_item/clothes_03_la.json"
+  },
+  {
+    "id": "item/china/man_item/clothes_03_sa",
+    "name": "clothes_03_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/clothes_03_sa.glb",
+    "sidecar": "item/china/man_item/clothes_03_sa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_aa",
+    "name": "heavy_01_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_aa.glb",
+    "sidecar": "item/china/man_item/heavy_01_aa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_ba",
+    "name": "heavy_01_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_ba.glb",
+    "sidecar": "item/china/man_item/heavy_01_ba.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_fa",
+    "name": "heavy_01_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_fa.glb",
+    "sidecar": "item/china/man_item/heavy_01_fa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_ha",
+    "name": "heavy_01_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_ha.glb",
+    "sidecar": "item/china/man_item/heavy_01_ha.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_la",
+    "name": "heavy_01_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_la.glb",
+    "sidecar": "item/china/man_item/heavy_01_la.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_01_sa",
+    "name": "heavy_01_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_01_sa.glb",
+    "sidecar": "item/china/man_item/heavy_01_sa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_aa",
+    "name": "heavy_02_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_aa.glb",
+    "sidecar": "item/china/man_item/heavy_02_aa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_ba",
+    "name": "heavy_02_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_ba.glb",
+    "sidecar": "item/china/man_item/heavy_02_ba.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_fa",
+    "name": "heavy_02_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_fa.glb",
+    "sidecar": "item/china/man_item/heavy_02_fa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_ha",
+    "name": "heavy_02_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_ha.glb",
+    "sidecar": "item/china/man_item/heavy_02_ha.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_la",
+    "name": "heavy_02_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_la.glb",
+    "sidecar": "item/china/man_item/heavy_02_la.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_02_sa",
+    "name": "heavy_02_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_02_sa.glb",
+    "sidecar": "item/china/man_item/heavy_02_sa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_aa",
+    "name": "heavy_03_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_aa.glb",
+    "sidecar": "item/china/man_item/heavy_03_aa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_ba",
+    "name": "heavy_03_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_ba.glb",
+    "sidecar": "item/china/man_item/heavy_03_ba.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_fa",
+    "name": "heavy_03_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_fa.glb",
+    "sidecar": "item/china/man_item/heavy_03_fa.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_ha",
+    "name": "heavy_03_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_ha.glb",
+    "sidecar": "item/china/man_item/heavy_03_ha.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_la",
+    "name": "heavy_03_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_la.glb",
+    "sidecar": "item/china/man_item/heavy_03_la.json"
+  },
+  {
+    "id": "item/china/man_item/heavy_03_sa",
+    "name": "heavy_03_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/heavy_03_sa.glb",
+    "sidecar": "item/china/man_item/heavy_03_sa.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_aa",
+    "name": "light_01_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_aa.glb",
+    "sidecar": "item/china/man_item/light_01_aa.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_ba",
+    "name": "light_01_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_ba.glb",
+    "sidecar": "item/china/man_item/light_01_ba.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_fa",
+    "name": "light_01_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_fa.glb",
+    "sidecar": "item/china/man_item/light_01_fa.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_ha",
+    "name": "light_01_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_ha.glb",
+    "sidecar": "item/china/man_item/light_01_ha.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_la",
+    "name": "light_01_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_la.glb",
+    "sidecar": "item/china/man_item/light_01_la.json"
+  },
+  {
+    "id": "item/china/man_item/light_01_sa",
+    "name": "light_01_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_01_sa.glb",
+    "sidecar": "item/china/man_item/light_01_sa.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_aa",
+    "name": "light_02_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_aa.glb",
+    "sidecar": "item/china/man_item/light_02_aa.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_ba",
+    "name": "light_02_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_ba.glb",
+    "sidecar": "item/china/man_item/light_02_ba.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_fa",
+    "name": "light_02_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_fa.glb",
+    "sidecar": "item/china/man_item/light_02_fa.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_ha",
+    "name": "light_02_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_ha.glb",
+    "sidecar": "item/china/man_item/light_02_ha.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_la",
+    "name": "light_02_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_la.glb",
+    "sidecar": "item/china/man_item/light_02_la.json"
+  },
+  {
+    "id": "item/china/man_item/light_02_sa",
+    "name": "light_02_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_02_sa.glb",
+    "sidecar": "item/china/man_item/light_02_sa.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_aa",
+    "name": "light_03_aa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_aa.glb",
+    "sidecar": "item/china/man_item/light_03_aa.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_ba",
+    "name": "light_03_ba",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_ba.glb",
+    "sidecar": "item/china/man_item/light_03_ba.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_fa",
+    "name": "light_03_fa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_fa.glb",
+    "sidecar": "item/china/man_item/light_03_fa.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_ha",
+    "name": "light_03_ha",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_ha.glb",
+    "sidecar": "item/china/man_item/light_03_ha.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_la",
+    "name": "light_03_la",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_la.glb",
+    "sidecar": "item/china/man_item/light_03_la.json"
+  },
+  {
+    "id": "item/china/man_item/light_03_sa",
+    "name": "light_03_sa",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/light_03_sa.glb",
+    "sidecar": "item/china/man_item/light_03_sa.json"
+  },
+  {
+    "id": "item/china/shield/shield_01",
+    "name": "shield_01",
+    "category": "item/china/shield",
+    "glb": "item/china/shield/shield_01.glb",
+    "sidecar": "item/china/shield/shield_01.json"
+  },
+  {
+    "id": "item/china/shield/shield_02",
+    "name": "shield_02",
+    "category": "item/china/shield",
+    "glb": "item/china/shield/shield_02.glb",
+    "sidecar": "item/china/shield/shield_02.json"
+  },
+  {
+    "id": "item/china/shield/shield_03",
+    "name": "shield_03",
+    "category": "item/china/shield",
+    "glb": "item/china/shield/shield_03.glb",
+    "sidecar": "item/china/shield/shield_03.json"
+  },
+  {
+    "id": "item/china/weapon/blade_02",
+    "name": "blade_02",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/blade_02.glb",
+    "sidecar": "item/china/weapon/blade_02.json"
+  },
+  {
+    "id": "item/china/weapon/blade_03",
+    "name": "blade_03",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/blade_03.glb",
+    "sidecar": "item/china/weapon/blade_03.json"
+  },
+  {
+    "id": "item/china/weapon/bow_02",
+    "name": "bow_02",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/bow_02.glb",
+    "sidecar": "item/china/weapon/bow_02.json"
+  },
+  {
+    "id": "item/china/weapon/bow_03",
+    "name": "bow_03",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/bow_03.glb",
+    "sidecar": "item/china/weapon/bow_03.json"
+  },
+  {
+    "id": "item/china/weapon/spear_02",
+    "name": "spear_02",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/spear_02.glb",
+    "sidecar": "item/china/weapon/spear_02.json"
+  },
+  {
+    "id": "item/china/weapon/spear_03",
+    "name": "spear_03",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/spear_03.glb",
+    "sidecar": "item/china/weapon/spear_03.json"
+  },
+  {
+    "id": "item/china/weapon/sword_02",
+    "name": "sword_02",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/sword_02.glb",
+    "sidecar": "item/china/weapon/sword_02.json"
+  },
+  {
+    "id": "item/china/weapon/sword_03",
+    "name": "sword_03",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/sword_03.glb",
+    "sidecar": "item/china/weapon/sword_03.json"
+  },
+  {
+    "id": "item/china/weapon/tblade_02",
+    "name": "tblade_02",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/tblade_02.glb",
+    "sidecar": "item/china/weapon/tblade_02.json"
+  },
+  {
+    "id": "item/china/weapon/tblade_03",
+    "name": "tblade_03",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/tblade_03.glb",
+    "sidecar": "item/china/weapon/tblade_03.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_aa",
+    "name": "clothes_01_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_aa.glb",
+    "sidecar": "item/china/woman_item/clothes_01_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_ba",
+    "name": "clothes_01_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_ba.glb",
+    "sidecar": "item/china/woman_item/clothes_01_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_fa",
+    "name": "clothes_01_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_fa.glb",
+    "sidecar": "item/china/woman_item/clothes_01_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_ha",
+    "name": "clothes_01_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_ha.glb",
+    "sidecar": "item/china/woman_item/clothes_01_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_la",
+    "name": "clothes_01_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_la.glb",
+    "sidecar": "item/china/woman_item/clothes_01_la.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_01_sa",
+    "name": "clothes_01_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_01_sa.glb",
+    "sidecar": "item/china/woman_item/clothes_01_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_aa",
+    "name": "clothes_02_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_aa.glb",
+    "sidecar": "item/china/woman_item/clothes_02_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_ba",
+    "name": "clothes_02_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_ba.glb",
+    "sidecar": "item/china/woman_item/clothes_02_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_fa",
+    "name": "clothes_02_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_fa.glb",
+    "sidecar": "item/china/woman_item/clothes_02_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_ha",
+    "name": "clothes_02_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_ha.glb",
+    "sidecar": "item/china/woman_item/clothes_02_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_la",
+    "name": "clothes_02_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_la.glb",
+    "sidecar": "item/china/woman_item/clothes_02_la.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_02_sa",
+    "name": "clothes_02_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_02_sa.glb",
+    "sidecar": "item/china/woman_item/clothes_02_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_aa",
+    "name": "clothes_03_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_aa.glb",
+    "sidecar": "item/china/woman_item/clothes_03_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_ba",
+    "name": "clothes_03_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_ba.glb",
+    "sidecar": "item/china/woman_item/clothes_03_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_fa",
+    "name": "clothes_03_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_fa.glb",
+    "sidecar": "item/china/woman_item/clothes_03_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_ha",
+    "name": "clothes_03_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_ha.glb",
+    "sidecar": "item/china/woman_item/clothes_03_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_la",
+    "name": "clothes_03_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_la.glb",
+    "sidecar": "item/china/woman_item/clothes_03_la.json"
+  },
+  {
+    "id": "item/china/woman_item/clothes_03_sa",
+    "name": "clothes_03_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/clothes_03_sa.glb",
+    "sidecar": "item/china/woman_item/clothes_03_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_aa",
+    "name": "heavy_01_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_aa.glb",
+    "sidecar": "item/china/woman_item/heavy_01_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_ba",
+    "name": "heavy_01_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_ba.glb",
+    "sidecar": "item/china/woman_item/heavy_01_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_fa",
+    "name": "heavy_01_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_fa.glb",
+    "sidecar": "item/china/woman_item/heavy_01_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_ha",
+    "name": "heavy_01_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_ha.glb",
+    "sidecar": "item/china/woman_item/heavy_01_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_la",
+    "name": "heavy_01_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_la.glb",
+    "sidecar": "item/china/woman_item/heavy_01_la.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_01_sa",
+    "name": "heavy_01_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_01_sa.glb",
+    "sidecar": "item/china/woman_item/heavy_01_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_aa",
+    "name": "heavy_02_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_aa.glb",
+    "sidecar": "item/china/woman_item/heavy_02_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_ba",
+    "name": "heavy_02_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_ba.glb",
+    "sidecar": "item/china/woman_item/heavy_02_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_fa",
+    "name": "heavy_02_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_fa.glb",
+    "sidecar": "item/china/woman_item/heavy_02_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_ha",
+    "name": "heavy_02_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_ha.glb",
+    "sidecar": "item/china/woman_item/heavy_02_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_la",
+    "name": "heavy_02_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_la.glb",
+    "sidecar": "item/china/woman_item/heavy_02_la.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_02_sa",
+    "name": "heavy_02_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_02_sa.glb",
+    "sidecar": "item/china/woman_item/heavy_02_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_aa",
+    "name": "heavy_03_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_aa.glb",
+    "sidecar": "item/china/woman_item/heavy_03_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_ba",
+    "name": "heavy_03_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_ba.glb",
+    "sidecar": "item/china/woman_item/heavy_03_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_fa",
+    "name": "heavy_03_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_fa.glb",
+    "sidecar": "item/china/woman_item/heavy_03_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_ha",
+    "name": "heavy_03_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_ha.glb",
+    "sidecar": "item/china/woman_item/heavy_03_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_la",
+    "name": "heavy_03_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_la.glb",
+    "sidecar": "item/china/woman_item/heavy_03_la.json"
+  },
+  {
+    "id": "item/china/woman_item/heavy_03_sa",
+    "name": "heavy_03_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/heavy_03_sa.glb",
+    "sidecar": "item/china/woman_item/heavy_03_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_aa",
+    "name": "light_01_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_aa.glb",
+    "sidecar": "item/china/woman_item/light_01_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_ba",
+    "name": "light_01_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_ba.glb",
+    "sidecar": "item/china/woman_item/light_01_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_fa",
+    "name": "light_01_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_fa.glb",
+    "sidecar": "item/china/woman_item/light_01_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_ha",
+    "name": "light_01_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_ha.glb",
+    "sidecar": "item/china/woman_item/light_01_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_la",
+    "name": "light_01_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_la.glb",
+    "sidecar": "item/china/woman_item/light_01_la.json"
+  },
+  {
+    "id": "item/china/woman_item/light_01_sa",
+    "name": "light_01_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_01_sa.glb",
+    "sidecar": "item/china/woman_item/light_01_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_aa",
+    "name": "light_02_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_aa.glb",
+    "sidecar": "item/china/woman_item/light_02_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_ba",
+    "name": "light_02_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_ba.glb",
+    "sidecar": "item/china/woman_item/light_02_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_fa",
+    "name": "light_02_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_fa.glb",
+    "sidecar": "item/china/woman_item/light_02_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_ha",
+    "name": "light_02_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_ha.glb",
+    "sidecar": "item/china/woman_item/light_02_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_la",
+    "name": "light_02_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_la.glb",
+    "sidecar": "item/china/woman_item/light_02_la.json"
+  },
+  {
+    "id": "item/china/woman_item/light_02_sa",
+    "name": "light_02_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_02_sa.glb",
+    "sidecar": "item/china/woman_item/light_02_sa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_aa",
+    "name": "light_03_aa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_aa.glb",
+    "sidecar": "item/china/woman_item/light_03_aa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_ba",
+    "name": "light_03_ba",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_ba.glb",
+    "sidecar": "item/china/woman_item/light_03_ba.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_fa",
+    "name": "light_03_fa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_fa.glb",
+    "sidecar": "item/china/woman_item/light_03_fa.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_ha",
+    "name": "light_03_ha",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_ha.glb",
+    "sidecar": "item/china/woman_item/light_03_ha.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_la",
+    "name": "light_03_la",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_la.glb",
+    "sidecar": "item/china/woman_item/light_03_la.json"
+  },
+  {
+    "id": "item/china/woman_item/light_03_sa",
+    "name": "light_03_sa",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/light_03_sa.glb",
+    "sidecar": "item/china/woman_item/light_03_sa.json"
+  },
+  {
+    "id": "item/etc/drop_ch_acc",
+    "name": "drop_ch_acc",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_acc.glb",
+    "sidecar": "item/etc/drop_ch_acc.json"
+  },
+  {
+    "id": "item/etc/drop_ch_bag",
+    "name": "drop_ch_bag",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_bag.glb",
+    "sidecar": "item/etc/drop_ch_bag.json"
+  },
+  {
+    "id": "item/etc/drop_ch_equip",
+    "name": "drop_ch_equip",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_equip.glb",
+    "sidecar": "item/etc/drop_ch_equip.json"
+  },
+  {
+    "id": "item/etc/drop_ch_money_large",
+    "name": "drop_ch_money_large",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_money_large.glb",
+    "sidecar": "item/etc/drop_ch_money_large.json"
+  },
+  {
+    "id": "item/etc/drop_ch_money_normal",
+    "name": "drop_ch_money_normal",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_money_normal.glb",
+    "sidecar": "item/etc/drop_ch_money_normal.json"
+  },
+  {
+    "id": "item/etc/drop_ch_money_small",
+    "name": "drop_ch_money_small",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_money_small.glb",
+    "sidecar": "item/etc/drop_ch_money_small.json"
+  },
+  {
+    "id": "item/etc/drop_scroll",
+    "name": "drop_scroll",
+    "category": "item/etc",
+    "glb": "item/etc/drop_scroll.glb",
+    "sidecar": "item/etc/drop_scroll.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_normal",
+    "name": "cha_arrow_normal",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_normal.glb",
+    "sidecar": "item/china/weapon/cha_arrow_normal.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_cold",
+    "name": "cha_arrow_cold",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_cold.glb",
+    "sidecar": "item/china/weapon/cha_arrow_cold.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_fire",
+    "name": "cha_arrow_fire",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_fire.glb",
+    "sidecar": "item/china/weapon/cha_arrow_fire.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_lighting",
+    "name": "cha_arrow_lighting",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_lighting.glb",
+    "sidecar": "item/china/weapon/cha_arrow_lighting.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_critical",
+    "name": "cha_arrow_critical",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_critical.glb",
+    "sidecar": "item/china/weapon/cha_arrow_critical.json"
+  },
+  {
+    "id": "item/china/weapon/cha_arrow_chain",
+    "name": "cha_arrow_chain",
+    "category": "item/china/weapon",
+    "glb": "item/china/weapon/cha_arrow_chain.glb",
+    "sidecar": "item/china/weapon/cha_arrow_chain.json"
+  },
+  {
+    "id": "mob/china/banditarcher_arrow",
+    "name": "banditarcher_arrow",
+    "category": "mob/china",
+    "glb": "mob/china/banditarcher_arrow.glb",
+    "sidecar": "mob/china/banditarcher_arrow.json"
+  },
+  {
+    "id": "npc/animal/whitehawk",
+    "name": "whitehawk",
+    "category": "npc/animal",
+    "glb": "npc/animal/whitehawk.glb",
+    "sidecar": "npc/animal/whitehawk.json"
+  },
+  {
+    "id": "item/etc/drop_ch_quest",
+    "name": "drop_ch_quest",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_quest.glb",
+    "sidecar": "item/etc/drop_ch_quest.json"
+  },
+  {
+    "id": "item/etc/drop_ch_equip_rare",
+    "name": "drop_ch_equip_rare",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_equip_rare.glb",
+    "sidecar": "item/etc/drop_ch_equip_rare.json"
+  },
+  {
+    "id": "item/etc/drop_ch_acc_rare",
+    "name": "drop_ch_acc_rare",
+    "category": "item/etc",
+    "glb": "item/etc/drop_ch_acc_rare.glb",
+    "sidecar": "item/etc/drop_ch_acc_rare.json"
+  },
+  {
+    "id": "item/etc/drop_archemy",
+    "name": "drop_archemy",
+    "category": "item/etc",
+    "glb": "item/etc/drop_archemy.glb",
+    "sidecar": "item/etc/drop_archemy.json"
+  },
+  {
+    "id": "item/etc/drop_archemy_1",
+    "name": "drop_archemy_1",
+    "category": "item/etc",
+    "glb": "item/etc/drop_archemy_1.glb",
+    "sidecar": "item/etc/drop_archemy_1.json"
+  },
+  {
+    "id": "item/etc/drop_archemy_bag",
+    "name": "drop_archemy_bag",
+    "category": "item/etc",
+    "glb": "item/etc/drop_archemy_bag.glb",
+    "sidecar": "item/etc/drop_archemy_bag.json"
+  },
+  {
+    "id": "item/etc/drop_trade",
+    "name": "drop_trade",
+    "category": "item/etc",
+    "glb": "item/etc/drop_trade.glb",
+    "sidecar": "item/etc/drop_trade.json"
+  },
+  {
+    "id": "mob/common/mangnyang_die",
+    "name": "mangnyang_die",
+    "category": "mob/common",
+    "glb": "mob/common/mangnyang_die.glb",
+    "sidecar": "mob/common/mangnyang_die.json"
+  },
+  {
+    "id": "mob/common/tombstone_die",
+    "name": "tombstone_die",
+    "category": "mob/common",
+    "glb": "mob/common/tombstone_die.glb",
+    "sidecar": "mob/common/tombstone_die.json"
+  },
+  {
+    "id": "mob/china/bluetiger",
+    "name": "bluetiger",
+    "category": "mob/china",
+    "glb": "mob/china/bluetiger.glb",
+    "sidecar": "mob/china/bluetiger.json"
+  },
+  {
+    "id": "cos/c_horse1",
+    "name": "c_horse1",
+    "category": "cos",
+    "glb": "cos/c_horse1.glb",
+    "sidecar": "cos/c_horse1.json"
+  },
+  {
+    "id": "item/etc/drop_reinforce_recipe",
+    "name": "drop_reinforce_recipe",
+    "category": "item/etc",
+    "glb": "item/etc/drop_reinforce_recipe.glb",
+    "sidecar": "item/etc/drop_reinforce_recipe.json"
+  },
+  {
+    "id": "item/etc/drop_reinforce_prob_up",
+    "name": "drop_reinforce_prob_up",
+    "category": "item/etc",
+    "glb": "item/etc/drop_reinforce_prob_up.glb",
+    "sidecar": "item/etc/drop_reinforce_prob_up.json"
+  },
+  {
+    "id": "char/china/chinaman_hwan_hair",
+    "name": "chinaman_hwan_hair",
+    "category": "char/china",
+    "glb": "char/china/chinaman_hwan_hair.glb",
+    "sidecar": "char/china/chinaman_hwan_hair.json"
+  },
+  {
+    "id": "char/china/chinawoman_hwan_hair",
+    "name": "chinawoman_hwan_hair",
+    "category": "char/china",
+    "glb": "char/china/chinawoman_hwan_hair.glb",
+    "sidecar": "char/china/chinawoman_hwan_hair.json"
+  }
+]

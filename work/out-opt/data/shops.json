@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "kind": "shops",
+  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "sources": [
+    "client:refshopgroup.txt",
+    "client:refmappingshopgroup.txt",
+    "client:refmappingshopwithtab.txt",
+    "client:refshoptab.txt",
+    "client:refshopgoods.txt",
+    "client:refscrapofpackageitem.txt"
+  ],
+  "entries": [
+    {
+      "id": "STORE_CH_ACCESSORY",
+      "npcs": [
+        "NPC_CH_ACCESSORY"
+      ],
+      "tabs": [
+        {
+          "name": "Accessory",
+          "items": [
+            "ITEM_CH_RING_01_A",
+            "ITEM_CH_RING_02_A",
+            "ITEM_CH_RING_03_A",
+            "ITEM_CH_EARRING_01_A",
+            "ITEM_CH_EARRING_02_A",
+            "ITEM_CH_EARRING_03_A",
+            "ITEM_CH_NECKLACE_01_A",
+            "ITEM_CH_NECKLACE_02_A",
+            "ITEM_CH_NECKLACE_03_A"
+          ]
+        },
+        {
+          "name": "Goods",
+          "items": [
+            "ITEM_ETC_SCROLL_RETURN_01",
+            "ITEM_ETC_SCROLL_RETURN_02"
+          ]
+        },
+        {
+          "name": "Alchemy",
+          "items": [
+            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01",
+            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02",
+            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03"
+          ]
+        }
+      ],
+      "provenance": "client"
+    },
+    {
+      "id": "STORE_CH_ARMOR",
+      "npcs": [
+        "NPC_CH_ARMOR"
+      ],
+      "tabs": [
+        {
+          "name": "Armor",
+          "items": [
+            "ITEM_CH_M_HEAVY_01_CA_A",
+            "ITEM_CH_M_HEAVY_02_CA_A",
+            "ITEM_CH_M_HEAVY_03_CA_A",
+            "ITEM_CH_M_HEAVY_01_SA_A",
+            "ITEM_CH_M_HEAVY_02_SA_A",
+            "ITEM_CH_M_HEAVY_03_SA_A",
+            "ITEM_CH_M_HEAVY_01_BA_A",
+            "ITEM_CH_M_HEAVY_02_BA_A",
+            "ITEM_CH_M_HEAVY_03_BA_A",
+            "ITEM_CH_M_HEAVY_01_LA_A",
+            "ITEM_CH_M_HEAVY_02_LA_A",
+            "ITEM_CH_M_HEAVY_03_LA_A",
+            "ITEM_CH_M_HEAVY_01_AA_A",
+            "ITEM_CH_M_HEAVY_02_AA_A",
+            "ITEM_CH_M_HEAVY_03_AA_A",
+            "ITEM_CH_M_HEAVY_01_FA_A",
+            "ITEM_CH_M_HEAVY_02_FA_A",
+            "ITEM_CH_M_HEAVY_03_FA_A"
+          ],
+          "reqGender": "male"
+        },
+        {
+          "name": "Protector",
+          "items": [
+            "ITEM_CH_M_LIGHT_01_CA_A",
+            "ITEM_CH_M_LIGHT_02_CA_A",
+            "ITEM_CH_M_LIGHT_03_CA_A",
+            "ITEM_CH_M_LIGHT_01_SA_A",
+            "ITEM_CH_M_LIGHT_02_SA_A",
+            "ITEM_CH_M_LIGHT_03_SA_A",
+            "ITEM_CH_M_LIGHT_01_BA_A",
+            "ITEM_CH_M_LIGHT_02_BA_A",
+            "ITEM_CH_M_LIGHT_03_BA_A",
+            "ITEM_CH_M_LIGHT_01_LA_A",
+            "ITEM_CH_M_LIGHT_02_LA_A",
+            "ITEM_CH_M_LIGHT_03_LA_A",
+            "ITEM_CH_M_LIGHT_01_AA_A",
+            "ITEM_CH_M_LIGHT_02_AA_A",
+            "ITEM_CH_M_LIGHT_03_AA_A",
+            "ITEM_CH_M_LIGHT_01_FA_A",
+            "ITEM_CH_M_LIGHT_02_FA_A",
+            "ITEM_CH_M_LIGHT_03_FA_A"
+          ],
+          "reqGender": "male"
+        },
+        {
+          "name": "Garment",
+          "items": [
+            "ITEM_CH_M_CLOTHES_01_CA_A",
+            "ITEM_CH_M_CLOTHES_02_CA_A",
+            "ITEM_CH_M_CLOTHES_03_CA_A",
+            "ITEM_CH_M_CLOTHES_01_SA_A",
+            "ITEM_CH_M_CLOTHES_02_SA_A",
+            "ITEM_CH_M_CLOTHES_03_SA_A",
+            "ITEM_CH_M_CLOTHES_01_BA_A",
+            "ITEM_CH_M_CLOTHES_02_BA_A",
+            "ITEM_CH_M_CLOTHES_03_BA_A",
+            "ITEM_CH_M_CLOTHES_01_LA_A",
+            "ITEM_CH_M_CLOTHES_02_LA_A",
+            "ITEM_CH_M_CLOTHES_03_LA_A",
+            "ITEM_CH_M_CLOTHES_01_AA_A",
+            "ITEM_CH_M_CLOTHES_02_AA_A",
+            "ITEM_CH_M_CLOTHES_03_AA_A",
+            "ITEM_CH_M_CLOTHES_01_FA_A",
+            "ITEM_CH_M_CLOTHES_02_FA_A",
+            "ITEM_CH_M_CLOTHES_03_FA_A"
+          ],
+          "reqGender": "male"
+        },
+        {
+          "name": "Armor",
+          "items": [
+            "ITEM_CH_W_HEAVY_01_CA_A",
+            "ITEM_CH_W_HEAVY_02_CA_A",
+            "ITEM_CH_W_HEAVY_03_CA_A",
+            "ITEM_CH_W_HEAVY_01_SA_A",
+            "ITEM_CH_W_HEAVY_02_SA_A",
+            "ITEM_CH_W_HEAVY_03_SA_A",
+            "ITEM_CH_W_HEAVY_01_BA_A",
+            "ITEM_CH_W_HEAVY_02_BA_A",
+            "ITEM_CH_W_HEAVY_03_BA_A",
+            "ITEM_CH_W_HEAVY_01_LA_A",
+            "ITEM_CH_W_HEAVY_02_LA_A",
+            "ITEM_CH_W_HEAVY_03_LA_A",
+            "ITEM_CH_W_HEAVY_01_AA_A",
+            "ITEM_CH_W_HEAVY_02_AA_A",
+            "ITEM_CH_W_HEAVY_03_AA_A",
+            "ITEM_CH_W_HEAVY_01_FA_A",
+            "ITEM_CH_W_HEAVY_02_FA_A",
+            "ITEM_CH_W_HEAVY_03_FA_A"
+          ],
+          "reqGender": "female"
+        },
+        {
+          "name": "Protector",
+          "items": [
+            "ITEM_CH_W_LIGHT_01_CA_A",
+            "ITEM_CH_W_LIGHT_02_CA_A",
+            "ITEM_CH_W_LIGHT_03_CA_A",
+            "ITEM_CH_W_LIGHT_01_SA_A",
+            "ITEM_CH_W_LIGHT_02_SA_A",
+            "ITEM_CH_W_LIGHT_03_SA_A",
+            "ITEM_CH_W_LIGHT_01_BA_A",
+            "ITEM_CH_W_LIGHT_02_BA_A",
+            "ITEM_CH_W_LIGHT_03_BA_A",
+            "ITEM_CH_W_LIGHT_01_LA_A",
+            "ITEM_CH_W_LIGHT_02_LA_A",
+            "ITEM_CH_W_LIGHT_03_LA_A",
+            "ITEM_CH_W_LIGHT_01_AA_A",
+            "ITEM_CH_W_LIGHT_02_AA_A",
+            "ITEM_CH_W_LIGHT_03_AA_A",
+            "ITEM_CH_W_LIGHT_01_FA_A",
+            "ITEM_CH_W_LIGHT_02_FA_A",
+            "ITEM_CH_W_LIGHT_03_FA_A"
+          ],
+          "reqGender": "female"
+        },
+        {
+          "name": "Garment",
+          "items": [
+            "ITEM_CH_W_CLOTHES_01_CA_A",
+            "ITEM_CH_W_CLOTHES_02_CA_A",
+            "ITEM_CH_W_CLOTHES_03_CA_A",
+            "ITEM_CH_W_CLOTHES_01_SA_A",
+            "ITEM_CH_W_CLOTHES_02_SA_A",
+            "ITEM_CH_W_CLOTHES_03_SA_A",
+            "ITEM_CH_W_CLOTHES_01_BA_A",
+            "ITEM_CH_W_CLOTHES_02_BA_A",
+            "ITEM_CH_W_CLOTHES_03_BA_A",
+            "ITEM_CH_W_CLOTHES_01_LA_A",
+            "ITEM_CH_W_CLOTHES_02_LA_A",
+            "ITEM_CH_W_CLOTHES_03_LA_A",
+            "ITEM_CH_W_CLOTHES_01_AA_A",
+            "ITEM_CH_W_CLOTHES_02_AA_A",
+            "ITEM_CH_W_CLOTHES_03_AA_A",
+            "ITEM_CH_W_CLOTHES_01_FA_A",
+            "ITEM_CH_W_CLOTHES_02_FA_A",
+            "ITEM_CH_W_CLOTHES_03_FA_A"
+          ],
+          "reqGender": "female"
+        }
+      ],
+      "provenance": "client"
+    },
+    {
+      "id": "STORE_CH_POTION",
+      "npcs": [
+        "NPC_CH_POTION"
+      ],
+      "tabs": [
+        {
+          "name": "Potion",
+          "items": [
+            "ITEM_ETC_HP_POTION_01",
+            "ITEM_ETC_HP_POTION_02",
+            "ITEM_ETC_HP_POTION_03",
+            "ITEM_ETC_HP_POTION_04",
+            "ITEM_ETC_HP_POTION_05",
+            "ITEM_ETC_MP_POTION_01",
+            "ITEM_ETC_MP_POTION_02",
+            "ITEM_ETC_MP_POTION_03",
+            "ITEM_ETC_MP_POTION_04",
+            "ITEM_ETC_MP_POTION_05",
+            "ITEM_ETC_CURE_ALL_01",
+            "ITEM_ETC_CURE_ALL_02",
+            "ITEM_ETC_CURE_ALL_03",
+            "ITEM_ETC_CURE_ALL_04",
+            "ITEM_ETC_CURE_ALL_05"
+          ]
+        }
+      ],
+      "provenance": "client"
+    },
+    {
+      "id": "STORE_CH_SMITH",
+      "npcs": [
+        "NPC_CH_SMITH"
+      ],
+      "tabs": [
+        {
+          "name": "Weapon",
+          "items": [
+            "ITEM_CH_SWORD_01_A",
+            "ITEM_CH_SWORD_02_A",
+            "ITEM_CH_SWORD_03_A",
+            "ITEM_CH_BLADE_01_A",
+            "ITEM_CH_BLADE_02_A",
+            "ITEM_CH_BLADE_03_A",
+            "ITEM_CH_SPEAR_01_A",
+            "ITEM_CH_SPEAR_02_A",
+            "ITEM_CH_SPEAR_03_A",
+            "ITEM_CH_TBLADE_01_A",
+            "ITEM_CH_TBLADE_02_A",
+            "ITEM_CH_TBLADE_03_A",
+            "ITEM_CH_BOW_01_A",
+            "ITEM_CH_BOW_02_A",
+            "ITEM_CH_BOW_03_A"
+          ]
+        },
+        {
+          "name": "Shield",
+          "items": [
+            "ITEM_CH_SHIELD_01_A",
+            "ITEM_CH_SHIELD_02_A",
+            "ITEM_CH_SHIELD_03_A"
+          ]
+        },
+        {
+          "name": "Goods",
+          "items": [
+            "ITEM_ETC_AMMO_ARROW_01"
+          ]
+        }
+      ],
+      "provenance": "client"
+    },
+    {
+      "id": "STORE_CH_STABLE",
+      "npcs": [
+        "NPC_CH_HORSE"
+      ],
+      "tabs": [
+        {
+          "name": "Vehicle",
+          "items": [
+            "ITEM_COS_C_HORSE1"
+          ]
+        },
+        {
+          "name": "Pill potion",
+          "items": [
+            "ITEM_ETC_COS_HP_POTION_01",
+            "ITEM_ETC_COS_HP_POTION_02",
+            "ITEM_ETC_COS_HP_POTION_03"
+          ]
+        }
+      ],
+      "provenance": "client"
+    }
+  ]
+}

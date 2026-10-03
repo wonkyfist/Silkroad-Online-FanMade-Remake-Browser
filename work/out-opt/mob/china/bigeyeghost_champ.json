@@ -1,0 +1,526 @@
+{
+  "source": "res/mob/china/bigeyeghost_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "bigeye_ghost",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\bigeye_ghost.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Spine2",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bone01",
+      "Bone02",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.4319842079355567e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "Bigeye_Ghost_part2"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "Bigeye_Ghost_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "bigeye_ghost",
+      "bmt": "prim\\mtrl\\mob\\china\\bigeye_ghost_champ.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\bigeyeghost_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Bigeye_Ghost_part1",
+      "bms": "prim\\mesh\\mob\\china\\bigeye_ghost_part1.bms",
+      "material": "Bigeye_Ghost",
+      "vertices": 513,
+      "triangles": 717,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bone01",
+        "Bip01 Spine2",
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Forearm",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    },
+    {
+      "name": "Bigeye_Ghost_part2",
+      "bms": "prim\\mesh\\mob\\china\\bigeye_ghost_part2.bms",
+      "material": "Bigeye_Ghost",
+      "vertices": 225,
+      "triangles": 287,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger2",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 L Hand",
+        "Bip01 L Forearm",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_stand01.ban",
+      "banName": "bigeye_ghost_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_walk.ban",
+      "banName": "bigeye_ghost_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 30,
+      "walkLength": 17,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_attack01.ban",
+      "banName": "bigeye_ghost_attack01",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 467,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_damage01.ban",
+      "banName": "bigeye_ghost_damage01",
+      "durationMs": 400,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 6,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_die.ban",
+      "banName": "bigeye_ghost_die",
+      "durationMs": 933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_attack02.ban",
+      "banName": "bigeye_ghost_attack02",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 588,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 37
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_stand02.ban",
+      "banName": "bigeye_ghost_stand02",
+      "durationMs": 3666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_run.ban",
+      "banName": "bigeye_ghost_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 35.007999420166016,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_damage02.ban",
+      "banName": "bigeye_ghost_damage02",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_die_loop.ban",
+      "banName": "bigeye_ghost_die_loop",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_down.ban",
+      "banName": "bigeye_ghost_down",
+      "durationMs": 933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_downwait.ban",
+      "banName": "bigeye_ghost_downwait",
+      "durationMs": 1300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 40,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_downdamage.ban",
+      "banName": "bigeye_ghost_downdamage",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_wakeup.ban",
+      "banName": "bigeye_ghost_wakeup",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\bigeye_ghost\\bigeye_ghost_downdie.ban",
+      "banName": "bigeye_ghost_downdie",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    }
+  ],
+  "stats": {
+    "vertices": 738,
+    "triangles": 1004,
+    "joints": 38,
+    "meshes": 2,
+    "animations": 15,
+    "textures": 1,
+    "heightM": 1.518541006516898,
+    "boundsMin": [
+      -1.5355513095855713,
+      0.00037381224683485925,
+      -0.44100433588027954
+    ],
+    "boundsMax": [
+      1.5355494022369385,
+      1.518914818763733,
+      0.44038325548171997
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "bigeye_ghost",
+    "packs": {
+      "default": "mob/_anims/bigeye_ghost/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "bigeye_ghost_stand01"
+      ],
+      "WALK": [
+        "default",
+        "bigeye_ghost_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "bigeye_ghost_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "bigeye_ghost_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "bigeye_ghost_die"
+      ],
+      "ATTACK2": [
+        "default",
+        "bigeye_ghost_attack02"
+      ],
+      "ATTREADY": [
+        "default",
+        "bigeye_ghost_stand02"
+      ],
+      "RUN": [
+        "default",
+        "bigeye_ghost_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "bigeye_ghost_damage02"
+      ],
+      "DIE1_RM": [
+        "default",
+        "bigeye_ghost_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "bigeye_ghost_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "bigeye_ghost_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "bigeye_ghost_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "bigeye_ghost_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "bigeye_ghost_downdie"
+      ]
+    }
+  }
+}

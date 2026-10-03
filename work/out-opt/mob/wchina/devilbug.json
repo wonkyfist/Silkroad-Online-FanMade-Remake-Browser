@@ -1,0 +1,630 @@
+{
+  "source": "res/mob/wchina/devilbug.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "devilbug",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\devilbug.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L ForeArm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R ForeArm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "Bip01 Tail3",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.274972015329894e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        0,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        0,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        0,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        1.29555,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        1.29555,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        -0.00164,
+        0,
+        -0.00321
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "DevilBug",
+      "bmt": "prim\\mtrl\\mob\\china\\devilbug.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\devilbug.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.5% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "DevilBug_2side",
+      "bmt": "prim\\mtrl\\mob\\china\\devilbug.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\devilbug.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "devilbug",
+      "bms": "prim\\mesh\\mob\\china\\devilbug.bms",
+      "material": "DevilBug",
+      "vertices": 475,
+      "triangles": 622,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Spine",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Ponytail1",
+        "Bip01 Tail2",
+        "Bip01 Tail3",
+        "Bip01 R UpperArm",
+        "Bip01 R ForeArm",
+        "Bip01 L ForeArm",
+        "Bip01 L UpperArm"
+      ]
+    },
+    {
+      "name": "devilbug_wing",
+      "bms": "prim\\mesh\\mob\\china\\devilbug_wing.bms",
+      "material": "DevilBug_2side",
+      "vertices": 36,
+      "triangles": 36,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bone01",
+        "Bip01 L Calf",
+        "Bip01 L Thigh"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_stand01.ban",
+      "banName": "devilbug_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_walk.ban",
+      "banName": "devilbug_walk",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 133.3000030517578,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_attack01.ban",
+      "banName": "devilbug_attack01",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 832,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_damage01.ban",
+      "banName": "devilbug_damage01",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 17,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_die.ban",
+      "banName": "devilbug_die",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 39,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_attack01.ban",
+      "banName": "devilbug_attack01",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 729,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 32
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_run.ban",
+      "banName": "devilbug_run",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 100,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_damage02.ban",
+      "banName": "devilbug_damage02",
+      "durationMs": 700,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_die_loop.ban",
+      "banName": "devilbug_die_loop",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_down.ban",
+      "banName": "devilbug_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 42,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_downwait.ban",
+      "banName": "devilbug_downwait",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_downdamage.ban",
+      "banName": "devilbug_downdamage",
+      "durationMs": 400,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_wakeup.ban",
+      "banName": "devilbug_wakeup",
+      "durationMs": 933,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_downdie.ban",
+      "banName": "devilbug_downdie",
+      "durationMs": 200,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_stand01.ban",
+      "banName": "devilbug_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\mob\\china\\devilbug\\devilbug_stand02.ban",
+      "banName": "devilbug_stand02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 68,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 32
+    }
+  ],
+  "stats": {
+    "vertices": 511,
+    "triangles": 658,
+    "joints": 33,
+    "meshes": 2,
+    "animations": 16,
+    "textures": 1,
+    "heightM": 1.3799536228179932,
+    "boundsMin": [
+      -0.9429399371147156,
+      1.0180532932281494,
+      -0.3094785213470459
+    ],
+    "boundsMax": [
+      0.9463003277778625,
+      2.3980069160461426,
+      0.3787039816379547
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "devilbug",
+    "packs": {
+      "default": "mob/_anims/devilbug/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "devilbug_stand01"
+      ],
+      "WALK": [
+        "default",
+        "devilbug_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "devilbug_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "devilbug_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "devilbug_die"
+      ],
+      "ATTACK2": [
+        "default",
+        "devilbug_attack01"
+      ],
+      "RUN": [
+        "default",
+        "devilbug_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "devilbug_damage02"
+      ],
+      "DIE1_RM": [
+        "default",
+        "devilbug_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "devilbug_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "devilbug_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "devilbug_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "devilbug_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "devilbug_downdie"
+      ],
+      "STUN": [
+        "default",
+        "devilbug_stand01"
+      ],
+      "STAND2": [
+        "default",
+        "devilbug_stand02"
+      ]
+    }
+  }
+}

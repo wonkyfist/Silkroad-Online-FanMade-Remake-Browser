@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "kind": "cos",
+  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "sources": [
+    "client:characterdata.txt",
+    "client:itemdata.txt (summon items)",
+    "client:textdataname.txt"
+  ],
+  "entries": [
+    {
+      "code": "COS_C_HORSE1",
+      "id": 2191,
+      "name": "Red Horse",
+      "level": 20,
+      "hp": 983,
+      "walkSpeed": 4.5,
+      "runSpeed": 9,
+      "radius": 1.2,
+      "physAbsorb": 20,
+      "magAbsorb": 20,
+      "parryRate": 65,
+      "hitRate": 65,
+      "model": {
+        "bsr": "res/cos/c_horse1.bsr",
+        "glb": "/out/cos/c_horse1.glb",
+        "sidecar": "/out/cos/c_horse1.json"
+      },
+      "icon": "/out/icon/cos/cos_c_horse1.png",
+      "fieldSources": {
+        "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
+        "runSpeed": "client characterdata Speed2 (col 47) x 0.1",
+        "radius": "client characterdata BCRadius (col 50) x 0.1"
+      }
+    }
+  ]
+}

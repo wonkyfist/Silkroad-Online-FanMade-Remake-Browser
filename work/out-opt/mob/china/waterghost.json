@@ -1,0 +1,698 @@
+{
+  "source": "res/mob/china/waterghost.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "waterghost",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\waterghost.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 L Toe1",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 R Toe1",
+      "Bip01 Spine1",
+      "Bip01 Spine2",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bone01",
+      "Bone02",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "bone_smoke"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 4.11127544341916e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "WaterGhost_bottle",
+      "bmt": "prim\\mtrl\\mob\\china\\waterghost.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\waterghost_bottle.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "WaterGhost",
+      "bmt": "prim\\mtrl\\mob\\china\\waterghost.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\waterghost.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "WaterGhost_bottle",
+      "bms": "prim\\mesh\\mob\\china\\waterghost_bottle.bms",
+      "material": "WaterGhost_bottle",
+      "vertices": 64,
+      "triangles": 102,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "WaterGhost_part1",
+      "bms": "prim\\mesh\\mob\\china\\waterghost_part1.bms",
+      "material": "waterghost",
+      "vertices": 180,
+      "triangles": 236,
+      "skinned": true,
+      "bones": [
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger11",
+        "Bip01 L Finger1",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger11",
+        "Bip01 R Finger1",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R UpperArm"
+      ]
+    },
+    {
+      "name": "WaterGhost_part2",
+      "bms": "prim\\mesh\\mob\\china\\waterghost_part2.bms",
+      "material": "waterghost",
+      "vertices": 523,
+      "triangles": 706,
+      "skinned": true,
+      "bones": [
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 Spine2",
+        "Bip01 Head",
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Pelvis",
+        "Bip01 Neck",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bone01",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_stand01.ban",
+      "banName": "waterghost_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_walk.ban",
+      "banName": "waterghost_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 28,
+      "walkLength": 14.334000587463379,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_attack01.ban",
+      "banName": "waterghost_attack01",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 878,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_damage01.ban",
+      "banName": "waterghost_damage01",
+      "durationMs": 400,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 6,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_die.ban",
+      "banName": "waterghost_die",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_attack02.ban",
+      "banName": "waterghost_attack02",
+      "durationMs": 3666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 61,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1196,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1685,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 2207,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 35
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_run.ban",
+      "banName": "waterghost_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 19,
+      "walkLength": 36.6619987487793,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_damage02.ban",
+      "banName": "waterghost_damage02",
+      "durationMs": 400,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_attack03.ban",
+      "banName": "waterghost_attack03",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 587,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_die_loop.ban",
+      "banName": "waterghost_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_down.ban",
+      "banName": "waterghost_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_downwait.ban",
+      "banName": "waterghost_downwait",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 51,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_downdamage.ban",
+      "banName": "waterghost_downdamage",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_wakeup.ban",
+      "banName": "waterghost_wakeup",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 36,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_downdie.ban",
+      "banName": "waterghost_downdie",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_stand01.ban",
+      "banName": "waterghost_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\mob\\china\\waterghost\\waterghost_stand02.ban",
+      "banName": "waterghost_stand02",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 767,
+    "triangles": 1044,
+    "joints": 37,
+    "meshes": 3,
+    "animations": 17,
+    "textures": 2,
+    "heightM": 1.5139352707192302,
+    "boundsMin": [
+      -1.2520341873168945,
+      -0.0119707016274333,
+      -0.3077259063720703
+    ],
+    "boundsMax": [
+      1.1742238998413086,
+      1.5019645690917969,
+      0.6515552997589111
+    ]
+  },
+  "warnings": [
+    "particle monster/mco_sys_appear.efp (set mco_sys_appear) is not in Particles.pk2; dropped",
+    "particle monster/mco_wrong_frostbite.efp (set mco_wrong_frostbite) is not in Particles.pk2; dropped",
+    "particle monster/msk_waterghost_gas.efp (set msk_waterghost_gas) is not in Particles.pk2; dropped",
+    "particle monster/system_appear.efp (set system_appear) is not in Particles.pk2; dropped"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "waterghost",
+    "packs": {
+      "default": "mob/_anims/waterghost/default.glb"
+    },
+    "clips": {
+      "STAND1": [
+        "default",
+        "waterghost_stand01"
+      ],
+      "WALK": [
+        "default",
+        "waterghost_walk"
+      ],
+      "ATTACK1": [
+        "default",
+        "waterghost_attack01"
+      ],
+      "DAMAGE1": [
+        "default",
+        "waterghost_damage01"
+      ],
+      "DIE1": [
+        "default",
+        "waterghost_die"
+      ],
+      "ATTACK2": [
+        "default",
+        "waterghost_attack02"
+      ],
+      "RUN": [
+        "default",
+        "waterghost_run"
+      ],
+      "DAMAGE2": [
+        "default",
+        "waterghost_damage02"
+      ],
+      "ATTACK3": [
+        "default",
+        "waterghost_attack03"
+      ],
+      "DIE1_RM": [
+        "default",
+        "waterghost_die_loop"
+      ],
+      "DOWN": [
+        "default",
+        "waterghost_down"
+      ],
+      "DOWN_RM": [
+        "default",
+        "waterghost_downwait"
+      ],
+      "DOWN_DAMAGE": [
+        "default",
+        "waterghost_downdamage"
+      ],
+      "DOWN_UP": [
+        "default",
+        "waterghost_wakeup"
+      ],
+      "DOWN_DIE": [
+        "default",
+        "waterghost_downdie"
+      ],
+      "STUN": [
+        "default",
+        "waterghost_stand01"
+      ],
+      "STAND2": [
+        "default",
+        "waterghost_stand02"
+      ]
+    }
+  }
+}

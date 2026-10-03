@@ -1,0 +1,209 @@
+{
+  "source": "res/mob/common/tombstone_die.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "tombstone_die",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\tombstone_die.bsk",
+    "joints": [
+      "[root]",
+      "fire01",
+      "fire",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.102625507622747e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": -1,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "tombstone",
+      "bmt": "prim\\mtrl\\mob\\china\\tombstone.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\tombstone.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Tombstone_die01",
+      "bms": "prim\\mesh\\mob\\china\\tombstone_die01.bms",
+      "material": "Tombstone",
+      "vertices": 103,
+      "triangles": 134,
+      "skinned": true,
+      "bones": [
+        "Bone05"
+      ]
+    },
+    {
+      "name": "Tombstone_die02",
+      "bms": "prim\\mesh\\mob\\china\\tombstone_die02.bms",
+      "material": "Tombstone",
+      "vertices": 22,
+      "triangles": 16,
+      "skinned": true,
+      "bones": [
+        "Bone03"
+      ]
+    },
+    {
+      "name": "Tombstone_die03",
+      "bms": "prim\\mesh\\mob\\china\\tombstone_die03.bms",
+      "material": "Tombstone",
+      "vertices": 131,
+      "triangles": 141,
+      "skinned": true,
+      "bones": [
+        "Bone03"
+      ]
+    },
+    {
+      "name": "Tombstone_die04",
+      "bms": "prim\\mesh\\mob\\china\\tombstone_die04.bms",
+      "material": "Tombstone",
+      "vertices": 41,
+      "triangles": 34,
+      "skinned": true,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\tombstone\\tombstone_die.ban",
+      "banName": "tombstone_die",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 9
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\tombstone\\tombstone_die_loop.ban",
+      "banName": "tombstone_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 9
+    }
+  ],
+  "stats": {
+    "vertices": 297,
+    "triangles": 325,
+    "joints": 9,
+    "meshes": 4,
+    "animations": 2,
+    "textures": 1,
+    "heightM": 2.6419299244880676,
+    "boundsMin": [
+      -0.4125637412071228,
+      0.46048372983932495,
+      -0.4440799355506897
+    ],
+    "boundsMax": [
+      0.4177005887031555,
+      3.1024136543273926,
+      0.26069334149360657
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "animationPacks": {
+    "format": "sro-anim-packs",
+    "version": 1,
+    "skeleton": "tombstone_die",
+    "packs": {
+      "default": "mob/_anims/tombstone_die/default.glb"
+    },
+    "clips": {
+      "DIE1": [
+        "default",
+        "tombstone_die"
+      ],
+      "DIE1_RM": [
+        "default",
+        "tombstone_die_loop"
+      ]
+    }
+  }
+}

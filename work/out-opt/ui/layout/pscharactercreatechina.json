@@ -1,0 +1,609 @@
+{
+  "source": "Media/resinfo/pscharactercreatechina.txt",
+  "space": [
+    1600,
+    1200
+  ],
+  "sections": {
+    "CreateChina": [
+      {
+        "name": "GDR_FADE",
+        "class": "CIFFade",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1600,
+          1200
+        ],
+        "text": "",
+        "id": 14
+      },
+      {
+        "name": "GDR_STA_WCREATE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/warning_create.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          248,
+          128
+        ],
+        "text": "",
+        "id": 13
+      },
+      {
+        "name": "GDR_SCREENFADE",
+        "class": "CIFFade",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1600,
+          1200
+        ],
+        "text": "",
+        "id": 12
+      },
+      {
+        "name": "GDR_BTN_BACK",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          92,
+          41
+        ],
+        "text": "UIO_COMMON_CTL_CANCEL",
+        "id": 11
+      },
+      {
+        "name": "GDR_BTN_OK",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/button.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          92,
+          41
+        ],
+        "text": "UIO_NEWCHAR_CTL_CONFIRM",
+        "id": 10
+      },
+      {
+        "name": "GDR_STA_EXPLAIN",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/explain-window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          212,
+          180
+        ],
+        "text": "",
+        "id": 9
+      },
+      {
+        "name": "GDR_STA_ROTATE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/rotate_window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          152,
+          56
+        ],
+        "text": "",
+        "id": 8
+      },
+      {
+        "name": "GDR_STA_CUSTOM",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/customize_window.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          264,
+          316
+        ],
+        "text": "",
+        "id": 7
+      },
+      {
+        "name": "GDR_CWND_CHARACTER",
+        "class": "CIFCharacterWnd",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          1600,
+          1200
+        ],
+        "text": "",
+        "id": 6
+      },
+      {
+        "name": "GDR_STA_BACKIMAGE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/back_image.ddj"
+        ],
+        "rect": [
+          969,
+          170,
+          632,
+          864
+        ],
+        "text": "",
+        "id": 5
+      },
+      {
+        "name": "GDR_TEXT_MESSAGE",
+        "class": "CIFTextBox",
+        "ddj": [],
+        "rect": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "text": "",
+        "id": 500
+      },
+      {
+        "name": "GDR_STA_TITLE",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/text-custom.ddj"
+        ],
+        "rect": [
+          47,
+          111,
+          428,
+          36
+        ],
+        "text": "",
+        "id": 3
+      },
+      {
+        "name": "GDR_STA_SCREENDOWN",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/redbar_down.ddj"
+        ],
+        "rect": [
+          0,
+          1030,
+          1600,
+          172
+        ],
+        "text": "",
+        "id": 2
+      },
+      {
+        "name": "GDR_STA_SCREENUP",
+        "class": "CIFStatic",
+        "ddj": [
+          "interface/outer/redbar_up.ddj"
+        ],
+        "rect": [
+          0,
+          0,
+          1600,
+          172
+        ],
+        "text": "",
+        "id": 1
+      }
+    ],
+    "Custom": [
+      {
+        "name": "GDR_SLI_WEAPON",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          88,
+          255,
+          120,
+          24
+        ],
+        "text": "",
+        "id": 49
+      },
+      {
+        "name": "GDR_SLI_PROTECTOR",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          88,
+          224,
+          120,
+          24
+        ],
+        "text": "",
+        "id": 48
+      },
+      {
+        "name": "GDR_SLI_VOLUME",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          88,
+          193,
+          120,
+          24
+        ],
+        "text": "",
+        "id": 47
+      },
+      {
+        "name": "GDR_SLI_HEIGHT",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          88,
+          162,
+          120,
+          24
+        ],
+        "text": "",
+        "id": 46
+      },
+      {
+        "name": "GDR_SLI_FIGURE",
+        "class": "CIFSliderCtrl",
+        "ddj": [],
+        "rect": [
+          88,
+          131,
+          120,
+          24
+        ],
+        "text": "",
+        "id": 45
+      },
+      {
+        "name": "GDR_BTN_FEMALE",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/woman_off.ddj"
+        ],
+        "rect": [
+          166,
+          95,
+          70,
+          25
+        ],
+        "text": "UIO_NEWCHAR_CTL_FEMALE",
+        "id": 44
+      },
+      {
+        "name": "GDR_BTN_MALE",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/man_on.ddj"
+        ],
+        "rect": [
+          87,
+          95,
+          70,
+          25
+        ],
+        "text": "UIO_NEWCHAR_CTL_MALE",
+        "id": 43
+      },
+      {
+        "name": "GDR_BTN_CHECK",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/overlap.ddj"
+        ],
+        "rect": [
+          156,
+          57,
+          75,
+          25
+        ],
+        "text": "UIO_NEWCHAR_CTL_CHECK_OVERLAP",
+        "id": 42
+      },
+      {
+        "name": "GDR_EDIT_NAME",
+        "class": "CIFEdit",
+        "ddj": [],
+        "rect": [
+          92,
+          32,
+          135,
+          20
+        ],
+        "text": "",
+        "id": 41
+      },
+      {
+        "name": "GDR_STATIC7",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          260,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_WEAPON",
+        "id": 107
+      },
+      {
+        "name": "GDR_STATIC6",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          229,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_PROTECTOR",
+        "id": 106
+      },
+      {
+        "name": "GDR_STATIC5",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          198,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_VOLUME",
+        "id": 105
+      },
+      {
+        "name": "GDR_STATIC4",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          167,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_HEIGHT",
+        "id": 104
+      },
+      {
+        "name": "GDR_STATIC3",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          137,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_FIGURE",
+        "id": 103
+      },
+      {
+        "name": "GDR_STATIC2",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          100,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_SEX",
+        "id": 102
+      },
+      {
+        "name": "GDR_STATIC1",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          32,
+          35,
+          45,
+          15
+        ],
+        "text": "UIO_NEWCHAR_STT_NAME",
+        "id": 101
+      }
+    ],
+    "Explain": [
+      {
+        "name": "GDR_TEXT_EXPLAIN",
+        "class": "CIFTextBox",
+        "ddj": [],
+        "rect": [
+          15,
+          42,
+          183,
+          122
+        ],
+        "text": "",
+        "id": 62
+      },
+      {
+        "name": "GDR_STA_EXPLAINNAME",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          15,
+          18,
+          183,
+          14
+        ],
+        "text": "",
+        "id": 61
+      }
+    ],
+    "Rotate": [
+      {
+        "name": "GDR_BTN_RROTATE",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/rotate_right.ddj"
+        ],
+        "rect": [
+          99,
+          11,
+          42,
+          35
+        ],
+        "text": "",
+        "id": 22
+      },
+      {
+        "name": "GDR_BTN_ZOOM",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/zoomin.ddj"
+        ],
+        "rect": [
+          57,
+          11,
+          39,
+          35
+        ],
+        "text": "",
+        "id": 23
+      },
+      {
+        "name": "GDR_BTN_LROTATE",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/rotate_left.ddj"
+        ],
+        "rect": [
+          12,
+          11,
+          42,
+          35
+        ],
+        "text": "",
+        "id": 21
+      }
+    ],
+    "Slider": [
+      {
+        "name": "GDR_BTN_THUMB",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/slider.ddj"
+        ],
+        "rect": [
+          20,
+          0,
+          16,
+          24
+        ],
+        "text": "",
+        "id": 73
+      },
+      {
+        "name": "GDR_BTN_NEXT",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/arrow_right.ddj"
+        ],
+        "rect": [
+          120,
+          2,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 72
+      },
+      {
+        "name": "GDR_BTN_PREV",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/arrow_left.ddj"
+        ],
+        "rect": [
+          0,
+          2,
+          20,
+          20
+        ],
+        "text": "",
+        "id": 71
+      }
+    ],
+    "WCreate": [
+      {
+        "name": "GDR_BTN_WCANCEL",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/warning_button.ddj"
+        ],
+        "rect": [
+          130,
+          75,
+          76,
+          32
+        ],
+        "text": "UIO_COMMON_CTL_CANCEL",
+        "id": 33
+      },
+      {
+        "name": "GDR_BTN_WCREATE",
+        "class": "CIFButton",
+        "ddj": [
+          "interface/outer/warning_button.ddj"
+        ],
+        "rect": [
+          42,
+          75,
+          76,
+          32
+        ],
+        "text": "UIO_COMMON_CTL_CREATE",
+        "id": 32
+      },
+      {
+        "name": "GDR_STATIC1",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          4,
+          47,
+          239,
+          13
+        ],
+        "text": "UIO_NEWCHAR_MSG_CREATE",
+        "id": 101
+      },
+      {
+        "name": "GDR_STA_WNAME",
+        "class": "CIFStatic",
+        "ddj": [],
+        "rect": [
+          4,
+          23,
+          239,
+          15
+        ],
+        "text": "",
+        "id": 31
+      }
+    ]
+  }
+}
