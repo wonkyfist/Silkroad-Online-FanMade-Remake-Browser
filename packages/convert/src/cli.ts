@@ -115,7 +115,7 @@ async function treesVerb(args: string[], cfg: SroConfig): Promise<number> {
   try {
     mod = await import(spec)
   } catch (e) {
-    console.log(`trees: the tree tool is not built yet (T12-A, packages/convert/src/trees/cli.ts): ${(e as Error).message.split('\n')[0]}`)
+    console.log('trees: the tree tool (species authoring with Blender and Meshy) is not part of this release; the converted trees ship in work/out/trees')
     return 1
   } finally {
     process.argv = argv

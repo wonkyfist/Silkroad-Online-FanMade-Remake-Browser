@@ -146,7 +146,7 @@ it reads your own vSRO 1.188 client:
   your client's archives, rebuilds the walking mesh, runs the reachability, overlap and budget checks and a set of
   tests, optimizes the changed files, and shows a report. It takes about a minute for a few regions. The first
   Publish on a new machine adds about 15 seconds to rebuild the coast cache. On a fresh clone, a Publish without new
-  edits reports that nothing changed: the shipped map already holds the shipped edits.
+  edits changes only the manifest's timestamps: the shipped map already holds the shipped edits.
 - **Test in game** (optional) starts a private server and client on free ports that play the staging copy.
 - **Keep** swaps the staged files into `work/out` and `work/out-opt`, updates the editor's base copy, and commits the
   layer folder with git (`World edits: ...`). Each Keep can be undone. **Go back** throws the staging copy away.
