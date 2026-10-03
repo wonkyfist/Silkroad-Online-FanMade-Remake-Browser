@@ -1,0 +1,305 @@
+{
+  "version": 1,
+  "generator": "packages/convert/src/tools/export-sky.ts",
+  "generatedAt": "2026-09-29T03:04:40.070Z",
+  "root": "sky/",
+  "moonCount": 30,
+  "fullMoon": 16,
+  "moons": [
+    {
+      "file": "moon/moon01.png",
+      "src": "Map.pk2 sun/moon01.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon02.png",
+      "src": "Map.pk2 sun/moon02.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon03.png",
+      "src": "Map.pk2 sun/moon03.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon04.png",
+      "src": "Map.pk2 sun/moon04.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon05.png",
+      "src": "Map.pk2 sun/moon05.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon06.png",
+      "src": "Map.pk2 sun/moon06.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon07.png",
+      "src": "Map.pk2 sun/moon07.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon08.png",
+      "src": "Map.pk2 sun/moon08.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon09.png",
+      "src": "Map.pk2 sun/moon09.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon10.png",
+      "src": "Map.pk2 sun/moon10.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon11.png",
+      "src": "Map.pk2 sun/moon11.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon12.png",
+      "src": "Map.pk2 sun/moon12.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon13.png",
+      "src": "Map.pk2 sun/moon13.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon14.png",
+      "src": "Map.pk2 sun/moon14.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon15.png",
+      "src": "Map.pk2 sun/moon15.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon16.png",
+      "src": "Map.pk2 sun/moon16.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon17.png",
+      "src": "Map.pk2 sun/moon17.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon18.png",
+      "src": "Map.pk2 sun/moon18.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon19.png",
+      "src": "Map.pk2 sun/moon19.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon20.png",
+      "src": "Map.pk2 sun/moon20.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon21.png",
+      "src": "Map.pk2 sun/moon21.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon22.png",
+      "src": "Map.pk2 sun/moon22.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon23.png",
+      "src": "Map.pk2 sun/moon23.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon24.png",
+      "src": "Map.pk2 sun/moon24.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon25.png",
+      "src": "Map.pk2 sun/moon25.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon26.png",
+      "src": "Map.pk2 sun/moon26.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon27.png",
+      "src": "Map.pk2 sun/moon27.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon28.png",
+      "src": "Map.pk2 sun/moon28.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon29.png",
+      "src": "Map.pk2 sun/moon29.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    },
+    {
+      "file": "moon/moon30.png",
+      "src": "Map.pk2 sun/moon30.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "DXT3"
+    }
+  ],
+  "lens": [
+    {
+      "file": "lens/lens1.png",
+      "src": "Map.pk2 sun/lens1.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "A8R8G8B8"
+    },
+    {
+      "file": "lens/lens2.png",
+      "src": "Map.pk2 sun/lens2.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "A8R8G8B8"
+    },
+    {
+      "file": "lens/lens3.png",
+      "src": "Map.pk2 sun/lens3.ddj",
+      "width": 256,
+      "height": 256,
+      "format": "A8R8G8B8"
+    },
+    {
+      "file": "lens/lens4.png",
+      "src": "Map.pk2 sun/lens4.ddj",
+      "width": 128,
+      "height": 128,
+      "format": "A8R8G8B8"
+    },
+    {
+      "file": "lens/lens5.png",
+      "src": "Map.pk2 sun/lens5.ddj",
+      "width": 64,
+      "height": 64,
+      "format": "DXT3"
+    },
+    {
+      "file": "lens/lens6.png",
+      "src": "Map.pk2 sun/lens6.ddj",
+      "width": 64,
+      "height": 64,
+      "format": "DXT3"
+    },
+    {
+      "file": "lens/lens7.png",
+      "src": "Map.pk2 sun/lens7.ddj",
+      "width": 64,
+      "height": 64,
+      "format": "DXT3"
+    },
+    {
+      "file": "lens/lens8.png",
+      "src": "Map.pk2 sun/lens8.ddj",
+      "width": 64,
+      "height": 64,
+      "format": "DXT3"
+    }
+  ],
+  "cloud": {
+    "file": "cloud1.png",
+    "src": "Map.pk2 skybox/cloud1.ddj",
+    "width": 512,
+    "height": 512,
+    "format": "DXT3"
+  },
+  "cloudNoise": {
+    "file": "cloud-noise.png",
+    "width": 256,
+    "height": 256,
+    "seed": 0,
+    "version": 1,
+    "sha256": "c4bacd2cd916f5f0ae3c007ba0046c831f8f3c93a91c84cda56b1b43ed563222",
+    "channels": {
+      "r": "shape (equalised)",
+      "g": "detail (erosion)",
+      "b": "cirrus streaks",
+      "a": "coverage variation"
+    },
+    "coverage": {
+      "0.2": 0.207,
+      "0.5": 0.498,
+      "0.8": 0.79
+    }
+  },
+  "failures": []
+}

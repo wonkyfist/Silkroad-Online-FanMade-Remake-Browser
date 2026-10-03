@@ -1,0 +1,73 @@
+{
+ "format": "sro-town-clips",
+ "version": 1,
+ "skeleton": "europeman_skel",
+ "pack": "town_clips.glb",
+ "fps": 30,
+ "clips": {
+  "CARRY": {
+   "anim": "chinaman_carry",
+   "frames": 36,
+   "durationMs": 1167,
+   "loop": true,
+   "base": "WALK",
+   "socket": {
+    "bone": "Bip01 R Hand",
+    "prop": "crate",
+    "offset": [
+     0.132208,
+     0.126782,
+     0.134333
+    ],
+    "rotation": [
+     0.722743,
+     0.422824,
+     -0.40157,
+     0.370949
+    ]
+   }
+  },
+  "SIT_CHAIR": {
+   "anim": "chinaman_sit_chair",
+   "frames": 91,
+   "durationMs": 3000,
+   "loop": true,
+   "base": "STAND1",
+   "seat": {
+    "hipZ": 0.6262,
+    "hipFwd": -0.0171,
+    "seatZ": 0.537
+   }
+  },
+  "SWEEP": {
+   "anim": "chinaman_sweep",
+   "frames": 61,
+   "durationMs": 2000,
+   "loop": true,
+   "base": "STAND1",
+   "socket": {
+    "bone": "Bip01 R Hand",
+    "prop": "broom",
+    "offset": [
+     0.000005,
+     -0.000012,
+     0.000003
+    ],
+    "rotation": [
+     -0.53983,
+     0.619539,
+     0.061058,
+     0.566592
+    ],
+    "floorM": 1.1078
+   }
+  },
+  "TALK": {
+   "anim": "chinaman_talk",
+   "frames": 91,
+   "durationMs": 3000,
+   "loop": true,
+   "base": "STAND1"
+  }
+ }
+}

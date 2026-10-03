@@ -1,0 +1,296 @@
+{
+  "source": "res/npc/npc/chinashop_herbalistman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinashop_herbalistman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinashop_herbalistman.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bone01",
+      "Bone02",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.358019029040207e-7,
+      "maxHierarchyError": 3.3306690738754696e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaShop_HerbalistMan_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_herbalistman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_herbalistman_al.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (72.2% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_HerbalistMan",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_herbalistman.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_herbalistman.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaShop_HerbalistMan_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_herbalistman_al_2s.bms",
+      "material": "ChinaShop_HerbalistMan_al_2s",
+      "vertices": 27,
+      "triangles": 24,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck1",
+        "Bip01 Spine1"
+      ]
+    },
+    {
+      "name": "ChinaShop_HerbalistMan_yak",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_herbalistman_yak.bms",
+      "material": "ChinaShop_HerbalistMan",
+      "vertices": 32,
+      "triangles": 28,
+      "skinned": true,
+      "bones": [
+        "Bone01"
+      ]
+    },
+    {
+      "name": "ChinaShop_HerbalistMan_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_herbalistman_part1.bms",
+      "material": "ChinaShop_HerbalistMan",
+      "vertices": 296,
+      "triangles": 378,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R Finger2",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0"
+      ]
+    },
+    {
+      "name": "ChinaShop_HerbalistMan_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_herbalistman_part2.bms",
+      "material": "ChinaShop_HerbalistMan",
+      "vertices": 259,
+      "triangles": 356,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Spine1",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Spine"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinashop_herbalistman_basic.ban",
+      "banName": "chinashop_herbalistman_basic",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinashop_herbalistman_time.ban",
+      "banName": "chinashop_herbalistman_time",
+      "durationMs": 4666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 37
+    }
+  ],
+  "stats": {
+    "vertices": 614,
+    "triangles": 786,
+    "joints": 38,
+    "meshes": 4,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 1.6710464861243963,
+    "boundsMin": [
+      -0.9265629649162292,
+      -0.01712273620069027,
+      -0.333365797996521
+    ],
+    "boundsMax": [
+      1.0231964588165283,
+      1.653923749923706,
+      0.26808980107307434
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "source": "res/item/etc/drop_ch_acc.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "drop_ch_acc",
+  "type": "OTHER",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\drop_ch_acc.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02",
+      "Bone03"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 1.9506488357912133e-7,
+      "maxHierarchyError": 3.3306692062243676e-17,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "system/item_drop_acc.efp",
+      "bone": null,
+      "position": [
+        0,
+        0.10242,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "drop_ch_acc",
+      "bmt": "prim\\mtrl\\item\\china\\etc\\drop_ch_acc.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\etc\\drop_ch_acc.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (13.1% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "drop_ch_acc",
+      "bms": "prim\\mesh\\item\\china\\etc\\drop_ch_acc.bms",
+      "material": "drop_ch_acc",
+      "vertices": 156,
+      "triangles": 112,
+      "skinned": true,
+      "bones": [
+        "Bone02",
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\item\\china\\drop_ch_acc01.ban",
+      "banName": "drop_ch_acc01",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\item\\china\\drop_ch_acc.ban",
+      "banName": "drop_ch_acc",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3
+    }
+  ],
+  "stats": {
+    "vertices": 156,
+    "triangles": 112,
+    "joints": 3,
+    "meshes": 1,
+    "animations": 2,
+    "textures": 1,
+    "heightM": 0.20715514721814543,
+    "boundsMin": [
+      -0.14039640128612518,
+      0.0009722620015963912,
+      -0.1476752758026123
+    ],
+    "boundsMax": [
+      0.14485898613929749,
+      0.20812740921974182,
+      0.14459171891212463
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

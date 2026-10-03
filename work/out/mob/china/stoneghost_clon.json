@@ -1,0 +1,516 @@
+{
+  "source": "res/mob/china/stoneghost_clon.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "stoneghost",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\stoneghost.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Spine2",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bone01",
+      "Bone02",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L HorseLink",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R HorseLink",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "Bip01 Tail3",
+      "Bip01 Tail4"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000012207730850644083,
+      "maxHierarchyError": 3.3306690738754696e-16,
+      "staleToLocal": []
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off_m.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on_m.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "stoneGhost",
+      "bmt": "prim\\mtrl\\mob\\china\\stoneghost_clon.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\stoneghost_clon.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.458823561668396,
+        0.458823561668396,
+        0.458823561668396,
+        1
+      ],
+      "ambient": [
+        0.458823561668396,
+        0.458823561668396,
+        0.458823561668396,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "stoneGhost_part1",
+      "bms": "prim\\mesh\\mob\\china\\stoneghost_part1.bms",
+      "material": "stoneGhost",
+      "vertices": 455,
+      "triangles": 658,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Spine2",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger0",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 Ponytail1",
+        "Bip01 L Finger0",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "stoneGhost_part2",
+      "bms": "prim\\mesh\\mob\\china\\stoneghost_part2.bms",
+      "material": "stoneGhost",
+      "vertices": 208,
+      "triangles": 265,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R HorseLink",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 L Calf",
+        "Bip01 L HorseLink",
+        "Bip01 L Foot",
+        "Bip01 Spine2",
+        "Bip01 L Toe0",
+        "Bip01 Tail1",
+        "Bip01 Tail",
+        "Bip01 Tail4",
+        "Bip01 Tail2",
+        "Bip01 Tail3"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_stand01.ban",
+      "banName": "stoneghost_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_walk.ban",
+      "banName": "stoneghost_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 30,
+      "walkLength": 13.329999923706055,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_attack01.ban",
+      "banName": "stoneghost_attack01",
+      "durationMs": 2233,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 84,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1163,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_damage01.ban",
+      "banName": "stoneghost_damage01",
+      "durationMs": 533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_die.ban",
+      "banName": "stoneghost_die",
+      "durationMs": 3100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 76,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_stand02.ban",
+      "banName": "stoneghost_stand02",
+      "durationMs": 5333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_run.ban",
+      "banName": "stoneghost_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 22,
+      "walkLength": 22.644001007080078,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "OBSOLETE_STAND2",
+      "group": "default",
+      "type": 8,
+      "typeName": "OBSOLETE_STAND2",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_stand02.ban",
+      "banName": "stoneghost_stand02",
+      "durationMs": 5333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_damage02.ban",
+      "banName": "stoneghost_damage02",
+      "durationMs": 2866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 65,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_die_loop.ban",
+      "banName": "stoneghost_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_down.ban",
+      "banName": "stoneghost_down",
+      "durationMs": 1000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_downwait.ban",
+      "banName": "stoneghost_downwait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 19,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_downdamage.ban",
+      "banName": "stoneghost_downdamage",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_downup.ban",
+      "banName": "stoneghost_downup",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\stoneghost\\stoneghost_downdie.ban",
+      "banName": "stoneghost_downdie",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 663,
+    "triangles": 923,
+    "joints": 36,
+    "meshes": 2,
+    "animations": 15,
+    "textures": 1,
+    "heightM": 1.7256977438810281,
+    "boundsMin": [
+      -0.5094322562217712,
+      -0.00030373333720490336,
+      -1.959607481956482
+    ],
+    "boundsMax": [
+      0.509432315826416,
+      1.7253940105438232,
+      0.7146181464195251
+    ]
+  },
+  "warnings": [
+    "particle monster/system_appear.efp (set system_appear) is not in Particles.pk2; dropped"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

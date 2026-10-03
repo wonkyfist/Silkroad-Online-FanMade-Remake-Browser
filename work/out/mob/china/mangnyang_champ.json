@@ -1,0 +1,445 @@
+{
+  "source": "res/mob/china/mangnyang_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "mangnyang",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\mangnyang.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Spine2",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.279696054267703e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "Mangnyang_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "Mangnyang_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Mangnyang",
+      "bmt": "prim\\mtrl\\mob\\china\\mangnyang_champ.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\mangnyang_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mangnyang_part1",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_part1.bms",
+      "material": "Mangnyang",
+      "vertices": 263,
+      "triangles": 277,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Clavicle",
+        "Bip01 Spine2",
+        "Bip01 R UpperArm",
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "Mangnyang_part2",
+      "bms": "prim\\mesh\\mob\\china\\mangnyang_part2.bms",
+      "material": "Mangnyang",
+      "vertices": 177,
+      "triangles": 200,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 L Calf",
+        "Bip01 L Foot"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_stand01.ban",
+      "banName": "mangnyang_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 126,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_walk.ban",
+      "banName": "mangnyang_walk",
+      "durationMs": 1200,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 46,
+      "walkLength": 10.199999809265137,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_attack01.ban",
+      "banName": "mangnyang_attack01",
+      "durationMs": 1666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 33,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 648,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_damage01.ban",
+      "banName": "mangnyang_damage01",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 4,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_die.ban",
+      "banName": "mangnyang_die",
+      "durationMs": 1833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_attack02.ban",
+      "banName": "mangnyang_attack02",
+      "durationMs": 2566,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 816,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1389,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 25
+    },
+    {
+      "name": "ATTREADY",
+      "group": "default",
+      "type": 6,
+      "typeName": "ATTREADY",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_stand02.ban",
+      "banName": "mangnyang_stand02",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_run.ban",
+      "banName": "mangnyang_run",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 23,
+      "walkLength": 10,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "OBSOLETE_STAND2",
+      "group": "default",
+      "type": 8,
+      "typeName": "OBSOLETE_STAND2",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_stand02.ban",
+      "banName": "mangnyang_stand02",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_damage02.ban",
+      "banName": "mangnyang_damage02",
+      "durationMs": 700,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_die_loop.ban",
+      "banName": "mangnyang_die_loop",
+      "durationMs": 166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_down.ban",
+      "banName": "mangnyang_down",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_downwait.ban",
+      "banName": "mangnyang_downwait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_downdamage.ban",
+      "banName": "mangnyang_downdamage",
+      "durationMs": 1100,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_wakeup.ban",
+      "banName": "mangnyang_wakeup",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 31,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\mangnyang_downdie.ban",
+      "banName": "mangnyang_downdie",
+      "durationMs": 300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 25
+    }
+  ],
+  "stats": {
+    "vertices": 440,
+    "triangles": 477,
+    "joints": 26,
+    "meshes": 2,
+    "animations": 16,
+    "textures": 1,
+    "heightM": 1.5228107348666526,
+    "boundsMin": [
+      -1.1495702266693115,
+      -0.00028411304811015725,
+      -0.2672629952430725
+    ],
+    "boundsMax": [
+      0.4333585798740387,
+      1.5225266218185425,
+      0.796035885810852
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

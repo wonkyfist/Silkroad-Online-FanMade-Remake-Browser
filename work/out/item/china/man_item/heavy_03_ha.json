@@ -1,0 +1,116 @@
+{
+  "source": "res/item/china/man_item/heavy_03_ha.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "heavy_03_ha",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 0,
+    "attachPointName": "_ha",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "heavy_03_ha"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "heavy_03_ha",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\heavy_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_ha.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (94.7% partial, 5.3% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.32927998900413513,
+        0.32927998900413513,
+        0.32927998900413513,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "heavy_03_ha",
+      "bms": "prim\\mesh\\item\\china\\man_item\\heavy_03_ha.bms",
+      "material": "heavy_03_ha",
+      "vertices": 166,
+      "triangles": 206,
+      "skinned": false,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 166,
+    "triangles": 206,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.35455918312072754,
+    "boundsMin": [
+      -0.09750883281230927,
+      1.565891981124878,
+      -0.19507727026939392
+    ],
+    "boundsMax": [
+      0.09745962917804718,
+      1.9204511642456055,
+      0.148061603307724
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

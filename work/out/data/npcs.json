@@ -1,0 +1,1096 @@
+{
+  "schema": 1,
+  "kind": "npcs",
+  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "sources": [
+    "client:npcpos.txt",
+    "client:characterdata.txt",
+    "client:refregion.txt",
+    "client:teleportdata.txt",
+    "port:npcshops.json (yaw)"
+  ],
+  "entries": [
+    {
+      "code": "NPC_CH_PRIEST",
+      "name": "Buddhist Priest Jeonghye",
+      "x": 257.974,
+      "z": -290.113,
+      "y": 0,
+      "yaw": -0.001,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_priest.bsr",
+        "glb": "/out/npc/npc/chinaquest_priest.glb",
+        "sidecar": "/out/npc/npc/chinaquest_priest.json"
+      },
+      "provenance": "client",
+      "greeting": "You will devote yourself to see the world with merciful mind. That is the very the teachings of Buddha. Amitabul...",
+      "region": 25257,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25257 (659.73999, 0, 981.13)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_priest rotY -3.141 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_INDIA",
+      "name": "Buddhist Priest Kushyan",
+      "x": 261.216,
+      "z": -205.735,
+      "y": -0.002,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_indiapriest.bsr",
+        "glb": "/out/npc/npc/chinaetc_indiapriest.glb",
+        "sidecar": "/out/npc/npc/chinaetc_indiapriest.json"
+      },
+      "provenance": "client",
+      "greeting": "It's been a rought and difficult journey to come here from Cheonchuk though, we could make it to come here with Buddhist scriptures.",
+      "region": 25257,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25257 (692.15997, -0.02, 137.35001)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_india rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_EA2",
+      "name": "Solder Sangnam [Teleport]",
+      "x": 330.717,
+      "z": -176.502,
+      "y": -0.007,
+      "yaw": -2.405,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldiereast2.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldiereast2.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldiereast2.json"
+      },
+      "provenance": "client",
+      "greeting": "Welcome. We are offering convenience of transfer within Jangan upon His Imperial Majesty's ryoal order to help people entering castle. I , mere footman am so happy to undertake this great task. Come on, Where would you like to move to?",
+      "teleports": [
+        "GATE_NPC_CH_SOLDIER_EA2"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (1387.17, -0.07, 1765.02)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_soldier_ea2 rotY -0.737 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_TICKET",
+      "name": "Ticket Seller Gyoun",
+      "x": 210.38,
+      "z": -91.308,
+      "y": -3.599,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_bookmakergirl.bsr",
+        "glb": "/out/npc/npc/chinasystem_bookmakergirl.glb",
+        "sidecar": "/out/npc/npc/chinasystem_bookmakergirl.json"
+      },
+      "provenance": "client",
+      "greeting": "I'm sorry no competition is scheduled at this time. Check back later.",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (183.8, -35.990002, 913.08002)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_ticket rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_LOTTERY",
+      "name": "Lottery Seller Wangwon",
+      "x": 214.584,
+      "z": -91.137,
+      "y": -3.598,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_bookmakerman.bsr",
+        "glb": "/out/npc/npc/chinasystem_bookmakerman.glb",
+        "sidecar": "/out/npc/npc/chinasystem_bookmakerman.json"
+      },
+      "provenance": "client",
+      "greeting": "You're here for a lottery ticket? I'm sorry to say that there is no lottery now. Check back later.",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (225.84, -35.98, 911.37)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_lottery rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_BIGMAN",
+      "name": "Casino Guardian Huhoan",
+      "x": 242.922,
+      "z": -75.524,
+      "y": -6.483,
+      "yaw": 3.142,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_gamblingplaceman.bsr",
+        "glb": "/out/npc/npc/chinaetc_gamblingplaceman.glb",
+        "sidecar": "/out/npc/npc/chinaetc_gamblingplaceman.json"
+      },
+      "provenance": "client",
+      "greeting": "Entering down here without permission is prohibited.",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (509.22, -64.830002, 755.23999)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_bigman rotY 0 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_EM1",
+      "name": "Soldier Choiyoung [Teleport]",
+      "x": 100.954,
+      "z": -190.264,
+      "y": 0,
+      "yaw": -0.455,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldierpalace1.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldierpalace1.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldierpalace1.json"
+      },
+      "provenance": "client",
+      "greeting": "There is a help from Jangan for us to move fast. We are offering convenience function called Reverse Return to travelers at 20 levels or lower. All these are possible thanks to His Imperial Majesty's command to help people trying to enter castle. You should be grateful for his graciousness.",
+      "teleports": [
+        "GATE_NPC_CH_SOLDIER_EM1"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1009.54, 0, 1902.64)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_soldier_em1 rotY -2.687 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_EM2",
+      "name": "Soldier Fengil",
+      "x": 93.755,
+      "z": -190.271,
+      "y": 0,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldierpalace2.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldierpalace2.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldierpalace2.json"
+      },
+      "provenance": "client",
+      "greeting": "This is where His Majesty resides. People cannot enter without permission.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (937.54999, 0, 1902.71)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_soldier_em2 rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SMITH",
+      "name": "Blacksmith Chulsan",
+      "x": 33.273,
+      "z": -140.67,
+      "y": 0,
+      "yaw": -2.905,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_smith.bsr",
+        "glb": "/out/npc/npc/chinashop_smith.glb",
+        "sidecar": "/out/npc/npc/chinashop_smith.json"
+      },
+      "provenance": "client",
+      "greeting": "Don't be hesitant to come here to get weapon in Jangan. There are various kinds of weapon other than what I have made myself. Well, if you are available, I am good to have a drink with you, Ah-ha-ha-ha.",
+      "shop": "STORE_CH_SMITH",
+      "roles": [
+        "shop",
+        "repair"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (332.73001, 0, 1406.7)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_smith rotY -0.237 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_ARMOR",
+      "name": "Protector Trader Mrs Jang",
+      "x": 33.217,
+      "z": -108.523,
+      "y": 0,
+      "yaw": -2.931,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_dignifiedgirl.bsr",
+        "glb": "/out/npc/npc/chinashop_dignifiedgirl.glb",
+        "sidecar": "/out/npc/npc/chinashop_dignifiedgirl.json"
+      },
+      "provenance": "client",
+      "greeting": "Brace yourself up for a long way. You shouldn't spare yourself in protecting yourself in particular. Overestimating your abilities gives you great pain. To you... and your loved ones...",
+      "shop": "STORE_CH_ARMOR",
+      "roles": [
+        "shop",
+        "repair"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (332.17001, 0, 1085.23)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_armor rotY -0.211 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_WAREHOUSE_M",
+      "name": "Storage-keeper Wangu",
+      "x": 98.08,
+      "z": -98.913,
+      "y": -3.243,
+      "yaw": -2.742,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_warehousekeeper.bsr",
+        "glb": "/out/npc/npc/chinasystem_warehousekeeper.glb",
+        "sidecar": "/out/npc/npc/chinasystem_warehousekeeper.json"
+      },
+      "provenance": "client",
+      "greeting": "...",
+      "roles": [
+        "storage"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (980.79999, -32.43, 989.13)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_warehouse rotY -0.4 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_WAREHOUSE_W",
+      "name": "Storage-keeper Sansan",
+      "x": 98.035,
+      "z": -98.919,
+      "y": -3.252,
+      "yaw": -3.125,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_warehousekeeper_woman.bsr",
+        "glb": "/out/npc/npc/chinasystem_warehousekeeper_woman.glb",
+        "sidecar": "/out/npc/npc/chinasystem_warehousekeeper_woman.json"
+      },
+      "provenance": "client",
+      "greeting": "It is best to travel light when on a long journey. Especially with all the bandits about. You can store anything here. I'll keep it safe.",
+      "roles": [
+        "storage"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (980.34998, -32.52, 989.19)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_warehouse_w rotY -0.017 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_HORSE",
+      "name": "Stable-keeper Machun",
+      "x": 32.921,
+      "z": -45.06,
+      "y": 0,
+      "yaw": 1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_stableman.bsr",
+        "glb": "/out/npc/npc/chinashop_stableman.glb",
+        "sidecar": "/out/npc/npc/chinashop_stableman.json"
+      },
+      "provenance": "client",
+      "greeting": "Can..I..help.. you? Are..you..going..to.. buy horses? He-he-he, there are lots of fine ones..",
+      "shop": "STORE_CH_STABLE",
+      "roles": [
+        "shop"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (329.20999, 0, 450.60001)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_horse rotY 1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_ISLAM",
+      "name": "Islam Merchant Ishyak",
+      "x": 167.068,
+      "z": -58.081,
+      "y": 1.1,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_islamman.bsr",
+        "glb": "/out/npc/npc/chinaetc_islamman.glb",
+        "sidecar": "/out/npc/npc/chinaetc_islamman.json"
+      },
+      "provenance": "client",
+      "greeting": "I came a long way to look for priceless thing to dedicate to God of Allah. It's been a hard journey though, I came to have arrived in one piece with the help of Allah's protection. Only Allah knows everything.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1670.6801, 11, 580.81)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_islam rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_EUROPE",
+      "name": "Adventurer Flora",
+      "x": 167.079,
+      "z": -26.054,
+      "y": 1.1,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_europegirl.bsr",
+        "glb": "/out/npc/npc/chinaetc_europegirl.glb",
+        "sidecar": "/out/npc/npc/chinaetc_europegirl.json"
+      },
+      "provenance": "client",
+      "greeting": "On our journey here,10 members of our party were died. We have to recruit people to join us for the journey back. It is more difficult to recruit people than we expected. You seem to be quite qualified. You want to join us?",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1670.79, 11, 260.54001)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_europe rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_ACCESSORY",
+      "name": "Grocery Trader Jinjin",
+      "x": 165.855,
+      "z": -107.819,
+      "y": 0,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_accessoryshopgirl.bsr",
+        "glb": "/out/npc/npc/chinashop_accessoryshopgirl.glb",
+        "sidecar": "/out/npc/npc/chinashop_accessoryshopgirl.json"
+      },
+      "provenance": "client",
+      "greeting": "Do come in. Look around pretty jewlery. The perfect accessory customized for you is here. Just take a look at.",
+      "shop": "STORE_CH_ACCESSORY",
+      "roles": [
+        "shop"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1658.55, 0, 1078.1899)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_accessory rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_POTION",
+      "name": "Herbalist Yangyun",
+      "x": 158.408,
+      "z": -140.729,
+      "y": 0,
+      "yaw": -2.517,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_herbalistman.bsr",
+        "glb": "/out/npc/npc/chinashop_herbalistman.glb",
+        "sidecar": "/out/npc/npc/chinashop_herbalistman.json"
+      },
+      "provenance": "client",
+      "greeting": "With consistent patients swarming in, we are almost short-handed. We're probably short of medicine herbs to sell.",
+      "shop": "STORE_CH_POTION",
+      "roles": [
+        "shop"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1584.08, 0, 1407.29)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_merchant_wang rotY -0.625 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG2",
+      "name": "Gisaeng Juju",
+      "x": -51.464,
+      "z": -119.283,
+      "y": 0.071,
+      "yaw": 1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng2.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng2.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng2.json"
+      },
+      "provenance": "client",
+      "greeting": "For the long years that I have been here, I have met many people. I hear and know many things as a result.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (1405.36, 0.70999998, 1192.83)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng2 rotY 1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG5",
+      "name": "Gisaeng Juyeong",
+      "x": -41.998,
+      "z": -96.617,
+      "y": 0,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng5.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng5.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng5.json"
+      },
+      "provenance": "client",
+      "greeting": "I saw a large merchant caravan enter Jangan. There were countless number of camels and horses bearing loads of cargo.. What items do they have brought this time? The nephrite stones of Hotan is said to be famous...but I wonder if this time I'll actually get to have one.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (1500.02, 0, 966.16998)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng5 rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG4",
+      "name": "Gisaeng Mihyang",
+      "x": -114.727,
+      "z": -104.569,
+      "y": -0.212,
+      "yaw": 1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng4.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng4.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng4.json"
+      },
+      "provenance": "client",
+      "greeting": "May I help you? I came to this city hoping to learn how to dance. I can't think of anything more impressive than dancing in front of hundreds of people.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (772.72998, -2.1199999, 1045.6899)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng4 rotY 1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG3",
+      "name": "Gisaeng Ahjin",
+      "x": -112.609,
+      "z": -103.392,
+      "y": -0.345,
+      "yaw": -1.903,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng3.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng3.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng3.json"
+      },
+      "provenance": "client",
+      "greeting": "Hum. I am bored. Anything fun? It is dangerous outside the the walls so I dare not go there. But I have already gone to all the fun places within the walls and I am bored. I am thinking about following traders when they move to other area.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (793.90997, -3.45, 1033.92)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng3 rotY -1.239 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_WE2",
+      "name": "Soldier Jowi",
+      "x": -158.56,
+      "z": -184.916,
+      "y": -0.128,
+      "yaw": 1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldierwest2.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldierwest2.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldierwest2.json"
+      },
+      "provenance": "client",
+      "greeting": "I happen to recognize familiar face as I see countless people passing by even in a day. You are familiar with me as well.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (334.39999, -1.28, 1849.16)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_soldier_we2 rotY 1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GENARAL_BO",
+      "name": "Juho",
+      "x": -42.864,
+      "z": -344.007,
+      "y": 4,
+      "yaw": -0.001,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_merchant_bow.bsr",
+        "glb": "/out/npc/npc/chinaquest_merchant_bow.glb",
+        "sidecar": "/out/npc/npc/chinaquest_merchant_bow.json"
+      },
+      "provenance": "client",
+      "greeting": "Lately bandits have regularly besieged the area around Jangan. Their frequent attacks are causing panic among the people. Military camp should punish them while taking lead, but I haven't heard any news from  superior office.",
+      "region": 25255,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25255 (1491.36, 40, 1520.0699)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_genaral_bo rotY -3.141 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_FERRY",
+      "name": "Ferry Ticket Seller Doji",
+      "x": -1307.77,
+      "z": -176.133,
+      "y": 7.248,
+      "yaw": 0.581,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_boatman1.bsr",
+        "glb": "/out/npc/npc/chinasystem_boatman1.glb",
+        "sidecar": "/out/npc/npc/chinasystem_boatman1.json"
+      },
+      "provenance": "client",
+      "greeting": "Damn it! All the pesky monsters in the area scare away potential passengers. I haven't seen another human face in...how long has it been? Ah. You want to cross the river?",
+      "teleports": [
+        "GATE_NPC_CH_FERRY"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 24993,
+      "inConvertedRegion": false,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24993 (362.29999, 72.480003, 1761.33)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_ferry rotY 2.561 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_FERRY2",
+      "name": "Ferry Ticket Seller Chau",
+      "x": -1886.966,
+      "z": 31.334,
+      "y": 6.189,
+      "yaw": 0.516,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_boatman1.bsr",
+        "glb": "/out/npc/npc/chinasystem_boatman1.glb",
+        "sidecar": "/out/npc/npc/chinasystem_boatman1.json"
+      },
+      "provenance": "client",
+      "greeting": "Hard to make a living with all these creatures. If only someone could help...but finding someone with the will to do so is difficult. You want to cross the river?",
+      "teleports": [
+        "GATE_NPC_CH_FERRY2"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 24734,
+      "inConvertedRegion": false,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24734 (330.34, 61.889999, 1606.66)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_ferry2 rotY 2.626 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GENARAL_SW",
+      "name": "Hunter Associate Gwakwi",
+      "x": -31.969,
+      "z": -232.038,
+      "y": 0,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_merchant_sword.bsr",
+        "glb": "/out/npc/npc/chinaquest_merchant_sword.glb",
+        "sidecar": "/out/npc/npc/chinaquest_merchant_sword.json"
+      },
+      "provenance": "client",
+      "greeting": "There is a hunter guild in Jangan. Hunter equipment is sold there. In this grim world, merchants frequently seek the protection of hunters, and so you can easily get a job as a hunter.",
+      "region": 25255,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25255 (1600.3101, 0, 400.38)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_genaral_sw rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_WE1",
+      "name": "Soldier Hogang [Teleport]",
+      "x": -158.501,
+      "z": -195.418,
+      "y": -0.028,
+      "yaw": 0.756,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldierwest1.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldierwest1.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldierwest1.json"
+      },
+      "provenance": "client",
+      "greeting": "Welcome, I may look like a mere footman though, we are the ones who carry out His Majesty Emperor's command. Kuhahat. We are offering convenience of transfer within Jangan for people entering in Jangan.",
+      "teleports": [
+        "GATE_NPC_CH_SOLDIER_WE1"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 25255,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25255 (334.98999, -0.28, 34.18)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_soldier_we1 rotY 2.386 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG6",
+      "name": "Gisaeng Yumi",
+      "x": -127.247,
+      "z": -36.755,
+      "y": 1.592,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng6.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng6.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng6.json"
+      },
+      "provenance": "client",
+      "greeting": "Do come in. Hmm you're not new here are you? Um. You're not? Although many people passed through, you, Mr. Warrior, cannot be easily forgotten. This is an act of providence and so I will keep you company.",
+      "teleports": [
+        "GATE_NPC_CH_KISAENG6"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (647.53003, 15.92, 367.54999)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng6 rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_BEGGARBOY",
+      "name": "Bagger Sochil",
+      "x": -53.391,
+      "z": -54.373,
+      "y": 1.674,
+      "yaw": -3.125,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_slumboy.bsr",
+        "glb": "/out/npc/npc/chinaetc_slumboy.glb",
+        "sidecar": "/out/npc/npc/chinaetc_slumboy.json"
+      },
+      "provenance": "client",
+      "greeting": "Some time ago, when I went fruit picking from the trees outside the city, my friend was kidnapped by a one-eye monster. I was so afraid I couldn't do anything but watch my friend get taken away. Although I wish to look for him, I'm afraid of going outside the gates.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (1386.09, 16.74, 543.72998)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_beggarboy rotY -0.017 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_CHEF",
+      "name": "Village Chief Hwangno",
+      "x": 277.002,
+      "z": -143.316,
+      "y": 0,
+      "yaw": 1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_villageheadman.bsr",
+        "glb": "/out/npc/npc/chinaquest_villageheadman.glb",
+        "sidecar": "/out/npc/npc/chinaquest_villageheadman.json"
+      },
+      "provenance": "client",
+      "greeting": "These days children who went out to play outside have been disappearing. These disappearances are worrying the villagers. What evil is happening out there?",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (850.02002, 0, 1433.16)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_chef rotY 1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SPECIAL",
+      "name": "Specialty Trader Jodaesan",
+      "x": 176.032,
+      "z": -48.022,
+      "y": 1.1,
+      "yaw": -1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinashop_spacialmerchant.bsr",
+        "glb": "/out/npc/npc/chinashop_spacialmerchant.glb",
+        "sidecar": "/out/npc/npc/chinashop_spacialmerchant.json"
+      },
+      "provenance": "client",
+      "greeting": "Welcome! There are lots of precious treasures from around the world that you might be amazed at the sight of them. You want to look around? It's for free for seeing.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1760.3199, 11, 480.22)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_special rotY -1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_DOCTOR",
+      "name": "Merchant Associate Hwajung",
+      "x": 176.084,
+      "z": -35.751,
+      "y": 1.1,
+      "yaw": -1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_doctor.bsr",
+        "glb": "/out/npc/npc/chinaquest_doctor.glb",
+        "sidecar": "/out/npc/npc/chinaquest_doctor.json"
+      },
+      "provenance": "client",
+      "greeting": "Welcome to the Merchant Association. We deal with goods necessary to merchant. Do you want to be a merchant to lead merchant caravan? Then you'd better dismiss greed from the start and get the knack of being a merchant.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1760.84, 11, 357.51001)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_doctor rotY -1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SHAMAN",
+      "name": "Exorcist Miaoryeong",
+      "x": -561.712,
+      "z": -274.211,
+      "y": 22.584,
+      "yaw": 1.152,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinasystem_shaman.bsr",
+        "glb": "/out/npc/npc/chinasystem_shaman.glb",
+        "sidecar": "/out/npc/npc/chinasystem_shaman.json"
+      },
+      "provenance": "client",
+      "greeting": "Many unsettling things happenning around Jang'an these days. A loss of balance between the ying and the yang. Someone must set things right soon but I am too weak to do it. Oh...I'm sorry but why have you come to me?",
+      "region": 25253,
+      "inConvertedRegion": false,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25253 (142.88, 225.84, 822.10999)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_shaman rotY 1.99 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_SO2",
+      "name": "Soldier Dangsam",
+      "x": 103.73,
+      "z": -3.021,
+      "y": -0.044,
+      "yaw": 3.124,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldiersouth2.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldiersouth2.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldiersouth2.json"
+      },
+      "provenance": "client",
+      "greeting": "This peace gets boring to me. Then again I wouldn't wish war break out and the monsters outside overun this city. Och. I'm just bellyachin'",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1037.3, -0.44, 30.209999)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_soldier_so2 rotY 0.018 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_SO1",
+      "name": "Soldier Jingyo [Teleport]",
+      "x": 93.007,
+      "z": -3.066,
+      "y": -0.041,
+      "yaw": 2.29,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldiersouth1.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldiersouth1.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldiersouth1.json"
+      },
+      "provenance": "client",
+      "greeting": "You don't seem to have come here for me. Well, where do you want to move to?",
+      "teleports": [
+        "GATE_NPC_CH_SOLDIER_SO1"
+      ],
+      "roles": [
+        "teleport"
+      ],
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (930.07001, -0.41, 30.66)",
+        "yaw": "vsro-server-db via third-party port: teleporters.json gate_npc_ch_soldier_so1 rotY 0.852 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SOLDIER_EA1",
+      "name": "Soldier Iyang",
+      "x": 330.787,
+      "z": -187.221,
+      "y": 0,
+      "yaw": -1.589,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_soldiereast1.bsr",
+        "glb": "/out/npc/npc/chinaetc_soldiereast1.glb",
+        "sidecar": "/out/npc/npc/chinaetc_soldiereast1.json"
+      },
+      "provenance": "client",
+      "greeting": "Exit through here to reach the Tomb of Qin-Shi. I warn you however that if you are not prepared, the dangers there will be deadly for you...",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (1387.87, 0, 1872.21)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_soldier_ea1 rotY -1.553 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GENARAL",
+      "name": "General Sonhyeon",
+      "x": -133.195,
+      "z": -221.992,
+      "y": 0,
+      "yaw": -0.001,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_merchant.bsr",
+        "glb": "/out/npc/npc/chinaquest_merchant.glb",
+        "sidecar": "/out/npc/npc/chinaquest_merchant.json"
+      },
+      "provenance": "client",
+      "greeting": "Outside these walls, crazed ghosts are terrorizing travelers and within the walls we have corrupt officials. How in Buddha's name am I supposed to do my job?",
+      "region": 25255,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25255 (588.04999, 0, 299.92001)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_genaral rotY -3.141 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GENARAL_SP",
+      "name": "Guild Manager Leebaek",
+      "x": -89.3,
+      "z": -248.979,
+      "y": 0,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_merchant_spear.bsr",
+        "glb": "/out/npc/npc/chinaquest_merchant_spear.glb",
+        "sidecar": "/out/npc/npc/chinaquest_merchant_spear.json"
+      },
+      "provenance": "client",
+      "greeting": "Do you want to organize a guild? I have everything related to the establishment, growth and disorganization of guilds. Ask if you need my help.",
+      "region": 25255,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25255 (1027, 0, 569.78998)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_genaral_sp rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_KISAENG1",
+      "name": "Gisaeng So-Ok",
+      "x": -101.849,
+      "z": -62.118,
+      "y": 1.619,
+      "yaw": 3.142,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_kisaeng1.bsr",
+        "glb": "/out/npc/npc/chinaetc_kisaeng1.glb",
+        "sidecar": "/out/npc/npc/chinaetc_kisaeng1.json"
+      },
+      "provenance": "client",
+      "greeting": "Though flowers are in full bloom and call for you, only the wind comes and goes. You are not the man I am waiting for. But, we can talk awhile.",
+      "region": 24999,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 24999 (901.51001, 16.190001, 621.17999)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_kisaeng1 rotY 0 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_SPECIAL2",
+      "name": "Specialty Trader Seopok",
+      "x": -1494.897,
+      "z": 808.411,
+      "y": 138.332,
+      "yaw": 0.349,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/thiefden_thief_e.bsr",
+        "glb": "/out/npc/npc/thiefden_thief_e.glb",
+        "sidecar": "/out/npc/npc/thiefden_thief_e.json"
+      },
+      "provenance": "client",
+      "greeting": "Hey, friend. Are you interested in great fortune? This is a trade market run by Bandits where you can trade rare items acquired by Bandits.  If you are a merchant, a simple set of procedures is all it takes to trade with us. But, you better not trade with us if you are curious of the origin of these goods. Sometimes it is necessary to turn a blind eye to make money. Don't forget that we only deal with merchants.",
+      "region": 23712,
+      "inConvertedRegion": false,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 23712 (411.03, 1383.3199, 1515.89)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json npc_ch_special2 rotY 2.793 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GACHA_OPERATOR",
+      "name": "Magic POP Guide Gori",
+      "x": 97.728,
+      "z": -72.763,
+      "y": -3.262,
+      "yaw": 0.018,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/westchinashop_herbalistman.bsr",
+        "glb": "/out/npc/npc/westchinashop_herbalistman.glb",
+        "sidecar": "/out/npc/npc/westchinashop_herbalistman.json"
+      },
+      "provenance": "client",
+      "greeting": "Oh you brought an Item Exchange Coupon. Let me exhange it for you.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (977.28003, -32.619999, 727.63)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_gacha_operator rotY 3.124 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_GACHA_MACHINE",
+      "name": "Magic POP",
+      "x": 161.297,
+      "z": -119.3,
+      "y": 0,
+      "yaw": -1.571,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/gacha_machine.bsr",
+        "glb": "/out/npc/npc/gacha_machine.glb",
+        "sidecar": "/out/npc/npc/gacha_machine.json"
+      },
+      "provenance": "client",
+      "greeting": "Welcome to Magic POP.\n \nIf you have Magic POP Card. You can enjoy the Magic POP, Anytime!!\nYou can obtain tradable items in the 12th grade or higher through Genie's Lamp. (Can be acquired as a reward while proceeding with the Genie's Lamp quest from daily quest manager in each town or purchased at the Item Mall.)\nHow about now! Try now!",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1612.97, 0, 1193)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_gacha_machine rotY -1.571 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_EVENT_KISAENG1",
+      "name": "Event So-Ok",
+      "x": 110.168,
+      "z": -85.43,
+      "y": -3.228,
+      "yaw": 0,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/event_kisaeng1.bsr",
+        "glb": "/out/npc/npc/event_kisaeng1.glb",
+        "sidecar": "/out/npc/npc/event_kisaeng1.json"
+      },
+      "provenance": "client",
+      "greeting": "Hohoho. Did you come to join in the event?",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (1101.6801, -32.279999, 854.29999)",
+        "yaw": "default 0: no facing in client data and no port placement within 1 m"
+      }
+    },
+    {
+      "code": "NPC_CH_FORTRESS_OFFICIAL",
+      "name": "Jangan Fortress Clerk",
+      "x": 156.934,
+      "z": -303.521,
+      "y": 6.982,
+      "yaw": -1.554,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaquest_merchant_sword.bsr",
+        "glb": "/out/npc/npc/chinaquest_merchant_sword.glb",
+        "sidecar": "/out/npc/npc/chinaquest_merchant_sword.json"
+      },
+      "provenance": "client",
+      "greeting": "Many people are visiting me to occupy Jangan Fortress. Help of mine is essential for occupying the fortress. Visit me if you desire to apply for participation in the fortress war or alliance, or to purchase the items for the fortress war.",
+      "region": 25256,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25256 (1569.34, 69.82, 1115.21)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_fortress_official rotY -1.588 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_CH_MOONSHADOW",
+      "name": "WalYoung",
+      "x": 277.904,
+      "z": -106.934,
+      "y": 0,
+      "yaw": -3.125,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/npc/chinaetc_qinshiquest.bsr",
+        "glb": "/out/npc/npc/chinaetc_qinshiquest.glb",
+        "sidecar": "/out/npc/npc/chinaetc_qinshiquest.json"
+      },
+      "provenance": "client",
+      "greeting": "With my loved ones gone, I console myself with memories of the past.  Is it perhaps foolish of me to long for the good times that cannot return?",
+      "region": 25001,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25001 (859.03998, 0, 1069.34)",
+        "yaw": "vsro-server-db via third-party port: npcshops.json zones.jangan_province npc_ch_moonshadow rotY -0.017 (yaw = pi - rotY, frame.ts portYawToWorld)"
+      }
+    },
+    {
+      "code": "NPC_BATTLE_ARENA_MANAGER",
+      "name": "Arena Manager",
+      "x": 85.758,
+      "z": -85.356,
+      "y": -3.258,
+      "yaw": 0,
+      "world": "jangan",
+      "model": {
+        "bsr": "res/npc/sd/sd_arena_manager.bsr",
+        "glb": "/out/npc/sd/sd_arena_manager.glb",
+        "sidecar": "/out/npc/sd/sd_arena_manager.json"
+      },
+      "provenance": "client",
+      "greeting": "Are you interested in the Arena, too?  If you are full of youthful energy in you, then you should jump in! If you go see an operator for Item Exchange in Hotan with Arena coin, you can buy good item.",
+      "region": 25000,
+      "inConvertedRegion": true,
+      "fieldSources": {
+        "position": "client: npcpos.txt region 25000 (857.58002, -32.580002, 853.56)",
+        "yaw": "default 0: no facing in client data and no port placement within 1 m"
+      }
+    }
+  ]
+}

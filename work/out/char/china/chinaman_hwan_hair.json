@@ -1,0 +1,591 @@
+{
+  "source": "res/char/china/chinaman_hwan_hair.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "hwan_hair",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\char\\china\\chinaman_hwan_hair.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "hwan_hair": [
+      0,
+      0,
+      0
+    ],
+    "Bone62": [
+      0.001,
+      0.17246,
+      0.07108
+    ],
+    "Bone14": [
+      0.001,
+      0.19598,
+      0.06182
+    ],
+    "Bone15": [
+      0.001,
+      0.23796,
+      -0.0019
+    ],
+    "Bone16": [
+      0.01473,
+      0.23081,
+      -0.09933
+    ],
+    "Bone17": [
+      0.04202,
+      0.17492,
+      -0.1423
+    ],
+    "Bone18": [
+      0.06735,
+      0.14524,
+      -0.19416
+    ],
+    "Bone19": [
+      0.0932,
+      0.16858,
+      -0.27597
+    ],
+    "Bone20": [
+      0.07876,
+      0.14624,
+      -0.35316
+    ],
+    "Bone58": [
+      -0.07379,
+      0.05091,
+      0.04925
+    ],
+    "Bone59": [
+      -0.08056,
+      0.09419,
+      0.02164
+    ],
+    "Bone60": [
+      -0.12383,
+      0.14815,
+      -0.00927
+    ],
+    "Bone61": [
+      -0.09964,
+      0.22987,
+      -0.06735
+    ],
+    "Bone54": [
+      0.07695,
+      0.05264,
+      0.04925
+    ],
+    "Bone55": [
+      0.0826,
+      0.09385,
+      0.02178
+    ],
+    "Bone56": [
+      0.1271,
+      0.13995,
+      -0.02128
+    ],
+    "Bone57": [
+      0.22122,
+      0.08073,
+      -0.03695
+    ],
+    "Bone33": [
+      -0.07101,
+      0.16151,
+      0.01416
+    ],
+    "Bone34": [
+      -0.07916,
+      0.13737,
+      -0.06224
+    ],
+    "Bone35": [
+      -0.05685,
+      0.12761,
+      -0.14152
+    ],
+    "Bone36": [
+      0.01454,
+      0.13704,
+      -0.169
+    ],
+    "Bone37": [
+      0.05179,
+      0.10954,
+      -0.2447
+    ],
+    "Bone38": [
+      0.04071,
+      0.07029,
+      -0.34103
+    ],
+    "Bone21": [
+      0.07249,
+      0.15908,
+      0.0149
+    ],
+    "Bone22": [
+      0.08895,
+      0.16901,
+      -0.06421
+    ],
+    "Bone23": [
+      0.08256,
+      0.12874,
+      -0.13571
+    ],
+    "Bone24": [
+      0.11589,
+      0.099,
+      -0.19927
+    ],
+    "Bone25": [
+      0.15591,
+      0.14934,
+      -0.25923
+    ],
+    "Bone26": [
+      0.18544,
+      0.25285,
+      -0.28122
+    ],
+    "Bone27": [
+      -0.0722,
+      0.0784,
+      0.0223
+    ],
+    "Bone28": [
+      -0.09966,
+      0.0707,
+      -0.03575
+    ],
+    "Bone29": [
+      -0.07445,
+      0.0935,
+      -0.11853
+    ],
+    "Bone30": [
+      -0.00875,
+      0.05949,
+      -0.18201
+    ],
+    "Bone31": [
+      -0.00718,
+      0.06224,
+      -0.27854
+    ],
+    "Bone32": [
+      -0.051,
+      0.08611,
+      -0.36318
+    ],
+    "Bone08": [
+      0.07545,
+      0.0773,
+      0.02379
+    ],
+    "Bone09": [
+      0.08798,
+      0.08674,
+      -0.03989
+    ],
+    "Bone10": [
+      0.12371,
+      0.10112,
+      -0.11763
+    ],
+    "Bone11": [
+      0.10046,
+      0.07507,
+      -0.2087
+    ],
+    "Bone12": [
+      0.01528,
+      0.0989,
+      -0.24948
+    ],
+    "Bone13": [
+      -0.07686,
+      0.15149,
+      -0.24953
+    ],
+    "Bone01": [
+      0.001,
+      0.1333,
+      0.02145
+    ],
+    "Bone02": [
+      0.01726,
+      0.0882,
+      -0.07387
+    ],
+    "Bone03": [
+      0.03405,
+      0.08156,
+      -0.14822
+    ],
+    "Bone04": [
+      0.06957,
+      0.08841,
+      -0.20608
+    ],
+    "Bone05": [
+      0.07189,
+      0.12449,
+      -0.27939
+    ],
+    "Bone06": [
+      0.01922,
+      0.10692,
+      -0.33262
+    ],
+    "Bone07": [
+      -0.06725,
+      0.0517,
+      -0.31843
+    ],
+    "Bone39": [
+      0.001,
+      0.14603,
+      0.13067
+    ],
+    "Bone40": [
+      0.001,
+      0.20798,
+      0.1164
+    ],
+    "Bone41": [
+      0.01415,
+      0.25576,
+      0.0771
+    ],
+    "Bone42": [
+      0.03769,
+      0.25389,
+      0.00288
+    ],
+    "Bone43": [
+      0.01824,
+      0.31146,
+      -0.08285
+    ],
+    "Bone44": [
+      0.04561,
+      0.14637,
+      0.11718
+    ],
+    "Bone45": [
+      0.06562,
+      0.16912,
+      0.08741
+    ],
+    "Bone46": [
+      0.07771,
+      0.22039,
+      0.05758
+    ],
+    "Bone47": [
+      0.08828,
+      0.24142,
+      0.00803
+    ],
+    "Bone48": [
+      0.11046,
+      0.23752,
+      -0.04375
+    ],
+    "Bone49": [
+      -0.04319,
+      0.14333,
+      0.11813
+    ],
+    "Bone50": [
+      -0.06698,
+      0.16984,
+      0.08852
+    ],
+    "Bone51": [
+      -0.05907,
+      0.2109,
+      0.04482
+    ],
+    "Bone52": [
+      -0.08886,
+      0.24133,
+      0.00932
+    ],
+    "Bone53": [
+      -0.14264,
+      0.23106,
+      0.00044
+    ],
+    "Bone63": [
+      0.03597,
+      0.07929,
+      0.10844
+    ],
+    "Bone64": [
+      -0.03469,
+      0.07938,
+      0.10852
+    ]
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "monster/luster_hwan.efp",
+      "bone": "Bone64",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "monster/luster_hwan.efp",
+      "bone": "Bone63",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
+  "attachBone": "Bip01 Head",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 0,
+    "attachPointName": "_ha",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "hwan_hair_part1"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "hwan_hair",
+      "bmt": "prim\\mtrl\\char\\china\\man\\hwan_hair.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\char\\china\\man\\hwan_hair.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (32.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.501960813999176,
+        0.501960813999176,
+        0.501960813999176,
+        1
+      ],
+      "specular": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hwan_hair_part1",
+      "bms": "prim\\mesh\\char\\china\\man\\hwan_hair_part1.bms",
+      "material": "hwan_hair",
+      "vertices": 188,
+      "triangles": 242,
+      "skinned": false,
+      "bones": [
+        "hwan_hair",
+        "Bone21",
+        "Bone08",
+        "Bone39",
+        "Bone62",
+        "Bone42",
+        "Bone41",
+        "Bone40",
+        "Bone58",
+        "Bone59",
+        "Bone54",
+        "Bone55",
+        "Bone49",
+        "Bone50",
+        "Bone51",
+        "Bone52",
+        "Bone44",
+        "Bone45",
+        "Bone46",
+        "Bone47"
+      ]
+    },
+    {
+      "name": "hwan_hair_part2_part1",
+      "bms": "prim\\mesh\\char\\china\\man\\hwan_hair_part2_part1.bms",
+      "material": "hwan_hair",
+      "vertices": 81,
+      "triangles": 60,
+      "skinned": false,
+      "bones": [
+        "Bone33",
+        "hwan_hair",
+        "Bone27",
+        "Bone21",
+        "Bone09",
+        "Bone08",
+        "Bone15",
+        "Bone42",
+        "Bone41",
+        "Bone60",
+        "Bone59",
+        "Bone56",
+        "Bone55",
+        "Bone52",
+        "Bone51",
+        "Bone47",
+        "Bone46",
+        "Bone01",
+        "Bone62",
+        "Bone02"
+      ]
+    },
+    {
+      "name": "hwan_hair_part2_part2_part1",
+      "bms": "prim\\mesh\\char\\china\\man\\hwan_hair_part2_part2_part1.bms",
+      "material": "hwan_hair",
+      "vertices": 73,
+      "triangles": 77,
+      "skinned": false,
+      "bones": [
+        "Bone34",
+        "Bone33",
+        "Bone35",
+        "Bone28",
+        "Bone27",
+        "Bone29",
+        "Bone22",
+        "Bone21",
+        "Bone23",
+        "Bone10",
+        "Bone09",
+        "Bone16",
+        "Bone15",
+        "Bone17",
+        "hwan_hair",
+        "Bone01",
+        "Bone02",
+        "Bone62",
+        "Bone03"
+      ]
+    },
+    {
+      "name": "hwan_hair_part2_part2_part2",
+      "bms": "prim\\mesh\\char\\china\\man\\hwan_hair_part2_part2_part2.bms",
+      "material": "hwan_hair",
+      "vertices": 57,
+      "triangles": 61,
+      "skinned": false,
+      "bones": [
+        "Bone36",
+        "Bone35",
+        "Bone37",
+        "Bone30",
+        "Bone29",
+        "Bone31",
+        "Bone24",
+        "Bone23",
+        "Bone25",
+        "Bone11",
+        "Bone10",
+        "Bone12",
+        "Bone17",
+        "Bone18",
+        "Bone19",
+        "Bone03",
+        "Bone04",
+        "Bone05",
+        "Bone06",
+        "Bone02"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 399,
+    "triangles": 440,
+    "joints": 0,
+    "meshes": 4,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.3516051825135946,
+    "boundsMin": [
+      -0.14316454529762268,
+      -0.03063485585153103,
+      -0.3783746361732483
+    ],
+    "boundsMax": [
+      0.22430233657360077,
+      0.3209703266620636,
+      0.2160799503326416
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 13,
+    "issues": [
+      "NODE_EMPTY x13"
+    ]
+  }
+}

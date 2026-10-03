@@ -1,0 +1,122 @@
+{
+  "source": "res/item/china/weapon/cha_arrow_chain.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cha_arrow_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\cha_arrow_01.bsk",
+    "joints": [
+      "Bone01",
+      "Bone02"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 2.841227786376521e-7,
+      "maxHierarchyError": 2.7755575615628914e-17,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": -1,
+    "attachPointName": "NONE",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "cha_arrow",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\cha_arrow.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\cha_arrow.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        64
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (21.5% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "cha_arrow_01",
+      "bms": "prim\\mesh\\item\\china\\weapon\\cha_arrow_01.bms",
+      "material": "cha_arrow",
+      "vertices": 51,
+      "triangles": 39,
+      "skinned": true,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 51,
+    "triangles": 39,
+    "joints": 2,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.07882281951606274,
+    "boundsMin": [
+      -0.050797365605831146,
+      -0.02989949844777584,
+      -0.04801098257303238
+    ],
+    "boundsMax": [
+      0.050066567957401276,
+      0.048923321068286896,
+      1.3553125858306885
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "source": "res/npc/animal/whitehawk.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "whitehawk",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\animal\\hawk.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L HorseLink",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R HorseLink",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.7130344887614797e-7,
+      "maxHierarchyError": 1.6653345369377348e-16,
+      "staleToLocal": [
+        "Bone02",
+        "Bone04",
+        "Bone06"
+      ]
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": -1,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": []
+  },
+  "materials": [
+    {
+      "name": "hawk01",
+      "bmt": "prim\\mtrl\\npc\\animal\\whitehawk.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\animal\\whitehawk01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "BMT alpha flag but the texture is fully opaque",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0.019999999552965164
+    },
+    {
+      "name": "hawk02",
+      "bmt": "prim\\mtrl\\npc\\animal\\whitehawk.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\animal\\whitehawk02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (32.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hawk01",
+      "bms": "prim\\mesh\\npc\\animal\\hawk01.bms",
+      "material": "hawk01",
+      "vertices": 263,
+      "triangles": 372,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck1",
+        "Bip01 Neck",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 R Thigh",
+        "Bip01 L HorseLink",
+        "Bip01 L Foot",
+        "Bip01 R Calf",
+        "Bip01 R Clavicle",
+        "Bip01 R HorseLink",
+        "Bip01 R Foot"
+      ]
+    },
+    {
+      "name": "hawk02",
+      "bms": "prim\\mesh\\npc\\animal\\hawk02.bms",
+      "material": "hawk02",
+      "vertices": 96,
+      "triangles": 101,
+      "skinned": true,
+      "bones": [
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 Neck",
+        "Bip01 L Forearm",
+        "Bip01 Spine",
+        "Bip01 Tail1",
+        "Bip01 Tail",
+        "Bone01",
+        "Bone03",
+        "Bip01 L Hand",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bone05",
+        "Bip01 R Hand"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\animal\\hawk_stand.ban",
+      "banName": "hawk_stand",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\npc\\animal\\hawk_walk.ban",
+      "banName": "hawk_walk",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\npc\\animal\\hawk_run.ban",
+      "banName": "hawk_run",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 41,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 359,
+    "triangles": 473,
+    "joints": 36,
+    "meshes": 2,
+    "animations": 3,
+    "textures": 2,
+    "heightM": 0.33593155816197395,
+    "boundsMin": [
+      -0.7638591527938843,
+      0.03763289377093315,
+      -0.4912432134151459
+    ],
+    "boundsMax": [
+      0.7834471464157104,
+      0.3735644519329071,
+      0.18969926238059998
+    ]
+  },
+  "warnings": [
+    "3 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

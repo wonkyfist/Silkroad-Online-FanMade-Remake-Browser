@@ -1,0 +1,127 @@
+{
+  "source": "res/item/china/woman_item/clothes_03_sa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "clothes_03_sa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\clothes_sa.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": "Bip01 Neck1",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 4,
+    "attachPointName": "_sa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "clothes_03_sa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_03_sa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\clothes_03_sa.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_sa.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        64,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_03_sa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\clothes_03_sa.bms",
+      "material": "clothes_03_sa",
+      "vertices": 16,
+      "triangles": 12,
+      "skinned": false,
+      "bones": [
+        "Bone05",
+        "Bone03"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 16,
+    "triangles": 12,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.140740305185318,
+    "boundsMin": [
+      -0.3325713872909546,
+      0.09126465022563934,
+      -0.029696643352508545
+    ],
+    "boundsMax": [
+      0.3172137439250946,
+      0.23200495541095734,
+      0.022604450583457947
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "issues": [
+      "NODE_EMPTY x2"
+    ]
+  }
+}

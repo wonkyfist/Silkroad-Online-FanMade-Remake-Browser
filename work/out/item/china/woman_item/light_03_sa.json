@@ -1,0 +1,116 @@
+{
+  "source": "res/item/china/woman_item/light_03_sa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_03_la",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 4,
+    "attachPointName": "_sa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "Light_03_sa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Light_03_sa",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\light_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_sa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (93.2% partial, 6.8% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Light_03_sa",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\light_03_sa.bms",
+      "material": "Light_03_sa",
+      "vertices": 68,
+      "triangles": 70,
+      "skinned": false,
+      "bones": [
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 68,
+    "triangles": 70,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.08111953735351562,
+    "boundsMin": [
+      0.046215496957302094,
+      1.4349128007888794,
+      -0.12275192886590958
+    ],
+    "boundsMax": [
+      0.31092196702957153,
+      1.516032338142395,
+      -0.0001275857794098556
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

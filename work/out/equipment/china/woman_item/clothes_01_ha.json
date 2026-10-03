@@ -1,0 +1,246 @@
+{
+  "source": "res/item/china/woman_item/clothes_01_ha.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "clothes_01_ha",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim/skel/char/europe/europewoman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone01",
+      "Bone02",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.242945916363652e-7,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 0,
+    "attachPointName": "_ha",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "clothes_01_ha"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_01_ha",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clother_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_ha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_01_ha",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_01_ha.bms",
+      "material": "clothes_01_ha",
+      "vertices": 98,
+      "triangles": 152,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 98,
+    "triangles": 152,
+    "joints": 45,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.17378365993499756,
+    "boundsMin": [
+      -0.07846085727214813,
+      1.5736583471298218,
+      -0.1574491560459137
+    ],
+    "boundsMax": [
+      0.07846085727214813,
+      1.7474420070648193,
+      0.08072417229413986
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_W_CLOTHES_01_HA_A",
+      "ITEM_CH_W_CLOTHES_01_HA_B",
+      "ITEM_CH_W_CLOTHES_01_HA_C"
+    ],
+    "bsr": "res/item/china/woman_item/clothes_01_ha.bsr",
+    "gender": "female",
+    "kind": "skinned",
+    "method": "REPLACE",
+    "attachPoint": "_ha",
+    "slots": [
+      "HAIR"
+    ],
+    "attachBone": null,
+    "hides": [
+      "chinawoman_Adventurer_hair"
+    ],
+    "skeleton": "prim/skel/char/europe/europewoman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone01",
+      "Bone02",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04"
+    ],
+    "coverage": [
+      {
+        "slot": "HAIR",
+        "mesh": "chinawoman_Adventurer_hair",
+        "vertices": 170,
+        "gaps": 6,
+        "maxOffsetM": 0.0754
+      }
+    ],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  }
+}

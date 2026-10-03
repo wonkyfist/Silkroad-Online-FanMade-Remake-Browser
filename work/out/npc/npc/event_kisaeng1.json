@@ -1,0 +1,399 @@
+{
+  "source": "res/npc/npc/event_kisaeng1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "event_kisaeng1",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaetc_kisaeng1.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail11",
+      "Bip01 Ponytail12",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06",
+      "Bone07",
+      "Bone08",
+      "Bone09",
+      "Bone10"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.612142309294413e-7,
+      "maxHierarchyError": 8.881784197001252e-16,
+      "staleToLocal": [
+        "Bone02",
+        "Bone03",
+        "Bone04",
+        "Bone05"
+      ]
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "chinaetc_kisaeng1",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.9843137860298157,
+        0.9098039865493774,
+        0.8784314393997192,
+        1
+      ],
+      "emissive": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinaetc_kisaeng1_al",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1_al.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (42.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "chinaetc_kisaeng1_2",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_kisaeng1.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaEtc_Kisaeng1_body_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_kisaeng1_body_part1.bms",
+      "material": "chinaetc_kisaeng1",
+      "vertices": 367,
+      "triangles": 496,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 L UpperArm",
+        "Bip01 Ponytail11",
+        "Bip01 R UpperArm",
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Ponytail1",
+        "Bip01 L Clavicle",
+        "Bip01 Ponytail12",
+        "Spine_Base",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger2",
+        "Bip01 L Finger01",
+        "Bip01 L Finger0",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 R Clavicle",
+        "Bip01 R Forearm"
+      ]
+    },
+    {
+      "name": "ChinaEtc_Kisaeng1_body_part2_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_kisaeng1_body_part2_part1.bms",
+      "material": "chinaetc_kisaeng1",
+      "vertices": 89,
+      "triangles": 101,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Finger1",
+        "Bip01 R Finger2",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21"
+      ]
+    },
+    {
+      "name": "ChinaEtc_Kisaeng1_body_part2_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_kisaeng1_body_part2_part2.bms",
+      "material": "chinaetc_kisaeng1",
+      "vertices": 330,
+      "triangles": 336,
+      "skinned": true,
+      "bones": [
+        "Spine_Base",
+        "Bip01 Spine1",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh",
+        "Bone01",
+        "Bone06",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bone07",
+        "Bone03",
+        "Bone04",
+        "Bone08",
+        "Bone09",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    },
+    {
+      "name": "ChinaEtc_Kisaeng1_hair",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_kisaeng1_hair.bms",
+      "material": "chinaetc_kisaeng1_al",
+      "vertices": 88,
+      "triangles": 72,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Ponytail1",
+        "Bip01 Ponytail12",
+        "Bip01 Ponytail11",
+        "Bip01 R Finger1"
+      ]
+    },
+    {
+      "name": "ChinaEtc_Kisaeng1_skirt",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_kisaeng1_skirt.bms",
+      "material": "chinaetc_kisaeng1_2",
+      "vertices": 86,
+      "triangles": 77,
+      "skinned": true,
+      "bones": [
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Thigh",
+        "Bone01",
+        "Bip01 Pelvis",
+        "Bone06",
+        "Bip01 R Calf",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bone02",
+        "Bone03",
+        "Bone04",
+        "Bone08",
+        "Bone09",
+        "Bone07"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\event_kisaeng1.ban",
+      "banName": "event_kisaeng1",
+      "durationMs": 5000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 12,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\event_kisaeng1_time.ban",
+      "banName": "chinaetc_kisaeng1_time",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    }
+  ],
+  "stats": {
+    "vertices": 960,
+    "triangles": 1082,
+    "joints": 49,
+    "meshes": 5,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 1.6910845492966473,
+    "boundsMin": [
+      -0.8420841097831726,
+      0.0026112343184649944,
+      -0.15163247287273407
+    ],
+    "boundsMax": [
+      0.6834630966186523,
+      1.6936957836151123,
+      0.1885191649198532
+    ]
+  },
+  "warnings": [
+    "4 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

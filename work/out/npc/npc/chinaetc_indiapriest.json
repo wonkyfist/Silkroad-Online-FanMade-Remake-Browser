@@ -1,0 +1,278 @@
+{
+  "source": "res/npc/npc/chinaetc_indiapriest.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaetc_indiapriest",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaetc_indiapriest.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000015253539935589089,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaEtc_IndiaPriest_stick ",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_indiapriest.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_indiapriest_stick .ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaEtc_IndiaPriest",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_indiapriest.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_indiapriest.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaEtc_IndiaPriest_stick ",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_indiapriest_stick .bms",
+      "material": "ChinaEtc_IndiaPriest_stick ",
+      "vertices": 248,
+      "triangles": 232,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Hand"
+      ]
+    },
+    {
+      "name": "ChinaEtc_IndiaPriest_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_indiapriest_part1.bms",
+      "material": "ChinaEtc_IndiaPriest",
+      "vertices": 381,
+      "triangles": 535,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Hand",
+        "Bip01 L Forearm",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 Head",
+        "Bip01 Neck1",
+        "Bip01 Neck",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Hand"
+      ]
+    },
+    {
+      "name": "ChinaEtc_IndiaPriest_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_indiapriest_part2.bms",
+      "material": "ChinaEtc_IndiaPriest",
+      "vertices": 225,
+      "triangles": 267,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Calf",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger0",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R Finger2",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 R Thigh",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 Pelvis"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_indiapriest_basic.ban",
+      "banName": "chinaetc_indiapriest_basic",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 11,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_indiapriest_time.ban",
+      "banName": "chinaetc_indiapriest_time",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 854,
+    "triangles": 1034,
+    "joints": 36,
+    "meshes": 3,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 2.3445978020317852,
+    "boundsMin": [
+      -0.2628708481788635,
+      0.0008821631781756878,
+      -0.20843227207660675
+    ],
+    "boundsMax": [
+      0.4382690489292145,
+      2.345479965209961,
+      0.5166274309158325
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

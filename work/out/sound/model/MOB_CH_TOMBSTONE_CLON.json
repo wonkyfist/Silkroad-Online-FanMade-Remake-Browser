@@ -1,0 +1,1 @@
+{"format":"sro-sound-model","version":1,"code":"MOB_CH_TOMBSTONE_CLON","bsr":"res/mob/china/tombstone.bsr","clips":{"DAMAGE1":[{"ms":0,"handle":"moan","raw":"voc_moan1","file":"monster/cm_tomb_moan1"}],"DAMAGE2":[{"ms":0,"handle":"moan","raw":"voc_moan2","file":"monster/cm_tomb_moan2"}]}}

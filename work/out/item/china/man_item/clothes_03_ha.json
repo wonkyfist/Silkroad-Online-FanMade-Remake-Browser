@@ -1,0 +1,170 @@
+{
+  "source": "res/item/china/man_item/clothes_03_ha.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "cloth_03_ha",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 0,
+    "attachPointName": "_ha",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "clothes_03_ha_2s"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_03_ha",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\clothes_03.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_ha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "clothes_03_ha_2s",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\clothes_03.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_ha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_03_ha",
+      "bms": "prim\\mesh\\item\\china\\man_item\\clothes_03_ha.bms",
+      "material": "clothes_03_ha",
+      "vertices": 66,
+      "triangles": 96,
+      "skinned": false,
+      "bones": [
+        "Bip01 Head"
+      ]
+    },
+    {
+      "name": "clothes_03_ha_2s",
+      "bms": "prim\\mesh\\item\\china\\man_item\\clothes_03_ha_2s.bms",
+      "material": "clothes_03_ha_2s",
+      "vertices": 28,
+      "triangles": 20,
+      "skinned": false,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 94,
+    "triangles": 116,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.4433553218841553,
+    "boundsMin": [
+      -0.27393829822540283,
+      1.4384688138961792,
+      -0.2516959607601166
+    ],
+    "boundsMax": [
+      0.27393776178359985,
+      1.8818241357803345,
+      0.29318344593048096
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "source": "res/npc/npc/chinaetc_gamblingplaceman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaetc_gamblingplaceman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaetc_gamblingplaceman.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 4.5113835955845616e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaEtc_GamblingplaceMan_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_gamblingplaceman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_gamblingplaceman_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (20.7% zero, 2.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaEtc_GamblingplaceMan",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_gamblingplaceman.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_gamblingplaceman.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaEtc_GamblingplaceMan_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_gamblingplaceman_al_2s.bms",
+      "material": "ChinaEtc_GamblingplaceMan_al_2s",
+      "vertices": 92,
+      "triangles": 100,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Calf",
+        "Bip01 Spine",
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 Head",
+        "Bip01 R Calf",
+        "Bip01 R Thigh"
+      ]
+    },
+    {
+      "name": "ChinaEtc_GamblingplaceMan_stick",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_gamblingplaceman_stick.bms",
+      "material": "ChinaEtc_GamblingplaceMan",
+      "vertices": 66,
+      "triangles": 36,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "ChinaEtc_GamblingplaceMan_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_gamblingplaceman_part1.bms",
+      "material": "ChinaEtc_GamblingplaceMan",
+      "vertices": 165,
+      "triangles": 204,
+      "skinned": true,
+      "bones": [
+        "Bip01 Pelvis",
+        "Bip01 Spine",
+        "Bip01 L Calf",
+        "Bip01 L Thigh",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0"
+      ]
+    },
+    {
+      "name": "ChinaEtc_GamblingplaceMan_part2_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_gamblingplaceman_part2_part1.bms",
+      "material": "ChinaEtc_GamblingplaceMan",
+      "vertices": 322,
+      "triangles": 343,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 L Finger2",
+        "Bip01 L Finger01",
+        "Bip01 L Finger0",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 Neck",
+        "Bip01 R Clavicle",
+        "Bip01 Neck1",
+        "Bip01 Spine1",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0",
+        "Bip01 Head"
+      ]
+    },
+    {
+      "name": "ChinaEtc_GamblingplaceMan_part2_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_gamblingplaceman_part2_part2.bms",
+      "material": "ChinaEtc_GamblingplaceMan",
+      "vertices": 346,
+      "triangles": 383,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 Neck1",
+        "Bip01 L Clavicle",
+        "Bip01 Neck",
+        "Bip01 Spine1",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 Head",
+        "Bip01 R Hand",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_gamblingplaceman_basic.ban",
+      "banName": "chinaetc_gamblingplaceman_basic",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_gamblingplaceman_time.ban",
+      "banName": "chinaetc_gamblingplaceman_time",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 991,
+    "triangles": 1066,
+    "joints": 36,
+    "meshes": 5,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 2.009647125378251,
+    "boundsMin": [
+      -0.39173680543899536,
+      -0.019273513928055763,
+      -0.2997351288795471
+    ],
+    "boundsMax": [
+      0.45450305938720703,
+      1.9903736114501953,
+      0.5062236785888672
+    ]
+  },
+  "warnings": [
+    "ChinaEtc_GamblingplaceMan_stick: no skin data; left static at the model origin"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

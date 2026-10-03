@@ -1,0 +1,458 @@
+{
+  "source": "res/mob/china/bluetiger.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "bluetiger",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\bluetiger.bsk",
+    "joints": [
+      "Bip02",
+      "Bip02 Pelvis",
+      "Bip02 Spine",
+      "Bip02 Spine1",
+      "Bip02 Spine2",
+      "Bip02 Neck",
+      "Bip02 Neck1",
+      "Bip02 Head",
+      "Bip02 Ponytail1",
+      "Bip02 L Clavicle",
+      "Bip02 L UpperArm",
+      "Bip02 L Forearm",
+      "Bip02 L Hand",
+      "Bip02 L Finger0",
+      "Bip02 R Clavicle",
+      "Bip02 R UpperArm",
+      "Bip02 R Forearm",
+      "Bip02 R Hand",
+      "Bip02 R Finger0",
+      "saddle",
+      "Bip02 L Thigh",
+      "Bip02 L Calf",
+      "Bip02 L HorseLink",
+      "Bip02 L Foot",
+      "Bip02 L Toe0",
+      "Bip02 R Thigh",
+      "Bip02 R Calf",
+      "Bip02 R HorseLink",
+      "Bip02 R Foot",
+      "Bip02 R Toe0",
+      "Bip02 Tail",
+      "Bip02 Tail1",
+      "Bip02 Tail2",
+      "Bip02 Tail3",
+      "Bip02 Tail4"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 6.750301675406689e-7,
+      "maxHierarchyError": 5.551115123125783e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "bluetiger_2side",
+      "bmt": "prim\\mtrl\\mob\\china\\bluetiger.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\bluetiger.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.4% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "bluetiger",
+      "bmt": "prim\\mtrl\\mob\\china\\bluetiger.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\bluetiger.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (7.4% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "bluetiger_2side",
+      "bms": "prim\\mesh\\mob\\china\\bluetiger_2side.bms",
+      "material": "bluetiger_2side",
+      "vertices": 89,
+      "triangles": 63,
+      "skinned": true,
+      "bones": [
+        "Bip02 Ponytail1",
+        "Bip02 Head",
+        "Bip02 Neck1",
+        "Bip02 R HorseLink",
+        "Bip02 R Calf",
+        "Bip02 R Forearm",
+        "Bip02 R UpperArm",
+        "Bip02 Spine2",
+        "Bip02 Spine1",
+        "Bip02 Neck",
+        "Bip02 L HorseLink",
+        "Bip02 L Calf",
+        "Bip02 L Forearm",
+        "Bip02 L UpperArm"
+      ]
+    },
+    {
+      "name": "bluetiger_part1",
+      "bms": "prim\\mesh\\mob\\china\\bluetiger_part1.bms",
+      "material": "bluetiger",
+      "vertices": 392,
+      "triangles": 487,
+      "skinned": true,
+      "bones": [
+        "Bip02 Head",
+        "Bip02 Ponytail1",
+        "Bip02 Neck1",
+        "Bip02 Neck",
+        "Bip02 R UpperArm",
+        "Bip02 Spine2",
+        "Bip02 Spine1",
+        "Bip02 R Forearm",
+        "Bip02 R Hand",
+        "Bip02 R Finger0",
+        "Bip02 L UpperArm",
+        "Bip02 L Forearm",
+        "Bip02 L Hand",
+        "Bip02 L Finger0"
+      ]
+    },
+    {
+      "name": "bluetiger_part2",
+      "bms": "prim\\mesh\\mob\\china\\bluetiger_part2.bms",
+      "material": "bluetiger",
+      "vertices": 211,
+      "triangles": 274,
+      "skinned": true,
+      "bones": [
+        "Bip02 R Thigh",
+        "Bip02 Pelvis",
+        "Bip02 Tail",
+        "Bip02 Spine",
+        "Bip02 R Calf",
+        "Bip02 L Calf",
+        "Bip02 R HorseLink",
+        "Bip02 R Foot",
+        "Bip02 R Toe0",
+        "Bip02 Spine1",
+        "Bip02 L Thigh",
+        "Bip02 L HorseLink",
+        "Bip02 L Foot",
+        "Bip02 L Toe0",
+        "Bip02 Tail1",
+        "Bip02 Tail4",
+        "Bip02 Tail3",
+        "Bip02 Tail2"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_stand01.ban",
+      "banName": "bluetiger_stand01",
+      "durationMs": 5333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_walk.ban",
+      "banName": "bluetiger_walk",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 39,
+      "walkLength": 34.65999984741211,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_attack01.ban",
+      "banName": "bluetiger_attack01",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 68,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_damage01.ban",
+      "banName": "bluetiger_damage01",
+      "durationMs": 966,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 15,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 6,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_die.ban",
+      "banName": "bluetiger_die",
+      "durationMs": 5533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 64,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_attack02.ban",
+      "banName": "bluetiger_attack02",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_run.ban",
+      "banName": "bluetiger_run",
+      "durationMs": 900,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 31,
+      "walkLength": 81,
+      "events": [],
+      "trackedJoints": 33
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_damage02.ban",
+      "banName": "bluetiger_damage02",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 44,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_attack03.ban",
+      "banName": "bluetiger_attack03",
+      "durationMs": 5000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_die_loop.ban",
+      "banName": "bluetiger_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "HELP",
+      "group": "default",
+      "type": 67,
+      "typeName": "HELP",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_help.ban",
+      "banName": "bluetiger_help",
+      "durationMs": 3733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 63,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "FIND",
+      "group": "default",
+      "type": 78,
+      "typeName": "FIND",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_find.ban",
+      "banName": "bluetiger_find",
+      "durationMs": 3066,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\mob\\china\\bluetiger\\bluetiger_stand02.ban",
+      "banName": "bluetiger_stand02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34
+    }
+  ],
+  "stats": {
+    "vertices": 692,
+    "triangles": 824,
+    "joints": 35,
+    "meshes": 3,
+    "animations": 13,
+    "textures": 1,
+    "heightM": 3.241283191367984,
+    "boundsMin": [
+      -0.8816113471984863,
+      -0.007816089317202568,
+      -4.077553749084473
+    ],
+    "boundsMax": [
+      0.8815900087356567,
+      3.2334671020507812,
+      2.905339241027832
+    ]
+  },
+  "warnings": [
+    "animation prim\\ani\\mob\\china\\bluetiger\\bluetiger_stnad01.ban: PK2: no such file prim\\ani\\mob\\china\\bluetiger\\bluetiger_stnad01.ban"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "source": "res/item/china/woman_item/light_03_aa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_03_aa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 5,
+    "attachPointName": "_aa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "Light_03_aa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Light_03_aa",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\light_03.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_aa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Light_03_aa",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\light_03_aa.bms",
+      "material": "Light_03_aa",
+      "vertices": 74,
+      "triangles": 76,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger2",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger2"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 74,
+    "triangles": 76,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.05841946601867676,
+    "boundsMin": [
+      -0.7048023343086243,
+      1.4048857688903809,
+      -0.095986008644104
+    ],
+    "boundsMax": [
+      0.7048023343086243,
+      1.4633052349090576,
+      -0.024720538407564163
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

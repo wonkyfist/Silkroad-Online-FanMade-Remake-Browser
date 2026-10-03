@@ -1,0 +1,162 @@
+{
+  "source": "res/item/china/weapon/blade_03.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "blade_03",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\blade_03.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": "Bip01 R HandMid",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 7,
+    "attachPointName": "RIGHT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 9,
+        "slotName": "RIGHT_HAND",
+        "mesh": "blade_03"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "blade1_5",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\blade1_5.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\blade1_5.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "blade_03",
+      "bms": "prim\\mesh\\item\\china\\weapon\\blade_03.bms",
+      "material": "blade1_5",
+      "vertices": 81,
+      "triangles": 86,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 81,
+    "triangles": 86,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.031791591085493565,
+    "boundsMin": [
+      -0.10176106542348862,
+      -0.027317699044942856,
+      -0.14963965117931366
+    ],
+    "boundsMax": [
+      0.12386901676654816,
+      0.004473892040550709,
+      0.9335042238235474
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_BLADE_03_A",
+      "ITEM_CH_BLADE_03_B",
+      "ITEM_CH_BLADE_03_C"
+    ],
+    "bsr": "res/item/china/weapon/blade_03.bsr",
+    "gender": null,
+    "kind": "socket",
+    "method": "ADD",
+    "attachPoint": "RIGHT_HAND",
+    "slots": [
+      "RIGHT_HAND"
+    ],
+    "attachBone": "Bip01 R HandMid",
+    "hides": [],
+    "skeleton": null,
+    "joints": [],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  },
+  "dummies": {
+    "Bone01": [
+      0.00027,
+      0,
+      -0.00058
+    ],
+    "ai_start": [
+      0.00018,
+      -0.01201,
+      0.08137
+    ],
+    "ai_end": [
+      0.03353,
+      -0.01201,
+      0.82883
+    ]
+  }
+}

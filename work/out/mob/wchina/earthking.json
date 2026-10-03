@@ -1,0 +1,568 @@
+{
+  "source": "res/mob/wchina/earthking.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "earthking",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\earthking.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bone01",
+      "Bone02",
+      "bone_brilliance_r",
+      "bone_brilliance_l",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L Finger22",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger12",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger02",
+      "Bip01 L Finger3",
+      "Bip01 L Finger31",
+      "Bip01 L Finger32",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R Finger22",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger12",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger02",
+      "Bip01 R Finger3",
+      "Bip01 R Finger31",
+      "Bip01 R Finger32",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 R Toe01",
+      "Bip01 R Toe02",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 L Toe01",
+      "Bip01 L Toe02"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 5.468876491665497e-7,
+      "maxHierarchyError": 6.661338147750939e-16,
+      "staleToLocal": [
+        "Bone02"
+      ]
+    }
+  },
+  "particles": [
+    {
+      "set": "status_bad_burn",
+      "kind": "status",
+      "efp": "monster/status_bad_burn.efp",
+      "bone": null,
+      "position": [
+        -0.00358,
+        0.39801,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_eshock",
+      "kind": "status",
+      "efp": "monster/status_bad_eshock.efp",
+      "bone": null,
+      "position": [
+        -0.00358,
+        0.39801,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_frostbite",
+      "kind": "status",
+      "efp": "monster/status_bad_frostbite.efp",
+      "bone": null,
+      "position": [
+        -0.00358,
+        0.39801,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_off",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_off_m.efp",
+      "bone": null,
+      "position": [
+        0.00429,
+        0.99617,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_icing_on",
+      "kind": "status",
+      "efp": "monster/status_bad_icing_on_m.efp",
+      "bone": null,
+      "position": [
+        0.00429,
+        0.99617,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "status_bad_poison",
+      "kind": "status",
+      "efp": "monster/status_bad_poison.efp",
+      "bone": null,
+      "position": [
+        -0.00358,
+        0.39801,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "default",
+      "kind": "clip",
+      "clip": "DIE1",
+      "efp": "monster/dust_earthghost_down.efp",
+      "bone": null,
+      "position": [
+        0,
+        0,
+        -0.37466
+      ],
+      "birthMs": 1118,
+      "night": false
+    }
+  ],
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "EarthKing_part1"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "EarthKing_part2_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "EarthKing_part2_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "EarthKing",
+      "bmt": "prim\\mtrl\\mob\\china\\earthking.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\earthking.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.5% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.43529415130615234,
+        0.43529415130615234,
+        0.43529415130615234,
+        1
+      ],
+      "ambient": [
+        0.43529415130615234,
+        0.43529415130615234,
+        0.43529415130615234,
+        1
+      ],
+      "specular": [
+        0.9137255549430847,
+        0.9137255549430847,
+        0.9137255549430847,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "EarthKing_part1",
+      "bms": "prim\\mesh\\mob\\china\\earthking_part1.bms",
+      "material": "EarthKing",
+      "vertices": 797,
+      "triangles": 1134,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Head",
+        "Bone01",
+        "Bip01 Neck1",
+        "Bip01 Neck",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm"
+      ]
+    },
+    {
+      "name": "EarthKing_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\earthking_part2_part1.bms",
+      "material": "EarthKing",
+      "vertices": 135,
+      "triangles": 181,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Hand",
+        "Bip01 L Finger0",
+        "Bip01 L Finger1",
+        "Bip01 L Finger01",
+        "Bip01 L Finger3",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger02",
+        "Bip01 L Finger12",
+        "Bip01 L Finger32",
+        "Bip01 L Finger31",
+        "Bip01 L Finger22"
+      ]
+    },
+    {
+      "name": "EarthKing_part2_part2",
+      "bms": "prim\\mesh\\mob\\china\\earthking_part2_part2.bms",
+      "material": "EarthKing",
+      "vertices": 135,
+      "triangles": 181,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 R Hand",
+        "Bip01 R Finger0",
+        "Bip01 R Finger1",
+        "Bip01 R Finger3",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger02",
+        "Bip01 R Finger01",
+        "Bip01 R Finger12",
+        "Bip01 R Finger32",
+        "Bip01 R Finger31",
+        "Bip01 R Finger22"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_stand01.ban",
+      "banName": "earthking_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 55
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_walk.ban",
+      "banName": "earthking_walk",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 17,
+      "walkLength": 50,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_attack01.ban",
+      "banName": "earthking_attack01",
+      "durationMs": 1866,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 67,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1112,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        },
+        {
+          "timeMs": 1475,
+          "type": 1,
+          "p1": 2,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 53
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_damage01.ban",
+      "banName": "earthking_damage01",
+      "durationMs": 366,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 6,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_die.ban",
+      "banName": "earthking_die",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 23,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_attack02.ban",
+      "banName": "earthking_attack02",
+      "durationMs": 3000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 918,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 53
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_run.ban",
+      "banName": "earthking_run",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 39.959999084472656,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "OBSOLETE_STAND2",
+      "group": "default",
+      "type": 8,
+      "typeName": "OBSOLETE_STAND2",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_stand02.ban",
+      "banName": "earthking_stand02",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 28,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_damage02.ban",
+      "banName": "earthking_damage02",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 13,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "ATTACK3",
+      "group": "default",
+      "type": 16,
+      "typeName": "ATTACK3",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_attack03.ban",
+      "banName": "earthking_attack03",
+      "durationMs": 2500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 50,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1312,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 53
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_die_loop.ban",
+      "banName": "earthking_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 53
+    },
+    {
+      "name": "STUN",
+      "group": "default",
+      "type": 79,
+      "typeName": "STUN",
+      "ban": "prim\\ani\\mob\\china\\earthking\\earthking_stand01.ban",
+      "banName": "earthking_stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 9,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 55
+    }
+  ],
+  "stats": {
+    "vertices": 1067,
+    "triangles": 1496,
+    "joints": 56,
+    "meshes": 3,
+    "animations": 12,
+    "textures": 1,
+    "heightM": 1.732023537158966,
+    "boundsMin": [
+      -1.80047607421875,
+      0.3499090075492859,
+      -0.26401716470718384
+    ],
+    "boundsMax": [
+      1.800489068031311,
+      2.081932544708252,
+      0.4124109745025635
+    ]
+  },
+  "warnings": [
+    "1 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

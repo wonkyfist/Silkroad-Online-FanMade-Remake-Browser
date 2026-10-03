@@ -1,0 +1,148 @@
+{
+  "source": "res/item/china/weapon/sword_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "sword_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\sword_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone01": [
+      0,
+      0,
+      0
+    ],
+    "Bone02": [
+      -0.02117,
+      0.00007,
+      -0.0001
+    ],
+    "ai_start": [
+      -0.00766,
+      -0.00011,
+      0.10104
+    ],
+    "ai_end": [
+      -0.01301,
+      -0.00077,
+      0.75898
+    ]
+  },
+  "attachBone": "Bip01 R HandMid",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 7,
+    "attachPointName": "RIGHT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 9,
+        "slotName": "RIGHT_HAND",
+        "mesh": "sword_01"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "sword1_2_3",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (93.4% partial, 4.2% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "sword_01",
+      "bms": "prim\\mesh\\item\\china\\weapon\\sword_01.bms",
+      "material": "sword1_2_3",
+      "vertices": 84,
+      "triangles": 102,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 84,
+    "triangles": 102,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.06314494647085667,
+    "boundsMin": [
+      -0.0651392936706543,
+      -0.04647919535636902,
+      -0.07811195403337479
+    ],
+    "boundsMax": [
+      0.034441325813531876,
+      0.016665751114487648,
+      0.7643366456031799
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

@@ -1,0 +1,393 @@
+{
+  "source": "res/npc/npc/chinaquest_villageheadman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaquest_villageheadman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaquest_villageheadman.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.263269719004484e-7,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaQuest_VillageHeadman_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.7% zero, 0.7% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (11.9% zero, 4.6% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaquest_villageheadman.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.7% zero, 0.7% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaQuest_VillageHeadman_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_2s.bms",
+      "material": "ChinaQuest_VillageHeadman_2s",
+      "vertices": 16,
+      "triangles": 10,
+      "skinned": true,
+      "bones": [
+        "Bip01 Neck1",
+        "Bip01 Spine1"
+      ]
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_al_2s.bms",
+      "material": "ChinaQuest_VillageHeadman_al_2s",
+      "vertices": 54,
+      "triangles": 64,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Calf",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Thigh",
+        "Bip01 Pelvis",
+        "Bip01 L Foot",
+        "Bip01 R Foot"
+      ]
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_al_2s_02",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_al_2s_02.bms",
+      "material": "ChinaQuest_VillageHeadman_al_2s",
+      "vertices": 48,
+      "triangles": 36,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Clavicle",
+        "Bip01 L Clavicle"
+      ]
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_chair",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_chair.bms",
+      "material": "ChinaQuest_VillageHeadman",
+      "vertices": 220,
+      "triangles": 128,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_part1.bms",
+      "material": "ChinaQuest_VillageHeadman",
+      "vertices": 179,
+      "triangles": 215,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Foot",
+        "Bip01 R Calf",
+        "Bip01 R Toe0",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 L Foot",
+        "Bip01 L Calf",
+        "Bip01 L Toe0",
+        "Bip01 Pelvis",
+        "Bip01 L Hand"
+      ]
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_part2_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_part2_part1.bms",
+      "material": "ChinaQuest_VillageHeadman",
+      "vertices": 239,
+      "triangles": 318,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Neck1",
+        "Bip01 R UpperArm",
+        "Bip01 Neck",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger0",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 L Forearm",
+        "Bip01 Spine"
+      ]
+    },
+    {
+      "name": "ChinaQuest_VillageHeadman_part2_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaquest_villageheadman_part2_part2.bms",
+      "material": "ChinaQuest_VillageHeadman",
+      "vertices": 164,
+      "triangles": 175,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Hand",
+        "Bip01 R Finger1",
+        "Bip01 R Finger0",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger01",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 L Hand",
+        "Bip01 L Forearm",
+        "Bip01 L Finger0",
+        "Bip01 L Finger11",
+        "Bip01 L Finger1",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger01",
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinaquest_villageheadman_basic.ban",
+      "banName": "chinaquest_villageheadman_basic",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\westchinaquest_oldman_time.ban",
+      "banName": "westchinaquest_oldman_time",
+      "durationMs": 3333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 920,
+    "triangles": 946,
+    "joints": 36,
+    "meshes": 7,
+    "animations": 2,
+    "textures": 2,
+    "heightM": 1.4534104019403458,
+    "boundsMin": [
+      -0.31655746698379517,
+      -0.0833214670419693,
+      -0.25772541761398315
+    ],
+    "boundsMax": [
+      0.31882622838020325,
+      1.3700889348983765,
+      0.5781553983688354
+    ]
+  },
+  "warnings": [
+    "ChinaQuest_VillageHeadman_chair: no skin data; left static at the model origin"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "source": "res/mob/wchina/earthghost_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "earthghost",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\earthghost.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bone01",
+      "Bone02",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail11",
+      "Bip01 Ponytail12",
+      "Bip01 Ponytail13",
+      "Bip01 Ponytail14",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000010918675498183816,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": [
+        "Bone02"
+      ]
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "EarthGhost_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "EarthGhost_part2_part1"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "EarthGhost_part2_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "earthghost",
+      "bmt": "prim\\mtrl\\mob\\china\\earthghost_champ.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\earthghost_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.7% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.9137255549430847,
+        0.9137255549430847,
+        0.9137255549430847,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "EarthGhost_part1",
+      "bms": "prim\\mesh\\mob\\china\\earthghost_part1.bms",
+      "material": "EarthGhost",
+      "vertices": 146,
+      "triangles": 184,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R UpperArm"
+      ]
+    },
+    {
+      "name": "EarthGhost_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\earthghost_part2_part1.bms",
+      "material": "EarthGhost",
+      "vertices": 215,
+      "triangles": 286,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    },
+    {
+      "name": "EarthGhost_part2_part2",
+      "bms": "prim\\mesh\\mob\\china\\earthghost_part2_part2.bms",
+      "material": "EarthGhost",
+      "vertices": 221,
+      "triangles": 316,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bip01 Head",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 Ponytail1",
+        "Bip01 Ponytail11",
+        "Bip01 Ponytail14",
+        "Bip01 Ponytail13",
+        "Bip01 Ponytail12",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\earthghost_stand01.ban",
+      "banName": "earthghost_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\earthghost_walk.ban",
+      "banName": "earthghost_walk",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 8.199999809265137,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\earthghost_attack01.ban",
+      "banName": "earthghost_attack01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 37,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 783,
+          "type": 1,
+          "p1": 0,
+          "p2": 2
+        },
+        {
+          "timeMs": 1118,
+          "type": 1,
+          "p1": 1,
+          "p2": 3
+        }
+      ],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\earthghost_damage01.ban",
+      "banName": "earthghost_damage01",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 11,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\earthghost_die.ban",
+      "banName": "earthghost_die",
+      "durationMs": 2766,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 47,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\earthghost_attack02.ban",
+      "banName": "earthghost_attack02",
+      "durationMs": 1533,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 939,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 42
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\earthghost_run.ban",
+      "banName": "earthghost_run",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 24,
+      "walkLength": 25,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "OBSOLETE_STAND2",
+      "group": "default",
+      "type": 8,
+      "typeName": "OBSOLETE_STAND2",
+      "ban": "prim\\ani\\mob\\china\\earthghost_stand01.ban",
+      "banName": "earthghost_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\earthghost_damage02.ban",
+      "banName": "earthghost_damage02",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\earthghost_die_loop.ban",
+      "banName": "earthghost_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\earthghost_down.ban",
+      "banName": "earthghost_down",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downwait.ban",
+      "banName": "earthghost_downwait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downdamage.ban",
+      "banName": "earthghost_downdamage",
+      "durationMs": 600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\earthghost_wakeup.ban",
+      "banName": "earthghost_wakeup",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downdie.ban",
+      "banName": "earthghost_downdie",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    }
+  ],
+  "stats": {
+    "vertices": 582,
+    "triangles": 786,
+    "joints": 43,
+    "meshes": 3,
+    "animations": 15,
+    "textures": 1,
+    "heightM": 1.131392101116944,
+    "boundsMin": [
+      -0.6908606290817261,
+      0.00042798154754564166,
+      -0.1948818415403366
+    ],
+    "boundsMax": [
+      0.6908608078956604,
+      1.1318200826644897,
+      0.49645012617111206
+    ]
+  },
+  "warnings": [
+    "1 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

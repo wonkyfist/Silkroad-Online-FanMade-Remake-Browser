@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "kind": "towns",
+  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "sources": [
+    "client:teleportdata.txt",
+    "client:refregion.txt",
+    "port:safe-areas.json"
+  ],
+  "entries": [
+    {
+      "code": "JANGAN",
+      "name": "Jangan",
+      "world": "jangan",
+      "spawn": {
+        "x": 96.9,
+        "y": -3.317,
+        "z": -136.9,
+        "source": "client: teleportdata GATE_CH region 25000 (969, 0, 1369); y = navmesh terrain height"
+      },
+      "regions": [
+        24999,
+        25000,
+        25001,
+        25255,
+        25256,
+        25257
+      ],
+      "safeArea": {
+        "x": 82.727,
+        "z": -198.833,
+        "halfX": 256.007,
+        "halfZ": 178.653,
+        "provenance": "vsro-server-db via third-party port",
+        "source": {
+          "x": 9628.09,
+          "z": 1738.25,
+          "hx": 384.01,
+          "hz": 267.98
+        }
+      }
+    }
+  ]
+}

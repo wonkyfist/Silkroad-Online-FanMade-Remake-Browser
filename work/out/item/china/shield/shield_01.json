@@ -1,0 +1,137 @@
+{
+  "source": "res/item/china/shield/shield_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "shield_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\armor\\shield_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone01": [
+      -0.00004,
+      0,
+      -0.00048
+    ],
+    "Bone02": [
+      -0.27231,
+      0,
+      -0.00048
+    ]
+  },
+  "attachBone": "Bip01 L Hand",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 6,
+    "attachPointName": "LEFT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 7,
+        "slotName": "LEFT_HAND",
+        "mesh": "Shield_01"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Shield_01",
+      "bmt": "prim\\mtrl\\item\\china\\armor\\shield_01.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\armor\\shield_01.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Shield_01",
+      "bms": "prim\\mesh\\item\\china\\armor\\shield_01.bms",
+      "material": "Shield_01",
+      "vertices": 30,
+      "triangles": 36,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 30,
+    "triangles": 36,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.10643662977963686,
+    "boundsMin": [
+      -0.21529975533485413,
+      0.009547795169055462,
+      -0.28231915831565857
+    ],
+    "boundsMax": [
+      0.21352176368236542,
+      0.11598442494869232,
+      0.2775445878505707
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

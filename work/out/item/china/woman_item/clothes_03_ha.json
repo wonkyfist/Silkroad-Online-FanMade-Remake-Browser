@@ -1,0 +1,174 @@
+{
+  "source": "res/item/china/woman_item/clothes_03_ha.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "clothes_03_ha",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 0,
+    "attachPointName": "_ha",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "clothes_03_ha"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "clothes_03_ha",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clothes_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_ha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "clothes_03_ha_2s",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\clothes_03.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_ha.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (6.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "clothes_03_ha",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_03_ha.bms",
+      "material": "clothes_03_ha",
+      "vertices": 66,
+      "triangles": 80,
+      "skinned": false,
+      "bones": [
+        "Bip01 Head"
+      ]
+    },
+    {
+      "name": "clothes_03_ha_2s",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\clothes_03_ha_2s.bms",
+      "material": "clothes_03_ha_2s",
+      "vertices": 96,
+      "triangles": 64,
+      "skinned": false,
+      "bones": [
+        "Bip01 Head"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 162,
+    "triangles": 144,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.40413355827331543,
+    "boundsMin": [
+      -0.27161040902137756,
+      1.384332299232483,
+      -0.28528887033462524
+    ],
+    "boundsMax": [
+      0.2707882225513458,
+      1.7884658575057983,
+      0.25602173805236816
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

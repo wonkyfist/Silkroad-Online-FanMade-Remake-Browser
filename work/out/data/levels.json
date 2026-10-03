@@ -1,0 +1,152 @@
+[
+  {
+    "level": 1,
+    "exp": 118,
+    "masterySp": 1
+  },
+  {
+    "level": 2,
+    "exp": 470,
+    "masterySp": 1
+  },
+  {
+    "level": 3,
+    "exp": 1058,
+    "masterySp": 1
+  },
+  {
+    "level": 4,
+    "exp": 1880,
+    "masterySp": 2
+  },
+  {
+    "level": 5,
+    "exp": 2938,
+    "masterySp": 2
+  },
+  {
+    "level": 6,
+    "exp": 5640,
+    "masterySp": 4
+  },
+  {
+    "level": 7,
+    "exp": 9048,
+    "masterySp": 5
+  },
+  {
+    "level": 8,
+    "exp": 13160,
+    "masterySp": 6
+  },
+  {
+    "level": 9,
+    "exp": 17978,
+    "masterySp": 7
+  },
+  {
+    "level": 10,
+    "exp": 23500,
+    "masterySp": 9
+  },
+  {
+    "level": 11,
+    "exp": 34898,
+    "masterySp": 12
+  },
+  {
+    "level": 12,
+    "exp": 47940,
+    "masterySp": 15
+  },
+  {
+    "level": 13,
+    "exp": 62628,
+    "masterySp": 18
+  },
+  {
+    "level": 14,
+    "exp": 78960,
+    "masterySp": 21
+  },
+  {
+    "level": 15,
+    "exp": 96938,
+    "masterySp": 24
+  },
+  {
+    "level": 16,
+    "exp": 127840,
+    "masterySp": 30
+  },
+  {
+    "level": 17,
+    "exp": 161798,
+    "masterySp": 35
+  },
+  {
+    "level": 18,
+    "exp": 198810,
+    "masterySp": 41
+  },
+  {
+    "level": 19,
+    "exp": 238878,
+    "masterySp": 47
+  },
+  {
+    "level": 20,
+    "exp": 282000,
+    "masterySp": 53
+  },
+  {
+    "level": 21,
+    "exp": 351231,
+    "masterySp": 62
+  },
+  {
+    "level": 22,
+    "exp": 427755,
+    "masterySp": 71
+  },
+  {
+    "level": 23,
+    "exp": 512196,
+    "masterySp": 80
+  },
+  {
+    "level": 24,
+    "exp": 605232,
+    "masterySp": 89
+  },
+  {
+    "level": 25,
+    "exp": 707587,
+    "masterySp": 98
+  },
+  {
+    "level": 26,
+    "exp": 820046,
+    "masterySp": 108
+  },
+  {
+    "level": 27,
+    "exp": 943453,
+    "masterySp": 117
+  },
+  {
+    "level": 28,
+    "exp": 1078717,
+    "masterySp": 126
+  },
+  {
+    "level": 29,
+    "exp": 1226815,
+    "masterySp": 135
+  },
+  {
+    "level": 30,
+    "exp": 1388803,
+    "masterySp": 144
+  }
+]

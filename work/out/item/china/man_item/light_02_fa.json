@@ -1,0 +1,122 @@
+{
+  "source": "res/item/china/man_item/light_02_fa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_02_fa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 3,
+    "attachPointName": "_fa",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "light_02_fa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "light_02_fa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\light_02.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_fa.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.3% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "light_02_fa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\light_02_fa.bms",
+      "material": "light_02_fa",
+      "vertices": 160,
+      "triangles": 156,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 160,
+    "triangles": 156,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.4778285790234804,
+    "boundsMin": [
+      -0.3209688067436218,
+      -0.0098335612565279,
+      -0.10005956888198853
+    ],
+    "boundsMax": [
+      0.3209688067436218,
+      0.4679950177669525,
+      0.20123493671417236
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

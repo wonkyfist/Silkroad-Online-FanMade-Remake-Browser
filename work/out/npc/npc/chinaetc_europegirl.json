@@ -1,0 +1,393 @@
+{
+  "source": "res/npc/npc/chinaetc_europegirl.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaetc_europegirl",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinaetc_europegirl.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail11",
+      "Bip01 Ponytail12",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "Bone01",
+      "Bone02"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 9.84020086969295e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaEtc_EuropeGirl_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_europegirl.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_europegirl.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_europegirl.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_europegirl_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (9.2% partial, 2.8% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl",
+      "bmt": "prim\\mtrl\\npc\\china\\chinaetc_europegirl.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinaetc_europegirl.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaEtc_EuropeGirl_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_europegirl_2s.bms",
+      "material": "ChinaEtc_EuropeGirl_2s",
+      "vertices": 68,
+      "triangles": 74,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Tail2",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Spine",
+        "Bip01 Neck"
+      ]
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_europegirl_al_2s.bms",
+      "material": "ChinaEtc_EuropeGirl_al_2s",
+      "vertices": 177,
+      "triangles": 256,
+      "skinned": true,
+      "bones": [
+        "Bip01 Tail1",
+        "Bip01 Tail2",
+        "Bip01 Head",
+        "Bip01 Ponytail1",
+        "Bip01 Ponytail11",
+        "Bip01 Ponytail12",
+        "Bip01 Tail",
+        "Bip01 Neck",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 L Clavicle"
+      ]
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_europegirl_part1.bms",
+      "material": "ChinaEtc_EuropeGirl",
+      "vertices": 303,
+      "triangles": 300,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl_part2_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_europegirl_part2_part1.bms",
+      "material": "ChinaEtc_EuropeGirl",
+      "vertices": 190,
+      "triangles": 219,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 L Finger2",
+        "Bone01"
+      ]
+    },
+    {
+      "name": "ChinaEtc_EuropeGirl_part2_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinaetc_europegirl_part2_part2.bms",
+      "material": "ChinaEtc_EuropeGirl",
+      "vertices": 175,
+      "triangles": 193,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R UpperArm",
+        "Bip01 Head",
+        "Bip01 Ponytail11",
+        "Bip01 Neck",
+        "Bip01 Tail",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger01",
+        "Bip01 R Finger11",
+        "Bip01 R Finger1",
+        "Bip01 R Finger21",
+        "Bip01 R Finger2",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_europegirl_basic.ban",
+      "banName": "chinaetc_europegirl_basic",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "STAND3",
+      "group": "default",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_europegirl_time02.ban",
+      "banName": "chinaetc_europegirl_time02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinaetc_europegirl_time.ban",
+      "banName": "chinaetc_europegirl_time",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    }
+  ],
+  "stats": {
+    "vertices": 913,
+    "triangles": 1042,
+    "joints": 44,
+    "meshes": 5,
+    "animations": 3,
+    "textures": 2,
+    "heightM": 1.7233130633831024,
+    "boundsMin": [
+      -0.4360041618347168,
+      0.02814820408821106,
+      -0.19338223338127136
+    ],
+    "boundsMax": [
+      0.2273399829864502,
+      1.7514612674713135,
+      0.24284560978412628
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

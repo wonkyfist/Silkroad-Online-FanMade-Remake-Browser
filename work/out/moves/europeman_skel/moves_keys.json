@@ -1,0 +1,3502 @@
+{
+ "prefix": "chinaman",
+ "fps": 30,
+ "controlAction": "chinaman_control_stand1",
+ "sourceGlb": "chinaman_adventurer.glb",
+ "thighM": 0.4060450845764527,
+ "calfM": 0.4725463688110268,
+ "toe0Z": 0.001220986247062683,
+ "clips": {
+  "jump": {
+   "action": "chinaman_jump",
+   "kind": "JUMP",
+   "frames": 42,
+   "durationMs": 1367,
+   "fps": 30,
+   "takeoffMs": 200,
+   "touchMs": 900,
+   "events": [
+    {
+     "timeMs": 200,
+     "type": "takeoff"
+    },
+    {
+     "timeMs": 900,
+     "type": "land"
+    }
+   ],
+   "air": [
+    -0.0,
+    -0.0,
+    -0.0,
+    0.0,
+    -0.0,
+    0.0,
+    -0.0,
+    0.1046,
+    0.2249,
+    0.3836,
+    0.5371,
+    0.6585,
+    0.7505,
+    0.8155,
+    0.8572,
+    0.8799,
+    0.8871,
+    0.8769,
+    0.847,
+    0.7952,
+    0.7209,
+    0.6274,
+    0.5196,
+    0.403,
+    0.2855,
+    0.1767,
+    0.0768,
+    0.0,
+    0.0,
+    -0.0,
+    0.0,
+    -0.0,
+    -0.0,
+    -0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "planted": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "summary": {
+    "apexPelvisZ": 1.6103,
+    "minAirM": -0.0,
+    "maxPlantedAirM": 0.0,
+    "maxSkateM": 0.0088,
+    "rootFwdRangeM": [
+     -0.0068,
+     0.1253
+    ],
+    "airFrames": 20
+   },
+   "rows": [
+    {
+     "f": 0,
+     "ms": 0,
+     "pelvisZ": 0.9978,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0067,
+     "toeFwd": {
+      "L": 0.1822,
+      "R": 0.016
+     },
+     "handZ": {
+      "L": 0.974,
+      "R": 0.963
+     },
+     "handFwd": {
+      "L": 0.083,
+      "R": -0.116
+     },
+     "upperArmSag": {
+      "L": -7.5,
+      "R": -17.2
+     },
+     "pose": "stand"
+    },
+    {
+     "f": 1,
+     "ms": 33,
+     "pelvisZ": 0.9755,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0166,
+     "toeFwd": {
+      "L": 0.1825,
+      "R": 0.0157
+     },
+     "handZ": {
+      "L": 0.958,
+      "R": 0.984
+     },
+     "handFwd": {
+      "L": 0.021,
+      "R": -0.197
+     },
+     "upperArmSag": {
+      "L": -21.4,
+      "R": -32.9
+     },
+     "skateM": 0.0003,
+     "pose": ""
+    },
+    {
+     "f": 2,
+     "ms": 67,
+     "pelvisZ": 0.8527,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0465,
+     "toeFwd": {
+      "L": 0.1778,
+      "R": 0.0205
+     },
+     "handZ": {
+      "L": 0.89,
+      "R": 0.992
+     },
+     "handFwd": {
+      "L": -0.047,
+      "R": -0.277
+     },
+     "upperArmSag": {
+      "L": -46.8,
+      "R": -61.1
+     },
+     "skateM": 0.0048,
+     "pose": ""
+    },
+    {
+     "f": 3,
+     "ms": 100,
+     "pelvisZ": 0.7384,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.056,
+     "toeFwd": {
+      "L": 0.1721,
+      "R": 0.0261
+     },
+     "handZ": {
+      "L": 0.794,
+      "R": 0.907
+     },
+     "handFwd": {
+      "L": -0.012,
+      "R": -0.238
+     },
+     "upperArmSag": {
+      "L": -55.5,
+      "R": -69.2
+     },
+     "skateM": 0.0057,
+     "pose": "crouch"
+    },
+    {
+     "f": 4,
+     "ms": 133,
+     "pelvisZ": 0.8193,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0445,
+     "toeFwd": {
+      "L": 0.176,
+      "R": 0.0222
+     },
+     "handZ": {
+      "L": 0.832,
+      "R": 0.841
+     },
+     "handFwd": {
+      "L": 0.178,
+      "R": -0.026
+     },
+     "upperArmSag": {
+      "L": -29.6,
+      "R": -38.0
+     },
+     "skateM": 0.0039,
+     "pose": ""
+    },
+    {
+     "f": 5,
+     "ms": 167,
+     "pelvisZ": 0.9677,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0537,
+     "toeFwd": {
+      "L": 0.1814,
+      "R": 0.0169
+     },
+     "handZ": {
+      "L": 1.198,
+      "R": 1.12
+     },
+     "handFwd": {
+      "L": 0.526,
+      "R": 0.424
+     },
+     "upperArmSag": {
+      "L": 28.5,
+      "R": 24.8
+     },
+     "skateM": 0.0054,
+     "pose": "push"
+    },
+    {
+     "f": 6,
+     "ms": 200,
+     "pelvisZ": 1.0397,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.1253,
+     "toeFwd": {
+      "L": 0.1795,
+      "R": 0.0188
+     },
+     "handZ": {
+      "L": 1.929,
+      "R": 1.929
+     },
+     "handFwd": {
+      "L": 0.33,
+      "R": 0.344
+     },
+     "upperArmSag": {
+      "L": 132.5,
+      "R": 128.8
+     },
+     "skateM": 0.0019,
+     "pose": "takeoff"
+    },
+    {
+     "f": 7,
+     "ms": 233,
+     "pelvisZ": 1.1457,
+     "lowZ": 0.1058,
+     "air": 0.1046,
+     "stance": "",
+     "rootFwd": 0.119,
+     "toeFwd": {
+      "L": 0.1336,
+      "R": -0.0259
+     },
+     "handZ": {
+      "L": 2.035,
+      "R": 2.084
+     },
+     "handFwd": {
+      "L": 0.011,
+      "R": 0.007
+     },
+     "upperArmSag": {
+      "L": 173.4,
+      "R": 168.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 8,
+     "ms": 267,
+     "pelvisZ": 1.2409,
+     "lowZ": 0.2261,
+     "air": 0.2249,
+     "stance": "",
+     "rootFwd": 0.1127,
+     "toeFwd": {
+      "L": 0.1326,
+      "R": -0.0319
+     },
+     "handZ": {
+      "L": 2.121,
+      "R": 2.167
+     },
+     "handFwd": {
+      "L": 0.03,
+      "R": 0.034
+     },
+     "upperArmSag": {
+      "L": 168.5,
+      "R": 163.3
+     },
+     "pose": ""
+    },
+    {
+     "f": 9,
+     "ms": 300,
+     "pelvisZ": 1.3252,
+     "lowZ": 0.3848,
+     "air": 0.3836,
+     "stance": "",
+     "rootFwd": 0.1064,
+     "toeFwd": {
+      "L": 0.1598,
+      "R": -0.0063
+     },
+     "handZ": {
+      "L": 2.188,
+      "R": 2.202
+     },
+     "handFwd": {
+      "L": 0.188,
+      "R": 0.215
+     },
+     "upperArmSag": {
+      "L": 142.5,
+      "R": 136.8
+     },
+     "pose": "rise"
+    },
+    {
+     "f": 10,
+     "ms": 333,
+     "pelvisZ": 1.3985,
+     "lowZ": 0.5383,
+     "air": 0.5371,
+     "stance": "",
+     "rootFwd": 0.1001,
+     "toeFwd": {
+      "L": 0.1961,
+      "R": 0.0336
+     },
+     "handZ": {
+      "L": 2.18,
+      "R": 2.15
+     },
+     "handFwd": {
+      "L": 0.322,
+      "R": 0.353
+     },
+     "upperArmSag": {
+      "L": 115.9,
+      "R": 109.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 11,
+     "ms": 367,
+     "pelvisZ": 1.461,
+     "lowZ": 0.6598,
+     "air": 0.6585,
+     "stance": "",
+     "rootFwd": 0.0939,
+     "toeFwd": {
+      "L": 0.228,
+      "R": 0.0711
+     },
+     "handZ": {
+      "L": 2.148,
+      "R": 2.085
+     },
+     "handFwd": {
+      "L": 0.378,
+      "R": 0.395
+     },
+     "upperArmSag": {
+      "L": 96.3,
+      "R": 89.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 12,
+     "ms": 400,
+     "pelvisZ": 1.5127,
+     "lowZ": 0.7518,
+     "air": 0.7505,
+     "stance": "",
+     "rootFwd": 0.0876,
+     "toeFwd": {
+      "L": 0.2517,
+      "R": 0.1007
+     },
+     "handZ": {
+      "L": 2.126,
+      "R": 2.048
+     },
+     "handFwd": {
+      "L": 0.38,
+      "R": 0.381
+     },
+     "upperArmSag": {
+      "L": 83.1,
+      "R": 75.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 13,
+     "ms": 433,
+     "pelvisZ": 1.5534,
+     "lowZ": 0.8168,
+     "air": 0.8155,
+     "stance": "",
+     "rootFwd": 0.0813,
+     "toeFwd": {
+      "L": 0.2676,
+      "R": 0.1221
+     },
+     "handZ": {
+      "L": 2.117,
+      "R": 2.039
+     },
+     "handFwd": {
+      "L": 0.356,
+      "R": 0.344
+     },
+     "upperArmSag": {
+      "L": 74.3,
+      "R": 66.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 14,
+     "ms": 467,
+     "pelvisZ": 1.5832,
+     "lowZ": 0.8585,
+     "air": 0.8572,
+     "stance": "",
+     "rootFwd": 0.075,
+     "toeFwd": {
+      "L": 0.2769,
+      "R": 0.1359
+     },
+     "handZ": {
+      "L": 2.116,
+      "R": 2.044
+     },
+     "handFwd": {
+      "L": 0.323,
+      "R": 0.305
+     },
+     "upperArmSag": {
+      "L": 68.0,
+      "R": 61.0
+     },
+     "pose": ""
+    },
+    {
+     "f": 15,
+     "ms": 500,
+     "pelvisZ": 1.6022,
+     "lowZ": 0.8812,
+     "air": 0.8799,
+     "stance": "",
+     "rootFwd": 0.0687,
+     "toeFwd": {
+      "L": 0.2807,
+      "R": 0.1428
+     },
+     "handZ": {
+      "L": 2.115,
+      "R": 2.049
+     },
+     "handFwd": {
+      "L": 0.295,
+      "R": 0.273
+     },
+     "upperArmSag": {
+      "L": 62.5,
+      "R": 56.8
+     },
+     "pose": "apex"
+    },
+    {
+     "f": 16,
+     "ms": 533,
+     "pelvisZ": 1.6103,
+     "lowZ": 0.8883,
+     "air": 0.8871,
+     "stance": "",
+     "rootFwd": 0.0624,
+     "toeFwd": {
+      "L": 0.2795,
+      "R": 0.1429
+     },
+     "handZ": {
+      "L": 2.109,
+      "R": 2.045
+     },
+     "handFwd": {
+      "L": 0.28,
+      "R": 0.255
+     },
+     "upperArmSag": {
+      "L": 57.6,
+      "R": 53.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 17,
+     "ms": 567,
+     "pelvisZ": 1.6075,
+     "lowZ": 0.8782,
+     "air": 0.8769,
+     "stance": "",
+     "rootFwd": 0.0561,
+     "toeFwd": {
+      "L": 0.275,
+      "R": 0.1377
+     },
+     "handZ": {
+      "L": 2.096,
+      "R": 2.03
+     },
+     "handFwd": {
+      "L": 0.275,
+      "R": 0.247
+     },
+     "upperArmSag": {
+      "L": 53.9,
+      "R": 49.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 18,
+     "ms": 600,
+     "pelvisZ": 1.5938,
+     "lowZ": 0.8482,
+     "air": 0.847,
+     "stance": "",
+     "rootFwd": 0.0498,
+     "toeFwd": {
+      "L": 0.2681,
+      "R": 0.1288
+     },
+     "handZ": {
+      "L": 2.073,
+      "R": 2.001
+     },
+     "handFwd": {
+      "L": 0.278,
+      "R": 0.244
+     },
+     "upperArmSag": {
+      "L": 51.2,
+      "R": 46.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 19,
+     "ms": 633,
+     "pelvisZ": 1.5692,
+     "lowZ": 0.7964,
+     "air": 0.7952,
+     "stance": "",
+     "rootFwd": 0.0435,
+     "toeFwd": {
+      "L": 0.2597,
+      "R": 0.1175
+     },
+     "handZ": {
+      "L": 2.038,
+      "R": 1.96
+     },
+     "handFwd": {
+      "L": 0.285,
+      "R": 0.243
+     },
+     "upperArmSag": {
+      "L": 48.5,
+      "R": 42.8
+     },
+     "pose": "hang"
+    },
+    {
+     "f": 20,
+     "ms": 667,
+     "pelvisZ": 1.5338,
+     "lowZ": 0.7221,
+     "air": 0.7209,
+     "stance": "",
+     "rootFwd": 0.0372,
+     "toeFwd": {
+      "L": 0.2506,
+      "R": 0.1051
+     },
+     "handZ": {
+      "L": 1.989,
+      "R": 1.904
+     },
+     "handFwd": {
+      "L": 0.291,
+      "R": 0.238
+     },
+     "upperArmSag": {
+      "L": 45.0,
+      "R": 38.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 21,
+     "ms": 700,
+     "pelvisZ": 1.4874,
+     "lowZ": 0.6286,
+     "air": 0.6274,
+     "stance": "",
+     "rootFwd": 0.0309,
+     "toeFwd": {
+      "L": 0.2417,
+      "R": 0.0923
+     },
+     "handZ": {
+      "L": 1.923,
+      "R": 1.833
+     },
+     "handFwd": {
+      "L": 0.292,
+      "R": 0.227
+     },
+     "upperArmSag": {
+      "L": 40.4,
+      "R": 32.9
+     },
+     "pose": ""
+    },
+    {
+     "f": 22,
+     "ms": 733,
+     "pelvisZ": 1.4302,
+     "lowZ": 0.5209,
+     "air": 0.5196,
+     "stance": "",
+     "rootFwd": 0.0246,
+     "toeFwd": {
+      "L": 0.2347,
+      "R": 0.0803
+     },
+     "handZ": {
+      "L": 1.84,
+      "R": 1.746
+     },
+     "handFwd": {
+      "L": 0.284,
+      "R": 0.206
+     },
+     "upperArmSag": {
+      "L": 34.4,
+      "R": 26.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 23,
+     "ms": 767,
+     "pelvisZ": 1.3621,
+     "lowZ": 0.4042,
+     "air": 0.403,
+     "stance": "",
+     "rootFwd": 0.0183,
+     "toeFwd": {
+      "L": 0.2317,
+      "R": 0.0708
+     },
+     "handZ": {
+      "L": 1.739,
+      "R": 1.644
+     },
+     "handFwd": {
+      "L": 0.262,
+      "R": 0.169
+     },
+     "upperArmSag": {
+      "L": 26.5,
+      "R": 18.8
+     },
+     "pose": "fall"
+    },
+    {
+     "f": 24,
+     "ms": 800,
+     "pelvisZ": 1.2831,
+     "lowZ": 0.2867,
+     "air": 0.2855,
+     "stance": "",
+     "rootFwd": 0.012,
+     "toeFwd": {
+      "L": 0.2325,
+      "R": 0.0642
+     },
+     "handZ": {
+      "L": 1.624,
+      "R": 1.53
+     },
+     "handFwd": {
+      "L": 0.225,
+      "R": 0.118
+     },
+     "upperArmSag": {
+      "L": 17.2,
+      "R": 10.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 25,
+     "ms": 833,
+     "pelvisZ": 1.1932,
+     "lowZ": 0.178,
+     "air": 0.1767,
+     "stance": "",
+     "rootFwd": 0.0057,
+     "toeFwd": {
+      "L": 0.2287,
+      "R": 0.0551
+     },
+     "handZ": {
+      "L": 1.5,
+      "R": 1.41
+     },
+     "handFwd": {
+      "L": 0.196,
+      "R": 0.078
+     },
+     "upperArmSag": {
+      "L": 10.0,
+      "R": 4.0
+     },
+     "pose": ""
+    },
+    {
+     "f": 26,
+     "ms": 867,
+     "pelvisZ": 1.0925,
+     "lowZ": 0.0781,
+     "air": 0.0768,
+     "stance": "",
+     "rootFwd": -0.0005,
+     "toeFwd": {
+      "L": 0.2147,
+      "R": 0.0403
+     },
+     "handZ": {
+      "L": 1.368,
+      "R": 1.281
+     },
+     "handFwd": {
+      "L": 0.206,
+      "R": 0.081
+     },
+     "upperArmSag": {
+      "L": 9.1,
+      "R": 2.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 27,
+     "ms": 900,
+     "pelvisZ": 0.9808,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": -0.0068,
+     "toeFwd": {
+      "L": 0.183,
+      "R": 0.0153
+     },
+     "handZ": {
+      "L": 1.231,
+      "R": 1.144
+     },
+     "handFwd": {
+      "L": 0.281,
+      "R": 0.156
+     },
+     "upperArmSag": {
+      "L": 14.5,
+      "R": 6.8
+     },
+     "pose": "touch"
+    },
+    {
+     "f": 28,
+     "ms": 933,
+     "pelvisZ": 0.8666,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0315,
+     "toeFwd": {
+      "L": 0.1742,
+      "R": 0.024
+     },
+     "handZ": {
+      "L": 1.132,
+      "R": 1.042
+     },
+     "handFwd": {
+      "L": 0.434,
+      "R": 0.328
+     },
+     "upperArmSag": {
+      "L": 22.5,
+      "R": 14.8
+     },
+     "skateM": 0.0088,
+     "pose": "heel"
+    },
+    {
+     "f": 29,
+     "ms": 967,
+     "pelvisZ": 0.7365,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0589,
+     "toeFwd": {
+      "L": 0.1687,
+      "R": 0.0296
+     },
+     "handZ": {
+      "L": 1.049,
+      "R": 0.962
+     },
+     "handFwd": {
+      "L": 0.536,
+      "R": 0.453
+     },
+     "upperArmSag": {
+      "L": 30.1,
+      "R": 22.5
+     },
+     "skateM": 0.0056,
+     "pose": ""
+    },
+    {
+     "f": 30,
+     "ms": 1000,
+     "pelvisZ": 0.657,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.076,
+     "toeFwd": {
+      "L": 0.1669,
+      "R": 0.0314
+     },
+     "handZ": {
+      "L": 0.995,
+      "R": 0.912
+     },
+     "handFwd": {
+      "L": 0.587,
+      "R": 0.516
+     },
+     "upperArmSag": {
+      "L": 34.5,
+      "R": 26.8
+     },
+     "skateM": 0.0018,
+     "pose": "absorb"
+    },
+    {
+     "f": 31,
+     "ms": 1033,
+     "pelvisZ": 0.7014,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0759,
+     "toeFwd": {
+      "L": 0.1705,
+      "R": 0.0277
+     },
+     "handZ": {
+      "L": 1.011,
+      "R": 0.928
+     },
+     "handFwd": {
+      "L": 0.589,
+      "R": 0.506
+     },
+     "upperArmSag": {
+      "L": 31.9,
+      "R": 24.3
+     },
+     "skateM": 0.0037,
+     "pose": ""
+    },
+    {
+     "f": 32,
+     "ms": 1067,
+     "pelvisZ": 0.8232,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0528,
+     "toeFwd": {
+      "L": 0.177,
+      "R": 0.0213
+     },
+     "handZ": {
+      "L": 1.059,
+      "R": 0.976
+     },
+     "handFwd": {
+      "L": 0.527,
+      "R": 0.413
+     },
+     "upperArmSag": {
+      "L": 23.4,
+      "R": 16.0
+     },
+     "skateM": 0.0065,
+     "pose": ""
+    },
+    {
+     "f": 33,
+     "ms": 1100,
+     "pelvisZ": 0.9313,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0195,
+     "toeFwd": {
+      "L": 0.1805,
+      "R": 0.0178
+     },
+     "handZ": {
+      "L": 1.077,
+      "R": 1.004
+     },
+     "handFwd": {
+      "L": 0.405,
+      "R": 0.259
+     },
+     "upperArmSag": {
+      "L": 12.5,
+      "R": 5.0
+     },
+     "skateM": 0.0035,
+     "pose": ""
+    },
+    {
+     "f": 34,
+     "ms": 1133,
+     "pelvisZ": 0.9806,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.003,
+     "toeFwd": {
+      "L": 0.1806,
+      "R": 0.0176
+     },
+     "handZ": {
+      "L": 1.057,
+      "R": 1.0
+     },
+     "handFwd": {
+      "L": 0.28,
+      "R": 0.112
+     },
+     "upperArmSag": {
+      "L": 2.5,
+      "R": -5.2
+     },
+     "skateM": 0.0002,
+     "pose": "rebound"
+    },
+    {
+     "f": 35,
+     "ms": 1167,
+     "pelvisZ": 0.9928,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0013,
+     "toeFwd": {
+      "L": 0.1805,
+      "R": 0.0178
+     },
+     "handZ": {
+      "L": 1.029,
+      "R": 0.988
+     },
+     "handFwd": {
+      "L": 0.193,
+      "R": 0.015
+     },
+     "upperArmSag": {
+      "L": -4.6,
+      "R": -12.6
+     },
+     "skateM": 0.0002,
+     "pose": ""
+    },
+    {
+     "f": 36,
+     "ms": 1200,
+     "pelvisZ": 0.9936,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0035,
+     "toeFwd": {
+      "L": 0.1811,
+      "R": 0.0172
+     },
+     "handZ": {
+      "L": 1.006,
+      "R": 0.979
+     },
+     "handFwd": {
+      "L": 0.138,
+      "R": -0.045
+     },
+     "upperArmSag": {
+      "L": -9.2,
+      "R": -17.5
+     },
+     "skateM": 0.0006,
+     "pose": ""
+    },
+    {
+     "f": 37,
+     "ms": 1233,
+     "pelvisZ": 0.9918,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0063,
+     "toeFwd": {
+      "L": 0.1819,
+      "R": 0.0163
+     },
+     "handZ": {
+      "L": 0.989,
+      "R": 0.972
+     },
+     "handFwd": {
+      "L": 0.107,
+      "R": -0.081
+     },
+     "upperArmSag": {
+      "L": -11.5,
+      "R": -20.2
+     },
+     "skateM": 0.0009,
+     "pose": "settle"
+    },
+    {
+     "f": 38,
+     "ms": 1267,
+     "pelvisZ": 0.993,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.0076,
+     "toeFwd": {
+      "L": 0.1824,
+      "R": 0.0158
+     },
+     "handZ": {
+      "L": 0.98,
+      "R": 0.968
+     },
+     "handFwd": {
+      "L": 0.09,
+      "R": -0.102
+     },
+     "upperArmSag": {
+      "L": -11.4,
+      "R": -20.5
+     },
+     "skateM": 0.0005,
+     "pose": ""
+    },
+    {
+     "f": 39,
+     "ms": 1300,
+     "pelvisZ": 0.9953,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0075,
+     "toeFwd": {
+      "L": 0.1825,
+      "R": 0.0158
+     },
+     "handZ": {
+      "L": 0.975,
+      "R": 0.966
+     },
+     "handFwd": {
+      "L": 0.083,
+      "R": -0.112
+     },
+     "upperArmSag": {
+      "L": -10.0,
+      "R": -19.4
+     },
+     "skateM": 0.0001,
+     "pose": ""
+    },
+    {
+     "f": 40,
+     "ms": 1333,
+     "pelvisZ": 0.9971,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "LR",
+     "rootFwd": 0.007,
+     "toeFwd": {
+      "L": 0.1823,
+      "R": 0.0159
+     },
+     "handZ": {
+      "L": 0.974,
+      "R": 0.964
+     },
+     "handFwd": {
+      "L": 0.082,
+      "R": -0.116
+     },
+     "upperArmSag": {
+      "L": -8.3,
+      "R": -17.9
+     },
+     "skateM": 0.0002,
+     "pose": ""
+    },
+    {
+     "f": 41,
+     "ms": 1367,
+     "pelvisZ": 0.9978,
+     "lowZ": 0.0012,
+     "air": -0.0,
+     "stance": "LR",
+     "rootFwd": 0.0067,
+     "toeFwd": {
+      "L": 0.1822,
+      "R": 0.016
+     },
+     "handZ": {
+      "L": 0.974,
+      "R": 0.963
+     },
+     "handFwd": {
+      "L": 0.083,
+      "R": -0.116
+     },
+     "upperArmSag": {
+      "L": -7.5,
+      "R": -17.2
+     },
+     "skateM": 0.0001,
+     "pose": "stand"
+    }
+   ]
+  },
+  "jump_run": {
+   "action": "chinaman_jump_run",
+   "kind": "JUMP_RUN",
+   "frames": 36,
+   "durationMs": 1167,
+   "fps": 30,
+   "takeoffMs": 133,
+   "touchMs": 833,
+   "events": [
+    {
+     "timeMs": 133,
+     "type": "takeoff"
+    },
+    {
+     "timeMs": 833,
+     "type": "land"
+    }
+   ],
+   "air": [
+    0.0092,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.1278,
+    0.2511,
+    0.4019,
+    0.6129,
+    0.8881,
+    0.967,
+    0.927,
+    0.8833,
+    0.8635,
+    0.8624,
+    0.8588,
+    0.8316,
+    0.7672,
+    0.6757,
+    0.5796,
+    0.4888,
+    0.4109,
+    0.3532,
+    0.2939,
+    0.1754,
+    0.0,
+    0.0,
+    0.0,
+    -0.0067,
+    0.1121,
+    0.2274,
+    0.2464,
+    0.2594,
+    0.1674,
+    0.0566,
+    0.0092
+   ],
+   "planted": [
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "run": "RUN_chinaman_fighter_runforward_sword",
+   "runFrames": 20,
+   "runCycleS": 0.6667,
+   "runContacts": {
+    "L": {
+     "start": 19,
+     "end": 1,
+     "startS": 0.6333
+    },
+    "R": {
+     "start": 9,
+     "end": 11,
+     "startS": 0.3
+    }
+   },
+   "enterPhaseS": 0.3,
+   "exitPhaseS": 0.3,
+   "for": [
+    "RUN_chinaman_fighter_runforward_sword",
+    "RUN_spear_run_fighter",
+    "RUN_bow_run_fighter"
+   ],
+   "blendFor": [],
+   "summary": {
+    "apexPelvisZ": 1.4816,
+    "minAirM": -0.0067,
+    "maxPlantedAirM": 0.0,
+    "maxSkateM": 0.0001,
+    "rootFwdRangeM": [
+     -0.0643,
+     0.0074
+    ],
+    "airFrames": 29
+   },
+   "rows": [
+    {
+     "f": 0,
+     "ms": 0,
+     "pelvisZ": 0.9009,
+     "lowZ": 0.0104,
+     "air": 0.0092,
+     "stance": "",
+     "rootFwd": 0.0,
+     "toeFwd": {
+      "L": -0.6014,
+      "R": 0.3748
+     },
+     "handZ": {
+      "L": 0.863,
+      "R": 0.937
+     },
+     "handFwd": {
+      "L": 0.392,
+      "R": -0.005
+     },
+     "upperArmSag": {
+      "L": -22.8,
+      "R": -46.0
+     },
+     "pose": "contact R"
+    },
+    {
+     "f": 1,
+     "ms": 33,
+     "pelvisZ": 0.8718,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": 0.0074,
+     "toeFwd": {
+      "L": -0.4139,
+      "R": 0.0276
+     },
+     "handZ": {
+      "L": 0.843,
+      "R": 0.88
+     },
+     "handFwd": {
+      "L": 0.284,
+      "R": 0.156
+     },
+     "upperArmSag": {
+      "L": -45.7,
+      "R": -30.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 2,
+     "ms": 67,
+     "pelvisZ": 0.8594,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": 0.0068,
+     "toeFwd": {
+      "L": -0.3653,
+      "R": -0.1726
+     },
+     "handZ": {
+      "L": 0.873,
+      "R": 0.848
+     },
+     "handFwd": {
+      "L": 0.166,
+      "R": 0.311
+     },
+     "upperArmSag": {
+      "L": -72.3,
+      "R": -15.5
+     },
+     "skateM": 0.0,
+     "pose": "load"
+    },
+    {
+     "f": 3,
+     "ms": 100,
+     "pelvisZ": 0.9205,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0562,
+     "toeFwd": {
+      "L": -0.1947,
+      "R": -0.3745
+     },
+     "handZ": {
+      "L": 1.015,
+      "R": 1.111
+     },
+     "handFwd": {
+      "L": -0.005,
+      "R": 0.468
+     },
+     "upperArmSag": {
+      "L": -72.7,
+      "R": 28.2
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 4,
+     "ms": 133,
+     "pelvisZ": 0.9166,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0594,
+     "toeFwd": {
+      "L": 0.2797,
+      "R": -0.5614
+     },
+     "handZ": {
+      "L": 1.03,
+      "R": 1.576
+     },
+     "handFwd": {
+      "L": -0.136,
+      "R": 0.347
+     },
+     "upperArmSag": {
+      "L": -57.5,
+      "R": 82.8
+     },
+     "skateM": 0.0,
+     "pose": "take-off R"
+    },
+    {
+     "f": 5,
+     "ms": 167,
+     "pelvisZ": 1.022,
+     "lowZ": 0.129,
+     "air": 0.1278,
+     "stance": "",
+     "rootFwd": -0.0573,
+     "toeFwd": {
+      "L": 0.6077,
+      "R": -0.6381
+     },
+     "handZ": {
+      "L": 1.092,
+      "R": 1.87
+     },
+     "handFwd": {
+      "L": -0.204,
+      "R": 0.044
+     },
+     "upperArmSag": {
+      "L": -43.7,
+      "R": 117.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 6,
+     "ms": 200,
+     "pelvisZ": 1.1166,
+     "lowZ": 0.2523,
+     "air": 0.2511,
+     "stance": "",
+     "rootFwd": -0.0551,
+     "toeFwd": {
+      "L": 0.7577,
+      "R": -0.6834
+     },
+     "handZ": {
+      "L": 1.151,
+      "R": 1.983
+     },
+     "handFwd": {
+      "L": -0.214,
+      "R": -0.123
+     },
+     "upperArmSag": {
+      "L": -34.5,
+      "R": 132.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 7,
+     "ms": 233,
+     "pelvisZ": 1.2003,
+     "lowZ": 0.4031,
+     "air": 0.4019,
+     "stance": "",
+     "rootFwd": -0.053,
+     "toeFwd": {
+      "L": 0.8245,
+      "R": -0.7468
+     },
+     "handZ": {
+      "L": 1.23,
+      "R": 2.057
+     },
+     "handFwd": {
+      "L": -0.193,
+      "R": -0.159
+     },
+     "upperArmSag": {
+      "L": -29.0,
+      "R": 134.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 8,
+     "ms": 267,
+     "pelvisZ": 1.2732,
+     "lowZ": 0.6141,
+     "air": 0.6129,
+     "stance": "",
+     "rootFwd": -0.0508,
+     "toeFwd": {
+      "L": 0.8541,
+      "R": -0.8136
+     },
+     "handZ": {
+      "L": 1.325,
+      "R": 2.114
+     },
+     "handFwd": {
+      "L": -0.153,
+      "R": -0.105
+     },
+     "upperArmSag": {
+      "L": -26.0,
+      "R": 127.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 9,
+     "ms": 300,
+     "pelvisZ": 1.3351,
+     "lowZ": 0.8893,
+     "air": 0.8881,
+     "stance": "",
+     "rootFwd": -0.0487,
+     "toeFwd": {
+      "L": 0.8563,
+      "R": -0.831
+     },
+     "handZ": {
+      "L": 1.428,
+      "R": 2.134
+     },
+     "handFwd": {
+      "L": -0.097,
+      "R": 0.008
+     },
+     "upperArmSag": {
+      "L": -24.9,
+      "R": 112.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 10,
+     "ms": 333,
+     "pelvisZ": 1.3862,
+     "lowZ": 0.9682,
+     "air": 0.967,
+     "stance": "",
+     "rootFwd": -0.0466,
+     "toeFwd": {
+      "L": 0.8292,
+      "R": -0.7615
+     },
+     "handZ": {
+      "L": 1.525,
+      "R": 2.097
+     },
+     "handFwd": {
+      "L": -0.031,
+      "R": 0.137
+     },
+     "upperArmSag": {
+      "L": -25.2,
+      "R": 92.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 11,
+     "ms": 367,
+     "pelvisZ": 1.4263,
+     "lowZ": 0.9282,
+     "air": 0.927,
+     "stance": "",
+     "rootFwd": -0.0444,
+     "toeFwd": {
+      "L": 0.7779,
+      "R": -0.6421
+     },
+     "handZ": {
+      "L": 1.601,
+      "R": 2.015
+     },
+     "handFwd": {
+      "L": 0.036,
+      "R": 0.235
+     },
+     "upperArmSag": {
+      "L": -26.2,
+      "R": 70.9
+     },
+     "pose": ""
+    },
+    {
+     "f": 12,
+     "ms": 400,
+     "pelvisZ": 1.4556,
+     "lowZ": 0.8845,
+     "air": 0.8833,
+     "stance": "",
+     "rootFwd": -0.0423,
+     "toeFwd": {
+      "L": 0.7247,
+      "R": -0.5426
+     },
+     "handZ": {
+      "L": 1.649,
+      "R": 1.933
+     },
+     "handFwd": {
+      "L": 0.087,
+      "R": 0.284
+     },
+     "upperArmSag": {
+      "L": -27.5,
+      "R": 52.8
+     },
+     "pose": "apex split"
+    },
+    {
+     "f": 13,
+     "ms": 433,
+     "pelvisZ": 1.474,
+     "lowZ": 0.8647,
+     "air": 0.8635,
+     "stance": "",
+     "rootFwd": -0.0401,
+     "toeFwd": {
+      "L": 0.698,
+      "R": -0.4972
+     },
+     "handZ": {
+      "L": 1.671,
+      "R": 1.888
+     },
+     "handFwd": {
+      "L": 0.111,
+      "R": 0.303
+     },
+     "upperArmSag": {
+      "L": -28.5,
+      "R": 42.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 14,
+     "ms": 467,
+     "pelvisZ": 1.4816,
+     "lowZ": 0.8636,
+     "air": 0.8624,
+     "stance": "",
+     "rootFwd": -0.038,
+     "toeFwd": {
+      "L": 0.6974,
+      "R": -0.4938
+     },
+     "handZ": {
+      "L": 1.675,
+      "R": 1.872
+     },
+     "handFwd": {
+      "L": 0.118,
+      "R": 0.312
+     },
+     "upperArmSag": {
+      "L": -28.1,
+      "R": 38.9
+     },
+     "pose": ""
+    },
+    {
+     "f": 15,
+     "ms": 500,
+     "pelvisZ": 1.4782,
+     "lowZ": 0.8601,
+     "air": 0.8588,
+     "stance": "",
+     "rootFwd": -0.0359,
+     "toeFwd": {
+      "L": 0.7088,
+      "R": -0.5119
+     },
+     "handZ": {
+      "L": 1.668,
+      "R": 1.87
+     },
+     "handFwd": {
+      "L": 0.124,
+      "R": 0.31
+     },
+     "upperArmSag": {
+      "L": -25.4,
+      "R": 38.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 16,
+     "ms": 533,
+     "pelvisZ": 1.4639,
+     "lowZ": 0.8329,
+     "air": 0.8316,
+     "stance": "",
+     "rootFwd": -0.0337,
+     "toeFwd": {
+      "L": 0.7155,
+      "R": -0.5279
+     },
+     "handZ": {
+      "L": 1.654,
+      "R": 1.864
+     },
+     "handFwd": {
+      "L": 0.144,
+      "R": 0.292
+     },
+     "upperArmSag": {
+      "L": -19.5,
+      "R": 38.8
+     },
+     "pose": "hang"
+    },
+    {
+     "f": 17,
+     "ms": 567,
+     "pelvisZ": 1.4388,
+     "lowZ": 0.7684,
+     "air": 0.7672,
+     "stance": "",
+     "rootFwd": -0.0316,
+     "toeFwd": {
+      "L": 0.7043,
+      "R": -0.52
+     },
+     "handZ": {
+      "L": 1.643,
+      "R": 1.839
+     },
+     "handFwd": {
+      "L": 0.184,
+      "R": 0.256
+     },
+     "upperArmSag": {
+      "L": -10.5,
+      "R": 37.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 18,
+     "ms": 600,
+     "pelvisZ": 1.4028,
+     "lowZ": 0.6769,
+     "air": 0.6757,
+     "stance": "",
+     "rootFwd": -0.0295,
+     "toeFwd": {
+      "L": 0.6785,
+      "R": -0.4913
+     },
+     "handZ": {
+      "L": 1.631,
+      "R": 1.79
+     },
+     "handFwd": {
+      "L": 0.227,
+      "R": 0.218
+     },
+     "upperArmSag": {
+      "L": -1.3,
+      "R": 34.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 19,
+     "ms": 633,
+     "pelvisZ": 1.3559,
+     "lowZ": 0.5808,
+     "air": 0.5796,
+     "stance": "",
+     "rootFwd": -0.0273,
+     "toeFwd": {
+      "L": 0.6467,
+      "R": -0.4574
+     },
+     "handZ": {
+      "L": 1.605,
+      "R": 1.716
+     },
+     "handFwd": {
+      "L": 0.259,
+      "R": 0.195
+     },
+     "upperArmSag": {
+      "L": 4.9,
+      "R": 29.9
+     },
+     "pose": ""
+    },
+    {
+     "f": 20,
+     "ms": 667,
+     "pelvisZ": 1.2981,
+     "lowZ": 0.49,
+     "air": 0.4888,
+     "stance": "",
+     "rootFwd": -0.0252,
+     "toeFwd": {
+      "L": 0.6158,
+      "R": -0.4385
+     },
+     "handZ": {
+      "L": 1.548,
+      "R": 1.616
+     },
+     "handFwd": {
+      "L": 0.275,
+      "R": 0.202
+     },
+     "upperArmSag": {
+      "L": 5.7,
+      "R": 22.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 21,
+     "ms": 700,
+     "pelvisZ": 1.2294,
+     "lowZ": 0.4122,
+     "air": 0.4109,
+     "stance": "",
+     "rootFwd": -0.023,
+     "toeFwd": {
+      "L": 0.5981,
+      "R": -0.4597
+     },
+     "handZ": {
+      "L": 1.444,
+      "R": 1.487
+     },
+     "handFwd": {
+      "L": 0.265,
+      "R": 0.246
+     },
+     "upperArmSag": {
+      "L": -1.5,
+      "R": 12.8
+     },
+     "pose": "reach"
+    },
+    {
+     "f": 22,
+     "ms": 733,
+     "pelvisZ": 1.1499,
+     "lowZ": 0.3544,
+     "air": 0.3532,
+     "stance": "",
+     "rootFwd": -0.0209,
+     "toeFwd": {
+      "L": 0.6159,
+      "R": -0.5411
+     },
+     "handZ": {
+      "L": 1.295,
+      "R": 1.322
+     },
+     "handFwd": {
+      "L": 0.2,
+      "R": 0.32
+     },
+     "upperArmSag": {
+      "L": -18.1,
+      "R": 3.3
+     },
+     "pose": ""
+    },
+    {
+     "f": 23,
+     "ms": 767,
+     "pelvisZ": 1.0594,
+     "lowZ": 0.2952,
+     "air": 0.2939,
+     "stance": "",
+     "rootFwd": -0.0188,
+     "toeFwd": {
+      "L": 0.6366,
+      "R": -0.6319
+     },
+     "handZ": {
+      "L": 1.151,
+      "R": 1.138
+     },
+     "handFwd": {
+      "L": 0.081,
+      "R": 0.395
+     },
+     "upperArmSag": {
+      "L": -37.4,
+      "R": -0.1
+     },
+     "pose": ""
+    },
+    {
+     "f": 24,
+     "ms": 800,
+     "pelvisZ": 0.9581,
+     "lowZ": 0.1766,
+     "air": 0.1754,
+     "stance": "",
+     "rootFwd": -0.0166,
+     "toeFwd": {
+      "L": 0.5779,
+      "R": -0.6523
+     },
+     "handZ": {
+      "L": 1.036,
+      "R": 0.963
+     },
+     "handFwd": {
+      "L": -0.021,
+      "R": 0.456
+     },
+     "upperArmSag": {
+      "L": -50.9,
+      "R": 4.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 25,
+     "ms": 833,
+     "pelvisZ": 0.8459,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0145,
+     "toeFwd": {
+      "L": 0.3703,
+      "R": -0.5801
+     },
+     "handZ": {
+      "L": 0.913,
+      "R": 0.815
+     },
+     "handFwd": {
+      "L": -0.031,
+      "R": 0.478
+     },
+     "upperArmSag": {
+      "L": -52.9,
+      "R": 9.4
+     },
+     "pose": "land L"
+    },
+    {
+     "f": 26,
+     "ms": 867,
+     "pelvisZ": 0.8389,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0341,
+     "toeFwd": {
+      "L": 0.0306,
+      "R": -0.5009
+     },
+     "handZ": {
+      "L": 0.866,
+      "R": 0.811
+     },
+     "handFwd": {
+      "L": 0.062,
+      "R": 0.391
+     },
+     "upperArmSag": {
+      "L": -41.6,
+      "R": -4.4
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 27,
+     "ms": 900,
+     "pelvisZ": 0.8547,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0476,
+     "toeFwd": {
+      "L": -0.1741,
+      "R": -0.5293
+     },
+     "handZ": {
+      "L": 0.832,
+      "R": 0.842
+     },
+     "handFwd": {
+      "L": 0.187,
+      "R": 0.208
+     },
+     "upperArmSag": {
+      "L": -32.9,
+      "R": -46.7
+     },
+     "skateM": 0.0001,
+     "pose": "absorb"
+    },
+    {
+     "f": 28,
+     "ms": 933,
+     "pelvisZ": 0.8533,
+     "lowZ": -0.0054,
+     "air": -0.0067,
+     "stance": "",
+     "rootFwd": -0.0643,
+     "toeFwd": {
+      "L": -0.4031,
+      "R": -0.4486
+     },
+     "handZ": {
+      "L": 0.798,
+      "R": 0.881
+     },
+     "handFwd": {
+      "L": 0.3,
+      "R": 0.031
+     },
+     "upperArmSag": {
+      "L": -20.4,
+      "R": -68.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 29,
+     "ms": 967,
+     "pelvisZ": 0.9124,
+     "lowZ": 0.1134,
+     "air": 0.1121,
+     "stance": "",
+     "rootFwd": -0.0238,
+     "toeFwd": {
+      "L": -0.5839,
+      "R": -0.1958
+     },
+     "handZ": {
+      "L": 0.86,
+      "R": 0.986
+     },
+     "handFwd": {
+      "L": 0.452,
+      "R": -0.052
+     },
+     "upperArmSag": {
+      "L": -6.9,
+      "R": -77.2
+     },
+     "pose": "drive on"
+    },
+    {
+     "f": 30,
+     "ms": 1000,
+     "pelvisZ": 0.9482,
+     "lowZ": 0.2286,
+     "air": 0.2274,
+     "stance": "",
+     "rootFwd": -0.0062,
+     "toeFwd": {
+      "L": -0.737,
+      "R": 0.11
+     },
+     "handZ": {
+      "L": 0.922,
+      "R": 1.07
+     },
+     "handFwd": {
+      "L": 0.551,
+      "R": -0.12
+     },
+     "upperArmSag": {
+      "L": 2.6,
+      "R": -83.3
+     },
+     "pose": ""
+    },
+    {
+     "f": 31,
+     "ms": 1033,
+     "pelvisZ": 0.958,
+     "lowZ": 0.2476,
+     "air": 0.2464,
+     "stance": "",
+     "rootFwd": -0.0022,
+     "toeFwd": {
+      "L": -0.842,
+      "R": 0.3912
+     },
+     "handZ": {
+      "L": 0.954,
+      "R": 1.109
+     },
+     "handFwd": {
+      "L": 0.593,
+      "R": -0.164
+     },
+     "upperArmSag": {
+      "L": 6.8,
+      "R": -85.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 32,
+     "ms": 1067,
+     "pelvisZ": 0.9562,
+     "lowZ": 0.2606,
+     "air": 0.2594,
+     "stance": "",
+     "rootFwd": 0.0,
+     "toeFwd": {
+      "L": -0.8779,
+      "R": 0.5536
+     },
+     "handZ": {
+      "L": 0.951,
+      "R": 1.094
+     },
+     "handFwd": {
+      "L": 0.584,
+      "R": -0.174
+     },
+     "upperArmSag": {
+      "L": 4.6,
+      "R": -80.8
+     },
+     "pose": "run"
+    },
+    {
+     "f": 33,
+     "ms": 1100,
+     "pelvisZ": 0.9379,
+     "lowZ": 0.1686,
+     "air": 0.1674,
+     "stance": "",
+     "rootFwd": 0.0006,
+     "toeFwd": {
+      "L": -0.8176,
+      "R": 0.5482
+     },
+     "handZ": {
+      "L": 0.909,
+      "R": 1.021
+     },
+     "handFwd": {
+      "L": 0.517,
+      "R": -0.134
+     },
+     "upperArmSag": {
+      "L": -5.0,
+      "R": -67.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 34,
+     "ms": 1133,
+     "pelvisZ": 0.9133,
+     "lowZ": 0.0578,
+     "air": 0.0566,
+     "stance": "",
+     "rootFwd": 0.0003,
+     "toeFwd": {
+      "L": -0.6799,
+      "R": 0.4434
+     },
+     "handZ": {
+      "L": 0.873,
+      "R": 0.957
+     },
+     "handFwd": {
+      "L": 0.433,
+      "R": -0.052
+     },
+     "upperArmSag": {
+      "L": -16.8,
+      "R": -53.1
+     },
+     "pose": ""
+    },
+    {
+     "f": 35,
+     "ms": 1167,
+     "pelvisZ": 0.9009,
+     "lowZ": 0.0104,
+     "air": 0.0092,
+     "stance": "",
+     "rootFwd": 0.0,
+     "toeFwd": {
+      "L": -0.6014,
+      "R": 0.3748
+     },
+     "handZ": {
+      "L": 0.863,
+      "R": 0.937
+     },
+     "handFwd": {
+      "L": 0.392,
+      "R": -0.005
+     },
+     "upperArmSag": {
+      "L": -22.8,
+      "R": -46.0
+     },
+     "pose": "run (= R-contact)"
+    }
+   ]
+  },
+  "jump_run_fist": {
+   "action": "chinaman_jump_run_fist",
+   "kind": "JUMP_RUN_FIST",
+   "frames": 40,
+   "durationMs": 1300,
+   "fps": 30,
+   "takeoffMs": 200,
+   "touchMs": 900,
+   "events": [
+    {
+     "timeMs": 200,
+     "type": "takeoff"
+    },
+    {
+     "timeMs": 900,
+     "type": "land"
+    }
+   ],
+   "air": [
+    -0.0096,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.1683,
+    0.347,
+    0.5462,
+    0.7762,
+    0.9389,
+    0.9404,
+    0.926,
+    0.8985,
+    0.8855,
+    0.8824,
+    0.8746,
+    0.8476,
+    0.7907,
+    0.7104,
+    0.6174,
+    0.5219,
+    0.4277,
+    0.3351,
+    0.2338,
+    0.122,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0432,
+    0.1822,
+    0.1503,
+    0.1111,
+    0.0621,
+    0.0124,
+    -0.0096
+   ],
+   "planted": [
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "run": "RUN",
+   "runFrames": 24,
+   "runCycleS": 0.8,
+   "runContacts": {
+    "L": {
+     "start": 13,
+     "end": 17,
+     "startS": 0.4333
+    },
+    "R": {
+     "start": 0,
+     "end": 5,
+     "startS": 0.0
+    }
+   },
+   "enterPhaseS": 0.0,
+   "exitPhaseS": 0.0,
+   "for": [
+    "RUN"
+   ],
+   "blendFor": [],
+   "summary": {
+    "apexPelvisZ": 1.4971,
+    "minAirM": -0.0096,
+    "maxPlantedAirM": 0.0,
+    "maxSkateM": 0.0001,
+    "rootFwdRangeM": [
+     -0.0651,
+     0.021
+    ],
+    "airFrames": 28
+   },
+   "rows": [
+    {
+     "f": 0,
+     "ms": 0,
+     "pelvisZ": 0.9191,
+     "lowZ": -0.0084,
+     "air": -0.0096,
+     "stance": "",
+     "rootFwd": -0.001,
+     "toeFwd": {
+      "L": -0.7837,
+      "R": 0.4501
+     },
+     "handZ": {
+      "L": 1.023,
+      "R": 1.021
+     },
+     "handFwd": {
+      "L": 0.444,
+      "R": -0.145
+     },
+     "upperArmSag": {
+      "L": 0.7,
+      "R": -65.9
+     },
+     "pose": "run contact R"
+    },
+    {
+     "f": 1,
+     "ms": 33,
+     "pelvisZ": 0.9215,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0,
+     "toeFwd": {
+      "L": -0.7201,
+      "R": 0.3179
+     },
+     "handZ": {
+      "L": 0.985,
+      "R": 0.975
+     },
+     "handFwd": {
+      "L": 0.367,
+      "R": -0.023
+     },
+     "upperArmSag": {
+      "L": -13.5,
+      "R": -54.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 2,
+     "ms": 67,
+     "pelvisZ": 0.8723,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": 0.021,
+     "toeFwd": {
+      "L": -0.6061,
+      "R": 0.1866
+     },
+     "handZ": {
+      "L": 0.911,
+      "R": 0.903
+     },
+     "handFwd": {
+      "L": 0.298,
+      "R": 0.137
+     },
+     "upperArmSag": {
+      "L": -30.0,
+      "R": -43.8
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 3,
+     "ms": 100,
+     "pelvisZ": 0.8578,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0075,
+     "toeFwd": {
+      "L": -0.5357,
+      "R": 0.0472
+     },
+     "handZ": {
+      "L": 0.896,
+      "R": 0.887
+     },
+     "handFwd": {
+      "L": 0.193,
+      "R": 0.233
+     },
+     "upperArmSag": {
+      "L": -41.7,
+      "R": -29.2
+     },
+     "skateM": 0.0001,
+     "pose": "load"
+    },
+    {
+     "f": 4,
+     "ms": 133,
+     "pelvisZ": 0.9091,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0213,
+     "toeFwd": {
+      "L": -0.3667,
+      "R": -0.0908
+     },
+     "handZ": {
+      "L": 0.964,
+      "R": 1.016
+     },
+     "handFwd": {
+      "L": 0.082,
+      "R": 0.387
+     },
+     "upperArmSag": {
+      "L": -50.0,
+      "R": 1.9
+     },
+     "skateM": 0.0001,
+     "pose": ""
+    },
+    {
+     "f": 5,
+     "ms": 167,
+     "pelvisZ": 0.9528,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0484,
+     "toeFwd": {
+      "L": -0.0623,
+      "R": -0.3042
+     },
+     "handZ": {
+      "L": 1.036,
+      "R": 1.325
+     },
+     "handFwd": {
+      "L": -0.05,
+      "R": 0.463
+     },
+     "upperArmSag": {
+      "L": -55.3,
+      "R": 44.2
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 6,
+     "ms": 200,
+     "pelvisZ": 0.9304,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "R",
+     "rootFwd": -0.0651,
+     "toeFwd": {
+      "L": 0.2739,
+      "R": -0.5184
+     },
+     "handZ": {
+      "L": 1.043,
+      "R": 1.59
+     },
+     "handFwd": {
+      "L": -0.141,
+      "R": 0.342
+     },
+     "upperArmSag": {
+      "L": -57.5,
+      "R": 82.8
+     },
+     "skateM": 0.0,
+     "pose": "takeoff R"
+    },
+    {
+     "f": 7,
+     "ms": 233,
+     "pelvisZ": 1.036,
+     "lowZ": 0.1695,
+     "air": 0.1683,
+     "stance": "",
+     "rootFwd": -0.0635,
+     "toeFwd": {
+      "L": 0.5035,
+      "R": -0.6636
+     },
+     "handZ": {
+      "L": 1.171,
+      "R": 1.832
+     },
+     "handFwd": {
+      "L": -0.165,
+      "R": 0.189
+     },
+     "upperArmSag": {
+      "L": -56.8,
+      "R": 106.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 8,
+     "ms": 267,
+     "pelvisZ": 1.1308,
+     "lowZ": 0.3482,
+     "air": 0.347,
+     "stance": "",
+     "rootFwd": -0.0618,
+     "toeFwd": {
+      "L": 0.632,
+      "R": -0.7691
+     },
+     "handZ": {
+      "L": 1.278,
+      "R": 1.968
+     },
+     "handFwd": {
+      "L": -0.157,
+      "R": 0.099
+     },
+     "upperArmSag": {
+      "L": -53.9,
+      "R": 116.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 9,
+     "ms": 300,
+     "pelvisZ": 1.2147,
+     "lowZ": 0.5475,
+     "air": 0.5462,
+     "stance": "",
+     "rootFwd": -0.0602,
+     "toeFwd": {
+      "L": 0.7073,
+      "R": -0.8442
+     },
+     "handZ": {
+      "L": 1.369,
+      "R": 2.049
+     },
+     "handFwd": {
+      "L": -0.13,
+      "R": 0.075
+     },
+     "upperArmSag": {
+      "L": -49.6,
+      "R": 117.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 10,
+     "ms": 333,
+     "pelvisZ": 1.2877,
+     "lowZ": 0.7774,
+     "air": 0.7762,
+     "stance": "",
+     "rootFwd": -0.0585,
+     "toeFwd": {
+      "L": 0.7519,
+      "R": -0.8747
+     },
+     "handZ": {
+      "L": 1.447,
+      "R": 2.088
+     },
+     "handFwd": {
+      "L": -0.092,
+      "R": 0.103
+     },
+     "upperArmSag": {
+      "L": -44.6,
+      "R": 111.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 11,
+     "ms": 367,
+     "pelvisZ": 1.3498,
+     "lowZ": 0.9401,
+     "air": 0.9389,
+     "stance": "",
+     "rootFwd": -0.0569,
+     "toeFwd": {
+      "L": 0.7715,
+      "R": -0.8397
+     },
+     "handZ": {
+      "L": 1.515,
+      "R": 2.087
+     },
+     "handFwd": {
+      "L": -0.046,
+      "R": 0.158
+     },
+     "upperArmSag": {
+      "L": -39.2,
+      "R": 98.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 12,
+     "ms": 400,
+     "pelvisZ": 1.401,
+     "lowZ": 0.9416,
+     "air": 0.9404,
+     "stance": "",
+     "rootFwd": -0.0552,
+     "toeFwd": {
+      "L": 0.7667,
+      "R": -0.7461
+     },
+     "handZ": {
+      "L": 1.576,
+      "R": 2.051
+     },
+     "handFwd": {
+      "L": 0.003,
+      "R": 0.215
+     },
+     "upperArmSag": {
+      "L": -34.1,
+      "R": 82.7
+     },
+     "pose": ""
+    },
+    {
+     "f": 13,
+     "ms": 433,
+     "pelvisZ": 1.4414,
+     "lowZ": 0.9273,
+     "air": 0.926,
+     "stance": "",
+     "rootFwd": -0.0536,
+     "toeFwd": {
+      "L": 0.7429,
+      "R": -0.6357
+     },
+     "handZ": {
+      "L": 1.627,
+      "R": 1.996
+     },
+     "handFwd": {
+      "L": 0.047,
+      "R": 0.255
+     },
+     "upperArmSag": {
+      "L": -30.0,
+      "R": 66.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 14,
+     "ms": 467,
+     "pelvisZ": 1.4709,
+     "lowZ": 0.8998,
+     "air": 0.8985,
+     "stance": "",
+     "rootFwd": -0.0519,
+     "toeFwd": {
+      "L": 0.715,
+      "R": -0.5522
+     },
+     "handZ": {
+      "L": 1.664,
+      "R": 1.948
+     },
+     "handFwd": {
+      "L": 0.078,
+      "R": 0.274
+     },
+     "upperArmSag": {
+      "L": -27.5,
+      "R": 52.8
+     },
+     "pose": "apex split"
+    },
+    {
+     "f": 15,
+     "ms": 500,
+     "pelvisZ": 1.4894,
+     "lowZ": 0.8867,
+     "air": 0.8855,
+     "stance": "",
+     "rootFwd": -0.0503,
+     "toeFwd": {
+      "L": 0.7008,
+      "R": -0.5162
+     },
+     "handZ": {
+      "L": 1.684,
+      "R": 1.923
+     },
+     "handFwd": {
+      "L": 0.091,
+      "R": 0.284
+     },
+     "upperArmSag": {
+      "L": -26.9,
+      "R": 45.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 16,
+     "ms": 533,
+     "pelvisZ": 1.4971,
+     "lowZ": 0.8836,
+     "air": 0.8824,
+     "stance": "",
+     "rootFwd": -0.0486,
+     "toeFwd": {
+      "L": 0.7001,
+      "R": -0.5154
+     },
+     "handZ": {
+      "L": 1.689,
+      "R": 1.913
+     },
+     "handFwd": {
+      "L": 0.096,
+      "R": 0.29
+     },
+     "upperArmSag": {
+      "L": -26.7,
+      "R": 41.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 17,
+     "ms": 567,
+     "pelvisZ": 1.4939,
+     "lowZ": 0.8759,
+     "air": 0.8746,
+     "stance": "",
+     "rootFwd": -0.047,
+     "toeFwd": {
+      "L": 0.7045,
+      "R": -0.5304
+     },
+     "handZ": {
+      "L": 1.683,
+      "R": 1.902
+     },
+     "handFwd": {
+      "L": 0.105,
+      "R": 0.291
+     },
+     "upperArmSag": {
+      "L": -24.8,
+      "R": 40.4
+     },
+     "pose": ""
+    },
+    {
+     "f": 18,
+     "ms": 600,
+     "pelvisZ": 1.4799,
+     "lowZ": 0.8488,
+     "air": 0.8476,
+     "stance": "",
+     "rootFwd": -0.0453,
+     "toeFwd": {
+      "L": 0.7039,
+      "R": -0.5394
+     },
+     "handZ": {
+      "L": 1.67,
+      "R": 1.88
+     },
+     "handFwd": {
+      "L": 0.132,
+      "R": 0.281
+     },
+     "upperArmSag": {
+      "L": -19.5,
+      "R": 38.8
+     },
+     "pose": "hang"
+    },
+    {
+     "f": 19,
+     "ms": 633,
+     "pelvisZ": 1.4549,
+     "lowZ": 0.7919,
+     "air": 0.7907,
+     "stance": "",
+     "rootFwd": -0.0437,
+     "toeFwd": {
+      "L": 0.6901,
+      "R": -0.5233
+     },
+     "handZ": {
+      "L": 1.658,
+      "R": 1.836
+     },
+     "handFwd": {
+      "L": 0.18,
+      "R": 0.256
+     },
+     "upperArmSag": {
+      "L": -10.1,
+      "R": 35.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 20,
+     "ms": 667,
+     "pelvisZ": 1.4191,
+     "lowZ": 0.7117,
+     "air": 0.7104,
+     "stance": "",
+     "rootFwd": -0.042,
+     "toeFwd": {
+      "L": 0.6652,
+      "R": -0.4888
+     },
+     "handZ": {
+      "L": 1.645,
+      "R": 1.771
+     },
+     "handFwd": {
+      "L": 0.231,
+      "R": 0.227
+     },
+     "upperArmSag": {
+      "L": -0.2,
+      "R": 30.9
+     },
+     "pose": ""
+    },
+    {
+     "f": 21,
+     "ms": 700,
+     "pelvisZ": 1.3723,
+     "lowZ": 0.6187,
+     "air": 0.6174,
+     "stance": "",
+     "rootFwd": -0.0404,
+     "toeFwd": {
+      "L": 0.6352,
+      "R": -0.454
+     },
+     "handZ": {
+      "L": 1.619,
+      "R": 1.69
+     },
+     "handFwd": {
+      "L": 0.266,
+      "R": 0.206
+     },
+     "upperArmSag": {
+      "L": 6.6,
+      "R": 25.2
+     },
+     "pose": ""
+    },
+    {
+     "f": 22,
+     "ms": 733,
+     "pelvisZ": 1.3147,
+     "lowZ": 0.5231,
+     "air": 0.5219,
+     "stance": "",
+     "rootFwd": -0.0387,
+     "toeFwd": {
+      "L": 0.606,
+      "R": -0.44
+     },
+     "handZ": {
+      "L": 1.563,
+      "R": 1.6
+     },
+     "handFwd": {
+      "L": 0.276,
+      "R": 0.204
+     },
+     "upperArmSag": {
+      "L": 7.1,
+      "R": 19.1
+     },
+     "pose": ""
+    },
+    {
+     "f": 23,
+     "ms": 767,
+     "pelvisZ": 1.2462,
+     "lowZ": 0.429,
+     "air": 0.4277,
+     "stance": "",
+     "rootFwd": -0.0371,
+     "toeFwd": {
+      "L": 0.5841,
+      "R": -0.4737
+     },
+     "handZ": {
+      "L": 1.46,
+      "R": 1.504
+     },
+     "handFwd": {
+      "L": 0.251,
+      "R": 0.232
+     },
+     "upperArmSag": {
+      "L": -1.5,
+      "R": 12.8
+     },
+     "pose": "reach"
+    },
+    {
+     "f": 24,
+     "ms": 800,
+     "pelvisZ": 1.1669,
+     "lowZ": 0.3363,
+     "air": 0.3351,
+     "stance": "",
+     "rootFwd": -0.0354,
+     "toeFwd": {
+      "L": 0.5754,
+      "R": -0.5849
+     },
+     "handZ": {
+      "L": 1.315,
+      "R": 1.394
+     },
+     "handFwd": {
+      "L": 0.164,
+      "R": 0.298
+     },
+     "upperArmSag": {
+      "L": -20.9,
+      "R": 7.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 25,
+     "ms": 833,
+     "pelvisZ": 1.0766,
+     "lowZ": 0.235,
+     "air": 0.2338,
+     "stance": "",
+     "rootFwd": -0.0338,
+     "toeFwd": {
+      "L": 0.5727,
+      "R": -0.7306
+     },
+     "handZ": {
+      "L": 1.177,
+      "R": 1.257
+     },
+     "handFwd": {
+      "L": 0.024,
+      "R": 0.374
+     },
+     "upperArmSag": {
+      "L": -43.7,
+      "R": 3.8
+     },
+     "pose": ""
+    },
+    {
+     "f": 26,
+     "ms": 867,
+     "pelvisZ": 0.9754,
+     "lowZ": 0.1233,
+     "air": 0.122,
+     "stance": "",
+     "rootFwd": -0.0321,
+     "toeFwd": {
+      "L": 0.5589,
+      "R": -0.8135
+     },
+     "handZ": {
+      "L": 1.078,
+      "R": 1.097
+     },
+     "handFwd": {
+      "L": -0.108,
+      "R": 0.427
+     },
+     "upperArmSag": {
+      "L": -61.6,
+      "R": 1.0
+     },
+     "pose": ""
+    },
+    {
+     "f": 27,
+     "ms": 900,
+     "pelvisZ": 0.8634,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0305,
+     "toeFwd": {
+      "L": 0.5051,
+      "R": -0.8221
+     },
+     "handZ": {
+      "L": 0.987,
+      "R": 0.934
+     },
+     "handFwd": {
+      "L": -0.171,
+      "R": 0.436
+     },
+     "upperArmSag": {
+      "L": -71.1,
+      "R": -3.4
+     },
+     "pose": "land L"
+    },
+    {
+     "f": 28,
+     "ms": 933,
+     "pelvisZ": 0.8526,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0473,
+     "toeFwd": {
+      "L": 0.3639,
+      "R": -0.8159
+     },
+     "handZ": {
+      "L": 0.967,
+      "R": 0.9
+     },
+     "handFwd": {
+      "L": -0.171,
+      "R": 0.38
+     },
+     "upperArmSag": {
+      "L": -70.8,
+      "R": -11.6
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 29,
+     "ms": 967,
+     "pelvisZ": 0.8109,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0357,
+     "toeFwd": {
+      "L": 0.221,
+      "R": -0.7594
+     },
+     "handZ": {
+      "L": 0.892,
+      "R": 0.854
+     },
+     "handFwd": {
+      "L": -0.081,
+      "R": 0.325
+     },
+     "upperArmSag": {
+      "L": -62.8,
+      "R": -22.1
+     },
+     "skateM": 0.0001,
+     "pose": ""
+    },
+    {
+     "f": 30,
+     "ms": 1000,
+     "pelvisZ": 0.804,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0486,
+     "toeFwd": {
+      "L": 0.0649,
+      "R": -0.6975
+     },
+     "handZ": {
+      "L": 0.854,
+      "R": 0.849
+     },
+     "handFwd": {
+      "L": 0.02,
+      "R": 0.234
+     },
+     "upperArmSag": {
+      "L": -49.4,
+      "R": -31.4
+     },
+     "skateM": 0.0,
+     "pose": "absorb"
+    },
+    {
+     "f": 31,
+     "ms": 1033,
+     "pelvisZ": 0.8843,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0349,
+     "toeFwd": {
+      "L": -0.0908,
+      "R": -0.5773
+     },
+     "handZ": {
+      "L": 0.916,
+      "R": 0.93
+     },
+     "handFwd": {
+      "L": 0.144,
+      "R": 0.176
+     },
+     "upperArmSag": {
+      "L": -33.5,
+      "R": -38.5
+     },
+     "skateM": 0.0,
+     "pose": ""
+    },
+    {
+     "f": 32,
+     "ms": 1067,
+     "pelvisZ": 0.9474,
+     "lowZ": 0.0012,
+     "air": 0.0,
+     "stance": "L",
+     "rootFwd": -0.0279,
+     "toeFwd": {
+      "L": -0.3044,
+      "R": -0.4354
+     },
+     "handZ": {
+      "L": 0.976,
+      "R": 0.995
+     },
+     "handFwd": {
+      "L": 0.249,
+      "R": 0.118
+     },
+     "upperArmSag": {
+      "L": -17.8,
+      "R": -44.3
+     },
+     "skateM": 0.0001,
+     "pose": ""
+    },
+    {
+     "f": 33,
+     "ms": 1100,
+     "pelvisZ": 0.9488,
+     "lowZ": 0.0444,
+     "air": 0.0432,
+     "stance": "",
+     "rootFwd": -0.011,
+     "toeFwd": {
+      "L": -0.5088,
+      "R": -0.2486
+     },
+     "handZ": {
+      "L": 0.99,
+      "R": 1.003
+     },
+     "handFwd": {
+      "L": 0.349,
+      "R": 0.078
+     },
+     "upperArmSag": {
+      "L": -3.8,
+      "R": -49.5
+     },
+     "pose": "drive on"
+    },
+    {
+     "f": 34,
+     "ms": 1133,
+     "pelvisZ": 0.9636,
+     "lowZ": 0.1834,
+     "air": 0.1822,
+     "stance": "",
+     "rootFwd": -0.0074,
+     "toeFwd": {
+      "L": -0.6894,
+      "R": -0.0186
+     },
+     "handZ": {
+      "L": 1.032,
+      "R": 1.029
+     },
+     "handFwd": {
+      "L": 0.421,
+      "R": 0.034
+     },
+     "upperArmSag": {
+      "L": 7.5,
+      "R": -54.5
+     },
+     "pose": ""
+    },
+    {
+     "f": 35,
+     "ms": 1167,
+     "pelvisZ": 0.9666,
+     "lowZ": 0.1515,
+     "air": 0.1503,
+     "stance": "",
+     "rootFwd": -0.008,
+     "toeFwd": {
+      "L": -0.8215,
+      "R": 0.2322
+     },
+     "handZ": {
+      "L": 1.064,
+      "R": 1.044
+     },
+     "handFwd": {
+      "L": 0.467,
+      "R": -0.01
+     },
+     "upperArmSag": {
+      "L": 14.6,
+      "R": -59.0
+     },
+     "pose": ""
+    },
+    {
+     "f": 36,
+     "ms": 1200,
+     "pelvisZ": 0.9523,
+     "lowZ": 0.1123,
+     "air": 0.1111,
+     "stance": "",
+     "rootFwd": -0.001,
+     "toeFwd": {
+      "L": -0.8687,
+      "R": 0.4212
+     },
+     "handZ": {
+      "L": 1.068,
+      "R": 1.04
+     },
+     "handFwd": {
+      "L": 0.492,
+      "R": -0.046
+     },
+     "upperArmSag": {
+      "L": 16.1,
+      "R": -62.5
+     },
+     "pose": "run"
+    },
+    {
+     "f": 37,
+     "ms": 1233,
+     "pelvisZ": 0.9347,
+     "lowZ": 0.0633,
+     "air": 0.0621,
+     "stance": "",
+     "rootFwd": 0.0025,
+     "toeFwd": {
+      "L": -0.8495,
+      "R": 0.4851
+     },
+     "handZ": {
+      "L": 1.049,
+      "R": 1.029
+     },
+     "handFwd": {
+      "L": 0.484,
+      "R": -0.088
+     },
+     "upperArmSag": {
+      "L": 11.3,
+      "R": -64.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 38,
+     "ms": 1267,
+     "pelvisZ": 0.9232,
+     "lowZ": 0.0136,
+     "air": 0.0124,
+     "stance": "",
+     "rootFwd": 0.0007,
+     "toeFwd": {
+      "L": -0.8062,
+      "R": 0.4703
+     },
+     "handZ": {
+      "L": 1.03,
+      "R": 1.023
+     },
+     "handFwd": {
+      "L": 0.458,
+      "R": -0.128
+     },
+     "upperArmSag": {
+      "L": 4.3,
+      "R": -65.6
+     },
+     "pose": ""
+    },
+    {
+     "f": 39,
+     "ms": 1300,
+     "pelvisZ": 0.9191,
+     "lowZ": -0.0084,
+     "air": -0.0096,
+     "stance": "",
+     "rootFwd": -0.001,
+     "toeFwd": {
+      "L": -0.7837,
+      "R": 0.4501
+     },
+     "handZ": {
+      "L": 1.023,
+      "R": 1.021
+     },
+     "handFwd": {
+      "L": 0.444,
+      "R": -0.145
+     },
+     "upperArmSag": {
+      "L": 0.7,
+      "R": -65.9
+     },
+     "pose": "run (= phase 0)"
+    }
+   ]
+  }
+ }
+}

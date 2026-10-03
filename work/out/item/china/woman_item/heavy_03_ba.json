@@ -1,0 +1,130 @@
+{
+  "source": "res/item/china/woman_item/heavy_03_ba.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "heavy_03_ba",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "Heavy_03_ba"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "Heavy_03_ba"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Heavy_03_ba",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\heavy_03.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_ba.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (96.5% partial, 3.5% zero)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Heavy_03_ba",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\heavy_03_ba.bms",
+      "material": "Heavy_03_ba",
+      "vertices": 258,
+      "triangles": 364,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Neck",
+        "Bip01 Spine",
+        "Bip01 R UpperArm",
+        "Bip01 Head",
+        "Bip01 R Clavicle",
+        "Bip01 R Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 258,
+    "triangles": 364,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.34894514083862305,
+    "boundsMin": [
+      -0.5012282133102417,
+      1.1853702068328857,
+      -0.13822892308235168
+    ],
+    "boundsMax": [
+      0.5012294054031372,
+      1.5343153476715088,
+      0.11623668670654297
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

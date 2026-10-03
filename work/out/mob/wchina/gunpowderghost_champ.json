@@ -1,0 +1,493 @@
+{
+  "source": "res/mob/wchina/gunpowderghost_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "gunpowderghost",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\gunpowderghost.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bone01",
+      "Bone02",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail11",
+      "Bip01 Ponytail12",
+      "Bip01 Ponytail13",
+      "Bip01 Ponytail14",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid",
+      "Bone10",
+      "Bone09",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone05",
+      "Bone06",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 8.876734974849754e-7,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": [
+        "Bone02",
+        "Bip01 L HandMid",
+        "Bone10",
+        "Bone09",
+        "Bone06"
+      ]
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "GunpowderGhost_part1"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "GunpowderGhost_part2_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "GunpowderGhost_part2_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "GunpowderGhost",
+      "bmt": "prim\\mtrl\\mob\\china\\gunpowderghost_champ.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\gunpowderghost_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.7% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.9137255549430847,
+        0.9137255549430847,
+        0.9137255549430847,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "GunpowderGhost_part1",
+      "bms": "prim\\mesh\\mob\\china\\gunpowderghost_part1.bms",
+      "material": "GunpowderGhost",
+      "vertices": 118,
+      "triangles": 152,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger01",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L Finger0",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Finger0",
+        "Bip01 R UpperArm"
+      ]
+    },
+    {
+      "name": "GunpowderGhost_part2_part1",
+      "bms": "prim\\mesh\\mob\\china\\gunpowderghost_part2_part1.bms",
+      "material": "GunpowderGhost",
+      "vertices": 241,
+      "triangles": 310,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 Spine1",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    },
+    {
+      "name": "GunpowderGhost_part2_part2",
+      "bms": "prim\\mesh\\mob\\china\\gunpowderghost_part2_part2.bms",
+      "material": "GunpowderGhost",
+      "vertices": 226,
+      "triangles": 310,
+      "skinned": true,
+      "bones": [
+        "Bone01",
+        "Bip01 Head",
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 Ponytail1",
+        "Bip01 Ponytail11",
+        "Bip01 Ponytail14",
+        "Bip01 Ponytail13",
+        "Bip01 Ponytail12",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_stand01.ban",
+      "banName": "gunpowderghost_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_walk.ban",
+      "banName": "gunpowderghost_walk",
+      "durationMs": 800,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 17,
+      "walkLength": 8.199999809265137,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_attack01.ban",
+      "banName": "gunpowderghost_attack01",
+      "durationMs": 2833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 656,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1736,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 48
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_damage01.ban",
+      "banName": "gunpowderghost_damage01",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 8,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_die.ban",
+      "banName": "gunpowderghost_die",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "ATTACK2",
+      "group": "default",
+      "type": 5,
+      "typeName": "ATTACK2",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_attack02.ban",
+      "banName": "gunpowderghost_attack02",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 43,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 648,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        },
+        {
+          "timeMs": 1734,
+          "type": 1,
+          "p1": 1,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 48
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_run.ban",
+      "banName": "gunpowderghost_run",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 24,
+      "walkLength": 25,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\gunpowderghost\\gunpowderghost_damage02.ban",
+      "banName": "gunpowderghost_damage02",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 48
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\earthghost_die_loop.ban",
+      "banName": "earthghost_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\earthghost_down.ban",
+      "banName": "earthghost_down",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 20,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downwait.ban",
+      "banName": "earthghost_downwait",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 16,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downdamage.ban",
+      "banName": "earthghost_downdamage",
+      "durationMs": 600,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 17,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\earthghost_wakeup.ban",
+      "banName": "earthghost_wakeup",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 25,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\earthghost_downdie.ban",
+      "banName": "earthghost_downdie",
+      "durationMs": 233,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 42
+    }
+  ],
+  "stats": {
+    "vertices": 585,
+    "triangles": 772,
+    "joints": 49,
+    "meshes": 3,
+    "animations": 14,
+    "textures": 1,
+    "heightM": 1.1313920819666237,
+    "boundsMin": [
+      -0.6828576922416687,
+      0.00042776227928698063,
+      -0.32814186811447144
+    ],
+    "boundsMax": [
+      0.6828675866127014,
+      1.1318198442459106,
+      0.25415417551994324
+    ]
+  },
+  "warnings": [
+    "5 joint(s) with a stale stored toLocal; inverse binds use the toParent chain"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

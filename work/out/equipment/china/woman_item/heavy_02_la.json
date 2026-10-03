@@ -1,0 +1,266 @@
+{
+  "source": "res/item/china/woman_item/heavy_02_la.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/equipment)",
+  "name": "heavy_02_la",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim/skel/char/europe/europewoman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone01",
+      "Bone02",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.242945916363652e-7,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 2,
+    "attachPointName": "_la",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "Heavy_02_la"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "Heavy_02_la"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Heavy_02_la",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\heavy_02.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_la.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Heavy_02_la",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\heavy_02_la.bms",
+      "material": "Heavy_02_la",
+      "vertices": 237,
+      "triangles": 360,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 L Calf"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 237,
+    "triangles": 360,
+    "joints": 45,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.8125772774219513,
+    "boundsMin": [
+      -0.24307623505592346,
+      0.32222458720207214,
+      -0.1661432683467865
+    ],
+    "boundsMax": [
+      0.2430645227432251,
+      1.1348018646240234,
+      0.07821379601955414
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  },
+  "equipment": {
+    "code": [
+      "ITEM_CH_W_HEAVY_02_LA_A",
+      "ITEM_CH_W_HEAVY_02_LA_B",
+      "ITEM_CH_W_HEAVY_02_LA_C"
+    ],
+    "bsr": "res/item/china/woman_item/heavy_02_la.bsr",
+    "gender": "female",
+    "kind": "skinned",
+    "method": "REPLACE",
+    "attachPoint": "_la",
+    "slots": [
+      "PELVIS",
+      "THIGH"
+    ],
+    "attachBone": null,
+    "hides": [
+      "woman_pelvis",
+      "woman_thigh"
+    ],
+    "skeleton": "prim/skel/char/europe/europewoman_skel.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 L HandMid2",
+      "Bip01 L HandMid",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 R HandMid",
+      "Bone01",
+      "Bone02",
+      "cloak01",
+      "cloak02",
+      "cloak03",
+      "cloak04"
+    ],
+    "coverage": [
+      {
+        "slot": "PELVIS",
+        "mesh": "woman_pelvis",
+        "vertices": 73,
+        "gaps": 0,
+        "maxOffsetM": 0.0265
+      },
+      {
+        "slot": "THIGH",
+        "mesh": "woman_thigh",
+        "vertices": 100,
+        "gaps": 0,
+        "maxOffsetM": 0.0398
+      }
+    ],
+    "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
+  }
+}

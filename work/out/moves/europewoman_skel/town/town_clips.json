@@ -1,0 +1,73 @@
+{
+ "format": "sro-town-clips",
+ "version": 1,
+ "skeleton": "europewoman_skel",
+ "pack": "town_clips.glb",
+ "fps": 30,
+ "clips": {
+  "CARRY": {
+   "anim": "chinawoman_carry",
+   "frames": 36,
+   "durationMs": 1167,
+   "loop": true,
+   "base": "WALK",
+   "socket": {
+    "bone": "Bip01 R Hand",
+    "prop": "crate",
+    "offset": [
+     0.147994,
+     0.160788,
+     0.061187
+    ],
+    "rotation": [
+     0.613237,
+     0.372108,
+     -0.525768,
+     0.457214
+    ]
+   }
+  },
+  "SIT_CHAIR": {
+   "anim": "chinawoman_sit_chair",
+   "frames": 91,
+   "durationMs": 3000,
+   "loop": true,
+   "base": "STAND1",
+   "seat": {
+    "hipZ": 0.6108,
+    "hipFwd": -0.0133,
+    "seatZ": 0.5371
+   }
+  },
+  "SWEEP": {
+   "anim": "chinawoman_sweep",
+   "frames": 61,
+   "durationMs": 2000,
+   "loop": true,
+   "base": "STAND1",
+   "socket": {
+    "bone": "Bip01 R Hand",
+    "prop": "broom",
+    "offset": [
+     0.000003,
+     -0.000004,
+     0
+    ],
+    "rotation": [
+     -0.608547,
+     0.600868,
+     0.120544,
+     0.504081
+    ],
+    "floorM": 1.0835
+   }
+  },
+  "TALK": {
+   "anim": "chinawoman_talk",
+   "frames": 91,
+   "durationMs": 3000,
+   "loop": true,
+   "base": "STAND1"
+  }
+ }
+}

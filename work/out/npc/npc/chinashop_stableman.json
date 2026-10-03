@@ -1,0 +1,524 @@
+{
+  "source": "res/npc/npc/chinashop_stableman.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinashop_stableman",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\china\\chinashop_stableman.bsk",
+    "joints": [
+      "Bip02",
+      "Bip02 Pelvis",
+      "Bip02 Spine",
+      "Bip02 Spine1",
+      "Bip02 Neck",
+      "Bip02 Neck1",
+      "Bip02 Head",
+      "Bip02 L Clavicle",
+      "Bip02 L UpperArm",
+      "Bip02 L Forearm",
+      "Bip02 L Hand",
+      "Bip02 L Finger0",
+      "Bip02 R Clavicle",
+      "Bip02 R UpperArm",
+      "Bip02 R Forearm",
+      "Bip02 R Hand",
+      "Bip02 R Finger0",
+      "Bip02 L Thigh",
+      "Bip02 L Calf",
+      "Bip02 L HorseLink",
+      "Bip02 L Foot",
+      "Bip02 L Toe0",
+      "Bip02 R Thigh",
+      "Bip02 R Calf",
+      "Bip02 R HorseLink",
+      "Bip02 R Foot",
+      "Bip02 R Toe0",
+      "Bip02 Tail",
+      "Bip02 Tail1",
+      "Bip02 Tail2",
+      "Bip02 Tail3",
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 5.371984316271394e-7,
+      "maxHierarchyError": 5.551115123125783e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "ChinaShop_Stableman_horse_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_stableman.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_stableman_horse.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_Stableman_horse_al_2s",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_stableman.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_stableman_horse_al.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (35.8% zero, 29.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_Stableman_tong",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_stableman.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_stableman.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.2% zero, 0.1% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_Stableman",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_stableman.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_stableman.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.2% zero, 0.1% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "ChinaShop_Stableman_horse",
+      "bmt": "prim\\mtrl\\npc\\china\\chinashop_stableman.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\npc\\china\\chinashop_stableman_horse.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ChinaShop_Stableman_horse_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_horse_2s.bms",
+      "material": "ChinaShop_Stableman_horse_2s",
+      "vertices": 30,
+      "triangles": 28,
+      "skinned": true,
+      "bones": [
+        "Bip02 Neck1",
+        "Bip02 Head",
+        "Bip02 Neck"
+      ]
+    },
+    {
+      "name": "ChinaShop_Stableman_horse_al_2s",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_horse_al_2s.bms",
+      "material": "ChinaShop_Stableman_horse_al_2s",
+      "vertices": 40,
+      "triangles": 32,
+      "skinned": true,
+      "bones": [
+        "Bip02 Neck1",
+        "Bip02 Spine1",
+        "Bip02 Head",
+        "Bip02 Spine",
+        "Bip02 Tail",
+        "Bip02 Tail1",
+        "Bip02 Tail2",
+        "Bip02 Tail3"
+      ]
+    },
+    {
+      "name": "ChinaShop_Stableman_tong",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_tong.bms",
+      "material": "ChinaShop_Stableman_tong",
+      "vertices": 80,
+      "triangles": 53,
+      "skinned": false,
+      "bones": []
+    },
+    {
+      "name": "ChinaShop_Stableman_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_part1.bms",
+      "material": "ChinaShop_Stableman",
+      "vertices": 315,
+      "triangles": 447,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 L Clavicle",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Forearm",
+        "Bip01 L UpperArm",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Calf",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 R Clavicle",
+        "Bip01 Neck1",
+        "Bip01 Head",
+        "Bip01 Neck"
+      ]
+    },
+    {
+      "name": "ChinaShop_Stableman_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_part2.bms",
+      "material": "ChinaShop_Stableman",
+      "vertices": 296,
+      "triangles": 358,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck1",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger2",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 R Finger1",
+        "Bip01 R Finger2",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21"
+      ]
+    },
+    {
+      "name": "ChinaShop_Stableman_horse_part1",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_horse_part1.bms",
+      "material": "ChinaShop_Stableman_horse",
+      "vertices": 170,
+      "triangles": 244,
+      "skinned": true,
+      "bones": [
+        "Bip02 Spine1",
+        "Bip02 Spine",
+        "Bip02 R Thigh",
+        "Bip02 Pelvis",
+        "Bip02 R Foot",
+        "Bip02 R HorseLink",
+        "Bip02 R Calf",
+        "Bip02 L Calf",
+        "Bip02 L HorseLink",
+        "Bip02 L Foot",
+        "Bip02 L Thigh",
+        "Bip02 Tail"
+      ]
+    },
+    {
+      "name": "ChinaShop_Stableman_horse_part2",
+      "bms": "prim\\mesh\\npc\\china\\chinashop_stableman_horse_part2.bms",
+      "material": "ChinaShop_Stableman_horse",
+      "vertices": 294,
+      "triangles": 440,
+      "skinned": true,
+      "bones": [
+        "Bip02 Spine1",
+        "Bip02 Neck",
+        "Bip02 Neck1",
+        "Bip02 Head",
+        "Bip02 R UpperArm",
+        "Bip02 R Forearm",
+        "Bip02 R Clavicle",
+        "Bip02 R Hand",
+        "Bip02 L Hand",
+        "Bip02 L UpperArm",
+        "Bip02 L Forearm",
+        "Bip02 L Clavicle"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\china\\chinashop_stableman_basic.ban",
+      "banName": "chinashop_stableman_basic",
+      "durationMs": 5000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 66
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\china\\chinashop_stableman_basic02.ban",
+      "banName": "chinashop_stableman_basic02",
+      "durationMs": 5666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 69,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 66
+    }
+  ],
+  "stats": {
+    "vertices": 1225,
+    "triangles": 1602,
+    "joints": 67,
+    "meshes": 7,
+    "animations": 2,
+    "textures": 3,
+    "heightM": 1.9864922938868403,
+    "boundsMin": [
+      -0.1981736421585083,
+      -0.014298337511718273,
+      -1.3332160711288452
+    ],
+    "boundsMax": [
+      0.8920184373855591,
+      1.972193956375122,
+      0.9343606233596802
+    ]
+  },
+  "warnings": [
+    "ChinaShop_Stableman_tong: no skin data; left static at the model origin"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

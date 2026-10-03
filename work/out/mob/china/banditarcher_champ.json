@@ -1,0 +1,499 @@
+{
+  "source": "res/mob/china/banditarcher_champ.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "banditarcher",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\banditarcher.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bone09",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04",
+      "Bone05",
+      "Bone06",
+      "Bone07",
+      "Bone08",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.000001042522441485616,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": {
+    "kind": 0,
+    "attachPoint": 13,
+    "attachPointName": "CHAR",
+    "attachMethod": 0,
+    "attachMethodName": "BASE",
+    "slots": [
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "BanditArcher_bow"
+      },
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "BanditArcher_bow"
+      },
+      {
+        "slot": 1,
+        "slotName": "FACE",
+        "mesh": "BanditArcher_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "BanditArcher_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "BanditArcher_bow",
+      "bmt": "prim\\mtrl\\mob\\china\\banditarcher_champ.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\banditarcher_bow.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.9% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "BanditArcher",
+      "bmt": "prim\\mtrl\\mob\\china\\banditarcher_champ.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\banditarcher_champ.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.6% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "BanditArcher_bow",
+      "bms": "prim\\mesh\\mob\\china\\banditarcher_bow.bms",
+      "material": "BanditArcher_bow",
+      "vertices": 90,
+      "triangles": 152,
+      "skinned": true,
+      "bones": [
+        "Bone05",
+        "Bone01",
+        "Bone02",
+        "Bone07",
+        "Bone06"
+      ]
+    },
+    {
+      "name": "BanditArcher_part1",
+      "bms": "prim\\mesh\\mob\\china\\banditarcher_part1.bms",
+      "material": "BanditArcher",
+      "vertices": 214,
+      "triangles": 276,
+      "skinned": true,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Finger0",
+        "Bip01 R Finger2",
+        "Bip01 R Finger1",
+        "Bip01 R Finger01",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger2",
+        "Bip01 L Finger1",
+        "Bip01 L Finger01",
+        "Bip01 L Finger0",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21"
+      ]
+    },
+    {
+      "name": "BanditArcher_part2",
+      "bms": "prim\\mesh\\mob\\china\\banditarcher_part2.bms",
+      "material": "BanditArcher",
+      "vertices": 556,
+      "triangles": 766,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Neck",
+        "Bip01 Head",
+        "Bip01 Pelvis",
+        "Bip01 L Thigh",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_stand01.ban",
+      "banName": "bandit_stand01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_walk.ban",
+      "banName": "banditarcher_walk",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 14,
+      "walkLength": 17,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_attack01.ban",
+      "banName": "banditarcher_attack01",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 38,
+      "walkLength": 0,
+      "events": [
+        {
+          "timeMs": 1390,
+          "type": 1,
+          "p1": 0,
+          "p2": 0
+        }
+      ],
+      "trackedJoints": 43
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_damage01.ban",
+      "banName": "banditarcher_damage01",
+      "durationMs": 500,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 3,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_die.ban",
+      "banName": "banditarcher_die",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 52,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_run.ban",
+      "banName": "banditarcher_run",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 26,
+      "walkLength": 43,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "DAMAGE2",
+      "group": "default",
+      "type": 9,
+      "typeName": "DAMAGE2",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_damage02.ban",
+      "banName": "banditarcher_damage02",
+      "durationMs": 1733,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 26,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\mob\\china\\banditarcher\\banditarcher_die_loop.ban",
+      "banName": "banditarcher_die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 43
+    },
+    {
+      "name": "DOWN",
+      "group": "default",
+      "type": 62,
+      "typeName": "DOWN",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_down.ban",
+      "banName": "bandit_down",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    },
+    {
+      "name": "DOWN_RM",
+      "group": "default",
+      "type": 63,
+      "typeName": "DOWN_RM",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_downwait.ban",
+      "banName": "bandit_downwait",
+      "durationMs": 2000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 5,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    },
+    {
+      "name": "DOWN_DAMAGE",
+      "group": "default",
+      "type": 64,
+      "typeName": "DOWN_DAMAGE",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_downdamage.ban",
+      "banName": "bandit_downdamage",
+      "durationMs": 833,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 14,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    },
+    {
+      "name": "DOWN_UP",
+      "group": "default",
+      "type": 65,
+      "typeName": "DOWN_UP",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_wakeup.ban",
+      "banName": "bandit_wakeup",
+      "durationMs": 1333,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 18,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    },
+    {
+      "name": "DOWN_DIE",
+      "group": "default",
+      "type": 66,
+      "typeName": "DOWN_DIE",
+      "ban": "prim\\ani\\mob\\china\\bandit\\bandit_downdie.ban",
+      "banName": "bandit_downdie",
+      "durationMs": 300,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 34,
+      "partial": true
+    }
+  ],
+  "stats": {
+    "vertices": 860,
+    "triangles": 1194,
+    "joints": 44,
+    "meshes": 3,
+    "animations": 13,
+    "textures": 2,
+    "heightM": 1.490241200197488,
+    "boundsMin": [
+      -1.1530145406723022,
+      0.002499073278158903,
+      -0.5604044795036316
+    ],
+    "boundsMax": [
+      1.153040885925293,
+      1.492740273475647,
+      0.5840489864349365
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "source": "res/mob/china/banditarcher_arrow.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "banditarcher_arrow",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\mob\\china\\banditarcher_arrow.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone11": [
+      0,
+      0,
+      0
+    ],
+    "Bone12": [
+      -0.00061,
+      0.00141,
+      0.10417
+    ]
+  },
+  "attachBone": "Bip01 R HandMid",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 7,
+    "attachPointName": "RIGHT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 9,
+        "slotName": "RIGHT_HAND",
+        "mesh": "BanditArcher_arrow"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "BanditArcher_bow",
+      "bmt": "prim\\mtrl\\mob\\china\\banditarcher.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\mob\\china\\banditarcher_bow.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.9% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "BanditArcher_arrow",
+      "bms": "prim\\mesh\\mob\\china\\banditarcher_arrow.bms",
+      "material": "BanditArcher_bow",
+      "vertices": 38,
+      "triangles": 48,
+      "skinned": false,
+      "bones": [
+        "Bone11"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 38,
+    "triangles": 48,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.06587295047938824,
+    "boundsMin": [
+      -0.03370184451341629,
+      -0.03607182949781418,
+      0.09665139019489288
+    ],
+    "boundsMax": [
+      0.03245755285024643,
+      0.02980112098157406,
+      1.0053285360336304
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

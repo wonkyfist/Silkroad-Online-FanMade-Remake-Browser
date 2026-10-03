@@ -1,0 +1,316 @@
+{
+  "source": "res/npc/npc/chinaetc_qinshiquest.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "chinaetc_qinshiquest",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\npc\\qinshi\\chinaetc_qinshiquest.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Head",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 L Finger01",
+      "Bip01 L Finger1",
+      "Bip01 L Finger11",
+      "Bip01 L Finger2",
+      "Bip01 L Finger21",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 R Finger01",
+      "Bip01 R Finger1",
+      "Bip01 R Finger11",
+      "Bip01 R Finger2",
+      "Bip01 R Finger21",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 3.637945165113621e-7,
+      "maxHierarchyError": 2.220446049250313e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "chinaetc_qinshiQuest",
+      "bmt": "prim\\mtrl\\npc\\qinshi\\chinaetc_qinshiquest.bmt",
+      "flags": 832,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\npc\\qinshi\\chinaetc_qinshiquest.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.8% zero, 0.0% partial)",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "chinaetc_qinshiQuest_al",
+      "bms": "prim\\mesh\\npc\\qinshi\\chinaetc_qinshiquest_al.bms",
+      "material": "chinaetc_qinshiQuest",
+      "vertices": 60,
+      "triangles": 62,
+      "skinned": true,
+      "bones": [
+        "Bip01 Neck1",
+        "Bip01 Head",
+        "Bip01 Spine1",
+        "Bip01 L Clavicle",
+        "Bip01 R Clavicle"
+      ]
+    },
+    {
+      "name": "chinaetc_qinshiQuest_part1",
+      "bms": "prim\\mesh\\npc\\qinshi\\chinaetc_qinshiquest_part1.bms",
+      "material": "chinaetc_qinshiQuest",
+      "vertices": 456,
+      "triangles": 612,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Spine1",
+        "Bip01 Neck1",
+        "Spine_Base",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Finger1",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger2",
+        "Bip01 L Finger11",
+        "Bip01 L Finger21",
+        "Bip01 Head",
+        "Bip01 R UpperArm",
+        "Bip01 R Clavicle",
+        "Bip01 R Forearm",
+        "Bip01 Pelvis"
+      ]
+    },
+    {
+      "name": "chinaetc_qinshiQuest_part2",
+      "bms": "prim\\mesh\\npc\\qinshi\\chinaetc_qinshiquest_part2.bms",
+      "material": "chinaetc_qinshiQuest",
+      "vertices": 283,
+      "triangles": 348,
+      "skinned": true,
+      "bones": [
+        "Bip01 L Thigh",
+        "Bip01 R Thigh",
+        "Bip01 Pelvis",
+        "Spine_Base",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 L Calf",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R UpperArm",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 R Finger1",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger2",
+        "Bip01 R Finger11",
+        "Bip01 R Finger21",
+        "Bip01 R Calf"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_stand01.ban",
+      "banName": "chinaetc_qinshiquest_stand01",
+      "durationMs": 4000,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 10,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_walk.ban",
+      "banName": "chinaetc_qinshiquest_walk",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "ATTACK1",
+      "group": "default",
+      "type": 2,
+      "typeName": "ATTACK1",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_attack01.ban",
+      "banName": "chinaetc_qinshiquest_attack01",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_run.ban",
+      "banName": "chinaetc_qinshiquest_walk",
+      "durationMs": 1500,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 29,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND3",
+      "group": "default",
+      "type": 61,
+      "typeName": "STAND3",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_stand03.ban",
+      "banName": "chinaetc_qinshiquest_stand03",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 30,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND4",
+      "group": "default",
+      "type": 81,
+      "typeName": "STAND4",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_stand04.ban",
+      "banName": "chinaetc_qinshiquest_stand04",
+      "durationMs": 8000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 21,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    },
+    {
+      "name": "STAND2",
+      "group": "default",
+      "type": 122,
+      "typeName": "STAND2",
+      "ban": "prim\\ani\\npc\\qinshi\\chinaetc_qinshiquest_stand02.ban",
+      "banName": "chinaetc_qinshiquest_stand02",
+      "durationMs": 7000,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 35
+    }
+  ],
+  "stats": {
+    "vertices": 799,
+    "triangles": 1022,
+    "joints": 36,
+    "meshes": 3,
+    "animations": 7,
+    "textures": 1,
+    "heightM": 1.665988584049046,
+    "boundsMin": [
+      -0.6800957918167114,
+      -0.01104642916470766,
+      -0.31076130270957947
+    ],
+    "boundsMax": [
+      0.6796541213989258,
+      1.6549421548843384,
+      0.2871759533882141
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}
