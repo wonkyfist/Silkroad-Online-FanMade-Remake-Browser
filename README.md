@@ -1,5 +1,7 @@
 # Silkroad Online: Jangan (a fan-made browser remake)
 
+Discord: https://discord.gg/qQEf6Jehq
+
 A non-commercial, fan-made remake of the Jangan area of **Silkroad Online (vSRO 1.188)** that runs in the browser.
 The game client, the game server, the converter and the World Editor were written from scratch in TypeScript
 (Babylon.js 9 in the browser, Node 24 + SQLite on the server). It is a hobby project for playing with friends: nothing
