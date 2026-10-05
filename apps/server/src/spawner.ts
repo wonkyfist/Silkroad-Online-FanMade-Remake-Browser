@@ -35,6 +35,12 @@ export interface SpawnerOptions {
    * re-attaches one either. Absent / false = the wave-10 behaviour.
    */
   skipUniqueGroups?: boolean
+  /**
+   * A live multiplier of a plain nest's count on top of countScale (storms, docs/WEATHER.md §12.3: water spirits rise,
+   * small animals hide, the big cats hunt in bigger packs). Absent = 1. Unique groups ignore it. The caller fills or
+   * thins the nests when it changes (storm/service.ts); a due respawn beyond the count is dropped.
+   */
+  countMul?: (nest: NestRuntime) => number
 }
 
 /** Spawner.refusal's reason for a unique group's nest while the uniques module owns it. */
@@ -175,6 +181,11 @@ export class Spawner {
     this.byMob.delete(id)
   }
 
+  /** How many mobs `nest` may hold right now (with the live count multiplier). */
+  wanted(nest: NestRuntime): number {
+    return this.want(nest)
+  }
+
   /** How many mobs a nest may hold right now (0 for a group nest while another nest of its group is taken). */
   private want(nest: NestRuntime): number {
     if (!nest.group) return this.count(nest)
@@ -184,7 +195,7 @@ export class Spawner {
 
   /** A plain nest's monster count after NEST_COUNT_SCALE. */
   private count(nest: NestRuntime): number {
-    const scale = this.opts.countScale ?? 1
+    const scale = (this.opts.countScale ?? 1) * (nest.group ? 1 : (this.opts.countMul?.(nest) ?? 1))
     return scale === 1 ? nest.def.count : Math.max(1, Math.round(nest.def.count * scale))
   }
 
@@ -241,6 +252,8 @@ export class Spawner {
       if (due.length === 0) continue
       nest.pending = nest.pending.filter((t) => t > now)
       for (let i = 0; i < due.length; i++) {
+        // a plain nest already at its (live) count drops the respawn (storms thin some nests out)
+        if (!nest.group && nest.alive.size >= this.count(nest)) continue
         const id = spawn(nest)
         if (id === null) {
           nest.pending.push(now + 5000)

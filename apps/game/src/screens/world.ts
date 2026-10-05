@@ -346,6 +346,8 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   let hovered: EntityView | null = null
   let lastAttack = { id: -1, at: -Infinity }
   let lastHitBy = ''
+  /** The last hit on you had no attacker (lightning, docs/WEATHER.md §2.7): the death line names it. */
+  let lastHitCause: string | null = null
   let deathShown = false
   /** Ground point under the mouse, for GM 'teleport here'. */
   let cursor: { x: number; z: number } | null = null
@@ -662,7 +664,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     clearTarget()
     if (deathShown) return
     deathShown = true
-    chat.add('system', lastHitBy ? t('world.diedBy', { name: lastHitBy }) : t('world.died'))
+    chat.add('system', lastHitCause === 'lightning' ? t('world.diedLightning') : lastHitBy ? t('world.diedBy', { name: lastHitBy }) : t('world.died'))
     hud.showDeath(() => send(intents.respawn()))
   }
 
@@ -695,7 +697,10 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   const onCombat = (msg: CombatMessage) => {
     const attacker = entities.get(msg.attacker)
     const victim = entities.get(msg.target)
-    if (msg.target === selfId && attacker) lastHitBy = attacker.displayName()
+    if (msg.target === selfId && attacker) {
+      lastHitBy = attacker.displayName()
+      lastHitCause = null
+    } else if (msg.target === selfId && msg.cause) lastHitCause = msg.cause
     if (msg.killed && victim) {
       victim.dying = true
       victim.pick.setEnabled(false)

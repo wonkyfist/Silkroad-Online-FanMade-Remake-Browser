@@ -11,4 +11,6 @@ export const enBerserk = {
   'bz.activeTip': 'Berserk: {seconds} s left',
   'bz.started': 'Your power and agility are increased substantially!',
   'bz.ended': 'Berserk mode has ended.',
+  // Options → Interface (settings.ts ui.berserkScreen): the own screen's Berserk effects
+  'bz.option.screen': 'Berserk screen effects (red edge, flash, camera)',
 } satisfies Record<string, string>

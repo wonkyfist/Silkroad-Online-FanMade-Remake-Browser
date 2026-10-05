@@ -11,6 +11,7 @@ import {
   type ServerMessage,
   type SkillDef,
   type SkillStatus,
+  type SkillStatusKind,
 } from '@sro/shared'
 import { BASIC_ATTACK, imbueDamage, mobCombatStats, reductionMul, rollSkillHit, type CombatStats } from '../formulas.ts'
 import type { Gameplay } from '../gameplay.ts'
@@ -555,7 +556,9 @@ export class SkillEngine implements GameplayModule {
     const magic = d.physPct === 0 && d.magPct > 0
     const da = PARAM(row, 'da')?.[0]
     const down = da !== undefined && this.effects.status(t.id, 'knockdown', now) ? da / 100 : 1
-    const spec = { pct: magic ? d.magPct : d.physPct, flat: d.flat, magic, critBonus: PARAM(row, 'cr')?.[0] ?? 0, mul: mul * down }
+    // Storms (docs/WEATHER.md §12.2): fire force is weaker in the rain, lightning and cold stronger.
+    const weather = this.g.storm?.elementMul(row) ?? 1
+    const spec = { pct: magic ? d.magPct : d.physPct, flat: d.flat, magic, critBonus: PARAM(row, 'cr')?.[0] ?? 0, mul: mul * down * weather }
     const hits: CombatHit[] = []
     const statuses: (StatusRoll | null)[] = []
     for (let i = 0; i < Math.min(MAX_COMBAT_HITS, Math.max(1, d.hits)); i++) {
@@ -595,9 +598,11 @@ export class SkillEngine implements GameplayModule {
     if (!e || !row?.damage || (e.until !== 0 && e.until <= now)) return out
     const d = row.damage
     let bounce = 0
+    // Storms (docs/WEATHER.md §12.2): the imbue's element in the rain.
+    const weather = this.g.storm?.elementMul(row) ?? 1
     hits.forEach((h, i) => {
       if (h.outcome !== 'hit' && h.outcome !== 'crit') return
-      const extra = imbueDamage(a.combat, t.combat, d.magPct || d.physPct, d.flat, this.g.rng, mul)
+      const extra = imbueDamage(a.combat, t.combat, d.magPct || d.physPct, d.flat, this.g.rng, mul * weather)
       h.damage += extra
       if (!bounce) bounce = extra
       if (!h.status) out[i] = this.rollStatuses(row, t, h)
@@ -764,6 +769,21 @@ export class SkillEngine implements GameplayModule {
       until: now + (st.durationMs && st.durationMs > 0 ? st.durationMs : rule.durationMs),
     }
     if (rule.tickMs) e.tick = { everyMs: rule.tickMs, next: now + rule.tickMs, damage: Math.max(1, st.extra?.[0] ?? 1) }
+    if (rule.blocks) {
+      this.g.world.halt(t, now)
+      if (t.kind === 'player') this.interrupt(t, 'interrupted', now)
+    }
+    this.addEffect(e, now)
+  }
+
+  /**
+   * A status with no skill and no caster (lightning's stun, docs/WEATHER.md §2.7): source 0, level 0, no resist roll
+   * (it is not an abnormal state), blocking per STATUS_RULES; replaces the same status kind like any other.
+   */
+  applyHazardStatus(t: Player | Mob, status: SkillStatusKind, durationMs: number, now: number): void {
+    if (t.kind === 'player' ? t.dead : t.ai === 'dead') return
+    const rule = STATUS_RULES[status]
+    const e: Effect = { instance: this.instanceId(), carrier: t.id, source: 0, kind: 'status', status, level: 0, overlap: 0, mods: [], startedAt: now, until: now + Math.max(1, durationMs) }
     if (rule.blocks) {
       this.g.world.halt(t, now)
       if (t.kind === 'player') this.interrupt(t, 'interrupted', now)

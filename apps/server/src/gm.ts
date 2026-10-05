@@ -30,6 +30,7 @@ import { CONTENT_USAGE, runContentCommand } from './editors/live.ts'
 import { NEST_USAGE, runNestCommand } from './editors/nest-edit.ts'
 import { NPC_USAGE, runNpcCommand } from './editors/npc-edit.ts'
 import { WEATHER_USAGE } from './weather.ts'
+import { STORM_USAGE } from './storm/service.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
 
@@ -477,7 +478,17 @@ export const COMMANDS: Record<string, Command> = {
       return r.ok ? ok(r.message, r.data) : fail(r.message)
     },
   },
-  weather: { usage: WEATHER_USAGE, about: 'The weather: show it, hold a state, back to auto, wind, surface wetness, or a lightning strike.', run: ({ ctx, args }) => ctx.gameplay.weather.gm(args, Date.now()) },
+  weather: {
+    usage: WEATHER_USAGE,
+    about: 'The weather: show it, hold a state, back to auto, wind, surface wetness, or a lightning strike (near you, on a spot, a player, a tree or a wall).',
+    run: ({ ctx, args, self }) => ctx.gameplay.weather.gm(args, Date.now(), self),
+  },
+  // docs/WEATHER.md §12.5: storm events and their effects; body in storm/service.ts.
+  storm: {
+    usage: STORM_USAGE,
+    about: 'Storms: show the storm status and effects, start one now (or with a forecast), stop it, preview a full storm effects, charge a monster, or call / stop a lightning tornado.',
+    run: ({ ctx, args, self }) => ctx.gameplay.storm.gm(args, Date.now(), self),
+  },
   // Wave 11 (docs/UNIQUES.md §3.9; lane U-S): the world bosses; body in uniques.ts.
   unique: {
     usage: UNIQUE_USAGE,

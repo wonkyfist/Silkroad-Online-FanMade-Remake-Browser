@@ -52,6 +52,7 @@ measured; **[likely]** strong evidence, not proven; **[unknown]** open; **[our r
 | Puddles | Per-region wet map (97² texels: basin depth × flatness × surface class) built on the CPU when a region commits: 0.66-1.1 ms mean per region on the dev PC (varies with machine load), measured on all 307 regions. Puddles grow from the deepest basins up as the puddle level rises. | measured (§6.2) |
 | Wet look | Darker albedo (by surface porosity), lower roughness, sky reflection with Fresnel, sun glint, animated ripple normals in puddles. PBR path: RENDER.md §9. Classic path: this spec (terrain splat shader, `WetnessPlugin` on StandardMaterial objects and on actors, grass and water shaders). Never both on one material. | our rule |
 | Retail assets | `Map/weather/rain1..3.ddj` (32²/64² DXT3 sprites), `snow1..2`, `smog.ddj` (128²), `Data/prim/snd/etc/rain1.wav` (2.3 s stereo) and `lightning1..3.wav` (6.2 / 8.2 / 11.8 s), wind loops in `snd/env`. The sounds are used; the sprites are not needed (the streaks are procedural). | confirmed |
+| Storm gameplay | Storms are uncommon announced events (3 a day, 10-20 min, a 5 min forecast; admin panel knobs) that change monster sight, speed, damage, leash and numbers, element damage, ranged accuracy, run speed and loot; thunder panics beasts and a monster that survives a strike is charged. One table, one module, one status icon (§12). | our rule, the user's decisions |
 | Presets | A `graphics.weather` setting: `auto` (follows the graphics preset) / `off` / `low` / `medium` / `high` / `ultra`. `off` keeps only the cheap sky, fog and light changes, so players on weak laptops still see that it is raining. | our rule |
 
 ---
@@ -182,8 +183,9 @@ The server rolls strikes while the blended `lightning` rate is above 0 (storms, 
 the rain vector's 0.3/min is scaled by intensity and set to 0 below 0.8 **[our rule]**): a Poisson
 process with that rate per minute, minimum 4 s apart, from the segment seed. Each strike is broadcast as
 `lightning {at, distM, bearing}` with `distM` 300..3000 m and `bearing` 0..2π, so every client sees the same flash at
-the same time and hears the thunder `distM / 343` s later (0.9-8.7 s). A GM can force one (`/weather strike [distM]`).
-Strikes are cosmetic: no damage, no gameplay.
+the same time and hears the thunder `distM / 343` s later (0.9-8.7 s). A GM can force one (`/weather strike ...`, §3).
+Storm series step 1: these strikes are now placed and real: they hurt and leave marks (§2.7); the `lightning`
+message stays for older clients.
 
 ### 2.5 Zones [our rule]
 
@@ -213,6 +215,78 @@ message, the two may share one `env` message; this spec keeps `weather` separate
 
 ---
 
+### 2.7 Lightning that strikes (storm series step 1) [our rule, the user's decisions]
+
+Lightning is universal: it hurts players and monsters and marks the world. The server places every strike, so every
+player sees the same bolt in the same place at the same time; every strike that can hurt is telegraphed first.
+Code: `apps/server/src/lightning/` (`service.ts` the module, `select.ts` where it lands, `rods.ts` the tall things,
+`damage.ts` the numbers), `packages/shared/src/lightning.ts` (kinds, telegraph, return strokes), the client in
+`apps/game/src/world/lightning/` and `world/features/lightning.ts` (§7.3b). The next steps of the series (storms
+changing monster behaviour, a lightning tornado, destructible walls) build on `LightningService.onStrike`.
+
+**Rolls.** The weather module keeps the Poisson roll of §2.4 at the blended rate, now × √(living players) (1..3), still
+≥ 4 s apart, and hands each roll to its `StrikeSink` (`WeatherService.strikes`, the lightning module, set by
+Gameplay). A roll anchors on a random living player and is:
+
+| Class | Share | What |
+|---|---|---|
+| sky | 30 % | a flash inside the cloud, 200–1500 m from the anchor and 300–600 m up: no ground contact, no damage, no telegraph |
+| near | 50 % | a weighted draw within 80 m of the anchor (a quarter of them within 25 m: close calls) among the rods, the bodies and 12 random ground points (never closer than 6 m) |
+| far | 20 % | a ground strike 300–1800 m away (thunder from a distance; still a real strike on that spot) |
+
+Near weights: `base × (1 + min(h, 30) / 10)²`, h = height above the local ground. Bases: ground 1, tree 1, tower 1,
+wall-walk point 0.6 (they are dense), body 1.2 with h = body height + prominence (feet above the mean ground 15 m
+around, from the navmesh): a player on a ridge draws strikes, one in a valley far fewer. Measured in the tests: a
+25 m tree next to a player takes ~50 % of the near strikes against 12 ground points; a body 12 m above its
+surroundings ≥ 2.5× the strikes of the same body on flat ground. Nothing in a safe area (a town interior,
+`towns.json` safeArea) is a target except a wall-walk point, so bolts still hit Jangan's outer walls (and the sky) but
+never the plaza. Nothing near → a sky flash instead.
+
+**Rods: how the server finds tall things.** Lazily and asynchronously (when the weather heads for lightning, or a GM
+strikes) from the world export the server already serves: `OUT_DIR/world/<WORLD_EXPORT>/manifest.json` (then
+`out-opt`), its `placements` and `models` (model-space bounds), plus the navmesh the server already loaded:
+- trees: a placement under a `tree` folder of `res\nature` (or a `tre_*` / `*_tree<n>` model) at least 4 m tall; the
+  rod is the crown top (placement y + model top × scale) over the trunk's foot (retail trees stand on their origin);
+- walls: a placement named like a wall (`*_wall*`, `orwall`, Jangan's `jangan_enter\cj_[nsew].bsr`) whose box is at
+  least 3× as long as it is high; points every 12 m along its long axis (the box turned by the placement's rotation),
+  each at the navmesh's highest surface there (`heightAt(x, z, +∞)`: Jangan's wall walk is 19.5 m); a point with no
+  surface ≥ 6 m above the wall's foot is dropped (no guessed tops);
+- towers: any other placement ≥ 20 m tall with a footprint narrower than 0.8 × its height; the rod is its top.
+
+On jangan-fields: 1664 trees, 386 wall points, 65 towers, 23 ms to classify once the manifest is read. Retail trees
+are big (median crown 37 m), so the height factor is capped at 30 m.
+
+**Telegraph → strike.** The `strike` message goes to every player in the world (and to anyone entering while it is
+pending) `telegraphMs(seed)` = 1.2–1.8 s before `at`. The spot is fixed then: whoever stands in the radius when the
+bolt lands is hit, whoever stepped out is not. Radius by kind: ground and entity 4 m around the impact, tree 3.5 m
+around the trunk's foot, wall and tower 3 m (a wall: around the impact on the wall walk, so only someone up there; a
+tower: around its foot); a body counts when its feet are within radius + its own radius horizontally and within 3 m
+vertically of that point. A strike whose ground point lies in a safe area has radius 0 (a GM's strike on the plaza):
+harmless, no telegraph ring.
+
+**Damage** (`damage.ts`), through `Gameplay.hazardHit`, the combat path without an attacker: shields absorb, the HP is
+capped, one `combat` with `attacker: 0`, `cause: 'lightning'`, `strike: id`; a death runs `playerDied` / `mobDied`
+(the modules' hooks; a monster's EXP, loot and quest credit go to the players already in its damage map, one nobody
+fought dies without loot, like a GM kill); no retaliation, durability, Berserk or horse redirect; a trance body is
+never hit. Then a 1.5 s `stun` (`SkillEngine.applyHazardStatus`, source 0).
+
+| Body | Share of max HP (centre → edge) | Stun |
+|---|---|---|
+| player | 38 % → 22 % (never an instant kill from full) | 1.5 s |
+| player below level 10 | × 0.6 | 1.5 s |
+| monster | 38 % → 22 % | 1.5 s |
+| champion, giant, titan, elite, party monster | × 0.6 | 1.5 s |
+| unique, Play the Boss body | 3 %, never below 1 HP | none |
+
+Death line on the struck client: "You were struck by lightning." (`world.diedLightning`).
+
+**Events.** `LightningService.onStrike(fn)` (returns the unsubscribe) is called at every telegraph (`phase: 'warn'`)
+and landing (`'land'`, with the hits `{id, kind, damage, killed}`); `pendingStrikes` lists the telegraphed ones and
+`rodIndex` the rods. Strike ids are u32, increasing.
+
+**Older clients.** Each strike is also sent to each player as the old `lightning {at, distM, bearing}` with that
+player's own distance (100..3000) and bearing, plus `strike: id`, which a newer client uses to skip it.
+
 ## 3. GM commands [our rule]
 
 Added to `apps/server/src/gm.ts` `COMMANDS` as `weather: { usage: WEATHER_USAGE, about, run: runWeatherCommand }`
@@ -225,7 +299,7 @@ Added to `apps/server/src/gm.ts` `COMMANDS` as `weather: { usage: WEATHER_USAGE,
 | `weather auto` | Ends a hold now; blends to the schedule's current state over 60 s. |
 | `weather wind <m/s> [degrees]` | Overrides wind speed (0..30) and the direction it blows toward (0..359, 0 = east, 90 = north) until the next state change. |
 | `weather wet <0..1> [puddle 0..1]` | Sets the surface wetness and puddle level now (tests drying). |
-| `weather strike [distM]` | One lightning strike now (distM 100..3000, default 600). |
+| `weather strike [here \| sky \| tree \| wall \| tower \| distM \| at <x> <z> \| <player>]` | One placed strike now (§2.7; at least 4 s after the last): around you as scheduled; on your spot; a sky flash; the nearest tree / wall / tower within 400 m; `distM` (100..3000) away in a random direction; on a spot; on a player. |
 
 Every command that changes something broadcasts `weather` (or `lightning`) and answers `gmResult`.
 
@@ -792,6 +866,74 @@ procedural ribbon (8-12 segments, one fork) at `bearing`, from the cloud base (2
 (clamped to the fog end so it is visible), additive, 180 ms, fading with the flash. The feature clamps flashes to one
 per 2 s and has a **reduce flashing** accessibility toggle (`ui.reduceFlashing`, default off): flash × 0.25, no bolt.
 
+### 7.3b Placed strikes on the client (storm series step 1)
+
+`world/features/lightning.ts` takes `strike` and draws it with `world/lightning/fx.ts`; the weather feature takes the
+same message for the scene flash and the retail thunder.
+
+- **The bolt** (`world/lightning/bolt.ts`, pure, deterministic from the seed): a main channel by midpoint displacement
+  (64 segments, sideways roughness 0.2 × the piece) from a cloud point 320 m above the impact, leaning up to 0.22 × the
+  height; 3–7 forks from its upper 85 %, 20–55° off it and always downward, 0.12–0.4 of the height long, each with an
+  optional sub-fork, dimmer and thinner, fading to the tips. Drawn as camera-facing ribbons (a core and a 6× wider
+  faint halo, at least ~2 px wide at any distance, unfogged so it shows through rain), additive.
+- **The flicker**: `strikeStrokes(seed)`, 2–4 return strokes within 0.3–0.5 s (each ~35 ms decay, a faint continuing
+  current between them); forks only in the first 90 ms; gone 0.25 s after the last stroke. `ui.reduceFlashing`: the
+  bolt dim and steady.
+- **The scene flash**: the weather flash (§7.3) of a placed strike follows the same strokes, peaks at
+  `strikeFlashPeak(distM)` (3 close, ~1 at 2.5 km) and points toward the real strike; it lights the sky and clouds
+  from inside (SKY.md's `SkyWeather.flash`), the ambient, the terrain, water and objects. `WeatherFrame.boltOwned`
+  keeps the old camera-relative High bolt (rain.ts) off for it. No point light (a light-count change recompiles every
+  material, W9F G1); an additive flare at the impact follows the strokes.
+- **Thunder by distance**: the retail `weather.thunder.near/mid/far` at `distM / 343` s (~3 s per km; sharp crack
+  < 800 m, rolling rumble beyond), plus a synthesized close crack under 400 m (§7.3c).
+- **Telegraph** (every tier, weather off included: it is the fair warning): a faint blue glow ring on the ground
+  (radius + 0.4 m, breathing faster as the strike nears), static arcs crackling on the spot (and St. Elmo's fire on a
+  tree's crown or a tower top) from Low up, and the crackle sound.
+- **What it leaves**: ground and entity strikes: a burnt scorch mark (150 s, fading over the last 40), sparks, thrown
+  dirt and clods, a puff of dust, steam rings and a plume when the ground is wet (> 0.3); trees: a scorch at the
+  foot, the trunk charred and split (a glowing crack up the trunk for 25 s), fire for ~60 s with embers, smoke that
+  lingers 20 s more (visual: the tree stays); walls and towers: a black scorch on the wall walk, stone chips flying,
+  dust falling.
+
+| Tier (weather level) | Telegraph | Bolt, flare | Scorch | Sparks, dirt, steam, chips, dust | Burning tree | Particles |
+|---|---|---|---|---|---|---|
+| off (or no new look) | ring | — | — | — | — | — |
+| low | ring + static | yes | yes | — | — | — |
+| medium | ring + static | yes | yes | yes | yes | × 1 |
+| high / ultra | ring + static | yes | yes | yes | yes | × 1.6 |
+
+**Fixed resources (no leaks).** Six dynamic quad meshes, six materials and four small RawTextures made once per world
+visit, never per strike: bolts/statics/splits (additive ribbons), the trunk char (alpha ribbons), additive and alpha
+CPU particles (700 + 600), telegraph rings (6), scorches (16, the oldest reused); at most 3 burning trees. Each mesh
+is disabled while it draws nothing; the vertex buffers are rewritten in place. The sub-mesh is never narrowed to the
+used quads (a narrowed sub-mesh has no bounding info and the transparent sort throws: found in the browser, guarded
+by a test that renders). `apps/game/test/lightning.test.ts` runs 120 strikes of every kind through every tier on a
+NullEngine and checks the scene's meshes, materials and textures never grow and return to the baseline on dispose.
+
+**Cost** (measured in the game, WebGPU, dev PC, RX 9060 XT; `fx.update` CPU per frame, averaged over 300 calls):
+
+| Tier | Telegraph | Bolt frames (~270 quads) | Burning tree (aftermath) |
+|---|---|---|---|
+| off | 0.005 ms | 0.005 ms | 0 |
+| low | 0.05 ms | 0.12 ms | 0 |
+| medium | 0.05 ms | 0.14 ms | 0.10 ms (140 particles) |
+| high | 0.05 ms | 0.15 ms | 0.13 ms (225 particles) |
+
+`scene.render()` CPU with three strikes in flight was within the ±1 ms run-to-run noise of the idle render (8–10 ms
+in a hidden pane). GPU time was not measured (no timestamp queries; the pane was hidden): at most ~1300 additive quads
+for under half a second, a few hundred sprites while a tree burns.
+
+### 7.3c Lightning's synthesized sounds (`apps/game/src/audio/lightning.ts`)
+
+Made at runtime, nothing downloaded or exported: pure seeded sample generators, encoded as 16-bit WAV (22.05 kHz)
+and decoded through the backend once (`GameAudio.lightning.prepare()` at the first strike).
+
+- **Crackle** (2 s): sparse sharp clicks (180 → 700 a second) over a faint 120 Hz hum, rising over 1.4 s; spatial at
+  the telegraphed spot (sfx bus), stopped when the bolt lands.
+- **Close crack** (2.6 s): an instant broadband snap (2 ms attack, 60 ms decay), a ripping tear of clicks over 0.25 s
+  and a low boom rolling off over ~0.9 s; non-spatial, panned toward the strike, ambient bus, for strikes under
+  400 m at `distM / 343` s, gain 1 at 30 m → 0.25 at 400 m, layered over the retail near thunder.
+
 ### 7.4 Colour grading (RENDER.md §5.2 owns it)
 
 RENDER.md's `GradeMixer` blends LUT keys `clear` / `overcast` / `rain` and applies `weatherExposure` (1.25 overcast,
@@ -1079,5 +1221,263 @@ mergeable:
   shows streaks through eaves.
 - **Double darkening.** A surface must get wetness from either the Classic `WetnessPlugin` or a RENDER.md plugin,
   never both; `attachWetness` checks for the RENDER plugins by name (`SroSurfacePlugin`, `SroTerrainPlugin`).
-- **Gameplay:** weather is cosmetic by design (no movement or combat modifiers); fog hides monsters only beyond about 85-110 m, well
-  past the range where players target and fight, so gameplay is unaffected **[our rule]**.
+- **Gameplay:** weather was cosmetic by design except lightning, which strikes (§2.7). Since storm series step 2, rain
+  and storms change monster behaviour, combat, spawns and movement (§12, the user's decision "storms change
+  everything"); the render fog still hides monsters only beyond about 85-110 m, except the night-storm fog of §12.2
+  **[our rule]**.
+
+---
+
+## 12. Storm gameplay: storms change everything (storm series step 2) [our rule, the user's decisions]
+
+The user's decision: "storm effects should change everything", a dramatic change of behaviour that affects gameplay,
+yet readable and fair. Rain already changes a few things; a storm changes many, is announced five minutes ahead, and
+every active effect is listed under the weather icon by the minimap. Code: `packages/shared/src/storm.ts` (the table
+and the pure maths, shared with the client), `apps/server/src/storm/schedule.ts` (storm events),
+`apps/server/src/storm/service.ts` (the `storm` GameplayModule and every hook), the client in
+`apps/game/src/world/features/storm.ts` and `world/storm/fx.ts`. It builds on lightning (§2.7): `LightningService.onStrike`
+feeds panic and charging.
+
+### 12.1 Storm events and the forecast
+
+- **Uncommon, announced.** With the storm module (always, on a real server) the schedule's own `storm` segments become
+  heavy rain (`rain:1`) and storms come only as **storm events**: `STORMS_PER_DAY` (3) a real day, one per equal slot
+  of the UTC day at a seeded time inside it, each `STORM_MIN_MIN`..`STORM_MAX_MIN` (10-20) minutes long, its forecast
+  `STORM_FORECAST_MIN` (5) minutes before it. Deterministic from `WEATHER_SEED` and the knobs (a restart lands on the
+  same storms); the knobs are read live (admin panel, group "Weather and storms"), and a storm whose forecast has begun
+  keeps its times. Scheduled storms only with `WEATHER=auto`; GM storms with any mode but `off`.
+- **Forecast.** WeatherService steers toward a darkening `overcast` (or keeps the rain that falls) blended over the
+  whole forecast, with the wind rising to `forecastWindMs` (9 m/s, sent as the sync's `windMs`, which the client already
+  honours), then to `storm` (the usual 60 s transition) until the event ends, then back to the schedule. A GM `weather`
+  hold still wins over both.
+- **Status.** Once a second the module reads the weather into a `StormEnv` (blended rain rate; storm level = blended
+  lightning rate / the storm's; wind; surface wetness; night from the world clock's sun height; `STORM_STRENGTH`) and
+  sends `storm {phase, startsAt?, endsAt?, effects}` to every player when it changes (phases `calm`, `rain`, `forecast`,
+  `storm`), and to a player entering unless all is calm.
+- **Client.** The weather icon (a rain cloud, or a cloud with a bolt; pulsing during the forecast) shows under the
+  minimap plate's lower left corner, left of the clock, whenever the phase is not calm; its tooltip lists every active effect
+  (`storm.effect.<id>` with the signed percent) and counts down to the storm or its end. Chat: "A storm is gathering
+  over the fields... It breaks in about 5 min.", "The storm breaks! ...", "The storm passes.".
+
+### 12.2 What rain and storms do
+
+Rain effects apply from rain rate `rainMin` (0.2) up, scaled linearly by the rain rate (a downpour is 1); storm effects
+from storm level `stormLevelMin` (0.5): the second half of the transition into a storm, also under a GM `weather storm`
+hold. `STORM_STRENGTH` scales every multiplier's distance from 1 (0 = nothing, 2 = twice).
+
+| Effect | When | What | Hook |
+|---|---|---|---|
+| Wet | rain | players are wet: lightning strikes and charged arcs hurt them ×1.2 | `Gameplay.hazardHit` → `hazardMul` |
+| Sight | rain | monster aggro detection radius ×(1 − 0.4 × rain): ×0.6 in a downpour, so sneaking past camps works | `AiHost.storm.sight` (ai.ts) |
+| Elements | rain | fire force ×0.75, lightning force ×1.25, cold force ×1.15 at rain 1 (a skill's hits and an imbue's component, by mastery FIRE / LIGHTNING / COLD) | `SkillEngine.rollHits` / `imbue` → `elementMul` |
+| Mud | surface wetness ≥ 0.6 | running −10 % outside towns (a stat mod; a horse's own speed replaces it) | mod provider, refresh on change |
+| Wind | wind 8 → 13 m/s | ranged player attacks (a bow, or a physical skill reaching ≥ 10 m) miss up to +20 % more | `Gameplay.dealHits` → `shapeHits` |
+| Night | storm at night | monster sight ×0.75 more (by how dark the night is), and +0.3 fog on the client (visibility) | `sight`; client `stormNightFog` |
+| Undead | storm | undead and ghosts (Stone Ghost, Tomb Stone, Yeoha, Big-Eyed Ghost, Hyungno, Earth Ghost...) chase ×1.25 faster and hit ×1.25 harder | `speed`, `shapeHits` |
+| Water spirits | storm | Water Ghost nests hold ×1.6 | Spawner `countMul` + `reconcile` |
+| Small animals | storm | Mangyang, weasels, bugs: nests ×0.4 (idle untouched ones leave, two per nest every 5 s; they come back after) | same |
+| Packs | storm | tiger / wolf nests ×1.5, and a tiger on the chase calls the idle pack-mates of its nest within 18 m | same, `packs` |
+| Bandits | storm | leash ×0.5 (at least 10 m) and roam ×0.4: they pull back to their camps | `leash`, `roam` |
+| Panic | any strike | §12.3 | `onStrike` |
+| Charged | storm | §12.4 | `onStrike`, `shapeHits`, `afterHits`, loot |
+
+Monster kinds come from `STORM_MOB_PATTERNS` (code patterns, first match wins; editable like the table): critter,
+water, undead, predator, bandit, else other. **Uniques and the Play the Boss body are never affected** (every hook
+returns their own values; never panicked or charged). Safe areas: no mud, no arc into a town; strikes there are already
+harmless.
+
+### 12.3 Thunder panic
+
+A strike that lands (not a sky flash) panics every beast (critter or predator) within 30 m of its ground point: its
+target is dropped (its damage map, the kill credit, stays), it runs 10-16 m away from the strike at its run speed
+(straight away, else fanning out to a walkable clear line), and for 3-5 s its AI does not run (`Gameplay.tick` asks
+`panicking`) and it sees nobody. Then it thinks again: an aggressive one may pick the player up again.
+
+### 12.4 Storm-charged monsters
+
+A monster hit by a strike that survives it while a storm rages is **charged** until the storm ends (storm level below
+the threshold) or it dies: `EntityState.charged` / `entityUpdate.charged`; the client draws a pulsing blue glow with
+crackles and a "Charged" badge on its name. A charged monster:
+
+- hits ×1.3 harder (on top of the undead bonus);
+- arcs: each landed hit on a player jumps to the nearest **other** player within 7 m of that player (not in a town,
+  not dead, invisible or in a trance) for 30 % of the hit (× the wet bonus), at most once per 2.5 s per monster:
+  `stormArc {from, to, at, mob}` to the viewers of either, the damage as `combat` with `attacker: 0`, `cause: 'arc'`.
+  Spread out when you fight one;
+- drops better loot: item-group chances ×2, gold ×1.5, and each piece of gear a 35 % chance of +1. Players hunt them
+  on purpose (a GM can make one with `storm charge [id]`).
+
+### 12.5 GM
+
+| Command | Effect |
+|---|---|
+| `storm` | Status: phase, the event's times, the next scheduled storm, the env numbers, active effects, charged count |
+| `storm start [minutes] [forecastMinutes]` | A GM storm now (default the mean length, no forecast: the 60 s transition) or after a forecast of 0-10 min |
+| `storm forecast [minutes]` | The same with the configured forecast first |
+| `storm stop` | Ends the storm or forecast in progress (a stopped scheduled one stays stopped); `weather storm` holds end with `weather auto` |
+| `storm preview` | Lists what a full storm would do right now (the current night and strength) |
+| `storm charge [mob id]` | Charges that monster, or the one nearest you within 30 m (only during a storm; never a unique or a steered boss) |
+
+### 12.6 The table (`STORM_TABLE`, `packages/shared/src/storm.ts`)
+
+| Key | Default | Meaning |
+|---|---|---|
+| `perDay` / `minMin` / `maxMin` / `forecastMin` / `strength` | 3 / 10 / 20 / 5 / 1 | defaults of `STORMS_PER_DAY`, `STORM_MIN_MIN`, `STORM_MAX_MIN`, `STORM_FORECAST_MIN`, `STORM_STRENGTH` (admin panel, live) |
+| `forecastWindMs` | 9 | wind during the forecast (m/s) |
+| `rainMin` / `stormLevelMin` | 0.2 / 0.5 | thresholds of the rain and storm effects |
+| `sightRainMul` | 0.6 | monster sight at rain 1 |
+| `fireRainMul` / `lightningRainMul` / `coldRainMul` | 0.75 / 1.25 / 1.15 | force damage by element at rain 1 |
+| `wetShockMul` | 1.2 | lightning and arcs on a wet player |
+| `mudWetMin` / `mudSlowPct` | 0.6 / 10 | mud threshold (surface wetness) and slow (%) |
+| `windFromMs` / `windFullMs` / `windMissMax` | 8 / 13 / 0.2 | wind spread of ranged attacks |
+| `nightSightMul` / `nightFogAdd` | 0.75 / 0.3 | night storm: monster sight, client fog |
+| `undeadSpeedMul` / `undeadDamageMul` | 1.25 / 1.25 | undead in a storm |
+| `waterCountMul` / `critterCountMul` / `predatorCountMul` | 1.6 / 0.4 / 1.5 | nest counts in a storm |
+| `packCallM` | 18 | pack call radius (m) |
+| `banditLeashMul` / `banditRoamMul` | 0.5 / 0.4 | bandits in a storm |
+| `panicRadiusM` / `panicMs` / `panicFleeM` | 30 / 3000-5000 / 10-16 | thunder panic |
+| `chargedDamageMul` | 1.3 | a charged monster's damage |
+| `chargedArcM` / `chargedArcPct` / `chargedArcCooldownMs` | 7 / 0.3 / 2500 | its arcs |
+| `chargedDropMul` / `chargedGoldMul` / `chargedPlusChance` | 2 / 1.5 / 0.35 | its loot |
+| `reconcileMs` / `despawnPerPass` | 5000 / 2 | nest reconcile cadence, and thinning per nest per pass |
+
+### 12.7 Client cost and safety
+
+`StormFx` is one dynamic additive quad mesh (`CAP` = 384 quads), one material and one 64² texture, rebuilt each frame
+from the charged monsters in view (the nearest 24) and the live arcs (at most 6, 0.42 s each). Nothing is created per
+monster or per arc, so nothing can leak (the black-screen bug), and `dispose` frees the three objects (tested on a
+NullEngine). The glow and the arcs show whatever the weather setting, like the strike telegraph: they are gameplay.
+The icon is one DOM node with a CSS-hover tooltip, removed on dispose.
+
+### 12.8 Next steps (not built)
+
+The lightning tornado is built (§13). Destructible Jangan walls with a siege event hook the same seams:
+`LightningService.onStrike` (where a strike lands), `TornadoService.onTornado` (where a tornado walks, when it lifts),
+`StormService.env` (how stormy it is), `StormPlan` (when storms come) and `HAZARD_CAUSES` (their damage without an
+attacker).
+
+---
+
+## 13. The lightning tornado (storm series step 3) [our rule, the user's decisions]
+
+The user's decisions: a **rare** storm event; a rotating funnel with electric arcs inside and leaves, dust and branches
+circling it; it throws lightning at what stands around it (through the strike system, so every bolt is telegraphed and
+fair); it wanders a server-chosen path across the fields for a few minutes; it pulls nearby players and monsters in and
+throws them out (server-authoritative, along the navmesh, never into walls, water or out of the world, with a short loss
+of control), with damage, but **never kills** and **never enters a town**; Low graphics gets a simpler funnel; it is
+announced to everyone, with a short warning before it touches down.
+
+Code: `packages/shared/src/tornado.ts` (TORNADO_TABLE and the pure maths: `tornadoAt`, `pullVelocity`, `throwDamage`,
+`throwArc`, `tornadoRoll`), `apps/server/src/storm/tornado.ts` (the `tornado` GameplayModule),
+`apps/server/src/storm/tornado-path.ts` (the path planner), `apps/server/src/storm/water.ts` (the water planes), the
+client in `apps/game/src/world/features/tornado.ts`, `world/storm/tornado-fx.ts`, `world/storm/tornado-status.ts` and
+`audio/tornado.ts`.
+
+### 13.1 When one comes
+
+- **Natural**: once per storm event (§12.1), with `TORNADO_CHANCE` (STORM_TABLE.tornadoChance, 0.3; admin "Weather and
+  storms" → "Tornado chance per storm"), rolled from the storm's seed (`tornadoRoll`: deterministic, a restart rolls the
+  same), at a seeded share of the storm (15-55 %). It is drawn to a random living player out in the fields (not in a
+  town, not invisible, not a trance body), touching down 110-220 m from them; with nobody out there it retries every
+  10 s while the storm leaves room for a minute of life. One tornado at a time; a storm brings one at most.
+- **GM**: `storm tornado` (near you, like a natural one), `storm tornado here` (on your spot; widened up to 60 m when the
+  spot is no good), `storm tornado <player>`, `storm tornado stop` (it lifts). A GM tornado comes with or without a storm
+  (the reply says so); `WEATHER=off` refuses. `storm stop` also lifts any tornado; a natural one lifts with its storm.
+- **Life**: a 20 s warning (the wall cloud lowers, everyone is told), then 3-5 min on the ground at 2.4-3.6 m/s, or less
+  when the path ends first (a dead end, or less storm left), then it lifts over 6 s (`LIFT_MS`).
+
+### 13.2 Its path (`tornado-path.ts`) [our rule]
+
+Straight legs of 28-48 m, each sampled every 6 m: every sample must be open outdoor ground (`MeshNav.place` on the
+highest open surface, an open terrain cell, not inside a solid), not water (§13.3), at least 90 m (`townMarginM`) from
+every town's safe area rectangle, and 30 m inside the world bounds. The heading wanders a little per leg; a blocked leg
+turns (0, ±0.45, ±0.9, ±1.5, ±2.2 rad, at last back); a dead end ends the path. It sets off roughly back toward the
+player it was drawn to, so it crosses the ground they stand on. The whole path goes out once (`tornado`), and every
+client places the funnel with `tornadoAt` (no per-step messages). Tested on synthetic worlds (towns, a lake, closed
+ground, bounds) and on the real Jangan export (`tornado-real.test.ts`: twelve paths around the town).
+
+### 13.3 Water
+
+The navmesh closes deep water but not shallow lakes or river edges, so the module loads the world export's water planes
+(manifest `regions[].blocks[].water`, one plane per 32 m block; 2,267 on jangan-fields) once, asynchronously, when the
+first player enters (`water.ts`). A point is wet when the plane stands more than 0.35 m over the surface there (a bridge
+stands above it). Paths and throw landings avoid wet points; drifts never end in one.
+
+### 13.4 Pull, throw, damage
+
+- **Pull** (every 500 ms): a body within `pullM` (30 m) drifts toward the funnel at `pullVelocity` (0.8 m/s at the edge,
+  7 m/s by the core, scaled by the strength), turned 0.55 rad around it (the swirl). Its own walk carries on: the
+  module remembers where it was going (a move it did not give) and walks it there with the drift added, so a player at
+  the edge can run out, one near the core cannot. A body standing still gets `displace {kind: 'pull'}` too (the client
+  slides it without a walking clip). Leaving the pull gives the walk back. Riders are not pulled (the horse owns the
+  move).
+- **Throw**: a body within `coreM` (5 m) is caught: knocked down for the flight plus 0.9 s (`lockMs`; the module's
+  `gate` refuses moves, attacks, skills, pick-ups, talks, sitting, emotes, jumps, mounting and stalls meanwhile; potions
+  stay allowed), then thrown 14-24 m (× √strength, at most × 1.4) out on the tangent of the spin. The landing is the end
+  of a straight navmesh walk from where it stood (so never through a wall or a railing), at least 5 m away, out of the
+  core, open ground, not water, not in a safe area, inside the bounds; ten directions are tried, then it is only spun in
+  place (stunned 0.9 s). The flight lasts 1.1-1.5 s with its apex 5-9 m up (`displace {kind: 'throw'}` after the `move`;
+  the `stop` comes at the landing as usual). Then 8 s (`immuneMs`) before it can be pulled or caught again.
+- **Damage**: on landing, `throwDamage` = 12 % × strength of max HP, at most 25 %, and never below 1 HP, through
+  `Gameplay.hazardHit(..., 'tornado', ..., nonLethal)` (shields absorb; `combat` with `attacker: 0`, `cause: 'tornado'`).
+  `nonLethal` caps the hit at HP − 1 after every modifier, so even a wet player at 2 HP survives.
+- **Its lightning**: one bolt every 2.2-5.2 s (÷ strength) in a 7-42 m ring around it: 45 % at a body there (its spot),
+  else 40 % a tree (a lightning rod, §2.7), else open ground. Each is `LightningService.strikeAt(..., {nonLethal: true,
+  source: 'tornado'})`: a normal telegraphed strike (1.2-1.8 s warning, the usual damage and stun) that never kills.
+- **Immune**: uniques (Tiger Girl among them, also by code), the Play the Boss body, a trance body, invisible GMs, the
+  dead, anyone inside a safe area; NPCs, horses and pets are not bodies to it.
+- `TORNADO_STRENGTH` (STORM_TABLE.tornadoStrength, 0..2; admin "Tornado strength") scales pull, throw distance, damage and
+  bolt rate; 0 = it only looks.
+
+### 13.5 Announcements
+
+`tornado` goes to every player at the warning, to a player entering while one is up, and again when it lifts early;
+`tornadoEnd` when it is gone. The client says in chat "A tornado is forming over <area>, 160 m north-east of you! It
+touches down in about 20 s. Keep clear of the funnel." (the area from `GameData.zoneName`), "The tornado lifts back into
+the clouds." at the lift, and "The tornado throws you!" when it does. The weather icon (§12.1) shows while a tornado is
+up even in calm weather, with an orange pulsing border, and its tooltip adds "Tornado 240 m north-east: it pulls in and
+throws whatever it catches" (or the touchdown countdown, or "lifting"), refreshed every second.
+
+### 13.6 The table (`TORNADO_TABLE`, `packages/shared/src/tornado.ts`)
+
+| Key | Default | What |
+|---|---|---|
+| `tornadoChance` / `tornadoStrength` (STORM_TABLE) | 0.3 / 1 | per-storm chance; strength 0..2 |
+| `warnMs` / `lifeMs` / `minLifeMs` / `stormFrac` | 20 s / 3-5 min / 60 s / 15-55 % | timeline |
+| `speedMs` / `spawnM` / `legM` / `sampleM` | 2.4-3.6 m/s / 110-220 m / 28-48 m / 6 m | path |
+| `townMarginM` / `edgeMarginM` | 90 / 30 m | keep-outs |
+| `pullM` / `pullEdgeMs` / `pullCoreMs` / `swirlRad` / `pullTickMs` | 30 m / 0.8 / 7 m/s / 0.55 / 500 ms | pull |
+| `coreM` / `throwM` / `throwMinM` / `throwMs` / `throwPeakM` | 5 m / 14-24 m / 5 m / 1.1-1.5 s / 5-9 m | throw |
+| `lockMs` / `immuneMs` | 0.9 s / 8 s | loss of control, grace |
+| `damagePct` / `damageCapPct` | 12 % / 25 % of max HP | damage (never below 1 HP) |
+| `boltMs` / `boltRingM` / `boltBodyShare` | 2.2-5.2 s / 7-42 m / 45 % | its lightning |
+| `heightM` / `topM` / `shakeM` / `hearM` | 75 m / 26 m / 60 m / 900 m | client look, shake, roar |
+
+### 13.7 Client
+
+- **Funnel** (`TornadoFx`): THREE meshes, three materials, three textures per tornado, made when it appears and
+  disposed when it is gone (and on worldEnter / dispose); nothing per bolt, arc or leaf, so nothing can leak. The meshes
+  stay enabled and are hidden with `isVisible` (the world's `EnabledMeshCandidates` list then always holds them).
+  1. Funnel (alpha blend): 1-3 nested lathe shells around a snaking axis, rebuilt on the CPU each frame: radius profile
+     (a 3 m rope at the ground flaring into a 50 m wall cloud), travelling ripples, the axis bending and leaning behind
+     its heading, shells turning at different speeds (UVs) over a streaky noise texture scrolling up, and a silhouette
+     term (denser at the edges) so it reads as a volume. It lowers out of the cloud during the warning and rises at the
+     lift.
+  2. Debris and dust (alpha blend, one atlas): leaves, twigs and grit spiral up around it tumbling; dust puffs circle its
+     foot.
+  3. Arcs (additive): jagged arcs flicker inside it; each bolt it throws (`strike.source: 'tornado'`) gets an arc from
+     its side to the impact as it lands.
+  Brightness follows the night and the lightning flash. Gameplay, so shown whatever the weather setting.
+- **Tiers** (`effectiveGraphics().renderPreset`): Low 1 shell 20×10 (360 tris), 24 debris + 10 dust; Medium 2 shells
+  32×18 (2,176 tris), 110 + 22; High/Ultra 3 shells 40×24 (5,520 tris), 220 + 34. Always 3 draw calls. CPU per frame
+  (NullEngine, this dev PC): Low 0.07 ms, Medium 0.31 ms, High 0.68 ms, only while a tornado is up; GPU cost is the
+  funnel's overdraw (1-3 translucent shells) when it fills the screen.
+- **Thrown bodies**: the server's `move` carries them; the feature lifts them on `throwArc` and spins them two turns
+  (the knockdown clips play from the status). Pulled bodies that stand slide without a walking clip.
+- **Shake**: inside 60 m (`tornadoShake`, up to 0.07 screen units by the core), harder while you are thrown; off with
+  Options → Controls → Camera shake.
+- **Sound** (`audio/tornado.ts`): two seeded 6.5 s roar segments (rumble, a wandering "freight train" band, a howl, the
+  arcs' crackle) started alternately every 4.6 s so they overlap into one roar, level `roarGain` by distance (heard to
+  900 m) and presence, panned toward the funnel; a whoosh when you are thrown. Made once through
+  `GameAudio.prepareSynth` (the Berserk set's path); nothing is downloaded.
+- Debug: `window.__sroTornado` (state, fx stats, tier).

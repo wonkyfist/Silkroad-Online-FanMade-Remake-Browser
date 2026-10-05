@@ -52,6 +52,7 @@ import {
   stageScale,
   type CharacterIndex,
 } from './fx/anchors.ts'
+import { fireTrail } from './fx/berserk-look.ts'
 import { arrowModel, BASIC_ARROW, FxModels, type FxModelInstance, type FxModelLoader } from './fx/fx-model.ts'
 import { HitLights } from './fx/hit-light.ts'
 import { trailStyle, WeaponTrail, type TrailStyle } from './fx/trail.ts'
@@ -666,7 +667,9 @@ export class SkillFx {
   /** The trail style `view` swings with for `skill`: its carried priority group's, else the row's. */
   private trailOf(id: number, skill: FxSkill): TrailStyle | null {
     const top = this.carriedTop(id, g => !!trailStyle(g.trail))
-    return trailStyle((top ?? skill).trail)
+    const style = trailStyle((top ?? skill).trail)
+    // The Berserk makeover (docs/EFFECTS.md §3.9): the HWAN trail burns fire-orange and lasts longer.
+    return style && top?.group === HWAN_GROUP ? fireTrail(style) : style
   }
 
   /** The highest-priority group `id` carries (that passes `ok`). */

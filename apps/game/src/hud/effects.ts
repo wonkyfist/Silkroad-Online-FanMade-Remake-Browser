@@ -26,6 +26,24 @@ interface Floater {
   life: number
   dx: number
   rise: number
+  /** × the size (an own-hit style). */
+  size: number
+}
+
+/**
+ * A look for the numbers of your own attacks while it is set (Berserk: bigger, fire-orange; world/features/berserk.ts):
+ * a CSS class on the number and a size factor. null = the retail look.
+ */
+export interface OwnHitStyle {
+  className: string
+  scale: number
+}
+
+let ownHitStyle: OwnHitStyle | null = null
+
+/** Sets (or clears) the look of your own attacks' numbers from now on (the numbers already shown keep theirs). */
+export function setOwnHitStyle(style: OwnHitStyle | null): void {
+  ownHitStyle = style
 }
 
 const MAX_FLOATERS = 80
@@ -87,7 +105,9 @@ export class Floaters {
     const spread = [0, 14, -14, 24, -24, 8, -8][this.recent % 7]!
     const dx = (isTaken(kind) ? -18 : 12) + spread
     const crit = isCrit(kind)
-    this.list.push({ node, at, born: now, life: crit ? 1500 : 1200, dx, rise: crit ? 70 : 56 })
+    const own = ownHitStyle && !isTaken(kind) && kind !== 'heal' ? ownHitStyle : null
+    if (own) node.classList.add(own.className)
+    this.list.push({ node, at, born: now, life: crit ? 1500 : 1200, dx, rise: crit ? 70 : 56, size: own?.scale ?? 1 })
     this.root.append(node)
     while (this.list.length > MAX_FLOATERS) this.list.shift()!.node.remove()
     this.place(this.list[this.list.length - 1]!, now)
@@ -103,7 +123,7 @@ export class Floaters {
       return true
     }
     const ease = 1 - (1 - age) * (1 - age)
-    const pop = age < 0.12 ? 1.5 - (age / 0.12) * 0.5 : 1
+    const pop = (age < 0.12 ? 1.5 - (age / 0.12) * 0.5 : 1) * f.size
     f.node.style.visibility = ''
     f.node.style.opacity = age < 0.6 ? '1' : String(Math.max(0, 1 - (age - 0.6) / 0.4))
     f.node.style.transform = `translate(${(p.x + f.dx).toFixed(1)}px, ${(p.y - ease * f.rise).toFixed(1)}px) translate(-50%, -100%) scale(calc(var(--ui) * ${pop.toFixed(3)}))`

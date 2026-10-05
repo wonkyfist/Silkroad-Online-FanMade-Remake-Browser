@@ -3,6 +3,7 @@ import {
   LIGHTNING_GM_DIST_M,
   LIGHTNING_MIN_GAP_MS,
   RAIN_INTENSITY_MIN,
+  STORM_TABLE,
   WEATHER_KINDS,
   WEATHER_LIMITS,
   WEATHER_RESYNC_MS,
@@ -25,6 +26,8 @@ import {
 import { W9_DEFAULTS, type ServerConfig, type WeatherMode } from './config.ts'
 import type { GmResult } from './gm.ts'
 import type { GameplayModule } from './modules.ts'
+import type { StormPlan } from './storm/schedule.ts'
+import type { Player } from './world.ts'
 
 /**
  * Server weather (docs/WEATHER.md §2–§4, docs/WAVE_PLAN3.md §3, §6.1; lane W9A-P). A GameplayModule named `weather`:
@@ -37,7 +40,13 @@ import type { GameplayModule } from './modules.ts'
  * - WEATHER=off: always clear, nothing after the enter sync, and the GM commands only report.
  * - Holds and overrides live in memory and end on restart; the schedule is deterministic, so a restart lands on the
  *   same state. The surface wetness at startup is warmed up over the last 90 minutes of the schedule.
- * - Strikes are cosmetic: no damage, no gameplay.
+ * - Strikes: with a StrikeSink (lightning/service.ts, set by Gameplay) every roll becomes a placed strike that can hurt
+ *   (docs/WEATHER.md §2.7) and `weather strike ...` goes there; without one (unit tests) a roll is the old cosmetic
+ *   `lightning {at, distM, bearing}`.
+ * - Storm events (docs/WEATHER.md §12.1): with a StormPlan (storm/schedule.ts, set by Gameplay) the schedule's own
+ *   `storm` segments become heavy rain and storms come only as announced events: during an event's forecast the target
+ *   is a darkening overcast (or the rain that is falling) with a rising wind, blended over the whole forecast; then
+ *   `storm` until the event ends. A GM hold still wins over both.
  * - While a transition runs, the sync carries the vector it started from (`fromVec`): a late joiner blends from the
  *   same point as everyone else, whatever `from` names (W9F P1).
  * - The wall clock stepping back (an NTP step at boot, a manual change) re-bases the module's times on the new clock
@@ -45,7 +54,19 @@ import type { GameplayModule } from './modules.ts'
  */
 
 export const WEATHER_USAGE =
-  'weather [<state>[:intensity] [minutes] [transitionS] | auto | wind <m/s> [degrees] | wet <0-1> [puddle 0-1] | strike [distM]]'
+  'weather [<state>[:intensity] [minutes] [transitionS] | auto | wind <m/s> [degrees] | wet <0-1> [puddle 0-1] | strike [here | sky | tree | wall | tower | distM | at <x> <z> | <player>]]'
+
+/** Where rolled and GM strikes go once lightning can strike (lightning/service.ts, docs/WEATHER.md §2.7). */
+export interface StrikeSink {
+  /** Multiplies the blended strike rate (the players in the world). */
+  rateScale(now: number): number
+  /** A storm is coming: get ready (load the lightning rods). Called every tick while one is due; idempotent. */
+  prepare(): void
+  /** The weather rolled a strike at `now`; false = it placed none (nobody in the world): the old flash goes out. */
+  roll(now: number): boolean
+  /** `weather strike <args>` of GM `self` (null: from the console). */
+  gm(args: string[], self: Player | null, now: number): GmResult
+}
 
 /** GM hold defaults (WEATHER §3): 30 minutes, reached in 60 s; `weather auto` blends back over 60 s. */
 export const HOLD_DEFAULT_MIN = 30
@@ -78,6 +99,10 @@ interface Target {
   seed: number
   windDir: number
   gm: boolean
+  /** A storm forecast's rising wind (m/s), sent as the sync's `windMs` (absent: the state's own). */
+  windMs?: number
+  /** The transition length to use when this target starts (absent: the default for the pair). */
+  dur?: number
 }
 
 const ok = (message: string, data?: unknown): GmResult => ({ ok: true, message, data })
@@ -123,6 +148,10 @@ export class WeatherService implements GameplayModule {
   private lastTick = -Infinity
   private lastSent: number
   private lastStrike = -Infinity
+  /** Placed strikes (Gameplay sets the lightning module; null: the old cosmetic flashes). */
+  strikes: StrikeSink | null = null
+  /** Storm events (Gameplay sets the storm module's plan; null: the schedule's own storms, as before). */
+  storms: StormPlan | null = null
 
   constructor(
     private readonly host: WeatherHost,
@@ -162,10 +191,11 @@ export class WeatherService implements GameplayModule {
     if (this.hold && now >= this.hold.until) this.hold = null
     const t = this.target(now)
     const s = this.state
-    if (t.kind !== s.to || t.intensity !== s.intensity || t.gm !== (s.gm === true)) {
-      this.change(now, t)
+    if (t.kind !== s.to || t.intensity !== s.intensity || t.gm !== (s.gm === true) || (t.windMs !== undefined && !this.wind && t.windMs !== s.windMs)) {
+      this.change(now, t, t.dur)
       this.send(now)
     } else if (now - this.lastSent >= WEATHER_RESYNC_MS) this.send(now)
+    if (this.strikes && weatherParams(t.kind, t.intensity).lightning > 0) this.strikes.prepare()
     this.rollLightning(now, dtS)
   }
 
@@ -181,12 +211,14 @@ export class WeatherService implements GameplayModule {
   params(now: number): WeatherParams {
     const p = blendWeather(this.state, now, this.startVec)
     if (this.wind) p.windMs = this.wind.windMs
+    // a storm forecast's rising wind: the sync's windMs differs from the state's own (the client reads it the same way)
+    else if (this.state.windMs !== weatherParams(this.state.to, this.state.intensity).windMs) p.windMs = this.state.windMs
     return p
   }
 
   // ---- GM (docs/WEATHER.md §3) ------------------------------------------------------------------------------
 
-  gm(args: string[], now = Date.now()): GmResult {
+  gm(args: string[], now = Date.now(), self: Player | null = null): GmResult {
     const a = (args[0] ?? '').toLowerCase()
     if (args.length === 0) return ok(this.describe(now), this.sync(now))
     if (this.mode === 'off') return fail('Weather is off on this server (WEATHER=off).')
@@ -224,6 +256,13 @@ export class WeatherService implements GameplayModule {
       return ok(`Weather: surfaces wet ${round(wet)}, puddles ${round(this.surface.puddle)}.`, this.sync(now))
     }
     if (a === 'strike') {
+      if (this.strikes) {
+        const wait = this.lastStrike + LIGHTNING_MIN_GAP_MS - now
+        if (wait > 0) return fail(`Strikes are at least ${LIGHTNING_MIN_GAP_MS / 1000} s apart; wait ${Math.ceil(wait / 1000)} s.`)
+        const r = this.strikes.gm(args.slice(1), self, now)
+        if (r.ok) this.lastStrike = now
+        return r
+      }
       const d = args.length > 1 ? num(args[1]) : 600
       if (d === null || d < LIGHTNING_GM_DIST_M[0] || d > LIGHTNING_GM_DIST_M[1] || args.length > 2) return fail(`Usage: weather strike [${LIGHTNING_GM_DIST_M[0]}-${LIGHTNING_GM_DIST_M[1]} metres]`)
       const wait = this.lastStrike + LIGHTNING_MIN_GAP_MS - now
@@ -271,6 +310,29 @@ export class WeatherService implements GameplayModule {
       const h = this.hold
       return { kind: h.kind, intensity: h.intensity, until: h.until, seed: h.seed, windDir: this.state?.windDir ?? PREVAILING_WIND, gm: true }
     }
+    const ev = this.mode === 'off' ? null : (this.storms?.event(now) ?? null)
+    if (ev && (this.mode === 'auto' || ev.gm)) {
+      const windDir = this.state?.windDir ?? PREVAILING_WIND
+      if (now >= ev.start) return { kind: 'storm', intensity: 1, until: ev.end, seed: ev.seed, windDir, gm: false }
+      // the forecast: the sky darkens over the whole forecast (or the rain keeps falling) and the wind rises
+      const base = this.base(now)
+      const rain = base.kind === 'rain'
+      return {
+        kind: rain ? 'rain' : 'overcast',
+        intensity: rain ? base.intensity : 1,
+        until: ev.start,
+        seed: base.seed,
+        windDir,
+        gm: false,
+        windMs: Math.min(WEATHER_LIMITS.windMs, STORM_TABLE.forecastWindMs),
+        dur: Math.min(WEATHER_LIMITS.durMs, Math.max(transitionMs('clear', 'overcast') / 4, ev.start - now)),
+      }
+    }
+    return this.base(now)
+  }
+
+  /** The schedule's (or the fixed state's) target; with storm events its own storms are heavy rain. */
+  private base(now: number): Target {
     if (this.mode === 'auto') {
       const seg = this.schedule.at(now)
       // the `until` hint skips segments that repeat the same state
@@ -280,6 +342,7 @@ export class WeatherService implements GameplayModule {
         if (n.kind !== seg.kind || n.intensity !== seg.intensity) break
         end = n
       }
+      if (this.storms && seg.kind === 'storm') return { kind: 'rain', intensity: 1, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
       return { kind: seg.kind, intensity: seg.intensity, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
     }
     const kind = this.mode === 'off' ? 'clear' : this.mode
@@ -295,7 +358,7 @@ export class WeatherService implements GameplayModule {
       intensity: t.intensity,
       until: t.until,
       windDir: ((t.windDir % TAU) + TAU) % TAU,
-      windMs: this.wind?.windMs ?? weatherParams(t.kind, t.intensity).windMs,
+      windMs: this.wind?.windMs ?? t.windMs ?? weatherParams(t.kind, t.intensity).windMs,
       wet: this.surface.wet,
       puddle: this.surface.puddle,
       at: now,
@@ -361,9 +424,13 @@ export class WeatherService implements GameplayModule {
   }
 
   private rollLightning(now: number, dtS: number): void {
-    const rate = this.params(now).lightning
+    const rate = this.params(now).lightning * (this.strikes?.rateScale(now) ?? 1)
     if (rate <= 0 || now - this.lastStrike < LIGHTNING_MIN_GAP_MS) return
     if (this.rng() >= 1 - Math.exp((-rate * dtS) / 60)) return
+    if (this.strikes?.roll(now)) {
+      this.lastStrike = now
+      return
+    }
     this.strike(now, LIGHTNING_DIST_M[0] + (LIGHTNING_DIST_M[1] - LIGHTNING_DIST_M[0]) * this.rng())
   }
 

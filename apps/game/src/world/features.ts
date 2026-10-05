@@ -41,6 +41,9 @@ import { townSoundFeature } from './features/town-sound.ts'
 import { tradeFeature } from './features/trade.ts'
 import { uxWorldFeature } from './features/ux-world.ts'
 import { weatherFeature } from './features/weather.ts'
+import { lightningFeature } from './features/lightning.ts'
+import { stormFeature } from './features/storm.ts'
+import { tornadoFeature } from './features/tornado.ts'
 
 export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
 
@@ -162,6 +165,12 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   // Wave 9 (docs/WAVE_PLAN3.md §4.3; W9A-S writes these lines):
   skyClockFeature, // world/features/sky-clock.ts (GAME)
   weatherFeature, // world/features/weather.ts (WX-C)
+  // Storm series step 1 (docs/WEATHER.md §2.7): lightning that strikes (telegraph, bolt, aftermath), after the weather.
+  lightningFeature, // world/features/lightning.ts
+  // Storm series step 2 (docs/WEATHER.md §12): the weather icon and forecast, charged monsters' glow and arcs.
+  stormFeature, // world/features/storm.ts
+  // Storm series step 3 (docs/WEATHER.md §13): the lightning tornado (funnel, thrown bodies, shake, roar).
+  tornadoFeature, // world/features/tornado.ts
   // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.
   coastFeature, // world/features/coast.ts (CST-A)
   // Wave 11 (docs/TOWN_LIFE.md §6, TL-S): after the sound and coast features (the area is set), before the town feature.

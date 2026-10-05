@@ -888,7 +888,8 @@ export class WeatherRain {
   private updateBolt(f: Readonly<WeatherFrame>, cam: Vector3 | null, maxM: number): void {
     const bolt = this.bolt
     if (!bolt) return
-    const flash = Math.max(0, f.flash)
+    // a placed strike's bolt is the game's (world/lightning/fx.ts): this camera-relative one stays off for it
+    const flash = f.boltOwned ? 0 : Math.max(0, f.flash)
     if (flash < 0.2) this.boltArmed = true
     if (flash >= 1 && this.boltArmed && cam) {
       this.boltArmed = false

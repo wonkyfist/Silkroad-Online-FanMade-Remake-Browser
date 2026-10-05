@@ -50,7 +50,24 @@ export interface AiHost {
    * chase, with the target out of reach at dist metres. True = the mob cast a ranged special instead (no chase now).
    */
   ranged?(m: Mob, target: Player, dist: number): boolean
+  /**
+   * Optional (storms, docs/WEATHER.md §12.2): the weather's say on a mob's sight, leash, roam radius and chase speed.
+   * Absent = the mob's own.
+   */
+  storm?: AiStorm
 }
+
+/** The storm module's view of one mob (storm/service.ts): each returns the value the AI uses now. */
+export interface AiStorm {
+  sight(m: Mob): number
+  leash(m: Mob): number
+  roam(m: Mob): number
+  speed(m: Mob, base: number): number
+}
+
+const sightOf = (m: Mob, host: AiHost): number => host.storm?.sight(m) ?? m.sightRange
+const leashOf = (m: Mob, host: AiHost): number => host.storm?.leash(m) ?? m.leashRange
+const roamOf = (m: Mob, host: AiHost): number => host.storm?.roam(m) ?? m.roamRadius
 
 /** Rule: wander pause range (ms) of an idle mob. */
 export const WANDER_PAUSE_MS: [number, number] = [4000, 12000]
@@ -87,8 +104,9 @@ export function mobReach(m: Mob, target: { radius: number }): number {
   return m.def.attackRange + m.radius + target.radius
 }
 
-function chaseSpeed(m: Mob): number {
-  return m.def.runSpeed > 0 ? m.def.runSpeed : m.def.walkSpeed
+function chaseSpeed(m: Mob, host?: AiHost): number {
+  const base = m.def.runSpeed > 0 ? m.def.runSpeed : m.def.walkSpeed
+  return host?.storm ? host.storm.speed(m, base) : base
 }
 
 /**
@@ -112,7 +130,7 @@ export function goHome(m: Mob, host: AiHost): void {
   m.ai = 'return'
   m.target = null
   m.damage.clear()
-  if (!host.move(m, m.home[0], m.home[1], chaseSpeed(m))) {
+  if (!host.move(m, m.home[0], m.home[1], chaseSpeed(m, host))) {
     if (dist2(host.positionOf(m), m.home) > HOME_EPS_M ** 2) host.warpHome?.(m)
     arriveHome(m, host)
   }
@@ -134,7 +152,7 @@ function nextTarget(m: Mob, host: AiHost): Player | undefined {
       m.damage.delete(id)
       continue
     }
-    if (dist2(host.positionOf(p), m.home) > m.leashRange ** 2) continue
+    if (dist2(host.positionOf(p), m.home) > leashOf(m, host) ** 2) continue
     if (dmg > bestDamage) {
       best = p
       bestDamage = dmg
@@ -153,7 +171,7 @@ export function thinkMob(m: Mob, host: AiHost): void {
     if (dist2(pos, m.home) <= HOME_EPS_M ** 2) {
       if (m.move) host.halt(m)
       arriveHome(m, host)
-    } else if (!m.move && !host.move(m, m.home[0], m.home[1], chaseSpeed(m))) {
+    } else if (!m.move && !host.move(m, m.home[0], m.home[1], chaseSpeed(m, host))) {
       // Stuck short of home (the straight run home hit a wall): leash reset.
       host.warpHome?.(m)
       arriveHome(m, host)
@@ -162,12 +180,14 @@ export function thinkMob(m: Mob, host: AiHost): void {
   }
 
   if (m.ai === 'idle') {
-    if (m.aggressive && m.sightRange > 0) {
+    const sight = sightOf(m, host)
+    if (m.aggressive && sight > 0) {
+      const leash = leashOf(m, host)
       let best: Player | undefined
       let bestD = Infinity
-      for (const p of host.playersNear(pos[0], pos[2], m.sightRange)) {
+      for (const p of host.playersNear(pos[0], pos[2], sight)) {
         const d = dist2(host.positionOf(p), pos)
-        if (d < bestD && dist2(host.positionOf(p), m.home) <= m.leashRange ** 2) {
+        if (d < bestD && dist2(host.positionOf(p), m.home) <= leash ** 2) {
           best = p
           bestD = d
         }
@@ -179,12 +199,13 @@ export function thinkMob(m: Mob, host: AiHost): void {
       }
     }
     if (m.ai === 'idle') {
-      if (!m.move && now >= m.nextThinkAt && m.def.walkSpeed > 0 && m.roamRadius > 0) {
+      const roam = roamOf(m, host)
+      if (!m.move && now >= m.nextThinkAt && m.def.walkSpeed > 0 && roam > 0) {
         // A few candidate points in the roam circle; the first one on open ground with a clear straight walk wins
         // (a blocked one is dropped for another: mobs do not walk into walls on purpose). None: stay this time.
         for (let i = 0; i < WANDER_TRIES; i++) {
           const a = host.rng() * Math.PI * 2
-          const r = Math.sqrt(host.rng()) * m.roamRadius
+          const r = Math.sqrt(host.rng()) * roam
           const x = m.home[0] + Math.sin(a) * r
           const z = m.home[1] + Math.cos(a) * r
           if (host.canWalk(x, z) && (!host.clear || host.clear(m, x, z))) {
@@ -199,7 +220,8 @@ export function thinkMob(m: Mob, host: AiHost): void {
   }
 
   // chase
-  if (dist2(pos, m.home) > m.leashRange ** 2) return goHome(m, host)
+  const leash = leashOf(m, host)
+  if (dist2(pos, m.home) > leash ** 2) return goHome(m, host)
   let target = m.target === null ? undefined : host.target(m.target)
   if (!target) {
     if (m.target !== null) m.damage.delete(m.target)
@@ -209,7 +231,7 @@ export function thinkMob(m: Mob, host: AiHost): void {
     m.nextThinkAt = 0
   }
   const tp = host.positionOf(target)
-  if (dist2(tp, m.home) > m.leashRange ** 2) {
+  if (dist2(tp, m.home) > leash ** 2) {
     m.damage.delete(target.id)
     m.target = null
     const next = nextTarget(m, host)
@@ -237,7 +259,7 @@ export function thinkMob(m: Mob, host: AiHost): void {
     const stand = Math.max(0, reach * 0.8)
     const x = tp[0] + ((pos[0] - tp[0]) / d) * stand
     const z = tp[2] + ((pos[2] - tp[2]) / d) * stand
-    if (!host.move(m, x, z, chaseSpeed(m))) {
+    if (!host.move(m, x, z, chaseSpeed(m, host))) {
       m.damage.delete(target.id)
       m.target = null
     }

@@ -12,7 +12,9 @@
  *   server integrates it (W9F F2, P2).
  * - The zone under the camera modulates the world state (ZONE_CLIMATE), blended over ~10 s at a border.
  * - Lightning: the flash at the strike's `at` (at most one per 2 s; `ui.reduceFlashing` scales it to a quarter before
- *   any subsystem sees it) and the thunder `distM / 343` s later, both on the server clock.
+ *   any subsystem sees it) and the thunder `distM / 343` s later, both on the server clock. A placed `strike`
+ *   (docs/WEATHER.md §2.7) flashes with its own return strokes, brighter the closer it is, toward where it really is
+ *   (its bolt, telegraph and aftermath are world/features/lightning.ts'); the old `lightning` copy of it is skipped.
  * - Classic character lights (screens/world.ts `sun` 1.2 / `hemi` 0.7): scaled by the weather only on the Classic
  *   material path with the classic sky (WEATHER §7.1); the modern sky dims them through SkyState (GAME).
  * - Debug: `?weather=storm` (or `rain:0.6`) holds a state offline until the first `weather` message;
@@ -23,11 +25,18 @@ import {
   WEATHER_KINDS,
   NEUTRAL_CLIMATE,
   SPEED_OF_SOUND,
+  STORM_TABLE,
   blendWeather,
   flashAt,
+  strikeFlashPeak,
+  strokeBrightness,
+  strikeStrokes,
   stepSurface,
   weatherParams,
   zoneClimate,
+  type LightningStrike,
+  type StormStatus,
+  type Stroke,
   type SurfaceState,
   type WeatherKind,
   type WeatherParams,
@@ -147,7 +156,7 @@ export class WeatherClient {
   private windDir: number
   private readonly climate: ZoneClimate = { ...NEUTRAL_CLIMATE }
   private primed = false
-  private readonly strikes: { at: number; bearing: number }[] = []
+  private readonly strikes: { at: number; bearing: number; strokes?: readonly Stroke[]; peak?: number }[] = []
   private readonly thunders: { due: number; distM: number; bearing: number }[] = []
   private lastFlashAt = -Infinity
   private overridden: boolean
@@ -202,12 +211,15 @@ export class WeatherClient {
     this.takeSurface(s, now)
   }
 
-  /** A `lightning` strike: the flash at `at` (false: dropped, too close to the last flash) and its thunder later. */
-  strike(at: number, distM: number, bearing: number): boolean {
+  /**
+   * A `lightning` strike: the flash at `at` (false: dropped, too close to the last flash) and its thunder later. A placed
+   * strike passes its return strokes and peak (docs/WEATHER.md §2.7): its flash follows them instead of `flashAt`.
+   */
+  strike(at: number, distM: number, bearing: number, placed?: { strokes: readonly Stroke[]; peak: number }): boolean {
     this.thunders.push({ due: at + (distM / SPEED_OF_SOUND) * 1000, distM, bearing })
     if (at - this.lastFlashAt < FLASH_MIN_GAP_MS) return false
     this.lastFlashAt = at
-    this.strikes.push({ at, bearing })
+    this.strikes.push(placed ? { at, bearing, strokes: placed.strokes, peak: placed.peak } : { at, bearing })
     if (this.strikes.length > 4) this.strikes.shift()
     return true
   }
@@ -257,11 +269,13 @@ export class WeatherClient {
     const gustMs = Math.max(0, windMs * (1 + p.gust * gustNoise(this.sync.seed, now / 1000)))
     let flash = 0
     let bearing = 0
+    let owned = false
     for (const s of this.strikes) {
-      const f = flashAt(s, now)
+      const f = s.strokes ? Math.min(3, (s.peak ?? 3) * strokeBrightness(s.strokes, (now - s.at) / 1000)) : flashAt(s, now)
       if (f > flash) {
         flash = f
         bearing = s.bearing
+        owned = !!s.strokes
       }
     }
     while (this.strikes.length && now - this.strikes[0]!.at > 2000) this.strikes.shift()
@@ -283,6 +297,7 @@ export class WeatherClient {
       flash,
       flashX: flash > 0 ? Math.cos(bearing) : 0,
       flashZ: flash > 0 ? -Math.sin(bearing) : 0,
+      ...(owned && flash > 0 ? { boltOwned: true } : {}),
       time: ((now / 1000) % 3600 + 3600) % 3600,
     }
     this.last = frame
@@ -316,6 +331,14 @@ export class WeatherClient {
   }
 }
 
+/** A placed strike's distance (m) and bearing (radians, 0 = east, π/2 = north) from the listener at (x, y, z). */
+export function strikeFromListener(s: Pick<LightningStrike, 'pos'>, x: number, y: number, z: number): { distM: number; bearing: number } {
+  const dx = s.pos[0] - x
+  const dz = s.pos[2] - z
+  const b = Math.atan2(-dz, dx) || 0
+  return { distM: Math.hypot(dx, s.pos[1] - y, dz), bearing: b < 0 ? b + TAU : b }
+}
+
 /** The stereo pan (−1..1) of a sound toward `bearing` for a listener looking along (fx, fz) (Babylon: +x right). */
 export function panToward(bearing: number, fx: number, fz: number): number {
   const len = Math.hypot(fx, fz)
@@ -334,6 +357,17 @@ export function shelteredAt(world: Pick<World, 'weather'> | null | undefined, x:
 }
 
 /** The Classic character lights under a frame (WEATHER §7.1), from the base intensities (never compounding). */
+/**
+ * The extra fog of a night storm (docs/WEATHER.md §12.2) from the server's storm status: its `night` effect (the
+ * monsters' sight change, which already carries the night's depth and the strength) scaled to STORM_TABLE.nightFogAdd.
+ */
+export function stormNightFog(s: Pick<StormStatus, 'effects'>): number {
+  const pct = s.effects.find((e) => e.id === 'night')?.pct
+  const full = (STORM_TABLE.nightSightMul - 1) * 100
+  if (pct === undefined || full === 0) return 0
+  return Math.min(1, STORM_TABLE.nightFogAdd * Math.min(2, Math.max(0, pct / full)))
+}
+
 export function characterLightIntensities(f: Pick<WeatherFrame, 'sun' | 'cloudDark'>): { sun: number; hemi: number } {
   return { sun: CHARACTER_LIGHTS.sun * clamp01(f.sun), hemi: CHARACTER_LIGHTS.hemi * (1 - 0.2 * clamp01(f.cloudDark)) }
 }
@@ -359,6 +393,9 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
   let level: WeatherLevel | null = null
   let lightsTouched = false
   let offDecorator: (() => void) | null = null
+  /** docs/WEATHER.md §12.2: the night-storm fog the server's `storm` status asks for (target, and eased). */
+  let nightFogTarget = 0
+  let nightFog = 0
 
   const applyLevel = () => {
     if (!world) return
@@ -442,12 +479,31 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
     })
   }
 
+  /** Where the listener stands: the own (or, Play the Boss, the steered) character, else the camera target. */
+  const listener = () => {
+    const selfId = ctx.controlledId?.() ?? ctx.selfId()
+    const self = selfId !== null ? ctx.view(selfId) : undefined
+    return self?.root.position ?? ctx.camera.target
+  }
+
   return {
     onMessage(msg) {
       const now = ctx.serverNow()
-      if (msg.t === 'worldEnter') client.enter(msg.world.weather, now)
-      else if (msg.t === 'weather') client.message(msg.weather, now)
-      else if (msg.t === 'lightning') {
+      if (msg.t === 'worldEnter') {
+        client.enter(msg.world.weather, now)
+        nightFogTarget = nightFog = 0
+      } else if (msg.t === 'weather') client.message(msg.weather, now)
+      else if (msg.t === 'storm') nightFogTarget = stormNightFog(msg.storm)
+      else if (msg.t === 'strike') {
+        // a placed strike (docs/WEATHER.md §2.7): flash and thunder from where it really is
+        const s = msg.strike
+        const at = listener()
+        const { distM, bearing } = strikeFromListener(s, at.x, at.y, at.z)
+        client.strike(s.at, distM, bearing, { strokes: strikeStrokes(s.seed), peak: strikeFlashPeak(distM) })
+        if (weatherShown(store.get())) audio?.weather.prepareThunder(distM)
+      } else if (msg.t === 'lightning') {
+        // the old copy of a placed strike, for older clients: the `strike` above has it
+        if (msg.strike !== undefined) return
         client.strike(msg.at, msg.distM, msg.bearing)
         // W9F A4: without the new look no thunder plays, so none is fetched either.
         if (weatherShown(store.get())) audio?.weather.prepareThunder(msg.distM)
@@ -467,14 +523,15 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
       // GAME's rollout gate (settings.ts weatherShown): without the new look the world and the speakers get a clear
       // frame, as before wave 9; the client keeps following the server underneath.
       const shown = weatherShown(store.get())
-      const live = client.frame(now, dt, zone, store.get().ui.reduceFlashing)
+      const raw = client.frame(now, dt, zone, store.get().ui.reduceFlashing)
+      // a night storm closes the view in (docs/WEATHER.md §12.2), eased over a few seconds
+      nightFog += (nightFogTarget - nightFog) * (1 - Math.exp(-Math.max(0, dt) / 3))
+      const live = nightFog > 0.002 ? { ...raw, fog: Math.min(1, raw.fog + nightFog) } : raw
       const frame = shown ? live : CLEAR_FRAME
       world?.setWeather(frame)
       updateLights(frame)
       if (!audio) return
-      const selfId = ctx.controlledId?.() ?? ctx.selfId() // Play the Boss: the steered mob while piloting
-      const self = selfId !== null ? ctx.view(selfId) : undefined
-      const at = self?.root.position ?? cam.target
+      const at = listener()
       audio.weather.update(frame, shelteredAt(world, at.x, at.y, at.z))
       const fx = cam.target.x - cam.position.x
       const fz = cam.target.z - cam.position.z

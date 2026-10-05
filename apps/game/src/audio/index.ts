@@ -20,8 +20,10 @@ import { EntitySound, type EntityPlay, type EntitySoundHost, type SoundView } fr
 import { Music } from './music.ts'
 import { AudioSettings, browserStorage } from './settings.ts'
 import { SurfaceProbe, type SurfaceWorld } from './surface.ts'
+import { wavBytes, type Pcm } from './synth.ts'
 import { VoicePolicy, type ActiveVoice, type VoiceBus, type VoiceKind } from './voices.ts'
 import { WeatherAudio } from './weather.ts'
+import { LightningAudio } from './lightning.ts'
 
 export { AudioSettings } from './settings.ts'
 export { Music } from './music.ts'
@@ -68,6 +70,8 @@ export interface PlayOptions {
   waitMs?: number
   /** Skip when the same entity is already playing this file (a skill stage and its clip track naming one sound). */
   unique?: boolean
+  /** Playback rate (1 = as recorded; Berserk's roar plays a retail shout pitched down). */
+  rate?: number
 }
 
 interface Voice extends ActiveVoice {
@@ -98,6 +102,8 @@ export class GameAudio implements EntitySoundHost {
   readonly ambient: AmbientPlayer
   /** Rain, wind and thunder (audio/weather.ts); the weather feature drives it every frame. */
   readonly weather: WeatherAudio
+  /** Lightning's synthesized crackle and close crack (audio/lightning.ts); the lightning feature drives it. */
+  readonly lightning: LightningAudio
   private readonly backend: AudioBackend
   private readonly policy = new VoicePolicy()
   private readonly probe = new SurfaceProbe()
@@ -171,6 +177,11 @@ export class GameAudio implements EntitySoundHost {
       oneShot: (file, gain, pan, waitMs) => this.playFile(file, { bus: 'ambient', kind: 'other', gain, pan, self: true, priority: 2, waitMs }),
       muteBirds: on => this.ambient.mute('weather', on),
       rng: () => this.random(),
+    })
+    this.lightning = new LightningAudio({
+      ready: () => this.backend.ready && !this.hidden && !this.settings.muted,
+      decode: bytes => this.backend.decode(bytes),
+      start: (buffer, opts) => this.backend.start(buffer, opts),
     })
     this.applySettings()
     this.offs.push(this.settings.onChange(() => this.applySettings()))
@@ -303,7 +314,7 @@ export class GameAudio implements EntitySoundHost {
     const gain = Math.max(0, (o.gain ?? 1) * (0.9 + 0.1 * this.random()))
     const id = ++this.serial
     this.bank.retain(file)
-    const handle = this.backend.start(buffer, { bus, gain, pos: o.pos, pan: o.pan, onEnded: () => this.removeVoice(id) })
+    const handle = this.backend.start(buffer, { bus, gain, pos: o.pos, pan: o.pan, ...(o.rate && o.rate !== 1 ? { rate: o.rate } : {}), onEnded: () => this.removeVoice(id) })
     if (!handle) {
       this.bank.release(file)
       return
@@ -423,6 +434,24 @@ export class GameAudio implements EntitySoundHost {
     const cue = dropCue(code, this.itemDef(code))
     if (cue) this.play(cue, { pos, priority: 1 })
   }
+
+  /**
+   * A sound made in code (audio/synth.ts) under `id` (`synth/<name>`): rendered and decoded once (the decode waits for
+   * the audio context), then kept; `playFile(id, ...)` plays it like any file. Repeated calls do nothing.
+   */
+  prepareSynth(id: string, make: () => Pcm): void {
+    if (this.synthIds.has(id)) return
+    this.synthIds.add(id)
+    void (async () => {
+      try {
+        this.bank.adopt(id, await this.backend.decode(wavBytes(make())))
+      } catch (err) {
+        console.warn('[audio] synth failed', id, err)
+      }
+    })()
+  }
+
+  private readonly synthIds = new Set<string>()
 
   /** Loads a skill group's sounds (stages, swings, SND_DMG) ahead of use: an imbue's hit layer when it starts. */
   preloadSkill(group: string): void {
@@ -596,6 +625,7 @@ export class GameAudio implements EntitySoundHost {
   dispose(): void {
     for (const off of this.offs.splice(0)) off()
     this.weather.stop()
+    this.lightning.stop()
     this.ambient.stop()
     for (const v of [...this.voices]) this.stopVoice(v.id)
   }

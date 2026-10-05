@@ -1,4 +1,4 @@
-import { MAX_GOLD, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
+import { MAX_GOLD, STORM_TABLE, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
 import { MOB_SKILL_DAMAGE_MODES, W8_DEFAULTS, type ServerConfig } from '../config.ts'
 import type { GameContext } from '../game.ts'
 import type { AdminStore } from './store.ts'
@@ -39,6 +39,7 @@ const RATES = 'Progression and rates'
 const WORLD = 'World and monsters'
 const COMBAT = 'Combat and items'
 const SOCIAL = 'Guilds and stalls'
+const STORMS = 'Weather and storms'
 
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
@@ -96,6 +97,16 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('guildRejoinHours', 'GUILD_REJOIN_HOURS', 'Guild rejoin penalty (hours)', SOCIAL, 0, 720, W8.guildRejoinHours, 'live'),
   num('guildRecreateDays', 'GUILD_RECREATE_DAYS', 'Guild recreate penalty (days)', SOCIAL, 0, 60, W8.guildRecreateDays, 'live'),
   bool('stallTownOnly', 'STALL_TOWN_ONLY', 'Stalls only in town', SOCIAL, true, 'live', undefined, true),
+
+  // docs/WEATHER.md §12: storm events (the schedule is re-derived from these at once; a storm in progress keeps its times)
+  num('stormsPerDay', 'STORMS_PER_DAY', 'Storms per day', STORMS, 0, 24, STORM_TABLE.perDay, 'live', 'Storm events per real day, spread over the day (a fraction is the chance of one more; 0 = no storms except GM storms). Only with WEATHER=auto.'),
+  num('stormMinMin', 'STORM_MIN_MIN', 'Shortest storm (minutes)', STORMS, 1, 120, STORM_TABLE.minMin, 'live'),
+  num('stormMaxMin', 'STORM_MAX_MIN', 'Longest storm (minutes)', STORMS, 1, 120, STORM_TABLE.maxMin, 'live'),
+  num('stormForecastMin', 'STORM_FORECAST_MIN', 'Storm forecast (minutes before)', STORMS, 0, 10, STORM_TABLE.forecastMin, 'live', 'The sky darkens, the wind rises and players are warned this long before a storm breaks.'),
+  num('stormStrength', 'STORM_STRENGTH', 'Storm effect strength', STORMS, 0, 2, STORM_TABLE.strength, 'live', 'Scales every storm and rain effect on monsters and players (0 = none, 1 = the defaults, 2 = twice as strong).'),
+  // docs/WEATHER.md §13: the lightning tornado
+  num('tornadoChance', 'TORNADO_CHANCE', 'Tornado chance per storm', STORMS, 0, 1, STORM_TABLE.tornadoChance, 'live', 'Chance (0..1) that a storm brings one lightning tornado somewhere in the fields near a player (0 = only GM tornadoes: storm tornado).'),
+  num('tornadoStrength', 'TORNADO_STRENGTH', 'Tornado strength', STORMS, 0, 2, STORM_TABLE.tornadoStrength, 'live', "Scales the tornado's pull, throw distance, damage and lightning (0 = it only looks; it never kills either way)."),
 ]
 
 export const SETTING_BY_KEY: ReadonlyMap<string, SettingSpec> = new Map(SETTINGS.map((s) => [s.key, s]))

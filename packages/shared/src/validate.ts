@@ -107,6 +107,9 @@ import {
   type EquipSlotUpdate,
   type ErrorCode,
   type Inventory,
+  type LightningStrike,
+  type StormStatus,
+  type TornadoState,
   type MoveState,
   type PlayerStats,
   type Role,
@@ -122,6 +125,9 @@ import {
 import { EQUIP_SLOTS, MOB_VARIANTS, type EquipSlot, type ItemStack } from './content.ts'
 import { CLOCK_LIMITS } from './world-clock.ts'
 import { LIGHTNING_GM_DIST_M, RAIN_INTENSITY_MIN, WEATHER_KINDS, WEATHER_LIMITS, type WeatherParams } from './weather.ts'
+import { HAZARD_CAUSES, STRIKE_KINDS, STRIKE_LIMITS, STRIKE_SOURCES } from './lightning.ts'
+import { STORM_EFFECT_IDS, STORM_LIMITS, STORM_PHASES, type StormEffect } from './storm.ts'
+import { TORNADO_LIMITS } from './tornado.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
 import {
   HUNT_OUTCOMES,
@@ -917,6 +923,8 @@ function entity(v: unknown): EntityState {
   if (o.trance !== undefined && bool(o, 'trance')) e.trance = true
   if (o.piloted !== undefined && bool(o, 'piloted')) e.piloted = true
   if (o.honor !== undefined) e.honor = honorCode(o, 'honor')
+  // storms (docs/WEATHER.md §12)
+  if (o.charged !== undefined && bool(o, 'charged')) e.charged = true
   return e
 }
 
@@ -1207,6 +1215,80 @@ function worldInfo(v: unknown): WorldInfo {
   return w
 }
 
+/** A placed lightning strike (docs/WEATHER.md §2.7): every field checked, unknown keys dropped. */
+function lightningStrike(v: unknown): LightningStrike {
+  const o = rec(v, 'strike')
+  const pos = vec3(o, 'pos')
+  if (pos.some((c) => Math.abs(c) > STRIKE_LIMITS.coord)) fail('pos out of range')
+  const s: LightningStrike = {
+    id: int(o, 'id', 1, 0xffffffff),
+    at: num(o, 'at', 0, BIG),
+    kind: oneOf(o, 'kind', STRIKE_KINDS),
+    pos,
+    radiusM: num(o, 'radiusM', 0, STRIKE_LIMITS.radiusM),
+    seed: int(o, 'seed', 0, 0xffffffff),
+  }
+  if (o.warnAt !== undefined) {
+    s.warnAt = num(o, 'warnAt', 0, BIG)
+    if (s.warnAt > s.at) fail('warnAt after at')
+  }
+  if (o.groundY !== undefined) s.groundY = num(o, 'groundY', -STRIKE_LIMITS.coord, STRIKE_LIMITS.coord)
+  if (o.target !== undefined) s.target = int(o, 'target', 1, MAX_ID)
+  if (o.source !== undefined) s.source = oneOf(o, 'source', STRIKE_SOURCES)
+  return s
+}
+
+/** A world point of the tornado messages: finite and inside TORNADO_LIMITS.coord. */
+function tornadoPoint(o: Record<string, unknown>, k: string): Vec3 {
+  const p = vec3(o, k)
+  if (p.some((c) => Math.abs(c) > TORNADO_LIMITS.coord)) fail(`${k} out of range`)
+  return p
+}
+
+/** A lightning tornado (docs/WEATHER.md §13): times in order, a path of 1..TORNADO_LIMITS.path points. */
+function tornadoState(v: unknown): TornadoState {
+  const o = rec(v, 'tornado')
+  const path = boundedList(o, 'path', TORNADO_LIMITS.path, (p) => {
+    if (!Array.isArray(p) || p.length !== 3) fail('path point must be a Vec3')
+    return tornadoPoint({ p }, 'p')
+  })
+  if (path.length === 0) fail('path is empty')
+  const s: TornadoState = {
+    id: int(o, 'id', 1, 0xffffffff),
+    seed: int(o, 'seed', 0, 0xffffffff),
+    warnAt: num(o, 'warnAt', 0, BIG),
+    touchAt: num(o, 'touchAt', 0, BIG),
+    endAt: num(o, 'endAt', 0, BIG),
+    path,
+    speedMs: num(o, 'speedMs', 0, TORNADO_LIMITS.speedMs),
+    pullM: num(o, 'pullM', 0, TORNADO_LIMITS.radiusM),
+    coreM: num(o, 'coreM', 0, TORNADO_LIMITS.radiusM),
+    strength: num(o, 'strength', 0, TORNADO_LIMITS.strength),
+  }
+  if (s.warnAt > s.touchAt || s.touchAt > s.endAt) fail('tornado times out of order')
+  if (o.liftAt !== undefined) s.liftAt = num(o, 'liftAt', 0, BIG)
+  if (o.area !== undefined) s.area = str(o, 'area', 64)
+  if (o.gm !== undefined && bool(o, 'gm')) s.gm = true
+  return s
+}
+
+/** The storm status (docs/WEATHER.md §12): unknown effect ids fail the message (the list is closed, like the phases). */
+function stormStatus(v: unknown): StormStatus {
+  const o = rec(v, 'storm')
+  const s: StormStatus = {
+    phase: oneOf(o, 'phase', STORM_PHASES),
+    effects: boundedList(o, 'effects', STORM_LIMITS.effects, (e): StormEffect => {
+      const r = rec(e, 'effect')
+      const x: StormEffect = { id: oneOf(r, 'id', STORM_EFFECT_IDS) }
+      if (r.pct !== undefined) x.pct = int(r, 'pct', -STORM_LIMITS.pct, STORM_LIMITS.pct)
+      return x
+    }),
+  }
+  if (o.startsAt !== undefined) s.startsAt = num(o, 'startsAt', 0, BIG)
+  if (o.endsAt !== undefined) s.endsAt = num(o, 'endsAt', 0, BIG)
+  return s
+}
+
 /** Runs one optional sub-parse; an invalid value is dropped with a console warning instead of failing the message. */
 function optionalField(what: string, parse: () => void): void {
   try {
@@ -1465,6 +1547,8 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.trance !== undefined) m.trance = bool(o, 'trance')
       if (o.piloted !== undefined) m.piloted = bool(o, 'piloted')
       if (o.honor !== undefined) m.honor = honorCode(o, 'honor', true)
+      // storms (docs/WEATHER.md §12)
+      if (o.charged !== undefined) m.charged = bool(o, 'charged')
       return m
     }
     case 'role':
@@ -1484,6 +1568,9 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.instance !== undefined) m.instance = int(o, 'instance', 0, MAX_ID)
       if (o.at !== undefined) m.at = num(o, 'at', 0, BIG)
       if (o.aoe !== undefined && bool(o, 'aoe')) m.aoe = true
+      // Lightning (docs/WEATHER.md §2.7): damage without an attacker (attacker 0)
+      if (o.cause !== undefined) m.cause = oneOf(o, 'cause', HAZARD_CAUSES)
+      if (o.strike !== undefined) m.strike = int(o, 'strike', 1, 0xffffffff)
       return m
     }
     case 'stats':
@@ -1698,13 +1785,45 @@ function serverMessage(v: unknown): ServerMessage {
       return { t: 'worldClock', clock: clockState(o.clock) }
     case 'weather':
       return { t: 'weather', weather: weatherSync(o.weather) }
-    case 'lightning':
-      return {
+    case 'lightning': {
+      const m: ServerMessage = {
         t: 'lightning',
         at: num(o, 'at', 0, BIG),
         distM: num(o, 'distM', LIGHTNING_GM_DIST_M[0], LIGHTNING_GM_DIST_M[1]),
         bearing: num(o, 'bearing', 0, TAU),
       }
+      if (o.strike !== undefined) m.strike = int(o, 'strike', 1, 0xffffffff)
+      return m
+    }
+    case 'strike':
+      return { t: 'strike', strike: lightningStrike(o.strike) }
+    // storms (docs/WEATHER.md §12)
+    case 'storm':
+      return { t: 'storm', storm: stormStatus(o.storm) }
+    case 'stormArc': {
+      const m: ServerMessage = { t: 'stormArc', from: int(o, 'from', 1, MAX_ID), to: int(o, 'to', 1, MAX_ID), at: num(o, 'at', 0, BIG) }
+      if (o.mob !== undefined) m.mob = int(o, 'mob', 1, MAX_ID)
+      return m
+    }
+    // the lightning tornado (docs/WEATHER.md §13)
+    case 'tornado':
+      return { t: 'tornado', tornado: tornadoState(o.tornado) }
+    case 'tornadoEnd':
+      return { t: 'tornadoEnd', id: int(o, 'id', 1, 0xffffffff), at: num(o, 'at', 0, BIG) }
+    case 'displace': {
+      const m: Extract<ServerMessage, { t: 'displace' }> = {
+        t: 'displace',
+        id: int(o, 'id', 1, MAX_ID),
+        kind: oneOf(o, 'kind', ['pull', 'throw'] as const),
+        from: tornadoPoint(o, 'from'),
+        to: tornadoPoint(o, 'to'),
+        at: num(o, 'at', 0, BIG),
+        ms: num(o, 'ms', 1, TORNADO_LIMITS.displaceMs),
+      }
+      if (o.peakM !== undefined) m.peakM = num(o, 'peakM', 0, TORNADO_LIMITS.peakM)
+      if (o.tornado !== undefined) m.tornado = int(o, 'tornado', 1, 0xffffffff)
+      return m
+    }
     // wave 10 (docs/MOVEMENT.md §5)
     case 'jump':
       return { t: 'jump', id: int(o, 'id', 0, MAX_ID), at: num(o, 'at', 0, BIG) }

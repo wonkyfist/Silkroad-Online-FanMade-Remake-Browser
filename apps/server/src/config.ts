@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DEFAULT_LEVEL_CAP, MAX_GOLD, WEATHER_KINDS, WORLD_FOLDER, type Role, type WeatherKind } from '@sro/shared'
+import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WORLD_FOLDER, type Role, type WeatherKind } from '@sro/shared'
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -153,6 +153,20 @@ export interface ServerConfig {
   weatherSeed?: number
   /** Multiplies the `→ rain` and `→ storm` schedule weights (WEATHER_RAIN_SCALE, default 1, 0..3). */
   weatherRainScale?: number
+  // ---- storms (docs/WEATHER.md §12); optional, absent = STORM_TABLE's default; the admin panel changes them live ----
+  /** Storm events per real day (STORMS_PER_DAY, default 3, 0..24; a fraction is the chance of one more; 0 = none). */
+  stormsPerDay?: number
+  /** Shortest and longest storm, minutes (STORM_MIN_MIN 10, STORM_MAX_MIN 20; 1..120). */
+  stormMinMin?: number
+  stormMaxMin?: number
+  /** The forecast begins this long before a storm, minutes (STORM_FORECAST_MIN, default 5, 0..10). */
+  stormForecastMin?: number
+  /** Storm effect strength (STORM_STRENGTH, default 1, 0..2; 0 = storms change nothing but the sky). */
+  stormStrength?: number
+  /** Chance that a storm event brings a lightning tornado (TORNADO_CHANCE, default 0.3, 0..1; docs/WEATHER.md §13). */
+  tornadoChance?: number
+  /** The tornado's pull, throw, damage and bolts (TORNADO_STRENGTH, default 1, 0..2; 0 = it only looks). */
+  tornadoStrength?: number
   // ---- wave 11 (docs/WAVE_PLAN7.md §3.4); optional like wave 3's, absent = the default ----
   /**
    * Unique monsters are world bosses run by the uniques module (UNIQUES, on (default) | off; docs/UNIQUES.md §3.2): the
@@ -412,6 +426,14 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     weather: weatherMode(env.WEATHER),
     weatherSeed: Math.floor(num(env, 'WEATHER_SEED', W9_DEFAULTS.weatherSeed, 0, 0xffffffff)),
     weatherRainScale: num(env, 'WEATHER_RAIN_SCALE', W9_DEFAULTS.weatherRainScale, 0, 3),
+    // storms (docs/WEATHER.md §12)
+    stormsPerDay: num(env, 'STORMS_PER_DAY', STORM_TABLE.perDay, 0, 24),
+    stormMinMin: num(env, 'STORM_MIN_MIN', STORM_TABLE.minMin, 1, 120),
+    stormMaxMin: num(env, 'STORM_MAX_MIN', STORM_TABLE.maxMin, 1, 120),
+    stormForecastMin: num(env, 'STORM_FORECAST_MIN', STORM_TABLE.forecastMin, 0, 10),
+    stormStrength: num(env, 'STORM_STRENGTH', STORM_TABLE.strength, 0, 2),
+    tornadoChance: num(env, 'TORNADO_CHANCE', STORM_TABLE.tornadoChance, 0, 1),
+    tornadoStrength: num(env, 'TORNADO_STRENGTH', STORM_TABLE.tornadoStrength, 0, 2),
     // wave 11 (docs/WAVE_PLAN7.md §3.4)
     uniques: onOff(env, 'UNIQUES', true),
     // admin panel (docs/ADMIN.md)

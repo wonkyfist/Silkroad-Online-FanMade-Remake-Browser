@@ -15,6 +15,8 @@ import type { EquipSlot, ItemStack, MobVariant } from './content.ts'
 import type { QuestDef, QuestFile, QuestIssue, QuestItemDef, QuestLocation } from './quests.ts'
 import type { WorldClockState } from './world-clock.ts'
 import type { WeatherKind, WeatherParams } from './weather.ts'
+import type { HazardCause, StrikeKind, StrikeSource } from './lightning.ts'
+import type { StormEffect, StormPhase } from './storm.ts'
 // Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
 import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
 
@@ -230,6 +232,9 @@ export interface EntityState {
   piloted?: true
   /** Players: a title code (PILOT_HONOR; client i18n `pilot.honor.<code>`), e.g. 'tiger_spirit'. */
   honor?: string
+  // ---- storm additions (docs/WEATHER.md §12) ----
+  /** Mobs: storm-charged (it survived a lightning strike): the blue electric glow, until the storm ends or it dies. */
+  charged?: true
 }
 
 export interface WorldInfo {
@@ -286,6 +291,76 @@ export interface WeatherSync {
    */
   fromVec?: WeatherParams
 }
+
+/**
+ * What storms do right now (docs/WEATHER.md §12; the `storm` message): the phase, the forecast or storm times, and
+ * every active effect (the weather icon's tooltip lists them).
+ */
+export interface StormStatus {
+  phase: StormPhase
+  /** forecast: server ms the storm is due to break. */
+  startsAt?: number
+  /** forecast / storm of a storm event: server ms it is due to end. */
+  endsAt?: number
+  effects: StormEffect[]
+}
+
+/** A placed lightning strike (docs/WEATHER.md §2.7; the `strike` message). */
+export interface LightningStrike {
+  /** Strike id (1..2³²-1, increasing). */
+  id: number
+  /** Server ms the bolt lands. */
+  at: number
+  /** Server ms the telegraph began (the crackle and the glow on the spot); absent for a harmless `sky` flash. */
+  warnAt?: number
+  kind: StrikeKind
+  /** Where the bolt ends (glTF metres): the ground, a tree top, the wall walk, a tower top; `sky`: a point in the cloud. */
+  pos: Vec3
+  /** Height (m) of the ground under the strike: a tree's or a tower's foot. Absent: `pos[1]`. */
+  groundY?: number
+  /** Damage radius (m) around the strike's ground point; 0 = harmless (a sky flash, a safe area). */
+  radiusM: number
+  /** u32: the bolt's shape and its return strokes, the same on every client. */
+  seed: number
+  /** The entity the strike was aimed at (kind `entity`): its spot when the telegraph began. */
+  target?: number
+  /** Additive (docs/WEATHER.md §13): thrown by a tornado (the client draws an arc from the funnel); absent: the storm's. */
+  source?: StrikeSource
+}
+
+/**
+ * A lightning tornado (docs/WEATHER.md §13; the `tornado` message): its timeline and the path it walks, so every client
+ * places it with `tornadoAt` (tornado.ts) without a message per step.
+ */
+export interface TornadoState {
+  /** Tornado id (1..2³²-1). */
+  id: number
+  /** u32: the funnel's look (noise, debris), the same on every client. */
+  seed: number
+  /** Server ms the warning began (the wall cloud lowers). */
+  warnAt: number
+  /** Server ms it touches down and starts walking `path`. */
+  touchAt: number
+  /** Server ms its walk ends (it then lifts over LIFT_MS). */
+  endAt: number
+  /** Server ms it began to lift early (the storm passed, a GM); absent: it lifts at `endAt`. */
+  liftAt?: number
+  /** Waypoints on the ground (glTF metres), walked from the first at `speedMs` from `touchAt`. */
+  path: Vec3[]
+  speedMs: number
+  /** Pull and catch radii (m). */
+  pullM: number
+  coreM: number
+  /** TORNADO_STRENGTH 0..2 (the funnel's size and fury on the client). */
+  strength: number
+  /** The area's name at touchdown (the announcement), as GameData.zoneName gives it. */
+  area?: string
+  /** Spawned by a GM (`storm tornado`). */
+  gm?: boolean
+}
+
+/** What moved a body without its say (docs/WEATHER.md §13; the `displace` message). */
+export type DisplaceKind = 'pull' | 'throw'
 
 // ---- client -> server ---------------------------------------------------------------------------
 
@@ -560,6 +635,8 @@ export type ServerMessage =
       piloted?: boolean
       /** Play the Boss: a title was granted ('' = none). */
       honor?: string
+      /** Storm (docs/WEATHER.md §12): the mob became storm-charged (true) or lost it (false). */
+      charged?: boolean
     }
   /**
    * GM addition: this account's role changed while connected (`pnpm gm grant|revoke`; the server
@@ -591,6 +668,12 @@ export type ServerMessage =
       instance?: number
       at?: number
       aoe?: true
+      /**
+       * Lightning (docs/WEATHER.md §2.7, additive): damage without an attacker. `attacker` is then 0 (no entity), and
+       * `strike` names the `strike` it came from. An older client drops both fields and shows the hits as usual.
+       */
+      cause?: HazardCause
+      strike?: number
     }
   /** Own character's full stats: after worldEnter, after a level-up, after respawn. */
   | { t: 'stats'; stats: PlayerStats }
@@ -727,7 +810,46 @@ export type ServerMessage =
   /** The weather changed (schedule or GM), a GM wind/wet override, or the 10-minute resync. */
   | { t: 'weather'; weather: WeatherSync }
   /** A lightning strike at server ms `at`, `distM` 100..3000 m away toward `bearing` (radians 0..2π, like windDir). */
-  | { t: 'lightning'; at: number; distM: number; bearing: number }
+  | {
+      t: 'lightning'
+      at: number
+      distM: number
+      bearing: number
+      /**
+       * Additive (docs/WEATHER.md §2.7): the id of the placed `strike` this flash belongs to, sent to each player with
+       * its own distance and bearing, so an older client still flashes and thunders; a newer one draws the `strike`.
+       */
+      strike?: number
+    }
+  /**
+   * A placed lightning strike (docs/WEATHER.md §2.7), to every player in the world when its telegraph starts (`sky`:
+   * when it flashes). The bolt lands at `strike.at`; its damage arrives as `combat` messages with `cause: 'lightning'`.
+   */
+  | { t: 'strike'; strike: LightningStrike }
+  /**
+   * Storms (docs/WEATHER.md §12): the storm status, to a player entering the world and to every player in it when the
+   * phase or an effect changes (at most once a second). An older client ignores it.
+   */
+  | { t: 'storm'; storm: StormStatus }
+  /**
+   * A storm-charged monster's hit arced (docs/WEATHER.md §12.4): from entity `from` (the player it hit) to entity `to`
+   * (a player nearby) at server ms `at`, to the viewers of either. The damage arrives as `combat` with `cause: 'arc'`.
+   */
+  | { t: 'stormArc'; from: number; to: number; at: number; mob?: number }
+  /**
+   * A lightning tornado (docs/WEATHER.md §13): its state, to every player in the world when it is announced (the warning)
+   * or changes (it lifts early), and to a player entering while one is up. An older client ignores it.
+   */
+  | { t: 'tornado'; tornado: TornadoState }
+  /** The tornado `id` is gone (lifted away, or a GM removed it) at server ms `at`. */
+  | { t: 'tornadoEnd'; id: number; at: number }
+  /**
+   * Entity `id` was moved without its say (docs/WEATHER.md §13), to its viewers right after the `move` that carries it
+   * (an older client still sees a plain move): `pull` a drift toward a tornado (no walking clip), `throw` a flight from
+   * `from` to `to` over `ms` from server ms `at` with its apex `peakM` above the line (spinning). The `stop` at the end
+   * comes as usual.
+   */
+  | { t: 'displace'; id: number; kind: DisplaceKind; from: Vec3; to: Vec3; at: number; ms: number; peakM?: number; tornado?: number }
   // ---- wave 10 (docs/MOVEMENT.md §5, docs/WAVE_PLAN6.md §3.2) ----
   /**
    * Entity `id` jumped at server ms `at`; viewers (the jumper included) play JUMP, or JUMP_RUN while moving. Reuses the

@@ -26,6 +26,11 @@ export interface WeatherFrame {
   flash: number
   flashX: number
   flashZ: number
+  /**
+   * Additive (docs/WEATHER.md §7.3b): true while the brightest flash belongs to a placed strike whose bolt the game
+   * draws itself at its world position; the camera-relative High bolt (rain.ts) then stays off. Absent = false.
+   */
+  boltOwned?: boolean
   /** Seconds, wrapping at 3600 (shader time). */
   time: number
 }

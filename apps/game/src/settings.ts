@@ -194,6 +194,11 @@ export interface Settings {
     reduceFlashing: boolean
     /** Wave 9: the in-game clock next to the minimap (docs/SKY.md, GAME). */
     clock: boolean
+    /**
+     * Berserk's own-screen effects (world/features/berserk.ts, docs/EFFECTS.md §3.9): the red pulsing edge, the start
+     * flash, the heartbeat, the richer colours, the camera push-in and bumps, the hit-stop. On by default.
+     */
+    berserkScreen: boolean
   }
   controls: {
     holdToMove: boolean
@@ -299,6 +304,7 @@ export function defaultSettings(): Settings {
       helpHintSessions: 0,
       reduceFlashing: false,
       clock: true,
+      berserkScreen: true,
     },
     controls: { holdToMove: true, cameraSpeed: 1, invertY: false, cameraMode: 'free', nearestTargetKey: true, cameraShake: true, keyboardMove: true, unreachableWarning: true },
     autoPotion: { enabled: false, hp: 50, mp: 30, cure: false },
@@ -381,6 +387,7 @@ export function normalizeSettings(raw: unknown): Settings {
       helpHintSessions: num(u.helpHintSessions, d.ui.helpHintSessions, 0, 1000, 1),
       reduceFlashing: bool(u.reduceFlashing, d.ui.reduceFlashing),
       clock: bool(u.clock, d.ui.clock),
+      berserkScreen: bool(u.berserkScreen, d.ui.berserkScreen),
     },
     controls: {
       holdToMove: bool(c.holdToMove, d.controls.holdToMove),

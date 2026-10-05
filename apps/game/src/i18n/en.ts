@@ -37,6 +37,7 @@ import { enUnique } from './en-unique.ts'
 import { enQol } from './en-qol.ts'
 import { enPilot } from './en-pilot.ts'
 import { enGpu } from './en-gpu.ts'
+import { enStorm } from './en-storm.ts'
 
 export const en = {
   // ---- per-lane string files (each lane edits only its own) ------------------------------------
@@ -68,6 +69,7 @@ export const en = {
   ...enRender,
   ...enSky,
   ...enWeather,
+  ...enStorm,
   // Wave 10 (docs/WAVE_PLAN6.md D15): the jump's toasts (MV-C).
   ...enMovement,
   // Wave 11 (docs/WAVE_PLAN7.md D8): the unique-monster announcements (U-H).

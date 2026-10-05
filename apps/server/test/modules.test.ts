@@ -103,6 +103,12 @@ describe('routing', () => {
       'mobSkills', 'mounts', 'durability', 'repairs', 'alchemy', 'berserk', 'trade', 'stalls', 'guilds',
       // wave 9 (docs/WAVE_PLAN3.md §6.1)
       'weather',
+      // storm series step 1 (docs/WEATHER.md §2.7): lightning that strikes
+      'lightning',
+      // storm series step 2 (docs/WEATHER.md §12): storms change everything
+      'storm',
+      // storm series step 3 (docs/WEATHER.md §13): the lightning tornado
+      'tornado',
       // wave 10 (docs/WAVE_PLAN6.md §3): the jump (movement.ts, lane MV-P)
       'movement',
       // wave 11 (docs/WAVE_PLAN7.md §4.2): unique world bosses (uniques.ts, UNIQUES=on by default)

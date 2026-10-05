@@ -521,6 +521,59 @@ server sends `EntityState.berserkMs` / `entityUpdate.berserkMs` and `CombatHit.h
 `hit.hwan`. SYSTEMS_COMBAT §5.3 says "system_hwan_keep looped on the root"; the retail rows above (Spine + 6 bones)
 win.
 
+**Makeover (2026-10-05, the approved "Berserk makeover" look; `world/fx/berserk-look.ts` rules, `berserk-makeover.ts`
+3D, `berserk-own.ts` camera / hit-stop / flinch, `hud/berserk-screen.ts` own screen, `audio/synth.ts` sounds; driven by
+`world/features/berserk.ts`).** On top of the retail rows above (kept: ACT_S burst, DEACT, the 1.1× growth, the hwan hair,
+`hwanchange` / `hwanreturn`):
+
+- **Start** (`START_MS` 900): the shockwave ring (thin-instanced ground decal, 7 m in 650 ms; every tier), dust and
+  leaves (a particle burst; Medium+), the roar under the retail start sound (`monster/cm_tiger_shout_a` at rate 0.72 +
+  the synthesized `synth/bz_boom` sub drop; everyone, positional for others). Own character only: a 100 ms hit-freeze
+  (`scene.animationTimeScale`), a field-of-view push-in with a shake (`startCamera`), the screen flash (`ui.reduceFlashing`
+  keeps a quarter).
+- **Active, everyone**: the **fire outline**, a shell per drawn part on the part's own geometry and skeleton (so the
+  game's skinning path, part merge, animation LOD and Volume patch apply unchanged), drawn by one StandardMaterial with
+  the `SroBerserkShell` plugin (GLSL + WGSL): vertices pushed out along the normal before skinning (4.6 cm, swelling
+  2 cm on the beat), both faces additive with a rim term: the far faces make the halo outside the silhouette, the near
+  ones a thin hot rim. Skinned parts with one vertex layout are merged into one shell (`mergeSkinnedParts`, one draw for
+  a body). Shells live outside the actor tree (the shadow casters and the renderer's character roots never see them) and
+  take their source's world matrix by reference; they switch off with an actor out of view. Babylon's HighlightLayer is
+  not used (it missed the skinned parts). The outline pulses on a heartbeat (74 bpm, 104 in the last 5 s). Embers and
+  faint heat wisps (one particle system each for every berserk player; the heat is wisps, there is no screen-distortion
+  pass), glowing eyes (thin instances placed from `Bip01 Head` along the facing, lifted towards the camera past the hwan
+  hair's band, fading as the face turns away), burning footsteps and a fire ring under the feet (thin-instanced decals),
+  afterimages (ghost rigs: a skeleton clone unlinked from the joints, a pose snapshot every 95 ms while moving or
+  swinging, 320 ms fade), the HWAN weapon trail tinted fire-orange and 40 % longer (`fireTrail`, in `skill-fx.ts`). The
+  retail keep cloud plays at 0.5× scale and 0.28 opacity (`SystemPlayOptions.scale` / `fade`).
+- **Own screen**: a red pulsing edge and a low heartbeat (`synth/bz_heart`) on the same beat, slightly richer colours
+  (a CSS filter on the canvas), bigger fire-orange numbers for your hits (every tier), a 55 ms hit-stop and a small
+  camera bump per own hit, and a visual flinch of the monster hit (0.13 m, crits 0.22 m; skipped when the server moves
+  it: `hit.pos`, `hit.down`). Options → Interface → "Berserk screen effects" (`ui.berserkScreen`, on) gates the edge,
+  flash, heartbeat, colours, camera and hit-stop; the camera ones also follow "Shake the camera on critical hits taken".
+  No drum music layer: there is no drum asset (music is three retail tracks) and nothing is downloaded.
+- **End**: the outline, the edge and the heartbeat flicker in the last 5 s (`flicker`), then a steam puff (Medium+) and
+  an exhale (`synth/bz_exhale`, with the retail end sound).
+- **Tiers** (`BERSERK_TIERS`): Low (Classic) keeps the outline, 10 / 4 embers per s (own / others), the own screen edge
+  and the start ring. Medium and High get everything; afterimages and the full outline (weapon, hwan hair) go to yourself
+  and the 2 (Medium) or 4 (High) nearest other berserk players (sticky ranks), the rest get the merged body outline.
+- **Cleanup**: the end, a despawn, a death (the makeover goes, the retail loop waits for the server) and a warp (what
+  trails behind is cleared) dispose everything; the shared pool (material, textures, particle systems, decal meshes) is
+  disposed once no look uses it and its last decal and particle are gone. `berserk-makeover.test.ts` checks the scene's
+  meshes, materials, textures, skeletons and particle systems are back to their count.
+- **Cost** (headless Chrome 154, RX 9060 XT, 1600×900, 20 copies of the own character around it; CPU ms per frame
+  avg / p95 between the engine's beginFrame and endFrame; `window.__sroBerserk.makeover = false` is the retail-only A/B):
+
+  | Preset | Engine | 20 players, none berserk | 1 berserk (own) | 21 berserk, retail only | 21 berserk, makeover |
+  |---|---|---|---|---|---|
+  | High | WebGPU | 11.0 / 14.2 | 12.0 / 14.3 | 22.1 / 26.2 | 25.7 / 29.4 |
+  | Medium | WebGPU | 8.5 / 11.0 | 10.0 / 12.1 | 18.2 / 22.1 | 20.7 / 24.7 |
+  | Low | WebGPU | 4.6 / 5.9 | 6.0 / 7.8 | 12.2 / 15.3 | 13.1 / 16.1 |
+  | High | WebGL2 | 9.5 / 12.3 | 10.4 / 12.6 | 20.9 / 24.8 | 23.7 / 27.9 |
+  | Low | WebGL2 | 3.9 / 5.1 | 4.8 / 6.0 | 11.9 / 14.5 | 13.1 / 15.7 |
+
+  The makeover adds 1–3.6 ms over the retail look at 21 berserk players; most of the cost of a berserk crowd is the
+  retail keep loops and hair. The frame-time watchdog was pinned for these runs.
+
 ### 3.10 Item glows: hook for the alchemy spec
 
 - **Enhancement** [what the table is for: likely the +N glow; from which plus: unknown; SYSTEMS_COMBAT §4.6 leaves it

@@ -12,6 +12,7 @@ import {
   type EntityState,
   type EquipSlot,
   type GameplayRequest,
+  type HazardCause,
   type ItemDef,
   type ItemStack,
   type MobDef,
@@ -70,6 +71,9 @@ import { TradeService } from './social/trade.ts'
 import { Spawner, type NestRuntime } from './spawner.ts'
 import { StorageService } from './storage-db.ts'
 import { WeatherService } from './weather.ts'
+import { LightningService } from './lightning/service.ts'
+import { StormService } from './storm/service.ts'
+import { TornadoService } from './storm/tornado.ts'
 import { MovementService } from './movement.ts'
 import { Uniques } from './uniques.ts'
 import { Pilot } from './pilot/service.ts'
@@ -284,6 +288,15 @@ export class Gameplay implements AiHost {
   // wave 9 (docs/WAVE_PLAN3.md §6.1 W9A-P): the world clock (not a module: GM `time`, worldEnter) and the weather
   readonly clock: WorldClock
   readonly weather: WeatherService
+  /** Lightning that strikes (docs/WEATHER.md §2.7): places, telegraphs and lands the weather's strikes. */
+  readonly lightning: LightningService
+  /**
+   * Storms change everything (docs/WEATHER.md §12): storm events and their forecast, and the weather's hooks into the AI
+   * (AiHost.storm), combat (dealHits, hazardHit, skill elements), spawns (Spawner countMul), mud and loot.
+   */
+  readonly storm: StormService
+  /** The lightning tornado (docs/WEATHER.md §13): a rare storm event that pulls, throws and strikes, never kills. */
+  readonly tornado: TornadoService
   // wave 10 (docs/WAVE_PLAN6.md §3; lane MV-P): the jump
   readonly movement: MovementService
   /**
@@ -314,7 +327,7 @@ export class Gameplay implements AiHost {
     this.spawner = new Spawner(
       d.config.spawnMobs ? d.data.nests : [],
       (code) => d.data.mob(code),
-      { world: d.config.world, mobLevelMax: d.config.mobLevelMax, rng: this.rng, countScale: d.config.nestCountScale, skipUniqueGroups: uniquesOn },
+      { world: d.config.world, mobLevelMax: d.config.mobLevelMax, rng: this.rng, countScale: d.config.nestCountScale, skipUniqueGroups: uniquesOn, countMul: (n) => this.storm?.countMul(n) ?? 1 },
       (x, z, nest) => this.nav.place(x, z, nest.y ?? NaN, Math.min(NEST_SEARCH_M, Math.max(nest.radius, nest.spawnRadius))) !== null,
     )
     this.skills = new SkillEngine(this)
@@ -336,6 +349,10 @@ export class Gameplay implements AiHost {
     this.guilds = new GuildService(this)
     this.clock = WorldClock.load(d.config)
     this.weather = new WeatherService(this)
+    this.lightning = new LightningService(this)
+    this.weather.strikes = this.lightning
+    this.storm = new StormService(this)
+    this.tornado = new TornadoService(this)
     this.movement = new MovementService(this)
     this.uniques = uniquesOn ? new Uniques(this) : null
     this.pilot = this.uniques ? new Pilot(this, this.uniques) : null
@@ -352,6 +369,11 @@ export class Gameplay implements AiHost {
       this.mobSkills, this.mounts, this.durability, this.repairs, this.alchemy, this.berserk,
       this.trade, this.stalls, this.guilds,
       this.weather,
+      this.lightning,
+      // docs/WEATHER.md §12: after the lightning (its onStrike hears the landings first)
+      this.storm,
+      // docs/WEATHER.md §13: after the storm (it reads the storm event)
+      this.tornado,
       this.movement,
       // wave 11 (docs/WAVE_PLAN7.md §4.2): the uniques module, when UNIQUES=on
       ...(this.uniques ? [this.uniques] : []),
@@ -981,6 +1003,8 @@ export class Gameplay implements AiHost {
    * the killing one are dropped. Returns the hits as applied.
    */
   dealHits(a: Player | Mob, target: Player | Mob | Cos, rolled: CombatHit[], extra: HitExtra, now: number): { dealt: number; killed: boolean; hits: CombatHit[] } {
+    // Storms (docs/WEATHER.md §12.2): the wind spreads ranged attacks; undead and charged monsters hit harder.
+    rolled = this.storm.shapeHits(a, target, rolled, extra)
     // Wave 8 (docs/SYSTEMS_COMBAT.md §1.3): a mounted player's hits land on its horse (not DoT ticks); mounts.ts
     // applies hits on a horse itself.
     const to = this.mounts.redirect(target, extra, now)
@@ -1026,6 +1050,8 @@ export class Gameplay implements AiHost {
     this.durability.afterHits(a, t, hits, extra, now)
     // Play the Boss: damage to or from the boss and her summons (downs, Stalk, the fight flag; pilot/service.ts).
     this.pilot?.onHits(a, t, dealt, now)
+    // Storms (docs/WEATHER.md §12.4): a charged monster's hit arcs to a player nearby.
+    this.storm.afterHits(a, t, dealt, now)
     if (t.kind === 'mob') {
       // An invisible GM is not a target (AiHost.target): the mob keeps its credit but does not turn on it.
       if (a.kind === 'player') retaliate(t, a.id, dealt, !a.invisible)
@@ -1035,6 +1061,36 @@ export class Gameplay implements AiHost {
       if (killed) this.playerDied(t, now, a)
     }
     return { dealt, killed, hits }
+  }
+
+  /**
+   * Damage without an attacker (lightning, docs/WEATHER.md §2.7; later hazards of the storm series): dealHits' path
+   * minus what needs an attacker (retaliation, the damage share, durability, the horse redirect, Berserk). A player's
+   * shields absorb first, the HP is capped, one `combat` goes to the target's viewers with attacker 0 and `cause`,
+   * and a death runs the usual playerDied / mobDied: a monster's EXP, loot and quest credit go to the players already in
+   * its damage map (one nobody fought dies without loot, like a GM kill). A trance body is never hit.
+   * `nonLethal` (a tornado and its bolts, docs/WEATHER.md §13): the HP never drops below 1, whatever the modifiers.
+   */
+  hazardHit(t: Player | Mob, damage: number, cause: HazardCause, now: number, strike?: number, nonLethal = false): { dealt: number; killed: boolean } {
+    if (t.kind === 'player' ? t.dead || t.trance : t.ai === 'dead') return { dealt: 0, killed: false }
+    // Storms (docs/WEATHER.md §12.2): a wet player takes more from lightning.
+    let dealt = Math.max(0, Math.round(damage * this.storm.hazardMul(t, cause)))
+    if (dealt > 0 && t.kind === 'player') dealt = this.skills.absorb(t, dealt, now)
+    dealt = Math.min(dealt, nonLethal ? Math.max(0, Math.ceil(t.hp) - 1) : Math.ceil(t.hp))
+    t.hp = Math.max(0, t.hp - dealt)
+    t.lastCombatAt = now
+    const killed = t.hp <= 0
+    const msg: ServerMessage = { t: 'combat', attacker: 0, target: t.id, hits: [{ outcome: 'hit', damage: dealt, hp: Math.round(t.hp) }], cause }
+    if (strike !== undefined) msg.strike = strike
+    if (killed) msg.killed = true
+    this.world.broadcastAbout(t, msg)
+    if (t.kind === 'mob') {
+      if (killed) this.mobDied(t, now, t.damage.size > 0)
+    } else {
+      if (dealt > 0) t.send({ t: 'statsDelta', stats: { hp: Math.round(t.hp) } })
+      if (killed) this.playerDied(t, now)
+    }
+    return { dealt, killed }
   }
 
   /** Whether `a`'s hits carry `CombatHit.hwan`: a player in Berserk (wave 8). */
@@ -1080,10 +1136,12 @@ export class Gameplay implements AiHost {
     // elixirs included); null keeps the normal table and the authored elixir drop.
     // Wave 8 (D51): the authored elixir drop joins the loot loop below (droppedAt / dropFrom like any drop).
     const unique = this.uniques?.drops(m, now) ?? null
-    const drops: RolledDrop[] = unique ?? [
-      ...rollDrops(this.data.drops.get(m.def.code), this.rng, (c) => this.data.items.has(c), { gold: this.config.goldRate, drop: this.config.dropRate }),
+    // Storms (docs/WEATHER.md §12.4): a charged monster drops more, and its gear may come +1.
+    const bonus = this.storm.lootBonus(m)
+    const drops: RolledDrop[] = unique ?? this.storm.plusLoot(m, [
+      ...rollDrops(this.data.drops.get(m.def.code), this.rng, (c) => this.data.items.has(c), { gold: (this.config.goldRate ?? 1) * bonus.gold, drop: (this.config.dropRate ?? 1) * bonus.drop }),
       ...this.alchemy.extraDrops(m),
-    ]
+    ])
     const corpse = this.world.livePoint(m, now)
     const from: Vec3 = [corpse.x, corpse.y, corpse.z]
     drops.forEach((drop, i) => {
@@ -1185,6 +1243,8 @@ export class Gameplay implements AiHost {
       // Stunned, frozen or knocked-down mobs do nothing until the status ends (skills/effects.ts); a mob inside a
       // monster skill's cast or action window stands still (wave 8, mob-skills.ts).
       if (this.skills.held(m, now) || this.mobSkills.busy(m, now)) continue
+      // Storms (docs/WEATHER.md §12.3): a beast panicked by thunder runs off, deaf to everything, until it calms down.
+      if (this.storm.panicking(m, now)) continue
       // Play the Boss (docs/PLAY_THE_BOSS.md §3.2): a player steers her; her AI only runs while it has her back.
       if (m.pilot?.steering === 'player') continue
       thinkMob(m, this)

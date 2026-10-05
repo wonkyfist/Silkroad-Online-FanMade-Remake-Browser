@@ -35,6 +35,8 @@ export interface FxPlayOptions {
   scale?: number
   /** One-shots: disposed after this at the latest (ms); default: the program's own length + 1 s. */
   capMs?: number
+  /** Opacity (0..1) of everything it draws (FxInstance.fade; default 1). */
+  fade?: number
 }
 
 export interface FxRunnerStats {
@@ -167,6 +169,7 @@ export class FxRunner {
       if (old) this.drop(old)
     }
     const fx = new FxInstance(this.lib, effect, { pose: o.pose, loop: !!o.loop, camera: this.scene.activeCamera, ...(o.scale && o.scale !== 1 ? { scale: o.scale } : {}) })
+    if (o.fade !== undefined && o.fade < 1) fx.fade = Math.max(0, o.fade)
     const lengthMs = ((effect.duration ?? 0) / (effect.fps || 20)) * 1000
     const cap = o.capMs ?? Math.max(1500, lengthMs + 1000)
     const l: Live = {
@@ -300,6 +303,10 @@ export function phaseRows(group: FxSkillV2 | undefined, phase: SystemFxPhase): F
 export interface SystemPlayOptions {
   /** Play looping rows once (one program cycle): for AT_LOOP rows nobody stops, e.g. SYSTEM_RETURNSCROLLRESULT. */
   once?: boolean
+  /** × every row's scale (Berserk's toned-down keep cloud; default 1). */
+  scale?: number
+  /** Opacity of every row (0..1, FxInstance.fade; default 1). */
+  fade?: number
 }
 
 /** Where the carrier is when there is no view (the return scroll's flash at the old spot). */
@@ -378,7 +385,7 @@ export class SystemFx {
       const rows = phaseRows(this.groups.get(key), phase)
       return groupHandle(rows.map(st => {
         const loop = !opts.once && (phase === 'loop' || st.actType === 'AT_LOOP')
-        return this.runner.play(st.effect!, { pose: pose(st, parseOffset(st.startOffset)), loop, scale: scale(st) })
+        return this.runner.play(st.effect!, { pose: pose(st, parseOffset(st.startOffset)), loop, scale: scale(st) * (opts.scale ?? 1), ...(opts.fade !== undefined ? { fade: opts.fade } : {}) })
       }))
     }
     if (this.groups.size) return run()

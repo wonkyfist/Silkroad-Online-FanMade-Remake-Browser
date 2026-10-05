@@ -193,6 +193,13 @@ export class SoundBank {
     this.evict()
   }
 
+  /** A buffer made in code (audio/synth.ts) under `id`: pinned, so the LRU never evicts it. */
+  adopt(id: string, buffer: SoundBuffer): void {
+    this.put(id, buffer)
+    const e = this.cache.get(id)
+    if (e && e.pins === 0) e.pins = 1
+  }
+
   stats(): { cached: number; bytes: number; loading: number; failed: number } {
     return { cached: this.cache.size, bytes: this.bytesValue, loading: this.loading.size, failed: this.failed.size }
   }

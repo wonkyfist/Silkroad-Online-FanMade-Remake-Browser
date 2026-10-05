@@ -14,4 +14,6 @@ export const enWeather = {
   'options.weather.ultra': 'Ultra',
   // Options → Interface (settings.ts ui.reduceFlashing): lightning at a quarter strength, no bolt
   'options.reduceFlashing': 'Reduce flashing (lightning)',
+  // docs/WEATHER.md §2.7: the death line after a lightning strike (screens/world.ts)
+  'world.diedLightning': 'You were struck by lightning.',
 } satisfies Record<string, string>
