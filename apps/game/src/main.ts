@@ -3,6 +3,7 @@ import { GameAudio, setGameAudio } from './audio/index.ts'
 import { installUiSounds } from './audio/ui-sounds.ts'
 import { loadCatalog } from './content/catalog.ts'
 import { createEngine } from './engine.ts'
+import { installGpuLossGuard, webglAfterLoss } from './gpu-loss.ts'
 import { resumeSession } from './net/resume.ts'
 import { createTransport } from './net/transport.ts'
 import { readParams } from './params.ts'
@@ -24,7 +25,10 @@ async function main(): Promise<void> {
   document.body.append(boot)
 
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
-  const [engineResult, catalog, art] = await Promise.all([createEngine(canvas, !params.webgl), loadCatalog(), Art.load(), loadGameText()])
+  // After repeated graphics device losses this tab runs on WebGL2 (gpu-loss.ts).
+  const lossFallback = !params.webgl && webglAfterLoss()
+  const [engineResult, catalog, art] = await Promise.all([createEngine(canvas, !params.webgl && !lossFallback), loadCatalog(), Art.load(), loadGameText()])
+  if (lossFallback) engineResult.note = 'WebGPU off for this tab after repeated graphics device losses'
   // Options → Graphics → Resolution (UX_GAPS R4), now and on every change.
   applyGraphics(engineResult.engine)
   const fonts = await loadFonts(art.manifest)
@@ -37,6 +41,8 @@ async function main(): Promise<void> {
   installUiSounds(cue => audio.ui(cue))
   const transport = createTransport(params.mock, params.gm)
   const app = new App(engineResult.engine, engineResult.kind, params, transport, catalog, art, audio.music!, audio)
+  // A lost graphics device reloads straight back into the world instead of leaving it black (gpu-loss.ts).
+  installGpuLossGuard(app, engineResult.kind)
   app.register('splash', splashScreen)
   app.register('login', loginScreen)
   app.register('servers', serversScreen)

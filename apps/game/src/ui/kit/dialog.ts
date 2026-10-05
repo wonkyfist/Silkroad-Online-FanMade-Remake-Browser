@@ -11,13 +11,16 @@ import { t } from '../../i18n/index.ts'
 import type { Art } from '../art.ts'
 import { el } from '../dom.ts'
 import { button } from './button.ts'
+import { RadioGroup } from './check.ts'
 import { Frame } from './frame.ts'
 import { kitArt } from './host.ts'
 import { NumberInput, parseAmount, TextInput } from './input.ts'
 import { FRAMES } from './skins.ts'
 
 export const MSGBOX_W = 300
-export const MSGBOX_H = { simple: 140, count: 180, prompt: 170 } as const
+/** The panel behind each radio group of a `choose` box (`ifsetpartymode.txt` GDR_SETPARTYMODE_BG_BOX_0n, 128×52). */
+const CHOICE_PANEL = 'messagebox/msgbox_blackbox_03'
+export const MSGBOX_H = { simple: 140, count: 180, prompt: 170, choose: 236 } as const
 
 export interface ConfirmOptions {
   title?: string
@@ -46,6 +49,40 @@ export interface PromptOptions {
   /** Allow an empty answer (default false: OK stays refused until something is typed). */
   allowEmpty?: boolean
   art?: Art
+}
+
+/** One choice of a `choose` box group. `hint` shows under the groups while the choice is selected. */
+export interface Choice<V extends string> {
+  value: V
+  label: string
+  hint?: string
+}
+
+/** One radio group of a `choose` box (a caption over a `msgbox_blackbox_03` panel). */
+export interface ChoiceGroup<V extends string> {
+  caption: string
+  choices: readonly Choice<V>[]
+  value: V
+}
+
+export interface ChooseOptions<V extends string> {
+  title?: string
+  text: string
+  /** Side by side (two fit the box), as the retail party setting box (`ifsetpartymode.txt`). */
+  groups: readonly ChoiceGroup<V>[]
+  ok?: string
+  cancel?: string
+  art?: Art
+}
+
+/** The hint lines a `choose` box shows for the current values (one per group that has a hint). */
+export function choiceHints<V extends string>(groups: readonly ChoiceGroup<V>[], values: readonly V[]): string[] {
+  const out: string[] = []
+  groups.forEach((g, i) => {
+    const hint = g.choices.find(c => c.value === values[i])?.hint
+    if (hint) out.push(hint)
+  })
+  return out
 }
 
 /** The amount a count box returns for its field text, or null (refused: not a whole number in range). */
@@ -184,6 +221,44 @@ export const MessageBox = {
       const cancel = button(art, { label: t('kit.cancel') }, () => done(null))
       box.frame.body.append(text(o.text), row, err, buttons(ok, cancel))
       field.focus()
+    })
+  },
+
+  /**
+   * Radio groups side by side (the retail party setting box: "Set the party properties." with an EXP and an item
+   * group); resolves with the chosen value of each group in order, or null when cancelled.
+   */
+  choose<V extends string>(o: ChooseOptions<V>): Promise<V[] | null> {
+    return new Promise(resolve => {
+      const art = o.art ?? kitArt()
+      const done = (v: V[] | null) => {
+        box.close()
+        resolve(v)
+      }
+      const values = o.groups.map(g => g.value)
+      const submit = () => done([...values])
+      const box = openBox(art, o.title, MSGBOX_H.choose, () => done(null), submit)
+      const hints = el('div', 'kit-msgbox-hints kit-t-small')
+      const showHints = () => hints.replaceChildren(...choiceHints(o.groups, values).map(h => el('div', '', h)))
+      const row = el('div', 'kit-msgbox-choose')
+      let first: HTMLInputElement | null = null
+      o.groups.forEach((g, i) => {
+        const radios = new RadioGroup<V>(art, g.choices, { value: g.value, vertical: true })
+        radios.onChange = v => {
+          values[i] = v
+          showHints()
+        }
+        const panel = el('div', 'kit-msgbox-choice', radios.root)
+        if (art.has(CHOICE_PANEL)) panel.style.backgroundImage = art.cssUrl(CHOICE_PANEL)
+        else panel.classList.add('no-art')
+        row.append(el('div', 'kit-msgbox-group', el('div', 'kit-msgbox-caption kit-t-label', g.caption), panel))
+        first ??= radios.root.querySelector('input:checked') ?? radios.root.querySelector('input')
+      })
+      showHints()
+      const ok = button(art, { label: o.ok ?? t('kit.ok'), primary: true }, submit)
+      const cancel = button(art, { label: o.cancel ?? t('kit.cancel') }, () => done(null))
+      box.frame.body.append(text(o.text), row, hints, buttons(ok, cancel))
+      ;(first as HTMLInputElement | null)?.focus()
     })
   },
 

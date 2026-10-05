@@ -107,6 +107,8 @@ describe('routing', () => {
       'movement',
       // wave 11 (docs/WAVE_PLAN7.md §4.2): unique world bosses (uniques.ts, UNIQUES=on by default)
       'uniques',
+      // Play the Boss (docs/PLAY_THE_BOSS.md §3.1): after uniques
+      'pilot',
     ])
     expect(HIDDEN_NPCS).not.toContain('NPC_CH_WAREHOUSE_M') // Wangu + the storage chest (docs/SHOPS.md §1.3)
     expect(h.gameplay.storage.enabled).toBe(true) // ST-S landed (storage.test.ts)
@@ -383,9 +385,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(10)
-      expect(store.schemaVersion).toBe(10)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(10)
+      expect(SCHEMA_VERSION).toBe(14)
+      expect(store.schemaVersion).toBe(14)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(14)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

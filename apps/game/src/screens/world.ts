@@ -57,7 +57,7 @@ import { nearestOnScreen } from '../world/screen-pick.ts'
 import { DropAssets } from '../world/drops.ts'
 import { ClickMarker, EffectList, TargetDecal, type GroundSampler, type RingTone } from '../world/effects.ts'
 import { createEntityView, type EntityAttachment, type EntityAttachmentFactory, type EntityContext, type EntityView } from '../world/entities.ts'
-import { WorldFeatures, type CombatMessage, type WorldFeatureContext } from '../world/features.ts'
+import { WorldFeatures, type CombatMessage, type ControlledView, type WorldFeatureContext } from '../world/features.ts'
 import { WorldGraphics, actorThreats, worldTown, worldTreesOption } from '../world/graphics.ts'
 import { createFlatGround, type WorldGround } from '../world/ground.ts'
 import { checkIntent, intents } from '../world/intents.ts'
@@ -322,7 +322,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     return y
   }
   const selfGroundY = (): number => {
-    const s = selfView()
+    const s = focusView()
     return s ? entityY(s, s.pos.x, s.pos.z) : camera.target.y
   }
   /**
@@ -352,6 +352,13 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   const marker = new ClickMarker(scene, decalGround)
 
   const selfView = () => entities.get(selfId)
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the entity the player steers instead of the own character. */
+  let controlled: ControlledView | null = null
+  /**
+   * The view the camera, the ground streaming, the world update, the minimap and the music/town check follow: the
+   * steered mob while piloting (once its view is here), else the own character. One function, so none is missed.
+   */
+  const focusView = () => (controlled ? entities.get(controlled.id) : undefined) ?? selfView()
   const selfLevel = () => playerStats?.level ?? selfView()?.state.level ?? character.level
 
   const ctx: EntityContext = {
@@ -819,7 +826,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
 
   /** jangan_town inside the town's safe area, jangan_field outside (checked about once a second). */
   const updateMusic = (force = false) => {
-    const self = selfView()
+    const self = focusView()
     if (!self || !entered) return
     // 8 m of hysteresis so walking along the edge does not flip the track.
     const inTown = townAt(towns, self.pos.x, self.pos.z, musicTrack === 'jangan_town' ? 8 : -8) !== null || !towns.length
@@ -857,7 +864,9 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
         const e = entities.get(msg.id)
         if (msg.id === selfId) heights?.placeSelf(msg.pos) // no retained surface after a warp (§5.2)
         e?.warp(msg.pos, msg.yaw)
-        if (msg.id === selfId) {
+        // The camera jumps with the focus (the own character, or the steered mob while piloting: the body's trance warp
+        // does not pull the camera away from her).
+        if (msg.id === (controlled?.id ?? selfId)) {
           ground?.follow(msg.pos[0], msg.pos[2])
           camera.target.set(msg.pos[0], heightAt(msg.pos[0], msg.pos[2]) + (e?.focusHeight ?? 1.5), msg.pos[2])
           marker.hide()
@@ -910,7 +919,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
         hud.applyInventoryUpdate(msg)
         break
       case 'appearance':
-        void entities.get(msg.id)?.setEquip(msg.equip)
+        void entities.get(msg.id)?.setEquip(msg.equip, msg.plus)
         break
       case 'actionResult':
         onActionResult(msg)
@@ -1049,7 +1058,8 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   // ---- input: click to move / attack / pick up --------------------------------------------------
   const isProxy = (m: AbstractMesh) => {
     const id = (m.metadata as { entityId?: number } | null)?.entityId
-    if (id === undefined || !m.isEnabled()) return false
+    // Play the Boss: the steered mob is the pilot's own body (a click on her is a click on the ground behind her).
+    if (id === undefined || !m.isEnabled() || id === controlled?.id) return false
     return entities.get(id)?.selectable ?? false
   }
   const entityAt = (px: number, py: number): EntityView | null => {
@@ -1068,7 +1078,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   const entityNear = (px: number, py: number): EntityView | null =>
     nearestOnScreen(px, py, (function* () {
       for (const v of entities.values()) {
-        if (!v.selectable) continue
+        if (!v.selectable || v.id === controlled?.id) continue
         const a = toScreen(scene, feetTmp.copyFrom(v.root.getAbsolutePosition()))
         if (!a.visible) continue
         const b = toScreen(scene, v.head(headTmp))
@@ -1148,6 +1158,8 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   function* minimapEntities(self: EntityView): Iterable<MinimapEntity> {
     for (const e of entities.values()) {
       if (e === self || e.dead || e.kind === 'cos') continue
+      // Play the Boss: the pilot's minimap shows hunters only as the pilot feature's own markers.
+      if (controlled?.onMinimap && !controlled.onMinimap(e)) continue
       // H11-CH-4: a unique gets its own sign (the label's test, world/entities.ts).
       const s = e.state
       const unique = s.kind === 'mob' && (s.variant === 'unique' || app.catalog.content.mobs.get(s.model)?.rarity === 'unique')
@@ -1193,10 +1205,12 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
       cursorDirty = false
       cursor = groundAt(scene.pointerX, scene.pointerY) ?? cursor
     }
-    const self = selfView()
+    // Play the Boss: everything below follows the focus (the steered mob while piloting, else the own character).
+    const self = focusView()
     if (self) {
       ground?.follow(self.pos.x, self.pos.z)
-      want.set(self.pos.x, entityY(self, self.pos.x, self.pos.z) + self.focusHeight, self.pos.z)
+      const focusY = self !== selfView() && controlled?.focusHeight ? controlled.focusHeight(self) : self.focusHeight
+      want.set(self.pos.x, entityY(self, self.pos.x, self.pos.z) + focusY, self.pos.z)
       Vector3.LerpToRef(camera.target, want, Math.min(1, dt * 10), tmp)
       camera.target.copyFrom(tmp)
     }
@@ -1245,6 +1259,10 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     camera,
     send: msg => send(msg),
     selfId: () => (selfId >= 0 ? selfId : null),
+    controlledId: () => controlled?.id ?? (selfId >= 0 ? selfId : null),
+    setControlled: c => {
+      controlled = c
+    },
     view: id => entities.get(id),
     views: () => entities.values(),
     target: () => target,

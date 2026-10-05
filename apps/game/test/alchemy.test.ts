@@ -22,7 +22,7 @@ import {
   type AlchemyProblem,
 } from '../src/hud/alchemy.ts'
 import { en, type StringKey } from '../src/i18n/en.ts'
-import { bagRoute } from '../src/world/features/alchemy.ts'
+import { bagRoute, besideInventory } from '../src/world/features/alchemy.ts'
 
 const ELIXIR_RATES = [25, 20, 15, 10, 10, 10, 10, 10, 10, 5, 5, 5]
 const POWDER_RATES = [50, 30, 20, 8, 8, 8, 8, 8, 8, 8, 8, 8]
@@ -204,6 +204,69 @@ describe('AlchemyModel', () => {
     b.model.sync()
     expect(b.model.result('fail')).toBe('fail')
     expect(b.model.stack('item')).toEqual(s(SWORD.code))
+  })
+})
+
+describe('Cancel sends one alchemyCancel per fuse (playtest fix)', () => {
+  it('fusing → cancel once: more presses send nothing until the result; the window shows Cancel greyed meanwhile', () => {
+    const { model } = bagOf(s(SWORD.code), s(E_WEAPON.code), s(P1.code, { count: 5 }))
+    for (const i of [0, 1, 2]) model.place(i)
+    expect(model.cancel()).toBe(false) // idle: nothing to cancel
+    model.fuse()
+    model.started()
+    expect(model.cancel()).toBe(true)
+    expect(model.phase).toBe('cancelling')
+    expect(model.cancel()).toBe(false)
+    expect(model.cancel()).toBe(false)
+    expect(model.canFuse()).toBe(false)
+    expect(model.place(0)).toBeNull()
+    expect(model.result('cancelled')).toBe('cancelled')
+    expect(model.phase).toBe('idle')
+    expect(model.canFuse()).toBe(true)
+  })
+
+  it('a cancel while the Fuse is still on the wire: alchemyStart keeps it pending, a refusal ends it', () => {
+    const { model } = bagOf(s(SWORD.code), s(E_WEAPON.code))
+    model.place(0)
+    model.place(1)
+    model.fuse()
+    expect(model.cancel()).toBe(true) // the window closed before alchemyStart
+    model.started()
+    expect(model.phase).toBe('cancelling')
+    expect(model.result('cancelled')).toBe('cancelled')
+    model.fuse()
+    expect(model.cancel()).toBe(true)
+    model.refused() // the Fuse was refused: no fuse, no result will come
+    expect(model.phase).toBe('idle')
+  })
+
+  it('the fuse finished before the cancel arrived: the success still lands', () => {
+    const { bag, model } = bagOf(s(SWORD.code), s(E_WEAPON.code))
+    model.place(0)
+    model.place(1)
+    model.fuse()
+    model.started()
+    model.cancel()
+    bag[0] = s(SWORD.code, { plus: 1 })
+    bag[1] = null
+    model.sync()
+    expect(model.result('success')).toBe('success')
+    expect(model.phase).toBe('idle')
+  })
+})
+
+describe('the window opens beside the inventory (playtest fix: it opened under it)', () => {
+  // Alchemy 408 x 336; the Main window 388 x 408 with its 42-px side strip.
+  it('overlapping: left of the Main window and its strip when it fits, else right of it, else the left edge', () => {
+    expect(besideInventory([440, 120, 408, 336], [500, 100, 388, 408], 1600)).toEqual([500 - 42 - 8 - 408, 100])
+    expect(besideInventory([440, 120, 408, 336], [440, 100, 388, 408], 1280)).toEqual([440 + 388 + 8, 100])
+    expect(besideInventory([300, 120, 408, 336], [300, 100, 388, 408], 900)).toEqual([0, 100])
+  })
+
+  it('apart already (or only touching): stays where it is', () => {
+    expect(besideInventory([0, 100, 408, 336], [500, 100, 388, 408], 1600)).toBeNull()
+    expect(besideInventory([900, 100, 408, 336], [500, 100, 388, 408], 1600)).toBeNull()
+    expect(besideInventory([500, 520, 408, 336], [500, 100, 388, 408], 1600)).toBeNull()
   })
 })
 

@@ -15,7 +15,7 @@ import { WEATHER_CUES, type AreaSound, type ItemDef, type SoundCategory, type So
 import { AmbientPlayer, type AmbientOutput } from './ambient.ts'
 import { WebAudioBackend, type AudioBackend, type Vec3Like, type VoiceHandle } from './backend.ts'
 import { SoundBank, type BankOptions } from './bank.ts'
-import { equipKind, hitSound, pick, type HitQuery } from './cues.ts'
+import { dropCue, equipKind, hitSound, pick, type HitQuery } from './cues.ts'
 import { EntitySound, type EntityPlay, type EntitySoundHost, type SoundView } from './entity.ts'
 import { Music } from './music.ts'
 import { AudioSettings, browserStorage } from './settings.ts'
@@ -41,6 +41,15 @@ const AMBIENT_LOOP_GAIN = 0.7
 const PRELOAD_SURFACES: readonly SoundSurface[] = ['Dirt', 'Stone', 'Grass', 'Mud']
 // H11 S4: the unique appear / defeat cues too (29 + 20 KB): with a 3–6 h respawn the first notice is often the only one.
 const PRELOAD_CUES = ['ui.click', 'ui.click2', 'ui.windowOpen', 'ui.windowClose', 'ui.error', 'ui.levelUp', 'item.pickup', 'item.dropGold', 'hit.crit', 'ui.potion', 'ui.uniqueAppear', 'ui.uniqueDown']
+/**
+ * docs/SOUND.md §10: cues of the world that answer one action each, loaded at world enter so the first one is not
+ * dropped while its file still loads (an accessory's first equip used to be lost that way): every `item.equip.<KIND>`
+ * (about 25 small files, ~70 KB), the rare/elixir drops, quests, revival and the Berserk orb.
+ */
+const WORLD_PRELOAD_CUES = ['item.dropRare', 'item.dropElixir', 'ui.questOpen', 'ui.questDone', 'ui.revive', 'ui.hyan']
+const WORLD_PRELOAD_PREFIX = 'item.equip.'
+/** An item put into a slot waits this long for its sound's buffer (ms): it answers a click, a late "ding" still fits. */
+const PLACE_WAIT_MS = 600
 
 export interface PlayOptions {
   /** Spatial position (glTF metres); omitted = non-spatial (yourself, the interface). */
@@ -380,9 +389,14 @@ export class GameAudio implements EntitySoundHost {
     if (!index) return
     const s = hitSound(index, { ...q, rng: this.random })
     const pos = at.self ? undefined : at.pos
-    for (const file of s?.files ?? []) this.playFile(file, { entity: at.entity, kind: 'other', pos, self: at.self, priority: at.priority, gain: s!.gain })
-    if (q.outcome === 'crit' && q.victim.kind === 'player') {
-      const cry = pick(index.voices[q.victim.model]?.moan.crit, this.random)
+    // The impact counts against the victim's 2 sfx; the layers (crit, imbue, shield) do not, so none steals another.
+    for (const [i, file] of (s?.files ?? []).entries()) {
+      this.playFile(file, { ...(i === 0 ? { entity: at.entity } : {}), kind: 'other', pos, self: at.self, priority: at.priority, gain: s!.gain })
+    }
+    if (q.outcome === 'crit' && (q.victim.kind === 'player' || q.victim.kind === 'mob')) {
+      // VOC_MOAN CRITYCAL; the victim's hurt-clip moan that follows becomes the same file (EntitySound.critHit).
+      const set = q.victim.kind === 'mob' ? index.mobs[q.victim.model] : index.voices[q.victim.model]
+      const cry = pick(set?.moan.crit, this.random)
       if (cry) this.playFile(cry, { entity: at.entity, kind: 'voice', pos, self: at.self, priority: at.priority })
     }
   }
@@ -390,9 +404,36 @@ export class GameAudio implements EntitySoundHost {
   /** Equip sound of the first of `codes` that is now worn (§5.9, `item.equip.<KIND>`). */
   equip(codes: readonly (string | null | undefined)[]): void {
     const code = codes.find(c => !!c)
-    if (!code || !this.index) return
+    if (code) this.place(code)
+  }
+
+  /**
+   * The sound of item `code` put into a slot (equip, unequip, a bag move; effectsound ITEM SND_EQUIP by item kind,
+   * docs/SOUND.md §10.3), else `item.equip.METAL`. Waits PLACE_WAIT_MS for a file still loading.
+   */
+  place(code: string): void {
+    const index = this.index
+    if (!index) return
     const kind = equipKind(this.itemDef(code))
-    this.ui(this.index.cues[`item.equip.${kind}`] ? `item.equip.${kind}` : 'item.equip.METAL')
+    this.play(index.cues[`item.equip.${kind}`] ? `item.equip.${kind}` : 'item.equip.METAL', { self: true, waitMs: PLACE_WAIT_MS })
+  }
+
+  /** The drop sound of item `code` at `pos` (gold, Seal of Star, elixirs: `dropCue`); other drops are silent. */
+  drop(code: string, pos: Vec3Like): void {
+    const cue = dropCue(code, this.itemDef(code))
+    if (cue) this.play(cue, { pos, priority: 1 })
+  }
+
+  /** Loads a skill group's sounds (stages, swings, SND_DMG) ahead of use: an imbue's hit layer when it starts. */
+  preloadSkill(group: string): void {
+    const s = this.index?.skills[group]
+    if (!s) return
+    const ids: string[] = []
+    if (Array.isArray(s.dmg)) ids.push(...s.dmg)
+    else if (s.dmg) ids.push(...Object.values(s.dmg.weak), ...Object.values(s.dmg.strong))
+    for (const files of Object.values(s.swing ?? {})) ids.push(...files)
+    for (const st of s.stages ?? []) for (const f of [st.begin, st.end]) if (f) ids.push(f)
+    this.bank.preload(ids)
   }
 
   /** Stage sound of a skill (skilleffect cols 26/27, §2.3): READY, SHOT, ACT_S... of `group`. */
@@ -520,7 +561,7 @@ export class GameAudio implements EntitySoundHost {
         if (h) ids.push(...Object.values(h.weak), ...Object.values(h.strong))
       }
       this.bank.preload(ids)
-      this.preloadCues(PRELOAD_CUES)
+      this.preloadCues([...PRELOAD_CUES, ...WORLD_PRELOAD_CUES, ...Object.keys(index.cues).filter(k => k.startsWith(WORLD_PRELOAD_PREFIX))])
     })
   }
 

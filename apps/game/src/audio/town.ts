@@ -6,8 +6,8 @@
  *   it). Its gain is `smoothstep(0, 25, folk within 30 m)`, cross-faded over 1.5 s, the calm loop handing over to the
  *   busy one as the count grows (the sum stays monotone in the count); at night it is silent below 5 folk. The count
  *   comes from a folk counter (the pure schedule's `populationNear` when the app plugs it in, `setFolkCounter`), else
- *   from `estimateFolkNear` over the town file's districts and hour bands, so it plays on every preset, Low included
- *   (no `World.town` there: WAVE_PLAN7 D23).
+ *   from `estimateFolkNear` over the town file's districts and hour bands. It (and the vendors' murmurs) plays only
+ *   while the crowd draws townsfolk (`setCrowd`, docs/SOUND.md §10.5): Town life Off and Low are without folk voices.
  * - **The temple bell** (retail `env/bell towel 3.wav`): once on every game hour of the server clock (`clockT` when the
  *   app has the clock, so Low's frozen-noon sky still rings it: H11 S1; else the sky's solar time) crossing h/24, moving
  *   forward by less than an hour: a clock jump never rings), three strokes at 06:00 and 18:00. Heard over the whole town
@@ -395,6 +395,8 @@ export class TownAudio {
   private pop: TownPopulation
   private counter: FolkCounter | null = null
   private external = { calls: false, hammer: false, animals: false }
+  /** The crowd draws townsfolk: their voices (the bed, the vendors' murmurs) play only then (setCrowd). */
+  private crowd = true
   private t = 0
   private lastNow = NaN
   private lastSolar = NaN
@@ -429,6 +431,15 @@ export class TownAudio {
   /** The pure schedule's count (null: the district estimate). */
   setFolkCounter(fn: FolkCounter | null): void {
     this.counter = fn
+  }
+
+  /**
+   * Whether townsfolk are drawn (docs/SOUND.md §10.5). Without them (Options → Town life Off, Low, a crowd that draws
+   * nobody) the folk's voices are silent: the bed fades out and no vendor murmurs; the bell, the fountain, the smith,
+   * the animals and the night layers keep playing. A user report: with the crowd off the town still talked.
+   */
+  setCrowd(drawn: boolean): void {
+    this.crowd = drawn
   }
 
   /** The crowd sends these events itself: the matching built-in schedules stop. */
@@ -469,6 +480,7 @@ export class TownAudio {
 
   /** A vendor called out at `pos` (TL-C's bubbles): a murmur, within 20 m. */
   vendorCall(pos: Vec3Like): boolean {
+    if (!this.crowd) return false
     return this.shotAt(TOWN_SOUND_CUES.murmur, pos, EVENT_CULL_M.murmur, SPOT_RULES.stall.gain)
   }
 
@@ -548,7 +560,7 @@ export class TownAudio {
   }
 
   private syncBed(night: boolean): void {
-    const g = bedGains(this.folkNear, night)
+    const g = bedGains(this.crowd ? this.folkNear : 0, night)
     this.calm = this.syncLoop(this.calm, TOWN_SOUND_CUES.bedCalm, g.calm, this.calmGain)
     this.busy = this.syncLoop(this.busy, TOWN_SOUND_CUES.bedBusy, g.busy, this.busyGain)
     if (Math.abs(g.calm - this.calmGain) > 0.01 || g.calm === 0) this.calmGain = g.calm
@@ -652,7 +664,7 @@ export class TownAudio {
         for (const _ of spotEvents(`${prefix}${i}`, rule.everyS, from, to)) this.shotAt(cue, p, rule.cullM, rule.gain)
       })
     }
-    if (!this.external.calls) run('stall', this.spots.stalls, SPOT_RULES.stall, TOWN_SOUND_CUES.murmur)
+    if (this.crowd && !this.external.calls) run('stall', this.spots.stalls, SPOT_RULES.stall, TOWN_SOUND_CUES.murmur)
     if (!this.external.animals) {
       run('horse', this.spots.stables, SPOT_RULES.horse, TOWN_SOUND_CUES.horse)
       run('chicken', this.spots.coops, SPOT_RULES.chicken, TOWN_SOUND_CUES.chicken)

@@ -160,6 +160,13 @@ export interface ServerConfig {
    * unique groups spawn as plain nest mobs). Read as `config.uniques ?? true`.
    */
   uniques?: boolean
+  // ---- admin panel (docs/ADMIN.md); optional like wave 3's, absent = the default ----
+  /** New accounts may register through POST /api/register (REGISTRATION, open (default) | closed). Read as `!== false`. */
+  registrationOpen?: boolean
+  /** The admin panel at /admin/ and its API /api/admin/* (ADMIN_PANEL, on (default) | off). Read as `!== false`. */
+  adminPanel?: boolean
+  /** Built admin panel, served at /admin/ (ADMIN_DIST, default <repo>/apps/admin/dist). Unset = that default. */
+  adminDist?: string
   /** Random source of gameplay rolls (tests pass a seeded one). */
   rng?: () => number
   log: (msg: string) => void
@@ -254,8 +261,15 @@ function weatherMode(raw: string | undefined): WeatherMode {
   throw new Error(`WEATHER must be auto, off or one of ${WEATHER_KINDS.join(', ')}, got ${raw}`)
 }
 
-/** Vite dev (5180) and preview (5181) servers, which proxy /api and /ws to this server. */
-export const DEV_ORIGINS = ['localhost', '127.0.0.1', '[::1]'].flatMap((h) => [`http://${h}:5180`, `http://${h}:5181`])
+/** Vite dev (5180) and preview (5181) servers, and the admin panel's dev server (5182), which proxy /api and /ws to this server. */
+export const DEV_ORIGINS = ['localhost', '127.0.0.1', '[::1]'].flatMap((h) => [`http://${h}:5180`, `http://${h}:5181`, `http://${h}:5182`])
+
+function registration(raw: string | undefined): boolean {
+  if (raw === undefined || raw === '') return true
+  if (/^(open|on|1|true|yes)$/i.test(raw.trim())) return true
+  if (/^(closed|off|0|false|no)$/i.test(raw.trim())) return false
+  throw new Error(`REGISTRATION must be open or closed, got ${raw}`)
+}
 
 function allowedOrigins(env: NodeJS.ProcessEnv): string[] {
   const out = new Set(DEV_ORIGINS)
@@ -400,6 +414,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     weatherRainScale: num(env, 'WEATHER_RAIN_SCALE', W9_DEFAULTS.weatherRainScale, 0, 3),
     // wave 11 (docs/WAVE_PLAN7.md §3.4)
     uniques: onOff(env, 'UNIQUES', true),
-    log: (msg) => console.log(`[${new Date().toISOString()}] ${msg}`),
+    // admin panel (docs/ADMIN.md)
+    registrationOpen: registration(env.REGISTRATION),
+    adminPanel: onOff(env, 'ADMIN_PANEL', true),
+    adminDist: resolve(env.ADMIN_DIST || resolve(REPO_ROOT, 'apps/admin/dist')),
+    log:(msg) => console.log(`[${new Date().toISOString()}] ${msg}`),
   }
 }

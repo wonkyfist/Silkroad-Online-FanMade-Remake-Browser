@@ -73,7 +73,8 @@ export function formatChance(pct: number): string {
 }
 
 export type AlchemyProblem = 'noItem' | 'notEquipment' | 'broken' | 'noElixir' | 'elixirMismatch' | 'powderMismatch' | 'maxPlus'
-export type AlchemyPhase = 'idle' | 'sent' | 'fusing'
+/** 'sent': the Fuse is on the wire; 'fusing': the server started it; 'cancelling': a cancel is on the wire. */
+export type AlchemyPhase = 'idle' | 'sent' | 'fusing' | 'cancelling'
 export type AlchemyOutcomeView = 'success' | 'fail' | 'destroyed' | 'cancelled'
 
 /** What the model needs of the item catalogue and the bag. */
@@ -198,14 +199,24 @@ export class AlchemyModel {
     return msg
   }
 
-  /** The server refused the request. */
+  /** The server refused the request (no fuse runs, so a cancel on the wire has nothing to end either). */
   refused(): void {
-    if (this.phase === 'sent') this.phase = 'idle'
+    if (this.phase === 'sent' || this.phase === 'cancelling') this.phase = 'idle'
   }
 
-  /** `alchemyStart`. */
+  /** `alchemyStart` (a cancel already on the wire stays pending: its `alchemyResult` follows). */
   started(): void {
-    this.phase = 'fusing'
+    if (this.phase !== 'cancelling') this.phase = 'fusing'
+  }
+
+  /**
+   * Cancel pressed, or the window closed, while a Fuse is pending: true when one `alchemyCancel` should go out. Further
+   * presses send nothing until the result arrives (each would cost the request budget).
+   */
+  cancel(): boolean {
+    if (this.phase !== 'sent' && this.phase !== 'fusing') return false
+    this.phase = 'cancelling'
+    return true
   }
 
   /**
@@ -389,7 +400,11 @@ export class AlchemyWindow extends Window {
   }
 
   private pressed(): void {
-    if (this.model.phase === 'fusing') return this.handlers.cancel()
+    if (this.model.phase === 'fusing' || this.model.phase === 'cancelling') {
+      if (this.model.cancel()) this.handlers.cancel()
+      this.render()
+      return
+    }
     const msg = this.model.fuse()
     if (!msg) return
     this.handlers.fuse(msg)
@@ -432,13 +447,13 @@ export class AlchemyWindow extends Window {
     this.lines.target.classList.toggle('plus', plus > 0)
     const problem = m.problem()
     const chance = m.chance()
-    const fusing = m.phase === 'fusing'
+    const fusing = m.phase === 'fusing' || m.phase === 'cancelling'
     this.lines.state.textContent = fusing ? t('alchemy.fusing') : chance !== null ? t('alchemy.chance', { pct: formatChance(chance) }) : item || m.stack('elixir') || m.stack('powder') ? t(`alchemy.problem.${problem}` as StringKey) : t('alchemy.hint')
     this.lines.state.classList.toggle('bad', !fusing && problem !== null && !!(item || m.stack('elixir') || m.stack('powder')))
     this.lines.state.classList.toggle('good', !fusing && chance !== null)
     this.root.classList.toggle('fusing', fusing)
     this.fuseButton.setLabel(fusing ? t('alchemy.cancel') : t('alchemy.fuse'))
-    this.fuseButton.setDisabled(!(fusing || m.canFuse()))
+    this.fuseButton.setDisabled(!(m.phase === 'fusing' || m.canFuse()))
   }
 
   // ---- effects -------------------------------------------------------------------------------------
@@ -502,7 +517,7 @@ export class AlchemyWindow extends Window {
     if (!this.isOpen) return
     this.tip.hide()
     // A Fuse on the wire is cancelled too: the server handles the two requests in order.
-    if (this.model.phase !== 'idle') this.handlers.cancel()
+    if (this.model.cancel()) this.handlers.cancel()
     super.close()
     if (this.model.phase === 'idle') {
       this.model.clear()

@@ -456,6 +456,12 @@ export class Mounts implements GameplayModule {
     this.save(c, now)
   }
 
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §3.3): a rider steps down where it stands (before the trance warp). */
+  stepDownFor(p: Player, now: number): void {
+    const c = this.ridden(p)
+    if (c) this.stepDown(p, c, now, false)
+  }
+
   /**
    * The rider leaves the saddle: the horse stays parked where it stands. `aside`: the rider is placed DISMOUNT_SIDE_M
    * to the horse's left (`stop`); otherwise it stays where it is (horse death, rider death).

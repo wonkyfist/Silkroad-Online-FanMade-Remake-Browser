@@ -16,6 +16,7 @@ import {
   contentEntries,
   type ContentKind,
 } from './content.ts'
+import { checkPilotDef } from './pilot.ts'
 
 type Problems = string[]
 
@@ -95,6 +96,7 @@ export function checkMobDef(v: unknown, where = 'mob'): Problems {
   c.range('physAttack')
   c.range('magAttack')
   c.bool('aggressive')
+  c.bool('championAggressive', true)
   c.num('spExp', true, 0)
   c.model('model')
   if (v.ride !== undefined) c.problems.push(...checkMobRide(v.ride, `${where}.ride`))
@@ -291,6 +293,8 @@ export interface UniquesCheckRefs {
   nest?: (id: number) => boolean
   /** True when `code` is an ItemDef code (drop entries). */
   item?: (code: string) => boolean
+  /** True when `code` is a skill row (Play the Boss kit rows; absent = not checked). */
+  skill?: (code: string) => boolean
 }
 
 /**
@@ -352,6 +356,9 @@ export function checkUniquesFile(json: unknown, refs: UniquesCheckRefs = {}): Pr
     })
     c.str('drops')
     if (typeof u.drops === 'string' && tables && !(u.drops in tables)) c.problems.push(`${w}.drops: no drop table ${u.drops}`)
+    // Play the Boss (docs/PLAY_THE_BOSS.md §5.5): the optional `pilot` block.
+    // Its shape only: a kit row or pack mob missing from this world's tables leaves that ability out at start (logged).
+    if (u.pilot !== undefined) c.problems.push(...checkPilotDef(u.pilot, `${w}.pilot`, { skill: refs.skill }))
     problems.push(...c.problems)
   })
   return problems

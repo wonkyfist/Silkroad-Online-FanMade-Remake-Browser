@@ -5,7 +5,7 @@
  */
 import { Color3, CreateBox, CreateCapsule, CreateCylinder, Matrix, StandardMaterial, TransformNode, Vector3, type Mesh, type Scene } from '@babylonjs/core'
 import { heightScale } from '@sro/appearance'
-import { JUMP_LATE_DROP_MS, type EntityState, type EquipSlot, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
+import { JUMP_LATE_DROP_MS, variantScale, type EntityState, type EquipSlot, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
 import { weaponFamilyOf, type Catalog } from '../content/catalog.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 import { sampleMove } from '../net/clock.ts'
@@ -75,6 +75,12 @@ function angleLerp(a: number, b: number, t: number): number {
   if (d > Math.PI) d -= Math.PI * 2
   if (d < -Math.PI) d += Math.PI * 2
   return a + d * t
+}
+
+/** The same item code in every slot (an appearance that only changes the +N). */
+export function sameCodesOf(a: Partial<Record<EquipSlot, string>>, b: Partial<Record<EquipSlot, string>>): boolean {
+  const ka = Object.keys(a) as EquipSlot[]
+  return ka.length === Object.keys(b).length && ka.every(k => a[k] === b[k])
 }
 
 /** Display text of a ground item: "123 Gold", "HP Recovery Herb x3", "Iron Blade +2". */
@@ -155,8 +161,10 @@ export class EntityView {
     ctx.labels.append(this.label)
     if (state.kind === 'mob') {
       const mob = ctx.catalog.mob(state.model)
-      this.scale = mob.scale
-      this.radius = mob.radius
+      // A giant is drawn (and picked, and labelled) at twice its mob's size (@sro/shared VARIANT_SCALE).
+      const size = variantScale(state.variant)
+      this.scale = mob.scale * size
+      this.radius = mob.radius * size
     } else if (state.kind === 'item') {
       this.radius = 0.35
     } else if (state.kind === 'player') {
@@ -222,6 +230,25 @@ export class EntityView {
     }
     b.className = `badge badge-${key}${cls ? ` ${cls}` : ''}`
     b.textContent = text
+  }
+
+  /**
+   * Play the Boss (docs/PLAY_THE_BOSS.md §4.1): one extra line per `key` under the name ("In a trance", "steered by a
+   * player", a title). `text` null removes it. The div has the classes `label-line label-line-<key>`.
+   */
+  setLabelLine(key: string, text: string | null): void {
+    let line = this.badges.get(`line:${key}`)
+    if (text === null) {
+      line?.remove()
+      this.badges.delete(`line:${key}`)
+      return
+    }
+    if (!line) {
+      line = el('div', `label-line label-line-${key}`)
+      this.badges.set(`line:${key}`, line)
+      this.label.append(line)
+    }
+    line.textContent = text
   }
 
   get id(): number {
@@ -398,14 +425,29 @@ export class EntityView {
       fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined,
       height: this.state.height,
       volume: this.state.volume,
+      plus: this.state.equipPlus,
     }
   }
 
-  /** Visible equipment changed (appearance): re-dresses the model (armour, weapon, weapon clips). */
-  async setEquip(equip: Partial<Record<EquipSlot, string>>): Promise<void> {
+  /**
+   * Visible equipment changed (appearance): re-dresses the model (armour, weapon, weapon clips). `plus` is the +N of
+   * the worn items (the weapon glow); when only it changed, the weapon is re-lit without re-dressing.
+   */
+  async setEquip(equip: Partial<Record<EquipSlot, string>>, plus?: Partial<Record<EquipSlot, number>>): Promise<void> {
+    const sameCodes = sameCodesOf(this.state.equip ?? {}, equip)
     this.state.equip = equip
+    if (sameCodes) return this.setPlus(plus)
+    if (plus && Object.keys(plus).length > 0) this.state.equipPlus = plus
+    else delete this.state.equipPlus
     if (!this.actor) return
     await this.ctx.library.dress(this.actor, this.look()).catch((err: unknown) => console.warn('[world] re-dress failed', err))
+  }
+
+  /** The +N of the worn items changed alone (no new codes): re-lights the weapon and shield. */
+  setPlus(plus: Partial<Record<EquipSlot, number>> | undefined): void {
+    if (plus && Object.keys(plus).length > 0) this.state.equipPlus = plus
+    else delete this.state.equipPlus
+    this.actor?.setPlus(this.state.equipPlus)
   }
 
   /** Height/Volume changed: rescales the model (label and pick follow) and re-applies the build. */

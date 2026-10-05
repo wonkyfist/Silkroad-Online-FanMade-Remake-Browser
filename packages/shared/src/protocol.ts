@@ -15,6 +15,8 @@ import type { EquipSlot, ItemStack, MobVariant } from './content.ts'
 import type { QuestDef, QuestFile, QuestIssue, QuestItemDef, QuestLocation } from './quests.ts'
 import type { WorldClockState } from './world-clock.ts'
 import type { WeatherKind, WeatherParams } from './weather.ts'
+// Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
+import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -93,6 +95,11 @@ export interface ServerInfo {
   clock?: WorldClockState
   /** Wave 10 (docs/SCREENS.md §9): the lobby's weather; absent = clear. Dropped on its own when malformed. */
   weather?: WeatherSync
+  /**
+   * Admin addition (docs/ADMIN.md): whether POST /api/register accepts new accounts (the admin panel's switch). The
+   * login screen hides Register when it is 'closed'. Absent (older servers, the mock) = 'open'.
+   */
+  registration?: 'open' | 'closed'
 }
 
 // ---- data shared by several messages ------------------------------------------------------------
@@ -115,6 +122,8 @@ export interface CharacterSummary {
   volume?: number
   /** Appearance addition: item codes worn in visible slots, so character select can dress the character. */
   equip?: Partial<Record<EquipSlot, string>>
+  /** Weapon glow addition: the enhancement (+N, 1..255) of the visible slots in `equip` that have one; absent = all +0. */
+  equipPlus?: Partial<Record<EquipSlot, number>>
 }
 
 export interface MoveState {
@@ -174,6 +183,8 @@ export interface EntityState {
   expiresAt?: number
   /** Players: item codes worn in visible slots (weapon, shield, armour), for drawing. */
   equip?: Partial<Record<EquipSlot, string>>
+  /** Players (weapon glow addition): the +N (1..255) of the visible slots in `equip` that have one; absent = all +0. */
+  equipPlus?: Partial<Record<EquipSlot, number>>
   /** Players: Height choice 0..4 (default 2). Render scale = heightScale(height). */
   height?: number
   /** Players: Volume (build) choice 0..4 (default 2). */
@@ -212,6 +223,13 @@ export interface EntityState {
   stall?: string
   /** Players: the guild name (0..GUILD_TITLE_MAX code points on the wire; GUILD_NAME for real names); absent = none. */
   guild?: string
+  // ---- Play the Boss additions (docs/PLAY_THE_BOSS.md §5.2) ----
+  /** Players: the body rests in a trance while its player steers a boss (drawn sitting, "In a trance"). */
+  trance?: true
+  /** Mobs: a player steers it now (the label line "steered by a player"). */
+  piloted?: true
+  /** Players: a title code (PILOT_HONOR; client i18n `pilot.honor.<code>`), e.g. 'tiger_spirit'. */
+  honor?: string
 }
 
 export interface WorldInfo {
@@ -468,6 +486,8 @@ export type ClientMessage =
    * in combat and in a trade. Stands a sitter up first.
    */
   | { t: 'jump' }
+  // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1; pilot.ts). GameplayRequests: one actionResult each. ----
+  | PilotClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -534,6 +554,12 @@ export type ServerMessage =
       stall?: string
       /** Wave 8: the guild name changed; '' = none. */
       guild?: string
+      /** Play the Boss: the body went into a trance (true) or woke up (false). */
+      trance?: boolean
+      /** Play the Boss: a player steers this mob now (true) or her own AI does again (false). */
+      piloted?: boolean
+      /** Play the Boss: a title was granted ('' = none). */
+      honor?: string
     }
   /**
    * GM addition: this account's role changed while connected (`pnpm gm grant|revoke`; the server
@@ -576,12 +602,17 @@ export type ServerMessage =
   | { t: 'inventory'; inventory: Inventory }
   /** Changed bag/equipment slots (item null = now empty) and the new gold total if it changed. */
   | { t: 'inventoryUpdate'; bag?: BagSlotUpdate[]; equip?: EquipSlotUpdate[]; gold?: number }
-  /** An entity's visible equipment changed (weapon/armour codes for drawing), sent to viewers. */
-  | { t: 'appearance'; id: number; equip: Partial<Record<EquipSlot, string>> }
+  /**
+   * An entity's visible equipment changed (weapon/armour codes for drawing), sent to viewers. `plus` (weapon glow
+   * addition): the +N of the slots that have one, as EntityState.equipPlus; absent = all +0. A change of +N alone
+   * (alchemy, GM `plus`) is announced too.
+   */
+  | { t: 'appearance'; id: number; equip: Partial<Record<EquipSlot, string>>; plus?: Partial<Record<EquipSlot, number>> }
   // ---- wave 3: skills (docs/SKILLS.md §10.2) ----
   /**
    * Own skills, in full: enter-world after `inventory`. `skills` = the highest learned row per skill group;
-   * `hotbar.length === HOTBAR_SLOTS`; `cooldowns` = skill groups still cooling down.
+   * `hotbar.length === HOTBAR_SLOTS`; `cooldowns` = skill groups still cooling down; `mouse` = the mouse quick slot
+   * (MOUSE_SLOT; absent = empty, and from servers before it existed).
    */
   | {
       t: 'skills'
@@ -589,6 +620,7 @@ export type ServerMessage =
       skills: string[]
       hotbar: (HotbarEntry | null)[]
       cooldowns?: SkillCooldown[]
+      mouse?: HotbarEntry
     }
   /** Changed masteries (new levels), newly learned rows (each replaces its group's lower row), changed hotbar slots. */
   | {
@@ -608,6 +640,11 @@ export type ServerMessage =
       prepareMs: number
       castMs: number
       actionMs: number
+      /**
+       * Play the Boss (docs/PLAY_THE_BOSS.md §3.5): the clip type (ATTACK1, FIND, HELP, ...) of a server-built ability
+       * whose `skill` (PILOT_*) no catalog knows; the client plays that clip.
+       */
+      clip?: string
     }
   /** A skill action closed early; a normal end needs no message. */
   | { t: 'castEnd'; id: number; instance: number; reason: CastEndReason }
@@ -707,6 +744,8 @@ export type ServerMessage =
    * Tiger Girl!"); both absent on a kill nobody owns. The town reacts to `appeared` (a cosmetic 60 s alarm).
    */
   | { t: 'uniqueNotice'; event: UniqueNoticeEvent; mob: string; name: string; area?: string; by?: string; party?: boolean; roar?: boolean; at?: number }
+  // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.2; pilot.ts) ----
+  | PilotServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -861,6 +900,8 @@ export type GameplayRequest =
   | 'guildNotice' | 'guildMaster'
   // wave 10: the jump (docs/MOVEMENT.md §5)
   | 'jump'
+  // Play the Boss (docs/PLAY_THE_BOSS.md §5.1)
+  | PilotRequest
 
 /** Wave 8 combat and item requests (docs/SYSTEMS_COMBAT.md §7.2). */
 export const COMBAT_W8_REQUESTS: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss', 'repair', 'alchemyReinforce', 'alchemyCancel', 'berserk']
@@ -884,6 +925,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...STALL_REQUESTS,
   ...GUILD_REQUESTS,
   'jump',
+  ...PILOT_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -912,6 +954,8 @@ export type ActionFailReason =
   | 'invalid_count'
   /** Level, gender, race or two-handed/shield rule not met. */
   | 'requirements'
+  /** A garment piece with protector or armour pieces worn, or the other way round (content.ts armorClassesClash). */
+  | 'armor_mix'
   /** Item cannot be used / sold / dropped. */
   | 'not_usable'
   /** Cooldown still running (e.g. potions). */
@@ -1007,6 +1051,8 @@ export type ActionFailReason =
   | 'name_taken'
   /** The guild name fails GUILD_NAME, or is reserved. */
   | 'bad_name'
+  // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
+  | PilotFailReason
 
 export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'not_found', 'invalid_target', 'target_dead', 'dead', 'not_dead', 'too_far', 'unreachable', 'not_owner',
@@ -1020,6 +1066,8 @@ export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'berserk_not_ready', 'berserk_active',
   'trading', 'stalling', 'stall_changed', 'stall_full', 'stall_closed', 'not_in_guild', 'in_guild', 'no_permission', 'guild_full',
   'name_taken', 'bad_name',
+  'armor_mix',
+  ...PILOT_FAIL_REASONS,
 ]
 
 export type HitOutcome = 'hit' | 'crit' | 'miss' | 'block'
@@ -1210,6 +1258,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   stallItemRemove: { perSecond: 10, burst: 20 },
   // wave 10 (docs/MOVEMENT.md §4.2): over budget = 'rate_limited'; the 1 s cooldown and the client gate are tighter
   jump: { perSecond: 2, burst: 3 },
+  // Play the Boss (docs/PLAY_THE_BOSS.md §5.1)
+  ...PILOT_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */
@@ -1237,6 +1287,11 @@ export function heightScale(h: number | undefined): number {
 export const MAX_GOLD = 9_999_999_999
 /** Hotbar slots: 4 pages x 10 (keys 1-0, pages F1-F4). */
 export const HOTBAR_SLOTS = 40
+/**
+ * The mouse quick slot (retail GDR_TMPQS_0, the underbar's "M" frame), used only by the middle mouse button: `hotbarSet`
+ * and `skillsUpdate.hotbar` address it as this slot number; the `skills` snapshot carries it as `mouse`.
+ */
+export const MOUSE_SLOT = HOTBAR_SLOTS
 /** Most effects one entity carries on the wire (EntityState.effects). */
 export const MAX_EFFECTS_PER_ENTITY = 32
 /** Storage slots of a new account, and the most the protocol allows. */

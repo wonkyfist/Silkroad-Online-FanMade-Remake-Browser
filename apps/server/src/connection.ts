@@ -23,7 +23,7 @@ import type { GameContext } from './game.ts'
 import { parseSlash, runGm } from './gm.ts'
 import { VISIBLE_SLOTS } from './inventory.ts'
 import type { NavPoint } from './nav.ts'
-import { WARP_SEARCH_M, type Player } from './world.ts'
+import { WARP_SEARCH_M, visibleEquipPlus, type Player } from './world.ts'
 
 /** Per-connection message budget. */
 const MSG_RATE = 20
@@ -219,6 +219,8 @@ export class Connection {
         return this.enterWorld(msg.id)
       case 'moveTo':
         if (!this.player) return this.error('not_in_world', 'not in the world', msg.t)
+        // Play the Boss (docs/PLAY_THE_BOSS.md §3.2): the pilot's moveTo steers the boss instead.
+        if (this.game.gameplay.pilot?.steer(this.player, msg.x, msg.z)) return
         // Dead characters stay put (only respawn brings them back); a move cancels auto-attack/pickup.
         if (this.game.gameplay.onMoveTo(this.player)) this.game.world.moveTo(this.player, msg.x, msg.z)
         return
@@ -226,6 +228,8 @@ export class Connection {
         if (!this.player) return this.error('not_in_world', 'not in the world', msg.t)
         const text = cleanChat(msg.text)
         if (!text) return this.error('bad_request', 'empty chat message', msg.t)
+        // Play the Boss (§3.10): no free chat on any channel while you steer the boss (slash commands still run).
+        if (!text.startsWith('/') && this.game.gameplay.pilot?.chatBlocked(this.player)) return this.error('forbidden', 'You cannot chat while you are the boss. Use the taunt wheel (hold Q).', msg.t)
         // Whisper / party lines (chat.ts) are routed before the slash branch: they are never commands.
         if (routeChat(this, msg, text)) return
         if (text.startsWith('/')) {
@@ -360,6 +364,7 @@ export class Connection {
   summary(r: CharacterRow): CharacterSummary {
     const spawn = this.game.setup.spawn
     const placed = r.x !== null && r.z !== null
+    const look = this.visibleEquipOf(r.id)
     return {
       id: r.id,
       name: r.name,
@@ -371,19 +376,20 @@ export class Connection {
       lastPlayed: r.last_played,
       height: r.height,
       volume: r.volume,
-      equip: this.visibleEquipOf(r.id),
+      equip: look.equip,
+      ...(Object.keys(look.plus).length > 0 ? { equipPlus: look.plus } : {}),
     }
   }
 
-  /** Item codes worn in visible slots (character select dresses the character with them). */
-  private visibleEquipOf(characterId: number): NonNullable<CharacterSummary['equip']> {
+  /** Item codes worn in visible slots and their +N (character select dresses the character and lights its weapon). */
+  private visibleEquipOf(characterId: number): { equip: NonNullable<CharacterSummary['equip']>; plus: NonNullable<CharacterSummary['equipPlus']> } {
     const inv = this.game.store.loadInventory(characterId)
     const out: NonNullable<CharacterSummary['equip']> = {}
     for (const slot of VISIBLE_SLOTS) {
       const it = inv.equip[slot]
       if (it) out[slot] = it.code
     }
-    return out
+    return { equip: out, plus: visibleEquipPlus(inv.equip) }
   }
 
   /**

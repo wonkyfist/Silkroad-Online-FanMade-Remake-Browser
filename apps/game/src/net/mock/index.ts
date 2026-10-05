@@ -9,6 +9,7 @@ import { guildMock } from './guild.ts'
 import { movementMock } from './movement.ts'
 import { npcMock } from './npc.ts'
 import { partyMock } from './party.ts'
+import { pilotMock } from './pilot.ts'
 import { questsMock } from './quests.ts'
 import { skillsMock } from './skills.ts'
 import { stallMock } from './stall.ts'
@@ -23,6 +24,7 @@ export const DEFAULT_MOCK_EXTENSIONS: readonly MockExtension[] = [
   uxMock, // net/mock/ux.ts (UX-B)
   questsMock, // net/mock/quests.ts (QS-C)
   partyMock, // net/mock/party.ts (PT-C)
+  pilotMock, // net/mock/pilot.ts (Play the Boss): claims `/unique pilot` lines (before the unique notices) and the pilot's input
   uniquesMock, // net/mock/uniques.ts (W11-P, wave 11): claims only `/unique` chat lines
   movementMock, // net/mock/movement.ts (W10-P, wave 10): claims only `jump`, which no later mock gates
   tradeMock, // net/mock/trade.ts (TR-C, wave 8)

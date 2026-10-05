@@ -62,6 +62,8 @@ export class App {
   /** Server-wide GM announcements, shown on every screen. */
   readonly notices = new NoticeBanner()
   current: ScreenName | null = null
+  /** The params the current screen was opened with (gpu-loss.ts reads the world's character). */
+  currentParams: unknown = undefined
   session: Session | null = null
   /** Account name typed at login (display only; the server's `welcome.account` wins once connected). */
   username = ''
@@ -139,6 +141,7 @@ export class App {
       this.screen = null
       this.ui.replaceChildren()
       this.current = name
+      this.currentParams = params
       document.body.dataset.screen = name
       try {
         this.screen = factory(this, params as ScreenParams[ScreenName])

@@ -14,6 +14,11 @@ import {
   type ServerInfo,
 } from '@sro/shared'
 import { WebSocketServer, type WebSocket } from 'ws'
+import { ADMIN_IDLE_MS, AdminApi } from './admin/api.ts'
+import { layerAdminContent, mergedItemsJson } from './admin/content.ts'
+import { ADMIN_ICON_PATH, iconRoots } from './admin/icons.ts'
+import { SettingsState } from './admin/settings.ts'
+import { openAdminStore } from './admin/store.ts'
 import { FailureLimiter, HashBusyError, MAX_SESSIONS_PER_ACCOUNT, SESSION_TTL_MS, hashPassword, hashToken, newToken, verifyPassword } from './auth.ts'
 import type { ServerConfig } from './config.ts'
 import { Connection } from './connection.ts'
@@ -26,7 +31,7 @@ import { Gameplay } from './gameplay.ts'
 import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
 import { originAllowed } from './origin.ts'
-import { serveFile } from './static.ts'
+import { acceptedEncodings, serveFile } from './static.ts'
 import { World, type Player } from './world.ts'
 
 /** Hard WebSocket frame cap: larger frames close the socket (1009). Smaller-but-too-big get bad_request. */
@@ -56,6 +61,11 @@ export interface GameContext {
    * config.rolePollMs, but only reads roles when SQLite's data_version says someone else wrote.
    */
   refreshRoles(force?: boolean): void
+  /**
+   * Admin panel (docs/ADMIN.md §6): saves, closes and exits so a supervisor (systemd) starts the server again. Set by
+   * main.ts only when such a supervisor exists; absent = the panel offers no Restart.
+   */
+  requestRestart?: () => void
 }
 
 export interface GameServer {
@@ -87,13 +97,45 @@ function sendJson(res: ServerResponse, status: number, body: unknown): void {
   res.end(data)
 }
 
+/**
+ * The admin panel's files (docs/ADMIN.md §4): own scripts and styles only, no framing. API calls and icons may go to other
+ * game servers (the panel's server profiles, §2.1), whose own role checks and ALLOWED_ORIGINS decide; scripts never do.
+ */
+const ADMIN_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: http: https:; connect-src 'self' http: https:; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"
+
+/** A prepared JSON document (the merged items.json) with its ETag, gzip when the client takes it. */
+function sendMergedJson(req: IncomingMessage, res: ServerResponse, doc: { etag: string; json: Buffer; gz: Buffer }): void {
+  const gzip = acceptedEncodings(req.headers['accept-encoding']).gzip
+  const headers: Record<string, string | number> = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-cache',
+    ETag: gzip ? doc.etag.replace(/"$/, '-gz"') : doc.etag,
+    Vary: 'Accept-Encoding',
+    'X-Content-Type-Options': 'nosniff',
+  }
+  const inm = req.headers['if-none-match']
+  if (inm && inm.split(',').some((t) => t.trim().replace(/^W\//, '') === headers.ETag)) {
+    res.writeHead(304, headers)
+    res.end()
+    return
+  }
+  const body = gzip ? doc.gz : doc.json
+  if (gzip) headers['Content-Encoding'] = 'gzip'
+  headers['Content-Length'] = body.length
+  res.writeHead(200, headers)
+  res.end(req.method === 'HEAD' ? undefined : body)
+}
+
 function sendError(res: ServerResponse, status: number, code: ErrorCode, message: string): void {
   const body: ApiError = { error: code, message }
   sendJson(res, status, body)
 }
 
-/** Reads a JSON body of at most `limit` bytes (default 4 KB; the GM editor routes pass GM_API_MAX_BODY_BYTES, 32 KB). */
-async function readJson(req: IncomingMessage, limit = MAX_BODY_BYTES): Promise<unknown> {
+/**
+ * Reads a JSON body of at most `limit` bytes (default 4 KB; the GM editor routes pass GM_API_MAX_BODY_BYTES, 32 KB).
+ * `emptyOk`: an empty body reads as undefined (the admin API's bodiless POSTs) instead of a 400.
+ */
+async function readJson(req: IncomingMessage, limit = MAX_BODY_BYTES, emptyOk = false): Promise<unknown> {
   const declared = Number(req.headers['content-length'] ?? 0)
   if (declared > limit) throw new HttpError(413, 'bad_request', 'body too large')
   const chunks: Buffer[] = []
@@ -103,6 +145,7 @@ async function readJson(req: IncomingMessage, limit = MAX_BODY_BYTES): Promise<u
     if (size > limit) throw new HttpError(413, 'bad_request', 'body too large')
     chunks.push(chunk as Buffer)
   }
+  if (emptyOk && size === 0) return undefined
   try {
     return JSON.parse(Buffer.concat(chunks).toString('utf8'))
   } catch {
@@ -169,12 +212,17 @@ export function unplacedNestsLine(gameplay: Gameplay, data: GameData, setup: Wor
 export async function startServer(config: ServerConfig): Promise<GameServer> {
   const store = openStore(config.dataDir)
   store.purgeSessions()
+  // Admin panel (docs/ADMIN.md §5): its tables, and the settings saved in it applied before any module reads the config.
+  const adminStore = openAdminStore(store, join(config.dataDir, 'game.db'))
+  const settings = SettingsState.load(config, adminStore)
   const data = GameData.load(config.outDir)
   for (const line of data.summary()) config.log(line)
   // GM content overrides (DATA_DIR/content/{nests,npcs}.override.json) over the export, before anything is placed (lane ED-S).
   // Repo overrides (CONTENT_DIR/{nests,npcs}.override.json) first: they are part of the content the GM files layer over.
   layerRepoOverrides(data, config.contentDir, config.world, config.log)
   layerContentOverrides(data, config.dataDir, config.world, config.log)
+  // Admin item and drop overrides (DATA_DIR/content/{items,drops}.override.json; docs/ADMIN.md §5).
+  layerAdminContent(data, config.dataDir, config.outDir, config.log)
   const worldExport = config.worldExport ?? config.world
   const base = withTownSpawn(resolveWorld(config.outDir, worldExport, config.spawn, config.world), config.world, data.town(config.world))
   // GM teleport places: the manifest's, then CONTENT_DIR/places.json (docs/PLAYTEST.md "Teleport places").
@@ -194,6 +242,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   const outOptDir = config.outOptDir ?? join(dirname(config.outDir), 'out-opt')
   const sockets = new Map<number, Connection>()
   const startedAt = Date.now()
+  /** When each player in the world was last saved (played_ms accrues between saves). */
+  const playedAt = new WeakMap<Player, number>()
 
   const ctx: GameContext = {
     config,
@@ -218,15 +268,22 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       // the `worldClock` / `weather` messages, which stay world-only).
       clock: gameplay.clock.state,
       weather: gameplay.weather.sync(Date.now()),
+      // Admin panel switch (docs/ADMIN.md): the login screen hides Register while it is closed.
+      registration: config.registrationOpen === false ? 'closed' : 'open',
     }),
     persist(players, now = Date.now()) {
       if (players.length === 0) return
       store.saveCharacters(
         players.map((p) => {
           const at = world.livePoint(p, now)
+          // Play the Boss (docs/PLAY_THE_BOSS.md §5.3): the time since the last save counts as played (the enter-world
+          // save starts the clock; a clock step or a stall never credits more than two save intervals).
+          const last = playedAt.get(p)
+          playedAt.set(p, now)
+          const playedMs = last === undefined ? 0 : Math.max(0, Math.min(now - last, config.saveIntervalS * 2000 + 60_000))
           return {
             id: p.characterId, x: at.x, y: at.y, z: at.z, yaw: p.yaw, world: config.world, lastPlayed: now, hp: p.hp, mp: p.mp, dead: p.dead,
-            surface: nav.surfaceKey(at.surface),
+            surface: nav.surfaceKey(at.surface), playedMs,
           }
         }),
       )
@@ -239,6 +296,14 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     },
   }
   let dataVersion = store.dataVersion()
+  // Play the Boss (docs/PLAY_THE_BOSS.md §3.9): the game socket's IP of a player (the same-IP associates).
+  gameplay.pilot?.connect({
+    ipOf: (p) => {
+      for (const c of sockets.values()) if (c.player === p) return c.ip
+      return null
+    },
+  })
+  const adminApi = new AdminApi(ctx, adminStore, settings, startedAt)
 
   const loginFailures = new FailureLimiter(5, 15 * 60_000)
   const ipLoginFailures = new FailureLimiter(50, 15 * 60_000)
@@ -277,6 +342,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     const ip = clientIp(req)
     if (path === '/api/servers' && method === 'GET') return sendJson(res, 200, [ctx.serverInfo()])
     if (path === '/api/register' && method === 'POST') {
+      // The admin panel's switch (docs/ADMIN.md): authoritative here, whatever the client shows.
+      if (config.registrationOpen === false) throw new HttpError(403, 'forbidden', 'Registration is closed on this server.')
       if (registrations.blocked(ip)) throw new HttpError(429, 'rate_limited', 'too many registrations, try later')
       const { username, password } = credentials(await readJson(req))
       if (!ACCOUNT_NAME.test(username)) throw new HttpError(400, 'bad_request', 'username must be 3-16 letters, digits or _')
@@ -312,6 +379,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       if (!ok || !account) throw new HttpError(401, 'unauthorized', 'wrong username or password')
       loginFailures.reset(key)
       ipLoginFailures.forgive(ip)
+      // Admin panel bans (docs/ADMIN.md): the right password of a banned account gets the reason, no session.
+      const ban = adminStore.banOf(account.id)
+      if (ban) throw new HttpError(403, 'forbidden', `This account is banned${ban.reason ? `: ${ban.reason}` : '.'}`)
       store.touchLogin(account.id)
       return sendJson(res, 200, issueSession(account.id))
     }
@@ -358,9 +428,67 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     const rawPath = (req.url ?? '/').split('?')[0]
     const method = req.method ?? 'GET'
     try {
+      // The admin panel's API (docs/ADMIN.md §3, §4): same-origin only and never any CORS headers (OPTIONS is a 404).
+      if (rawPath === '/api/admin' || rawPath.startsWith('/api/admin/')) {
+        if (!originAllowed(req, config.allowedOrigins)) throw new HttpError(403, 'unauthorized', 'origin not allowed')
+        if (config.adminPanel === false) throw new HttpError(404, 'not_found', 'no such endpoint')
+        // A panel served elsewhere (its server profiles, docs/ADMIN.md §2.1) may call this server only from an origin listed in
+        // ALLOWED_ORIGINS (or a dev origin): those get CORS for Bearer requests, never cookies; same-origin needs none.
+        const origin = req.headers.origin
+        const cors = typeof origin === 'string' && config.allowedOrigins.includes(origin)
+        if (cors) {
+          res.setHeader('Access-Control-Allow-Origin', origin)
+          res.setHeader('Vary', 'Origin')
+        }
+        if (method === 'OPTIONS') {
+          if (!cors) throw new HttpError(404, 'not_found', 'no such endpoint')
+          res.writeHead(204, { 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', 'Access-Control-Allow-Headers': 'Authorization, Content-Type', 'Access-Control-Max-Age': '600' })
+          res.end()
+          return
+        }
+        const r = await adminApi.handle({
+          method,
+          path: rawPath,
+          query: new URL(req.url ?? '/', 'http://x').searchParams,
+          authorization: req.headers.authorization,
+          ip: clientIp(req),
+          body: (limit) => readJson(req, limit, true),
+        })
+        if (r.status === 204 || r.body === undefined) {
+          res.writeHead(r.status, { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' })
+          res.end()
+          return
+        }
+        return sendJson(res, r.status, r.body)
+      }
       if (rawPath.startsWith('/api/')) {
         if (!originAllowed(req, config.allowedOrigins)) throw new HttpError(403, 'unauthorized', 'origin not allowed')
         return await api(req, res, rawPath)
+      }
+      // The admin panel's files (apps/admin/dist; docs/ADMIN.md §2), whether or not the game itself is served.
+      if (config.adminPanel !== false && (rawPath === '/admin' || rawPath.startsWith('/admin/')) && (method === 'GET' || method === 'HEAD')) {
+        if (rawPath === '/admin') {
+          res.writeHead(301, { Location: '/admin/' })
+          res.end()
+          return
+        }
+        const dist = config.adminDist ?? join(dirname(config.gameDist), '..', 'admin', 'dist')
+        res.setHeader('Content-Security-Policy', ADMIN_CSP)
+        res.setHeader('Referrer-Policy', 'no-referrer')
+        const sub = rawPath.slice('/admin'.length)
+        // Item and monster rank icons for the panel (admin/icons.ts): converted PNGs only, from OUT_DIR, else OUT_OPT_DIR.
+        if (sub.startsWith('/out/')) {
+          const rel = sub.slice('/out/'.length)
+          if (ADMIN_ICON_PATH.test(rel)) for (const root of iconRoots(ctx)) if (await serveFile(req, res, root, `/${rel}`, { cache: 'public, max-age=86400' })) return
+          throw new HttpError(404, 'not_found', 'no such icon')
+        }
+        const hashed = sub.startsWith('/assets/')
+        if (await serveFile(req, res, dist, sub, { index: true, cache: hashed ? 'public, max-age=31536000, immutable' : 'no-cache' })) return
+        const last = sub.split('/').pop() ?? ''
+        if (!last.includes('.') && !sub.includes('%') && !sub.includes('..')) {
+          if (await serveFile(req, res, dist, '/index.html', { cache: 'no-cache' })) return
+        }
+        throw new HttpError(404, 'not_found', 'the admin panel is not built (pnpm --filter @sro/admin build)')
       }
       if (rawPath === '/health') {
         return sendJson(res, 200, {
@@ -369,6 +497,11 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         })
       }
       if (config.serveStatic && (method === 'GET' || method === 'HEAD')) {
+        // items.json with the admin item overrides merged in, so the client shows what the server uses (docs/ADMIN.md §6).
+        if (rawPath === '/out/data/items.json' || rawPath === '/out-opt/data/items.json') {
+          const merged = mergedItemsJson(ctx)
+          if (merged) return sendMergedJson(req, res, merged)
+        }
         if (rawPath === '/out-opt' || rawPath.startsWith('/out-opt/')) {
           if (await serveFile(req, res, outOptDir, rawPath.slice(8))) return
           throw new HttpError(404, 'not_found', 'not found')
@@ -466,7 +599,10 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       config.log(`periodic save failed: ${(e as Error).message}`)
     }
   }, config.saveIntervalS * 1000)
-  const purger = setInterval(() => store.purgeSessions(), 3600_000)
+  const purger = setInterval(() => {
+    store.purgeSessions()
+    adminStore.purgeSessions(Date.now(), ADMIN_IDLE_MS)
+  }, 3600_000)
   const rolePoll = setInterval(() => {
     try {
       ctx.refreshRoles()

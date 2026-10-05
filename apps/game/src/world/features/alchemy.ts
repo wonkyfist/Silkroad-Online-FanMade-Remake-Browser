@@ -3,9 +3,10 @@
  * lane edits this file; see world/features.ts for the context and hooks.
  *
  *  - The Alchemy window (hud/alchemy.ts) on `hud.layer`, the MENU → Alchemy row (D20).
- *  - Right-click on an Elixir or a Lucky Powder in the bag opens it with the item in place; while it is open (and on
- *    top of any shop / storage window) right-clicked equipment and materials go into it (`hud.routeBagAction`), and
- *    items dragged from the bag onto it too (`addSlotDropTarget`). The bag slots it holds are drawn locked (M8).
+ *  - Right-click on an Elixir or a Lucky Powder in the bag opens it with the item in place, beside the inventory and on
+ *    top of it; while it is open (and on top of any shop / storage window) right-clicked equipment and materials go
+ *    into it (`hud.routeBagAction`), and items dragged from the bag onto it too (`addSlotDropTarget`; a worn item
+ *    dragged onto it is explained, not ignored). The bag slots it holds are drawn locked (M8).
  *  - Fuse sends `alchemyReinforce`; `alchemyStart` plays the prepare sheet, `alchemyResult` the success / fail sheet,
  *    its cue and a system line. Refusals are toasted by the HUD (claimRequests).
  *  - The preview uses `worldEnter.world.alchemyRate` / `alchemyMaxPlus`.
@@ -13,8 +14,10 @@
 import type { ServerMessage } from '@sro/shared'
 import { AlchemyWindow, DEFAULT_ALCHEMY_MAX_PLUS, DEFAULT_ALCHEMY_RATE, slotFor } from '../../hud/alchemy.ts'
 import type { MenuBarEntry } from '../../hud/menubar.ts'
+import { mainWindowFor } from '../../hud/main-window.ts'
 import { addSlotDropTarget } from '../../hud/slots.ts'
 import { t } from '../../i18n/index.ts'
+import { layerViewport } from '../../ui/kit/scale.ts'
 import { openKitWindows } from '../../ui/kit/window.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
 
@@ -33,6 +36,26 @@ export function bagRoute(open: boolean, ownZ: number, npcZ: readonly number[], k
   if (open) return npcZ.some(z => z > ownZ) ? 'pass' : 'put'
   if (kind === 'item' || npcZ.length > 0) return 'pass'
   return 'open'
+}
+
+type Rect = readonly [x: number, y: number, w: number, h: number]
+
+/** The Main window's side tab strip hangs this far out on its left (hud/index.ts placeBesideNpcWindow). */
+const MAIN_STRIP_W = 42
+
+/**
+ * Where the Alchemy window `own` goes so it does not sit under the open inventory (the Main window `main`), or null
+ * when they do not overlap: left of the Main window and its side strip when that fits, else right of it, else the
+ * left edge. Native px of the HUD layer (pure, for tests).
+ */
+export function besideInventory(own: Rect, main: Rect, roomW: number): [number, number] | null {
+  const [x, y, w, h] = own
+  const [mx, my, mw, mh] = main
+  const left = mx - MAIN_STRIP_W
+  if (x + w <= left || x >= mx + mw || y + h <= my || y >= my + mh) return null
+  if (left - 8 - w >= 0) return [left - 8 - w, my]
+  if (mx + mw + 8 + w <= roomW) return [mx + mw + 8, my]
+  return [0, my]
 }
 
 export function alchemyFeature(ctx: WorldFeatureContext): WorldFeature {
@@ -57,20 +80,39 @@ export function alchemyFeature(ctx: WorldFeatureContext): WorldFeature {
     return s ? slotFor(items.def(s.code)) : null
   }
 
+  /**
+   * After the window opened: the inventory beside it (hud placeBesideNpcWindow moves an inventory it opens). An
+   * inventory that was already open (a right-click in the bag) only gets raised, which covered the new window: move
+   * ours beside it and keep it on top.
+   */
+  const withInventory = () => {
+    hud.openInventory?.()
+    const main = mainWindowFor(ctx.app.art, hud.layer)
+    if (main.isOpen) {
+      const at = besideInventory([...win.position, ...win.size], [...main.position, ...main.size], layerViewport(hud.layer)[0])
+      if (at) win.moveTo(at[0], at[1])
+    }
+    win.raise()
+  }
+
   hud.claimRequests(['alchemyReinforce', 'alchemyCancel'])
   offs.push(
     hud.routeBagAction(bag => {
       const route = bagRoute(win.isOpen, win.z, npcZ(), kindOf(bag))
       if (route === 'pass') return false
       win.put(bag)
-      // After the window opened, so the inventory goes beside it (hud placeBesideNpcWindow).
-      if (route === 'open') hud.openInventory?.()
+      if (route === 'open') withInventory()
       return true
     }),
   )
   offs.push(
     addSlotDropTarget((from, x, y) => {
-      if (from.kind !== 'bag' || !win.contains(x, y)) return false
+      if (!win.contains(x, y)) return false
+      // Only bag items can be enhanced (the server refuses worn ones): say so instead of ignoring the drop.
+      if (from.kind !== 'bag') {
+        hud.toast(t('alchemy.problem.equipped'), 'error')
+        return true
+      }
       if (win.put(from.slot) === 'notMaterial') hud.toast(t('alchemy.problem.notMaterial'), 'error')
       return true
     }),
@@ -86,7 +128,7 @@ export function alchemyFeature(ctx: WorldFeatureContext): WorldFeature {
     toggle: () => {
       const opening = !win.isOpen
       win.toggle()
-      if (opening) hud.openInventory?.()
+      if (opening) withInventory()
     },
     isOpen: () => win.isOpen,
   }

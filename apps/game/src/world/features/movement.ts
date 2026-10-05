@@ -29,6 +29,7 @@ import { t } from '../../i18n/index.ts'
 import type { EntityView } from '../entities.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
 import { intents } from '../intents.ts'
+import { isPiloting } from '../pilot-model.ts'
 import { keyMoveFeature } from './keymove.ts'
 
 /** The Space key as KeyboardEvent.key reports it (normalizeKey keeps it). */
@@ -169,7 +170,8 @@ export function movementFeature(ctx: WorldFeatureContext, clock: () => number = 
     echo.sent(clock(), predictsJump(selfState(v)) && v.jump(now, now))
   }
 
-  offs.push(ctx.keys.register({ id: 'movement.jump', keys: [...JUMP_KEYS], label: 'movement.key.jump', group: 'movement', run: press }))
+  // Play the Boss (docs/PLAY_THE_BOSS.md §4.2): Space does nothing while piloting (the body in its trance cannot jump).
+  offs.push(ctx.keys.register({ id: 'movement.jump', keys: [...JUMP_KEYS], label: 'movement.key.jump', group: 'movement', when: () => !isPiloting(ctx), run: press }))
   // The movement pack per player actor once its model is in (views from now on), and for the views already there.
   offs.push(ctx.addAttachment(v => (v.kind === 'player' ? { loaded: () => loadClips(v), dispose() {} } : null)))
   for (const v of ctx.views()) loadClips(v)

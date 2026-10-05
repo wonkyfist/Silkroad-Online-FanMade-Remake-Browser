@@ -216,7 +216,15 @@ function add(g: GmCall): GmResult {
   const radius = args[3] === undefined ? ADD_DEFAULTS.radius : num(args[3])
   const respawn = args[4] === undefined ? ([ADD_DEFAULTS.respawnSec, ADD_DEFAULTS.respawnSec] as [number, number]) : respawnArg(args[4])
   if (count === null || radius === null || radius < NEST_RADIUS_MIN || radius > NEST_RADIUS_MAX || respawn === null) return fail(usage)
-  const at = ctx.world.livePoint(self, Date.now())
+  return addNestAt(ctx, conn.account, ctx.world.livePoint(self, Date.now()), code, count, radius, respawn)
+}
+
+/**
+ * `nest add` at an explicit point (the GM's position, or coordinates typed in the admin panel, docs/ADMIN.md): checks
+ * the mob, the authored caps and that the nest spawns, then commits it. `by` is the account written as its author.
+ */
+export function addNestAt(ctx: GameContext, by: string, at: { x: number; y: number; z: number }, code: string, count: number, radius: number, respawn: [number, number]): GmResult {
+  if (!ctx.data.mob(code)) return fail(`No monster ${code}.`)
   const draft = draftNests(editorState(ctx))
   if (draft.add.length >= OVERRIDE_RECORDS_MAX) return fail(`Too many authored nests (${OVERRIDE_RECORDS_MAX}); remove some first.`)
   const id = nextAuthoredId(draft)
@@ -233,7 +241,7 @@ function add(g: GmCall): GmResult {
     tactics: tacticsFor(ctx, code),
     world: ctx.config.world,
     provenance: 'authored',
-    source: { file: NESTS_OVERRIDE_FILE, by: conn.account, at: new Date().toISOString() },
+    source: { file: NESTS_OVERRIDE_FILE, by, at: new Date().toISOString() },
   }
   const checked = checkAuthoredNest(nest, { mob: (c) => ctx.data.mob(c) })
   if ('problems' in checked) return fail(`Invalid nest: ${checked.problems.join('; ')}`)
@@ -250,14 +258,18 @@ function move(g: GmCall): GmResult {
   if (!self) return fail('nest move needs your character in the world.')
   const id = nestId(args[1])
   if (id === null || args.length !== 2) return fail('Usage: nest move <id>')
-  const at = ctx.world.livePoint(self, Date.now())
+  return moveNestTo(ctx, id, ctx.world.livePoint(self, Date.now()))
+}
+
+/** `nest move` to an explicit point (the GM's position or admin panel coordinates). */
+export function moveNestTo(ctx: GameContext, id: number, at: { x: number; y: number; z: number }): GmResult {
   const pos = { x: round2(at.x), z: round2(at.z), y: round2(at.y) }
   const draft = editNest(ctx, id, { authored: (a) => Object.assign(a, pos), patch: (p) => Object.assign(p, pos) })
   if ('ok' in draft) return draft
   return commitEdit(ctx, draft, id, 'Moved nest')
 }
 
-function set(g: GmCall): GmResult {
+function set(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const usage = `Usage: nest set <id> <${SET_FIELDS.join('|')}> <value>`
   const id = nestId(args[1])
@@ -324,7 +336,7 @@ function set(g: GmCall): GmResult {
   return commitEdit(ctx, draft, id, 'Changed nest')
 }
 
-function remove(g: GmCall): GmResult {
+function remove(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const id = nestId(args[1])
   if (id === null || args.length !== 2) return fail('Usage: nest remove <id>')
@@ -341,7 +353,7 @@ function remove(g: GmCall): GmResult {
   return ok(`Removed nest #${id} (${info.mobName} x${info.count}${id >= AUTHORED_NEST_ID_MIN ? ', deleted' : ', exported: hidden by the override'}).`, { id })
 }
 
-function restore(g: GmCall): GmResult {
+function restore(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const id = nestId(args[1])
   if (id === null || args.length !== 2) return fail('Usage: nest restore <id>')
@@ -358,7 +370,7 @@ function restore(g: GmCall): GmResult {
   return ok(`Restored the exported nest: ${describeNest(info)}`, { nest: info })
 }
 
-function undo(g: GmCall): GmResult {
+function undo(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   if (args.length !== 1) return fail('Usage: nest undo')
   const st = editorState(ctx)
@@ -393,3 +405,9 @@ export function runNestCommand(g: GmCall): GmResult {
       return fail(`Usage: ${NEST_USAGE}`)
   }
 }
+
+/**
+ * The nest edits that need no position, for callers without a GM character (the admin panel, docs/ADMIN.md): the same
+ * argument lists as the `nest` command (`['set', id, field, value]`, `['remove', id]`, `['restore', id]`, `['undo']`).
+ */
+export const nestEdits = { set, remove, restore, undo } as const

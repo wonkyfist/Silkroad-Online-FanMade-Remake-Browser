@@ -121,7 +121,7 @@ export function soundZonesFeature(ctx: WorldFeatureContext): WorldFeature {
         if (zones.loops) zones.stop()
         return
       }
-      const selfId = ctx.selfId()
+      const selfId = ctx.controlledId?.() ?? ctx.selfId() // Play the Boss: the steered mob while piloting
       const self = selfId !== null ? ctx.view(selfId) : undefined
       if (!self) return
       preload()

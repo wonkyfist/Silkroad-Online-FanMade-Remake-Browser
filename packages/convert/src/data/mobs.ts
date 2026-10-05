@@ -172,6 +172,12 @@ export function buildMobDef(code: string, ctx: MobContext): MobBuild {
     mob.attacks = attacks
   }
   const pm = ctx.portMobs.find(m => nests.some(n => n.mobId === m.id))
+  // A passive mob's champion: aggressive when its tactics link a champion tactics row (every one has btAggressType 0).
+  if (!aggressive && pm) {
+    const link = pm.combat?.championTacticsId ?? 0
+    mob.championAggressive = link > 0
+    fieldSources.championAggressive = link > 0 ? `${PROVENANCE_PORT}: mobs.json ${pm.id}.combat.championTacticsId ${link} (champion tactics attack on sight)` : `${PROVENANCE_PORT}: mobs.json ${pm.id} links no champion tactics`
+  }
   if (pm?.variants && (pm.variants.champion || pm.variants.giant)) {
     const v: MobVariant[] = ['normal']
     if (pm.variants.champion) v.push('champion')

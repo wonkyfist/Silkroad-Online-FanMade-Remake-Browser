@@ -7,7 +7,7 @@
  *   SP-EXP gauge  the thin well of the left box, x 15..190, y 24..31 (`ub_new_sp_bar` 176×8)
  *   SP text       the lower field of the left box, x 15..190, y 35..51
  *   level box     the small rounded square at the bottom-left, inner (2,52,15,14)
- *   mouse slot    the gold frame at (206,13,42,42), mouse icon baked in
+ *   mouse slot    the gold frame at (206,13,42,42), mouse icon baked in; the icon well (211,18,32,32)
  *   page arrows   `ub_up_arrow` at (625,16) and `ub_down_arrow` at (625,40) over the baked ones; digit well (626,27,17,13)
  *   right panel   inner (656,21,127,30) under the MENU tab; the C / I / S round buttons (32×32) sit in it
  *   MENU tab      `ub_new_menu` (78×24) at (681,1), exactly over the tab baked into the bar
@@ -43,6 +43,8 @@ export const SP_GAUGE: Rect = { x: 15, y: 24, w: 176, h: 8 }
 export const SP_TEXT: Rect = { x: 15, y: 35, w: 176, h: 16 }
 export const LEVEL_BOX: Rect = { x: 2, y: 52, w: 15, h: 14 }
 export const MOUSE_SLOT: Rect = { x: 206, y: 13, w: 42, h: 42 }
+/** The mouse slot's dark icon well inside the gold frame (the baked mouse picture), measured on the art. */
+export const MOUSE_SLOT_ICON: Rect = { x: 211, y: 18, w: 32, h: 32 }
 export const PAGE_UP: Rect = { x: 625, y: 16, w: 20, h: 12 }
 export const PAGE_DOWN: Rect = { x: 625, y: 40, w: 20, h: 12 }
 export const PAGE_TEXT: Rect = { x: 626, y: 27, w: 17, h: 13 }

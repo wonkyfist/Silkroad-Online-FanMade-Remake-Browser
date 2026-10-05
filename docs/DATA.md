@@ -147,6 +147,9 @@ The export includes every code in the Jangan nests: 32 monsters, levels 1–30. 
 **Aggression and variants.**
 
 - `aggressive` is true when all of the mob's nests (in any province) have port `aggressTypeRaw 0`. The port's own mobs.json labels those "aggressive" and the 1s "passive", consistently for all 32 mobs.
+  - 0 = aggressive is confirmed by the data's own shape: Tiger Girl and every champion tactics row are 0; the starter mobs (Mangyang, Big-Eyed Ghost, Weasel, Water Ghost) and the variants the client names "Young Tiger", "Bandit Subordinate", "Meek Gun Powder" are 1. Every mob has one tactics row for all its nests.
+  - Jangan: 398 of the 825 nests and 16 of the 32 mobs are aggressive (sight 9.5–11.5 m, Tiger Girl 14 m). The repo's `content/nests.override.json` turns nest 5416 (the tomb entrance pack) passive, so 397 play aggressive. `apps/server/test/aggro.test.ts` pins the set.
+- `championAggressive` (passive mobs only): true when the port's mobs.json links champion tactics (`combat.championTacticsId`, vSRO dwChampionTacticsID; every champion tactics row has btAggressType 0), false when it links none. In Jangan only the four starter mobs link one. Absent (exports before the field) counts as true. The champion tactics' own sight is not in the port data, so champions use the nest's.
 - `variants` comes from the port's mobs.json `variants.champion/giant`. Retail has no champion/giant multipliers in its data, so those stay server config.
 - The port's authored defaults are champion 10 % with ×2 HP/EXP, and giant 3 % with ×8 HP/EXP.
 

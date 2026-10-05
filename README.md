@@ -50,12 +50,20 @@ project. Keep the repository private and do not redistribute the assets.
 ## Install
 
 ```sh
-git clone <this repository> silkroad
+git clone -c core.longpaths=true <this repository> silkroad
 cd silkroad
 pnpm install --frozen-lockfile
+pnpm verify-install
 ```
 
 No native build step is needed: `better-sqlite3`, `sharp` and `esbuild` come with prebuilt binaries.
+
+**Windows: keep the folder path short.** The deepest asset paths are about 135 characters, so clone into a short folder
+such as `C:\dev\silkroad` (a deep OneDrive or Documents path can drop files). If you download the ZIP instead, extract it
+with 7-Zip into a short folder; Windows Explorer's extractor can silently skip long paths. `pnpm verify-install` checks
+the copy (Node version, one Babylon.js, package links, the SQLite driver, the assets, missing files, folder depth) and
+prints the fix for anything wrong. If you copy an already-installed folder to another PC, run `pnpm install --force`
+there.
 
 Checks (optional):
 

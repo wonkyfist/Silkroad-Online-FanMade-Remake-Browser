@@ -124,7 +124,9 @@ describe.skipIf(!HAVE_FIELDS)('quest hint circles hold their mobs (jangan-fields
     expect(checked).toBeGreaterThanOrEqual(1)
     expect(problems).toEqual([])
     const miao = [...s.ctx.world.npcs.values()].find((n) => n.code === 'NPC_CH_SHAMAN')!
-    expect(Math.hypot(miao.pos[0] + 410, miao.pos[2] + 300)).toBeLessThan(1)
+    // On the river bridge's town end (content/npcs.override.json rev 2): the old spot by the bank (-410, -300) ended up
+    // inside a bush after wave 12's plants. Still 60 m beyond every aggressive roam circle.
+    expect(Math.hypot(miao.pos[0] + 419, miao.pos[2] + 314)).toBeLessThan(1)
     const salted = s.ctx.gameplay.spawner.nests.find((n) => n.def.id === 5416)
     expect(salted?.def.tactics?.aggressive).toBe(false)
   })

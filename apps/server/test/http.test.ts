@@ -88,10 +88,10 @@ describe('accounts API', () => {
     const r = await api(s.url, '/api/servers')
     expect(r.status).toBe(200)
     // wave 10 (docs/SCREENS.md §9): plus the clock anchor and the weather (apps/server/test/servers-clock.test.ts)
-    expect(r.json).toEqual([{ id: 'jangan', name: 'Jangan', status: 'online', online: 0, capacity: 50, world: 'jangan', clock: expect.any(Object), weather: expect.any(Object) }])
+    expect(r.json).toEqual([{ id: 'jangan', name: 'Jangan', status: 'online', online: 0, capacity: 50, world: 'jangan', clock: expect.any(Object), weather: expect.any(Object), registration: 'open' }])
     const h = await api(s.url, '/health')
     expect(h.json.ok).toBe(true)
-    expect(h.json.schema).toBe(10)
+    expect(h.json.schema).toBe(14)
   })
 
   it('logout revokes the token', async () => {

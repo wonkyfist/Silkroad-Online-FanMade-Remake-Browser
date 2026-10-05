@@ -56,7 +56,8 @@ import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
 import { newLook, settings } from '../settings.ts'
-import { actorTexturesFor } from './actor-textures.ts'
+import { actorGraphics, actorTexturesFor } from './actor-textures.ts'
+import { GLOW_SLOTS, SHIELD_STRENGTH, WeaponGlow, glowModeFor, type GlowMode } from './weapon-glow.ts'
 import { optPath, optUrl, slimAvailable } from './slim.ts'
 import type { ClipCursor, ClipCursors } from '../audio/clips.ts'
 
@@ -293,6 +294,8 @@ export interface Look {
   height?: number
   /** Volume choice 0..4 (per-bone radial skin factor). */
   volume?: number
+  /** The +N of worn items (EntityState.equipPlus): the weapon and shield glow (weapon-glow.ts). Absent = all +0. */
+  plus?: Partial<Record<EquipSlot, number>>
 }
 
 /** Clip facts from the converter sidecar. */
@@ -426,6 +429,32 @@ export class ModelLibrary {
   /** Clock of the animation LOD (ms; tests). */
   now: () => number = () => performance.now()
   private readonly lodObs: Observer<Scene> | null
+  private glowPart: WeaponGlow | null = null
+  private glowOff: (() => void) | null = null
+  /** The glow's mode: set by tests and the lab (null = from the settings, effectiveGraphics of this engine). */
+  glowMode: GlowMode | null = null
+
+  /**
+   * The alchemy glow of this scene's weapons and shields (weapon-glow.ts), made on first use. Its mode follows the
+   * effective graphics (Low/Classic: the lite code, no glints; the glint cap per preset) and every settings change.
+   */
+  get glow(): WeaponGlow {
+    if (!this.glowPart) {
+      const fromSettings = (): GlowMode => {
+        try {
+          return glowModeFor(actorGraphics(this.scene.getEngine()))
+        } catch {
+          return { lite: false, glintCap: 0 }
+        }
+      }
+      let mode = fromSettings()
+      this.glowOff = settings.onChange(() => {
+        mode = fromSettings()
+      })
+      this.glowPart = new WeaponGlow(this.scene, { mode: () => this.glowMode ?? mode, out: '/out/' })
+    }
+    return this.glowPart
+  }
 
   constructor(readonly scene: Scene) {
     installPooledInterpolation()
@@ -651,6 +680,7 @@ export class ModelLibrary {
     actor.root.setEnabled(false)
     actor.loadPack = rel => this.pack(rel)
     actor.loadMovement = skeleton => this.movementPack(skeleton)
+    if (actor.isPlayer) actor.glow = this.glow
     this.actors.add(actor)
     actor.root.onDisposeObservable.addOnce(() => this.actors.delete(actor))
     if (look.height !== undefined) actor.root.scaling.setAll(heightScale(look.height))
@@ -711,6 +741,7 @@ export class ModelLibrary {
       this.ensureClips(actor, look.family).catch(err => console.warn('[models] weapon clips failed', look.family, err)),
     ])
     if (this.disposed || actor.isDisposed || !actor.isDressToken(token)) return
+    if (actor.isPlayer && !actor.glow) actor.glow = this.glow
     actor.applyDress({
       comp,
       items: items.flatMap((b, i) => (loaded[i] ? [{ item: b, container: loaded[i]!.container, sidecar: loaded[i]!.sidecar }] : [])),
@@ -718,6 +749,7 @@ export class ModelLibrary {
       family: look.family ?? null,
       gender: characterGender(actor.model.code, lookup),
       volume: look.volume,
+      plus: look.plus,
     })
   }
 
@@ -725,6 +757,9 @@ export class ModelLibrary {
     this.disposed = true
     if (this.cullObs) this.scene.onBeforeActiveMeshesEvaluationObservable.remove(this.cullObs)
     if (this.lodObs) this.scene.onBeforeAnimationsObservable.remove(this.lodObs)
+    this.glowOff?.()
+    this.glowPart?.dispose()
+    this.glowPart = null
     this.actors.clear()
     this.decorators.length = 0
     this.loadedContainers.length = 0
@@ -942,6 +977,8 @@ interface DressPlan {
   family: StarterWeapon | null
   gender: 'male' | 'female'
   volume: number | undefined
+  /** The +N of the worn items (Look.plus): the glow of the weapon and shield. */
+  plus?: Partial<Record<EquipSlot, number>> | undefined
 }
 
 /** A bind pose whose lowest point is this far above the feet is authored floating; its clips pull it down (metres). */
@@ -1127,6 +1164,12 @@ export class CharacterActor {
   private deathClip: AnimationGroup | null = null
   /** Hide Weapon (setWeaponVisible): kept across re-dressing. */
   private weaponsVisible = true
+  /** The scene's weapon glow (players; set by ModelLibrary): lights the weapon and shield by their +N. */
+  glow: WeaponGlow | null = null
+  /** The +N of the worn items (Look.plus), kept across re-dressing. */
+  private plusBySlot: Partial<Record<EquipSlot, number>> = {}
+  /** The dress token current when setPlus last ran (a dress begun before it keeps setPlus's value). */
+  private plusDuring = -1
   /** A clip has posed this actor (the first one snaps instead of blending in from the bind pose: D25). */
   private posedOnce = false
   /** Lab hook (docs/EFFECTS.md §2.5 H2): called with the name of every clip that starts on this actor. */
@@ -1685,6 +1728,9 @@ export class CharacterActor {
       else this.hangOnSocket(item.code, item.slot, container, item.attachBone ?? DEFAULT_ATTACH_BONE, sidecar)
     }
     if (plan.fallback) this.hangOnSocket('weapon', 'fallback', plan.fallback.container, plan.fallback.attachBone, plan.fallback.sidecar)
+    // A setPlus that came while this dress loaded is newer than the plan's look.
+    if (this.plusDuring !== this.dressToken) this.plusBySlot = { ...(plan.plus ?? {}) }
+    this.lightWeapons()
     this.family = plan.family
     this.setVolume(plan.gender, plan.volume)
     if (!this.weaponsVisible) this.setWeaponVisible(false)
@@ -1769,7 +1815,39 @@ export class CharacterActor {
       m.alwaysSelectAsActiveMesh = true
       m.isPickable = false
     }
+    // The glow plugin goes on before the first draw, so a later +N changes defines only (weapon-glow.ts).
+    if (this.glow && WEAPON_SLOTS.has(slot)) this.glow.prepare(worn.meshes)
     this.worn.push(worn)
+  }
+
+  /**
+   * The +N of the worn items changed (an `appearance` with the same codes): re-lights the weapon and shield without
+   * re-dressing. Slots left out are +0.
+   */
+  setPlus(plus: Partial<Record<EquipSlot, number>> | undefined): void {
+    this.plusBySlot = { ...(plus ?? {}) }
+    this.plusDuring = this.dressToken
+    this.lightWeapons()
+  }
+
+  /** The +N this actor's weapon and shield glow at (tests, the console). */
+  get plus(): Readonly<Partial<Record<EquipSlot, number>>> {
+    return this.plusBySlot
+  }
+
+  /** Lights the worn weapon, shield and fallback weapon by their +N (the fallback stands in for the weapon). */
+  private lightWeapons(): void {
+    const glow = this.glow
+    if (!glow || this.disposed) return
+    for (const w of this.worn) {
+      if (!WEAPON_SLOTS.has(w.slot)) continue
+      const slot = w.slot === 'fallback' ? 'weapon' : w.slot
+      const root = w.nodes[0] as TransformNode | undefined
+      if (!root || !(GLOW_SLOTS as readonly string[]).includes(slot)) continue
+      const dummies = new Map<string, Vector3>()
+      for (const [name, node] of w.dummies) dummies.set(name, node.position)
+      glow.light(this, { meshes: w.meshes, root, dummies, strength: slot === 'shield' ? SHIELD_STRENGTH : 1 }, this.plusBySlot[slot])
+    }
   }
 
   private removeWorn(): void {

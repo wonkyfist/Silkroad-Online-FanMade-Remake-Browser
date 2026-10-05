@@ -181,8 +181,10 @@ export const uxWorldFeature: WorldFeatureFactory = ctx => {
   const { chat, hud, scene, camera, keys } = ctx
   const offs: (() => void)[] = []
   const now = () => ctx.serverNow()
+  // Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the steered mob while piloting (the blocked-path check, the name tags'
+  // focus, the camera keys, the area name follow her), else the own character.
   const selfView = (): EntityView | undefined => {
-    const id = ctx.selfId()
+    const id = ctx.controlledId?.() ?? ctx.selfId()
     return id === null ? undefined : ctx.view(id)
   }
   const alivePos = (): GroundPoint | null => {
@@ -363,6 +365,7 @@ export const uxWorldFeature: WorldFeatureFactory = ctx => {
     self: alivePos,
     cursorGround,
     holdToMove: () => settings.get().controls.holdToMove,
+    warn: () => settings.get().controls.unreachableWarning,
     rtt: () => ctx.session.clock.rtt,
     blocked: (want, stop, message) => {
       blockedFx.show({ ...want, y: groundY(want) }, { ...stop, y: groundY(stop) })
@@ -523,7 +526,7 @@ export const uxWorldFeature: WorldFeatureFactory = ctx => {
           break
         }
         case 'move':
-          if (msg.id === selfId) move.onSelfMove(msg.move, now())
+          if (msg.id === (ctx.controlledId?.() ?? selfId)) move.onSelfMove(msg.move, now())
           break
         case 'warp':
           if (msg.id === selfId) {

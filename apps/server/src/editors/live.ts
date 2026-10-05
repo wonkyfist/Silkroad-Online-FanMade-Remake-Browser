@@ -1,6 +1,7 @@
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import type { ContentChangeKind, NestDef, NpcDef } from '@sro/shared'
+import { mobAggressive } from '../ai.ts'
 import type { GameContext } from '../game.ts'
 import type { GmCall, GmResult } from '../gm.ts'
 import { HIDDEN_NPCS } from '../npc.ts'
@@ -77,7 +78,7 @@ function retune(ctx: GameContext, nest: NestRuntime): void {
     m.roamRadius = def.radius
     m.sightRange = def.tactics.sightRange
     m.leashRange = Math.max(def.tactics.leashRange, def.radius + 10)
-    m.aggressive = def.tactics.aggressive
+    m.aggressive = mobAggressive(m.def, m.variant, def.tactics)
   }
 }
 

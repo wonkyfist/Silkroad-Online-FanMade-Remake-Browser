@@ -292,7 +292,8 @@ describe('hotbar model', () => {
     expect(hotbarDrop(bar, bar[0]!, 0, 0)).toEqual([])
     expect(hotbarDrop(bar, { kind: 'item', code: POTION.code }, null, 39).map(m => valid(m))).toEqual([{ t: 'hotbarSet', slot: 39, entry: { kind: 'item', code: POTION.code } }])
     expect(valid(intent.hotbarSet(12, null))).toEqual({ t: 'hotbarSet', slot: 12, entry: null })
-    expect(intent.hotbarSet(40, null)).toBeNull()
+    // 40 is MOUSE_SLOT (the mouse quick slot); 41 is past every slot.
+    expect(intent.hotbarSet(41, null)).toBeNull()
     expect(valid(intent.skillLearn('SKILL_CH_SWORD_SMASH_A_02'))).toEqual({ t: 'skillLearn', skill: 'SKILL_CH_SWORD_SMASH_A_02' })
     expect(valid(intent.masteryUp('BICHEON'))).toEqual({ t: 'masteryUp', mastery: 'BICHEON' })
     expect(valid(intent.buffCancel('SKILL_CH_COLD_GANGGI_A_01'))).toEqual({ t: 'buffCancel', skill: 'SKILL_CH_COLD_GANGGI_A_01' })

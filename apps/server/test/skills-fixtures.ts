@@ -120,7 +120,7 @@ type Msg<T extends ServerMessage['t']> = Extract<ServerMessage, { t: T }>
  * A Gameplay on a flat 1 km world with the synthetic skills, a constant rng (every hit lands as a plain hit, every
  * 100 % status sticks) and helpers to make characters and dummies. Time is driven by hand (`tick(now)`).
  */
-export function skillHarness(opts: { rng?: () => number; skillAmmo?: number; data?: GameData; book?: SkillBook; /** Extra config (wave 11: e.g. `uniques: false`). */ config?: Partial<ServerConfig> } = {}) {
+export function skillHarness(opts: { rng?: () => number; skillAmmo?: number; data?: GameData; book?: SkillBook; /** Extra config (wave 11: e.g. `uniques: false`). */ config?: Partial<ServerConfig>; /** The world's straight-walk rule (default: the flat world's; Play the Boss tests put a wall in it). */ move?: (from: Vec3, to: Vec3) => Vec3 | null } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'sro-skills-'))
   const logs: string[] = []
   const rng = opts.rng ?? (() => 0.5)
@@ -128,7 +128,7 @@ export function skillHarness(opts: { rng?: () => number; skillAmmo?: number; dat
   const store = openStore(config.dataDir)
   const bounds = { minX: -500, minZ: -500, maxX: 500, maxZ: 500 }
   const nav = new FlatNav(bounds)
-  const world = new World('jangan', 5, 20, bounds, (f, t) => nav.moveStraight(f, t))
+  const world = new World('jangan', 5, 20, bounds, opts.move ?? ((f, t) => nav.moveStraight(f, t)))
   const data = opts.data ?? new GameData({ mobs: [DUMMY], items: SKILL_ITEMS, levels: SKILL_LEVELS, towns: [SAFE_TOWN] })
   const setup: WorldSetup = { spawn: { x: 0, y: 0, z: 0 }, spawnSource: 'test', bounds, displayName: 'Test', regionOrigin: null, places: [] }
   const gameplay = new Gameplay({ world, data, store, config, setup, nav, rng })

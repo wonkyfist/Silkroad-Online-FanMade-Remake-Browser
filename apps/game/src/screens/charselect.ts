@@ -16,14 +16,15 @@
  * text-characterselect art would be),
  * info window (228x140: GDR_STA_NAME 32,29; HP/MP gauges 46,50 / 46,62; level label 79,102 and value 126,102), 92x41
  * buttons, warning_delete dialog (344x192, buttons at 90,145 and 178,145). Rebuilt on the UI kit (docs/UI.md §4.7):
- * outer buttons and dialog from screens/outer-ui.ts, name plates on the tooltip frame, and the info window kept
- * under the top bar (it follows the selected character's head).
+ * outer buttons and dialog from screens/outer-ui.ts, name plates on the tooltip frame, and the info window beside the
+ * selected character (retail places it in code: its Info section has no rect), never over it, between the bars.
  */
 import { CreateCylinder, PointerEventTypes, Vector3, type AbstractMesh, type Mesh, type Observer, type PointerInfo, type Scene, type TransformNode } from '@babylonjs/core'
 import { MAX_CHARACTER_SLOTS, type CharacterSummary } from '@sro/shared'
 import type { App, OwnedScene, Screen, ScreenParams } from '../app.ts'
 import { heightScale } from '@sro/appearance'
 import { weaponFamilyOf, weaponLabel } from '../content/catalog.ts'
+import { takeGpuRecovery } from '../gpu-loss.ts'
 import { t } from '../i18n/index.ts'
 import { STAGES, STAGE_ORBIT_MS } from '../stage/stages.ts'
 import type { Stage } from '../stage/types.ts'
@@ -89,6 +90,29 @@ interface View {
 type ListReply = { characters: CharacterSummary[]; slots: number }
 
 const ease = (f: number) => (f < 0.5 ? 2 * f * f : 1 - (-2 * f + 2) ** 2 / 2)
+
+/** Screen px kept between the info window and the body, and from the screen edges and the bars. */
+const INFO_GAP = 16
+const INFO_EDGE = 8
+
+/**
+ * Where the info window goes (top-left, screen px) for the selected character: `head` = just above its head, `body` =
+ * head-to-feet height on screen, `w`/`h` the window's size, `bar` the top and bottom bars' height. Right of the body,
+ * else left of it, level with the upper body; when neither side fits (a narrow screen), above the head if that fits
+ * under the top bar; else right of the body as far as the screen allows. Never under either bar.
+ */
+export function infoPlace(head: { x: number; y: number }, body: number, w: number, h: number, screenW: number, screenH: number, bar: number): { x: number; y: number } {
+  const half = body * 0.2 + INFO_GAP
+  const top = bar + INFO_EDGE / 2
+  const bottom = screenH - bar - h - INFO_EDGE / 2
+  const beside = Math.min(Math.max(head.y + body * 0.08, top), bottom)
+  if (head.x + half + w <= screenW - INFO_EDGE) return { x: head.x + half, y: beside }
+  if (head.x - half - w >= INFO_EDGE) return { x: head.x - half - w, y: beside }
+  const above = head.y - INFO_GAP - h
+  const centred = Math.min(Math.max(head.x - w / 2, INFO_EDGE), screenW - w - INFO_EDGE)
+  if (above >= top) return { x: centred, y: above }
+  return { x: Math.max(INFO_EDGE, screenW - w - INFO_EDGE), y: beside }
+}
 
 export function charSelectScreen(app: App, params: ScreenParams['charselect']): Screen {
   const session = app.session
@@ -223,6 +247,7 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
           fallbackWeapon: app.catalog.weapon(family),
           height: character.height,
           volume: character.volume,
+          plus: character.equipPlus,
         }, tick)
         if (disposed || slots[i] !== slot) return actor.dispose()
         actor.root.setEnabled(false)
@@ -330,7 +355,8 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
   let lastClick = 0
   const t0 = performance.now()
   const head = new Vector3()
-  // --ui (the outer windows' scale) and the top bar's height, for keeping the info window on screen.
+  const foot = new Vector3()
+  // --ui (the outer windows' scale) and the bars' height (both 172/1600 of the width), for keeping the info window on screen.
   let ui = rootScale()
   ls.on(window, 'resize', () => (ui = rootScale()))
   const topBar = () => Math.min((window.innerWidth * 172) / 1600, window.innerHeight * 0.16)
@@ -363,9 +389,13 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
         s.tag.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -100%) scale(${ui})`
         s.tag.hidden = !p.visible || i === selected || !a || !v.shown(a.root)
         if (i === selected) {
-          // Above the head, but never under the top bar (a tall character near the camera).
-          const y = Math.max(p.y, topBar() + 4 + 140 * ui)
-          info.style.transform = `translate(${p.x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -100%) scale(${ui})`
+          // Beside the character, never over it: right of the body, else left of it, level with the upper body; on a
+          // screen too narrow for either, above the head when that fits under the top bar. Always between the bars.
+          // (Anchored to the head it covered the face whenever the camera was close.)
+          foot.set(s.at.x, s.at.y, s.at.z)
+          const body = Math.max(40, toScreen(scene, foot).y - p.y)
+          const at = infoPlace({ x: p.x, y: p.y }, body, 228 * ui, 140 * ui, window.innerWidth, window.innerHeight, topBar())
+          info.style.transform = `translate(${at.x.toFixed(1)}px, ${at.y.toFixed(1)}px) scale(${ui})`
           // With its character: hidden while the stage prepares it (P-STALL).
           info.style.visibility = a && !v.shown(a.root) ? 'hidden' : ''
         }
@@ -428,6 +458,14 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
         busy = false
         refreshButtons()
         void loading.finish()
+        // A reload after a graphics device loss whose token could not resume here (gpu-loss.ts): back into the world.
+        const back = takeGpuRecovery()
+        const i = back ? slots.findIndex(s => s.character.id === back.characterId) : -1
+        if (i >= 0) {
+          selected = i
+          app.toast(t('gpu.restored'), 'info', 8000)
+          startGame()
+        }
       }
     }
   }

@@ -18,6 +18,7 @@
  */
 import { CHARACTER_RULES, type ActionFailReason, type ClientMessage, type EquipSlot, type GameplayRequest, type Inventory, type PlayerStats, type ServerMessage } from '@sro/shared'
 import type { App } from '../app.ts'
+import { placedItem } from '../audio/cues.ts'
 import { gameAudio } from '../audio/index.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 import type { Session } from '../net/session.ts'
@@ -223,12 +224,16 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
     if (!disposed && kind === 'error') gameAudio()?.ui('ui.error')
   }
 
+  /** The item of the last own move/equip/unequip request: its SND_EQUIP sound plays when the server accepts it. */
+  let placing: { re: string; code: string } | null = null
   const sendIntent = (msg: ClientMessage | null) => {
     if (!msg || disposed) return
     if (session.status !== 'online') {
       toast(t('net.notConnected'), 'error')
       return
     }
+    const code = placedItem(msg, inv)
+    if (code) placing = { re: msg.t, code }
     send(msg)
   }
 
@@ -373,7 +378,6 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
     const change = inv.apply(u)
     if (change.bag.length) invWin.update(change.bag)
     if (change.equip.length) charWin.renderEquip(change.equip as EquipSlot[])
-    if (change.equip.length) gameAudio()?.equip(change.equip.map(s => inv.equipped(s as EquipSlot)?.code))
     if (change.gold !== 0) gold = inv.gold
     invWin.renderMoney(gold)
     renderGold()
@@ -418,6 +422,12 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
         applyInventoryUpdate(msg)
         break
       case 'actionResult':
+        // docs/SOUND.md §10.3: an accepted placement plays the item's SND_EQUIP sound (not every equip-slot update:
+        // durability ticks change those too).
+        if (placing && msg.re === placing.re) {
+          if (msg.ok) gameAudio()?.place(placing.code)
+          placing = null
+        }
         if (msg.ok || !ownRequests.has(msg.re)) break
         if (msg.re === 'respawn') {
           if (msg.reason === 'not_dead') death.hide()

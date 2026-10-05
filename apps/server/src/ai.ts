@@ -1,4 +1,4 @@
-import { yawTowards, type Vec3 } from '@sro/shared'
+import { yawTowards, type MobDef, type MobVariant, type TacticsDef, type Vec3 } from '@sro/shared'
 import type { Mob, Player } from './world.ts'
 
 /**
@@ -69,6 +69,17 @@ function dist2(a: Vec3 | [number, number], b: Vec3 | [number, number]): number {
   const bx = b[0]
   const bz = b.length === 3 ? b[2] : b[1]
   return (ax - bx) ** 2 + (az - bz) ** 2
+}
+
+/**
+ * Whether a mob attacks players in sight unprovoked: its nest's tactics, else (no nest) the MobDef default. A champion
+ * spawns with its champion tactics instead, and vSRO's are all aggressive (Tab_RefTactics: btAggressType 0 on every
+ * dwChampionTacticsID row), so a champion Mangyang attacks on sight; MobDef.championAggressive false (no champion
+ * tactics linked) keeps the base tactics. Giants and uniques keep their tactics. Sight and leash stay the nest's.
+ */
+export function mobAggressive(def: Pick<MobDef, 'aggressive' | 'championAggressive'>, variant: MobVariant, tactics?: Pick<TacticsDef, 'aggressive'> | null): boolean {
+  const base = tactics?.aggressive ?? def.aggressive
+  return base || (variant === 'champion' && def.championAggressive !== false)
 }
 
 /** Reach of a mob's basic attack against a player, metres centre to centre. */

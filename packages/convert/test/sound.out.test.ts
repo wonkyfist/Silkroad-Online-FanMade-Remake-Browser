@@ -32,7 +32,8 @@ describe.skipIf(!HAS)('work/out/sound', () => {
       expect(existsSync(p), f.url).toBe(true)
       expect(statSync(p).size, f.url).toBe(f.bytes)
       if (f.wav) expect(existsSync(join(OUT, ...f.wav.split('/'))), f.wav).toBe(true)
-      expect(f.url.endsWith(idx.codec === 'opus' ? '.ogg' : '.wav'), id).toBe(true)
+      // An Opus export made without ffmpeg writes the uncached files as PCM .wav (docs/SOUND.md §10.4).
+      expect(idx.codec === 'opus' ? /\.(ogg|wav)$/.test(f.url) : f.url.endsWith('.wav'), id).toBe(true)
     }
   })
 

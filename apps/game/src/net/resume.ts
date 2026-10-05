@@ -5,8 +5,10 @@
  * Every storage access is guarded: blocked storage simply means no resume.
  */
 import type { App } from '../app.ts'
+import { takeGpuRecovery } from '../gpu-loss.ts'
 import { t } from '../i18n/index.ts'
 import { GameError } from './api.ts'
+import type { Session } from './session.ts'
 import { openSession } from './transport.ts'
 
 export interface SavedSession {
@@ -127,6 +129,25 @@ export async function resumeSession(app: App): Promise<boolean> {
   app.username = saved.username
   app.tokenExpiresAt = saved.expiresAt
   app.setSession(session)
+  // A reload after a graphics device loss (gpu-loss.ts) goes straight back into the world with the same character.
+  const back = takeGpuRecovery()
+  if (back && (await reenterWorld(app, session, back.characterId))) return true
   await app.go('charselect')
   return true
+}
+
+/** Enters the world with character `id` (from the server's list); false when it is not there or the list fails. */
+async function reenterWorld(app: App, session: Session, id: number): Promise<boolean> {
+  try {
+    const reply = await session.request({ t: 'charList' }, ['charList'], RESUME_TIMEOUT_MS)
+    const character = reply.characters.find(c => c.id === id)
+    if (!character) return false
+    console.info(`[resume] back into the world as ${character.name} after a graphics device loss`)
+    app.toast(t('gpu.restored'), 'info', 8000)
+    await app.go('world', { character })
+    return true
+  } catch (err) {
+    console.warn('[resume] could not re-enter the world after a graphics device loss', err)
+    return false
+  }
 }

@@ -86,7 +86,7 @@ Every visible thing is an `EntityState` in `worldEnter.entities`, `spawn`, `desp
    - the attacker dies;
    - the target leashes out of reach for good (`unreachable`).
 5. **Mob AI** (server module) uses the same combat path.
-   - Aggressive mobs (`NestDef.tactics.aggressive`) acquire players within `sightRange`.
+   - Aggressive mobs (`NestDef.tactics.aggressive`) acquire players within `sightRange`. A champion uses its retail champion tactics, which are always aggressive, so a champion of a passive mob (Mangyang, Big-Eyed Ghost, Weasel, Water Ghost) attacks on sight too, with the nest's sight; `MobDef.championAggressive: false` (no champion tactics linked) keeps it passive. Giants and uniques keep the nest's tactics. A GM who turns a nest's `aggressive` off also sets its champion chance to 0 to make it fully passive (`ai.ts` `mobAggressive`).
    - Every mob retaliates when hit.
    - A mob chases at `runSpeed`, gives up past `leashRange` from its nest, walks home and regenerates.
 6. **Damage and hit formulas** are server code.
@@ -164,13 +164,14 @@ Every visible thing is an `EntityState` in `worldEnter.entities`, `spawn`, `desp
   - `inventory {inventory}` is the full snapshot, sent right after `worldEnter` (after `stats`) and whenever the server thinks the client may be out of sync.
   - `inventoryUpdate {bag?: {slot, item|null}[], equip?: {slot, item|null}[], gold?}` sends only what changed.
   - `appearance {id, equip}` tells viewers when a player's visible equipment codes change. Players also carry `equip` in their `EntityState`.
+  - Weapon glow (additive, optional): `appearance` carries `plus` and `EntityState` / `CharacterSummary` carry `equipPlus`, the +N (1..255) of the visible slots that have one (absent = all +0). A change of +N alone (alchemy, GM `plus`) sends an `appearance` too.
 - **Requests.** Bag indexes run from 0 to `MAX_BAG_SIZE − 1`, and counts from 1 to `MAX_ITEM_COUNT`. The server checks every index against the real bag size.
 
 | Request | Rule | Typical failures |
 |---|---|---|
 | `itemMove {from, to}` | Into an empty slot: move. Onto the same code with room: merge (the remainder stays). Otherwise: swap. | `invalid_slot` (empty `from`, `from === to`) |
 | `itemSplit {from, to, count}` | `to` must be empty; `count` must be less than the stack. | `invalid_slot`, `invalid_count` |
-| `itemEquip {bag, slot?}` | The item must be equipment whose `ItemDef.slot` fits `slot`. Rings go to `slot`, or the first free ring. Anything already in the slot swaps back into `bag`. A two-handed weapon also unequips the shield, and a shield is refused while a two-handed weapon is worn. | `invalid_slot`, `requirements` (level, gender, race), `inventory_full` |
+| `itemEquip {bag, slot?}` | The item must be equipment whose `ItemDef.slot` fits `slot`. Rings go to `slot`, or the first free ring. Anything already in the slot swaps back into `bag`. A two-handed weapon also unequips the shield, and a shield is refused while a two-handed weapon is worn. Armour classes (retail): a garment piece is refused while a protector or armour piece is worn, and the other way round; protector and armour mix. Only the pieces that stay on count, so a character already wearing a mixed set keeps it (nothing is removed or deleted) and may swap any piece for one that agrees with the rest, but cannot add to the mix. Unequipping is always allowed. | `invalid_slot`, `requirements` (level, gender, race), `armor_mix` ("Armor and garment cannot be worn at the same time."), `inventory_full` |
 | `itemUnequip {slot, bag?}` | Into `bag` (must be empty), or the first free slot. | `invalid_slot`, `inventory_full` |
 | `itemUse {bag}` | Consumes one. It applies `ItemDef.use`: HP/MP at once, or a return scroll, which casts first and warps to the town point at the end (section 8, Consumables). Potions share `cooldownGroup`. | `not_usable`, `cooldown`, `busy`, `dead` |
 | `itemDrop {bag, count?}` | Spawns an item entity at the player's feet with no owner. | `not_usable` (`canDrop: false`), `invalid_count` |
@@ -195,7 +196,7 @@ The full design is [docs/SKILLS.md](SKILLS.md) (§1 masteries and SP, §5 timing
 
 - **Learning.** `masteryUp {mastery}` raises one of the seven `MASTERY_CODES` by one level (cap: the character level). `skillLearn {skill}` learns the next row of a line (SKILLS §1.3 rules). Typical refusals: `no_sp`, `mastery_cap`, `not_learned`, `requirements`. Both answer `actionResult ok` → `skillsUpdate` → `statsDelta {sp}` (→ `stats` when passives change the totals).
 - **State.** Enter-world sends `skills {masteries, skills, hotbar, cooldowns?}` after `inventory`: the highest learned row per group, the `HOTBAR_SLOTS` (40) hotbar and the groups still cooling down. Skill cooldowns survive a relog but not a server restart; item cooldowns are runtime only.
-- **Hotbar.** `hotbarSet {slot, entry}` stores `{kind: 'skill' | 'item', code}` or clears a slot (also while dead). An item entry is accepted only for a consumable (`ItemDef.use`; otherwise `not_usable`); pressing it sends `itemUse` for the lowest bag slot holding that code.
+- **Hotbar.** `hotbarSet {slot, entry}` stores `{kind: 'skill' | 'item', code}` or clears a slot (also while dead). An item entry is accepted only for a consumable (`ItemDef.use`; otherwise `not_usable`); pressing it sends `itemUse` for the lowest bag slot holding that code. Slot `MOUSE_SLOT` (40, right after the 40 hotbar slots) is the mouse quick slot: same entries and rules, stored per character (migration 11, `char_mouse_slot`), carried in the `skills` snapshot as `mouse` (absent = empty) and in `skillsUpdate.hotbar` as slot 40; only the middle mouse button uses it.
 - **Using.** `useSkill {skill, target?}` is implemented: `actionResult ok` → `cast {id, skill, instance, target?, instant?, prepareMs, castMs, actionMs}` (to everyone who sees the caster) → `statsDelta {mp}` → `combat {instance, skill, ...}` per hit moment. A queued skill gets its `actionResult` at request time and its `cast` when it starts. An action that closes early sends `castEnd {reason}`. New refusals: `not_learned`, `not_enough_mp`, `wrong_weapon`, `no_ammo` (only when config `SKILL_AMMO` is on), `cant_act`, `cooldown`. `not_implemented` stays in the enum for older clients.
 - **Effects.** Buffs, debuffs, imbues, toggles and statuses are `EffectState`s: `effectAdd {id, effect}` / `effectRemove {id, instance, reason?}` to viewers, and `EntityState.effects` (at most `MAX_EFFECTS_PER_ENTITY` = 32) for late joiners. `buffCancel {skill}` ends an own buff or toggle. Passives are never sent.
 - **Combat extensions.** `combat.skill` is the skill **row** code (basic attacks: the weapon's `*_BASE_01` row; clients map it to its group through `skills.json`), `instance` links hits to a `cast`, `at` is the landing time of projectiles, `aoe` marks a secondary target. `CombatHit` gains `status`, `down` and `pos` (knockback landing point).
@@ -237,7 +238,7 @@ Codes are CodeName128 and are matched case-insensitively, then upper-cased. An u
 | `skillLearn` | `skill: CodeName128` |
 | `masteryUp` | `mastery: MasteryCode` (`MASTERY_CODES`) |
 | `buffCancel` | `skill: CodeName128` |
-| `hotbarSet` | `slot: 0..39`, `entry: {kind: 'skill' \| 'item', code: CodeName128} \| null` (strict keys inside `entry` too) |
+| `hotbarSet` | `slot: 0..40` (40 = `MOUSE_SLOT`), `entry: {kind: 'skill' \| 'item', code: CodeName128} \| null` (strict keys inside `entry` too) |
 | `npcTalk` | `npc: int` |
 | `npcClose` | — |
 | `storageOpen` | `npc: int` |
@@ -261,9 +262,9 @@ Per-type budgets (`CLIENT_RATE_LIMITS`, per second / burst): `skillLearn`, `mast
 | `levelUp` | `id`, `level` |
 | `inventory` | `inventory: {bagSize, bag: (ItemStack\|null)[bagSize], equip, gold}` |
 | `inventoryUpdate` | `bag?`, `equip?`, `gold?` |
-| `appearance` | `id`, `equip: {[EquipSlot]: item code}` |
+| `appearance` | `id`, `equip: {[EquipSlot]: item code}`, `plus?: {[EquipSlot]: 1..255}` (weapon glow) |
 | `entityUpdate` (extended) | `hp?`, `maxHp?`, `state?`, `gm?: boolean` (wave 3; false clears the [GM] tag) |
-| `EntityState` (extended) | `kind: 'player'\|'mob'\|'npc'\|'item'`, `weapon?`, `hp?`, `maxHp?`, `state?`, `variant?`, `count?`, `plus?`, `owner?`, `ownerUntil?`, `expiresAt?`, `equip?`; wave 3: `effects?: EffectState[]` (≤ 32), `gm?: true` (players, display only) |
+| `EntityState` (extended) | `kind: 'player'\|'mob'\|'npc'\|'item'`, `weapon?`, `hp?`, `maxHp?`, `state?`, `variant?`, `count?`, `plus?`, `owner?`, `ownerUntil?`, `expiresAt?`, `equip?`, `equipPlus?` (players: +N of the visible slots, the weapon glow); wave 3: `effects?: EffectState[]` (≤ 32), `gm?: true` (players, display only) |
 | `combat` (wave 3) | `skill` = row code, `instance?`, `at?` (server ms the hits land), `aoe?: true`; each hit may carry `status?: SkillStatusKind`, `down?: true`, `pos?: Vec3` |
 | `skills` | `masteries: {[MasteryCode]: 0..300}`, `skills: string[]` (≤ 512, highest learned row per group), `hotbar: (HotbarEntry\|null)[40]`, `cooldowns?: {group, readyInMs}[]` |
 | `skillsUpdate` | `masteries?` (only the changed ones), `learned?: string[]`, `hotbar?: {slot, entry}[]` |
@@ -504,6 +505,50 @@ is skipped). Gwakwi and Jeonghye mention Tiger Girl while she lives (`content/qu
 from characterInfo's `ride` column (today only Tiger Girl on `bluetiger.glb`, joint `saddle`); absent in older
 exports. `content/uniques.json` (`UniquesFile`, `checkUniquesFile`; the server's start check) and the two town files
 (`TownFile` / `TownDressingFile`, `validateTownFile`) are in §14.
+
+### Admin panel: registration switch and bans (docs/ADMIN.md)
+
+All additive, protocol v1. The panel's own HTTP API (`/api/admin/*`, `packages/shared/src/admin.ts`) is not part of
+the game protocol; docs/ADMIN.md §3 lists it.
+
+| Where | Change |
+|---|---|
+| `welcome.server` / `GET /api/servers` (extended) | `registration?: 'open' \| 'closed'`: whether `POST /api/register` accepts new accounts. Absent (older servers, the mock) = open. A bad value drops only that field, like `clock` |
+| `POST /api/register` | 403 `forbidden` "Registration is closed on this server." while it is closed (checked before anything else) |
+| `POST /api/login` | 403 `forbidden` "This account is banned: \<reason\>" for a banned account with the right password (no session); a ban also ends the account's sessions and closes its socket with 4010 |
+
+The login screen asks `GET /api/servers` each time it opens and hides Register when every server says `closed`
+(`registrationOpen` in `apps/game/src/net/api.ts`); a `forbidden` answer to a registration hides it too.
+
+### Play the Boss, layers 1–5 (docs/PLAY_THE_BOSS.md §5)
+
+All additive, protocol v1. Types, lists and the settings schema live in `packages/shared/src/pilot.ts`; protocol.ts
+spreads them into its unions and lists. Every request is a GameplayRequest answered by one `actionResult`.
+
+| Direction | Message / field | Notes |
+|---|---|---|
+| client → server | `pilotVolunteer {on}` | during a call only (else `no_event`): `on` volunteers this character (eligible; one entry per account, else `not_eligible` with a message), `false` withdraws it. The player also gets its own `huntEvent` (just before the answer). Accepted while dead. 1/s, burst 3 |
+| client → server | `pilotAnswer {event, accept}` | only the offered account, inside `pilotOffer.expiresAt`; else `no_event`. 1/s, burst 3 |
+| client → server | `pilotAct {ability, target?, x?, z?, repeat?}` | `ability` /^[a-z]{1,16}$/ (a kit id); `x`/`z` together; `repeat` on Claw = auto-claw. Fails: `no_event`, `not_found`, `cant_act`, `busy` (her cast window, or < 500 ms since the last act), `cooldown`, `no_charges`, `invalid_target`, `too_far` (more than 8 m past the reach), `safe_zone`. 5/s, burst 10 |
+| client → server | `pilotTaunt {line}` | 0..15 on the wire, 0..7 used; 4 s cooldown (`cooldown`). 1/s, burst 2 |
+| client → server | `pilotQuit` | her AI finishes; the reward is forfeit. 1/s, burst 2 |
+| client → server | `moveTo`, `stopAction` | unchanged on the wire: while you pilot, the server steers her with them |
+| server → client | `huntEvent {event: HuntEventView}` | every world socket, on changes (the hunters and volunteers counts at most every 2 s) and on enter-world; `pilot` only once `phase` is `ended`. Phase `call` (layer 4): `callEndsAt`, `volunteers`, `minLevel` (additive) and the recipient's own `you {volunteered, eligible, why?}`; phase `offer` after a call keeps `callEndsAt` and `volunteers` (the banner's "Drawing a volunteer…") |
+| server → client | `pilotOffer {event, expiresAt, surviveMin, downsTarget, idleSec}` | the drawn (or GM / admin picked) player; a decline or a timeout after a call draws the next volunteer |
+| server → client | `pilotStart {event, mob, kit, huntEndsAt, downsTarget, area, taunts, senseM, place}` | the pilot, after its interest moved to her (`mob` is spawned first); `event` 0 = a GM attach session (no timer, no downs) |
+| server → client | `pilotState {steering, idleWarnAt?, hunting, downs, charges, ready, enraged?, stalkUntil?}` | the pilot, on change; `ready` = server ms per ability still cooling down |
+| server → client | `pilotEnd {event, reason, gold?, honor?, downs?, steeredMs?}` | the pilot; then its view returns to the body |
+| server → client | `huntPing {event, x, z, r, at}`, `huntTrail {points: [x, z, at][]}`, `huntRoar {bearing, distM, at}`, `huntTaunt {id, line}` | hunters (`huntTaunt`: her viewers) |
+| `ActionFailReason` | `piloting`, `not_eligible`, `no_event`, `no_charges` | `piloting`: the body in a trance refuses everything but `stopAction` |
+| `EntityState` / `entityUpdate` | `trance?`, `piloted?`, `honor?` | booleans on `entityUpdate` (`honor: ''` clears) |
+| `cast` | `clip?` | the clip type of a server-built ability (`skill` `PILOT_TIGERWOMAN_POUNCE`, ...) |
+
+Free chat from the pilot is refused with `error forbidden` (re `chat`); slash commands still run. The admin panel's
+`/api/admin/boss/*` routes are listed in docs/PLAY_THE_BOSS.md §6.3 (all built: status, settings, start, pick, stop, events,
+blocks, eligibility).
+
+Layer 5 (big crowds) adds nothing on the wire: her max HP follows the hunters every 5 s and goes out as the existing
+`entityUpdate {id, hp, maxHp}` to everyone who sees her (her HP keeps its fraction). Old clients ignore `minLevel`.
 
 ## 12. Combat and items: horses, monster skills, durability and repair, alchemy, Berserk (docs/SYSTEMS_COMBAT.md, docs/WAVE_PLAN2.md §3.2)
 

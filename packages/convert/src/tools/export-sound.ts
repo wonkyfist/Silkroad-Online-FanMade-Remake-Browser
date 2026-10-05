@@ -12,7 +12,8 @@
  * Output (served at /out/sound/):
  *   <out>/sound/index.json                SoundIndex (packages/shared/src/sound.ts)
  *   <out>/sound/model/<CodeName128>.json  ModelSounds, per player/mob/NPC code with at least one clip track
- *   <out>/sound/<folder>/<name>.ogg       Ogg Opus mono 48 kbps (env/* 64 kbps); .wav with --codec wav / --also-wav
+ *   <out>/sound/<folder>/<name>.ogg       Ogg Opus mono 48 kbps (env/* 64 kbps); .wav with --codec wav / --also-wav,
+ *                                         and for files not in the cache when ffmpeg is missing (docs/SOUND.md §10.4)
  *   <out>/sound/.cache.json               encoder cache (dot-file: never served or deployed)
  * The tree is built in a staging folder and swapped in whole. It is then mirrored to <workDir>/out-opt/sound when
  * out-opt exists (docs/ASSETS.md: out-opt copies everything but glb/world PNGs unchanged; the game reads /out-opt/
@@ -59,14 +60,20 @@ async function main(): Promise<void> {
   const soundDir = join(outDir, 'sound')
   const extracted = join(cfg.workDir, 'extracted')
 
-  let codec: SoundCodec = (flag('--codec') ?? 'opus') as SoundCodec
+  const codec: SoundCodec = (flag('--codec') ?? 'opus') as SoundCodec
   if (codec !== 'opus' && codec !== 'wav') throw new Error(`--codec must be opus or wav, not ${codec}`)
   let ffmpeg: string | null = null
+  /**
+   * Opus asked for but no ffmpeg (docs/SOUND.md §10.4): every cached .ogg is kept, and only the files that need
+   * encoding are written as trimmed PCM .wav (each SoundFile.url names its own file, so a mixed tree plays). A later
+   * run with ffmpeg encodes those to .ogg (their cache entries say 'wav').
+   */
+  let pcmFallback = false
   if (codec === 'opus') {
     ffmpeg = detectFfmpeg(flag('--ffmpeg'))
     if (!ffmpeg || !hasLibopus(ffmpeg)) {
-      console.warn(`! ffmpeg with libopus not found (${flag('--ffmpeg') ?? process.env.SRO_FFMPEG ?? 'ffmpeg'}); writing trimmed PCM .wav instead`)
-      codec = 'wav'
+      console.warn(`! ffmpeg with libopus not found (${flag('--ffmpeg') ?? process.env.SRO_FFMPEG ?? 'ffmpeg'}); cached .ogg files are kept, files that need encoding are written as trimmed PCM .wav`)
+      pcmFallback = true
       ffmpeg = null
     }
   }
@@ -227,6 +234,7 @@ async function main(): Promise<void> {
   const urlPath = (id: string) => id.replace(/[^a-z0-9_\-/.]/g, '_')
   let encoded = 0
   let reused = 0
+  const pcmFallbacks: string[] = []
   await pool(ids, jobs, async id => {
     const src = sources.get(id)
     try {
@@ -236,13 +244,13 @@ async function main(): Promise<void> {
       const sha1 = createHash('sha1').update(bytes).digest('hex')
       const ambient = plan.ambient.has(id) || id.startsWith('env/')
       const bitrate = codec === 'opus' ? (ambient ? AMBIENT_KBPS : OPUS_KBPS) : 0
-      const out = `${urlPath(id)}${ext}`
-      const dst = join(staging, ...out.split('/'))
+      let out = `${urlPath(id)}${ext}`
+      let dst = join(staging, ...out.split('/'))
       mkdirSync(dirname(dst), { recursive: true })
       const srcKey = `prim/snd/${id}.wav`
       const prev = oldCache[srcKey]
       const prevOut = prev && join(soundDir, ...prev.out.split('/'))
-      const wavOut = alsoWav && codec === 'opus' ? `${urlPath(id)}.wav` : null
+      const wavOut = alsoWav && codec === 'opus' && !pcmFallback ? `${urlPath(id)}.wav` : null
       const prevWav = wavOut && join(soundDir, ...wavOut.split('/'))
       let entry: CacheEntry
       if (prev && prev.sha1 === sha1 && prev.bitrate === bitrate && prev.codec === codec && prev.out === out && existsSync(prevOut!) && (!prevWav || existsSync(prevWav))) {
@@ -256,7 +264,12 @@ async function main(): Promise<void> {
         if (!(ambient && pcm.channels.length === 2)) pcm = downmix(pcm)
         const channels = pcm.channels.length === 2 ? 2 : 1
         const pcmBytes = writeWav16(pcm)
-        if (codec === 'opus') {
+        if (pcmFallback) {
+          out = `${urlPath(id)}.wav`
+          dst = join(staging, ...out.split('/'))
+          writeFileSync(dst, pcmBytes)
+          pcmFallbacks.push(id)
+        } else if (codec === 'opus') {
           const tmpWav = join(tmp, `${createHash('sha1').update(id).digest('hex')}.wav`)
           writeFileSync(tmpWav, pcmBytes)
           try {
@@ -268,7 +281,7 @@ async function main(): Promise<void> {
         } else {
           writeFileSync(dst, pcmBytes)
         }
-        entry = { size: bytes.byteLength, mtimeMs: src.pk2?.modified ?? (src.path ? statSync(src.path).mtimeMs : 0), sha1, bitrate, codec, out, ms: pcmMs(pcm), channels }
+        entry = { size: bytes.byteLength, mtimeMs: src.pk2?.modified ?? (src.path ? statSync(src.path).mtimeMs : 0), sha1, bitrate: pcmFallback ? 0 : bitrate, codec: pcmFallback ? 'wav' : codec, out, ms: pcmMs(pcm), channels }
         encoded++
       }
       cache[srcKey] = entry
@@ -284,8 +297,9 @@ async function main(): Promise<void> {
   notExported.sort()
 
   const index = finishSoundIndex(plan, files, resolver, {
-    codec,
-    wavFallback: alsoWav && codec === 'opus',
+    // A fallback run without one cached .ogg is all PCM.
+    codec: pcmFallback && reused === 0 ? 'wav' : codec,
+    wavFallback: alsoWav && codec === 'opus' && !pcmFallback,
     generatedAt: new Date().toISOString(),
     sourceFiles: ids.length,
     sourceBytes,
@@ -324,6 +338,7 @@ async function main(): Promise<void> {
   console.log(`  unresolved paths: ${unresolved.length} (${bsrUnresolved.length} from BSR tracks, ${unresolved.length - bsrUnresolved.length} from tables); fixed by basename: ${resolver.fixed.size}`)
   for (const u of unresolved) console.log(`    ${u.path}  <- ${u.from.slice(0, 4).join(', ')}${u.from.length > 4 ? ` (+${u.from.length - 4})` : ''}`)
   for (const n of notExported) console.warn(`  ! not exported: ${n}`)
+  if (pcmFallbacks.length) console.warn(`  ! ${pcmFallbacks.length} files written as PCM .wav (no ffmpeg; re-run with ffmpeg for .ogg): ${pcmFallbacks.join(', ')}`)
   console.log(`done in ${((performance.now() - t0) / 1000).toFixed(1)} s -> ${soundDir}${mirrored}`)
 }
 

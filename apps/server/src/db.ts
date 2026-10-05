@@ -241,6 +241,85 @@ const MIGRATIONS: string[] = [
     last_killed_at INTEGER
   );
   `,
+  // 11: the mouse quick slot (retail GDR_TMPQS_0, docs/UI.md): one entry per character beside the 40 hotbar slots,
+  // used by the middle mouse button. Its own table so char_hotbar (slot 0..39) stays as it is.
+  `
+  CREATE TABLE char_mouse_slot (
+    character_id INTEGER PRIMARY KEY REFERENCES characters(id),
+    kind TEXT NOT NULL CHECK (kind IN ('skill', 'item')),
+    code TEXT NOT NULL
+  );
+  `,
+  // 12: Play the Boss, layer 1 (docs/PLAY_THE_BOSS.md §5.3, verbatim): the events, their log, and the play-time counter
+  // the layer-4 lottery reads (it accrues from now on; no back-fill). Statements live in pilot/store.ts.
+  `
+  CREATE TABLE pilot_events (
+    id INTEGER PRIMARY KEY,
+    code TEXT NOT NULL,                 -- MOB_CH_TIGERWOMAN
+    origin TEXT NOT NULL,               -- 'schedule' | 'gm' | 'admin'
+    phase TEXT NOT NULL,                -- 'call' | 'draw' | 'hunt' | 'ended'
+    created_at INTEGER NOT NULL,
+    call_ends_at INTEGER, hunt_started_at INTEGER, hunt_ends_at INTEGER, ended_at INTEGER,
+    outcome TEXT,                       -- HuntEventView.outcome
+    pilot_account INTEGER, pilot_character INTEGER, pilot_name TEXT,
+    camp INTEGER,
+    downs INTEGER NOT NULL DEFAULT 0,
+    hunters INTEGER NOT NULL DEFAULT 0, -- distinct non-associates who hit her
+    steered_ms INTEGER NOT NULL DEFAULT 0,
+    reward_gold INTEGER NOT NULL DEFAULT 0,
+    refunded INTEGER NOT NULL DEFAULT 0,
+    flags TEXT NOT NULL DEFAULT '[]',   -- e.g. ["suspect_associates_31pct","pilot_left"]
+    stats TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE INDEX pilot_events_created ON pilot_events(created_at);
+  CREATE INDEX pilot_events_pilot ON pilot_events(pilot_account);
+  CREATE TABLE pilot_log (
+    id INTEGER PRIMARY KEY,
+    event_id INTEGER NOT NULL REFERENCES pilot_events(id) ON DELETE CASCADE,
+    at INTEGER NOT NULL,
+    kind TEXT NOT NULL,                 -- offer, accept, decline, timeout, spawn, takeover, ai, player, down, end, reward, flag, gm
+    data TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE INDEX pilot_log_event ON pilot_log(event_id);
+  ALTER TABLE characters ADD COLUMN played_ms INTEGER NOT NULL DEFAULT 0;
+  `,
+  // 13: Play the Boss, layer 3 (docs/PLAY_THE_BOSS.md §3.9, §5.4's pilot_honors moved up): titles won as the boss
+  // ("Spirit of the Tiger"), permanent, shown as EntityState.honor. Statements live in pilot/store.ts.
+  `
+  CREATE TABLE pilot_honors (
+    character_id INTEGER NOT NULL REFERENCES characters(id),
+    code TEXT NOT NULL,
+    at INTEGER NOT NULL,
+    PRIMARY KEY (character_id, code)
+  );
+  `,
+  // 14: Play the Boss, layer 4 (docs/PLAY_THE_BOSS.md §5.4; pilot_honors landed in 13): the admin panel's settings patch
+  // over the content defaults (one row per unique, `rev` for stale-save checks), the volunteers of each call (one per
+  // account; `draw` = how the draw treated them) and the lottery blocks. Statements live in pilot/store.ts.
+  `
+  CREATE TABLE pilot_settings (
+    code TEXT PRIMARY KEY,
+    json TEXT NOT NULL,
+    rev INTEGER NOT NULL DEFAULT 1,
+    updated_at INTEGER NOT NULL,
+    updated_by INTEGER
+  );
+  CREATE TABLE pilot_volunteers (
+    event_id INTEGER NOT NULL REFERENCES pilot_events(id) ON DELETE CASCADE,
+    account_id INTEGER NOT NULL,
+    character_id INTEGER NOT NULL,
+    at INTEGER NOT NULL,
+    draw TEXT,                          -- null, offered, accepted, declined, timeout, left, skipped:<why>
+    PRIMARY KEY (event_id, account_id)
+  );
+  CREATE TABLE pilot_blocks (
+    account_id INTEGER PRIMARY KEY,
+    until INTEGER NOT NULL,
+    reason TEXT NOT NULL,
+    by_account INTEGER,
+    at INTEGER NOT NULL
+  );
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */
@@ -333,6 +412,9 @@ export interface CharacterRow {
   guild_left_at: number | null
   /** ms the character last disbanded a guild (recreate penalty), or null. */
   guild_disbanded_at: number | null
+  // migration 12
+  /** ms spent in the world (Play the Boss eligibility; accrues from migration 12 on, added at every save). */
+  played_ms: number
 }
 
 /** Character creation choices (docs/CHARACTER_SCALE.md; protocol charCreate). */
@@ -369,6 +451,8 @@ export interface CharacterSave {
   dead: boolean
   /** Navmesh surface key (nav.ts surfaceKey); null/absent = unknown. */
   surface?: string | null
+  /** ms in the world since the last save, added to characters.played_ms (migration 12); absent = 0. */
+  playedMs?: number
 }
 
 /** Runs the pending migrations (up to `upTo`, default all; tests build older schemas with it). Returns the version reached. */
@@ -470,6 +554,8 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     // migration 8 (docs/WAVE_PLAN2.md D34)
     hwanPoints: db.prepare<[number], { hwan_points: number }>('SELECT hwan_points FROM characters WHERE id = ?'),
     setHwanPoints: db.prepare<[number, number]>('UPDATE characters SET hwan_points = ? WHERE id = ?'),
+    // migration 12 (docs/PLAY_THE_BOSS.md §5.3)
+    addPlayed: db.prepare<[number, number]>('UPDATE characters SET played_ms = played_ms + ? WHERE id = ?'),
   }
 
   function loadInventory(characterId: number): InvState {
@@ -518,7 +604,10 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
   }
 
   const saveCharactersTx = db.transaction((rows: CharacterSave[]) => {
-    for (const r of rows) q.saveCharacter.run(r.x, r.y, r.z, r.yaw, r.world, r.lastPlayed, Math.round(r.hp), Math.round(r.mp), r.dead ? 1 : 0, r.surface ?? null, r.id)
+    for (const r of rows) {
+      q.saveCharacter.run(r.x, r.y, r.z, r.yaw, r.world, r.lastPlayed, Math.round(r.hp), Math.round(r.mp), r.dead ? 1 : 0, r.surface ?? null, r.id)
+      if (r.playedMs && r.playedMs > 0) q.addPlayed.run(Math.round(r.playedMs), r.id)
+    }
   })
 
   /** Equips the starter kit once (no-op when already given or `items` is empty). Returns whether it was given. */

@@ -11,6 +11,7 @@ import { t, type StringKey } from '../i18n/index.ts'
 import type { Art } from '../ui/art.ts'
 import { el, Listeners, place } from '../ui/dom.ts'
 import { button, type KitButton } from '../ui/kit/button.ts'
+import type { ChoiceGroup } from '../ui/kit/dialog.ts'
 import { Section } from '../ui/kit/section.ts'
 import { layerScale } from '../ui/kit/scale.ts'
 import { PARTY_PITCH, PARTY_SLOTS } from './hud-layout.ts'
@@ -247,6 +248,24 @@ export function modesText(m: PartyModes): string {
   return t('party.modes', { exp: modeLabel('exp', m.exp), items: modeLabel('items', m.items) })
 }
 
+/**
+ * The two radio groups of the party setting box (retail `ifsetpartymode.txt`: EXP on the left, items on the right),
+ * starting from `m`. MessageBox.choose returns [exp, items].
+ */
+export function partySetupGroups(m: PartyModes): [ChoiceGroup<PartyMode>, ChoiceGroup<PartyMode>] {
+  const group = (kind: 'exp' | 'items'): ChoiceGroup<PartyMode> => ({
+    caption: t(`party.mode.${kind}`),
+    value: m[kind],
+    choices: PARTY_MODES.map(mode => ({ value: mode, label: modeLabel(kind, mode), hint: t(`party.mode.${kind}.${mode}.hint` as StringKey) })),
+  })
+  return [group('exp'), group('items')]
+}
+
+/** The modes of a party setting box answer ([exp, items]). */
+export function modesFromChoice(values: readonly PartyMode[]): PartyModes {
+  return { exp: values[0] ?? DEFAULT_PARTY_MODES.exp, items: values[1] ?? DEFAULT_PARTY_MODES.items }
+}
+
 /** Fraction 0..1 of a gauge. */
 export function gauge(value: number, max: number): number {
   return max > 0 ? Math.max(0, Math.min(1, value / max)) : 0
@@ -263,6 +282,7 @@ export function rowTitle(r: PartyRow): string {
     if (r.dead) parts.push(t('party.dead'))
     else if (r.far) parts.push(t('party.outOfRange'))
   }
+  parts.push(t(r.self ? 'party.rowHintSelf' : 'party.rowHint'))
   return parts.join('\n')
 }
 
@@ -550,10 +570,15 @@ export class PartyFrame {
 // ---- DOM: the P window -------------------------------------------------------------------------------------
 
 export interface PartyWindowHandlers extends PartyRowHandlers {
-  /** A mode button: the leader changes the party, anyone out of a party changes the modes for a new one. */
-  setMode(kind: 'exp' | 'items', mode: PartyMode): void
+  /** Invite: the selected player (the feature explains when nothing invitable is selected). */
+  invite(): void
+  /** Settings, or a click on a mode line: the party setting box (the leader changes the party; out of a party, the modes a new one gets). */
+  settings(): void
   leave(): void
 }
+
+/** What the Invite button can do now: invite, or why not (in a party you do not lead; a full party). */
+export type PartyInviteState = 'ready' | 'notLeader' | 'full'
 
 export interface PartyWindowView {
   rows: readonly PartyRow[]
@@ -562,26 +587,45 @@ export interface PartyWindowView {
   inParty: boolean
   leader: boolean
   targetEntity: number | null
+  /** Absent = 'ready'. */
+  invite?: PartyInviteState
 }
 
-/** The other value of a two-way party mode (the mode lines toggle on click). */
+/** The other value of a two-way party mode. */
 export function nextPartyMode(mode: PartyMode): PartyMode {
   const i = PARTY_MODES.indexOf(mode)
   return PARTY_MODES[(i + 1) % PARTY_MODES.length]!
 }
 
+/** The window's buttons for a view (pure, for tests): which are enabled and their hover lines. */
+export function partyWindowButtons(v: Pick<PartyWindowView, 'inParty' | 'leader' | 'invite'>): Record<'invite' | 'settings' | 'leave', { enabled: boolean; title: string }> {
+  const invite = v.invite ?? 'ready'
+  return {
+    invite: {
+      enabled: invite === 'ready',
+      title: invite === 'notLeader' ? t('party.problem.notLeader') : invite === 'full' ? t('party.full') : t('party.inviteButtonHint'),
+    },
+    settings: {
+      enabled: !v.inParty || v.leader,
+      title: v.inParty ? (v.leader ? t('party.setupHint') : t('party.settingsLeaderOnly')) : t('party.setupHintNew'),
+    },
+    leave: { enabled: v.inParty, title: v.inParty ? t('party.leaveHint') : t('party.none') },
+  }
+}
+
 /**
  * The Main window's Party tab (P; docs/UI.md §4.6, retail `ifparty.txt` `GDR_PARTY` (13,38,364,337)): the
  * `sframe_wnd_` "Party information" panel with one `pt_slot` row per member (face, name, level, `pt_hp` / `pt_mp`
- * gauges), the `pt_msg` board with the EXP and item distribution lines (◆ `com_diamond`; a click toggles the mode when
- * you may change it) and the Leave button at (143, 339).
+ * gauges), the `pt_msg` board with the EXP and item distribution lines (◆ `com_diamond`; a click opens the setting box
+ * when you may change them) and the retail `com_button` row: Invite (56, 339), Settings (143, 339) and, in the slot of
+ * retail's Party Match (230, 339; not built), Leave.
  */
 export class PartyWindow extends MainPage {
   private readonly section: Section
   private readonly list: HTMLElement
   private readonly none: HTMLElement
   private readonly modeLines: Record<'exp' | 'items', HTMLButtonElement>
-  private readonly leaveBtn: KitButton
+  private readonly buttons: Record<'invite' | 'settings' | 'leave', KitButton>
   private readonly rows: RowList
   private last: PartyWindowView | null = null
 
@@ -606,18 +650,24 @@ export class PartyWindow extends MainPage {
       if (art.has('ifcommon/com_diamond')) diamond.style.backgroundImage = art.cssUrl('ifcommon/com_diamond')
       b.append(diamond, el('span', 'pt-mode-text'))
       this.ls.on(b, 'click', () => {
-        const v = this.last
-        if (!v || b.disabled) return
-        h.setMode(kind, nextPartyMode(v.modes[kind]))
+        if (!this.last || b.disabled) return
+        h.settings()
       })
       board.append(b)
       return b
     }
     this.modeLines = { items: line('items', 30), exp: line('exp', 186) }
-    this.leaveBtn = button(art, { label: t('party.leave') }, () => h.leave())
-    place(this.leaveBtn, [143, 339, 0, 24])
-    this.leaveBtn.hidden = true
-    this.body.append(this.section.root, board, this.leaveBtn)
+    const btn = (label: string, x: number, run: () => void) => {
+      const b = button(art, { label }, run)
+      place(b, [x, 339, 0, 24])
+      return b
+    }
+    this.buttons = {
+      invite: btn(t('party.invite'), 56, () => h.invite()),
+      settings: btn(t('party.setup'), 143, () => h.settings()),
+      leave: btn(t('party.leaveShort'), 230, () => h.leave()),
+    }
+    this.body.append(this.section.root, board, this.buttons.invite, this.buttons.settings, this.buttons.leave)
     this.rows = new RowList(art, this.list, 'hud-party-wrow', h, this.ls)
   }
 
@@ -639,7 +689,11 @@ export class PartyWindow extends MainPage {
       b.disabled = !editable
       b.title = `${t(`party.mode.${kind}.${mode}.hint` as StringKey)}\n${note}`
     }
-    this.leaveBtn.hidden = !v.inParty
+    const state = partyWindowButtons(v)
+    for (const k of ['invite', 'settings', 'leave'] as const) {
+      this.buttons[k].setDisabled(!state[k].enabled)
+      this.buttons[k].title = state[k].title
+    }
   }
 
   protected override onOpen(): void {

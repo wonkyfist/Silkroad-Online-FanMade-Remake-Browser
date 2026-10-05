@@ -254,6 +254,25 @@ export class MobSkills implements GameplayModule {
     this.use(m, row, target, now)
   }
 
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §3.2): server ms row `code` of `m` is ready again (0 = ready). */
+  readyAt(m: Mob, code: string): number {
+    return this.states.get(m.id)?.ready.get(code) ?? 0
+  }
+
+  /**
+   * Play the Boss, Call the Pack (§3.5): mobs `ids` join `m`'s summons (they leave with her, count toward maxAlive).
+   */
+  adopt(m: Mob, ids: readonly number[]): void {
+    const s = this.state(m)
+    for (const id of ids) s.summoned.add(id)
+  }
+
+  /** The summoner of mob `id` (a live summon of hers), or null. */
+  summonerOf(id: number): number | null {
+    for (const [mob, s] of this.states) if (s.summoned.has(id)) return mob
+    return null
+  }
+
   /** Whether `m` is inside a skill's cast or action window (its AI waits: it stands still). */
   busy(m: Mob, now: number): boolean {
     const s = this.states.get(m.id)

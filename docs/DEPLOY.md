@@ -65,6 +65,7 @@ The retail-derived assets travel only over the SSH connection inside the tailnet
 | `~/silkroad/silkroad.local.env` | Your own settings (e.g. `LEVEL_CAP`, `CAPACITY`; see `apps/server/README.md`). They override `silkroad.env` and are never touched by a deploy |
 | `~/silkroad-data/game.db` | The SQLite database (accounts, characters, items) |
 | `~/silkroad-data/world-clock.json` | The world clock a GM set with `/time` (absent = the `DAY_*` defaults; see "Day, night and weather") |
+| `~/silkroad-data/content/` | Runtime content overrides: the GM editors' and the admin panel's (nests, NPCs, quests, items, drops) with a `history/` of every previous version. Never touched by a deploy (docs/ADMIN.md §5) |
 | `~/silkroad-assets/out/` | `work/out`, served at `/out/` (`OUT_DIR`) |
 | `~/silkroad-assets/out-opt/` | `work/out-opt`, the slimmed copy (`OUT_OPT_DIR`) for when the loaders read it |
 | `~/.config/systemd/user/silkroad.service` | The user service (`deploy/remote/silkroad.service`) |
@@ -88,6 +89,19 @@ The server runs as `node --import tsx src/main.ts` from `apps/server` of the cur
    - Recommended: in the Tailscale admin console, open **Machines**, then the mini PC's `...` menu, then **Share...**. Send the invite link. The friend signs in to Tailscale with their own account and accepts. They see only this machine, at the same address.
    - Or invite them as users of your tailnet (**Users**, then **Invite users**). Your ACLs then decide what they can reach.
    - They then open **http://<SERVER_TAILNET_IP>:7000/**, register an account and play. Registration is open to anyone who can reach the port, which is why the port stays on the tailnet: do not port-forward it.
+
+## Admin panel
+
+The game server also serves the admin panel at **http://<SERVER_TAILNET_IP>:7000/admin/** (docs/ADMIN.md). The deploy builds it
+next to the game (`install.sh prepare`: `pnpm --filter @sro/admin build`; a failed panel build is a warning, the game
+still deploys), points `ADMIN_DIST` at it in `silkroad.env`, and the health check reports `/admin/`. Log in with an
+account whose role is admin: `pnpm deploy:gm grant <name> --role admin`.
+
+Everything the panel changes lives in `~/silkroad-data` (the database and `content/`), so it survives deploys and
+rollbacks; panel settings win over `silkroad.local.env`. To run the panel from somewhere else against the live server
+(its Servers page), add that page's origin to `ALLOWED_ORIGINS` in `silkroad.local.env` and restart; the development
+panel (`pnpm admin`, http://localhost:5182) is allowed by default. The panel's **Restart** button stops the service with
+exit code 75 after saving, and systemd starts it again 5 s later.
 
 ## Operating it
 

@@ -539,7 +539,8 @@ for (const worldExport of ['jangan', 'jangan-fields'] as const) {
         strikes++
       }
       for (const f of frames) await bad(f.t === 'chat' ? f : { ...f, x: 1 })
-      await bad({ t: 'hotbarSet', slot: HOTBAR_SLOTS, entry: null })
+      // HOTBAR_SLOTS itself is MOUSE_SLOT (the mouse quick slot); one past it is refused.
+      await bad({ t: 'hotbarSet', slot: HOTBAR_SLOTS + 1, entry: null })
       await bad({ t: 'storageGold', npc, dir: 'deposit', amount: 0 })
       expect(p.c.queue.find((m) => m.t === 'actionResult')).toBeUndefined() // none of them reached a module
       expect(p.c.isClosed).toBe(false)

@@ -14,6 +14,9 @@ import { t, type StringKey } from '../i18n/index.ts'
 import { RENDER_ROLLOUT, type RenderRollout } from '../rollout.ts'
 import {
   ADVANCED_CHOICES,
+  AUTO_POTION_PCT_MAX,
+  AUTO_POTION_PCT_MIN,
+  AUTO_POTION_PCT_STEP,
   BLOOM_SETTINGS,
   CAMERA_SPEED_MAX,
   CAMERA_SPEED_MIN,
@@ -75,6 +78,14 @@ export const OPTIONAL_ROWS: ReadonlySet<string> = new Set<string>([
   'controls.cameraShake',
   // MV-WASD: walking with W A S D and the arrows (world/features/keymove.ts, world/camera-keys.ts)
   'controls.keyboardMove',
+  // The "cannot get there" warning (world/move-feedback.ts through ux-world.ts) and the auto potion
+  // (world/features/auto-potion.ts).
+  'controls.unreachableWarning',
+  'autoPotion',
+  'autoPotion.enabled',
+  'autoPotion.hp',
+  'autoPotion.mp',
+  'autoPotion.cure',
   // W5-G: grass and plants (world-render scatter.ts, through qualityFor)
   'graphics.scatter',
   // Wave 9B (TX-R): the texture tier (pbr/maps.ts through QualitySettings.render.textures and three/actor-textures.ts);
@@ -157,6 +168,22 @@ function advancedRow(key: Exclude<keyof AdvancedGraphics, 'toneMap'>, rollout: R
     get: s => s.graphics.advanced[key],
     patch: v => ({ graphics: { advanced: { [key]: v } } }) as Patch,
     when: advancedShown(rollout),
+  }
+}
+
+/** An auto potion threshold slider (autoPotion.hp / .mp: 0 = never, else the percent of the maximum). */
+function autoPotionRow(key: 'hp' | 'mp'): OptionRow {
+  return {
+    id: `autoPotion.${key}`,
+    kind: 'range',
+    label: `options.autoPotion.${key}`,
+    min: AUTO_POTION_PCT_MIN,
+    max: AUTO_POTION_PCT_MAX,
+    step: AUTO_POTION_PCT_STEP,
+    get: s => s.autoPotion[key],
+    patch: v => ({ autoPotion: { [key]: v } }) as Patch,
+    format: v => (v > 0 ? t('options.autoPotion.pct', { pct: v }) : t('options.autoPotion.never')),
+    when: s => s.autoPotion.enabled,
   }
 }
 
@@ -405,7 +432,14 @@ export function optionRows(host: OptionsHost, s: Settings = settings.get(), roll
       },
       { id: 'controls.nearestTargetKey', kind: 'toggle', label: 'options.nearestTargetKey', get: s => s.controls.nearestTargetKey, patch: v => ({ controls: { nearestTargetKey: v } }) },
       { id: 'controls.cameraShake', kind: 'toggle', label: 'options.cameraShake', get: s => s.controls.cameraShake, patch: v => ({ controls: { cameraShake: v } }) },
+      { id: 'controls.unreachableWarning', kind: 'toggle', label: 'options.unreachableWarning', get: s => s.controls.unreachableWarning, patch: v => ({ controls: { unreachableWarning: v } }) },
       { id: 'keyHelp', kind: 'button', label: 'options.keyHelp', run: () => host.keyHelp() },
+      // Auto potion (world/features/auto-potion.ts): the thresholds and the pill switch show while it is on.
+      { id: 'autoPotion', kind: 'info', text: () => t('options.autoPotion') },
+      { id: 'autoPotion.enabled', kind: 'toggle', label: 'options.autoPotion.enabled', get: s => s.autoPotion.enabled, patch: v => ({ autoPotion: { enabled: v } }) },
+      autoPotionRow('hp'),
+      autoPotionRow('mp'),
+      { id: 'autoPotion.cure', kind: 'toggle', label: 'options.autoPotion.cure', get: s => s.autoPotion.cure, patch: v => ({ autoPotion: { cure: v } }), when: s => s.autoPotion.enabled },
     ],
     audio: [
       {

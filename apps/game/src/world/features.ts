@@ -16,6 +16,7 @@ import type { EntityAttachmentFactory, EntityView } from './entities.ts'
 import type { JanganGround } from './jangan/ground.ts'
 import type { HudMinimap } from './jangan/minimap.ts'
 import { alchemyFeature } from './features/alchemy.ts'
+import { autoPotionFeature } from './features/auto-potion.ts'
 import { berserkFeature } from './features/berserk.ts'
 import { coastFeature } from './features/coast.ts'
 import { durabilityFeature } from './features/durability.ts'
@@ -27,6 +28,7 @@ import { mountFeature } from './features/mount.ts'
 import { movementFeature } from './features/movement.ts'
 import { npcFeature } from './features/npc.ts'
 import { partyFeature } from './features/party.ts'
+import { pilotFeature } from './features/pilot.ts'
 import { postureFeature } from './features/posture.ts'
 import { questsFeature } from './features/quests.ts'
 import { skillsFeature } from './features/skills.ts'
@@ -80,6 +82,27 @@ export interface WorldFeatureContext {
    * and every later one). Returns a remover. Optional: absent in lane tests' contexts.
    */
   addMaterialDecorator?(fn: ActorMaterialDecorator): () => void
+  /**
+   * Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the entity the player's input and "where am I" reads follow: the
+   * steered mob while piloting, else the own id (null before worldEnter). Optional: absent in lane tests' contexts
+   * (`ctx.controlledId?.() ?? ctx.selfId()`).
+   */
+  controlledId?(): number | null
+  /** Play the Boss: sets the steered entity (null = back to the own character). */
+  setControlled?(c: ControlledView | null): void
+}
+
+/**
+ * Play the Boss (docs/PLAY_THE_BOSS.md §4.1): an entity the player steers instead of the own character. While one is
+ * set, the world screen's focusView() is its view: the camera follow, the ground streaming, the world update, the
+ * minimap centre and the music/town check follow it.
+ */
+export interface ControlledView {
+  readonly id: number
+  /** The camera's follow height above the feet (m); default the view's focusHeight. */
+  focusHeight?(v: EntityView): number
+  /** Minimap: false keeps an entity's sign off it (the pilot sees hunters only as her own markers). */
+  onMinimap?(v: EntityView): boolean
 }
 
 export interface WorldFeature {
@@ -132,6 +155,10 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   tradeFeature, // world/features/trade.ts (TR-C)
   stallFeature, // world/features/stall.ts (ST-C)
   guildFeature, // world/features/guild.ts (GU-C)
+  // Playtest ask: drinks potions below the Options thresholds (after the stall and trade features, which own those windows).
+  autoPotionFeature, // world/features/auto-potion.ts
+  // Play the Boss (docs/PLAY_THE_BOSS.md §4.1): after the skills feature (its 1-7 win over the hotbar while piloting).
+  pilotFeature, // world/features/pilot.ts
   // Wave 9 (docs/WAVE_PLAN3.md §4.3; W9A-S writes these lines):
   skyClockFeature, // world/features/sky-clock.ts (GAME)
   weatherFeature, // world/features/weather.ts (WX-C)

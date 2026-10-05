@@ -9,7 +9,7 @@
  * N-1, the row's `masteryLevel` in its mastery, its `sp` and its `requires`. Chain segments after the first share
  * the head's group and level and are never learned on their own.
  */
-import { HOTBAR_SLOTS, MASTERY_CODES, type HotbarEntry, type LevelDef, type MasteryCode, type MasteryDef, type ServerMessage, type SkillDef, type SkillKind } from '@sro/shared'
+import { HOTBAR_SLOTS, MASTERY_CODES, MOUSE_SLOT, type HotbarEntry, type LevelDef, type MasteryCode, type MasteryDef, type ServerMessage, type SkillDef, type SkillKind } from '@sro/shared'
 import type { TooltipLine } from '../hud/items.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 
@@ -288,6 +288,8 @@ export interface SkillStateChange {
   masteries: boolean
   learned: string[]
   hotbar: number[]
+  /** The mouse quick slot changed. */
+  mouse?: boolean
 }
 
 /** The character's masteries, learned rows and hotbar, as the server last described them. */
@@ -296,6 +298,8 @@ export class SkillState {
   /** Group -> the highest learned row code. */
   readonly learned = new Map<string, string>()
   hotbar: (HotbarEntry | null)[] = new Array<HotbarEntry | null>(HOTBAR_SLOTS).fill(null)
+  /** The mouse quick slot (MOUSE_SLOT), saved on the server like the hotbar. */
+  mouse: HotbarEntry | null = null
   /** The `skills` snapshot has arrived. */
   known = false
 
@@ -323,7 +327,8 @@ export class SkillState {
     this.learned.clear()
     for (const code of msg.skills) this.learn(code)
     this.hotbar = Array.from({ length: HOTBAR_SLOTS }, (_, i) => msg.hotbar[i] ?? null)
-    return { masteries: true, learned: [...this.learned.keys()], hotbar: this.hotbar.map((_, i) => i) }
+    this.mouse = msg.mouse ?? null
+    return { masteries: true, learned: [...this.learned.keys()], hotbar: this.hotbar.map((_, i) => i), mouse: true }
   }
 
   applyUpdate(msg: SkillsUpdateMsg): SkillStateChange {
@@ -337,6 +342,11 @@ export class SkillState {
     }
     for (const code of msg.learned ?? []) change.learned.push(this.learn(code))
     for (const u of msg.hotbar ?? []) {
+      if (u.slot === MOUSE_SLOT) {
+        this.mouse = u.entry
+        change.mouse = true
+        continue
+      }
       if (!Number.isInteger(u.slot) || u.slot < 0 || u.slot >= HOTBAR_SLOTS) continue
       this.hotbar[u.slot] = u.entry
       change.hotbar.push(u.slot)

@@ -68,10 +68,14 @@ export interface PortTeleporter {
   rotY?: number
 }
 
-/** mobs.json mobs[]: only `variants` is used (champion/giant opt-in). */
+/**
+ * mobs.json mobs[]: `variants` (champion/giant opt-in) and `combat.championTacticsId`, the vSRO Tab_RefTactics
+ * dwChampionTacticsID of a passive mob (absent: none linked).
+ */
 export interface PortMob {
   id: string
   variants?: { champion?: boolean; giant?: boolean }
+  combat?: { championTacticsId?: number }
 }
 
 export interface PortDropTable {

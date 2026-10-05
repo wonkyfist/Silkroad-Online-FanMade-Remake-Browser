@@ -2,6 +2,7 @@
  * World feature of lane SK-C, skills (docs/SKILLS.md §10.3; WAVE_PLAN §4.4). It owns the skills client for one world
  * visit and wires it to the server messages:
  * - `skills` / `skillsUpdate` -> SkillState -> the skill window (S, alias K) and the hotbar (1-0, pages F1-F4);
+ *   the underbar's mouse quick slot is used by the middle mouse button on the world canvas (kept per character name);
  * - `cast` / `castEnd` / `combat {instance}` -> the ActionPlayer (clips per phase, hits at their cues) and SkillFx
  *   (effect stages, hit sparks); own casts arm the CooldownClock (`skill:<group>`), `itemCooldown` the item keys;
  * - `EntityState.effects` / `effectAdd` / `effectRemove` -> EffectBook -> the buff bar under the player frame, the
@@ -14,13 +15,14 @@
  * The server decides everything; this only sends intents (`useSkill`, `itemUse`, `hotbarSet`, `skillLearn`,
  * `masteryUp`, `buffCancel`) and presents what comes back.
  */
-import type { EffectState, EntityState, ServerMessage, SkillDef } from '@sro/shared'
+import { MOUSE_SLOT, type EffectState, type EntityState, type ServerMessage, type SkillDef } from '@sro/shared'
 import { SkillCatalog, SkillState } from '../../content/skills.ts'
 import { BuffBar, EffectBook, targetIcons } from '../../hud/buffs.ts'
 import { cooldownNow, itemCooldownKey, skillCooldownKey } from '../../hud/cooldowns.ts'
 import { Hotbar } from '../../hud/hotbar.ts'
 import { HOTBAR_KEYS, HOTBAR_PAGE_KEYS, slotMessage, type HotbarContext, type ResolvedSlot } from '../../hud/hotbar-model.ts'
 import { intent } from '../../hud/intents.ts'
+import { browserMouseSlotStorage, isMiddlePress, MouseSlotStore } from '../../hud/mouse-slot.ts'
 import { SkillWindow } from '../../hud/skills.ts'
 import { Tooltip } from '../../hud/slots.ts'
 import { t } from '../../i18n/index.ts'
@@ -29,6 +31,7 @@ import { fxBudget } from '../fx/quality.ts'
 import type { SkillPhase } from '../../three/models.ts'
 import type { EntityView } from '../entities.ts'
 import type { CombatMessage, WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
+import { isPiloting } from '../pilot-model.ts'
 import { damageFlight, isFlight, parseMove, SkillFx, type FxSkill, type StatusParticle } from '../skill-fx.ts'
 import { ActionPlayer, clipTypeOf, mobSkillDef, type ActionPort, type PhasePlan, type SkillAction } from '../skills-view.ts'
 
@@ -234,6 +237,12 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
   /** The next default skill of each mob (they take turns). */
   const mobTurn = new Map<number, number>()
   const offs: (() => void)[] = []
+  /**
+   * The own character's name. The server keeps the mouse quick slot (MOUSE_SLOT); an entry an older client left in this
+   * browser (hud/mouse-slot.ts, per name) is moved to the server once, when the server has none.
+   */
+  let selfName = ''
+  const mouseSlots = new MouseSlotStore(browserMouseSlotStorage())
   let hotbarDirty = true
   let buffsDirty = true
   let lastSp = -1
@@ -301,7 +310,39 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
     use: useSlot,
     toast: text => hud.toast(text, 'error'),
     itemTooltip: code => hud.items.tooltip({ code, count: 1 }, { player: hud.stats }),
+    onMouseChange: entry => {
+      const m = intent.hotbarSet(MOUSE_SLOT, entry)
+      if (m) send(m)
+    },
   })
+
+  // ---- the mouse quick slot: the middle mouse button (the wheel) in the world uses it, like its key would ----------
+  // A native listener on the canvas: Babylon's camera only takes the right button (screens/world.ts), the scene's
+  // pick handlers only the left, and windows over the canvas get their own events, so a press there never lands here.
+  const canvas = ctx.scene?.getEngine?.()?.getRenderingCanvas?.() ?? null
+  if (canvas) {
+    const onMiddle = (ev: PointerEvent) => {
+      if (!isMiddlePress(ev)) return
+      // No autoscroll (or paste) from the wheel button on the game view.
+      ev.preventDefault()
+      // A camera drag captures the pointer to the canvas: over a window the press still does nothing.
+      if (typeof document !== 'undefined' && document.elementFromPoint(ev.clientX, ev.clientY) !== canvas) return
+      hotbar.pressMouse()
+    }
+    const noAutoscroll = (ev: MouseEvent) => {
+      if (ev.button === 1) ev.preventDefault()
+    }
+    canvas.addEventListener('pointerdown', onMiddle)
+    canvas.addEventListener('pointermove', onMiddle)
+    canvas.addEventListener('mousedown', noAutoscroll)
+    canvas.addEventListener('auxclick', noAutoscroll)
+    offs.push(() => {
+      canvas.removeEventListener('pointerdown', onMiddle)
+      canvas.removeEventListener('pointermove', onMiddle)
+      canvas.removeEventListener('mousedown', noAutoscroll)
+      canvas.removeEventListener('auxclick', noAutoscroll)
+    })
+  }
 
   const win = new SkillWindow({
     art: app.art,
@@ -326,7 +367,8 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
   // ---- keys and the menu bar ----------------------------------------------------------------------
   offs.push(ctx.keys.register({ id: 'window.skills', keys: [...SKILLS_WINDOW_KEYS], label: 'skills.keys.window', group: 'windows', run: () => win.toggle() }))
   HOTBAR_KEYS.forEach((key, i) => {
-    offs.push(ctx.keys.register({ id: `hotbar.${i + 1}`, keys: [key], label: 'skills.keys.hotbar', group: 'combat', run: () => hotbar.press(i) }))
+    // Play the Boss (docs/PLAY_THE_BOSS.md §4.1): off while piloting, so the pilot's kit keys win without a warning.
+    offs.push(ctx.keys.register({ id: `hotbar.${i + 1}`, keys: [key], label: 'skills.keys.hotbar', group: 'combat', when: () => !isPiloting(ctx), run: () => hotbar.press(i) }))
   })
   HOTBAR_PAGE_KEYS.forEach((key, i) => {
     offs.push(ctx.keys.register({ id: `hotbar.page${i + 1}`, keys: [key], label: 'skills.keys.page', group: 'combat', run: () => hotbar.setPage(i) }))
@@ -458,6 +500,7 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
     const self = ctx.selfId()
     switch (msg.t) {
       case 'worldEnter': {
+        selfName = msg.self.name
         player.clear()
         for (const id of effects.ids()) forgetEntity(id)
         effects.clear()
@@ -475,6 +518,14 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
         break
       case 'skills': {
         state.applySnapshot(msg)
+        hotbar.setMouseEntry(state.mouse)
+        // A mouse slot this browser kept before the server stored it: hand it over once, then forget it here.
+        const legacy = state.mouse ? null : mouseSlots.get(selfName)
+        if (legacy) {
+          const m = intent.hotbarSet(MOUSE_SLOT, legacy)
+          if (m) send(m)
+        }
+        if (selfName) mouseSlots.set(selfName, null)
         for (const c of msg.cooldowns ?? []) {
           const total = catalog.rows(c.group)[0]?.cooldownMs ?? c.readyInMs
           hud.cooldowns.setIn(skillCooldownKey(c.group), c.readyInMs, Math.max(total, c.readyInMs))
@@ -485,6 +536,7 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
       }
       case 'skillsUpdate': {
         const change = state.applyUpdate(msg)
+        if (change.mouse) hotbar.setMouseEntry(state.mouse)
         hotbarDirty = true
         if (change.masteries || change.learned.length) win.render()
         break

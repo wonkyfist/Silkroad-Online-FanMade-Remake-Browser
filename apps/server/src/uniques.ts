@@ -4,6 +4,7 @@ import {
   UNIQUES_FILE,
   checkUniquesFile,
   mulberry32,
+  pilotScaledSummons,
   type DropEntry,
   type GameplayRequest,
   type ItemDef,
@@ -62,7 +63,7 @@ import type { Mob, Player } from './world.ts'
  */
 
 /** The GM usage line (gm.ts COMMANDS.unique). */
-export const UNIQUE_USAGE = 'unique list | spawn <name> [here | camp <id>] | kill <name> | despawn <name> | timer <name> <minutes|now|clear> | quiet <on|off>'
+export const UNIQUE_USAGE = 'unique list | spawn <name> [here | camp <id>] | kill <name> | despawn <name> | timer <name> <minutes|now|clear> | quiet <on|off> | pilot ...'
 
 /** Players within this many metres of her get the enrage and fury lines (docs/UNIQUES.md §3.6). */
 export const UNIQUE_AREA_LINE_M = 60
@@ -199,6 +200,10 @@ interface Tracked {
   stuck: boolean
   /** The due time a GM set with `/unique timer` this session (may lie past the window; the tick keeps it). */
   gmDue: number | null
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §3.4): an event runs on her: no fury, no leash reset. */
+  event: boolean
+  /** Play the Boss (§2.2): a call holds her spawn timer: no roll before this (ms; 0 = no hold). */
+  holdUntil: number
 }
 
 /**
@@ -231,6 +236,10 @@ export class Uniques implements GameplayModule {
   /** Player entity ids whose GM typed `/unique quiet on` (this session only; dropped when the player leaves). */
   private readonly quiet = new Set<number>()
   private upsert: ((row: UniqueRow) => void) | null = null
+  /** Play the Boss: `/unique pilot ...` (pilot/gm.ts, set by the pilot module); null = not available. */
+  pilotGm: ((self: Player | null, args: string[], now: number) => GmResult) | null = null
+  /** Play the Boss, layer 5 (§3.7): her crowd factor s while a hunt scales her (null = not scaled). */
+  pilotScale: ((m: Mob) => number | null) | null = null
 
   constructor(readonly g: Gameplay) {
     this.rng = g.config.rng ? mulberry32(0x0711e5) : Math.random
@@ -282,7 +291,7 @@ export class Uniques implements GameplayModule {
       for (const [i, grp] of table.groups.entries()) {
         if (grp.pool && grp.pool.length === 0) config.log(`uniques: ${def.drops}.groups[${i}]: no item of its gear pool is in items.json and wearable at level ${config.levelCap}; the group drops nothing`)
       }
-      const u: Tracked = { def, mob, table, row: this.loadRow(def.mob), id: null, fightAt: null, enraged: false, furious: false, stuck: false, gmDue: null }
+      const u: Tracked = { def, mob, table, row: this.loadRow(def.mob), id: null, fightAt: null, enraged: false, furious: false, stuck: false, gmDue: null, event: false, holdUntil: 0 }
       lines.push(this.restart(u, now))
       this.list.push(u)
     }
@@ -371,7 +380,7 @@ export class Uniques implements GameplayModule {
           this.save(u)
           this.g.config.log(`uniques: ${u.mob.name ?? u.mob.code} due time beyond the window (clock change?); re-rolled, spawns in ${hmm(u.row.due_at - now)}`)
         }
-        if (u.row.phase === 'waiting' && u.row.due_at > 0 && now >= u.row.due_at && this.g.config.spawnMobs !== false) this.roll(u, now)
+        if (u.row.phase === 'waiting' && u.row.due_at > 0 && now >= u.row.due_at && now >= u.holdUntil && this.g.config.spawnMobs !== false) this.roll(u, now)
         continue
       }
       const m = this.g.world.mobs.get(u.id)
@@ -435,7 +444,7 @@ export class Uniques implements GameplayModule {
     const name = u.mob.name ?? u.mob.code
     u.id = null
     u.fightAt = null
-    u.enraged = u.furious = false
+    u.enraged = u.furious = u.event = false
     u.row.phase = 'waiting'
     u.row.due_at = now + this.minutes(u.def.respawnMin)
     if (owner) {
@@ -454,7 +463,8 @@ export class Uniques implements GameplayModule {
   private behave(u: Tracked, m: Mob, now: number): void {
     const dirty = u.fightAt !== null || u.enraged || u.furious
     if (m.ai === 'return' || (m.ai === 'idle' && m.damage.size === 0)) {
-      if (dirty) this.reset(u, m)
+      // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): no leash reset during the event.
+      if (dirty && !u.event) this.reset(u, m)
       return
     }
     // H11-FURY-2: an attacker who left the world, or went well past her leash (UNIQUE_FIGHT_MARGIN_M: a ranged
@@ -482,7 +492,8 @@ export class Uniques implements GameplayModule {
       this.applyMul(u, m)
       this.areaLine(m, now, `${m.name} is enraged!`)
     }
-    if (!u.furious && u.fightAt !== null && now - u.fightAt >= u.def.fury.afterSec * 1000) {
+    // Play the Boss: the survival timer replaces the fury during the event.
+    if (!u.furious && !u.event && u.fightAt !== null && now - u.fightAt >= u.def.fury.afterSec * 1000) {
       u.furious = true
       this.applyMul(u, m)
       this.areaLine(m, now, `${m.name} grows furious!`)
@@ -495,7 +506,7 @@ export class Uniques implements GameplayModule {
    */
   homeReached(m: Mob): void {
     const u = this.tracked(m)
-    if (u && (u.fightAt !== null || u.enraged || u.furious)) this.reset(u, m)
+    if (u && !u.event && (u.fightAt !== null || u.enraged || u.furious)) this.reset(u, m)
   }
 
   /** A leash reset (§3.6): adds leave, the fight clock, enrage and fury clear (HP and bands: the AI and MobSkills). */
@@ -553,12 +564,17 @@ export class Uniques implements GameplayModule {
     return drops
   }
 
-  /** The field unique's summon switch, clip, cap and variants; null for every other mob. */
+  /**
+   * The field unique's summon switch, clip, cap and variants; null for every other mob. Play the Boss, layer 5 (§3.7):
+   * while a hunt scales her by s, each band wave grows to round(perWave √s) (≤ 6) and the cap keeps its ratio.
+   */
   summonPolicy(m: Mob): SummonPolicy | null {
     const u = this.tracked(m)
     if (!u) return null
     const s = u.def.summons
-    return { on: s.on, perWave: s.perWave, maxAlive: s.maxAlive, variants: s.variants }
+    const f = this.pilotScale?.(m) ?? null
+    const w = f !== null && f > 1 ? pilotScaledSummons(s, f) : s
+    return { on: s.on, perWave: w.perWave, maxAlive: w.maxAlive, variants: s.variants }
   }
 
   /** The player leaves the world: a quiet flag ends with the session. */
@@ -575,6 +591,72 @@ export class Uniques implements GameplayModule {
     return { id: m.id, name: m.name, area: this.areaAt(at.x, at.z) }
   }
 
+  // ---- Play the Boss seams (docs/PLAY_THE_BOSS.md §3.1) -----------------------------------------------------
+
+  /** The unique of mob `code` on this world: its content, the live body (null while waiting) and its current camp. */
+  unique(code: string): { def: UniqueDef; mob: MobDef; live: Mob | null; camp: NestDef | null } | null {
+    const u = this.list.find((x) => x.def.mob === code)
+    if (!u) return null
+    const m = u.id === null ? undefined : this.g.world.mobs.get(u.id)
+    const camp = u.row.camp === null ? null : (this.allCamps(u.def).find((n) => n.id === u.row.camp) ?? null)
+    return { def: u.def, mob: u.mob, live: m && m.ai !== 'dead' ? m : null, camp: camp ? uniqueHome(camp) : null }
+  }
+
+  /** The event flag (§3.4): while set, no fury and no leash reset (the AI's run home neither resets nor refills her). */
+  setEvent(code: string, on: boolean): void {
+    const u = this.list.find((x) => x.def.mob === code)
+    if (!u) return
+    u.event = on
+    if (on && u.furious) {
+      u.furious = false
+      const m = u.id === null ? undefined : this.g.world.mobs.get(u.id)
+      if (m) this.applyMul(u, m)
+    }
+  }
+
+  /**
+   * Play the Boss (§2.2): the call holds her spawn timer until `until` (ms; 0 releases it): a due roll waits, so she
+   * does not appear in the middle of the call. A spawn for the event itself (spawnForEvent) is not held.
+   */
+  hold(code: string, until: number): void {
+    const u = this.list.find((x) => x.def.mob === code)
+    if (u) u.holdUntil = Math.max(0, until)
+  }
+
+  /** The hold of `code` (ms; 0 = none). */
+  heldUntil(code: string): number {
+    return this.list.find((x) => x.def.mob === code)?.holdUntil ?? 0
+  }
+
+  /**
+   * She appears now at a random camp that places, for an event (announced like any appearance). null when she is
+   * alive already or no camp places.
+   */
+  spawnForEvent(code: string, now: number): Mob | null {
+    const u = this.list.find((x) => x.def.mob === code)
+    if (!u || u.id !== null) return null
+    return this.roll(u, now, true)
+  }
+
+  /** Her event is over (§2.3): a live body leaves silently, and the respawn timer (respawnMin) runs. */
+  endEvent(code: string, now: number, how: string): void {
+    const u = this.list.find((x) => x.def.mob === code)
+    if (!u) return
+    u.event = false
+    if (u.id === null) return
+    const m = this.g.world.mobs.get(u.id)
+    if (m) {
+      this.g.mobSkills.dismissSummons(m)
+      this.g.world.removeEntity(m.id)
+    }
+    this.ended(u, now, null, how)
+  }
+
+  /** The client's area name at x/z ('' where there is none). */
+  area(x: number, z: number): string {
+    return this.areaAt(x, z)
+  }
+
   // ---- GM -------------------------------------------------------------------------------------------------
 
   /** `/unique ...` (gm.ts). `self` is the GM's character (null from the lobby). */
@@ -583,6 +665,8 @@ export class Uniques implements GameplayModule {
     const sub = (args[0] ?? '').toLowerCase()
     const rest = args.slice(1).join(' ').trim().split(/\s+/).filter(Boolean)
     if (sub === 'list' && rest.length === 0) return this.gmList(now)
+    // Play the Boss (docs/PLAY_THE_BOSS.md §2.5): `/unique pilot ...` (pilot/gm.ts).
+    if (sub === 'pilot') return this.pilotGm ? this.pilotGm(self, args.slice(1), now) : fail('Play the Boss is not available on this server (no unique has a pilot block).')
     if (sub === 'quiet') {
       const v = (rest[0] ?? '').toLowerCase()
       if (rest.length !== 1 || (v !== 'on' && v !== 'off')) return fail(`Usage: ${UNIQUE_USAGE}`)

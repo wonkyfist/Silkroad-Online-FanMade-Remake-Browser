@@ -5,6 +5,9 @@
  * only sends `hotbarSet`; the server's `skills` / `skillsUpdate` redraws. Slots show the CooldownClock sweep and grey
  * out when the skill is not usable now (MP, weapon, not learned) or the item is gone. The rules are in
  * hotbar-model.ts; this is the DOM.
+ * The mouse quick slot (the underbar's "M" frame, retail GDR_TMPQS_0) takes a skill or potion the same ways; the
+ * middle mouse button in the world uses it, and only that (`pressMouse`, wired by world/features/skills.ts). The server
+ * keeps it per character as slot MOUSE_SLOT beside the 40; the feature feeds it through `setMouseEntry` / `onMouseChange`.
  */
 import type { ClientMessage, HotbarEntry } from '@sro/shared'
 import type { SkillCatalog, SkillState } from '../content/skills.ts'
@@ -14,29 +17,38 @@ import { el, Listeners } from '../ui/dom.ts'
 import { iconButton } from '../ui/kit/button.ts'
 import type { CooldownClock } from './cooldowns.ts'
 import { placeAt } from './hud-layout.ts'
-import { PAGE_DOWN, PAGE_TEXT, PAGE_UP, slotRect } from './underbar-layout.ts'
+import { MOUSE_SLOT_ICON, PAGE_DOWN, PAGE_TEXT, PAGE_UP, slotRect } from './underbar-layout.ts'
 import { HOTBAR_KEYS, HOTBAR_PAGE_SIZE, HOTBAR_PAGES, hotbarDrop, hotbarItemAllowed, hotbarSlot, resolveSlot, type HotbarContext, type ResolvedSlot } from './hotbar-model.ts'
 import { intent, type SlotRef } from './intents.ts'
 import type { ItemCatalog, TooltipLine } from './items.ts'
+import { mouseSlotDrop } from './mouse-slot.ts'
 import { ensureSkillStyles } from './skills-style.ts'
 import { addSlotDropTarget, CooldownSweep, type Tooltip } from './slots.ts'
 
 const PAGE_KEY = 'sro.hotbar.page'
 const DRAG_START_PX = 4
+/** `data-hotbar` of the mouse quick slot (the others hold their absolute slot 0..39). */
+const MOUSE = 'mouse'
+/** The mouse slot's key caption (shown only on the free-standing bar; the underbar art has the mouse baked in). */
+const MOUSE_LABEL = 'M'
+
+/** A hotbar slot (absolute 0..39) or the mouse quick slot. */
+export type HotbarTarget = number | 'mouse'
 
 /** Something dragged towards the hotbar: a skill from the window, or a hotbar slot. */
 export interface HotbarPayload {
   entry: HotbarEntry
-  /** The hotbar slot it came from (null: from the skill window). */
-  from: number | null
+  /** The hotbar slot it came from ('mouse': the mouse slot; null: from the skill window). */
+  from: HotbarTarget | null
   icon: string | null
 }
 
-/** The hotbar slot under a point (absolute 0..39), or null. */
-function hotbarSlotAt(x: number, y: number): number | null {
+/** The hotbar slot under a point (absolute 0..39, or 'mouse'), or null. */
+function hotbarSlotAt(x: number, y: number): HotbarTarget | null {
   const hit = document.elementFromPoint(x, y) as HTMLElement | null
   const s = hit?.closest<HTMLElement>('[data-hotbar]')
   if (!s) return null
+  if (s.dataset.hotbar === MOUSE) return MOUSE
   const n = Number(s.dataset.hotbar)
   return Number.isInteger(n) ? n : null
 }
@@ -47,7 +59,7 @@ export class IconDrag {
   private readonly ls = new Listeners()
   onStart: (() => void) | null = null
 
-  constructor(private readonly onDrop: (p: HotbarPayload, to: number | null, overUi: boolean) => void) {
+  constructor(private readonly onDrop: (p: HotbarPayload, to: HotbarTarget | null, overUi: boolean) => void) {
     this.ls.on(window, 'pointermove', ev => this.move(ev))
     this.ls.on(window, 'pointerup', ev => this.up(ev))
     this.ls.on(window, 'blur', () => this.cancel())
@@ -129,6 +141,8 @@ export interface HotbarDeps {
   toast: (text: string) => void
   /** Item tooltip lines (the HUD's ItemCatalog). */
   itemTooltip: (code: string) => TooltipLine[]
+  /** The mouse slot was changed by the player (drop, swap, right-click): the feature stores it. */
+  onMouseChange?: (entry: HotbarEntry | null) => void
 }
 
 interface SlotEl {
@@ -148,7 +162,10 @@ export class Hotbar {
   private readonly offs: (() => void)[] = []
   private pageIndex = 0
   private resolved: (ResolvedSlot | null)[] = []
-  private hover: { i: number; ev: PointerEvent } | null = null
+  private hover: { i: number | 'mouse'; ev: PointerEvent } | null = null
+  private readonly mouseSlot: SlotEl
+  private mouseEntry: HotbarEntry | null = null
+  private mouseResolved: ResolvedSlot | null = null
 
   constructor(private readonly d: HotbarDeps) {
     ensureSkillStyles()
@@ -173,24 +190,26 @@ export class Hotbar {
       placeAt(this.pageText, PAGE_TEXT, true)
     }
     const cell = !ub && d.art.has('ifcommon/lattice_window/com_lattice_left_up') ? d.art.cssUrl('ifcommon/lattice_window/com_lattice_left_up') : null
-    for (let i = 0; i < HOTBAR_PAGE_SIZE; i++) {
-      const root = el('div', `hud-hotbar-slot${cell || ub ? '' : ' no-art'}`)
+    const slot = (i: number | 'mouse', label: string): SlotEl => {
+      const root = el('div', `hud-hotbar-slot${i === MOUSE ? ' hud-hotbar-mouse' : ''}${cell || ub ? '' : ' no-art'}`)
       if (cell) root.style.setProperty('--cell', cell)
-      if (ub) placeAt(root, slotRect(i), true)
+      if (ub) placeAt(root, i === MOUSE ? MOUSE_SLOT_ICON : slotRect(i), true)
       const icon = el('div', 'ico')
-      const key = el('span', 'key', HOTBAR_KEYS[i])
+      const key = el('span', 'key', label)
       const count = el('span', 'cnt')
       root.append(icon, key, count)
       const s: SlotEl = { root, icon, key, count, sweep: new CooldownSweep(root, key) }
-      this.slots.push(s)
       row.append(root)
       this.ls.on(root, 'pointerdown', ev => this.down(i, ev))
       this.ls.on(root, 'click', () => {
-        if (!this.drag.dragging && !this.drag.justDropped) this.press(i)
+        if (this.drag.dragging || this.drag.justDropped) return
+        // The mouse slot is used only by the middle mouse button (the wheel) in the world, as in retail.
+        if (i !== MOUSE) this.press(i)
       })
       this.ls.on(root, 'contextmenu', ev => {
         ev.preventDefault()
-        this.clear(hotbarSlot(this.pageIndex, i))
+        if (i === MOUSE) this.changeMouse(null)
+        else this.clear(hotbarSlot(this.pageIndex, i))
       })
       this.ls.on(root, 'pointerenter', ev => this.showTip(i, ev))
       this.ls.on(root, 'pointermove', ev => this.showTip(i, ev))
@@ -198,7 +217,12 @@ export class Hotbar {
         this.hover = null
         d.tooltip.hide()
       })
+      return s
     }
+    // The mouse slot first: left of key 1, as on the bar art.
+    this.mouseSlot = slot(MOUSE, MOUSE_LABEL)
+    this.mouseSlot.root.dataset.hotbar = MOUSE
+    for (let i = 0; i < HOTBAR_PAGE_SIZE; i++) this.slots.push(slot(i, HOTBAR_KEYS[i]!))
     this.root.append(pages, row)
     host.append(this.root)
     this.drag = new IconDrag((p, to, overUi) => this.dropped(p, to, overUi))
@@ -233,15 +257,26 @@ export class Hotbar {
 
   /** Visible slot `i` (0..9) pressed: key or click. */
   press(i: number): void {
-    const r = this.resolved[i]
-    const s = this.slots[i]
-    if (!r || !s) return
-    s.root.classList.add('pressed')
-    setTimeout(() => s.root.classList.remove('pressed'), 120)
-    this.d.use(r)
+    this.use(this.slots[i], this.resolved[i])
   }
 
-  /** Redraws the visible page from the state and the character. */
+  /** The mouse slot pressed: the middle mouse button in the world (a left click on the slot does not use it). */
+  pressMouse(): void {
+    this.use(this.mouseSlot, this.mouseResolved)
+  }
+
+  /** What the mouse slot holds (null: empty). */
+  get mouse(): HotbarEntry | null {
+    return this.mouseEntry
+  }
+
+  /** Shows the character's stored mouse slot (no `onMouseChange`). */
+  setMouseEntry(entry: HotbarEntry | null): void {
+    this.mouseEntry = entry ? { kind: entry.kind, code: entry.code } : null
+    this.render()
+  }
+
+  /** Redraws the visible page (and the mouse slot) from the state and the character. */
   render(): void {
     const ctx = this.d.context()
     this.resolved = []
@@ -252,24 +287,10 @@ export class Hotbar {
       const entry = this.d.state.hotbar[abs] ?? null
       const r = entry ? resolveSlot(entry, ctx) : null
       this.resolved.push(r)
-      s.root.classList.toggle('filled', !!r)
-      s.root.classList.toggle('blocked', !!r?.block)
-      s.root.classList.toggle('mp', r?.block === 'mp')
-      s.icon.classList.remove('fallback')
-      s.icon.textContent = ''
-      s.icon.style.backgroundImage = ''
-      if (r) {
-        if (r.icon) s.icon.style.backgroundImage = `url("${r.icon}")`
-        else {
-          s.icon.classList.add('fallback')
-          const name = r.entry.kind === 'skill' ? this.d.catalog.name(r.code) : this.d.items.name(r.code)
-          s.icon.textContent = name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0]!.toUpperCase()).join('') || '?'
-        }
-      }
-      s.count.textContent = r?.entry.kind === 'item' ? String(r.count ?? 0) : ''
-      const cd = r?.cooldownKey ? this.d.cooldowns.get(r.cooldownKey) : null
-      s.sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
+      this.draw(s, r)
     }
+    this.mouseResolved = this.mouseEntry ? resolveSlot(this.mouseEntry, ctx) : null
+    this.draw(this.mouseSlot, this.mouseResolved)
     if (this.hover) this.showTip(this.hover.i, this.hover.ev)
   }
 
@@ -280,18 +301,55 @@ export class Hotbar {
     this.root.remove()
   }
 
-  private onCooldown(key: string): void {
-    this.resolved.forEach((r, i) => {
-      if (!r || r.cooldownKey !== key) return
-      const cd = this.d.cooldowns.get(key)
-      this.slots[i]!.sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
-    })
+  private draw(s: SlotEl, r: ResolvedSlot | null): void {
+    s.root.classList.toggle('filled', !!r)
+    s.root.classList.toggle('blocked', !!r?.block)
+    s.root.classList.toggle('mp', r?.block === 'mp')
+    s.icon.classList.remove('fallback')
+    s.icon.textContent = ''
+    s.icon.style.backgroundImage = ''
+    if (r) {
+      if (r.icon) s.icon.style.backgroundImage = `url("${r.icon}")`
+      else {
+        s.icon.classList.add('fallback')
+        const name = r.entry.kind === 'skill' ? this.d.catalog.name(r.code) : this.d.items.name(r.code)
+        s.icon.textContent = name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0]!.toUpperCase()).join('') || '?'
+      }
+    }
+    s.count.textContent = r?.entry.kind === 'item' ? String(r.count ?? 0) : ''
+    const cd = r?.cooldownKey ? this.d.cooldowns.get(r.cooldownKey) : null
+    s.sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
   }
 
-  private down(i: number, ev: PointerEvent): void {
-    const r = this.resolved[i]
+  private use(s: SlotEl | undefined, r: ResolvedSlot | null | undefined): void {
+    if (!r || !s) return
+    s.root.classList.add('pressed')
+    setTimeout(() => s.root.classList.remove('pressed'), 120)
+    this.d.use(r)
+  }
+
+  /** The player changed the mouse slot: redraw, and the feature stores it. */
+  private changeMouse(entry: HotbarEntry | null): void {
+    const prev = this.mouseEntry
+    if (prev?.kind === entry?.kind && prev?.code === entry?.code) return
+    this.d.tooltip.hide()
+    this.setMouseEntry(entry)
+    this.d.onMouseChange?.(this.mouseEntry)
+  }
+
+  private onCooldown(key: string): void {
+    const cd = this.d.cooldowns.get(key)
+    this.resolved.forEach((r, i) => {
+      if (r?.cooldownKey === key) this.slots[i]!.sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
+    })
+    if (this.mouseResolved?.cooldownKey === key) this.mouseSlot.sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
+  }
+
+  private down(i: number | 'mouse', ev: PointerEvent): void {
+    const r = i === MOUSE ? this.mouseResolved : this.resolved[i]
     if (!r || ev.button !== 0) return
-    this.drag.begin(ev, { entry: r.entry, from: hotbarSlot(this.pageIndex, i), icon: r.icon }, this.slots[i]!.root)
+    const from: HotbarTarget = i === MOUSE ? MOUSE : hotbarSlot(this.pageIndex, i)
+    this.drag.begin(ev, { entry: r.entry, from, icon: r.icon }, i === MOUSE ? this.mouseSlot.root : this.slots[i]!.root)
   }
 
   private clear(abs: number): void {
@@ -300,13 +358,21 @@ export class Hotbar {
     this.d.send(intent.hotbarSet(abs, null))
   }
 
-  private dropped(p: HotbarPayload, to: number | null, overUi: boolean): void {
-    if (to !== null) {
-      for (const m of hotbarDrop(this.d.state.hotbar, p.entry, p.from, to)) this.d.send(m)
+  private dropped(p: HotbarPayload, to: HotbarTarget | null, overUi: boolean): void {
+    // From or onto the mouse slot (hud/mouse-slot.ts): swaps with a hotbar slot, cleared when dragged off the bar.
+    const m = mouseSlotDrop(this.d.state.hotbar, this.mouseEntry, p.entry, p.from, to, overUi)
+    if (m) {
+      for (const msg of m.send) this.d.send(msg)
+      if (m.mouse !== undefined) this.changeMouse(m.mouse)
+      return
+    }
+    const from = typeof p.from === 'number' ? p.from : null
+    if (typeof to === 'number') {
+      for (const msg of hotbarDrop(this.d.state.hotbar, p.entry, from, to)) this.d.send(msg)
       return
     }
     // A hotbar slot dragged off the bar (not onto another window) is cleared, as in SRO.
-    if (p.from !== null && !overUi) this.clear(p.from)
+    if (from !== null && !overUi) this.clear(from)
   }
 
   private itemDropped(from: SlotRef, x: number, y: number): boolean {
@@ -320,14 +386,20 @@ export class Hotbar {
       this.d.toast(t('skills.hotbar.notUsable'))
       return true
     }
+    if (to === MOUSE) {
+      this.changeMouse({ kind: 'item', code: stack.code })
+      return true
+    }
     for (const m of hotbarDrop(this.d.state.hotbar, { kind: 'item', code: stack.code }, null, to)) this.d.send(m)
     return true
   }
 
-  private showTip(i: number, ev: PointerEvent): void {
+  private showTip(i: number | 'mouse', ev: PointerEvent): void {
     if (this.drag.dragging) return
     this.hover = { i, ev }
-    const r = this.resolved[i]
+    const r = i === MOUSE ? this.mouseResolved : this.resolved[i]
+    // The empty mouse slot explains itself (nothing on the bar says what it is for).
+    if (!r && i === MOUSE) return this.d.tooltip.show([{ text: t('skills.hotbar.mouseEmpty'), cls: 'hint' }], ev.clientX, ev.clientY)
     if (!r) return this.d.tooltip.hide()
     let lines: TooltipLine[]
     if (r.entry.kind === 'item') {
@@ -337,7 +409,7 @@ export class Hotbar {
       const block = r.block ? t(`skills.block.${r.block}` as StringKey) : null
       lines = this.d.catalog.tooltip(r.code, { learned: this.d.state.isLearned(r.code), block })
     }
-    lines.push({ text: t('skills.hotbar.hint', { key: HOTBAR_KEYS[i]! }), cls: 'hint' })
+    lines.push(i === MOUSE ? { text: t('skills.hotbar.mouseHint'), cls: 'hint' } : { text: t('skills.hotbar.hint', { key: HOTBAR_KEYS[i]! }), cls: 'hint' })
     this.d.tooltip.show(lines, ev.clientX, ev.clientY)
   }
 }

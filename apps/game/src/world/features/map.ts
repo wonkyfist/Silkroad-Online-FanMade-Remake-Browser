@@ -60,7 +60,7 @@ export const mapFeature: WorldFeatureFactory = ctx => {
   void loadZones()
 
   const self = () => {
-    const id = ctx.selfId()
+    const id = ctx.controlledId?.() ?? ctx.selfId() // Play the Boss: the steered mob while piloting
     const v = id === null ? undefined : ctx.view(id)
     if (!v) return null
     return { x: v.pos.x, z: v.pos.z, yaw: v.yaw, level: hud.stats?.level ?? v.state.level ?? 1 }

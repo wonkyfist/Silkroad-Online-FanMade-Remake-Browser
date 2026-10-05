@@ -5,7 +5,8 @@
  * - blocked-path feedback: the server walks a straight line and stops at the first blocking edge. When our own
  *   `move` ends more than 1.5 m short of the point asked for, or no `move` comes at all (refused or blocked at
  *   once), the feature shows a red marker at the point, a dashed line to where we stop, and "You cannot get there."
- *   at most once per 2 s.
+ *   at most once per 2 s. Options → Controls → "Warn when a spot cannot be reached" off (`warn`) silences all of it;
+ *   the walk itself is the server's either way (it already stops at the last reachable point on the line).
  * - a world feature's `beforeGroundMove` veto (vetoGroundMove, wave 8) ends the hold instead of sending the step.
  * - MV-WASD: the movement keys taking over (noteKeyMove) end the hold and forget the request, like an entity click.
  * The world screen reports each ground click with `noteGroundMove`; the rest is driven by the ux-world feature.
@@ -96,6 +97,11 @@ export interface MoveFeedbackDeps {
   rtt(): number
   /** The walk to `wanted` stops at `stop` (or never starts: stop = where we stand); `message` = show the line. */
   blocked(wanted: GroundPoint, stop: GroundPoint, message: boolean): void
+  /**
+   * Options → Controls → "Warn when a spot cannot be reached" (settings.controls.unreachableWarning). False: a short
+   * walk is not reported at all (no marker, no line, no sound). Absent = on.
+   */
+  warn?(): boolean
 }
 
 export class MoveFeedback {
@@ -168,6 +174,7 @@ export class MoveFeedback {
   }
 
   private report(wanted: GroundPoint, stop: GroundPoint, now: number): void {
+    if (this.deps.warn && !this.deps.warn()) return
     const message = now - this.lastMessageAt >= BLOCKED_MESSAGE_MS
     if (message) this.lastMessageAt = now
     this.deps.blocked(wanted, stop, message)

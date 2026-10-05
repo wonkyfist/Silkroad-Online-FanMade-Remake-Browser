@@ -430,6 +430,17 @@ describe('WorldGraphics (world/graphics.ts)', () => {
     expect(g.path).toBe('pbr')
   })
 
+  it('Medium -> Low hides the animated objects before the Classic rebuild (the regions then load the blocking trees as static variants)', () => {
+    const store = new SettingsStore(null)
+    store.set({ graphics: { preset: 'medium', firstRun: false } })
+    const world = fakeWorld('pbr')
+    world.objects.setAnimatedVisible = vi.fn((on: boolean) => world.calls.push(`animated:${on}`))
+    graphicsOn(world, store, 'on')
+    world.calls.length = 0
+    store.set({ graphics: { preset: 'low' } })
+    expect(world.calls.slice(0, 2)).toEqual(['animated:false', 'path:classic'])
+  })
+
   it('a whole-world load keeps its path and tells the player once', () => {
     const store = new SettingsStore(null)
     const said: string[] = []

@@ -159,7 +159,9 @@ describe.skipIf(!HAVE_FIELDS)('The Tiger\'s Shadow on jangan-fields', () => {
 
   it('PACE: JG_S05 Fengil -> Mrs Jang -> Chulsan (300 gold); JG_004 gives 2 Return Scrolls; Miaoryeong at the river bridge', async () => {
     const miao = npc('NPC_CH_SHAMAN')
-    expect(Math.hypot(miao.pos[0] + 410, miao.pos[2] + 300)).toBeLessThan(1)
+    // On the river bridge's town end (content/npcs.override.json rev 2): the old spot by the bank (-410, -300) ended up
+    // inside a bush after wave 12's plants. Still 60 m beyond every aggressive roam circle.
+    expect(Math.hypot(miao.pos[0] + 419, miao.pos[2] + 314)).toBeLessThan(1)
     expect(logs.some((l) => /repo content npcs .*1 patched/.test(l))).toBe(true)
     const h = await hero(['JG_001', 'JG_002'])
     await gm(h.c, 'invis', 'on')

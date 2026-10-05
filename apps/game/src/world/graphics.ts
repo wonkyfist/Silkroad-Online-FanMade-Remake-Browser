@@ -329,7 +329,11 @@ export class WorldGraphics {
     }
     const renderChanged = key !== this.renderKey
     // Leaving PBR: drop its parts first; entering it: the preset's blocks first, so the parts are built with them.
-    if (canSwitch && e.render === 'classic') w.setRenderMode('classic')
+    if (canSwitch && e.render === 'classic') {
+      // Low's animated-object rule first: the rebuilt regions then load a blocking skinned tree's static variant.
+      w.objects.setAnimatedVisible(q.animated)
+      w.setRenderMode('classic')
+    }
     if (renderChanged || canSwitch) {
       this.renderKey = key
       w.setQuality(q)

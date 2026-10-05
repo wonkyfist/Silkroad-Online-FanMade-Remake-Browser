@@ -1,6 +1,8 @@
 import {
+  ARMOR_MIX_MESSAGE,
   EQUIP_SLOTS,
   MAX_GOLD,
+  armorClassesClash,
   equipSlotsFor,
   type ActionFailReason,
   type BagSlotUpdate,
@@ -243,9 +245,26 @@ export function wearProblem(def: ItemDef, who: Wearer): string | null {
 }
 
 /**
+ * The worn slot (other than `target`, whose piece swaps out) holding an armour piece whose class clashes with `def`'s
+ * (retail: a garment never goes with protector or armour pieces; armorClassesClash), or null. Only the pieces left on
+ * count, so a character still wearing a mixed set from before the rule keeps it and can replace any piece with one
+ * that agrees with the rest, but cannot add to the mix.
+ */
+export function armorClash(d: Pick<InvDraft, 'equip'>, def: ItemDef, target: EquipSlot, defs: Defs): EquipSlot | null {
+  if (!def.armorType) return null
+  for (const slot of EQUIP_SLOTS) {
+    const worn = slot === target ? undefined : d.equip[slot]
+    const type = worn ? defs(worn.code)?.armorType : undefined
+    if (type && armorClassesClash(def.armorType, type)) return slot
+  }
+  return null
+}
+
+/**
  * Equips the bag item at `bag` into `slot` (default: its own slot; rings: the first free ring). Whatever was in
  * the slot swaps back into `bag`. A two-handed weapon also moves a worn shield to a free bag slot; a shield is
- * refused while a two-handed weapon is worn. Returns the equip slot used.
+ * refused while a two-handed weapon is worn; an armour piece is refused `armor_mix` while a piece of a clashing class
+ * is worn (armorClash). Returns the equip slot used.
  */
 export function equipItem(d: InvDraft, bag: number, slot: EquipSlot | undefined, who: Wearer, defs: Defs): Result<EquipSlot> {
   if (!d.inBag(bag)) return fail('invalid_slot')
@@ -265,6 +284,7 @@ export function equipItem(d: InvDraft, bag: number, slot: EquipSlot | undefined,
   if (problem) return fail('requirements', problem)
   const weaponDef = d.equip.weapon ? defs(d.equip.weapon.code) : undefined
   if (target === 'shield' && weaponDef?.twoHanded) return fail('requirements', 'a two-handed weapon is worn')
+  if (armorClash(d, def, target, defs)) return fail('armor_mix', ARMOR_MIX_MESSAGE)
   const old = d.equip[target] ?? null
   d.setBag(bag, old)
   d.setEquip(target, it)

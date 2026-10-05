@@ -11,6 +11,7 @@ import {
   type ErrorCode,
   type QuestIssue,
   type QuestRefs,
+  type Role,
 } from '@sro/shared'
 import { hashToken } from '../auth.ts'
 import type { GameContext } from '../game.ts'
@@ -164,6 +165,11 @@ function view(ctx: GameContext, files = readAll(ctx)): Map<string, QuestEntry> {
   return out
 }
 
+/** Every quest the editor sees, with its winning raw copy (the admin panel's quest list and detail, docs/ADMIN.md). */
+export function questEntries(ctx: GameContext): { id: string; title: string; file: string; source: Source; rev: number; disabled: boolean; issues: QuestIssue[]; raw: Record<string, unknown> }[] {
+  return [...view(ctx).values()]
+}
+
 /** Quest ids whose giver, turn-in or a talk/deliver objective is the NPC `code` (NPC editor warnings). */
 export function questsUsingNpc(ctx: GameContext, code: string): string[] {
   const out: string[] = []
@@ -301,6 +307,39 @@ export async function handleGmApi(ctx: GameContext, req: GmApiRequest): Promise<
   const account = ctx.store.sessionAccount(hashToken(m[1]), now)
   if (!account) return err(401, 'unauthorized', 'session expired or invalid')
   if (!allow(ctx, account.id, now)) return err(429, 'rate_limited', 'too many quest editor requests, slow down')
+  const recheck = (): QuestEditorActor | null => {
+    const again = ctx.store.sessionAccount(hashToken(m[1]), req.now ?? Date.now())
+    return again && again.id === account.id ? again : null
+  }
+  return runQuestEditor(ctx, account, req.method, req.path, r, req.body, recheck, now)
+}
+
+/** Who edits: the account and its role as stored now (the admin panel passes its admin). */
+export interface QuestEditorActor {
+  id: number
+  username: string
+  role: Role
+}
+
+/** route() for the admin panel's quest routes (docs/ADMIN.md §3), which map onto the same paths. */
+export const questRoute = route
+
+/**
+ * The quest editor after authentication (shared by /api/gm/* and the admin panel's /api/admin/quests*): the role
+ * gate, the audit rows, validation, saving and the hot reload. `recheck` re-reads the actor after a body arrived (null =
+ * the session ended meanwhile).
+ */
+export async function runQuestEditor(
+  ctx: GameContext,
+  account: QuestEditorActor,
+  method: string,
+  path: string,
+  r: Route | 'bad_id',
+  readBody: (limit: number) => Promise<unknown>,
+  recheck: () => QuestEditorActor | null,
+  now: number,
+): Promise<GmApiResponse> {
+  const req = { method, path, body: readBody }
   const command = r === 'bad_id' ? 'questapi' : AUDIT_COMMAND[r.kind]
   const target = r !== 'bad_id' && 'id' in r ? [r.id] : []
   const audit = (res: string, okay: boolean, args: string[] = target) =>
@@ -329,8 +368,8 @@ export async function handleGmApi(ctx: GameContext, req: GmApiRequest): Promise<
     const body = parsePut(await req.body(GM_API_MAX_BODY_BYTES))
     // The body may arrive long after the headers: the session, the role and the quests (baseRev) are checked again as
     // they are now. Everything from here to save() is synchronous, so no other request can slip in between.
-    const again = ctx.store.sessionAccount(hashToken(m[1]), req.now ?? Date.now())
-    if (!again || again.id !== account.id) return err(401, 'unauthorized', 'session expired or invalid')
+    const again = recheck()
+    if (!again) return err(401, 'unauthorized', 'session expired or invalid')
     if (!editorAllowed(again.role, ctx.config.editorRole)) return denied()
     files = readAll(ctx)
     quests = view(ctx, files)

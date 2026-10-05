@@ -1,7 +1,7 @@
 import {
-  HOTBAR_SLOTS,
   MAX_COMBAT_HITS,
   MAX_EFFECTS_PER_ENTITY,
+  MOUSE_SLOT,
   yawTowards,
   type CombatHit,
   type EffectRemoveReason,
@@ -936,7 +936,8 @@ export class SkillEngine implements GameplayModule {
   }
 
   private hotbarSet(p: Player, slot: number, entry: HotbarEntry | null, answer: Answer): void {
-    if (!Number.isInteger(slot) || slot < 0 || slot >= HOTBAR_SLOTS) return answer(fail('invalid_slot'))
+    // 0..HOTBAR_SLOTS-1 = the bar, MOUSE_SLOT = the mouse quick slot (same entries, same rules).
+    if (!Number.isInteger(slot) || slot < 0 || slot > MOUSE_SLOT) return answer(fail('invalid_slot'))
     const s = this.state(p)
     let saved: HotbarEntry | null = null
     if (entry?.kind === 'skill') {
@@ -953,7 +954,8 @@ export class SkillEngine implements GameplayModule {
       saved = { kind: 'item', code: def.code }
     }
     this.store.setHotbar(p.characterId, slot, saved)
-    s.save.hotbar[slot] = saved
+    if (slot === MOUSE_SLOT) s.save.mouse = saved
+    else s.save.hotbar[slot] = saved
     answer(true)
     p.send({ t: 'skillsUpdate', hotbar: [{ slot, entry: saved }] })
   }
@@ -970,6 +972,7 @@ export class SkillEngine implements GameplayModule {
     for (const [group, at] of this.cooldownsOf(p.characterId)) if (at > now) cooldowns.push({ group, readyInMs: Math.min(600_000, Math.round(at - now)) })
     const msg: ServerMessage = { t: 'skills', masteries: { ...s.save.masteries }, skills: skills.slice(0, 512), hotbar: [...s.save.hotbar] }
     if (cooldowns.length) msg.cooldowns = cooldowns
+    if (s.save.mouse) msg.mouse = { ...s.save.mouse }
     return msg
   }
 

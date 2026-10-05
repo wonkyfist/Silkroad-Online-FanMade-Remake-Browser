@@ -165,10 +165,12 @@ describe('I-12: delivery (WAVE_PLAN8 D32, §3.4)', () => {
     expect(bad).toEqual([])
   })
 
-  it('the mini PC builds only @sro/game; the deploy skips the editor\'s staging exports and the tree tool\'s work products', () => {
+  it('the mini PC builds only @sro/game (and the admin panel), never the editor; the deploy skips the editor\'s staging exports and the tree tool\'s work products', () => {
     const install = readFileSync(join(REPO_ROOT, 'deploy/remote/install.sh'), 'utf8')
     const builds = [...install.matchAll(/pnpm --filter (\S+) build/g)].map(m => m[1])
-    expect([...new Set(builds)]).toEqual(['@sro/game'])
+    // @sro/admin: the admin panel served at /admin/ (docs/ADMIN.md §7). The World Editor (@sro/viewer) stays on the host PC.
+    expect([...new Set(builds)]).toEqual(['@sro/game', '@sro/admin'])
+    expect(builds).not.toContain('@sro/viewer')
     const cfg = readFileSync(join(REPO_ROOT, 'deploy/config.sh'), 'utf8')
     const exclude = /DEPLOY_ASSET_EXCLUDE:=([^}"]+)/.exec(cfg)![1]!.split(',')
     for (const e of ['out:world/*-edit', 'out-opt:world/*-edit', 'out:trees', 'out-opt:trees']) expect(exclude, e).toContain(e)

@@ -148,7 +148,8 @@ export interface SoundIndex {
   /** Logical cues: 'ui.click', 'ui.click2', 'ui.windowOpen', 'ui.windowClose', 'ui.error', 'ui.warning',
    *  'ui.levelUp', 'ui.potion', 'ui.revive', 'ui.questOpen', 'ui.questDone', 'item.pickup', 'item.dropGold',
    *  'item.equip.<KIND>' (effectsound ITEM SND_EQUIP event1), 'hit.crit', 'block.normal', 'block.crit'.
-   *  Extras written when the data has them: 'ui.repair', 'item.dropRare', 'hit.imbue', 'hit.imbueCrit'.
+   *  Extras written when the data has them: 'ui.repair', 'item.dropRare', 'item.dropElixir', and the Berserk
+   *  ('hwan') rows 'hit.hwan', 'hit.hwanCrit', 'swing.hwan.<WEAPON>' (docs/SOUND.md §10).
    *  Weather (WEATHER_CUES): 'weather.rain', 'weather.thunder.near/mid/far', 'weather.wind.strong', 'weather.wind.gust'. */
   cues: Record<string, SoundCue>
   steps: {

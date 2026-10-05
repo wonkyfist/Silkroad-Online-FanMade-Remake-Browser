@@ -62,11 +62,14 @@ health_from_here() {
   [ "$ok" = 1 ] || die "no answer from $URL/health (see: bash deploy/deploy.sh --status)"
   code_root=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$URL/")
   code_out=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$URL/out/index.json")
+  code_admin=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$URL/admin/")
   echo "    /health          $body"
   echo "    /                HTTP $code_root (game client)"
   echo "    /out/index.json  HTTP $code_out (converted assets)"
+  echo "    /admin/          HTTP $code_admin (admin panel)"
   [ "$code_root" = 200 ] || warn "the game client is not being served (GAME_DIST)"
   [ "$code_out" = 200 ] || warn "the converted assets are not being served (OUT_DIR)"
+  [ "$code_admin" = 200 ] || warn "the admin panel is not being served (ADMIN_DIST; see .deploy-admin-build.log of the release)"
 }
 
 stat_field() { sed -n "s/.*\\b$1=\\([0-9]*\\).*/\\1/p" <<<"$2"; }

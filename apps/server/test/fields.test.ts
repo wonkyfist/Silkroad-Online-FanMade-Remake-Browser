@@ -236,7 +236,7 @@ describe.skipIf(!FIELDS || !JANGAN)('WORLD_EXPORT=jangan-fields on the real expo
 
   it('tells the client the export folder (servers list, welcome, worldEnter); the world id stays jangan', async () => {
     const list = await api(s.url, '/api/servers')
-    expect(list.json).toEqual([{ id: 'jangan', name: 'Jangan', status: 'online', online: expect.any(Number), capacity: 50, world: 'jangan-fields', clock: expect.any(Object), weather: expect.any(Object) }])
+    expect(list.json).toEqual([{ id: 'jangan', name: 'Jangan', status: 'online', online: expect.any(Number), capacity: 50, world: 'jangan-fields', clock: expect.any(Object), weather: expect.any(Object), registration: 'open' }])
     const acc = await newAccount(s.url, 'wel')
     const c = await Client.connect(s.url)
     c.send({ t: 'hello', version: PROTOCOL_VERSION, token: acc.token })
@@ -307,6 +307,30 @@ describe.skipIf(!FIELDS || !JANGAN)('WORLD_EXPORT=jangan-fields on the real expo
     expect(warp.pos[2]).toBeCloseTo(GATE_CH.z, 3)
     expect(warp.pos[1]).toBeCloseTo(GATE_CH.y, 3)
     expect(s.ctx.data.inSafeArea('jangan', warp.pos[0], warp.pos[2])).toBe(true)
+    a.c.close()
+    await a.c.closed
+  })
+
+  it('retail-aggressive monsters (Tiger, Bandit) attack a player 6 m away on sight; passive ones (Young Tiger, Mangyang) do not', async () => {
+    const a = await enter()
+    await gm(a.c, 'setlevel', a.ch.name, '20')
+    const visit = async (code: string): Promise<boolean> => {
+      const m = [...s.ctx.world.mobs.values()].find((x) => x.def.code === code && x.variant === 'normal' && x.ai === 'idle' && x.nest?.id !== 5416)!
+      expect(m, code).toBeDefined()
+      expect(m.aggressive, code).toBe(s.ctx.data.mobs.get(code)!.aggressive)
+      const [x, , z] = s.ctx.world.positionAt(m, Date.now())
+      await gm(a.c, 'tp', String(x + 6), String(z))
+      await sleep(700)
+      const acquired = m.target === a.id
+      await gm(a.c, 'tp', 'jangan')
+      for (const x of s.ctx.world.mobs.values()) if (x.target === a.id) await gm(a.c, 'kill', String(x.id))
+      await gm(a.c, 'heal')
+      return acquired
+    }
+    expect(await visit('MOB_CH_TIGER')).toBe(true)
+    expect(await visit('MOB_CH_BANDIT')).toBe(true)
+    expect(await visit('MOB_CH_TIGER_CLON')).toBe(false)
+    expect(await visit('MOB_CH_MANGNYANG')).toBe(false)
     a.c.close()
     await a.c.closed
   })

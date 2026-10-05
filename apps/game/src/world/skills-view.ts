@@ -155,7 +155,8 @@ export class ActionPlayer {
 
   /** `cast` from the server, received at local time `now`. */
   cast(msg: CastMessage, now: number, port: ActionPort | null): SkillAction | null {
-    const def = this.catalog.get(msg.skill) ?? this.opts.fallbackDef?.(msg.skill)
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.5): a server-built ability (PILOT_*) no catalog knows plays its `clip`.
+    const def = this.catalog.get(msg.skill) ?? this.opts.fallbackDef?.(msg.skill) ?? (msg.clip ? clipSkillDef(msg.skill, msg.clip) : undefined)
     if (msg.instant) {
       this.opts.onInstant?.(msg, def)
       return null
@@ -390,6 +391,17 @@ export function mobSkillDef(g: FxGroupFacts): SkillDef {
     aniGroup: g.aniGroup ?? 'DEFAULT',
     hitCues: hitCuesOf(g),
   } as SkillDef
+}
+
+/**
+ * Play the Boss (docs/PLAY_THE_BOSS.md §3.5, `cast.clip`): the minimal SkillDef of a server-built ability whose code no
+ * catalog knows (PILOT_TIGERWOMAN_POUNCE): one SHOT phase of clip type `clip` ('ATTACK1', 'FIND', 'HELP') in the
+ * DEFAULT group, its hit at the clip's first hit event. Presentation only; the server owns the numbers.
+ */
+export function clipSkillDef(skill: string, clip: string): SkillDef | undefined {
+  const shot = clipType(clip)
+  if (!shot) return undefined
+  return mobSkillDef({ group: skill, aniGroup: 'DEFAULT', clips: { ready: null, wait: null, shot }, stages: [] })
 }
 
 /** The clip TYPE_NAME of an animation cell ('ANI_ATTACK1,ANI_ATTACK2' -> 'ATTACK1'). */

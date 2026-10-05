@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { characterDataRow, itemDataRow, parseSkillParams, type CharacterDataRow, type TextdataRow } from '@sro/formats'
-import { checkDropTable, checkNestDef, PROVENANCE_PORT } from '../../shared/src/index.ts'
+import { checkDropTable, checkMobDef, checkNestDef, PROVENANCE_PORT } from '../../shared/src/index.ts'
 import { buildDrops } from '../src/data/drops.ts'
 import type { WorldFrame } from '../src/data/frame.ts'
 import { npcGreetingKey, npcGreetings } from '../src/data/client-source.ts'
 import { buildItemDef, classifyItem, isExportedItem } from '../src/data/items.ts'
-import { championModelSource, mobModelSource } from '../src/data/mobs.ts'
+import { buildMobDef, championModelSource, mobModelSource, type MobContext } from '../src/data/mobs.ts'
 import { iconUrl, modelRef } from '../src/data/models.ts'
 import { buildNest } from '../src/data/nests.ts'
 import { buildNpcs, matchFacing, regionsOfContinent, shopChain } from '../src/data/npcs.ts'
@@ -140,6 +140,31 @@ describe('mobs', () => {
     expect(mobModelSource(base, byCode, () => false).assoc).toBe('mob\\china\\bigeyeghost.bsr')
     expect(championModelSource('mob\\china\\bigeyeghost_clon.bsr', p => files.has(p))).toBe('mob\\china\\bigeyeghost_champ.bsr')
     expect(championModelSource('mob\\china\\tiger.bsr', () => false)).toBeUndefined()
+  })
+
+  it('aggressive from the nest tactics (aggressTypeRaw 0); a passive mob\'s champion is aggressive when the port links champion tactics', () => {
+    const rows = [['MOB_CH_MANGNYANG', 1907], ['MOB_CH_GYO_CLON', 1913], ['MOB_CH_TIGER', 1925]] as const
+    const byCode = new Map<string, CharacterDataRow>(rows.map(([code, id]) => [code, characterDataRow(row(charCells(code, id, [1, 2, 1, 1], { 52: 'mob\\china\\x.bsr' })))]))
+    const portNest = (vsroCode: string, mobId: string, aggressTypeRaw: number): PortNest => ({
+      nestId: 1, mobId, vsroCode, x: 0, z: 0, count: 1, radius: 75, spawnRadius: 60, tacticsId: 2, sightRangeU: 17.3, aggressTypeRaw, traceBoundaryU: 75, respawnDelaySec: [8, 12],
+    })
+    const ctx: MobContext = {
+      byCode,
+      skillsById: new Map(),
+      strings: new Map(),
+      exists: () => true,
+      hasData: () => false,
+      nests: [portNest('MOB_CH_MANGNYANG', 'mob_mangyang', 1), portNest('MOB_CH_GYO_CLON', 'mob_gyo_clon', 1), portNest('MOB_CH_TIGER', 'mob_tiger', 0)],
+      portMobs: [{ id: 'mob_mangyang', combat: { championTacticsId: 1 } }, { id: 'mob_gyo_clon', combat: {} }, { id: 'mob_tiger' }],
+    }
+    const mang = buildMobDef('MOB_CH_MANGNYANG', ctx).mob
+    expect(mang).toMatchObject({ aggressive: false, championAggressive: true })
+    expect((mang.fieldSources as Record<string, string>).championAggressive).toMatch(/championTacticsId 1/)
+    expect(buildMobDef('MOB_CH_GYO_CLON', ctx).mob).toMatchObject({ aggressive: false, championAggressive: false })
+    const tiger = buildMobDef('MOB_CH_TIGER', ctx).mob
+    expect(tiger.aggressive).toBe(true)
+    expect('championAggressive' in tiger).toBe(false)
+    for (const m of [mang, tiger]) expect(checkMobDef(m)).toEqual([])
   })
 })
 

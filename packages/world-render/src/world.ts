@@ -60,7 +60,7 @@ import { createOceanPart } from './ocean/index.ts'
 import { PbrFoliage } from './pbr/foliage-plugin.ts'
 import { Minimap } from './minimap.ts'
 import { loadNav, loadNavStreamed, manifestSpawn, pickNav, spawnAt, type NavPick, type NavSource } from './nav.ts'
-import { WORLD_OBJECT_LAYER, WorldObjects } from './objects.ts'
+import { WORLD_OBJECT_LAYER, WorldObjects, blockingModelsOf } from './objects.ts'
 import type { RegionData } from './regions.ts'
 import { WorldRegions } from './regions.ts'
 import { EnabledMeshCandidates } from './render/active-meshes.ts'
@@ -574,6 +574,10 @@ export class World {
     // RND-M's part (pbr/surface-plugin.ts PbrSurfaces): it joins render.materials on the PBR path only.
     this.materials.pbr.attach(this.render, this.weather)
     this.objects = new WorldObjects(scene, assets, this.materials)
+    // A blocking object is drawn on every preset: the models with a nav footprint, and Low's hidden animated objects
+    // before any region places (its regions then load a blocking skinned tree's static variant; objects.ts lowModelOf).
+    this.objects.setBlocking(model => this.blockingModels().has(model.index), manifest.models)
+    if (!QUALITY_PRESETS[this.quality].animated) this.objects.setAnimatedVisible(false)
     this.scatter = new WorldScatter({
       scene,
       assets,
@@ -649,6 +653,15 @@ export class World {
   /** The file-space navigation world (NAVIGATION.md §9.2). */
   get navWorld(): NavWorld {
     return this.nav.world
+  }
+
+  private blockingCache: { data: unknown; models: ReadonlySet<number> } | null = null
+
+  /** The manifest models that block movement (objects.ts blockingModelsOf over the nav's instances; again after an edit). */
+  blockingModels(): ReadonlySet<number> {
+    const data = this.nav.world.data
+    if (this.blockingCache?.data !== data) this.blockingCache = { data, models: blockingModelsOf(this.manifest.placements, data?.instances ?? []) }
+    return this.blockingCache.models
   }
 
   // ---- wave 10 parts (W10-S; docs/WAVE_PLAN6.md §4.1, D2) ------------------------------------------------------
@@ -1247,7 +1260,7 @@ export class World {
     this.weather.update(dt, camera)
     this.render.update(camera, this.sky.state)
     this.objects.tickAnimationSpeed()
-    if (camera) this.objects.update(camera.globalPosition)
+    if (camera) this.objects.update(camera.globalPosition, false, this.focus)
     // Wave 12 (W12-SA, D2): the trees after the objects (the band refill reads the range scale and the resident slots).
     this.trees?.update(camera, dt)
     // Wave 10 (W10-S, D2): the ocean after the objects, the wildlife after the scatter.

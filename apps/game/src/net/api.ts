@@ -19,6 +19,14 @@ export interface Api {
   logout(token: string): Promise<void>
 }
 
+/**
+ * Whether the login screen offers Register (docs/ADMIN.md, the admin panel's switch): closed only when every server
+ * says so; an empty list or an older server without the field counts as open. The server refuses anyway when closed.
+ */
+export function registrationOpen(servers: readonly ServerInfo[]): boolean {
+  return servers.length === 0 || servers.some((s) => s.registration !== 'closed')
+}
+
 function isApiError(v: unknown): v is ApiError {
   return !!v && typeof v === 'object' && typeof (v as ApiError).error === 'string'
 }

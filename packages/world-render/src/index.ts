@@ -31,7 +31,7 @@ export type {
   SidecarLite,
   SidecarMaterialLite,
 } from './materials.ts'
-export { GROUP_RANGE_M, WORLD_OBJECT_LAYER, WorldObjects, loadGlb, prepareStatic } from './objects.ts'
+export { GROUP_RANGE_M, WORLD_OBJECT_LAYER, WorldObjects, blockingModelsOf, loadGlb, lowModelOf, prepareStatic } from './objects.ts'
 export { WORLD_GROUND_LAYER } from './layers.ts'
 export { installEffectCacheFix } from './render/babylon-fixes.ts'
 export { installGlErrorProbe, installLinkSettle, installVaryingBudgetCheck, settleProgram, wgslInterStageCount } from './render/gpu-guards.ts'

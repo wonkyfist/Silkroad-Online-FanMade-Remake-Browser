@@ -2,11 +2,30 @@
  * Resolves the .wav paths that BSR sound tracks, effectsound.txt and effectenvsnd.txt name to the files that exist
  * under Data.pk2 prim/snd (docs/SOUND.md §2.1):
  *   1. the exact lower-case path (a stray 'sound\' prefix, and the 'prim\snd\' prefix, are stripped);
- *   2. otherwise the file with the same basename when exactly one exists (fixes wrong folders such as
+ *   2. otherwise a known retail path defect (RETAIL_PATH_FIXES: typos and renamed files, docs/SOUND.md §10.2);
+ *   3. otherwise the file with the same basename when exactly one exists (fixes wrong folders such as
  *      prim\snd\swing\swordswing1.wav -> common/swordswing1);
- *   3. otherwise unresolved: recorded with who referenced it, and dropped.
+ *   4. otherwise unresolved: recorded with who referenced it, and dropped.
  * Ids are the lower-case path under prim/snd without the extension ('player/mvwalkgrass'). Node-free.
  */
+
+/**
+ * Paths the retail data names that do not exist, mapped to the file that does (docs/SOUND.md §10.2). Each fix is
+ * used only when its target exists. Typos [confirmed]: itQuckicon (ITEM SND_EQUIP QUICKSLOT), mvfrunground. Renamed
+ * or merged files [likely, the same sound under the name the folder has]: the bow skill swing (one file, no _a/_b),
+ * Hyungno's zombie set (wchina_jombie_* -> wcm_jombie_*), Hyeongcheon's moan, Yeoha's die/shout, Bunwang's shout,
+ * Mangnyang's second moan (effectsound plays moan1 for both NORMAL and CRITYCAL).
+ */
+export const RETAIL_PATH_FIXES: ReadonlyArray<readonly [RegExp, string]> = [
+  [/^ui\/itquckicon$/, 'ui/itquickicon'],
+  [/^player\/mvfrunground$/, 'player/mvrunground'],
+  [/^skill\/csk_bow_swing_[ab]$/, 'skill/csk_bow_swing'],
+  [/^monster\/wchina_jombie_(\w+)$/, 'monster/wcm_jombie_$1'],
+  [/^monster\/wcm_hchen_moan1$/, 'monster/wcm_hchen_moan1_a'],
+  [/^monster\/cm_yeoha_(die|shout)_a$/, 'monster/cm_yeoha_$1'],
+  [/^monster\/cara_bunwang_shout1$/, 'monster/cara_bunwang_shout'],
+  [/^monster\/cm_mang_moan2$/, 'monster/cm_mang_moan1'],
+]
 
 export interface Unresolved {
   path: string
@@ -64,6 +83,13 @@ export class SoundResolver {
     if (!rel) return null
     const id = soundId(rel)
     if (this.ids.has(id)) return id
+    for (const [re, to] of RETAIL_PATH_FIXES) {
+      if (!re.test(id)) continue
+      const fix = id.replace(re, to)
+      if (!this.ids.has(fix)) break
+      this.fixed.set(rel, fix)
+      return fix
+    }
     const cands = this.byBase.get(basename(id))
     if (cands?.length === 1) {
       this.fixed.set(rel, cands[0]!)

@@ -8,7 +8,8 @@
  *   (D23: "their count from the pure schedule"): the tea house at 21:00 is silent though the schedule fills it, the
  *   plaza at noon is at about half the gain.
  * - S3: Town life Off on Medium/High silences the bed (and the vendors' murmurs): the counter is wired whenever the
- *   town part exists, and a disabled part answers 0 folk. Low keeps its bed, so Off is quieter than Low.
+ *   town part exists, and a disabled part answers 0 folk. Low keeps its bed, so Off is quieter than Low. (Reversed
+ *   by docs/SOUND.md §10.5 after a user report: no drawn townsfolk, no townsfolk voices, on Off and on Low alike.)
  * - S4: the unique cues are never preloaded and a UI cue waits only 150 ms: on a real link the first (often the only)
  *   appear notice of a session plays no sound.
  * - S5: the animal sounds come from spots where no animal is drawn: the cat meows at the tea house while the drawn cat
@@ -172,8 +173,10 @@ describe('S2: the bed on Low follows the pure schedule (WAVE_PLAN7 D23)', () => 
   })
 })
 
-describe('S3: Town life Off keeps the town\'s sound (sound costs no GPU; TOWN_LIFE §8.2)', () => {
-  it('the bed still hears the plaza after Options → Town life: Off on Medium', async () => {
+// docs/SOUND.md §10.5 (a later user report) reverses S3's rule: with Town life Off the user heard the townsfolk talk
+// though none were drawn. The count stays (the pure schedule), the folk's voices (the bed) go.
+describe('S3: Town life Off silences the townsfolk\'s voices (docs/SOUND.md §10.5)', () => {
+  it('the bed hears the plaza with Town life Full, and fades out after Options → Town life: Off on Medium', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {})
     vi.spyOn(console, 'info').mockImplementation(() => {})
     const s = await w10World({
@@ -212,14 +215,14 @@ describe('S3: Town life Off keeps the town\'s sound (sound costs no GPU; TOWN_LI
       }
     }
     frames(30)
-    const on = activeTownAudio()!.folk
-    expect(on, 'Town life Full: the bed hears the plaza').toBeGreaterThan(0)
+    const full = activeTownAudio()!
+    expect(full.folk, 'Town life Full: the bed hears the plaza').toBeGreaterThan(0)
+    expect(full.bed.calm + full.bed.busy, 'Town life Full: the plaza talks').toBeGreaterThan(0)
     s.world.setTownLife('off')
     frames(30)
     const off = activeTownAudio()!
-    // found: 0 folk, both bed loops faded out (Low, with no town part at all, keeps its bed)
-    expect(off.folk, 'Town life Off: the bed still hears the plaza').toBeGreaterThan(0)
-    expect(off.bed.calm + off.bed.busy).toBeGreaterThan(0)
+    expect(off.folk, 'Town life Off: the schedule still counts the plaza').toBeGreaterThan(0)
+    expect(off.bed.calm + off.bed.busy, 'Town life Off: nobody drawn, nobody heard').toBe(0)
   }, 60_000)
 })
 

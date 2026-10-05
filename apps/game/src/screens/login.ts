@@ -7,7 +7,7 @@
 import { ACCOUNT_NAME, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, type ApiLoginResponse } from '@sro/shared'
 import type { App, Screen, ScreenParams } from '../app.ts'
 import { t } from '../i18n/index.ts'
-import { GameError } from '../net/api.ts'
+import { GameError, registrationOpen } from '../net/api.ts'
 import { prefetchStage } from '../stage/prefetch.ts'
 import { anchor, bars } from '../ui/chrome.ts'
 import { el, input, Listeners, place } from '../ui/dom.ts'
@@ -137,6 +137,20 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
   user.value = saved
   rememberBox.checked = true
   setMode('login')
+
+  // The admin panel's registration switch (docs/ADMIN.md): asked each time this screen opens, so turning it back on
+  // brings Register back without a rebuild. The server refuses registration on its own while it is closed.
+  let disposed = false
+  const closeRegistration = () => {
+    secondary.hidden = true
+    if (mode === 'register') setMode('login')
+  }
+  void app.transport.api
+    .servers()
+    .then(list => {
+      if (!disposed && !registrationOpen(list)) closeRegistration()
+    })
+    .catch(() => {})
   if (params?.error) setMessage(params.error, 'error', params.error === t('net.versionMismatch'))
 
   const setBusy = (b: boolean) => {
@@ -185,6 +199,8 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
       if (mode === 'register') await enter(username, await app.transport.api.register({ username, password }))
       else await doLogin(username, password)
     } catch (err) {
+      // Registration was closed meanwhile: back to the login form, with the server's message.
+      if (mode === 'register' && err instanceof GameError && err.code === 'forbidden') closeRegistration()
       setMessage(describeError(err), 'error', err instanceof GameError && err.code === 'version_mismatch')
       setBusy(false)
       pass.select()
@@ -214,6 +230,7 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
 
   return {
     dispose() {
+      disposed = true
       ls.clear()
     },
   }

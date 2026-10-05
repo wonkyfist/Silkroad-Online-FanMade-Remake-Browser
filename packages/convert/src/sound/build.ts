@@ -244,10 +244,15 @@ export function planSoundIndex(inp: SoundInputs): SoundPlan {
   for (const w of inp.scope === 'jangan' ? JANGAN_HIT_WEAPONS : uniq(table.find('PLAYER', { handle: /^SND_SWING\d$/, skill: '' }).map(r => r.event1).filter(w => w && w !== 'HWAN'))) {
     cue(`swing.${w}`, table.find('PLAYER', { handle: /^SND_SWING\d$/, skill: '', event1: w }), 'sfx')
   }
-  cue('swing.imbue', table.find('PLAYER', { handle: /^SND_SWING\d$/, skill: '', event1: 'HWAN' }), 'sfx')
+  // Berserk ('hwan', 환; docs/SOUND.md §10.3): per weapon the SND_SWING3 HWAN <weapon> swing, and the HWAN hit and
+  // crit rows. (Not the imbues: those are skill groups, SKILL_CH_*_GIGONGTA_*, with their own SND_DMG rows.)
+  const hwanSwings = table.find('PLAYER', { handle: /^SND_SWING\d$/, skill: '', event1: 'HWAN' })
+  for (const w of uniq(hwanSwings.map(r => r.event2).filter(w => w && (inp.scope === 'all' || JANGAN_HIT_WEAPONS.includes(w))))) {
+    cue(`swing.hwan.${w}`, hwanSwings.filter(r => r.event2 === w), 'sfx')
+  }
   cue('hit.crit', table.find('PLAYER', { handle: 'SND_CRIDMG', skill: '', event1: '' }), 'sfx')
-  cue('hit.imbue', table.find('PLAYER', { handle: 'SND_DMG', skill: '', event1: 'HWAN', event2: '' }), 'sfx')
-  cue('hit.imbueCrit', table.find('PLAYER', { handle: 'SND_CRIDMG', skill: '', event1: 'HWAN' }), 'sfx')
+  cue('hit.hwan', table.find('PLAYER', { handle: 'SND_DMG', skill: '', event1: 'HWAN', event2: '' }), 'sfx')
+  cue('hit.hwanCrit', table.find('PLAYER', { handle: 'SND_CRIDMG', skill: '', event1: 'HWAN' }), 'sfx')
   cue('block.normal', table.find('PLAYER', { handle: 'SND_BLOCKING', skill: '', event1: '', event2: 'NORMAL' }), 'sfx')
   cue('block.crit', table.find('PLAYER', { handle: 'SND_BLOCKING', skill: '', event1: '', event2: 'CRITYCAL' }), 'sfx')
   cue('block.bow', table.find('PLAYER', { handle: 'SND_BLOCKING', skill: '', event1: 'BOW' }).filter(r => r.event2 !== 'CRITYCAL'), 'sfx')

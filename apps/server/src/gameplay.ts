@@ -5,6 +5,7 @@ import {
   ITEM_OWNER_MS,
   MAX_COMBAT_HITS,
   PICKUP_RANGE,
+  variantScale,
   yawTowards,
   type CombatHit,
   type DropTable,
@@ -23,7 +24,7 @@ import {
   type StatGain,
   type Vec3,
 } from '@sro/shared'
-import { retaliate, thinkMob, type AiHost } from './ai.ts'
+import { mobAggressive, retaliate, thinkMob, type AiHost } from './ai.ts'
 import { Alchemy } from './alchemy.ts'
 import { Berserk } from './berserk.ts'
 import type { ServerConfig } from './config.ts'
@@ -71,8 +72,9 @@ import { StorageService } from './storage-db.ts'
 import { WeatherService } from './weather.ts'
 import { MovementService } from './movement.ts'
 import { Uniques } from './uniques.ts'
+import { Pilot } from './pilot/service.ts'
 import { WorldClock } from './world-clock.ts'
-import { visibleEquip, WARP_SEARCH_M, type Cos, type Entity, type GroundItem, type Mob, type MobTuning, type NewPlayer, type Npc, type Player, type World } from './world.ts'
+import { visibleEquip, visibleEquipPlus, WARP_SEARCH_M, type Cos, type Entity, type GroundItem, type Mob, type MobTuning, type NewPlayer, type Npc, type Player, type World } from './world.ts'
 
 /**
  * Gameplay rules on top of the world simulation (docs/PROTOCOL.md §3-§8): combat (player auto-attack and mob
@@ -289,6 +291,11 @@ export class Gameplay implements AiHost {
    * UNIQUES=off: the Spawner then keeps the unique groups as plain nests (the wave-10 behaviour).
    */
   readonly uniques: Uniques | null
+  /**
+   * Play the Boss (docs/PLAY_THE_BOSS.md; pilot/): a player steers a unique while everyone else hunts her. Registered
+   * after `uniques` when UNIQUES=on (inert until a unique of this world has a `pilot` block); null otherwise.
+   */
+  readonly pilot: Pilot | null
   /** Every module, in registration order (enter-world order, hook order). */
   readonly modules: readonly GameplayModule[]
   /** Request type -> the module that answers it (built from `handles`; a duplicate throws). */
@@ -331,6 +338,7 @@ export class Gameplay implements AiHost {
     this.weather = new WeatherService(this)
     this.movement = new MovementService(this)
     this.uniques = uniquesOn ? new Uniques(this) : null
+    this.pilot = this.uniques ? new Pilot(this, this.uniques) : null
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
     this.mobSkills.summonPolicy = (m) => this.uniques?.summonPolicy(m) ?? null
     if (!this.world.decorators.includes(dropTag)) this.world.decorators.push(dropTag)
@@ -347,6 +355,8 @@ export class Gameplay implements AiHost {
       this.movement,
       // wave 11 (docs/WAVE_PLAN7.md §4.2): the uniques module, when UNIQUES=on
       ...(this.uniques ? [this.uniques] : []),
+      // Play the Boss (docs/PLAY_THE_BOSS.md §3.1): after uniques
+      ...(this.pilot ? [this.pilot] : []),
     ]
     this.routes = buildRoutes(this.modules, CORE_REQUESTS)
     this.world.onTick = (now) => this.tick(now)
@@ -443,7 +453,8 @@ export class Gameplay implements AiHost {
   }
 
   private attackable(p: Player): boolean {
-    if (p.dead || p.invisible) return false
+    // Play the Boss: a body in a trance is never a target (docs/PLAY_THE_BOSS.md §3.3).
+    if (p.dead || p.invisible || p.trance) return false
     const [x, , z] = this.world.positionAt(p, this.now)
     return !this.data.inSafeArea(this.config.world, x, z)
   }
@@ -483,6 +494,8 @@ export class Gameplay implements AiHost {
   }
 
   restored(m: Mob): void {
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): during the event no refill and no reset at home.
+    if (m.pilot) return
     // H11-FURY-1: the AI got her home (a leash reset); the uniques module resets her fight here, whatever else this
     // tick does to her afterwards (a projectile or DoT landing before its tick would hide the reset from a poll).
     this.uniques?.homeReached(m)
@@ -510,7 +523,8 @@ export class Gameplay implements AiHost {
       level: def.level,
       hp: maxHp,
       maxHp,
-      radius: Math.max(0.2, def.radius),
+      // A giant's body is as big as the client draws it (@sro/shared VARIANT_SCALE), so melee reaches its edge.
+      radius: Math.max(0.2, def.radius * variantScale(variant)),
       combat,
       pos: [x, y, z],
       yaw: this.rng() * Math.PI * 2,
@@ -521,7 +535,7 @@ export class Gameplay implements AiHost {
       roamRadius: nest ? nest.radius : GM_MOB_ROAM,
       sightRange: tactics?.sightRange ?? GM_MOB_SIGHT,
       leashRange: Math.max(tactics?.leashRange ?? GM_MOB_LEASH, (nest?.radius ?? GM_MOB_ROAM) + 10),
-      aggressive: tactics?.aggressive ?? def.aggressive,
+      aggressive: mobAggressive(def, variant, tactics),
       nest,
       ai: 'idle',
       target: null,
@@ -872,10 +886,15 @@ export class Gameplay implements AiHost {
       p.send({ t: 'statsDelta', stats: { gold: p.gold } })
     }
     if (d.touchedEquip.size > 0) {
-      const before = JSON.stringify(visibleEquip(p))
+      // The codes and the +N (the weapon glow) of what the player shows: a change of either is announced.
+      const look = () => JSON.stringify([visibleEquip(p), visibleEquipPlus(p.equip)])
+      const before = look()
       p.equip = this.equipOf(d.state())
       const changed = this.refresh(p)
-      if (JSON.stringify(visibleEquip(p)) !== before) this.world.broadcastAbout(p, { t: 'appearance', id: p.id, equip: visibleEquip(p) })
+      if (look() !== before) {
+        const plus = visibleEquipPlus(p.equip)
+        this.world.broadcastAbout(p, { t: 'appearance', id: p.id, equip: visibleEquip(p), ...(Object.keys(plus).length > 0 ? { plus } : {}) })
+      }
       p.send({ t: 'stats', stats: this.stats(p) })
       if (changed) this.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hp: Math.round(p.hp), maxHp: p.maxHp })
     }
@@ -977,6 +996,8 @@ export class Gameplay implements AiHost {
       return m
     }
     if (t.kind === 'player' ? t.dead : t.ai === 'dead') return { dealt: 0, killed: false, hits: [] }
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.3): a body in a trance cannot be hurt (no message: nothing landed).
+    if (t.kind === 'player' && t.trance) return { dealt: 0, killed: false, hits: [] }
     if (t.kind === 'mob' && t.ai === 'return') {
       // Rule (anti leash-kiting): a mob running home after giving up evades every hit; it is restored at home.
       a.lastCombatAt = now
@@ -1003,13 +1024,15 @@ export class Gameplay implements AiHost {
     this.world.broadcastAboutEither(a, t, msg(hits, killed))
     // Wave 8 (docs/SYSTEMS_COMBAT.md §3.2): durability wear of the landed hits (skips extra.dot).
     this.durability.afterHits(a, t, hits, extra, now)
+    // Play the Boss: damage to or from the boss and her summons (downs, Stalk, the fight flag; pilot/service.ts).
+    this.pilot?.onHits(a, t, dealt, now)
     if (t.kind === 'mob') {
       // An invisible GM is not a target (AiHost.target): the mob keeps its credit but does not turn on it.
       if (a.kind === 'player') retaliate(t, a.id, dealt, !a.invisible)
       if (killed) this.mobDied(t, now, true)
     } else {
       if (dealt > 0) t.send({ t: 'statsDelta', stats: { hp: Math.round(t.hp) } })
-      if (killed) this.playerDied(t, now)
+      if (killed) this.playerDied(t, now, a)
     }
     return { dealt, killed, hits }
   }
@@ -1040,6 +1063,8 @@ export class Gameplay implements AiHost {
       if (m.encounter) this.quests.encounterMobGone(m, now, false)
       return
     }
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.9): the pilot's associates leave her damage map before anything is shared.
+    this.pilot?.beforeShares(m, now)
     // Decision 41: the party decides shares, credit and loot owners for kills it is part of; otherwise the solo rule.
     const { shares, credit, lootOwners, lootGroup } = this.party.killShares(m, now) ?? soloShares(m, (id) => this.world.players.get(id))
     // Wave 11 (docs/UNIQUES.md §3.3): the loot-owner group, with the damage map as it is before the clear below.
@@ -1126,14 +1151,15 @@ export class Gameplay implements AiHost {
     this.config.log(`${p.name} reached level ${p.level} (from ${before})`)
   }
 
-  playerDied(p: Player, now: number): void {
+  /** `killer`: the attacker of the killing hit (Play the Boss downs); absent for a GM kill. */
+  playerDied(p: Player, now: number, killer?: Player | Mob): void {
     p.dead = true
     p.hp = 0
     p.action = null
     this.world.halt(p, now)
     this.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hp: 0, state: 'dead' })
     for (const m of this.world.mobs.values()) if (m.target === p.id) m.target = null
-    this.hook('playerDied', p, now)
+    this.hook('playerDied', p, now, killer)
   }
 
   // ---- tick ----------------------------------------------------------------------------------------------
@@ -1159,6 +1185,8 @@ export class Gameplay implements AiHost {
       // Stunned, frozen or knocked-down mobs do nothing until the status ends (skills/effects.ts); a mob inside a
       // monster skill's cast or action window stands still (wave 8, mob-skills.ts).
       if (this.skills.held(m, now) || this.mobSkills.busy(m, now)) continue
+      // Play the Boss (docs/PLAY_THE_BOSS.md §3.2): a player steers her; her AI only runs while it has her back.
+      if (m.pilot?.steering === 'player') continue
       thinkMob(m, this)
       if (m.ai === 'idle') this.regenMob(m, now)
     }
@@ -1168,7 +1196,8 @@ export class Gameplay implements AiHost {
   }
 
   private regenMob(m: Mob, now: number): void {
-    if (m.hp >= m.maxHp || now - m.lastCombatAt < REGEN.outOfCombatMs || now < m.nextRegenAt) return
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): hiding never heals the boss during the event.
+    if (m.pilot || m.hp >= m.maxHp || now - m.lastCombatAt < REGEN.outOfCombatMs || now < m.nextRegenAt) return
     m.nextRegenAt = now + REGEN.intervalMs
     m.hp = Math.min(m.maxHp, m.hp + Math.max(1, Math.round(m.maxHp * REGEN.mobPct)))
     this.world.broadcastAbout(m, { t: 'entityUpdate', id: m.id, hp: m.hp })

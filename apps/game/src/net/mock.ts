@@ -13,6 +13,7 @@
  */
 import {
   ACCOUNT_NAME,
+  armorClassesClash,
   CHARACTER_NAME,
   CHARACTER_RULES,
   CLOCK_EPOCH_DAYS,
@@ -1373,6 +1374,12 @@ export class MockServer implements Api {
         if (def.race === 'europe') return no('requirements')
         const weapon = this.weaponOf(ps)
         if (def.slot === 'shield' && weapon?.twoHanded) return no('requirements')
+        // The server's garment rule (armorClassesClash): the pieces left on must agree with the new one.
+        const clash = (Object.entries(inv.equip) as [EquipSlot, { code: string } | undefined][]).some(([s, worn]) => {
+          const type = s !== slot && worn ? this.content.items.get(worn.code)?.armorType : undefined
+          return !!type && !!def.armorType && armorClassesClash(def.armorType, type)
+        })
+        if (clash) return no('armor_mix')
         const bagUpdates: BagSlotUpdate[] = []
         const equipUpdates: EquipSlotUpdate[] = []
         const shield = inv.equip.shield

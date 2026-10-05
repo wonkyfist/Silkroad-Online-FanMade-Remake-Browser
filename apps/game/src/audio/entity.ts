@@ -6,8 +6,8 @@
  */
 import type { ClipTrack, ModelSounds, SoundHandle, SoundIndex, SoundSurface } from '@sro/shared'
 import type { Vec3Like } from './backend.ts'
-import { ClipSoundDriver, type ClipCursors } from './clips.ts'
-import { pick, SKILL_ROWS_OVERRIDE_CLIP, trackFile } from './cues.ts'
+import { ClipSoundDriver, type ClipCursor, type ClipCursors } from './clips.ts'
+import { mobAttackOf, pick, SKILL_ROWS_OVERRIDE_CLIP, trackFile } from './cues.ts'
 import type { VoiceKind } from './voices.ts'
 
 /** The slice of world/entities.ts EntityView the sound reads (structural, for tests). */
@@ -61,6 +61,8 @@ export const POLL_RANGE_M = 40
 const SURFACE_CACHE_MS = 250
 /** Share of player shouts that play (retail shouts on every swing; noisy with many players). */
 export const PLAYER_SHOUT_SHARE = 0.5
+/** A crit's hurt-clip moan is expected within this time of the hit (ms). */
+const CRIT_MOAN_MS = 400
 /** Delay of the body thud after the death cry when a model has no DIE1 tracks (ms). */
 const FALLBACK_THUD_MS = 1500
 /** Raw names of the jump's synthetic tracks (three/models.ts movementTracksOf; kept in sync by audio.test.ts). */
@@ -97,6 +99,12 @@ export function voiceKindOf(handle: SoundHandle): VoiceKind {
 export class EntitySound {
   private readonly driver: ClipSoundDriver
   private skill: { group: string; until: number } | null = null
+  /** Berserk: the weapon's HWAN swing files (docs/SOUND.md §10.3); null outside it. */
+  private hwanSwing: readonly string[] | null = null
+  /** The mob attack clip start last seen (`name#run`), for mobAttackStart. */
+  private attackKey: string | null = null
+  /** Until this time (ms) the next moan track is the crit moan. */
+  private critUntil = 0
   private inRange = true
   private surface: { at: number; x: number; z: number; s: SoundSurface } | null = null
   private wasDead: boolean
@@ -117,6 +125,16 @@ export class EntitySound {
     return this.skill?.group ?? null
   }
 
+  /** A crit landed on this entity: its next hurt-clip moan is the critical one (VOC_MOAN CRITYCAL). */
+  critHit(nowMs = performance.now()): void {
+    this.critUntil = nowMs + CRIT_MOAN_MS
+  }
+
+  /** Berserk on (the weapon's SND_SWING3 HWAN files replace the basic swings) or off (null). */
+  setHwanSwing(files: readonly string[] | null): void {
+    this.hwanSwing = files?.length ? files : null
+  }
+
   update(nowMs: number): void {
     const v = this.view
     if (this.disposed || v.kind === 'item') return
@@ -135,6 +153,7 @@ export class EntitySound {
     if (this.later.length) this.flushLater(nowMs)
     const cursors = v.actor?.clipCursors?.()
     if (!cursors) return
+    if (v.kind === 'mob') this.mobAttackStart(cursors.top, fire)
     const fired = this.driver.update(cursors, nowMs, fire)
     if (!fired.length) return
     const index = this.host.index
@@ -142,10 +161,20 @@ export class EntitySound {
     for (const track of fired) {
       if (track.handle === 'shout' && v.kind === 'player' && this.host.rng() >= PLAYER_SHOUT_SHARE) continue
       const jumpStep = track.raw === JUMP_TAKEOFF_RAW || track.raw === JUMP_LAND_RAW
+      if (track.handle === 'moan' && this.critUntil > nowMs) {
+        // §10.3: the hurt clip of a crit moans with the VOC_MOAN CRITYCAL row (the one GameAudio.hit just played).
+        this.critUntil = 0
+        const crit = pick((index.mobs[v.state.model] ?? index.voices[v.state.model])?.moan.crit, () => this.host.rng())
+        if (crit) {
+          this.play(crit, 'voice')
+          continue
+        }
+      }
       const file = trackFile(index, track, {
         surface: () => (jumpStep ? this.jumpSurfaceAt(nowMs) : this.surfaceAt(nowMs)),
         skill: this.skill?.group ?? null,
         overrideSwing: SKILL_ROWS_OVERRIDE_CLIP,
+        hwanSwing: this.hwanSwing,
         rng: () => this.host.rng(),
       })
       // A skill's own swing row may name its stage sound too (Heal: csk_heal_ready): play it once.
@@ -173,6 +202,25 @@ export class EntitySound {
       gain,
       unique,
     })
+  }
+
+  /**
+   * A mob attack clip whose model carries no swing or shout track (Tombstone's force attacks, docs/SOUND.md §10.3)
+   * plays the effectsound swing row of that attack (`MOB_<NAME> SND_SWING1 <MSKILL>`) when the clip starts, once per
+   * start. Models with their own tracks keep them (the driver plays those).
+   */
+  private mobAttackStart(top: ClipCursor | null, fire: boolean): void {
+    const key = top && /^ATTACK\d/.test(top.name) ? `${top.name}#${top.run}` : null
+    if (key === this.attackKey) return
+    this.attackKey = key
+    if (!key || !top || !fire) return
+    const index = this.host.index
+    const code = this.view.state.model
+    const model = this.host.modelTracks(code)
+    if (!index || model === undefined || model?.clips[top.name]?.some(t => t.handle === 'swing' || t.handle === 'shout')) return
+    const skill = mobAttackOf(index, code, top.name)
+    const file = pick(skill ? index.mobs[code]?.attacks[skill]?.swing : undefined, () => this.host.rng())
+    if (file) this.play(file, 'other', index.mobs[code]?.gain)
   }
 
   /**

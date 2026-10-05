@@ -28,6 +28,9 @@
  *   the key walk (the action takes over); the keys need a new press after either.
  * - Mounted, buffed or GM speed: the speed of the own latest `move` (DEFAULT_SPEED until one came). Dead: nothing. A
  *   stall owner: the features' `beforeGroundMove` veto (its "Close your stall first."). Space jumps while walking.
+ * - Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the "own view" is `ctx.controlledId?.() ?? ctx.selfId()`, so while
+ *   piloting the keys walk the steered mob (the server redirects the `moveTo`); its `move` / `stop` / `warp` echoes and
+ *   speed (9 m/s) drive the prediction, and the walk starts afresh (reset + seen) when that id changes.
  * The pure parts (cameraRelative, chooseStep, KeyMover with injected dependencies) run in node tests.
  */
 import { PointerEventTypes, type Observer, type PointerInfo } from '@babylonjs/core'
@@ -762,9 +765,23 @@ export interface KeyMoveFeature extends WorldFeature {
  */
 export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
   const navs = new WeakMap<NavGltf, KeyNav>()
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the keys walk the steered mob while piloting, else the own character. */
+  const ownId = (): number | null => ctx.controlledId?.() ?? ctx.selfId()
   const self = (): EntityView | null => {
-    const id = ctx.selfId()
+    const id = ownId()
     return id === null ? null : (ctx.view(id) ?? null)
+  }
+  /** The id the walk follows; a change (piloting starts or ends) starts it afresh from that view's state. */
+  let walking: number | null = null
+  const follow = (): void => {
+    const id = ownId()
+    if (id === walking) return
+    const was = walking
+    walking = id
+    if (was === null || id === null) return
+    mover.reset()
+    const v = self()
+    if (v) mover.seen([v.pos.x, v.pos.y, v.pos.z], v.move)
   }
   const mover = new KeyMover({
     send: m => ctx.send(m),
@@ -833,10 +850,12 @@ export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
   return {
     mover,
     onFrame(now) {
+      follow()
       mover.frame(now)
     },
     onMessage(msg: ServerMessage) {
-      const id = ctx.selfId()
+      follow()
+      const id = ownId()
       switch (msg.t) {
         case 'move':
           if (msg.id === id) mover.onSelfMove(msg.move)
@@ -850,6 +869,7 @@ export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
         case 'worldEnter':
           mover.reset()
           mover.seen(msg.self.pos, msg.self.move)
+          walking = msg.self.id
           break
         case 'actionResult':
           if (msg.ok) mover.accepted(msg.re)
@@ -857,7 +877,7 @@ export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
       }
     },
     onEntityAdded(v) {
-      if (v.id === ctx.selfId()) mover.seen([v.pos.x, v.pos.y, v.pos.z], v.move)
+      if (v.id === ownId()) mover.seen([v.pos.x, v.pos.y, v.pos.z], v.move)
     },
     dispose() {
       mover.reset()

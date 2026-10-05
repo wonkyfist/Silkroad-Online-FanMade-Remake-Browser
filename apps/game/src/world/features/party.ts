@@ -4,13 +4,16 @@
  * - the party state (`party`, `partyVitals`) into the member frames under the buff bar and the party window (P and the
  *   menu-bar Party button; binding id 'window.party', menu-bar id 'party' as W4-FC registered them);
  * - the invitation popup (`partyInvited`), the event lines (`partyEvent`) and the refusals of the invite/answer;
- * - the Invite button of the target window on player targets (Hud.addTargetAction, M3);
+ * - the Invite button of the target window on player targets (Hud.addTargetAction, M3), the window's Invite /
+ *   Settings / Leave buttons, and the retail chat commands `/party` (`/InviteToParty`) [name], `/LeaveTheParty`,
+ *   `/BanishFromParty name`. An invitation that starts a party first asks for the EXP and item modes in the retail
+ *   party setting box (`ifsetpartymode`, MessageBox.choose), which the window's Settings button also opens;
  * - party chat: a line starting with `#` goes to the party channel (ChatBox.registerPrefix);
  * - minimap pins for the members (addMarkerSource) and the party colour on their name tags (setLabelClass('party')).
  *
  * PartyController is the DOM-free part (tests drive it with a fake PartyIo); the factory binds it to the HUD.
  */
-import type { ActionFailReason, ClientMessage, PartyMode, ServerMessage } from '@sro/shared'
+import type { ActionFailReason, ClientMessage, PartyExpMode, PartyItemMode, PartyMode, ServerMessage } from '@sro/shared'
 import { gameAudio } from '../../audio/index.ts'
 import { t, type StringKey } from '../../i18n/index.ts'
 import { intent } from '../../hud/intents.ts'
@@ -20,12 +23,14 @@ import {
   memberMenu,
   memberPosition,
   modeLabel,
+  modesFromChoice,
   PARTY_COLOR,
   PARTY_PIN,
   PartyBook,
   PartyFrame,
   PartyMenu,
   partyRows,
+  partySetupGroups,
   PartyWindow,
   type PartyMenuAction,
   type PartyMenuEntry,
@@ -34,6 +39,7 @@ import {
   type XZ,
 } from '../../hud/party.ts'
 import type { TargetAction, TargetInfo } from '../../hud/target.ts'
+import { MessageBox } from '../../ui/kit/dialog.ts'
 import { intents } from '../intents.ts'
 import type { HudMarker, HudMinimap } from '../jangan/minimap.ts'
 import type { WorldFeatureFactory } from '../features.ts'
@@ -58,9 +64,30 @@ export interface PartyIo {
   now(): number
   /** The party or the invitation changed: redraw. */
   changed(): void
+  /**
+   * The party setting box (retail `ifsetpartymode`), starting from `current`: the chosen modes, or null when
+   * cancelled. 'invite' asks before an invitation that starts a party (`name` is the invitee). Absent (tests): no
+   * box, the remembered modes are used.
+   */
+  chooseModes?(current: PartyModes, purpose: { invite: string } | 'settings'): Promise<PartyModes | null>
+  /** A player in view by name (case-insensitive), not yourself; null when none. */
+  findPlayer?(name: string): PartyTarget | null
+  /** The current target when it is a player. */
+  targetPlayer?(): PartyTarget | null
 }
 
+/** A player the Invite button, the window or a chat command may invite. */
+export type PartyTarget = Pick<TargetInfo, 'id' | 'name' | 'kind'>
+
+/** Why a target cannot be invited (an i18n key taking {name}), or null. */
+export type InviteProblem = 'party.problem.notPlayer' | 'party.problem.self' | 'party.problem.mate' | 'party.problem.notLeader' | 'party.problem.full'
+
 const MODES_KEY = 'sro.party.modes'
+
+/** The retail party chat commands (matched case-insensitively by ChatBox). */
+export const PARTY_INVITE_COMMANDS = ['/party', '/invitetoparty'] as const
+export const PARTY_LEAVE_COMMAND = '/leavetheparty'
+export const PARTY_KICK_COMMAND = '/banishfromparty'
 
 function isMode(v: unknown): v is PartyMode {
   return v === 'free' || v === 'share'
@@ -224,19 +251,121 @@ export class PartyController {
     return this.book.isLeader(this.io.selfId())
   }
 
-  /** The Invite button shows for other players who are not with us, while we can invite. */
-  canInvite(target: Pick<TargetInfo, 'id' | 'kind'>): boolean {
-    if (target.kind !== 'player') return false
+  /** Why `target` cannot be invited now, or null. */
+  inviteProblem(target: Pick<TargetInfo, 'id' | 'kind'>): InviteProblem | null {
+    if (target.kind !== 'player') return 'party.problem.notPlayer'
     const self = this.io.selfId()
-    if (self === null || target.id === self) return false
-    if (!this.book.inParty) return true
-    return !this.book.isMate(target.id, self) && this.leader && !this.book.full
+    if (self === null || target.id === self) return 'party.problem.self'
+    if (!this.book.inParty) return null
+    if (this.book.isMate(target.id, self)) return 'party.problem.mate'
+    if (!this.leader) return 'party.problem.notLeader'
+    if (this.book.full) return 'party.problem.full'
+    return null
   }
 
-  inviteTarget(target: Pick<TargetInfo, 'id' | 'name'>): void {
-    // The modes only matter when this invitation starts a party.
-    const msg = this.book.inParty ? intent.partyInvite(target.id) : intent.partyInvite(target.id, this.modes.exp, this.modes.items)
-    if (this.io.send(msg)) this.sent.push(target.name)
+  /** The Invite button shows for other players who are not with us, while we can invite. */
+  canInvite(target: Pick<TargetInfo, 'id' | 'kind'>): boolean {
+    return this.inviteProblem(target) === null
+  }
+
+  /**
+   * Invites `target`. Out of a party this starts one: the party setting box asks for the EXP and item modes first
+   * (retail), starting from the remembered choice; cancelling it sends nothing. Resolves true when the invitation went out.
+   */
+  async inviteTarget(target: Pick<TargetInfo, 'id' | 'name'>): Promise<boolean> {
+    let modes = this.modes
+    if (!this.book.inParty && this.io.chooseModes) {
+      if (this.choosing) return false
+      this.choosing = true
+      let chosen: PartyModes | null
+      try {
+        chosen = await this.io.chooseModes(this.modes, { invite: target.name })
+      } finally {
+        this.choosing = false
+      }
+      if (!chosen) return false
+      this.remember(chosen)
+      modes = chosen
+    }
+    // The modes only matter when this invitation starts a party (a party may have formed while the box was open).
+    const msg = this.book.inParty ? intent.partyInvite(target.id) : intent.partyInvite(target.id, modes.exp, modes.items)
+    if (!this.io.send(msg)) return false
+    this.sent.push(target.name)
+    return true
+  }
+
+  /**
+   * `/party [name]` (and retail `/InviteToParty`): invites the named player in view, or the current player target.
+   * Problems are chat error lines.
+   */
+  inviteCommand(rest: string): void {
+    const name = rest.trim().split(/\s+/)[0] ?? ''
+    const target = name ? (this.io.findPlayer?.(name) ?? null) : (this.io.targetPlayer?.() ?? null)
+    if (!target) {
+      this.io.chatError(name ? t('party.cmd.notNearby', { name }) : t('party.cmd.usage'))
+      return
+    }
+    const problem = this.inviteProblem(target)
+    if (problem) {
+      this.io.chatError(t(problem, { name: target.name }))
+      return
+    }
+    void this.inviteTarget(target)
+  }
+
+  /** `/BanishFromParty name`: the leader removes a member by name. */
+  kickCommand(rest: string): void {
+    const name = rest.trim().split(/\s+/)[0] ?? ''
+    if (!name) return this.io.chatError(t('party.cmd.kickUsage'))
+    if (!this.book.inParty) return this.io.chatError(t('action.fail.not_in_party'))
+    const m = this.book.members.find(x => x.name.toLowerCase() === name.toLowerCase())
+    if (!m) return this.io.chatError(t('party.cmd.noMember', { name }))
+    if (!this.leader) return this.io.chatError(t('action.fail.not_leader'))
+    this.kick(m.characterId)
+  }
+
+  /** `/LeaveTheParty`. */
+  leaveCommand(): void {
+    if (!this.book.inParty) return this.io.chatError(t('action.fail.not_in_party'))
+    this.leave()
+  }
+
+  /**
+   * The Settings button and the mode lines: the party setting box. In a party only its leader may change the modes
+   * (partySettings with what changed); out of one it sets the modes the next party starts with.
+   */
+  async openSettings(): Promise<void> {
+    if (this.book.inParty && !this.leader) {
+      this.io.error(t('party.settingsLeaderOnly'))
+      return
+    }
+    if (!this.io.chooseModes || this.choosing) return
+    this.choosing = true
+    let chosen: PartyModes | null
+    try {
+      chosen = await this.io.chooseModes(this.book.modes ?? this.modes, 'settings')
+    } finally {
+      this.choosing = false
+    }
+    if (!chosen) return
+    const current = this.book.modes
+    if (!current) return this.remember(chosen)
+    // The party may have changed hands while the box was open.
+    if (!this.leader) return this.io.error(t('party.settingsLeaderOnly'))
+    const patch: { exp?: PartyExpMode; items?: PartyItemMode } = {}
+    if (chosen.exp !== current.exp) patch.exp = chosen.exp
+    if (chosen.items !== current.items) patch.items = chosen.items
+    this.io.send(intent.partySettings(patch))
+  }
+
+  /** The setting box is open (one at a time). */
+  private choosing = false
+
+  private remember(m: PartyModes): void {
+    if (m.exp === this.modes.exp && m.items === this.modes.items) return
+    this.modes = { ...m }
+    saveModes(this.modes)
+    this.io.changed()
   }
 
   respond(accept: boolean): void {
@@ -335,6 +464,28 @@ export const partyFeature: WorldFeatureFactory = ctx => {
     changed: () => {
       dirty = true
     },
+    chooseModes: async (current, purpose) => {
+      if (MessageBox.isOpen()) return null
+      const values = await MessageBox.choose({
+        title: t('party.setup.title'),
+        text: purpose === 'settings' ? t(ctl.book.inParty ? 'party.setup.text' : 'party.setup.textNew') : t('party.setup.textInvite', { name: purpose.invite }),
+        groups: partySetupGroups(current),
+        ok: purpose === 'settings' ? t('kit.ok') : t('party.invite'),
+        art: app.art,
+      })
+      return values ? modesFromChoice(values) : null
+    },
+    findPlayer: name => {
+      const want = name.toLowerCase()
+      for (const v of ctx.views()) {
+        if (v.kind === 'player' && !v.isSelf && !v.isDisposed && v.state.name.toLowerCase() === want) return { id: v.id, name: v.state.name, kind: 'player' }
+      }
+      return null
+    },
+    targetPlayer: () => {
+      const v = ctx.target()
+      return v && v.kind === 'player' && !v.isSelf ? { id: v.id, name: v.state.name, kind: 'player' } : null
+    },
   })
 
   const targetMember = (row: PartyRow): boolean => {
@@ -368,7 +519,16 @@ export const partyFeature: WorldFeatureFactory = ctx => {
     menu: openMenu,
   }
 
-  const win = new PartyWindow(app.art, hud.layer, { ...rowHandlers, setMode: (kind, mode) => ctl.setMode(kind, mode), leave: () => ctl.leave() })
+  /** The window's Invite: the selected player, or a line saying what to do. */
+  const inviteSelected = () => {
+    const v = ctx.target()
+    const tgt = v && v.kind === 'player' && !v.isSelf ? { id: v.id, name: v.state.name, kind: 'player' as const } : null
+    if (!tgt) return hud.toast(t('party.selectPlayer'), 'error')
+    const problem = ctl.inviteProblem(tgt)
+    if (problem) return hud.toast(t(problem, { name: tgt.name }), 'error')
+    void ctl.inviteTarget(tgt)
+  }
+  const win = new PartyWindow(app.art, hud.layer, { ...rowHandlers, invite: inviteSelected, settings: () => void ctl.openSettings(), leave: () => ctl.leave() })
   win.onClose = () => menu.hide()
   const frame = new PartyFrame(app.art, hud.layer, { ...rowHandlers, head: () => win.toggle() })
   const popup = new InvitePopup(app.art, hud.layer, accept => ctl.respond(accept))
@@ -392,7 +552,8 @@ export const partyFeature: WorldFeatureFactory = ctx => {
     const target = ctx.target()
     const targetEntity = target ? target.id : null
     frame.render(rows.filter(r => !r.self), ctl.book.modes, targetEntity)
-    win.render({ rows, modes: ctl.book.modes ?? ctl.modes, inParty: ctl.book.inParty, leader: ctl.leader, targetEntity })
+    const invite = ctl.book.inParty && !ctl.leader ? 'notLeader' : ctl.book.full ? 'full' : 'ready'
+    win.render({ rows, modes: ctl.book.modes ?? ctl.modes, inParty: ctl.book.inParty, leader: ctl.leader, targetEntity, invite })
     if (ctl.invite !== shownInvite) {
       shownInvite = ctl.invite
       if (shownInvite) {
@@ -406,7 +567,7 @@ export const partyFeature: WorldFeatureFactory = ctx => {
   }
 
   // ---- the Invite button of the target window ----
-  const actions: TargetAction[] = [{ id: 'partyInvite', label: t('party.invite'), title: t('party.inviteHint'), show: tgt => ctl.canInvite(tgt), run: tgt => ctl.inviteTarget(tgt) }]
+  const actions: TargetAction[] = [{ id: 'partyInvite', label: t('party.invite'), title: t('party.inviteHint'), show: tgt => ctl.canInvite(tgt), run: tgt => void ctl.inviteTarget(tgt) }]
   let actionsKey = ''
   /** Re-checks the button for the current target when what it depends on changed (party, leader, size). */
   const syncActions = () => {
@@ -432,6 +593,10 @@ export const partyFeature: WorldFeatureFactory = ctx => {
     hud.menubar.register({ id: 'party', art: 'mainpopup/main_sysbutton_party', label: 'party.title', hotkey: 'P', order: 50, toggle: () => win.toggle(), isOpen: () => win.isOpen }),
     ...actions.map(a => hud.addTargetAction(a)),
     chat.registerPrefix('#', rest => ctl.partyChat(rest)),
+    // Retail chat commands (textuisystem UIIT_STT_CHAT_COMMAND_PARTY_*): /party and /InviteToParty [name], /LeaveTheParty, /BanishFromParty name.
+    ...PARTY_INVITE_COMMANDS.map(c => chat.registerPrefix(c, rest => ctl.inviteCommand(rest))),
+    chat.registerPrefix(PARTY_LEAVE_COMMAND, () => ctl.leaveCommand()),
+    chat.registerPrefix(PARTY_KICK_COMMAND, rest => ctl.kickCommand(rest)),
   ]
   hud.claimRequests(['partyLeave', 'partyKick', 'partyLeader', 'partySettings'])
   syncActions()

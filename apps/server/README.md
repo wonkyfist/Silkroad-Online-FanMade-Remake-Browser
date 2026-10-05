@@ -103,8 +103,11 @@ pnpm tsx apps/server/test/soak/newplayer.ts --minutes 5      # a quick smoke run
 | `GOLD_RATE` | `1` | Dropped gold × this (0–1000; `0` = no gold drops). Quest gold and shop prices are unchanged. |
 | `DROP_RATE` | `1` | Chance of every item group of a monster's drop table × this (0–1000, each chance stops at 100 %). Gold (`GOLD_RATE`) and quest item drops are unchanged. |
 | `CORS_ORIGIN` | (none) | Sets `Access-Control-Allow-Origin` on `/api/*`. It is only needed if the client is served from another origin without a proxy. |
-| `ALLOWED_ORIGINS` | (none) | Extra browser origins (comma-separated, e.g. `http://100.64.0.5:5180`) allowed to call `/api` and open `/ws`. The server's own origin (Origin host = Host header), the Vite dev/preview origins (`http://localhost:5180`, `:5181`, also 127.0.0.1 and [::1]) and `CORS_ORIGIN` are always allowed; requests without an Origin header (curl) are allowed; anything else gets 403. |
+| `ALLOWED_ORIGINS` | (none) | Extra browser origins (comma-separated, e.g. `http://100.64.0.5:5180`) allowed to call `/api` and open `/ws`. The server's own origin (Origin host = Host header), the Vite dev/preview origins (`http://localhost:5180`, `:5181`, the admin panel's `:5182`, also 127.0.0.1 and [::1]) and `CORS_ORIGIN` are always allowed; requests without an Origin header (curl) are allowed; anything else gets 403. An admin panel served from a listed origin may also call this server's `/api/admin/*` (CORS for Bearer requests; docs/ADMIN.md §2.1). |
 | `TRUST_PROXY` | `0` | `1` = take the client IP from `X-Forwarded-For`. Enable it only behind your own reverse proxy. |
+| `REGISTRATION` | `open` | `closed` = `POST /api/register` answers 403 and the login screen hides Register. The admin panel's Settings switch overrides it (saved in the database). |
+| `ADMIN_PANEL` | `on` | `off` = no admin panel: `/admin/`, its icons and `/api/admin/*` answer 404 (docs/ADMIN.md). |
+| `ADMIN_DIST` | `<repo>/apps/admin/dist` | Built admin panel (`pnpm --filter @sro/admin build`), served at `/admin/` whether or not `SERVE_STATIC` is on. |
 
 **Spawn point.** New characters appear at the spawn point, and dead characters respawn there (it is the town return point). It is chosen by the first rule that applies (implemented in `src/content.ts`, `resolveWorld` and `withTownSpawn`):
 

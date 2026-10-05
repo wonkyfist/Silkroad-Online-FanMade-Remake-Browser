@@ -472,7 +472,7 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
       world?.setWeather(frame)
       updateLights(frame)
       if (!audio) return
-      const selfId = ctx.selfId()
+      const selfId = ctx.controlledId?.() ?? ctx.selfId() // Play the Boss: the steered mob while piloting
       const self = selfId !== null ? ctx.view(selfId) : undefined
       const at = self?.root.position ?? cam.target
       audio.weather.update(frame, shelteredAt(world, at.x, at.y, at.z))

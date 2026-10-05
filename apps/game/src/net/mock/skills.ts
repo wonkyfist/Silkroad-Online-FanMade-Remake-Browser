@@ -10,13 +10,15 @@
  *   send `effectAdd` and later `effectRemove expired`; `buffCancel` ends them;
  * - GM chat `/skill all` learns every row the masteries allow after raising them to the level; `/sp <n>` sets SP.
  */
-import { HOTBAR_SLOTS, isStaff, MASTERY_CODES, type ClientMessage, type EffectState, type HotbarEntry, type MasteryCode, type ServerMessage, type SkillDef } from '@sro/shared'
+import { HOTBAR_SLOTS, isStaff, MASTERY_CODES, MOUSE_SLOT, type ClientMessage, type EffectState, type HotbarEntry, type MasteryCode, type ServerMessage, type SkillDef } from '@sro/shared'
 import type { MockConn, MockContext, MockEntity, MockExtension } from '../mock.ts'
 
 interface CharSkills {
   masteries: Record<MasteryCode, number>
   learned: Map<string, SkillDef>
   hotbar: (HotbarEntry | null)[]
+  /** The mouse quick slot (MOUSE_SLOT). */
+  mouse: HotbarEntry | null
   cooldowns: Map<string, number>
   effects: Map<number, { skill: string; group: string; until: number; carrier: number }>
 }
@@ -32,6 +34,7 @@ function charOf(conn: MockConn): CharSkills {
       masteries: Object.fromEntries(MASTERY_CODES.map(m => [m, 0])) as Record<MasteryCode, number>,
       learned: new Map(),
       hotbar: new Array<HotbarEntry | null>(HOTBAR_SLOTS).fill(null),
+      mouse: null,
       cooldowns: new Map(),
       effects: new Map(),
     }
@@ -44,7 +47,9 @@ const skills = (ctx: MockContext): SkillDef[] => [...ctx.content.skills.values()
 const heads = (ctx: MockContext, group: string) => skills(ctx).filter(s => s.group === group && !s.basicAttack && (s.chainIndex ?? 1) === 1).sort((a, b) => a.skillLevel - b.skillLevel)
 
 function snapshot(c: CharSkills): ServerMessage {
-  return { t: 'skills', masteries: { ...c.masteries }, skills: [...c.learned.values()].map(s => s.code), hotbar: [...c.hotbar] }
+  const msg: ServerMessage = { t: 'skills', masteries: { ...c.masteries }, skills: [...c.learned.values()].map(s => s.code), hotbar: [...c.hotbar] }
+  if (c.mouse) msg.mouse = { ...c.mouse }
+  return msg
 }
 
 function sp(e: MockEntity): number {
@@ -213,7 +218,8 @@ export const skillsMock: MockExtension = {
           return true
         }
         const c = charOf(conn)
-        c.hotbar[msg.slot] = e
+        if (msg.slot === MOUSE_SLOT) c.mouse = e
+        else c.hotbar[msg.slot] = e
         ctx.result(conn, 'hotbarSet', true)
         ctx.send(conn, { t: 'skillsUpdate', hotbar: [{ slot: msg.slot, entry: e }] })
         return true

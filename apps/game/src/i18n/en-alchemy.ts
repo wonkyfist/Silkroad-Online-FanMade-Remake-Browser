@@ -28,6 +28,7 @@ export const enAlchemy = {
   'alchemy.problem.powderMismatch': "The Lucky Powder's degree does not match the item.",
   'alchemy.problem.maxPlus': 'This item cannot be enhanced any further.',
   'alchemy.problem.notMaterial': 'That does not go into the alchemy window.',
+  'alchemy.problem.equipped': 'Take the item off first: only items in the inventory can be enhanced.',
   'alchemy.result.success': 'Success! {name} is now +{plus}.',
   'alchemy.result.fail': 'The alchemy enhancement has failed. The enhancement level on the equipment is gone.',
   'alchemy.result.destroyed': 'The alchemy enhancement has failed. The item has been destroyed.',

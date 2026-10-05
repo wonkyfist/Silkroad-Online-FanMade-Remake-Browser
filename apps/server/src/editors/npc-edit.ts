@@ -47,7 +47,7 @@ function round3(n: number): number {
 }
 
 /** Every NPC the editor knows in this world: the exported ones (patched, hidden ones included) and the authored ones. */
-function allNpcs(ctx: GameContext): { def: NpcDef; base: string; hidden: boolean }[] {
+export function allNpcs(ctx: GameContext): { def: NpcDef; base: string; hidden: boolean }[] {
   const st = editorState(ctx)
   const patches = new Map(st.npcs.patch.map((p) => [p.code, p]))
   const live = new Map(ctx.data.npcs.map((n) => [n.code, n]))
@@ -155,17 +155,21 @@ function add(g: GmCall): GmResult {
   const usage = 'Usage: npc add <base NPC code> <name...>'
   const base = codeArg(args[1])
   if (!base || args.length < 3) return fail(usage)
+  const now = Date.now()
+  ctx.world.settle(self, now)
+  return addNpcAt(ctx, base, args.slice(2).join(' '), ctx.world.livePoint(self, now), self.yaw)
+}
+
+/** `npc add` at an explicit point and facing (the GM's, or typed in the admin panel, docs/ADMIN.md). */
+export function addNpcAt(ctx: GameContext, base: string, rawName: string, at: { x: number; y: number; z: number }, yaw: number): GmResult {
   const st = editorState(ctx)
   if (!st.base.npcs.some((n) => n.code === base)) return fail(`No NPC ${base} in npcs.json to copy the look from.`)
-  const name = cleanNpcName(args.slice(2).join(' '))
+  const name = cleanNpcName(rawName)
   if (name === null) return fail(`The name must be 1-${NPC_NAME_MAX} characters.`)
   const draft = draftNpcs(st)
   if (draft.add.length >= OVERRIDE_RECORDS_MAX) return fail(`Too many authored NPCs (${OVERRIDE_RECORDS_MAX}); remove some first.`)
   const code = `NPCX_${nextNumber(draft)}`
-  const now = Date.now()
-  ctx.world.settle(self, now)
-  const at = ctx.world.livePoint(self, now)
-  const npc: AuthoredNpc = { code, base, name, x: round2(at.x), z: round2(at.z), y: round2(at.y), yaw: round3(self.yaw) }
+  const npc: AuthoredNpc = { code, base, name, x: round2(at.x), z: round2(at.z), y: round2(at.y), yaw: round3(yaw) }
   const r = checkAuthoredNpc(npc, overrideRefs(ctx.data, st))
   if ('problems' in r) return fail(`Invalid NPC: ${r.problems.join('; ')}`)
   draft.add.push(r.npc)
@@ -191,14 +195,20 @@ function place(g: GmCall, what: 'move' | 'face'): GmResult {
   const now = Date.now()
   ctx.world.settle(self, now)
   const at = ctx.world.livePoint(self, now)
-  const change = what === 'move' ? { x: round2(at.x), z: round2(at.z), y: round2(at.y) } : { yaw: round3(self.yaw) }
+  return placeNpcAt(ctx, code, what === 'move' ? { x: at.x, z: at.z, y: at.y } : { yaw: self.yaw })
+}
+
+/** `npc move` / `npc face` with an explicit point or facing (the GM's, or typed in the admin panel). */
+export function placeNpcAt(ctx: GameContext, code: string, to: { x: number; y: number; z: number; yaw?: number } | { yaw: number }): GmResult {
+  const change: Partial<NpcPatch> = 'x' in to ? { x: round2(to.x), z: round2(to.z), y: round2(to.y) } : {}
+  if (to.yaw !== undefined) change.yaw = round3(to.yaw)
   const draft = editNpc(ctx, code, { authored: (a) => Object.assign(a, change), patch: (p) => Object.assign(p, change) })
   if ('ok' in draft) return draft
   commitNpcs(ctx, draft)
-  return reply(ctx, code, what === 'move' ? 'Moved NPC' : 'Turned NPC')
+  return reply(ctx, code, 'x' in to ? 'Moved NPC' : 'Turned NPC')
 }
 
-function rename(g: GmCall): GmResult {
+function rename(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const code = codeArg(args[1])
   if (!code || args.length < 3) return fail('Usage: npc rename <code> <name...>')
@@ -210,7 +220,7 @@ function rename(g: GmCall): GmResult {
   return reply(ctx, code, 'Renamed NPC')
 }
 
-function shop(g: GmCall): GmResult {
+function shop(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const code = codeArg(args[1])
   const raw = (args[2] ?? '').trim()
@@ -230,7 +240,7 @@ function shop(g: GmCall): GmResult {
   return reply(ctx, code, id ? `Shop ${id} attached to NPC` : 'Shop removed from NPC')
 }
 
-function remove(g: GmCall): GmResult {
+function remove(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const code = codeArg(args[1])
   if (!code || args.length !== 2) return fail('Usage: npc remove <code>')
@@ -250,7 +260,7 @@ function remove(g: GmCall): GmResult {
   return ok(`Removed NPC ${code}${AUTHORED_NPC_CODE.test(code) ? ' (deleted)' : ' (exported: hidden by the override; "npc restore" brings it back)'}.${questWarning(ctx, code)}`, { code })
 }
 
-function restore(g: GmCall): GmResult {
+function restore(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   const code = codeArg(args[1])
   if (!code || args.length !== 2) return fail('Usage: npc restore <code>')
@@ -263,7 +273,7 @@ function restore(g: GmCall): GmResult {
   return reply(ctx, code, 'Restored the exported NPC')
 }
 
-function undo(g: GmCall): GmResult {
+function undo(g: Pick<GmCall, 'ctx' | 'args'>): GmResult {
   const { ctx, args } = g
   if (args.length !== 1) return fail('Usage: npc undo')
   const st = editorState(ctx)
@@ -302,3 +312,9 @@ export function runNpcCommand(g: GmCall): GmResult {
       return fail(`Usage: ${NPC_USAGE}`)
   }
 }
+
+/**
+ * The NPC edits that need no position, for callers without a GM character (the admin panel, docs/ADMIN.md): the same
+ * argument lists as the `npc` command (`['rename', code, name]`, `['shop', code, id|none]`, `['remove', code]`, ...).
+ */
+export const npcEdits = { rename, shop, remove, restore, undo } as const

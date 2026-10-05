@@ -90,6 +90,9 @@ export class MainWindow extends Window {
       next.tab.page.hidden = false
       next.button.classList.add('on')
       this.setTitle(next.tab.windowTitle ?? next.tab.title)
+      // Open before onShow: a page renders only while the window shows it (isShowing), so a closed window opened
+      // straight onto a tab (K for Skills) would otherwise draw an empty page until the tab is clicked again.
+      this.open()
       next.tab.onShow?.()
       this.onTabChange(id)
     }

@@ -780,7 +780,8 @@ Without the real world (flat fallback ground) every surface is 'Dirt'.
 - **Equip** (`apps/game/src/hud/index.ts` `applyInventoryUpdate`, where `change.equip.length` is non-zero; the
   message is `inventoryUpdate { equip?: EquipSlotUpdate[] }`): `item.equip.<KIND>` from the item's slot and
   weapon family (weapon → SWORD/BLADE/SPEAR/TBLADE/BOW; armour slot → HELM/BREASTPLATE/CUISSE/PAULDRONS/GAUNTLET/GREAVE;
-  accessories → RING/NECKLACE/EARRING); unknown → `item.equip.METAL` [likely mapping].
+  accessories → RING/NECKLACE/EARRING); unknown → `item.equip.METAL` [likely mapping]. *(§10.1: now played when the
+  server accepts the own move/equip/unequip request, not on equip-slot updates.)*
 - **Skills lane** (SKILLS.md §10.3 ActionPlayer): on `cast`, set the entity's `currentSkill` for §5.7 and call
   `audio.skillStage(entity, group, phase)` for READY/SHOT/ACT_S rows with a `begin` file; `effectAdd` of a buff plays
   its ACT_S `begin`.
@@ -1107,3 +1108,127 @@ when the defeat banner shows. Both play on the UI bus when their banner reaches 
 notice waits with its cue) and never outside the world.
 
 **Budgets met** (TL-S): ≤ 0.05 ms main thread per frame; the bed is its own loop voice beside the area loop.
+
+> §10.5 (2026-10-05) changes this section's rule: the bed and the vendors' murmurs play only while the crowd draws
+> townsfolk.
+
+## 10. Missing-sound pass (2026-10-05): every retail cue group and its status
+
+The user heard gaps: imbued hits had no element sound, and equipping an accessory had no "diiing". This pass compared
+the retail sound events with the export and with what the client triggers. The retail sources are the effectsound.txt
+rows (`UI`, `ITEM`, `PLAYER`, `PCM_`/`PCF_`, `MOB_`, `COS_`), skilleffect cols 26/27, the BSR clip tracks,
+effectenvsnd and the files in `prim/snd`. Tests: `apps/game/test/audio-gaps.test.ts`,
+`apps/game/test/town-crowd-sound.test.ts` and `packages/convert/test/sound-gaps.test.ts`. Each also checks the real
+export when `work/out/sound` exists.
+
+### 10.1 Status table
+
+**Working** = played before this pass. **Fixed** = played since this pass. **Out of scope** = not played; the reason
+is given.
+
+| Cue group (retail source) | Status |
+|---|---|
+| Footsteps by surface (BSR `snd_walk*`/`snd_run*`, `PLAYER SND_WALK1/RUN1 FIELD`), jump steps | working |
+| Weapon swings and shouts, skill clip swings (BSR tracks), skill swing rows (`SND_SWING_S*` override) | working |
+| Skill stage sounds (skilleffect col 26: READY, WAIT, ACT_S, ACT_L, SHOT) | working. Col 27 (SndEnd) is `none` on every in-scope `SKILL_CH_` group |
+| Hit impacts (`SND_DMG` per skill group, `SKILL_CH_<FAMILY>_BASE`, weapon rows, mob attack rows), `SND_CRIDMG` crit layer | working |
+| **Imbue hits** (`PLAYER SND_DMG SKILL_CH_{COLD,LIGHTNING,FIRE}_GIGONGTA_*`: `csk_{cold,light,fire}_gigong_hit`) | **fixed**. The client never looked at the attacker's imbue. Every landed hit of an imbued attacker (basic or skill) now layers the imbue's SND_DMG on the weapon impact [likely: layered, as the imbue's DamageEfp is layered on the hit spark, EFFECTS.md M14] |
+| Imbue activation (`SND_ACTIVATE`, ACT_S `csk_*_gigong_hand`) | working |
+| **Berserk ('hwan') hits and swings** (`SND_DMG/SND_CRIDMG HWAN`, `SND_SWING3 HWAN <weapon>`) | **fixed**. They were exported as `hit.imbue`/`swing.imbue` (misnamed, with one swing cue for every weapon) and never played. Now `hit.hwan`, `hit.hwanCrit` and `swing.hwan.<WEAPON>`: a Berserk basic attack hits with `batHwanHit` (crit layer `batHwanCriHit`) and swings with the weapon's HWAN swing. Skill hits keep their own row [likely] |
+| Berserk orb gained (`UI SND_HYAN` HyanGet) | **fixed** (plays when `stats.hwan` rises) |
+| Berserk start / end (skilleffect `SYSTEM_CH_HWANMODE`) | working |
+| **Shield buff hit** (`PLAYER SND_DDMG SKILL_CH_COLD_BINGBYEOK_*`, Ice Wall, level 17: `csk_cold_hosin_hit`) | **fixed**: a hit on a victim carrying the buff adds this layer |
+| Hurt moans (BSR DAMAGE1 track), **crit moan** (`VOC_MOAN CRITYCAL`) | moans working; **crit moan fixed**. A player's crit cry was cut one frame later by the DAMAGE1 moan, and mobs had no crit cry. The hurt clip's moan after a crit is now the CRITYCAL file, for players and mobs |
+| **Tombstone's force attacks** (`MOB_TOMBSTONE SND_SWING1 MSKILL_CH_TOMBSTONE_*`; its BSR has no attack tracks) | **fixed**: a mob attack clip without swing or shout tracks plays its attack's effectsound swing at the clip start |
+| Death cry and thud (BSR DIE1 tracks, fallback `VOC_DEATH`/`SND_DEATH`) | working |
+| Dodge voice (`VOC_AVOID`), block (`SND_BLOCKING` normal / bow) | working. `block.crit` / `block.bowCrit` (the strong block rows) are out of scope: the wire has no strong-block outcome |
+| Sit / stand voices (`VOC_SITDOWN/STANDUP`), emote voices (`voc_emo`) | working through the SIT_DOWN, STAND_UP and EMOTION0x clip tracks (checked in code and data, not by ear in this pass) |
+| Mob idle (`SND_STAND`), NPC idle tracks | working (STAND clip tracks) |
+| Mob call for help (`MOB_TIGERWOMAN SND_HELP`) | out of scope: her BSR has no HELP track and the game has no help event |
+| **Accessory equip** (`ITEM SND_EQUIP RING/NECKLACE/EARRING`: `itRing`) and every other equip | **fixed**, see the root cause below |
+| Item put into a slot: bag moves, unequip, consumables (`SND_EQUIP POTION/SCROLL/HERB/QUIVER/MOBPIECE`) | **fixed**. SND_EQUIP is the "item placed" sound (the table has kinds nobody wears). Potions use POTION, cure pills HERB, scrolls SCROLL, arrows QUIVER; quest items MOBPIECE and alchemy items POTION [our rule for these two] |
+| Quick slot icon placed (`SND_EQUIP QUICKSLOT`, retail file misspelled `itQuckicon`) | **fixed**. The path fix exports `ui/itquickicon`; it plays on a `skillsUpdate.hotbar` slot that gets an entry |
+| Pickup (`SND_PICKUP`), gold drop (`SND_DROPITEM GOLD`), potion drink, level up, repair, durability warning/break | working |
+| Rare drop (`SND_DROPITEM RARE`, a Seal of Star `_RARE` item), elixir drop (`ELIXIR`, alchemy items) | **fixed**. Other drops have no row (BOX and BAG are commented out in 1.188), so they are silent |
+| Revival (`UI SND_REVIVE` itRevive) | **fixed**: your own in the interface, others' where they stand |
+| Quest window / done (`UI SND_QUEST` QuestOpen, `SND_QUEST_END` ItQuest) | **fixed**: on `questUpdate` accepted / completed |
+| Buttons, windows, error toast | working. `ui.click2` (the second click row) has no known retail trigger; `data-sfx="click2"` plays it |
+| Warning beep (`UI SND_WARNING` Biff) | out of scope: no retail trigger in the data (the client exe decides, and we do not have it) |
+| Alchemy: use, success, failure | working. `SND_ELIXIR_DESTROY` is out of scope: our alchemy never destroys an item |
+| Horse (`COS_C_HORSE`), pet summon (`SND_COS_SUMMON`) | working. `SND_COS_UNSUMMON` is commented out in 1.188 |
+| Gacha, sockets, set items (`SND_GACHA_*`, `SND_SOCKET_*`, `SND_SETITEM_*`) | out of scope: these systems are not in the game |
+| Portal exit (`UI SND_WARP` Gatein) | out of scope: commented out in the 1.188 table |
+| `ui/buf_disappear`, `ui/itfly`, `itfly_bag/box`, `countdown*` | out of scope: no row names them (hardcoded in the exe, or from later versions) |
+| Music, area ambience, weather, coast, town bell/animals/fountain, unique notices | working (not changed) |
+| **Townsfolk voices** (the town bed, the vendors' murmurs) | **fixed**, see §10.5 |
+| European skills and voices, other regions' mobs and areas | out of scope (Jangan, Chinese characters) |
+
+**The accessory root cause.** The equip sound played on any equip-slot change in `inventoryUpdate`, with the 150 ms
+interface wait and nothing preloaded. Armour and weapons were still heard, because durability ticks are equip-slot
+changes too: they played those sounds during fights, so the files were cached. Accessories have no durability, so
+their file was never cached, and over the friends' link the first equip was dropped ("too late"). Now:
+- every `item.equip.*` file is preloaded at world enter;
+- the sound plays when the server accepts the own move, equip or unequip request, waiting up to 600 ms;
+- durability ticks no longer play equip sounds.
+
+### 10.2 Retail path fixes
+
+`packages/convert/src/sound/resolve.ts` `RETAIL_PATH_FIXES` runs before the unique-basename fallback, and only when the
+target file exists.
+- Typos [confirmed]: `ui\itQuckicon` → `ui/itquickicon`, `mvfrunground` → `mvrunground`.
+- The same sound under the folder's name [likely]: `skill\csk_bow_swing_a/_b` → `skill/csk_bow_swing`; Hyungno's
+  `wchina_jombie_*` → `wcm_jombie_*`; `wcm_hchen_moan1` → `wcm_hchen_moan1_a`; `cm_yeoha_{die,shout}_a` →
+  `cm_yeoha_{die,shout}`; `cara_bunwang_shout1` → `cara_bunwang_shout`; `cm_mang_moan2` → `cm_mang_moan1`.
+
+The export's unresolved list went from 29 to 14. The rest are files that exist nowhere: `dd.wav`,
+`cm_tombstone_shout`, three female avoid alternates, `vcf_at_shout1_b`/`shout2_a` on the male BSRs,
+`csk_gwi_ilgyeo_swing`, `csk_hwa_jigong_swing`, `csk_pung_noeho_swing`, and one European file.
+
+### 10.3 Runtime hooks
+
+- `audio/cues.ts`: `hitSound` takes `imbue`, `hwan` and `guards`; `trackFile` takes `hwanSwing`; `equipKind` covers the
+  consumables; new `placedItem`, `dropCue`, `isBasicGroup` and `hwanSwingCue`.
+- `audio/carried.ts` `CarriedSkills`: the imbues and buffs per entity, from `EntityState.effects`, `effectAdd`,
+  `effectRemove` and `despawn` (an imbue is skills.json kind `imbue`).
+- `audio/index.ts`: `place(code)`, `drop(code, pos)`, and `preloadSkill(group)` (an imbue's files when it starts). The
+  world-enter preload adds every `item.equip.*` cue and the §10 cues. In `hit()` only the impact counts against the
+  victim's 2-sfx cap, so the layers (crit, imbue, shield) never steal the impact.
+- `audio/entity.ts`: `setHwanSwing`, `critHit`, and the mob attack-start swing.
+- `world/features/sound.ts`: the carried effects; Berserk (`EntityState.berserkMs`, `entityUpdate.berserkMs`,
+  `CombatHit.hwan`); revival; the Berserk orb; quests; the quick slot; drops.
+- `hud/index.ts`: the placement sound on the accepted own request (it replaces the equip-slot hook).
+
+**Checked in the running game** (mock server, `?sounddebug=1` log):
+- Equipping a ring and then a necklace logs `ui/itring` on the first equip.
+- Thunder Tiger Force logs `csk_light_gigong_hand`. Each following basic hit logs `batswordhit1n`,
+  `csk_light_gigong_hit` and the Mangnyang's moan.
+
+Berserk, the shield buff, the crit moan, Tombstone, quests, revival and drops are covered by the tests only.
+
+### 10.4 Exporting without ffmpeg
+
+Asked for Opus on a machine without ffmpeg, `export-sound.ts` used to re-encode the whole tree as PCM WAV. Now it
+keeps every cached `.ogg` and writes only the files that need encoding as trimmed PCM `.wav`.
+- Each `SoundFile.url` names its own file, so a mixed tree plays. The server and Vite already serve `.wav`.
+- The cache entries of those files say `wav`, so a later run with ffmpeg turns them into `.ogg`.
+- This pass's export wrote 4 such files: `ui/itquickicon`, `skill/csk_bow_swing`, `monster/wcm_jombie_walk` and
+  `monster/cara_bunwang_shout` (108 KB of PCM, mirrored to `work/out-opt/sound`).
+
+### 10.5 The townsfolk's voices follow the drawn crowd
+
+The user reported that with Town life off, the townsfolk could still be heard talking. Two sounds caused it, both by
+design (WAVE_PLAN7 D23, H11 S3):
+- §9's bed (granulated voices) followed the pure schedule's count on every preset;
+- the built-in stall murmurs played whenever no crowd sent vendor calls.
+
+Now `TownAudio.setCrowd(drawn)` gates both. The town feature (`world/features/town.ts`) reports whether the crowd draws
+folk through `setTownCrowd` in `town-sound.ts`. The value is kept whichever feature starts first, and it is false until
+a crowd reports, so Low has none.
+
+Without a drawn crowd (Town life Off, switched live or at entry; Low; a crowd that draws nobody):
+- the bed fades out over 1.5 s and no murmurs play;
+- the schedule still counts (`folk`);
+- the bell, the fountain, the smith's hammer, the animals and the night layers keep playing.
+
+**Checked in the running game**, in the plaza at noon: with Full the bed plays (busy 1.0). With Off, set live and
+also from world entry, the bed is 0, no loops play and no murmurs are heard in 25 s, while a dog still barks.

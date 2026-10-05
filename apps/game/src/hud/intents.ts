@@ -7,7 +7,7 @@
 import {
   BUYBACK_SLOTS,
   CODE_NAME,
-  HOTBAR_SLOTS,
+  MOUSE_SLOT,
   MASTERY_CODES,
   MAX_BAG_SIZE,
   MAX_GOLD,
@@ -79,9 +79,9 @@ export const intent = {
   buffCancel(skill: string): Msg<'buffCancel'> | null {
     return code(skill) ? { t: 'buffCancel', skill } : null
   },
-  /** `entry` null clears the slot. */
+  /** `entry` null clears the slot; MOUSE_SLOT is the mouse quick slot. */
   hotbarSet(slot: number, entry: HotbarEntry | null): Msg<'hotbarSet'> | null {
-    if (!Number.isInteger(slot) || slot < 0 || slot >= HOTBAR_SLOTS) return null
+    if (!Number.isInteger(slot) || slot < 0 || slot > MOUSE_SLOT) return null
     if (entry === null) return { t: 'hotbarSet', slot, entry: null }
     if ((entry.kind !== 'skill' && entry.kind !== 'item') || !code(entry.code)) return null
     return { t: 'hotbarSet', slot, entry: { kind: entry.kind, code: entry.code } }

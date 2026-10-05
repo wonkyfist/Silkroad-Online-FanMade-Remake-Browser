@@ -4,7 +4,7 @@
  * intent builder against the server's strict frame parser. DOM-free, like hud.test.ts.
  */
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { BUYBACK_SLOTS, HOTBAR_SLOTS, MASTERY_CODES, MAX_GOLD, MAX_STORAGE_SIZE, parseClientMessage, type ClientMessage, type ServerMessage } from '@sro/shared'
+import { BUYBACK_SLOTS, HOTBAR_SLOTS, MASTERY_CODES, MAX_GOLD, MAX_STORAGE_SIZE, MOUSE_SLOT, parseClientMessage, type ClientMessage, type ServerMessage } from '@sro/shared'
 import { CooldownClock, itemCooldownKey, skillCooldownKey } from '../src/hud/cooldowns.ts'
 import { RouteStack } from '../src/hud/index.ts'
 import { intent } from '../src/hud/intents.ts'
@@ -418,7 +418,9 @@ describe('wave-3 intent builders pass parseClientMessage', () => {
     expect(intent.skillLearn('bad code')).toBeNull()
     expect(intent.skillLearn('')).toBeNull()
     expect(intent.masteryUp('WATER' as never)).toBeNull()
-    expect(intent.hotbarSet(HOTBAR_SLOTS, null)).toBeNull()
+    // HOTBAR_SLOTS itself is MOUSE_SLOT, the mouse quick slot; one past it is refused.
+    expect(intent.hotbarSet(MOUSE_SLOT, null)).toEqual({ t: 'hotbarSet', slot: MOUSE_SLOT, entry: null })
+    expect(intent.hotbarSet(MOUSE_SLOT + 1, null)).toBeNull()
     expect(intent.hotbarSet(-1, null)).toBeNull()
     expect(intent.hotbarSet(1.5, null)).toBeNull()
     expect(intent.hotbarSet(0, { kind: 'emote' as never, code: 'X' })).toBeNull()

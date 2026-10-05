@@ -66,6 +66,34 @@ export function webgpuEngineOptions(adapter: AdapterLike | null, limits: GpuLimi
   return opts
 }
 
+/** Bind groups Babylon's WebGPU cache may hold before it starts over (trimBindGroupCache). */
+export const BIND_GROUP_CACHE_LIMIT = 20_000
+
+/** The statics of Babylon's WebGPUCacheBindGroups (internal) that the trim uses. */
+interface BindGroupCacheClass {
+  NumBindGroupsCreatedTotal: number
+  ResetCache(): void
+}
+
+/**
+ * Babylon 9.28's WebGPU bind-group cache (WebGPUCacheBindGroups) is one global tree keyed by the ids of the uniform
+ * buffers, samplers and textures of every bind group ever made, and nothing ever prunes it: the entries of disposed
+ * meshes stay forever. Grinding makes ~160k a minute (each hit or drop effect is a few new meshes, and their shared
+ * material's uniform buffer comes from a pool whose index changes every frame), +65 MB of JS heap a minute measured, the
+ * 2026-10-05 black screen's tab at 1.7 GB. Starting the cache over once it holds `limit` bind groups is safe: draw
+ * contexts keep the bind groups they use, and only changed ones are looked up (and made) again. Returns a remover.
+ */
+export function trimBindGroupCache(engine: AbstractEngine, limit = BIND_GROUP_CACHE_LIMIT): () => void {
+  const cache = (engine as unknown as { _cacheBindGroups?: { constructor: Partial<BindGroupCacheClass> } })._cacheBindGroups
+  const C = cache?.constructor
+  if (!C || typeof C.ResetCache !== 'function' || typeof C.NumBindGroupsCreatedTotal !== 'number') return () => {}
+  const reset = C.ResetCache.bind(C)
+  const obs = engine.onEndFrameObservable.add(() => {
+    if ((C.NumBindGroupsCreatedTotal ?? 0) >= limit) reset()
+  })
+  return () => obs.remove()
+}
+
 /** `?gpuLimits=default` → 'default', anything else → 'max'. */
 export function gpuLimitsParam(search: string = typeof location === 'undefined' ? '' : location.search): GpuLimitsMode {
   return new URLSearchParams(search).get('gpuLimits') === 'default' ? 'default' : 'max'
@@ -97,6 +125,7 @@ export async function createEngine(canvas: HTMLCanvasElement, preferWebGPU = tru
         const adapter = await preQueryAdapter()
         engine = new WebGPUEngine(canvas, webgpuEngineOptions(adapter, gpuLimits))
         await engine.initAsync()
+        trimBindGroupCache(engine)
         const gpu = gpuInfoFromEngine(engine, {
           isFallbackAdapter: !!(adapter?.info?.isFallbackAdapter ?? adapter?.isFallbackAdapter),
           ...(adapter?.info?.vendor ? { vendor: adapter.info.vendor } : {}),

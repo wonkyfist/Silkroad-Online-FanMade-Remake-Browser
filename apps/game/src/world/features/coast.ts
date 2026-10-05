@@ -122,7 +122,7 @@ export const coastFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
       } catch (err) {
         console.warn('[coast] follow failed', err)
       }
-      const selfId = ctx.selfId()
+      const selfId = ctx.controlledId?.() ?? ctx.selfId() // Play the Boss: the steered mob while piloting
       const self = selfId !== null ? ctx.view(selfId) : undefined
       if (!self) return
       const p = self.root.position

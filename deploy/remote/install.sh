@@ -72,6 +72,14 @@ EOF
   fi
   grep -E 'built in|dist/' "$rel/.deploy-build.log" | tail -n 4 | sed 's/^/    [mini-pc]   /' || true
   [ -f "$rel/apps/game/dist/index.html" ] || die 'the build wrote no apps/game/dist/index.html'
+  # The admin panel (docs/ADMIN.md), served at /admin/. Not fatal: the game deploys without it (/admin/ then says so).
+  log 'pnpm --filter @sro/admin build'
+  if env -u NODE_ENV CI=1 pnpm --filter @sro/admin build > "$rel/.deploy-admin-build.log" 2>&1 && [ -f "$rel/apps/admin/dist/index.html" ]; then
+    grep -E 'built in' "$rel/.deploy-admin-build.log" | tail -n 1 | sed 's/^/    [mini-pc]   /' || true
+  else
+    tail -n 20 "$rel/.deploy-admin-build.log" >&2 || true
+    log 'WARNING: the admin panel did not build; the game deploys without it'
+  fi
   log "release $name ready"
 }
 
@@ -87,6 +95,7 @@ DATA_DIR=$DATA
 OUT_DIR=$ASSETS/out
 OUT_OPT_DIR=$ASSETS/out-opt
 GAME_DIST=$APP/current/apps/game/dist
+ADMIN_DIST=$APP/current/apps/admin/dist
 EOF
   # The world export (docs/DEPLOY.md "Playing on the fields"), only once its assets are here: a code deploy that
   # runs before the first asset sync leaves it to the server's default, and the restart after the sync writes it.
@@ -104,6 +113,8 @@ EOF
 #LEVEL_CAP=20
 #CAPACITY=50
 #REGISTER_LIMIT=10
+# The admin panel (http://<host>:7000/admin/) saves its own settings in the database; they win over these.
+#REGISTRATION=open
 EOF
   fi
   if ! cmp -s "$APP/bin/$UNIT" "$UNIT_DIR/$UNIT"; then

@@ -29,7 +29,8 @@ export interface GameplayModule {
   tickPlayer?(p: Player, now: number): void
   /** Once per server tick, after mobs. */
   tick?(now: number): void
-  playerDied?(p: Player, now: number): void
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §3.8): `killer` = the attacker of the killing hit (absent: a GM kill). */
+  playerDied?(p: Player, now: number, killer?: Player | Mob): void
   /** toTown (respawn, return scroll) or GM tp/summon; runs after the warp was broadcast. */
   warped?(p: Player, reason: WarpReason, now: number): void
   /** End of Gameplay.afterInventory. */

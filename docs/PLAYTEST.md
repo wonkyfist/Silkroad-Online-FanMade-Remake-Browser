@@ -79,7 +79,7 @@ Town NPCs, with `/tp x z` coordinates if you want to jump:
 5. **Hwangno, JG_004:** the Meat Bun sits in the quest bag with a real icon. Hand it to Bagger Sochil (`/tp -53 -54`).
 6. **Q** or **L** (or the menu-bar button) opens the quest log: quests grouped by act, an n/10 counter, Track/Untrack, "Show completed", and Abandon (it asks first). The tracker shows at most 5 quests, and your tracked choice survives a reload. The minimap draws gold circles on the areas of tracked objectives.
 7. `/setlevel <you> 19` shows new **!** marks, plus grey ones on NPCs whose quests are up to 2 levels away.
-8. Worth a look: the moved hunting spots, `/tp 167 362` (Southern grassland, big-eyed ghosts for JG_005) and `/tp -370 -400` (the swamp just north of Exorcist Miaoryeong for JG_010-012). Miaoryeong now stands at the east end of the west river bridge, `/tp -410 -300`, out of the Yeoha camp.
+8. Worth a look: the moved hunting spots, `/tp 167 362` (Southern grassland, big-eyed ghosts for JG_005) and `/tp -370 -400` (the swamp just north of Exorcist Miaoryeong for JG_010-012). Miaoryeong now stands on the town end of the west river bridge, `/tp -419 -314`, out of the Yeoha camp.
 9. The daily JG_R01 (Fengil, after JG_002): once turned in, it answers "cooldown" until 04:00 server time.
 10. **The finale (JG_025, Tiger Girl):** you can only get there by playing the whole chain. With a party at level 19, ring the Binding Bell at the Tiger Mountain Shrine (`/tp -1001 600`). One Tiger Girl appears at 5 % of her HP. A second ring answers "cooldown". After she dies, by anyone's hand, the bell waits about 120 s. After a GM `/kill` it works again at once.
 
@@ -89,11 +89,11 @@ Quick test trick: in the GM Quests editor you can lower an objective count (for 
 
 Use a second account in a private window, or a friend over Tailscale.
 
-1. Target the other player and click **Invite** under the target window. The popup reads "A (Lv x) invites you to a party.", shows the EXP and Items modes, and counts down 30 s. Accept.
+1. Target the other player and click **Invite** under the target window (or press Invite in the **P** window, or type `/party <name>`). A "Party settings" box asks how the new party shares EXP (Individual / Shared) and items (Free-for-all / Shared), pre-set to your last choice; press Invite. Your friend's popup reads "A (Lv x) invites you to a party.", shows those modes, and counts down 30 s. Accept.
 2. A member row appears under the buff bar (light-blue name, a crown on the leader, HP/MP bars). The name tag turns light blue, and a party pin shows on the minimap.
 3. A line starting with `#` goes to party chat (`#hello`). Outside a party you get an error line instead.
 4. Kill a mob while your friend stands nearby: both of you get EXP. If your friend has JG_002, their count goes up without dealing damage.
-5. **P** opens the party window. Only the leader can switch the EXP and Items modes. Right-click a member row for Target, Whisper, Make leader, Kick and Leave.
+5. **P** opens the party window: the members, the EXP and Items modes, and Invite / Settings / Leave at the bottom. Only the leader can change the modes (Settings, or click a mode line); for a member Invite and Settings are greyed. Right-click a member row for Target, Whisper, Make leader, Kick and Leave. `/LeaveTheParty` and `/BanishFromParty <name>` work too.
 6. With Items set to Shared, drops alternate between members and gold is split ("You received N gold (party share from A)"). Pickup rights are fixed when an item drops: switching modes later does not unlock someone else's item.
 7. Close your friend's tab: their row dims and "went offline" appears. If they relog within 2 minutes, they are back in the party.
 8. Whispers: `/w <name> hi` gives pink From/To lines, `/r` replies, and `/w Nobody hi` says "Nobody is not online.". The All / Whisper / Party / System tabs filter the chat, and clicking a name starts a whisper.
@@ -128,6 +128,23 @@ Commands that help with testing:
 3. **Quests tab:** open JG_002, change the count from 8 to 3 and click "Save & reload". A second player at 3/8 sees their tracker turn ready without relogging. "Revert to repo" gives 8 again. A misspelled mob code plus Validate shows the problem with a red border. A stale second tab gets the "changed meanwhile" message.
 4. As a plain player, `/nest near` answers "Unknown command", and `pnpm gm audit` lists the denied call.
 5. With `/invis on`, monsters you hit neither fight back nor run home to heal (fixed at the final gate: before, a missed first swing reset the monster to full HP). This makes invisible quest testing easy.
+
+### Admin panel
+
+A web page for running the server, with nothing to install: **http://<SERVER_TAILNET_IP>:7000/admin/** from any device on the tailnet (locally: `pnpm --filter @sro/admin build`, then http://localhost:7000/admin/, or `pnpm admin` for its dev server on :5182). The design is in docs/ADMIN.md.
+
+- **Who can log in:** an existing account whose role is `admin`. Make one with `pnpm deploy:gm grant <name> --role admin` (on the mini PC host: `pnpm gm grant <name> --role admin`). Roles are never changed in the panel or in game; `pnpm deploy:gm revoke <name>` takes the role back and the panel locks that account out on its next click.
+- **The session** belongs to the browser tab (closing the tab logs you out) and ends after 2 hours idle or 12 hours. Five wrong passwords in 15 minutes block that name from your address for a while.
+- **Which server you edit** is always in the bar on top: its name, address and **LIVE** (the mini PC) or **LOCAL** (a dev server on this PC). The **Servers** page adds other servers (name + address) and switches between them; each has its own login. On a LIVE server, bans, kicks, removals and restarts ask you to type the server's name. Changes are stored on that server (its database and `~/silkroad-data/content`), never in the repo.
+- **What is where:** Dashboard (who is on, kick, send to town, notice, restart under systemd), Accounts (create, reset password, ban with a reason, characters, storage), Characters (level, EXP, SP, gold, items with +, send to town), Settings (level cap, rates, registration and more; "live" ones apply at once, "after restart" ones wait for a restart), Items and Drops (overrides, never the export), NPCs & spawns, Quests, Events (Tiger Girl's timer, spawn, kill; Play the Boss appears there once built), Audit log.
+
+Things to try:
+
+1. Settings › Access: turn **Registration open** off and save. Reload the game: the login screen has no Register button, and `POST /api/register` answers "Registration is closed". Accounts › New account still works. Turn it back on; the button is back after a reload.
+2. Characters: open a character in the world, Give item `ITEM_CH_BLADE_02_A` with plus 5. It appears in the player's bag at once. Set gold, Edit level, Send to town.
+3. Items: change a potion's name and price, save. The server uses it at once; the game shows the new name after a page reload (the server serves a merged `items.json`). Revert to export.
+4. Accounts: ban a test account with a reason. Its player is disconnected and its next login shows the reason. Unban.
+5. Audit log: every step above is listed with the old and new values.
 
 ### Teleport places
 
@@ -183,7 +200,7 @@ Use a GM character (`pnpm gm grant <username>`). The headless tests already ran 
 
 **Alchemy (A):**
 15. **A1.** Grocery Trader Jinjin's shop has an Alchemy tab with Lucky Powder (1st), (2nd) and (3rd).
-16. **A2.** `/item ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A 5`, `/item ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01 10`, `/item ITEM_CH_SWORD_01_A 1`. Right-click an Elixir (Weapon): the Alchemy window opens with it in place, and the inventory opens beside it. Right-click the Copper Sword (the rune circle, "Copper Sword +0 → +1"), then a Lucky Powder: "Success rate: 100%" in green. Items in the window show red-locked in the bag. MENU → Alchemy opens it too. A (2nd) powder on the Copper Sword, or the weapon Elixir on armour, shows a red line and greys out Fuse; a broken sword says it must be repaired.
+16. **A2.** `/item ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A 5`, `/item ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01 10`, `/item ITEM_CH_SWORD_01_A 1`. Right-click an Elixir (Weapon): the Alchemy window opens with it in place, beside the inventory (not under it) and on top. Right-click the Copper Sword (the rune circle, "Copper Sword +0 → +1"), then a Lucky Powder: "Success rate: 100%" in green. Items in the window show red-locked in the bag. MENU → Alchemy opens it too. A (2nd) powder on the Copper Sword, or the weapon Elixir on armour, shows a red line and greys out Fuse; a broken sword says it must be repaired.
 17. **A3.** Fuse: a spinning effect for about 3 s, the button reads Cancel, then a golden burst and the success sound; "Success! Copper Sword is now +1." and the +1 sign on the sword. Equip it: the attack in C goes up.
 18. **A4.** `/plus <bag index of the sword> 9` and fuse (about 19.5 %): usually the sword returns to +0 with the fail burst, and the elixir and powder are gone either way. A success at +7 or more is announced to everyone.
 19. **A5.** Start a fuse and click the ground: "Fusing has been cancelled." and nothing is used up. During a fuse, dragging bag items, selling, or asking someone to trade is refused as busy.
@@ -251,7 +268,7 @@ Each one has a default already in place, so nothing is blocked.
     - JG_012 also gives a head piece for your armour type (level 8) and 20 HP Recovery Potions (Small).
     - The tomb is a grid of about 25 aggressive packs, and no path around them exists. The pack of Broken Stone Ghosts right at the entrance is now non-aggressive (`content/nests.override.json`), and Miaoryeong's JG_013 text says to start there and to fight the other groups from their edge.
     - Check: `/tp 614 -626`. The five Broken Stone Ghosts about 25 m north-west only fight back when hit. The other packs still attack on sight.
-9. ~~Miaoryeong stands next to aggressive Yeoha.~~ **Done:** she moved to the east end of the west river bridge (`/tp -410 -300`), facing the road to town. The nearest aggressive camp's range is now 63 m away, and the swamp is 109 m away instead of 258 m. The move is 150 m east instead of 80 m south-east, because the Yeoha camp lies south-east of her old spot and 80 m that way lands inside it. The move is in the repo (`content/npcs.override.json`), so it ships with the code and needs no NPC editor on the mini PC. The quest texts now name the bridge instead of her hut. Her hut model stays where it was.
+9. ~~Miaoryeong stands next to aggressive Yeoha.~~ **Done:** she moved to the east end of the west river bridge (`/tp -410 -300`), facing the road to town; on 2026-10-05 onto the bridge deck itself (`/tp -419 -314`), because wave 12's bigger plants grew a bush over the bank spot. The nearest aggressive camp's range is now 63 m away, and the swamp is 109 m away instead of 258 m. The move is 150 m east instead of 80 m south-east, because the Yeoha camp lies south-east of her old spot and 80 m that way lands inside it. The move is in the repo (`content/npcs.override.json`), so it ships with the code and needs no NPC editor on the mini PC. The quest texts now name the bridge instead of her hut. Her hut model stays where it was.
 10. ~~Nothing sends new players to Mrs Jang or Chulsan before the level-8 jump.~~ **Done:** after JG_001, Fengil offers the side quest "Dressed for the Road" (JG_S05): talk to Mrs Jang, then turn it in at Chulsan, for 300 gold, enough for a first cloth piece. Chief Hwangno's JG_001 text now tells you to listen to Fengil.
 11. Collect drop rates for JG_006 (ash) and JG_007 (claws) take 17-33 kills. *Default: leave them. Option: raise the chances to 0.5 and 0.55.*
 

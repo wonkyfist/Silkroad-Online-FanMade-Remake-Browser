@@ -30,6 +30,7 @@ import { QuestTracker, TRACK_MAX } from '../../quests/tracker.ts'
 import { layerScale } from '../../ui/kit/scale.ts'
 import type { EntityView } from '../entities.ts'
 import type { WorldFeature, WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
+import { isPiloting } from '../pilot-model.ts'
 
 /** The quest requests whose refusals the HUD toasts (docs/QUESTS.md §2.3). */
 export const QUEST_REQUESTS: readonly GameplayRequest[] = ['questAccept', 'questTurnIn', 'questAbandon', 'questTalk', 'questUseItem']
@@ -223,7 +224,8 @@ function createQuestsFeature(ctx: WorldFeatureContext): WorldFeature {
     now,
   })
   offs.push(
-    ctx.keys.register({ id: 'window.quests', keys: ['q', 'l'], label: 'keys.window.quests', group: 'windows', run: () => log.toggle() }),
+    // Play the Boss (docs/PLAY_THE_BOSS.md §4.2): Q is the taunt wheel while piloting.
+    ctx.keys.register({ id: 'window.quests', keys: ['q', 'l'], label: 'keys.window.quests', group: 'windows', when: () => !isPiloting(ctx), run: () => log.toggle() }),
     hud.menubar.register({ id: 'quests', art: 'mainpopup/main_sysbutton_quest', label: 'quest.log.title', hotkey: 'Q', order: 40, toggle: () => log.toggle(), isOpen: () => log.isOpen }),
   )
 

@@ -24,6 +24,7 @@ import {
   MAX_EFFECTS_PER_ENTITY,
   MAX_GOLD,
   MAX_STORAGE_SIZE,
+  MOUSE_SLOT,
   NPC_CLOSE_REASONS,
   NPC_SERVICES,
   PARTY_EVENT_KINDS,
@@ -122,6 +123,22 @@ import { EQUIP_SLOTS, MOB_VARIANTS, type EquipSlot, type ItemStack } from './con
 import { CLOCK_LIMITS } from './world-clock.ts'
 import { LIGHTNING_GM_DIST_M, RAIN_INTENSITY_MIN, WEATHER_KINDS, WEATHER_LIMITS, type WeatherParams } from './weather.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
+import {
+  HUNT_OUTCOMES,
+  HUNT_PHASES,
+  HUNT_TRAIL_MAX,
+  PILOT_ABILITY,
+  PILOT_END_REASONS,
+  PILOT_HONOR,
+  PILOT_INELIGIBLE,
+  PILOT_KIT_MAX,
+  PILOT_STEERINGS,
+  PILOT_TARGET_KINDS,
+  PILOT_TAUNT_MAX,
+  type HuntEventView,
+  type PilotKitView,
+  type PilotServerMessage,
+} from './pilot.ts'
 
 export type ParseResult<T> = { ok: true; msg: T } | { ok: false; error: string }
 
@@ -225,6 +242,12 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   guildMaster: ['t', 'member'],
   // wave 10 (docs/MOVEMENT.md §5): no fields
   jump: ['t'],
+  // Play the Boss (docs/PLAY_THE_BOSS.md §5.1)
+  pilotVolunteer: ['t', 'on'],
+  pilotAnswer: ['t', 'event', 'accept'],
+  pilotAct: ['t', 'ability'],
+  pilotTaunt: ['t', 'line'],
+  pilotQuit: ['t'],
 }
 
 /** Keys a client message may omit. */
@@ -248,6 +271,8 @@ const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]
   tradeOffer: ['count'],
   stallText: ['title', 'greeting'],
   stallBuy: ['plus', 'durability'],
+  // Play the Boss
+  pilotAct: ['target', 'x', 'z', 'repeat'],
 }
 
 const MAX_ID = Number.MAX_SAFE_INTEGER
@@ -464,7 +489,8 @@ function clientMessage(v: unknown): ClientMessage {
     case 'buffCancel':
       return { t: 'buffCancel', skill: codeName(v, 'skill') }
     case 'hotbarSet':
-      return { t: 'hotbarSet', slot: int(v, 'slot', 0, HOTBAR_SLOTS - 1), entry: v.entry === null ? null : clientHotbarEntry(v.entry) }
+      // Slots 0..HOTBAR_SLOTS-1 are the bar; MOUSE_SLOT (= HOTBAR_SLOTS) is the mouse quick slot.
+      return { t: 'hotbarSet', slot: int(v, 'slot', 0, MOUSE_SLOT), entry: v.entry === null ? null : clientHotbarEntry(v.entry) }
     case 'npcTalk':
       return { t: 'npcTalk', npc: npcId(v) }
     case 'npcClose':
@@ -533,6 +559,28 @@ function clientMessage(v: unknown): ClientMessage {
     // ---- wave 10: the jump (docs/MOVEMENT.md §5); no fields ----
     case 'jump':
       return { t: 'jump' }
+    // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
+    case 'pilotVolunteer':
+      return { t: 'pilotVolunteer', on: bool(v, 'on') }
+    case 'pilotAnswer':
+      return { t: 'pilotAnswer', event: int(v, 'event', 1, MAX_ID), accept: bool(v, 'accept') }
+    case 'pilotAct': {
+      const ability = str(v, 'ability', 16, 1)
+      if (!PILOT_ABILITY.test(ability)) fail('ability must be 1-16 letters a-z')
+      const m: Extract<ClientMessage, { t: 'pilotAct' }> = { t: 'pilotAct', ability }
+      if (has(v, 'target')) m.target = int(v, 'target', 0, MAX_ID)
+      if (has(v, 'x') !== has(v, 'z')) fail('x and z go together')
+      if (has(v, 'x')) {
+        m.x = num(v, 'x', -MAX_COORD, MAX_COORD)
+        m.z = num(v, 'z', -MAX_COORD, MAX_COORD)
+      }
+      if (has(v, 'repeat')) m.repeat = bool(v, 'repeat')
+      return m
+    }
+    case 'pilotTaunt':
+      return { t: 'pilotTaunt', line: int(v, 'line', 0, PILOT_TAUNT_MAX) }
+    case 'pilotQuit':
+      return { t: 'pilotQuit' }
     // ---- wave 8: combat and items (docs/SYSTEMS_COMBAT.md §7.2) ----
     case 'mountRide':
       return { t: 'mountRide', cos: int(v, 'cos', 0, MAX_ID) }
@@ -785,6 +833,8 @@ function serverInfo(v: unknown): ServerInfo {
   // wave 10 (docs/SCREENS.md §9): a bad clock or weather drops only that field, never the whole welcome (or login)
   if (o.clock !== undefined) optionalField('server.clock', () => (s.clock = clockState(o.clock)))
   if (o.weather !== undefined) optionalField('server.weather', () => (s.weather = weatherSync(o.weather)))
+  // admin addition (docs/ADMIN.md): a bad value drops only this field
+  if (o.registration !== undefined) optionalField('server.registration', () => (s.registration = oneOf(o, 'registration', ['open', 'closed'] as const)))
   return s
 }
 
@@ -811,6 +861,7 @@ function character(v: unknown): CharacterSummary {
     ...(o.height !== undefined ? { height: int(o, 'height', 0, APPEARANCE_STEPS - 1) } : {}),
     ...(o.volume !== undefined ? { volume: int(o, 'volume', 0, APPEARANCE_STEPS - 1) } : {}),
     ...(o.equip !== undefined ? { equip: equipCodes(o.equip) } : {}),
+    ...(o.equipPlus !== undefined ? { equipPlus: equipPlus(o.equipPlus) } : {}),
   }
 }
 
@@ -845,6 +896,7 @@ function entity(v: unknown): EntityState {
   if (o.ownerUntil !== undefined) e.ownerUntil = num(o, 'ownerUntil', 0, BIG)
   if (o.expiresAt !== undefined) e.expiresAt = num(o, 'expiresAt', 0, BIG)
   if (o.equip !== undefined) e.equip = equipCodes(o.equip)
+  if (o.equipPlus !== undefined) e.equipPlus = equipPlus(o.equipPlus)
   if (o.height !== undefined) e.height = int(o, 'height', 0, APPEARANCE_STEPS - 1)
   if (o.volume !== undefined) e.volume = int(o, 'volume', 0, APPEARANCE_STEPS - 1)
   if (o.effects !== undefined) e.effects = boundedList(o, 'effects', MAX_EFFECTS_PER_ENTITY, effectState)
@@ -861,7 +913,18 @@ function entity(v: unknown): EntityState {
   if (o.berserkMs !== undefined) e.berserkMs = int(o, 'berserkMs', 1, BERSERK_MAX_MS)
   if (o.stall !== undefined) e.stall = str(o, 'stall', STALL_TITLE_MAX)
   if (o.guild !== undefined) e.guild = str(o, 'guild', GUILD_TITLE_MAX)
+  // Play the Boss (docs/PLAY_THE_BOSS.md §5.2)
+  if (o.trance !== undefined && bool(o, 'trance')) e.trance = true
+  if (o.piloted !== undefined && bool(o, 'piloted')) e.piloted = true
+  if (o.honor !== undefined) e.honor = honorCode(o, 'honor')
   return e
+}
+
+/** EntityState.honor / entityUpdate.honor: a title code ('' only on entityUpdate = cleared). */
+function honorCode(o: Record<string, unknown>, k: string, empty = false): string {
+  const s = str(o, k, 32, empty ? 0 : 1)
+  if (s !== '' && !PILOT_HONOR.test(s)) fail(`${k} must be a title code`)
+  return s
 }
 
 /** EntityState.posture: only 'sit' (standing = absent). */
@@ -894,7 +957,7 @@ function hotbarEntry(v: unknown): HotbarEntry | null {
 
 function hotbarSlotUpdate(v: unknown): { slot: number; entry: HotbarEntry | null } {
   const o = rec(v, 'hotbar update')
-  return { slot: int(o, 'slot', 0, HOTBAR_SLOTS - 1), entry: hotbarEntry(o.entry) }
+  return { slot: int(o, 'slot', 0, MOUSE_SLOT), entry: hotbarEntry(o.entry) }
 }
 
 /** Every MasteryCode (missing = 0) or, when partial, only the present ones. Unknown keys are dropped. */
@@ -941,6 +1004,18 @@ function equipCodes(v: unknown): Partial<Record<EquipSlot, string>> {
   const o = rec(v, 'equip')
   const out: Partial<Record<EquipSlot, string>> = {}
   for (const s of EQUIP_SLOTS) if (o[s] !== undefined) out[s] = str(o, s, 128, 1)
+  return out
+}
+
+/** EntityState.equipPlus / appearance `plus` / CharacterSummary.equipPlus: +N per equip slot (0 is dropped). */
+function equipPlus(v: unknown): Partial<Record<EquipSlot, number>> {
+  const o = rec(v, 'equip plus')
+  const out: Partial<Record<EquipSlot, number>> = {}
+  for (const s of EQUIP_SLOTS) {
+    if (o[s] === undefined) continue
+    const n = int(o, s, 0, 255)
+    if (n > 0) out[s] = n
+  }
   return out
 }
 
@@ -1386,6 +1461,10 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.berserkMs !== undefined) m.berserkMs = int(o, 'berserkMs', 0, BERSERK_MAX_MS)
       if (o.stall !== undefined) m.stall = str(o, 'stall', STALL_TITLE_MAX)
       if (o.guild !== undefined) m.guild = str(o, 'guild', GUILD_TITLE_MAX)
+      // Play the Boss
+      if (o.trance !== undefined) m.trance = bool(o, 'trance')
+      if (o.piloted !== undefined) m.piloted = bool(o, 'piloted')
+      if (o.honor !== undefined) m.honor = honorCode(o, 'honor', true)
       return m
     }
     case 'role':
@@ -1426,7 +1505,7 @@ function serverMessage(v: unknown): ServerMessage {
       return m
     }
     case 'appearance':
-      return { t: 'appearance', id: int(o, 'id', 0, MAX_ID), equip: equipCodes(o.equip) }
+      return { t: 'appearance', id: int(o, 'id', 0, MAX_ID), equip: equipCodes(o.equip), ...(o.plus !== undefined ? { plus: equipPlus(o.plus) } : {}) }
     // ---- wave 3 ----
     case 'skills': {
       const hotbar = boundedList(o, 'hotbar', HOTBAR_SLOTS, hotbarEntry)
@@ -1438,13 +1517,17 @@ function serverMessage(v: unknown): ServerMessage {
         hotbar,
       }
       if (o.cooldowns !== undefined) m.cooldowns = boundedList(o, 'cooldowns', MAX_SKILL_CODES, skillCooldown)
+      if (o.mouse !== undefined) {
+        const mouse = hotbarEntry(o.mouse)
+        if (mouse) m.mouse = mouse
+      }
       return m
     }
     case 'skillsUpdate': {
       const m: ServerMessage = { t: 'skillsUpdate' }
       if (o.masteries !== undefined) m.masteries = masteryLevels(o.masteries, true)
       if (o.learned !== undefined) m.learned = boundedList(o, 'learned', MAX_SKILL_CODES, codeString)
-      if (o.hotbar !== undefined) m.hotbar = boundedList(o, 'hotbar', HOTBAR_SLOTS, hotbarSlotUpdate)
+      if (o.hotbar !== undefined) m.hotbar = boundedList(o, 'hotbar', MOUSE_SLOT + 1, hotbarSlotUpdate)
       return m
     }
     case 'cast': {
@@ -1459,6 +1542,12 @@ function serverMessage(v: unknown): ServerMessage {
       }
       if (o.target !== undefined) m.target = int(o, 'target', 0, MAX_ID)
       if (o.instant !== undefined) m.instant = bool(o, 'instant')
+      // Play the Boss: the clip type of a server-built ability
+      if (o.clip !== undefined) {
+        const clip = str(o, 'clip', 32, 1)
+        if (!/^[A-Z0-9_]{1,32}$/.test(clip)) fail('clip must be a clip type')
+        m.clip = clip
+      }
       return m
     }
     case 'castEnd':
@@ -1640,6 +1729,140 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.at !== undefined) m.at = num(o, 'at', 0, BIG)
       return m
     }
+    // Play the Boss (docs/PLAY_THE_BOSS.md §5.2)
+    case 'huntEvent':
+    case 'pilotOffer':
+    case 'pilotStart':
+    case 'pilotState':
+    case 'pilotEnd':
+    case 'huntPing':
+    case 'huntTrail':
+    case 'huntRoar':
+    case 'huntTaunt':
+      return pilotMessage(o)
+    default:
+      fail('unknown message type')
+  }
+}
+
+// ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.2) -----------------------------------------------------------------
+
+/** Ability ids -> server ms / counts (pilotState.ready / charges). */
+function abilityMap(o: Record<string, unknown>, k: string, max: number): Record<string, number> {
+  const r = rec(o[k], k)
+  const keys = Object.keys(r)
+  if (keys.length > PILOT_KIT_MAX) fail(`${k} has too many abilities`)
+  const out: Record<string, number> = {}
+  for (const id of keys) {
+    if (!PILOT_ABILITY.test(id)) fail(`${k}: bad ability id`)
+    out[id] = num(r, id, 0, max)
+  }
+  return out
+}
+
+function huntEventView(v: unknown): HuntEventView {
+  const o = rec(v, 'event')
+  const e: HuntEventView = { id: int(o, 'id', 0, MAX_ID), mob: str(o, 'mob', 128, 1), name: str(o, 'name', 64, 1), phase: oneOf(o, 'phase', HUNT_PHASES) }
+  if (o.callEndsAt !== undefined) e.callEndsAt = num(o, 'callEndsAt', 0, BIG)
+  if (o.volunteers !== undefined) e.volunteers = int(o, 'volunteers', 0, BIG)
+  if (o.minLevel !== undefined) e.minLevel = int(o, 'minLevel', 0, 1000)
+  if (o.you !== undefined) {
+    const y = rec(o.you, 'you')
+    e.you = { volunteered: bool(y, 'volunteered'), eligible: bool(y, 'eligible') }
+    if (y.why !== undefined) e.you.why = oneOf(y, 'why', PILOT_INELIGIBLE)
+  }
+  if (o.huntEndsAt !== undefined) e.huntEndsAt = num(o, 'huntEndsAt', 0, BIG)
+  if (o.downs !== undefined) e.downs = int(o, 'downs', 0, BIG)
+  if (o.downsTarget !== undefined) e.downsTarget = int(o, 'downsTarget', 0, BIG)
+  if (o.hunters !== undefined) e.hunters = int(o, 'hunters', 0, BIG)
+  if (o.area !== undefined) e.area = str(o, 'area', 64)
+  if (o.steering !== undefined) e.steering = oneOf(o, 'steering', PILOT_STEERINGS)
+  if (o.nextPingAt !== undefined) e.nextPingAt = num(o, 'nextPingAt', 0, BIG)
+  if (o.outcome !== undefined) e.outcome = oneOf(o, 'outcome', HUNT_OUTCOMES)
+  if (o.pilot !== undefined) e.pilot = str(o, 'pilot', 64, 1)
+  return e
+}
+
+function pilotKitView(v: unknown): PilotKitView {
+  const o = rec(v, 'kit')
+  const id = str(o, 'id', 16, 1)
+  if (!PILOT_ABILITY.test(id)) fail('kit id must be 1-16 letters a-z')
+  const k: PilotKitView = {
+    id,
+    slot: int(o, 'slot', 1, PILOT_KIT_MAX),
+    clip: str(o, 'clip', 32),
+    rangeM: num(o, 'rangeM', 0, 1000),
+    cooldownMs: int(o, 'cooldownMs', 0, MAX_ACTION_MS),
+    target: oneOf(o, 'target', PILOT_TARGET_KINDS),
+  }
+  if (o.charges !== undefined) k.charges = int(o, 'charges', 0, 100)
+  return k
+}
+
+function pilotMessage(o: Record<string, unknown>): PilotServerMessage {
+  switch (o.t) {
+    case 'huntEvent':
+      return { t: 'huntEvent', event: huntEventView(o.event) }
+    case 'pilotOffer':
+      return {
+        t: 'pilotOffer',
+        event: int(o, 'event', 1, MAX_ID),
+        expiresAt: num(o, 'expiresAt', 0, BIG),
+        surviveMin: num(o, 'surviveMin', 0, 1000),
+        downsTarget: int(o, 'downsTarget', 0, BIG),
+        idleSec: num(o, 'idleSec', 0, 1000),
+      }
+    case 'pilotStart': {
+      const area = rec(o.area, 'area')
+      return {
+        t: 'pilotStart',
+        event: int(o, 'event', 0, MAX_ID),
+        mob: int(o, 'mob', 0, MAX_ID),
+        kit: boundedList(o, 'kit', PILOT_KIT_MAX, pilotKitView),
+        huntEndsAt: num(o, 'huntEndsAt', 0, BIG),
+        downsTarget: int(o, 'downsTarget', 0, BIG),
+        area: { x: num(area, 'x', -BIG, BIG), z: num(area, 'z', -BIG, BIG), r: num(area, 'r', 0, BIG) },
+        taunts: int(o, 'taunts', 0, PILOT_TAUNT_MAX + 1),
+        senseM: num(o, 'senseM', 0, 1000),
+        place: str(o, 'place', 64),
+      }
+    }
+    case 'pilotState': {
+      const m: Extract<PilotServerMessage, { t: 'pilotState' }> = {
+        t: 'pilotState',
+        steering: oneOf(o, 'steering', PILOT_STEERINGS),
+        hunting: int(o, 'hunting', 0, BIG),
+        downs: int(o, 'downs', 0, BIG),
+        charges: abilityMap(o, 'charges', 100),
+        ready: abilityMap(o, 'ready', BIG),
+      }
+      if (o.idleWarnAt !== undefined) m.idleWarnAt = num(o, 'idleWarnAt', 0, BIG)
+      if (o.enraged !== undefined) m.enraged = bool(o, 'enraged')
+      if (o.stalkUntil !== undefined) m.stalkUntil = num(o, 'stalkUntil', 0, BIG)
+      return m
+    }
+    case 'pilotEnd': {
+      const m: Extract<PilotServerMessage, { t: 'pilotEnd' }> = { t: 'pilotEnd', event: int(o, 'event', 0, MAX_ID), reason: oneOf(o, 'reason', PILOT_END_REASONS) }
+      if (o.gold !== undefined) m.gold = int(o, 'gold', 0, MAX_GOLD)
+      if (o.honor !== undefined) m.honor = honorCode(o, 'honor')
+      if (o.downs !== undefined) m.downs = int(o, 'downs', 0, BIG)
+      if (o.steeredMs !== undefined) m.steeredMs = int(o, 'steeredMs', 0, BIG)
+      return m
+    }
+    case 'huntPing':
+      return { t: 'huntPing', event: int(o, 'event', 0, MAX_ID), x: num(o, 'x', -BIG, BIG), z: num(o, 'z', -BIG, BIG), r: num(o, 'r', 0, 10_000), at: num(o, 'at', 0, BIG) }
+    case 'huntTrail':
+      return {
+        t: 'huntTrail',
+        points: boundedList(o, 'points', HUNT_TRAIL_MAX, (p) => {
+          if (!Array.isArray(p) || p.length !== 3 || !p.every((n) => typeof n === 'number' && Number.isFinite(n))) fail('trail points are [x, z, at]')
+          return [p[0], p[1], p[2]] as [number, number, number]
+        }),
+      }
+    case 'huntRoar':
+      return { t: 'huntRoar', bearing: num(o, 'bearing', -TAU, TAU), distM: num(o, 'distM', 0, 100_000), at: num(o, 'at', 0, BIG) }
+    case 'huntTaunt':
+      return { t: 'huntTaunt', id: int(o, 'id', 0, MAX_ID), line: int(o, 'line', 0, PILOT_TAUNT_MAX) }
     default:
       fail('unknown message type')
   }

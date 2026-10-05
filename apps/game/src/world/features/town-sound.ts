@@ -3,7 +3,8 @@
  * screen, through audio/town.ts. On every preset (Low too: no `World.town` is needed, WAVE_PLAN7 D23):
  *
  * - the bed by the folk near, the hourly temple bell, the vendors' murmurs, the smith's hammer, the animals, the
- *   fountain, and the night layers in town (TownAudio);
+ *   fountain, and the night layers in town (TownAudio); the bed and the murmurs (the folk's voices) only while the
+ *   crowd draws townsfolk (`setTownCrowd`, docs/SOUND.md §10.5);
  * - the town file (`/out(-opt)/world/<world>/town.json`, TL-R) for the stalls, anvils, stables, fountain and the
  *   population when the export has one; Jangan's defaults otherwise;
  * - the pigeons' wing claps on a flush of the life part within the town.
@@ -23,6 +24,8 @@ export const TOWN_NIGHT_MUTE = 'townNight'
 
 let current: TownAudio | null = null
 let folkCounter: FolkCounter | null = null
+/** The crowd draws townsfolk now (world/features/town.ts says so); false until it does (Low has no crowd at all). */
+let crowdDrawn = false
 /** The town file the world loaded (the schedule counter's source) and its pure schedule, built on first use. */
 let scheduleFile: TownFile | null = null
 let schedule: TownSchedule | null = null
@@ -62,6 +65,15 @@ export function activeTownAudio(): TownAudio | null {
 export function setTownFolkCounter(fn: FolkCounter | null): void {
   folkCounter = fn
   current?.setFolkCounter(fn ?? scheduleFolkCounter)
+}
+
+/**
+ * Whether the crowd draws townsfolk (docs/SOUND.md §10.5): their voices (the bed, the vendors' murmurs) play only
+ * then, so Options → Town life Off, switched live or not, and Low (no crowd) leave the town without talk.
+ */
+export function setTownCrowd(drawn: boolean): void {
+  crowdDrawn = drawn
+  current?.setCrowd(drawn)
 }
 
 /** TownAudio's output on GameAudio: the ambient bus, the index's cues and files. */
@@ -104,6 +116,7 @@ export const townSoundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) 
   if (!audio) return {}
   const town = new TownAudio(townAudioOutput(audio))
   town.setFolkCounter(folkCounter ?? scheduleFolkCounter)
+  town.setCrowd(crowdDrawn)
   current = town
   /** The server clock (worldEnter / worldClock, as sky-clock.ts keeps it): the bell's hours and the count (H11 S1). */
   let clock: WorldClockState | null = null

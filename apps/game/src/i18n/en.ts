@@ -34,6 +34,9 @@ import { enSky } from './en-sky.ts'
 import { enWeather } from './en-weather.ts'
 import { enMovement } from './en-movement.ts'
 import { enUnique } from './en-unique.ts'
+import { enQol } from './en-qol.ts'
+import { enPilot } from './en-pilot.ts'
+import { enGpu } from './en-gpu.ts'
 
 export const en = {
   // ---- per-lane string files (each lane edits only its own) ------------------------------------
@@ -69,6 +72,12 @@ export const en = {
   ...enMovement,
   // Wave 11 (docs/WAVE_PLAN7.md D8): the unique-monster announcements (U-H).
   ...enUnique,
+  // The unreachable-spot warning switch, the mouse quick slot and the auto potion.
+  ...enQol,
+  // Play the Boss (docs/PLAY_THE_BOSS.md §4.6).
+  ...enPilot,
+  // A lost graphics device (gpu-loss.ts).
+  ...enGpu,
 
   // ---- boot / app shell ----------------------------------------------------------------------
   'boot.loading': 'Loading...',
@@ -421,6 +430,8 @@ export const en = {
   'action.fail.invalid_slot': 'That does not fit there.',
   'action.fail.invalid_count': 'Invalid amount.',
   'action.fail.requirements': 'You do not meet the requirements.',
+  // retail UIIT_MSG_STRGERR_CANT_MIX_EXCLUSIVE_ARMOR_TYPE (@sro/shared ARMOR_MIX_MESSAGE)
+  'action.fail.armor_mix': 'Armor and garment cannot be worn at the same time.',
   'action.fail.not_usable': 'That item cannot be used like that.',
   'action.fail.cooldown': 'Not ready yet.',
   'action.fail.no_points': 'You have no stat points left.',

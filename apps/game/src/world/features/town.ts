@@ -21,7 +21,7 @@ import { toScreen } from '../../three/project.ts'
 import type { WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
 import { worldTown } from '../graphics.ts'
 import { layoutPlates, labelAnchor, plateBox, type PlateInput } from '../nameplates.ts'
-import { activeTownAudio, scheduleFolkCounter, setTownFolkCounter } from './town-sound.ts'
+import { activeTownAudio, scheduleFolkCounter, setTownCrowd, setTownFolkCounter } from './town-sound.ts'
 import { addTownPick } from './ux-world.ts'
 
 /** Bubbles on screen at most (bubbles.ts MAX_BUBBLES). */
@@ -210,14 +210,16 @@ export const townFeature: WorldFeatureFactory = ctx => {
   /** The bed counts the folk the crowd draws (TL-S's counter) while a crowd is there; its own estimate otherwise. */
   const syncCounter = (town: TownApp | null): void => {
     // H11 S3 / LOW-1 (TOWN_LIFE §6, §8.2; WAVE_PLAN7 D23): the drawn crowd counts, and its bubbles make the vendors'
-    // murmurs, only while it draws folk. Otherwise (Low: no part; Town life Off; cut 20) the pure schedule counts and
-    // the built-in stall murmurs play: the town keeps its sound.
+    // murmurs, only while it draws folk. Otherwise (Low: no part; Town life Off; cut 20) the pure schedule counts, but
+    // the folk's voices are silent (docs/SOUND.md §10.5): the bell, the smith, the animals and the fountain stay.
     const crowd = town?.folkNear && town.enabled !== false && town.drawsFolk !== false ? town : null
     if (crowd === counterFor) return
     counterFor = crowd
     if (crowd) setTownFolkCounter((x, z, r) => crowd.folkNear?.(x, z, r) ?? 0)
     else setTownFolkCounter(scheduleFolkCounter)
     activeTownAudio()?.setExternal({ calls: !!crowd })
+    // docs/SOUND.md §10.5 (a user report): no drawn townsfolk, no townsfolk talk (the bed and the murmurs).
+    setTownCrowd(!!crowd)
   }
 
   return {
@@ -313,6 +315,7 @@ export const townFeature: WorldFeatureFactory = ctx => {
       if (counterFor !== undefined) {
         setTownFolkCounter(null)
         activeTownAudio()?.setExternal({ calls: false })
+        setTownCrowd(false)
         counterFor = undefined
       }
       for (const s of slots) s.el.remove()

@@ -18,6 +18,7 @@
  */
 
 import type { SkillStatusKind, StarterWeapon } from './protocol.ts'
+import type { PilotDef } from './pilot.ts'
 
 /** Bump only for breaking changes to a content file; additive fields keep the version. */
 export const CONTENT_SCHEMA_VERSION = 1
@@ -88,6 +89,17 @@ export type MobVariant = 'normal' | 'champion' | 'giant' | 'titan' | 'elite' | '
 
 export const MOB_VARIANTS: readonly MobVariant[] = ['normal', 'champion', 'giant', 'titan', 'elite', 'unique', 'party']
 
+/**
+ * Body size of a spawn-time variant over the mob's own scale: the client's model, label and pick, and the server's body
+ * radius (so melee reach matches what is drawn). Retail draws a giant at about twice its mob's size; a champion keeps
+ * the mob's size (only its name and stats change). Tune here.
+ */
+export const VARIANT_SCALE: Readonly<Partial<Record<MobVariant, number>>> = { giant: 2, titan: 2 }
+
+export function variantScale(variant: MobVariant | undefined): number {
+  return (variant && VARIANT_SCALE[variant]) || 1
+}
+
 /** mobs.json: ContentFile<MobDef>. Monsters are characterdata rows with TypeID 1/2/1/x. */
 export interface MobDef {
   /** client: CodeName128 (col 2), e.g. MOB_CH_MANGNYANG. */
@@ -138,6 +150,13 @@ export interface MobDef {
    * agree; otherwise false. Per-nest `NestDef.tactics.aggressive` wins.
    */
   aggressive: boolean
+  /**
+   * A champion of this mob spawns with its champion tactics (vSRO Tab_RefTactics dwChampionTacticsID; every linked
+   * champion tactics row has btAggressType 0, so the champion attacks on sight even when the mob is passive). false:
+   * the mob's tactics link none (port: no `combat.championTacticsId`), so its champion keeps the nest's tactics.
+   * Absent = linked (exports before this field, and aggressive mobs, where it changes nothing).
+   */
+  championAggressive?: boolean
   /** client: ExpToGive (col 79). */
   exp: number
   /** SP-EXP awarded (400 SP-EXP = 1 SP). Not in client data; absent = the server's rule (default: equal to exp). */
@@ -188,7 +207,11 @@ export interface MobAttack {
 export interface TacticsDef {
   /** port: tacticsId. */
   id: number
-  /** Attacks players in sight unprovoked (port: aggressTypeRaw; 0 = aggressive per go-sro, unverified). */
+  /**
+   * Attacks players in sight unprovoked (port: aggressTypeRaw === 0, vSRO btAggressType). 0 = aggressive: it is 0 on
+   * every champion tactics row and on the uniques' (Tiger Girl), 1 on the starter mobs (Mangyang) and on the mobs the
+   * client names meek (MOB_WC_GUNPOWDERGHOST_CLON "Meek Gun Powder"); docs/DATA.md.
+   */
   aggressive: boolean
   /** Aggro radius in metres (port: sightRangeU; vSRO search radius = 15 + nSightRange units). */
   sightRange: number
@@ -277,6 +300,18 @@ export type WeaponType = StarterWeapon
 
 /** Chinese armour classes (client: TypeID4 1 garment, 2 protector, 3 armour). */
 export type ArmorType = 'garment' | 'protector' | 'armor'
+
+/**
+ * Retail: garment pieces are never worn together with protector or armour pieces; protector and armour mix freely
+ * (client textdata UIIT_MSG_STRGERR_CANT_MIX_EXCLUSIVE_ARMOR_TYPE, ARMOR_MIX_MESSAGE; the European line names the robe
+ * against heavy and light armour both). docs/PROTOCOL.md §7.
+ */
+export function armorClassesClash(a: ArmorType, b: ArmorType): boolean {
+  return a !== b && (a === 'garment' || b === 'garment')
+}
+
+/** The client's refusal line for a mixed garment (UIIT_MSG_STRGERR_CANT_MIX_EXCLUSIVE_ARMOR_TYPE, English). */
+export const ARMOR_MIX_MESSAGE = 'Armor and garment cannot be worn at the same time.'
 
 /** Stat block of an item definition: [min, max] of the roll, before + (enhancement) increments. */
 export interface ItemStats {
@@ -786,6 +821,8 @@ export interface UniqueDef {
   announce: { appear: boolean; defeat: boolean; roarRadiusM: number }
   /** UniquesFile.dropTables id. */
   drops: string
+  /** Play the Boss (docs/PLAY_THE_BOSS.md §5.5): a player may steer her; her kit and the default numbers. */
+  pilot?: PilotDef
 }
 
 /** A unique's loot (docs/UNIQUES.md §3.4). Every group is rolled `rolls` times (default 1), each with `chance`. */

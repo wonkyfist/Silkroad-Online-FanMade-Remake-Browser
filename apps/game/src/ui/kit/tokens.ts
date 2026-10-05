@@ -314,6 +314,12 @@ ${typeCss()}
 .kit-msgbox-count { display: flex; align-items: center; gap: 8px; }
 .kit-msgbox-error { min-height: 11px; color: var(--c-bad); }
 .kit-msgbox-buttons { margin-top: auto; display: flex; gap: 8px; justify-content: center; }
+.kit-msgbox-choose { display: flex; gap: 3px; justify-content: center; }
+.kit-msgbox-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.kit-msgbox-choice { box-sizing: border-box; width: 128px; height: 52px; padding: 4px 4px 4px 8px; display: flex; align-items: center; background: no-repeat 0 0 / 100% 100%; }
+.kit-msgbox-choice.no-art { background: rgba(0, 0, 0, 0.55); box-shadow: inset 0 0 0 1px var(--c-rim); }
+.kit-msgbox-choice .kit-radio-group { gap: 4px; }
+.kit-msgbox-hints { min-height: 26px; text-align: center; max-width: 268px; color: var(--c-label); }
 
 /* ---- notice ---- */
 .kit-notice { position: absolute; left: 50%; top: ${96}px; transform: translateX(-50%); box-sizing: border-box; max-width: 480px; padding: 12px 20px; text-align: center; background: rgba(0, 0, 0, 0.72); pointer-events: none; }

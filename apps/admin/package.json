@@ -1,0 +1,17 @@
+{
+  "name": "@sro/admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The admin panel (docs/ADMIN.md): a small vanilla-TypeScript single-page app the game server serves at /admin/.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@sro/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}

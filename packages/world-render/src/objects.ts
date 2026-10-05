@@ -39,6 +39,36 @@ export const WORLD_OBJECT_LAYER = 0x10000000
 /** Owner of the chunks and clones of the whole-world load (not a region id: those are 0..0x7FFF). */
 const NO_REGION = -1
 
+/**
+ * The manifest models that block movement: every model drawn by a placement whose object (object.ifo id) has a nav
+ * footprint, i.e. some nav object instance carries that id (docs/NAVIGATION.md §4.1). By object rather than by
+ * instance: retail bakes some placements' footprints into the terrain's closed cells instead of an instance (21 Jangan
+ * trees whose models have instances elsewhere).
+ */
+export function blockingModelsOf(placements: readonly Pick<WorldPlacement, 'objId' | 'models'>[], instances: Iterable<{ objId: number }>): Set<number> {
+  const ids = new Set<number>()
+  for (const i of instances) ids.add(i.objId)
+  const out = new Set<number>()
+  for (const p of placements) if (ids.has(p.objId)) for (const m of p.models) out.add(m)
+  return out
+}
+
+/**
+ * What a model draws while animated objects are hidden (Low: QUALITY_PRESETS.low.animated is false) and no batcher
+ * stands in for it: a static model itself; a skinned model that blocks movement (`blockingModelsOf`) its static
+ * variant (`WorldModel.staticVariant`: the retail mesh at frame 0 of its default clip, skin removed; BATCHING §3.5) or,
+ * without one, itself (its clone stays drawn, still); any other skinned model nothing (hidden, as before). null: not
+ * drawn. A blocking object is never invisible on Low: 17 skinned retail tree models and the old ferry boat were.
+ */
+export function lowModelOf(model: WorldModel, models: readonly WorldModel[], blocks: boolean): WorldModel | null {
+  if (!model.glb || model.kind === 'failed') return null
+  if (model.kind !== 'skinned') return model
+  if (!blocks) return null
+  const i = model.staticVariant
+  const v = i === undefined || i === null || i === model.index ? undefined : models[i]
+  return v && v.index === i && v.kind === 'static' && v.glb ? v : model
+}
+
 interface Chunk {
   group: number
   meshes: Mesh[]
@@ -62,6 +92,8 @@ interface Clone {
   /** W12-SA: the placement and the manifest model it draws (a region reload keeps an unchanged clone: adoptClones). */
   placement: WorldPlacement
   model: WorldModel
+  /** Its model blocks movement (`WorldObjects.setBlocking`): drawn (still) even while animated objects are hidden. */
+  blocks: boolean
 }
 
 export interface ObjectStats {
@@ -224,6 +256,9 @@ export class WorldObjects {
   private editorOwnedValue: EditorOwned | null = null
   /** W12-SA (S-OBJ): owners whose chunks and clones stay hidden until `showRegion` (a region reload's new set). */
   private readonly staged = new Set<number>()
+  /** The models that block movement and the manifest's model list (setBlocking; null: none block). */
+  private blocking: ((model: WorldModel) => boolean) | null = null
+  private blockingModels: readonly WorldModel[] = []
 
   constructor(readonly scene: Scene, readonly assets: Assets, readonly materials: ObjectMaterials) {}
 
@@ -313,6 +348,21 @@ export class WorldObjects {
     return !!this.hiddenModel?.(model)
   }
 
+  /**
+   * The models that block movement (World: `blockingModelsOf` over its nav) and the manifest's models (their static
+   * variants): while animated objects are hidden, a blocking skinned model still draws (`lowModelOf`). Like
+   * setHiddenModels it applies to placements placed afterwards; set it before any region places (World does).
+   */
+  setBlocking(blocks: ((model: WorldModel) => boolean) | null, models: readonly WorldModel[] = []): void {
+    this.blocking = blocks
+    this.blockingModels = models
+  }
+
+  /** Whether `model` blocks movement (setBlocking). */
+  blocks(model: WorldModel): boolean {
+    return !!this.blocking?.(model)
+  }
+
   // ---- W12-SA: S-OBJ (docs/WORLD_EDITOR.md §2.3, §9.3 item 1; docs/WAVE_PLAN8.md §4.2 step 4) -----------------------
 
   /**
@@ -382,10 +432,17 @@ export class WorldObjects {
     for (const c of this.clones) if (c.region === owner) this.applyClone(c, cam)
   }
 
-  /** The model a region loads for `model`: the batcher's stand-in (a static tree variant) when it names a loadable one. */
+  /**
+   * The model a region loads for `model`: the batcher's stand-in (a static tree variant) when it names a loadable one;
+   * else, while animated objects are hidden (Low), a blocking skinned model's static variant (`lowModelOf`), so the
+   * tree is drawn as cheap thin instances instead of a hidden clone. Decided when the region places: a later
+   * setAnimatedVisible keeps it until the regions are placed again (both ways stay drawn).
+   */
   modelToLoad(model: WorldModel): WorldModel {
     const use = this.batcherValue?.modelFor?.(model)
-    return use && use.glb && use.kind !== 'failed' ? use : model
+    if (use && use.glb && use.kind !== 'failed') return use
+    if (!this.showAnimated && model.kind === 'skinned') return lowModelOf(model, this.blockingModels, this.blocks(model)) ?? model
+    return model
   }
 
   /**
@@ -515,25 +572,27 @@ export class WorldObjects {
       }
     }
     const used = [...byModel.keys()].map(i => models[i]!).filter(m => m.glb && m.kind !== 'failed')
-    const todo = used.filter(m => (opts.animated || m.kind === 'static') && !this.isHidden(m))
+    // Each model loads what modelToLoad names (Low: a blocking skinned model's static variant).
+    const todo = used.filter(m => (opts.animated || this.modelToLoad(m).kind === 'static') && !this.isHidden(m))
     let done = 0
     await mapLimit(todo, 6, async model => {
       if (this.disposed) return
+      const use = this.modelToLoad(model)
       try {
         const [container, sidecar] = await Promise.all([
-          loadGlb(this.scene, this.assets, model.glb!),
-          model.sidecar ? this.assets.json<SidecarLite>(model.sidecar).catch(() => null) : Promise.resolve(null),
+          loadGlb(this.scene, this.assets, use.glb!),
+          use.sidecar ? this.assets.json<SidecarLite>(use.sidecar).catch(() => null) : Promise.resolve(null),
         ])
         if (this.disposed) {
           container.dispose()
           return
         }
-        const kind = model.kind === 'skinned' ? 'clone' : 'static'
-        await this.materials.convert(container, sidecar, opts.lightmaps, { model: model.glb!, source: model.source, kind, ...(model.cloth ? { cloth: model.cloth } : {}) })
+        const kind = use.kind === 'skinned' ? 'clone' : 'static'
+        await this.materials.convert(container, sidecar, opts.lightmaps, { model: use.glb!, source: use.source, kind, ...(use.cloth ? { cloth: use.cloth } : {}) })
         this.containers.push(container)
         const list = byModel.get(model.index)!
         const meshes: AbstractMesh[] = []
-        if (model.kind === 'skinned') for (const p of list) meshes.push(...this.placeClone(model, container, p, NO_REGION).root.getChildMeshes(false))
+        if (use.kind === 'skinned') for (const p of list) meshes.push(...this.placeClone(model, container, p, NO_REGION).root.getChildMeshes(false))
         else {
           const chunks = this.placeStatic(prepareStatic(container), list, NO_REGION, p => {
             const size = CHUNK_M[p.group] ?? 192
@@ -751,7 +810,7 @@ export class WorldObjects {
       anim.goToFrame(anim.from + Math.random() * (anim.to - anim.from))
     }
     const center = Vector3.TransformCoordinates(localCenter, holder.computeWorldMatrix(true))
-    const clone: Clone = { group: p.group, root: holder, entries, anim, center, radius, enabled: true, animating: true, region, meshes, placement: p, model }
+    const clone: Clone = { group: p.group, root: holder, entries, anim, center, radius, enabled: true, animating: true, region, meshes, placement: p, model, blocks: this.blocks(model) }
     this.clones.push(clone)
     this.stats.clones++
     return clone
@@ -775,9 +834,17 @@ export class WorldObjects {
     this.refresh()
   }
 
+  /**
+   * Animated objects drawn and animating (Medium+), or hidden (Low). Hidden, a clone that blocks movement still draws,
+   * still, and regions placed from then on load a blocking skinned model's static variant instead (modelToLoad).
+   */
   setAnimatedVisible(on: boolean): void {
     this.showAnimated = on
     this.refresh()
+  }
+
+  get animatedVisible(): boolean {
+    return this.showAnimated
   }
 
   setLod(on: boolean): void {
@@ -800,6 +867,8 @@ export class WorldObjects {
   }
 
   private lastCam = new Vector3(NaN, NaN, NaN)
+  /** The camera's focus (the player): draw distance counts from the nearer of it and the camera. NaN = camera only. */
+  private lastFocus = new Vector3(NaN, NaN, NaN)
 
   private refresh(): void {
     this.update(this.lastCam.x === this.lastCam.x ? this.lastCam : Vector3.Zero(), true)
@@ -808,7 +877,11 @@ export class WorldObjects {
   private inRange(cam: Vector3, group: number, center: Vector3, radius: number): boolean {
     if (!this.lod) return true
     const range = (GROUP_RANGE_M[group] ?? GROUP_RANGE_M[2]!) * this.rangeScale
-    return Vector3.Distance(cam, center) - radius < range
+    // From the nearer of the camera and its focus (horizontally): zoomed far out, a small object the player stands at
+    // stays drawn (Low's 28.8 m small range is shorter than the 40 m zoom), and it still blocks there.
+    const f = this.lastFocus
+    const d = f.x === f.x ? Math.min(Vector3.Distance(cam, center), Math.hypot(center.x - f.x, center.z - f.z)) : Vector3.Distance(cam, center)
+    return d - radius < range
   }
 
   private camOrZero(): Vector3 {
@@ -826,10 +899,11 @@ export class WorldObjects {
   }
 
   private applyClone(c: Clone, cam = this.camOrZero()): void {
-    const on = this.showAnimated && !this.isStaged(c.region) && this.inRange(cam, c.group, c.center, c.radius)
+    // While animated objects are hidden (Low) a clone that blocks movement stays drawn, still (lowModelOf).
+    const on = (this.showAnimated || c.blocks) && !this.isStaged(c.region) && this.inRange(cam, c.group, c.center, c.radius)
     // Beyond ANIMATE_RANGE_M a clone stays drawn but its clip pauses (no bone updates): far swaying trees and
     // flowers are not noticeable, and the skinned-clone CPU cost is what grows with the view.
-    const animate = on && (!this.lod || Vector3.Distance(cam, c.center) - c.radius < ANIMATE_RANGE_M * this.rangeScale)
+    const animate = on && this.showAnimated && (!this.lod || Vector3.Distance(cam, c.center) - c.radius < ANIMATE_RANGE_M * this.rangeScale)
     if (on !== c.enabled) {
       c.enabled = on
       c.root.setEnabled(on)
@@ -842,9 +916,11 @@ export class WorldObjects {
   }
 
   /** Draw distance per TERRAIN.md 6.3 (no fades): visible while distance - radius < range of the group. */
-  update(cam: Vector3, force = false): void {
-    if (!force && Vector3.DistanceSquared(cam, this.lastCam) < 1) return
+  update(cam: Vector3, force = false, focus?: { x: number; z: number }): void {
+    const focusMoved = !!focus && (this.lastFocus.x !== this.lastFocus.x || (focus.x - this.lastFocus.x) ** 2 + (focus.z - this.lastFocus.z) ** 2 >= 1)
+    if (!force && !focusMoved && Vector3.DistanceSquared(cam, this.lastCam) < 1) return
     this.lastCam.copyFrom(cam)
+    if (focus) this.lastFocus.set(focus.x, 0, focus.z)
     for (const c of this.chunks) this.applyChunk(c, cam)
     for (const c of this.clones) this.applyClone(c, cam)
     this.batcherValue?.update(cam, force)

@@ -12,7 +12,9 @@
     "viewer": "pnpm --filter @sro/viewer dev",
     "server": "pnpm --filter @sro/server dev",
     "game": "pnpm --filter @sro/game dev",
+    "admin": "pnpm --filter @sro/admin dev",
     "gm": "pnpm --filter @sro/server gm",
+    "verify-install": "tsx apps/server/src/cli/verify-install.ts",
     "deploy": "tsx deploy/run.ts deploy.sh",
     "deploy:gm": "tsx deploy/run.ts gm.sh"
   },

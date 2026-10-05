@@ -2,8 +2,9 @@
  * TL-S (docs/TOWN_LIFE.md §6; docs/WAVE_PLAN7.md §6.1): the town's sound.
  * - the bell strikes once per game hour, three strokes at 06:00 and 18:00, never on a clock jump; heard town-wide
  *   from the tower's direction;
- * - the bed's gain is monotone in the folk near, silent at night below 5, cross-faded; on Low (no town part) it follows
- *   the schedule's hour curve through the district estimate or a plugged counter;
+ * - the bed's gain is monotone in the folk near, silent at night below 5, cross-faded; its count follows the schedule's
+ *   hour curve through the district estimate or a plugged counter (it plays only while a crowd is drawn: SOUND §10.5,
+ *   town-crowd-sound.test.ts);
  * - voice limits: ≤ 3 town one-shots at a time (the bell may add one), ≤ 3 loops; culls per sound;
  * - the built-in spots are a pure function of the server clock (two clients hear the same hammer);
  * - night in town mutes the day one-shots and plays the night layers; the GameAudio adapter routes everything to the
@@ -154,7 +155,7 @@ describe('the bed', () => {
     expect(bedGains(6, true).calm).toBeGreaterThan(0)
   })
 
-  it('on Low (no town part) it follows the schedule: busy at noon in the plaza, empty at 02:00, quiet in the fields', () => {
+  it('the count follows the schedule: busy at noon in the plaza, empty at 02:00, quiet in the fields', () => {
     expect(populationShare(JANGAN_POPULATION.bands, 0.5)).toBe(1)
     expect(populationShare(JANGAN_POPULATION.bands, 2 * H)).toBe(0.08)
     expect(circleOverlap(0, 60, 30)).toBeCloseTo(Math.PI * 900)

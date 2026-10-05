@@ -439,6 +439,27 @@ body:has(.screen.world) .corner {
   z-index: 30;
 }
 
+/* A lost graphics device (gpu-loss.ts): what happens next, over the black 3D view. */
+.gpu-notice {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: min(520px, 90vw);
+  background: rgba(20, 16, 10, 0.92);
+  border: 1px solid #c8a060;
+  color: #f0e6cc;
+  padding: 12px 18px;
+  border-radius: 3px;
+  text-align: center;
+  z-index: 60;
+}
+
+.gpu-notice button {
+  display: block;
+  margin: 10px auto 0;
+}
+
 .toasts {
   position: fixed;
   top: 70px;
@@ -918,7 +939,7 @@ body:has(.screen.world) .corner {
   position: absolute;
   left: 0;
   top: 0;
-  transform-origin: 50% 100%;
+  transform-origin: 0 0;
   pointer-events: none !important;
 }
 

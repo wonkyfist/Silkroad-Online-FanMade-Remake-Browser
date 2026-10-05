@@ -5,12 +5,15 @@
  * - the listener at the own character with the camera's heading, the footstep surface world, voice priorities;
  * - hit impacts at each shown hit, level-up fanfare, gold drop and pickup, potion drinks, skill stage sounds;
  * - town/field ambience following the music's town check; the Esc menu's "Sound" entry (order 30).
+ * - docs/SOUND.md §10: the imbue, Berserk and shield-buff layers of a hit, Berserk swings, rare/elixir drops, quest
+ *   accepted/completed, revival, the Berserk orb, and a quick-slot icon placed.
  * Every sound degrades to silence when the index or a file is missing.
  */
-import type { EffectState, ServerMessage } from '@sro/shared'
+import type { EffectState, EntityState, ServerMessage } from '@sro/shared'
 import type { LifePart } from '@sro/world-render'
 import type { GameAudio } from '../../audio/index.ts'
-import { skillGroupOf, type HitQuery } from '../../audio/cues.ts'
+import { CarriedSkills } from '../../audio/carried.ts'
+import { hwanSwingCue, skillGroupOf, type HitQuery } from '../../audio/cues.ts'
 import type { EntitySound } from '../../audio/entity.ts'
 import { registerMenuItem } from '../../hud/menu-items.ts'
 import { closeSoundSettings, openSoundSettings, soundSettingsWindow } from '../../hud/sound-settings.ts'
@@ -44,6 +47,11 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
   let drinkAt = 0
   /** A self itemCast or warp just happened: an ok itemUse then was a scroll, not a drink. */
   let quietUntil = 0
+  // docs/SOUND.md §10.3: imbues and shield buffs per entity, who is in Berserk, who is dead, the own Berserk gauge.
+  const carried = new CarriedSkills(code => ctx.app.catalog.content.skills.get(code)?.kind === 'imbue')
+  const berserk = new Set<number>()
+  const dead = new Set<number>()
+  let hwanGauge: number | null = null
   const now = () => performance.now()
   const later = (ms: number, fn: () => void, entity?: number) => pending.push({ at: now() + ms, fn, entity })
   // Wave 10 (GL-O, GRASS_LIFE §5.3): a flock's flush plays one bird one-shot at the flock (audio/ambient.ts flush).
@@ -64,6 +72,7 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
     if (!s) return null
     audio.preloadModel(view.state.model, KEEP_CLIPS)
     sounds.set(view.id, s)
+    if (berserk.has(view.id)) hwanSwing(view, s, true)
     return {
       update: () => s.update(now()),
       dispose: () => {
@@ -91,6 +100,29 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
   })
 
   const family = (v: EntityView) => (v.kind === 'player' ? v.look().family ?? null : null)
+
+  /** Berserk swings on or off for a view's sound (the weapon's SND_SWING3 HWAN files). */
+  function hwanSwing(v: EntityView, s: EntitySound | undefined, on: boolean): void {
+    s?.setHwanSwing(on ? audio!.index?.cues[hwanSwingCue(family(v))]?.files ?? null : null)
+  }
+
+  const setBerserk = (id: number, on: boolean) => {
+    if (on === berserk.has(id)) return
+    if (on) berserk.add(id)
+    else berserk.delete(id)
+    const v = ctx.view(id)
+    if (v) hwanSwing(v, sounds.get(id), on)
+  }
+
+  /** An entity's state as it arrives (worldEnter, spawn): its effects, Berserk and life. */
+  const arrived = (e: EntityState) => {
+    carried.set(e.id, e.effects)
+    const imbue = carried.imbueOf(e.id)
+    if (imbue) audio.preloadSkill(imbue)
+    setBerserk(e.id, (e.berserkMs ?? 0) > 0)
+    if (e.state === 'dead') dead.add(e.id)
+    else dead.delete(e.id)
+  }
 
   /** Skill stage sounds of a cast (skilleffect cols 26/27): READY now, WAIT after the prepare, the action stage after the cast. */
   const onCast = (msg: Extract<ServerMessage, { t: 'cast' }>) => {
@@ -133,8 +165,53 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
           const self = ctx.view(msg.self.id)
           const f = self ? family(self) : null
           audio.preloadWorld(['PUNCH', ...(f ? [FAMILY_HITS[f]!] : [])])
+          carried.clear()
+          berserk.clear()
+          dead.clear()
+          hwanGauge = null
+          for (const e of [msg.self, ...msg.entities]) arrived(e)
           break
         }
+        case 'despawn':
+          carried.forget(msg.id)
+          berserk.delete(msg.id)
+          dead.delete(msg.id)
+          break
+        case 'effectRemove':
+          carried.remove(msg.id, msg.instance)
+          break
+        case 'combat':
+          if (msg.killed) dead.add(msg.target)
+          break
+        case 'entityUpdate': {
+          if (msg.berserkMs !== undefined) setBerserk(msg.id, msg.berserkMs > 0)
+          if (msg.state === 'dead') dead.add(msg.id)
+          else if (msg.state === 'alive' && dead.delete(msg.id)) {
+            // UI SND_REVIVE (itRevive, "재생소리"): back to life, yours in the interface, others' where they stand.
+            const v = ctx.view(msg.id)
+            if (msg.id === ctx.selfId() || !v) audio.ui('ui.revive')
+            else audio.play('ui.revive', at(v))
+          }
+          break
+        }
+        case 'stats':
+        case 'statsDelta': {
+          // UI SND_HYAN (HyanGet, "환습득소리"): the Berserk gauge gained an orb.
+          const h = msg.stats.hwan
+          if (typeof h !== 'number') break
+          if (hwanGauge !== null && h > hwanGauge) audio.ui('ui.hyan')
+          hwanGauge = h
+          break
+        }
+        case 'questUpdate':
+          // UI SND_QUEST (QuestOpen, "퀘스트 창 열리기") when a quest is taken, SND_QUEST_END (ItQuest) when it is done.
+          if (msg.event === 'accepted') audio.ui('ui.questOpen')
+          else if (msg.event === 'completed') audio.ui('ui.questDone')
+          break
+        case 'skillsUpdate':
+          // ITEM SND_EQUIP QUICKSLOT (itQuickicon): an icon placed on the quick bar.
+          if (msg.hotbar?.some(h => h.entry)) audio.ui('item.equip.QUICKSLOT')
+          break
         case 'levelUp': {
           const v = ctx.view(msg.id)
           if (msg.id === ctx.selfId() || !v) audio.ui('ui.levelUp')
@@ -143,7 +220,8 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
         }
         case 'spawn': {
           const e = msg.entity
-          if (e.kind === 'item' && /^ITEM_ETC_GOLD_/.test(e.model)) audio.play('item.dropGold', { pos: { x: e.pos[0], y: e.pos[1] + 0.3, z: e.pos[2] }, priority: 1 })
+          if (e.kind === 'item') audio.drop(e.model, { x: e.pos[0], y: e.pos[1] + 0.3, z: e.pos[2] })
+          else arrived(e)
           break
         }
         case 'actionResult':
@@ -170,9 +248,13 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
           for (let i = pending.length - 1; i >= 0; i--) if (pending[i]!.entity === msg.id) pending.splice(i, 1)
           break
         }
-        case 'effectAdd':
+        case 'effectAdd': {
+          carried.add(msg.id, msg.effect)
+          const imbue = carried.imbueOf(msg.id)
+          if (imbue) audio.preloadSkill(imbue)
           onEffect(msg.id, msg.effect)
           break
+        }
       }
     },
 
@@ -188,14 +270,20 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
           : null,
         victim: { kind: victim.kind, model: victim.state.model, radius: victim.radius, rarity: ctx.app.catalog.content.mobs.get(victim.state.model)?.rarity },
         outcome: hit.outcome,
+        imbue: carried.imbueOf(msg.attacker),
+        hwan: hit.hwan === true || berserk.has(msg.attacker),
+        guards: carried.groupsOf(msg.target),
       }
+      if (hit.outcome === 'crit') sounds.get(victim.id)?.critHit(now())
       audio.hit(q, at(victim))
     },
 
     onFrame() {
       const selfId = ctx.selfId()
       audio.setFocus(selfId ?? -1, ctx.target()?.id ?? -1)
-      const self = selfId !== null ? ctx.view(selfId) : undefined
+      // Play the Boss (docs/PLAY_THE_BOSS.md §4.1): the listener stands at the steered mob while piloting.
+      const focus = ctx.controlledId?.() ?? selfId
+      const self = focus !== null ? ctx.view(focus) : undefined
       if (self) {
         const cam = ctx.camera
         audio.setListener(self.root.position, { x: cam.target.x - cam.position.x, y: 0, z: cam.target.z - cam.position.z })
@@ -236,6 +324,9 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
       followLife(null)
       pending.length = 0
       sounds.clear()
+      carried.clear()
+      berserk.clear()
+      dead.clear()
     },
   }
 }

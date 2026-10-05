@@ -21,6 +21,16 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@types/node@20.19.43)(vite@8.3.1(@types/node@20.19.43)(esbuild@0.28.2)(tsx@4.23.15))
 
+  apps/admin:
+    dependencies:
+      '@sro/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+    devDependencies:
+      vite:
+        specifier: ^8.3.1
+        version: 8.3.1(@types/node@24.19.0)(esbuild@0.28.2)(tsx@4.23.15)
+
   apps/game:
     dependencies:
       '@babylonjs/core':

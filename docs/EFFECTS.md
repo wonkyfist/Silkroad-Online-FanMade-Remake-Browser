@@ -536,6 +536,20 @@ win.
 - **Seal (SOX)**: `itemrare.txt` → `system/system_raretype_{a,b}_step{1,2,3}.efp` on `ai_end`/`ai_start` [confirmed];
   none ≤ cap in our item set.
 - These need the weapon dummies in the sidecar (§5.2).
+- **What the enchant effect is** [confirmed, the compiled `fx/efp/system/system_enchant_a_01.json`]: five aura bursts
+  (`oura_18`/`oura_19` plates, a `color_hall` ring; additive; #8C97FF and #D9FCFF) flashing three frames apart (20
+  fps) at five points 0.12 apart along the blade, tip first, in a one-second root; `_b_01` runs the same five from the
+  other bone. From which + level the client plays it is in sro_client.exe, which this install does not have [unknown].
+- **Ours (2026-10-05, `apps/game/src/three/weapon-glow.ts`)**: a visible step at every level from +1, data in
+  `WEAPON_GLOW_TIERS` (open-ended: +8 … use the +7 row until rows are added). +1/+2 a pale shimmer band sweeping the
+  blade base → tip; +3/+4 a soft glow in the retail blue with a rim at the silhouette; +5/+6 stronger, with a slow
+  pulse; +7 brighter (the blue halfway to the pale core) plus retail's glint run (the five bursts, tip → base, once a
+  second), batched in one draw for all weapons. Weapons and shields (shields at 0.4); a fallback weapon takes the
+  weapon's +N. Drawn by a material plugin on the weapon's shared glTF material (per-mesh defines, per-draw values; no
+  extra draw, no varying). Low (Classic) draws a lite tint (+ pulse and a flash per sweep) and no glints; Medium and up
+  the full code and the glints (your own character and the nearest within 25 m: 4 / 6 / 8 on Medium / High / Ultra).
+  The values are display-relative: the glow divides by the post stack's exposure (×10.9 at noon, ≈ ×30 at night).
+  Protocol: EntityState.equipPlus, CharacterSummary.equipPlus, appearance `plus` (PROTOCOL.md).
 
 ### 3.11 NPCs
 

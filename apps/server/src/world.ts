@@ -107,6 +107,13 @@ export interface Player extends Mover {
   /** Character creation Height/Volume choices (0..4, default 2). */
   height: number
   volume: number
+  /**
+   * Play the Boss (docs/PLAY_THE_BOSS.md §3.1): the entity whose position this player's interest is centred on (the boss
+   * it steers); absent, or gone from the world, = its own position. Runtime only.
+   */
+  viewFrom?: number
+  /** Play the Boss: the body rests in a trance while its player steers a boss (never a target, locked by a gate). */
+  trance?: true
 }
 
 export type NewPlayer = Pick<Player, 'characterId' | 'name' | 'model' | 'level' | 'weapon' | 'pos' | 'yaw' | 'send'> &
@@ -154,6 +161,13 @@ export interface Mob extends Mover {
   damageMul?: number
   /** Wave 11 (docs/UNIQUES.md D-U21): how long the corpse stays, ms (absent = formulas.ts CORPSE_MS, 3 s). */
   corpseMs?: number
+  /**
+   * Play the Boss (docs/PLAY_THE_BOSS.md §3.1, §3.4): set for the whole event. `player` = the pilot's entity id (null once
+   * the pilot left); `steering` 'player' = Gameplay.tick runs no AI for her. While set: no regen, no refill at home.
+   */
+  pilot?: { player: number | null; steering: 'player' | 'ai' }
+  /** Play the Boss, Stalk (§3.5): non-staff viewers other than her pilot see her only within this many metres. */
+  veil?: number
 }
 
 /** A live quest encounter (docs/QUESTS.md §1.6): who summoned it and when it leaves unkilled. */
@@ -633,6 +647,8 @@ export class World {
       if (e.dead) s.state = 'dead'
       const equip = visibleEquip(e)
       if (Object.keys(equip).length > 0) s.equip = equip
+      const plus = visibleEquipPlus(e.equip)
+      if (Object.keys(plus).length > 0) s.equipPlus = plus
       s.height = e.height
       s.volume = e.volume
       return s
@@ -809,12 +825,20 @@ export class World {
 
   /** Whether `e` is in `viewer`'s view range (with the despawn margin when the viewer already has it). */
   inRange(viewer: Player, e: Entity, now: number, known: boolean): boolean {
-    const r = this.viewRange + (known ? VIEW_HYSTERESIS_M : 0)
-    const a = this.positionAt(viewer, now)
+    let r = this.viewRange + (known ? VIEW_HYSTERESIS_M : 0)
+    // Play the Boss, Stalk: a veiled boss only shows within `veil` m (no hysteresis), except to staff and her pilot.
+    if (e.kind === 'mob' && e.veil !== undefined && !viewer.staff && e.pilot?.player !== viewer.id) r = Math.min(r, e.veil)
+    const a = this.positionAt(this.viewAnchor(viewer), now)
     const b = this.positionAt(e, now)
     const dx = a[0] - b[0]
     const dz = a[2] - b[2]
     return dx * dx + dz * dz <= r * r
+  }
+
+  /** Where `viewer`'s interest is centred: the entity it views from (Play the Boss: the boss it steers), else itself. */
+  viewAnchor(viewer: Player): Mover {
+    const id = viewer.viewFrom
+    return id === undefined ? viewer : (this.mobs.get(id) ?? viewer)
   }
 
   /** Spawns `e` for `viewer` if it may see it and it is in range. */
@@ -865,7 +889,7 @@ export class World {
       else grid.set(k, [e])
     }
     for (const v of this.players.values()) {
-      const [x, , z] = this.positionAt(v, now)
+      const [x, , z] = this.positionAt(this.viewAnchor(v), now)
       const cx = Math.floor(x / cell)
       const cz = Math.floor(z / cell)
       const near: Entity[] = []
@@ -891,6 +915,19 @@ export function visibleEquip(p: Player): Partial<Record<EquipSlot, string>> {
   for (const slot of VISIBLE_SLOTS) {
     const it = p.equip[slot]
     if (it) out[slot] = it.code
+  }
+  return out
+}
+
+/**
+ * The +N of the visible slots that have one (EntityState.equipPlus, appearance `plus`, CharacterSummary.equipPlus):
+ * what the weapon glow draws (apps/game/src/three/weapon-glow.ts). Slots at +0 are left out.
+ */
+export function visibleEquipPlus(equip: Partial<Record<EquipSlot, Pick<ItemStack, 'plus'> | null | undefined>>): Partial<Record<EquipSlot, number>> {
+  const out: Partial<Record<EquipSlot, number>> = {}
+  for (const slot of VISIBLE_SLOTS) {
+    const plus = equip[slot]?.plus ?? 0
+    if (plus > 0) out[slot] = plus
   }
   return out
 }

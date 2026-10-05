@@ -209,6 +209,22 @@ export interface Settings {
      * walk, and the arrows turn and zoom the camera again (world/camera-keys.ts).
      */
     keyboardMove: boolean
+    /**
+     * The "You cannot get there." warning of a click the walk cannot reach (world/move-feedback.ts K5): the red ring,
+     * the dashed line, the line of text and its error sound. Off: none of it (the server still walks to the last
+     * reachable point on the line). On by default.
+     */
+    unreachableWarning: boolean
+  }
+  /** Auto potion (Options → Controls; world/auto-potion.ts): off by default. */
+  autoPotion: {
+    enabled: boolean
+    /** Drink an HP potion below this % of max HP; 0 = never (AUTO_POTION_PCT_MIN..MAX in steps of 5). */
+    hp: number
+    /** Drink an MP potion below this % of max MP; 0 = never. */
+    mp: number
+    /** Universal Pills on abnormal states (burn, poison, freeze, ...). */
+    cure: boolean
   }
 }
 
@@ -245,6 +261,10 @@ export const UI_SCALE_MAX = 1.4
 export const CAMERA_SPEED_MIN = 0.5
 export const CAMERA_SPEED_MAX = 2
 export const MINIMAP_ZOOM_MAX = 4
+/** Auto potion thresholds (percent of max HP / MP; 0 = never). */
+export const AUTO_POTION_PCT_MIN = 0
+export const AUTO_POTION_PCT_MAX = 90
+export const AUTO_POTION_PCT_STEP = 5
 
 export function defaultSettings(): Settings {
   return {
@@ -280,7 +300,8 @@ export function defaultSettings(): Settings {
       reduceFlashing: false,
       clock: true,
     },
-    controls: { holdToMove: true, cameraSpeed: 1, invertY: false, cameraMode: 'free', nearestTargetKey: true, cameraShake: true, keyboardMove: true },
+    controls: { holdToMove: true, cameraSpeed: 1, invertY: false, cameraMode: 'free', nearestTargetKey: true, cameraShake: true, keyboardMove: true, unreachableWarning: true },
+    autoPotion: { enabled: false, hp: 50, mp: 30, cure: false },
   }
 }
 
@@ -305,6 +326,7 @@ export function normalizeSettings(raw: unknown): Settings {
   const u = obj(r.ui)
   const n = obj(u.names)
   const c = obj(r.controls)
+  const ap = obj(r.autoPotion)
   return {
     v: 1,
     graphics: {
@@ -368,6 +390,13 @@ export function normalizeSettings(raw: unknown): Settings {
       nearestTargetKey: bool(c.nearestTargetKey, d.controls.nearestTargetKey),
       cameraShake: bool(c.cameraShake, d.controls.cameraShake),
       keyboardMove: bool(c.keyboardMove, d.controls.keyboardMove),
+      unreachableWarning: bool(c.unreachableWarning, d.controls.unreachableWarning),
+    },
+    autoPotion: {
+      enabled: bool(ap.enabled, d.autoPotion.enabled),
+      hp: num(ap.hp, d.autoPotion.hp, AUTO_POTION_PCT_MIN, AUTO_POTION_PCT_MAX, AUTO_POTION_PCT_STEP),
+      mp: num(ap.mp, d.autoPotion.mp, AUTO_POTION_PCT_MIN, AUTO_POTION_PCT_MAX, AUTO_POTION_PCT_STEP),
+      cure: bool(ap.cure, d.autoPotion.cure),
     },
   }
 }
