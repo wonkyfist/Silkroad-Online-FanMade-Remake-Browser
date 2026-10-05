@@ -2,10 +2,10 @@
   "schema": 1,
   "kind": "npcs-override",
   "world": "jangan",
-  "rev": 1,
-  "updatedAt": "2026-09-28T00:00:00.000Z",
+  "rev": 2,
+  "updatedAt": "2026-10-05T00:00:00.000Z",
   "add": [],
   "patch": [
-    { "code": "NPC_CH_SHAMAN", "x": -410, "z": -300, "y": 6.7, "yaw": 1.571 }
+    { "code": "NPC_CH_SHAMAN", "x": -419, "z": -314, "y": 8.65, "yaw": 1.571 }
   ]
 }

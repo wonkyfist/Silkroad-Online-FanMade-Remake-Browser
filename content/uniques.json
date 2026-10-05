@@ -15,7 +15,31 @@
       "fury": { "afterSec": 600, "damageMul": 2.0 },
       "corpseSec": 8,
       "announce": { "appear": true, "defeat": true, "roarRadiusM": 120 },
-      "drops": "UNIQUE_TIGERWOMAN"
+      "drops": "UNIQUE_TIGERWOMAN",
+      "pilot": {
+        "trancePlace": "palace-steps",
+        "kit": [
+          { "id": "claw", "slot": 1, "row": "MSKILL_CH_TIGERWOMAN_ATTACK01" },
+          { "id": "sweep", "slot": 2, "row": "MSKILL_CH_TIGERWOMAN_ATTACK02" },
+          { "id": "curse", "slot": 3, "row": "MSKILL_CH_TIGERWOMAN_ATTACK03" },
+          { "id": "pounce", "slot": 4, "kind": "leap", "rangeM": 12, "speedMs": 24, "cooldownMs": 12000, "clip": "ATTACK1",
+            "hit": { "row": "MSKILL_CH_TIGERWOMAN_ATTACK02", "mul": 0.6, "radiusM": 3, "status": "knockdown" } },
+          { "id": "roar", "slot": 5, "kind": "fear", "radiusM": 8, "pushM": 5, "lockMs": 1500, "cooldownMs": 20000, "clip": "FIND" },
+          { "id": "pack", "slot": 6, "kind": "pack", "mob": "MOB_CH_WHITETIGER", "count": 2, "charges": 2, "cooldownMs": 30000, "clip": "HELP" },
+          { "id": "stalk", "slot": 7, "kind": "stalk", "revealM": 8, "maxMs": 20000, "speedMul": 0.4, "cooldownMs": 25000, "cover": "anywhere" }
+        ],
+        "defaults": {
+          "enabled": false,
+          "schedule": { "slots": [{ "weekday": 6, "time": "21:00" }], "tz": "" },
+          "call": { "minutes": 10, "acceptSec": 30, "maxDraws": 5 },
+          "eligibility": { "minLevel": 20, "minPlayHours": 10, "cooldownDays": 14, "recentEvents": 3, "firstTimerWeight": 3 },
+          "win": { "surviveMin": 15, "downsTarget": 15, "downMinLevel": 15, "downMinDamage": 200 },
+          "hunt": { "radiusM": 350, "pingSec": 60, "pingRadiusM": 60, "idleSec": 20, "speedMul": 1, "senseM": 60 },
+          "scaling": { "on": true, "baseHunters": 4, "exponent": 0.9, "capHunters": 40, "windowSec": 60, "minDamage": 200 },
+          "rewards": { "baseGold": 5000, "perDownGold": 500, "perMinuteGold": 300, "winGold": 10000, "title": "tiger_spirit", "cosmetic": null },
+          "guards": { "associateDamagePct": 25, "earlyDeathMin": 3, "tauntCooldownSec": 4 }
+        }
+      }
     }
   ],
   "dropTables": {
