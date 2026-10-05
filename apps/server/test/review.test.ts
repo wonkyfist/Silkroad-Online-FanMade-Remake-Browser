@@ -468,7 +468,7 @@ describe('existing database (schema v2)', () => {
   })
 
   it('upgrades to v3: starter stats (with per-level growth), then the starter kit and full HP at the next entry', async () => {
-    expect(s.ctx.store.schemaVersion).toBe(14)
+    expect(s.ctx.store.schemaVersion).toBe(15)
     expect(s.ctx.store.characterById(1)).toMatchObject({ level: 1, strength: 20, intellect: 20, stat_points: 0, gold: 0, hp: null, dead: 0, bag_size: 48, starter_kit: 0 })
     expect(s.ctx.store.characterById(2)).toMatchObject({ level: 5, strength: 24, intellect: 24, stat_points: 12, starter_kit: 0 })
     // v4: default appearance, no saved navmesh surface

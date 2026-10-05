@@ -27,6 +27,7 @@ import { onlineCharacter, type AdminCall } from './call.ts'
 import * as characters from './characters.ts'
 import * as content from './content.ts'
 import { AdminError, bad, body, conflict, idOf, isObj, notFound, paging, search, segment, str } from './http.ts'
+import * as news from './news.ts'
 import { adminEvents, adminRouteGroup } from './routes.ts'
 import type { SettingsState } from './settings.ts'
 import type { AdminStore } from './store.ts'
@@ -151,6 +152,12 @@ function routes(api: AdminApi): Route[] {
     r('GET', 'uniques', (c) => world.uniquesView(c)),
     r('POST', `uniques/${CODE}/(spawn|kill|despawn|timer)`, (c, m) => world.uniqueAction(c, segment(m[1]), m[2] as 'spawn' | 'kill' | 'despawn' | 'timer')),
     r('GET', 'events', (c) => ({ events: adminEvents(c.ctx) })),
+    // "What's new" (docs/CHANGELOG_WINDOW.md)
+    r('GET', 'news', (c) => news.listNews(c)),
+    r('POST', 'news-images', (c) => news.uploadNewsImage(c), 201),
+    r('GET', `news/${CODE}`, (c, m) => news.newsDetail(c, segment(m[1]))),
+    r('PUT', `news/${CODE}`, (c, m) => news.putNews(c, segment(m[1]))),
+    r('DELETE', `news/${CODE}`, (c, m) => news.deleteNews(c, segment(m[1]))),
   ]
 }
 

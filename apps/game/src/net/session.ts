@@ -45,6 +45,10 @@ export class Session {
   slots = 4
   /** GM addition: this account's role (welcome / worldEnter / role; absent = player). */
   role: Role = 'player'
+  /** "What's new" entries this account has not seen, from the last `welcome` (docs/CHANGELOG_WINDOW.md). */
+  news = 0
+  /** The world's news feature showed the unseen entries once in this session (a reconnect does not show them again). */
+  newsShown = false
   readonly clock = new ServerClock()
   private statusValue: SessionStatus = 'connecting'
   private wire: Wire | null = null
@@ -100,6 +104,7 @@ export class Session {
         this.server = msg.server
         this.slots = msg.slots
         this.role = msg.role ?? 'player'
+        this.news = msg.news ?? 0
         const resumed = this.everOnline
         this.everOnline = true
         this.attempt = 0

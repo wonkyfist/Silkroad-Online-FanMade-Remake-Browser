@@ -38,6 +38,7 @@ import { enQol } from './en-qol.ts'
 import { enPilot } from './en-pilot.ts'
 import { enGpu } from './en-gpu.ts'
 import { enStorm } from './en-storm.ts'
+import { enNews } from './en-news.ts'
 
 export const en = {
   // ---- per-lane string files (each lane edits only its own) ------------------------------------
@@ -80,6 +81,8 @@ export const en = {
   ...enPilot,
   // A lost graphics device (gpu-loss.ts).
   ...enGpu,
+  // The "What's new" window (docs/CHANGELOG_WINDOW.md).
+  ...enNews,
 
   // ---- boot / app shell ----------------------------------------------------------------------
   'boot.loading': 'Loading...',

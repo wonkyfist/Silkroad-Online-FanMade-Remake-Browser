@@ -10,6 +10,7 @@ import { dropPage, dropsPage } from './pages/drops.ts'
 import { worldPage } from './pages/world.ts'
 import { questsPage } from './pages/quests.ts'
 import { eventsPage } from './pages/events.ts'
+import { newsEntryPage, newsPage } from './pages/news.ts'
 import './pages/boss.ts' // Play the Boss: EVENT_PAGES 'boss' (docs/PLAY_THE_BOSS.md §6.4)
 import { auditPage } from './pages/audit.ts'
 import { serversPage } from './pages/servers.ts'
@@ -53,7 +54,13 @@ const SECTIONS: { label: string; items: Route[] }[] = [
       { path: 'quests', label: 'Quests', icon: 'quests', page: questsPage },
     ],
   },
-  { label: 'Live', items: [{ path: 'events', label: 'Events', icon: 'events', page: eventsPage }] },
+  {
+    label: 'Live',
+    items: [
+      { path: 'events', label: 'Events', icon: 'events', page: eventsPage },
+      { path: 'news', label: "What's new", icon: 'megaphone', page: newsPage, detail: newsEntryPage },
+    ],
+  },
   {
     label: 'System',
     items: [

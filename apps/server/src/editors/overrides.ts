@@ -140,11 +140,17 @@ function pause(ms: number): void {
 
 /** Writes `value` as JSON to `file` atomically: `file.tmp`, fsync, rename over `file`. */
 export function writeJsonAtomic(file: string, value: unknown): void {
+  writeFileAtomic(file, `${JSON.stringify(value, null, 2)}\n`)
+}
+
+/** Writes text or bytes to `file` atomically: `file.tmp`, fsync, rename over `file` (the changelog entries and images too). */
+export function writeFileAtomic(file: string, data: string | Uint8Array): void {
   mkdirSync(dirname(file), { recursive: true })
   const tmp = `${file}.tmp`
   const fd = openSync(tmp, 'w')
   try {
-    writeSync(fd, `${JSON.stringify(value, null, 2)}\n`)
+    if (typeof data === 'string') writeSync(fd, data)
+    else writeSync(fd, data)
     fsyncSync(fd)
   } finally {
     closeSync(fd)

@@ -4,12 +4,17 @@ import { dirname, join } from 'node:path'
 import {
   ACCOUNT_NAME,
   CLOSE_CODE,
+  NEWS_ID,
+  NEWS_IMAGE_NAME,
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   WORLD_FOLDER,
   codePointLength,
   type ApiError,
   type ApiLoginResponse,
+  type ApiNewsList,
+  type ApiNewsSeenRequest,
+  type ApiNewsSeenResponse,
   type ErrorCode,
   type ServerInfo,
 } from '@sro/shared'
@@ -30,6 +35,7 @@ import { GM_API_PREFIX, handleGmApi } from './editors/quest-api.ts'
 import { Gameplay } from './gameplay.ts'
 import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
+import { NewsStore } from './news.ts'
 import { originAllowed } from './origin.ts'
 import { acceptedEncodings, serveFile } from './static.ts'
 import { World, type Player } from './world.ts'
@@ -61,6 +67,8 @@ export interface GameContext {
    * config.rolePollMs, but only reads roles when SQLite's data_version says someone else wrote.
    */
   refreshRoles(force?: boolean): void
+  /** The "What's new" entries (docs/CHANGELOG_WINDOW.md): repo files with the admin panel's layer over them. */
+  news: NewsStore
   /**
    * Admin panel (docs/ADMIN.md §6): saves, closes and exits so a supervisor (systemd) starts the server again. Set by
    * main.ts only when such a supervisor exists; absent = the panel offers no Restart.
@@ -255,6 +263,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     nav,
     gameplay,
     sockets,
+    news: NewsStore.open(config),
     serverInfo: () => ({
       id: config.world,
       name: setup.displayName,
@@ -324,6 +333,14 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     store.createSession(hashToken(token), accountId, expiresAt)
     store.trimSessions(accountId, MAX_SESSIONS_PER_ACCOUNT)
     return { token, expiresAt }
+  }
+
+  /** The account behind the request's Bearer token, or a 401. */
+  const bearerAccount = (req: IncomingMessage) => {
+    const m = /^Bearer\s+(\S{1,256})$/.exec(req.headers.authorization ?? '')
+    const account = m ? store.sessionAccount(hashToken(m[1])) : undefined
+    if (!account) throw new HttpError(401, 'unauthorized', 'missing or expired bearer token')
+    return account
   }
 
   async function api(req: IncomingMessage, res: ServerResponse, path: string): Promise<void> {
@@ -415,6 +432,31 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         return
       }
       return sendJson(res, 200, catalog)
+    }
+    // "What's new" (docs/CHANGELOG_WINDOW.md): the entries for any logged-in account, its seen mark, and the images
+    // (public, like the game's own files). The admin panel writes them (/api/admin/news).
+    if (path.startsWith('/api/news/img/') && (method === 'GET' || method === 'HEAD')) {
+      const name = path.slice('/api/news/img/'.length)
+      if (NEWS_IMAGE_NAME.test(name)) {
+        for (const root of ctx.news.imageDirs) if (await serveFile(req, res, root, `/${name}`, { cache: 'public, max-age=86400' })) return
+      }
+      throw new HttpError(404, 'not_found', 'no such image')
+    }
+    if (path === '/api/news' && method === 'GET') {
+      const account = bearerAccount(req)
+      const body: ApiNewsList = { entries: ctx.news.published(), unseen: ctx.news.unseenFor(store, account.id).map((e) => e.id) }
+      return sendJson(res, 200, body)
+    }
+    if (path === '/api/news/seen' && method === 'POST') {
+      const account = bearerAccount(req)
+      const o = (await readJson(req)) as Partial<ApiNewsSeenRequest> | null
+      if (!o || typeof o !== 'object' || Array.isArray(o) || Object.keys(o).some((k) => k !== 'id') || typeof o.id !== 'string' || !NEWS_ID.test(o.id)) {
+        throw new HttpError(400, 'bad_request', 'body must be {"id": "<entry id>"}')
+      }
+      const unseen = ctx.news.markSeen(store, account.id, o.id)
+      if (!unseen) throw new HttpError(404, 'not_found', 'no such entry')
+      const body: ApiNewsSeenResponse = { unseen: unseen.map((e) => e.id) }
+      return sendJson(res, 200, body)
     }
     // The GM quest editor (docs/QUESTS.md §5.4; lane ED-S): Bearer + editor role, 32 KB bodies, its own rate limit.
     if (path.startsWith(GM_API_PREFIX)) {

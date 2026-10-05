@@ -1473,6 +1473,7 @@ function serverMessage(v: unknown): ServerMessage {
     case 'welcome': {
       const m: ServerMessage = { t: 'welcome', account: str(o, 'account', 64, 1), server: serverInfo(o.server), slots: int(o, 'slots', 0, BIG) }
       if (o.role !== undefined) m.role = oneOf<Role>(o, 'role', ROLES)
+      if (o.news !== undefined) m.news = int(o, 'news', 0, 1000)
       return m
     }
     case 'error': {

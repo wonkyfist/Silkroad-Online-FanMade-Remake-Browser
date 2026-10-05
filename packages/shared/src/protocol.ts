@@ -567,8 +567,12 @@ export type ClientMessage =
 // ---- server -> client ---------------------------------------------------------------------------
 
 export type ServerMessage =
-  /** `role` is a GM addition (absent from older servers = 'player'). */
-  | { t: 'welcome'; account: string; server: ServerInfo; slots: number; role?: Role }
+  /**
+   * `role` is a GM addition (absent from older servers = 'player'). `news` (docs/CHANGELOG_WINDOW.md): how many
+   * "What's new" entries this account has not seen (absent = 0 or an older server); the client fetches them with
+   * `GET /api/news` and shows them once it is in the world.
+   */
+  | { t: 'welcome'; account: string; server: ServerInfo; slots: number; role?: Role; news?: number }
   | { t: 'error'; code: ErrorCode; message: string; re?: ClientMessage['t'] }
   | { t: 'charList'; slots: number; characters: CharacterSummary[] }
   | { t: 'nameCheck'; name: string; available: boolean; reason?: string }

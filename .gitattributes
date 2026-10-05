@@ -1,6 +1,8 @@
 * text=auto eol=lf
 *.png binary
 *.glb binary
+*.jpg binary
+*.jpeg binary
 # Converted assets, converter caches and the editor's base overlay are stored byte for byte: the World Editor's base
 # overlay and the deploy manifest compare SHA-256 hashes, so no line-ending normalisation may touch them.
 work/** -text

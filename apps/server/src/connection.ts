@@ -305,7 +305,9 @@ export class Connection {
     this.role = account.role
     this.state = 'lobby'
     this.game.sockets.set(account.id, this)
-    this.send({ t: 'welcome', account: account.username, server: this.game.serverInfo(), slots: MAX_CHARACTER_SLOTS, role: this.role })
+    // "What's new" (docs/CHANGELOG_WINDOW.md): how many entries this account has not seen; the client shows them in the world.
+    const news = this.game.news?.unseenFor(this.game.store, account.id).length ?? 0
+    this.send({ t: 'welcome', account: account.username, server: this.game.serverInfo(), slots: MAX_CHARACTER_SLOTS, role: this.role, ...(news > 0 ? { news } : {}) })
   }
 
   /**

@@ -142,9 +142,9 @@ describe('migration 10 (the uniques table)', () => {
     v9.close()
     const store = openStore(root)
     cleanups.push(() => store.close())
-    expect(SCHEMA_VERSION).toBe(14)
-    expect(store.schemaVersion).toBe(14)
-    expect(store.db.pragma('user_version', { simple: true })).toBe(14)
+    expect(SCHEMA_VERSION).toBe(15)
+    expect(store.schemaVersion).toBe(15)
+    expect(store.db.pragma('user_version', { simple: true })).toBe(15)
     expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 12, gold: 4321 })
     expect(cols(store.db, 'uniques').map((c) => [c.name, c.type, c.notnull, c.dflt_value, c.pk])).toEqual([
       ['code', 'TEXT', 0, null, 1],
@@ -173,7 +173,7 @@ describe('migration 10 (the uniques table)', () => {
     expect(version).toBeGreaterThanOrEqual(9)
     const store = openStore(dir)
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(14)
+    expect(store.schemaVersion).toBe(15)
     expect((store.db.prepare('SELECT COUNT(*) AS n FROM characters').get() as { n: number }).n).toBe(chars)
     expect(cols(store.db, 'uniques').map((c) => c.name)).toEqual(['code', 'phase', 'due_at', 'camp', 'spawns', 'last_killer', 'last_killed_at'])
   })

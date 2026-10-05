@@ -391,9 +391,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(14)
-      expect(store.schemaVersion).toBe(14)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(14)
+      expect(SCHEMA_VERSION).toBe(15)
+      expect(store.schemaVersion).toBe(15)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(15)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

@@ -320,6 +320,13 @@ const MIGRATIONS: string[] = [
     at INTEGER NOT NULL
   );
   `,
+  // 15: the "What's new" window (docs/CHANGELOG_WINDOW.md): per account, the newest changelog entry it acknowledged
+  // ("Got it"), as that entry's date (yyyy-mm-dd[Thh:mm]) and id. NULL = never; then the entries dated from the
+  // account's creation day on count as unseen (shared/news.ts unseenNews).
+  `
+  ALTER TABLE accounts ADD COLUMN news_seen_date TEXT;
+  ALTER TABLE accounts ADD COLUMN news_seen_id TEXT;
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */
@@ -556,6 +563,11 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     setHwanPoints: db.prepare<[number, number]>('UPDATE characters SET hwan_points = ? WHERE id = ?'),
     // migration 12 (docs/PLAY_THE_BOSS.md §5.3)
     addPlayed: db.prepare<[number, number]>('UPDATE characters SET played_ms = played_ms + ? WHERE id = ?'),
+    // migration 15 (docs/CHANGELOG_WINDOW.md)
+    newsMark: db.prepare<[number], { created_at: number; news_seen_date: string | null; news_seen_id: string | null }>(
+      'SELECT created_at, news_seen_date, news_seen_id FROM accounts WHERE id = ?',
+    ),
+    setNewsMark: db.prepare<[string, string, number]>('UPDATE accounts SET news_seen_date = ?, news_seen_id = ? WHERE id = ?'),
   }
 
   function loadInventory(characterId: number): InvState {
@@ -703,6 +715,13 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     /** Saves Berserk points (clamped to 0..5). */
     setHwanPoints: (characterId: number, points: number) =>
       q.setHwanPoints.run(Math.max(0, Math.min(5, Math.round(points))), characterId).changes > 0,
+    /** The account's "What's new" seen mark (null = never acknowledged) and creation time; null for no such account. */
+    newsMark(accountId: number): { createdAt: number; mark: { date: string; id: string } | null } | null {
+      const r = q.newsMark.get(accountId)
+      if (!r) return null
+      return { createdAt: r.created_at, mark: r.news_seen_date && r.news_seen_id ? { date: r.news_seen_date, id: r.news_seen_id } : null }
+    },
+    setNewsMark: (accountId: number, mark: { date: string; id: string }) => q.setNewsMark.run(mark.date, mark.id, accountId).changes > 0,
     /** Changes whenever another connection (e.g. the gm CLI) commits to the database. */
     dataVersion: () => db.pragma('data_version', { simple: true }) as number,
     close: () => db.close(),

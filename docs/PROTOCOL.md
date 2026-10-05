@@ -563,6 +563,26 @@ blocks, eligibility).
 Layer 5 (big crowds) adds nothing on the wire: her max HP follows the hunters every 5 s and goes out as the existing
 `entityUpdate {id, hp, maxHp}` to everyone who sees her (her HP keeps its fraction). Old clients ignore `minLevel`.
 
+### "What's new": the update notes window (docs/CHANGELOG_WINDOW.md)
+
+All additive, protocol v1. Types and the Markdown dialect live in `packages/shared/src/news.ts`; the seen mark is
+migration 15 (`accounts.news_seen_date`, `accounts.news_seen_id`).
+
+| Where | Change |
+|---|---|
+| `welcome` (extended) | `news?: number` (0..1000): how many published entries this account has not seen (at most `NEWS_UNSEEN_MAX` = 5). Absent = none, or an older server. The client fetches them only when it is above 0 |
+| `GET /api/news` | Bearer (any account). `ApiNewsList {entries, unseen}`: every published entry (drafts never), newest first (date, then id), and the unseen ids, newest first. `Cache-Control: no-store`. 401 without a valid session |
+| `POST /api/news/seen` | Bearer. Body `{id}` (`NEWS_ID`, no other keys, else 400). Everything up to and including that entry counts as seen for this account; the mark never moves back. Answers `ApiNewsSeenResponse {unseen}`; 404 for an unknown or draft id |
+| `GET /api/news/img/<name>` | Public (no session), GET/HEAD. `<name>` must match `NEWS_IMAGE_NAME` (lower case `.jpg`/`.jpeg`/`.png`/`.webp`, no folders), looked up in `DATA_DIR/content/changelog/img`, then `CONTENT_DIR/changelog/img`. `Cache-Control: public, max-age=86400` + ETag; 404 for anything else |
+
+**Unseen rule.** With a mark: the published entries newer than it. Without one (the account never pressed "Got it"): the
+entries dated on or after the account's creation day (UTC), so a new player is not handed the whole history. A deploy
+during play changes nothing for connected players: the window opens at the next login (the next `welcome` of a new
+session); a reconnect of the same session does not open it again.
+
+The admin panel's routes (`GET /api/admin/news`, `GET|PUT|DELETE /api/admin/news/<id>`, `POST /api/admin/news-images`)
+are in docs/CHANGELOG_WINDOW.md §4.
+
 ## 12. Combat and items: horses, monster skills, durability and repair, alchemy, Berserk (docs/SYSTEMS_COMBAT.md, docs/WAVE_PLAN2.md §3.2)
 
 **Client → server** (each is a `GameplayRequest`: exactly one `actionResult`):
