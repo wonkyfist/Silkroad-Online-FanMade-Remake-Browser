@@ -3,11 +3,53 @@
 Every update to Jangan, newest first. This is the same text and pictures the game shows in its **What's new**
 window (press **J** in game). It is generated from `content/changelog/` by `pnpm changelog`; edit the entries there.
 
+- [October 7: Jangan's walls can break — and be rebuilt](#october-7-jangans-walls-can-break--and-be-rebuilt)
 - [October 6 (night): Winter fun is ready — cold, snowball fights, gift boxes and a new boss](#october-6-night-winter-fun-is-ready--cold-snowball-fights-gift-boxes-and-a-new-boss)
 - [October 6: Winter is coming to Jangan, and the tornado got fierce](#october-6-winter-is-coming-to-jangan-and-the-tornado-got-fierce)
 - [October 6: No more stuck black screens](#october-6-no-more-stuck-black-screens)
 - [October 5 (evening): Storms, lightning, a tornado and a new Berserk](#october-5-evening-storms-lightning-a-tornado-and-a-new-berserk)
 - [October 5: Play the Boss, the black-screen fix and more](#october-5-play-the-boss-the-black-screen-fix-and-more)
+
+---
+
+## October 7: Jangan's walls can break — and be rebuilt
+
+*October 7, 2026*
+
+**The first part of the Siege of Jangan is here. The town's outer walls are now made of sections that crack, breach and collapse into rubble. A breach is a real hole that monsters can walk through, so help Master Mason Ko rebuild it!**
+
+![October 7: Jangan's walls can break — and be rebuilt](content/changelog/img/oct6-siege-breach.jpg)
+
+## The walls can break
+
+Jangan's outer wall is now split into **33 sections**. Each one can be:
+
+- **Cracked**: cracks run along the stone.
+- **Breached**: a hole is torn in the wall. It's a **real gap**: you (and monsters!) can walk straight through, and the ground behind it is **no longer safe**.
+- **Rubble**: the whole section collapses into a heap of stone.
+
+![A breach in the south wall](content/changelog/img/oct6-siege-breach.jpg "A breach in the south wall: a real hole you can walk through.")
+![A section collapsing next to a breach](content/changelog/img/oct6-siege-collapse.jpg "A section collapsing into rubble next to a breach.")
+
+When a section breaks, the whole server hears about it, the town bell rings, and the damage shows on your **minimap and world map** (red rings mark the ground that is no longer safe).
+
+**Storms** can crack the walls, but lightning and tornadoes never bring a section down on their own.
+
+> **Watch out:** bandit **looters** gather at every open breach until it is repaired.
+
+## Rebuilding the walls
+
+![Master Mason Ko's donation window](content/changelog/img/oct6-siege-mason.jpg "Master Mason Ko's window: pick a section and donate gold or Stone Blocks.")
+![Scaffolding on a section being repaired](content/changelog/img/oct6-siege-scaffold.jpg "Scaffolding goes up while builders repair a section.")
+
+- **Master Mason Ko** stands on the main street north of the south gate. Donate **gold** or **Stone Blocks** to a section (or to wherever it's needed most) and his builders get to work.
+- Buy a **Mason's Kit** from him to repair a wall yourself, standing right at the damaged section.
+- **Stone Blocks** drop from Stone Ghosts, or buy them from Ko.
+- Walls also mend slowly on their own.
+
+## Coming next
+
+The **Siege of Jangan** event: bandit armies march on the town, sappers blow holes in the wall, and the Warlord leads the last wave. After that: **Thunder Kegs**, **Wanted** wall-breakers, **Hunters** and the **jail**.
 
 ---
 

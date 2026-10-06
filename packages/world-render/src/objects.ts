@@ -254,6 +254,8 @@ export class WorldObjects {
   private hiddenModel: ((model: WorldModel) => boolean) | null = null
   /** W12-SA (S-OBJ): the placements the World Editor draws itself (null: none). */
   private editorOwnedValue: EditorOwned | null = null
+  /** Siege of Jangan (docs/SIEGE.md §9.1): more owners of placements (the walls feature), next to the editor's. */
+  private readonly owners: EditorOwned[] = []
   /** W12-SA (S-OBJ): owners whose chunks and clones stay hidden until `showRegion` (a region reload's new set). */
   private readonly staged = new Set<number>()
   /** The models that block movement and the manifest's model list (setBlocking; null: none block). */
@@ -380,16 +382,34 @@ export class WorldObjects {
     return this.editorOwnedValue
   }
 
-  /** Whether the editor owns a placement now (setEditorOwned; a predicate that throws owns nothing). */
-  isEditorOwned(p: WorldPlacement, model: WorldModel): boolean {
-    const f = this.editorOwnedValue
-    if (!f) return false
-    try {
-      return f(p, model)
-    } catch (err) {
-      console.warn('[world] editor-owned predicate failed', err)
-      return false
+  /**
+   * Siege of Jangan (docs/SIEGE.md §9.1, the S-OBJ seam as a list): another owner of placements, drawn by its owner
+   * and left out of their region exactly like the editor's (setEditorOwned stays the editor's own slot). Applies to
+   * placements placed afterwards (`RegionStreamer.reloadObjects` re-places a resident region). Returns the remover.
+   */
+  addOwner(pred: EditorOwned): () => void {
+    this.owners.push(pred)
+    return () => {
+      const i = this.owners.indexOf(pred)
+      if (i >= 0) this.owners.splice(i, 1)
     }
+  }
+
+  /** Whether some owner (the editor, or one added with addOwner) draws this placement itself. */
+  private hasOwners(): boolean {
+    return this.editorOwnedValue !== null || this.owners.length > 0
+  }
+
+  /** Whether the editor or another owner owns a placement now (a predicate that throws owns nothing). */
+  isEditorOwned(p: WorldPlacement, model: WorldModel): boolean {
+    for (const f of this.editorOwnedValue ? [this.editorOwnedValue, ...this.owners] : this.owners) {
+      try {
+        if (f(p, model)) return true
+      } catch (err) {
+        console.warn('[world] editor-owned predicate failed', err)
+      }
+    }
+    return false
   }
 
   /**
@@ -620,7 +640,7 @@ export class WorldObjects {
   addStatic(region: number, origin: readonly [number, number], model: WorldModel, prep: StaticPrep, placements: readonly WorldPlacement[], entry: CachedModel | null = null): void {
     if (this.disposed || !placements.length || this.isHidden(model)) return
     // W12-SA (S-OBJ): the editor's placements stay out of the region (its chunks and its batch).
-    if (this.editorOwnedValue && region !== NO_REGION) {
+    if (this.hasOwners() && region !== NO_REGION) {
       placements = placements.filter(p => !this.isEditorOwned(p, model))
       if (!placements.length) return
     }

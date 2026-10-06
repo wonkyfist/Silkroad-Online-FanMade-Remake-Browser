@@ -104,7 +104,12 @@ export interface ReachInstance {
 export interface ReachSource {
   readonly regions: ReadonlyMap<number, NavRegion>
   readonly instances: readonly ReachInstance[]
-  /** 0 open, 1 closed, 2 not loaded; global 20-unit tile index. */
+  /**
+   * Siege (docs/SIEGE.md §4.1): false for an instance the world has switched off (a wall third that is down): its
+   * outline stops covering the terrain and its cells join nothing. Absent: every instance is on.
+   */
+  instanceEnabled?(index: number): boolean
+  /** 0 open, 1 closed, 2 not loaded; global 20-unit tile index (the world's tile overrides included). */
   tileState(tx: number, tz: number): number
   terrainHeight(x: number, z: number): number
   /**
@@ -361,6 +366,7 @@ class ReachBuilder {
     const ax: number[] = [], az: number[] = [], bx: number[] = [], bz: number[] = [], nx: number[] = [], nz: number[] = []
     const enter: number[] = []
     for (const inst of this.insts) {
+      if (this.src.instanceEnabled && !this.src.instanceEnabled(inst.index)) continue
       const m = inst.model
       const { cos, sin } = inst
       const base = this.cellBase[inst.index]!
@@ -413,10 +419,10 @@ class ReachBuilder {
       const slot = pieces.regionSlot.get(id)!
       for (let lz = 0; lz < NVM_TILES; lz++) {
         for (let lx = 0; lx < NVM_TILES; lx++) {
-          const cell = r.tileCells[lz * NVM_TILES + lx]!
-          if (!(cell >= 0 && cell < r.openCellCount)) continue
-          this.terrainTiles++
           const tx = r.rx * NVM_TILES + lx, tz = r.rz * NVM_TILES + lz
+          // the world's tile state (its tile overrides included), not the raw cell
+          if (this.src.tileState(tx, tz) !== 0) continue
+          this.terrainTiles++
           const ti = slot * TPR + lz * NVM_TILES + lx
           const first = polyStart.length
           pieces.tileFirst[ti] = first
@@ -696,6 +702,7 @@ class ReachBuilder {
     }
     for (let i = 0; i < this.pc.n; i++) edges.push(pieceNode[this.pc.a[i]!]!, this.pc.b[i]!)
     for (const inst of this.insts) {
+      if (this.src.instanceEnabled && !this.src.instanceEnabled(inst.index)) continue
       const m = inst.model
       const base = this.cellBase[inst.index]!
       for (let s = 0; s < m.n * 3; s++) {

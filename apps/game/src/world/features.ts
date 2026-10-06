@@ -46,6 +46,8 @@ import { winterPlayFeature } from './features/winter-play.ts'
 import { lightningFeature } from './features/lightning.ts'
 import { stormFeature } from './features/storm.ts'
 import { tornadoFeature } from './features/tornado.ts'
+import { wallsFeature } from './features/walls.ts'
+import { siegeRepairFeature } from './features/siege-repair.ts'
 import { newsFeature } from './features/news.ts'
 
 export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
@@ -178,6 +180,10 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   stormFeature, // world/features/storm.ts
   // Storm series step 3 (docs/WEATHER.md §13): the lightning tornado (funnel, thrown bodies, shake, roar).
   tornadoFeature, // world/features/tornado.ts
+  // Siege of Jangan, layer 1 (docs/SIEGE.md §9.1): the walls that break (the cut walls, the nav through gaps, dust).
+  wallsFeature, // world/features/walls.ts
+  // Siege of Jangan, layer 3 (docs/SIEGE.md §2.4): Master Mason Ko's donation window and the repair numbers.
+  siegeRepairFeature, // world/features/siege-repair.ts
   // The "What's new" window (docs/CHANGELOG_WINDOW.md): unseen update notes once per login, the Esc menu entry and J.
   newsFeature, // world/features/news.ts
   // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.

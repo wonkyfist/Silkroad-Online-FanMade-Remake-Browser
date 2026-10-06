@@ -49,6 +49,8 @@ export interface HudMarker {
   radius?: number
   /** Art key (e.g. 'minimap/mm_sign_party'): drawn instead of a dot when the art exported. */
   icon?: string
+  /** Siege of Jangan, layer 2 (the walls' damage): a line from (x, z) to here instead of a dot, `size` px wide. */
+  to?: { x: number; z: number }
 }
 
 export type MarkerSource = () => Iterable<HudMarker>
@@ -234,7 +236,7 @@ export class HudMinimap {
     }
     const circles: HudMarker[] = []
     for (const m of extra) {
-      if (m.radius !== undefined && m.radius > 0) circles.push(m)
+      if (m.to || (m.radius !== undefined && m.radius > 0)) circles.push(m)
       else {
         const img = this.icon(m.icon)
         if (img) signs.push({ x: m.x, z: m.z, img, size: (m.size ?? img.naturalWidth) * dpr })
@@ -255,7 +257,7 @@ export class HudMinimap {
     if (this.mapBtn.hidden === canMap) this.mapBtn.hidden = !canMap
   }
 
-  /** Signs and area circles, on top of the map (same centring and scale as Minimap.render). */
+  /** Signs, area circles and lines, on top of the map (same centring and scale as Minimap.render). */
   private overlay(self: { x: number; z: number }, scale: number, signs: { x: number; z: number; img: HTMLImageElement; size: number }[], circles: HudMarker[]): void {
     const ctx = this.canvas.getContext('2d')
     if (!ctx) return
@@ -273,6 +275,20 @@ export class HudMinimap {
     ctx.clip()
     for (const c of circles) {
       const [sx, sy] = at(c.x, c.z)
+      if (c.to) {
+        const [tx, ty] = at(c.to.x, c.to.z)
+        if (Math.max(sx, tx) < 0 || Math.max(sy, ty) < 0 || Math.min(sx, tx) > w || Math.min(sy, ty) > h) continue
+        ctx.beginPath()
+        ctx.moveTo(sx, sy)
+        ctx.lineTo(tx, ty)
+        ctx.strokeStyle = c.color
+        ctx.lineWidth = (c.size ?? 2) * (w / SIZE)
+        ctx.lineCap = 'round'
+        ctx.globalAlpha = 0.9
+        ctx.stroke()
+        ctx.globalAlpha = 1
+        continue
+      }
       const r = c.radius! * pxPerM * scale
       if (sx + r < 0 || sy + r < 0 || sx - r > w || sy - r > h) continue
       ctx.beginPath()

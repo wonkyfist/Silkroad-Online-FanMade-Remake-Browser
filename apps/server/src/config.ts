@@ -208,6 +208,24 @@ export interface ServerConfig {
   giftYetiCount?: number
   /** Chance (percent) of a rare extra reward per gift box (GIFT_RARE_PCT, default 4, 0..100). */
   giftRarePct?: number
+  // ---- Siege of Jangan, layer 3: repair (docs/SIEGE.md §2.4, §11.2); optional, absent = content/siege/jangan.json's
+  // numbers (else WALL_DEFAULTS); the admin panel changes them live (siege/walls.ts WALL_KNOBS) ----
+  /** Natural repair, % per 10 min (WALL_NATURAL_PCT, default 1, 0..10). */
+  wallNaturalPctPer10Min?: number
+  /** A donation: gold per 1 % (WALL_GOLD_PER_PCT, default 2000, 100..100000) or Stone Blocks per 1 % (WALL_BLOCKS_PER_PCT, 2, 1..20). */
+  wallGoldPerPct?: number
+  wallBlocksPerPct?: number
+  /** Ko's builders, % per minute per segment (WALL_BUILDER_PCT_PER_MIN, default 1, 0..10). */
+  wallBuilderPctPerMin?: number
+  /** Donated work queued on one segment stops at this % (WALL_QUEUE_CAP_PCT, default 50, 0..150). */
+  wallQueueCapPct?: number
+  /** A Mason's Kit: % per channel (WALL_KIT_PCT, 1, 0..10), channel seconds (WALL_KIT_CHANNEL_S, 10, 2..60), price (WALL_KIT_PRICE, 1500). */
+  wallKitPct?: number
+  wallKitChannelS?: number
+  wallKitPrice?: number
+  /** Looters per open gap outside a siege (WALL_LOOTERS, default 3, 0..10) and their respawn (WALL_LOOTER_RESPAWN_MIN, 5, 1..60). */
+  wallLooters?: number
+  wallLooterRespawnMin?: number
   // ---- wave 11 (docs/WAVE_PLAN7.md §3.4); optional like wave 3's, absent = the default ----
   /**
    * Unique monsters are world bosses run by the uniques module (UNIQUES, on (default) | off; docs/UNIQUES.md §3.2): the
@@ -233,6 +251,12 @@ function num(env: NodeJS.ProcessEnv, key: string, fallback: number, min: number,
   const v = Number(raw)
   if (!Number.isFinite(v) || v < min || v > max) throw new Error(`${key} must be a number in [${min}, ${max}], got ${raw}`)
   return v
+}
+
+/** An optional number: undefined when the variable is unset (the content's own number applies). */
+function optNum(env: NodeJS.ProcessEnv, key: string, min: number, max: number): number | undefined {
+  const raw = env[key]
+  return raw === undefined || raw === '' ? undefined : num(env, key, 0, min, max)
 }
 
 function bool(env: NodeJS.ProcessEnv, key: string, fallback: boolean): boolean {
@@ -513,6 +537,17 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     giftDropPct: num(env, 'GIFT_DROP_PCT', WINTER_PLAY.gifts.dropPct, 0, 100),
     giftYetiCount: Math.floor(num(env, 'GIFT_YETI_COUNT', WINTER_PLAY.gifts.yetiCount, 0, 20)),
     giftRarePct: num(env, 'GIFT_RARE_PCT', WINTER_PLAY.gifts.rarePct, 0, 100),
+    // Siege of Jangan, layer 3 (docs/SIEGE.md §11.2)
+    wallNaturalPctPer10Min: optNum(env, 'WALL_NATURAL_PCT', 0, 10),
+    wallGoldPerPct: optNum(env, 'WALL_GOLD_PER_PCT', 100, 100_000),
+    wallBlocksPerPct: optNum(env, 'WALL_BLOCKS_PER_PCT', 1, 20),
+    wallBuilderPctPerMin: optNum(env, 'WALL_BUILDER_PCT_PER_MIN', 0, 10),
+    wallQueueCapPct: optNum(env, 'WALL_QUEUE_CAP_PCT', 0, 150),
+    wallKitPct: optNum(env, 'WALL_KIT_PCT', 0, 10),
+    wallKitChannelS: optNum(env, 'WALL_KIT_CHANNEL_S', 2, 60),
+    wallKitPrice: optNum(env, 'WALL_KIT_PRICE', 0, 100_000),
+    wallLooters: optNum(env, 'WALL_LOOTERS', 0, 10),
+    wallLooterRespawnMin: optNum(env, 'WALL_LOOTER_RESPAWN_MIN', 1, 60),
     // wave 11 (docs/WAVE_PLAN7.md §3.4)
     uniques: onOff(env, 'UNIQUES', true),
     // admin panel (docs/ADMIN.md)

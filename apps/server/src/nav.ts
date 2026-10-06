@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { NavGltf, NavWorld, TERRAIN_SURFACE, decodeNavData, type NavData, type NavLeg, type NavSurface } from '@sro/nav'
+import { NavGltf, NavWorld, TERRAIN_SURFACE, decodeNavData, navPiecePuts, type NavData, type NavLeg, type NavSurface } from '@sro/nav'
 import type { Vec3 } from '@sro/shared'
 import type { Bounds } from './content.ts'
 
@@ -142,10 +142,12 @@ const EXIT_BACKOFF_M = 0.02
  */
 class SolidIndex {
   private readonly tris: Float64Array[] = []
+  /** Per solid: its instance index (a switched-off instance stops covering: docs/SIEGE.md §4.1). */
+  private readonly instanceOf: number[] = []
   private readonly buckets = new Map<number, number[]>()
   readonly solid: Uint8Array
 
-  constructor(data: NavData, g: NavGltf) {
+  constructor(data: NavData, g: NavGltf, private readonly enabled: (instance: number) => boolean = () => true) {
     this.solid = new Uint8Array(data.instances.length)
     data.instances.forEach((inst, i) => {
       const model = data.models[inst.model]!
@@ -175,6 +177,7 @@ class SolidIndex {
       }
       const index = this.tris.length
       this.tris.push(t)
+      this.instanceOf.push(i)
       for (let bz = Math.floor(minZ / SOLID_BUCKET_M); bz <= Math.floor(maxZ / SOLID_BUCKET_M); bz++) {
         for (let bx = Math.floor(minX / SOLID_BUCKET_M); bx <= Math.floor(maxX / SOLID_BUCKET_M); bx++) {
           const key = bx * 65536 + bz
@@ -191,6 +194,7 @@ class SolidIndex {
     const list = this.buckets.get(Math.floor(x / SOLID_BUCKET_M) * 65536 + Math.floor(z / SOLID_BUCKET_M))
     if (!list) return false
     for (const i of list) {
+      if (!this.enabled(this.instanceOf[i]!)) continue
       const t = this.tris[i]!
       for (let k = 0; k < t.length; k += 9) {
         const ax = t[k]!, az = t[k + 1]!, bx = t[k + 2]!, bz = t[k + 3]!, cx = t[k + 4]!, cz = t[k + 5]!
@@ -211,24 +215,89 @@ class SolidIndex {
 export class MeshNav implements NavProvider {
   readonly kind = 'mesh'
   readonly g: NavGltf
-  private readonly solids: SolidIndex
+  private solids: SolidIndex
   /** Instance world id (regionId << 16 | localUid) -> index, for saved surfaces. */
   private readonly byWorldId = new Map<number, number>()
-  /** The walkable component placements must lie in (the town spawn's), or -1: no constraint. */
+  /**
+   * The walkable component placements must lie in (the town spawn's), or -1: no constraint. Component ids change when
+   * the components are rebuilt (a wall third switched off or on), so the anchor is kept and the id found again after
+   * every switch (`homeId`).
+   */
   private home = -1
+  private homeAnchor: { x: number; z: number; yHint: number } | null = null
+  private homeGen = 0
+  /** Bumped by every runtime switch (pieces installed, an instance or a tile switched). */
+  private gen = 0
 
   constructor(
-    readonly data: NavData,
+    data: NavData,
     originRegion: { x: number; z: number },
     readonly source: string,
   ) {
     this.g = new NavGltf(new NavWorld(data), originRegion)
-    this.solids = new SolidIndex(data, this.g)
+    this.solids = new SolidIndex(data, this.g, (i) => this.world.isInstanceEnabled(i))
     data.instances.forEach((inst, i) => this.byWorldId.set(inst.id >>> 0, i))
   }
 
   get world(): NavWorld {
     return this.g.world
+  }
+
+  /** The nav data (after installPieces: with the pieces). */
+  get data(): NavData {
+    return this.world.data
+  }
+
+  // ---- runtime switches (docs/SIEGE.md §4: the walls that break) ------------------------------------------------
+
+  /**
+   * Adds extra collision instances (the Siege of Jangan's wall pieces, `siege/walls-nav.bin`) by id: appended, or
+   * replaced in their slot when already there (installing twice changes nothing). No other index moves. Returns
+   * id -> instance index of the pieces.
+   */
+  installPieces(pieces: NavData): Map<number, number> {
+    this.world.editInstances({ put: navPiecePuts(pieces) })
+    this.solids = new SolidIndex(this.world.data, this.g, (i) => this.world.isInstanceEnabled(i))
+    this.byWorldId.clear()
+    this.world.data.instances.forEach((inst, i) => this.byWorldId.set(inst.id >>> 0, i))
+    this.gen++
+    const out = new Map<number, number>()
+    for (const inst of pieces.instances) {
+      const i = this.byWorldId.get(inst.id >>> 0)
+      if (i !== undefined) out.set(inst.id >>> 0, i)
+    }
+    return out
+  }
+
+  /** The index of an instance by its world id, or undefined. */
+  instanceIndex(id: number): number | undefined {
+    return this.byWorldId.get(id >>> 0)
+  }
+
+  /** NavWorld.setInstanceEnabled; a switched-off solid also stops covering (insideSolid, place). */
+  setInstanceEnabled(index: number, on: boolean): boolean {
+    const changed = this.world.setInstanceEnabled(index, on)
+    if (changed) this.gen++
+    return changed
+  }
+
+  /** NavWorld.setTileOverride. */
+  setTileOverride(regionId: number, tile: number, mode: 'open' | 'closed' | null): boolean {
+    const changed = this.world.setTileOverride(regionId, tile, mode)
+    if (changed) this.gen++
+    return changed
+  }
+
+  /** The home component now (found again from its anchor after a switch). */
+  private homeId(): number {
+    if (this.homeGen !== this.gen && this.homeAnchor) {
+      this.homeGen = this.gen
+      const a = this.homeAnchor
+      this.home = -1
+      const p = this.locate(a.x, a.z, a.yHint)
+      this.home = p?.surface ? this.componentOf(p) : -1
+    }
+    return this.home
   }
 
   /** Terrain height (m) at x/z, NaN outside the loaded regions. */
@@ -255,8 +324,11 @@ export class MeshNav implements NavProvider {
    * town spawn. Returns that component, or -1 (no constraint) when there is no surface there.
    */
   setHome(x: number, z: number, yHint: number): number {
-    const p = this.locate(x, z, Number.isNaN(yHint) ? Infinity : yHint)
+    const hint = Number.isNaN(yHint) ? Infinity : yHint
+    const p = this.locate(x, z, hint)
     this.home = p?.surface ? this.componentOf(p) : -1
+    this.homeAnchor = { x, z, yHint: hint }
+    this.homeGen = this.gen
     return this.home
   }
 
@@ -267,7 +339,8 @@ export class MeshNav implements NavProvider {
 
   /** Whether a positioned point may be placed: in the home component (anywhere with a surface without one). */
   inHome(p: NavPoint): boolean {
-    return p.surface !== null && (this.home < 0 || this.componentOf(p) === this.home)
+    const home = this.homeId()
+    return p.surface !== null && (home < 0 || this.componentOf(p) === home)
   }
 
   heightAt(x: number, z: number, yHint = Infinity): number | null {
@@ -293,7 +366,8 @@ export class MeshNav implements NavProvider {
   private standAt(x: number, z: number, yHint: number): NavPoint | null {
     const hint = Number.isNaN(yHint) ? Infinity : yHint
     // Only surfaces of the home component count (the nearest to the hint among them).
-    let p = this.home >= 0 ? this.g.locateIn(x, z, hint, this.home) : this.locate(x, z, hint)
+    const home = this.homeId()
+    let p = home >= 0 ? this.g.locateIn(x, z, hint, home) : this.locate(x, z, hint)
     if (!p) return null
     if (p.surface?.kind === 'object' && this.isSolid(p.surface.instance)) {
       // On a solid footprint: the open terrain under it is no better (inside the building), so refuse unless the
@@ -313,7 +387,7 @@ export class MeshNav implements NavProvider {
     // Moving away from x/z: the highest home surface. The terrain under a walkable floor can belong to the home
     // component (the corner-exit quirk, docs/NAVIGATION.md §11.3), and a rescue from the fountain basin with the
     // basin's y as the hint would otherwise pick the terrain 1.5 m under the plaza.
-    const ringHint = this.home >= 0 ? Infinity : yHint
+    const ringHint = this.homeId() >= 0 ? Infinity : yHint
     for (let r = 1; r <= searchRadius; r++) {
       const n = Math.max(8, Math.round(2 * Math.PI * r))
       for (let k = 0; k < n; k++) {

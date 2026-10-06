@@ -1,4 +1,4 @@
-import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WINTER_DEFAULTS, WINTER_PLAY, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
+import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WALL_DEFAULTS, WINTER_DEFAULTS, WINTER_PLAY, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
 import { MOB_SKILL_DAMAGE_MODES, W8_DEFAULTS, type ServerConfig } from '../config.ts'
 import type { GameContext } from '../game.ts'
 import type { AdminStore } from './store.ts'
@@ -53,6 +53,10 @@ const WINTER = 'Winter season'
 const WINTER_GAME = 'Winter gameplay'
 /** docs/WINTER.md §13: a winter-gameplay knob changed: the layer re-evaluates at once (on/off, snowballs, shop tab). */
 const winterPlayLive = (ctx: GameContext): void => ctx.gameplay.winterPlay.refresh()
+const SIEGE = 'Siege of Jangan: wall repair'
+/** docs/SIEGE.md §11.2: a repair number changed: the kit's price follows, every client gets the new numbers. */
+const wallLive = (ctx: GameContext): void => ctx.gameplay.wallRepair.refresh()
+const W = WALL_DEFAULTS
 
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
@@ -142,6 +146,18 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('giftDropPct', 'GIFT_DROP_PCT', 'Gift box chance per kill (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.dropPct, 'live', 'Any monster killed during the season.'),
   int('giftYetiCount', 'GIFT_YETI_COUNT', 'Gift boxes from the Ice Yeti', WINTER_GAME, 0, 20, WINTER_PLAY.gifts.yetiCount, 'live'),
   num('giftRarePct', 'GIFT_RARE_PCT', 'Rare gift reward chance (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.rarePct, 'live', 'Per box, on top of its two rewards: an elixir, Lucky Powders or a pile of gold.'),
+
+  // docs/SIEGE.md §2.4, §2.5, §11.2 (layer 3): unset = content/siege/jangan.json's numbers
+  { ...num('wallNaturalPctPer10Min', 'WALL_NATURAL_PCT', 'Natural wall repair (% per 10 min)', SIEGE, 0, 10, W.naturalPctPer10Min, 'live', 'Every damaged segment mends this much on its own every 10 minutes (not during a siege). Rubble to closed takes about 9 h at 1.'), onLive: wallLive },
+  { ...int('wallGoldPerPct', 'WALL_GOLD_PER_PCT', 'Donation: gold per 1 %', SIEGE, 100, 100_000, W.goldPerPct, 'live', "What Master Mason Ko asks for 1 % of a segment's repair. Donations are never refunded."), onLive: wallLive },
+  { ...int('wallBlocksPerPct', 'WALL_BLOCKS_PER_PCT', 'Donation: Stone Blocks per 1 %', SIEGE, 1, 20, W.blocksPerPct, 'live'), onLive: wallLive },
+  { ...num('wallBuilderPctPerMin', 'WALL_BUILDER_PCT_PER_MIN', "Ko's builders (% per minute per segment)", SIEGE, 0, 10, W.builderPctPerMin, 'live', 'Donated work is applied at this rate to every damaged segment at once. 0 = the builders rest (donations wait).'), onLive: wallLive },
+  { ...num('wallQueueCapPct', 'WALL_QUEUE_CAP_PCT', 'Donated work queued per segment (max %)', SIEGE, 0, 150, W.queueCapPct, 'live', 'Work beyond a full repair waits for the next damage, up to this. A rubble segment needs 150 % to be whole.'), onLive: wallLive },
+  { ...num('wallKitPct', 'WALL_KIT_PCT', "Mason's Kit: % per channel", SIEGE, 0, 10, W.kitPct, 'live'), onLive: wallLive },
+  { ...int('wallKitChannelS', 'WALL_KIT_CHANNEL_S', "Mason's Kit: channel (seconds)", SIEGE, 2, 60, W.kitChannelS, 'live', 'One kit per channel; moving, fighting, a warp or taking damage interrupts it.'), onLive: wallLive },
+  { ...int('wallKitPrice', 'WALL_KIT_PRICE', "Mason's Kit: price at Ko's shop", SIEGE, 0, 100_000, W.kitPrice, 'live'), onLive: wallLive },
+  { ...int('wallLooters', 'WALL_LOOTERS', 'Looters per open gap', SIEGE, 0, 10, W.looters, 'live', 'Bandits that move into every breach outside a siege; they leave when it is repaired. 0 = none.'), onLive: wallLive },
+  { ...num('wallLooterRespawnMin', 'WALL_LOOTER_RESPAWN_MIN', 'Looter respawn (minutes)', SIEGE, 1, 60, W.looterRespawnMin, 'live'), onLive: wallLive },
 ]
 
 export const SETTING_BY_KEY: ReadonlyMap<string, SettingSpec> = new Map(SETTINGS.map((s) => [s.key, s]))

@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "world": "jangan-fields",
+  "about": "Siege of Jangan (docs/SIEGE.md §2.1): the 33 destructible wall segments, glTF metres along each wall (N/S: x, W/E: z). Written by `pnpm sro siege-walls plan`; the cut (Blender), the nav split, the server and the client read it. Segments split into equal thirds a, b, c.",
+  "texture": {
+    "N": {
+      "repeatM": 11.99,
+      "phase": 4.5
+    },
+    "S": {
+      "repeatM": 11.3,
+      "phase": 8
+    },
+    "W": {
+      "repeatM": 11.3,
+      "phase": 2.25
+    },
+    "E": {
+      "repeatM": 11.3,
+      "phase": 10.25
+    }
+  },
+  "settings": {
+    "walls": {}
+  },
+  "sides": [
+    {
+      "side": "N",
+      "source": "res\\bldg\\china\\jangan_enter\\cj_n.bsr",
+      "axis": "x",
+      "run": [
+        -159.69,
+        330.22
+      ],
+      "gate": null,
+      "segments": [
+        {
+          "id": "N1",
+          "from": -159.69,
+          "to": -109.4
+        },
+        {
+          "id": "N2",
+          "from": -109.4,
+          "to": -61.45
+        },
+        {
+          "id": "N3",
+          "from": -61.45,
+          "to": -13.48
+        },
+        {
+          "id": "N4",
+          "from": -13.48,
+          "to": 34.48
+        },
+        {
+          "id": "N5",
+          "from": 34.48,
+          "to": 82.44
+        },
+        {
+          "id": "N6",
+          "from": 82.44,
+          "to": 136.39
+        },
+        {
+          "id": "N7",
+          "from": 136.39,
+          "to": 184.35
+        },
+        {
+          "id": "N8",
+          "from": 184.35,
+          "to": 232.31
+        },
+        {
+          "id": "N9",
+          "from": 232.31,
+          "to": 280.27
+        },
+        {
+          "id": "N10",
+          "from": 280.27,
+          "to": 330.22
+        }
+      ]
+    },
+    {
+      "side": "S",
+      "source": "res\\bldg\\china\\jangan_enter\\cj_s.bsr",
+      "axis": "x",
+      "run": [
+        -159.69,
+        330.22
+      ],
+      "gate": [
+        67.68,
+        128.54
+      ],
+      "segments": [
+        {
+          "id": "S1",
+          "from": -159.69,
+          "to": -116.3
+        },
+        {
+          "id": "S2",
+          "from": -116.3,
+          "to": -71.1
+        },
+        {
+          "id": "S3",
+          "from": -71.1,
+          "to": -25.9
+        },
+        {
+          "id": "S4",
+          "from": -25.9,
+          "to": 24.95
+        },
+        {
+          "id": "S5",
+          "from": 24.95,
+          "to": 67.68
+        },
+        {
+          "id": "S6",
+          "from": 128.54,
+          "to": 177.5
+        },
+        {
+          "id": "S7",
+          "from": 177.5,
+          "to": 228.35
+        },
+        {
+          "id": "S8",
+          "from": 228.35,
+          "to": 279.2
+        },
+        {
+          "id": "S9",
+          "from": 279.2,
+          "to": 330.22
+        }
+      ]
+    },
+    {
+      "side": "W",
+      "source": "res\\bldg\\china\\jangan_enter\\cj_w.bsr",
+      "axis": "z",
+      "run": [
+        -385.55,
+        -1.55
+      ],
+      "gate": [
+        -220.67,
+        -159.8
+      ],
+      "segments": [
+        {
+          "id": "W1",
+          "from": -385.55,
+          "to": -342.4
+        },
+        {
+          "id": "W2",
+          "from": -342.4,
+          "to": -302.85
+        },
+        {
+          "id": "W3",
+          "from": -302.85,
+          "to": -263.3
+        },
+        {
+          "id": "W4",
+          "from": -263.3,
+          "to": -220.67
+        },
+        {
+          "id": "W5",
+          "from": -159.8,
+          "to": -105.1
+        },
+        {
+          "id": "W6",
+          "from": -105.1,
+          "to": -54.25
+        },
+        {
+          "id": "W7",
+          "from": -54.25,
+          "to": -1.55
+        }
+      ]
+    },
+    {
+      "side": "E",
+      "source": "res\\bldg\\china\\jangan_enter\\cj_e.bsr",
+      "axis": "z",
+      "run": [
+        -385.55,
+        -1.55
+      ],
+      "gate": [
+        -211.98,
+        -151.12
+      ],
+      "segments": [
+        {
+          "id": "E1",
+          "from": -385.55,
+          "to": -340.05
+        },
+        {
+          "id": "E2",
+          "from": -340.05,
+          "to": -300.5
+        },
+        {
+          "id": "E3",
+          "from": -300.5,
+          "to": -255.3
+        },
+        {
+          "id": "E4",
+          "from": -255.3,
+          "to": -211.98
+        },
+        {
+          "id": "E5",
+          "from": -151.12,
+          "to": -102.75
+        },
+        {
+          "id": "E6",
+          "from": -102.75,
+          "to": -51.9
+        },
+        {
+          "id": "E7",
+          "from": -51.9,
+          "to": -1.55
+        }
+      ]
+    }
+  ]
+}

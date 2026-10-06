@@ -20,6 +20,8 @@ import type { StormEffect, StormPhase } from './storm.ts'
 // Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
 import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
 import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
+import type { WallServerMessage } from './siege.ts'
+import { WALL_RATE_LIMITS, WALL_REQUESTS, type WallClientMessage, type WallRequest } from './siege-repair.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -601,6 +603,8 @@ export type ClientMessage =
   | PilotClientMessage
   // ---- winter gameplay (docs/WINTER.md §13; winter-play.ts). GameplayRequests: one actionResult each. ----
   | WinterClientMessage
+  // ---- Siege of Jangan, layer 3: repair (docs/SIEGE.md §10.1; siege-repair.ts). GameplayRequests. ----
+  | WallClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -917,6 +921,8 @@ export type ServerMessage =
   | PilotServerMessage
   // ---- winter gameplay (docs/WINTER.md §13; winter-play.ts): warmth, snowballs, the scoreboard, gifts, the Ice Yeti ----
   | WinterServerMessage
+  // ---- Siege of Jangan, the walls (docs/SIEGE.md §10.2; siege.ts): stages, integrity, cosmetic moments ----
+  | WallServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1075,6 +1081,8 @@ export type GameplayRequest =
   | PilotRequest
   // winter gameplay (docs/WINTER.md §13)
   | WinterRequest
+  // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
+  | WallRequest
 
 /** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
 export type WinterRequest = 'snowball' | 'winterBoard'
@@ -1104,6 +1112,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   'jump',
   ...PILOT_REQUESTS,
   ...WINTER_REQUESTS,
+  ...WALL_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1441,6 +1450,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   // winter gameplay (docs/WINTER.md §13): the 1.2 s throw cooldown is tighter; the board is a small query
   snowball: { perSecond: 3, burst: 6 },
   winterBoard: { perSecond: 1, burst: 3 },
+  // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
+  ...WALL_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */
@@ -1533,10 +1544,11 @@ export interface SkillCooldown {
 
 /**
  * What an NPC dialog offers; the server decides per NPC. Wave 8: 'repair' (NpcDef.roles; the client shows it as the
- * shop window's Repair buttons, not as a dialog option) and 'guild' (GUILD_MANAGER_NPCS).
+ * shop window's Repair buttons, not as a dialog option) and 'guild' (GUILD_MANAGER_NPCS). Siege of Jangan layer 3:
+ * 'mason' (Master Mason Ko's donations, docs/SIEGE.md §2.4).
  */
-export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild'
-export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild']
+export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason'
+export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason']
 
 /** Why a dialog closed without the client asking ('closed' = replaced by another npcTalk). */
 export type NpcCloseReason = 'closed' | 'too_far' | 'dead' | 'warp' | 'gone'

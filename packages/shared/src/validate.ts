@@ -131,6 +131,8 @@ import { STORM_EFFECT_IDS, STORM_LIMITS, STORM_PHASES, type StormEffect } from '
 import { MONTH_DAY_RE, WINTER_LIMITS } from './winter.ts'
 import { WARMTH_LEVELS, WARMTH_SOURCES, WINTER_PLAY_LIMITS, YETI_SKILLS, type WarmthState, type WinterBoard, type WinterPlayState, type WinterServerMessage } from './winter-play.ts'
 import { TORNADO_LIMITS } from './tornado.ts'
+import { WALL_FX_KINDS, WALL_LIMITS, WALL_SEGMENT_ID, WALL_STAGES, type WallRepairTerms, type WallSegView, type WallServerMessage } from './siege.ts'
+import { MAX_DONATE_BLOCKS } from './siege-repair.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
 import {
   HUNT_OUTCOMES,
@@ -260,6 +262,9 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   // winter gameplay (docs/WINTER.md §13)
   snowball: ['t'],
   winterBoard: ['t'],
+  // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
+  wallDonate: ['t', 'npc'],
+  wallRepair: ['t', 'seg'],
 }
 
 /** Keys a client message may omit. */
@@ -287,6 +292,8 @@ const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]
   pilotAct: ['target', 'x', 'z', 'repeat'],
   // winter gameplay: a target entity, or a ground point
   snowball: ['target', 'x', 'z'],
+  // Siege of Jangan: a segment or 'where it is needed'; gold and/or Stone Blocks
+  wallDonate: ['seg', 'gold', 'blocks'],
 }
 
 const MAX_ID = Number.MAX_SAFE_INTEGER
@@ -582,6 +589,17 @@ function clientMessage(v: unknown): ClientMessage {
     }
     case 'winterBoard':
       return { t: 'winterBoard' }
+    // ---- Siege of Jangan, layer 3 (docs/SIEGE.md §10.1) ----
+    case 'wallDonate': {
+      if (!has(v, 'gold') && !has(v, 'blocks')) fail('wallDonate needs gold or blocks')
+      const m: Extract<ClientMessage, { t: 'wallDonate' }> = { t: 'wallDonate', npc: npcId(v) }
+      if (has(v, 'seg')) m.seg = wallSegId(v, 'seg')
+      if (has(v, 'gold')) m.gold = int(v, 'gold', 1, MAX_GOLD)
+      if (has(v, 'blocks')) m.blocks = int(v, 'blocks', 1, MAX_DONATE_BLOCKS)
+      return m
+    }
+    case 'wallRepair':
+      return { t: 'wallRepair', seg: wallSegId(v, 'seg') }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -1918,8 +1936,63 @@ function serverMessage(v: unknown): ServerMessage {
     case 'huntRoar':
     case 'huntTaunt':
       return pilotMessage(o)
+    // Siege of Jangan, the walls (docs/SIEGE.md §10.2)
+    case 'walls':
+    case 'wallUpdate':
+    case 'wallFx':
+      return wallMessage(o)
     default:
       fail('unknown message type')
+  }
+}
+
+// ---- Siege of Jangan, the walls (docs/SIEGE.md §10.2; siege.ts) ------------------------------------------------------
+
+function wallSegId(o: Record<string, unknown>, k: string): string {
+  const id = str(o, k, 3, 2)
+  if (!WALL_SEGMENT_ID.test(id)) fail(`${k} must be a wall segment id`)
+  return id
+}
+
+function wallSegView(v: unknown): WallSegView {
+  const o = rec(v, 'seg')
+  const s: WallSegView = { id: wallSegId(o, 'id'), stage: oneOf(o, 'stage', WALL_STAGES), pct: num(o, 'pct', -100, 100) }
+  if (o.scaffold !== undefined && bool(o, 'scaffold')) s.scaffold = true
+  if (o.repairing !== undefined && bool(o, 'repairing')) s.repairing = true
+  if (o.queued !== undefined) s.queued = num(o, 'queued', 0, 1000)
+  return s
+}
+
+/** Layer 3: the repair numbers sent with `walls`. */
+function wallRepairTerms(v: unknown): WallRepairTerms {
+  const o = rec(v, 'repair')
+  return {
+    goldPerPct: num(o, 'goldPerPct', 0, MAX_GOLD), blocksPerPct: num(o, 'blocksPerPct', 0, 1000), queueCapPct: num(o, 'queueCapPct', 0, 1000),
+    builderPctPerMin: num(o, 'builderPctPerMin', 0, 1000), kitPct: num(o, 'kitPct', 0, 1000), kitChannelS: num(o, 'kitChannelS', 0, 3600),
+    kitPrice: num(o, 'kitPrice', 0, MAX_GOLD), kitRangeM: num(o, 'kitRangeM', 0, 1000),
+  }
+}
+
+function wallMessage(o: Record<string, unknown>): WallServerMessage {
+  switch (o.t) {
+    case 'walls': {
+      const m: Extract<WallServerMessage, { t: 'walls' }> = { t: 'walls', segs: boundedList(o, 'segs', WALL_LIMITS.segments, wallSegView) }
+      if (o.repair !== undefined) m.repair = wallRepairTerms(o.repair)
+      return m
+    }
+    case 'wallUpdate': {
+      const m: Extract<WallServerMessage, { t: 'wallUpdate' }> = { t: 'wallUpdate', id: wallSegId(o, 'id'), stage: oneOf(o, 'stage', WALL_STAGES), pct: num(o, 'pct', -100, 100), at: num(o, 'at', 0, BIG) }
+      if (o.repairing !== undefined && bool(o, 'repairing')) m.repairing = true
+      if (o.queued !== undefined) m.queued = num(o, 'queued', 0, 1000)
+      return m
+    }
+    default: {
+      const c = WALL_LIMITS.coord
+      return {
+        t: 'wallFx', id: wallSegId(o, 'id'), kind: oneOf(o, 'kind', WALL_FX_KINDS),
+        x: num(o, 'x', -c, c), y: num(o, 'y', -c, c), z: num(o, 'z', -c, c), at: num(o, 'at', 0, BIG),
+      }
+    }
   }
 }
 

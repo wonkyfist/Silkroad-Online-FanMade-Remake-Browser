@@ -78,6 +78,9 @@ import { WinterService } from './winter.ts'
 import { LightningService } from './lightning/service.ts'
 import { StormService } from './storm/service.ts'
 import { TornadoService } from './storm/tornado.ts'
+import { WallService } from './siege/walls.ts'
+import { WallRepair } from './siege/repair.ts'
+import { WallLooters } from './siege/looters.ts'
 import { MovementService } from './movement.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
@@ -303,6 +306,17 @@ export class Gameplay implements AiHost {
   /** The lightning tornado (docs/WEATHER.md §13): a rare storm event that pulls, throws and strikes, never kills. */
   readonly tornado: TornadoService
   /**
+   * Siege of Jangan, the walls (docs/SIEGE.md §2, §4, §5; siege/walls.ts): 33 segments that crack, breach and fall to
+   * rubble, with the nav and the safe area following. Inert without a mesh nav and the export's siege/walls.json.
+   */
+  readonly walls: WallService
+  /**
+   * Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5; siege/repair.ts, siege/looters.ts): Master Mason Ko, donations
+   * and the builders, the Mason's Kit; looters at the open gaps. Inert while the walls are.
+   */
+  readonly wallRepair: WallRepair
+  readonly wallLooters: WallLooters
+  /**
    * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
    * falls as snow. Other modules read `winter.state(now)`.
    */
@@ -371,6 +385,10 @@ export class Gameplay implements AiHost {
     this.weather.strikes = this.lightning
     this.storm = new StormService(this)
     this.tornado = new TornadoService(this)
+    this.walls = new WallService(this)
+    this.wallRepair = new WallRepair(this, this.walls)
+    this.wallLooters = new WallLooters(this, this.walls)
+    this.wallRepair.looters = this.wallLooters
     this.movement = new MovementService(this)
     this.winterPlay = new WinterPlay(this)
     this.uniques = uniquesOn ? new Uniques(this) : null
@@ -395,6 +413,11 @@ export class Gameplay implements AiHost {
       this.storm,
       // docs/WEATHER.md §13: after the storm (it reads the storm event)
       this.tornado,
+      // docs/SIEGE.md §5.1: the walls, after the lightning and the tornado (their hooks wear the walls)
+      this.walls,
+      // docs/SIEGE.md §2.4, §2.5: repair and looters, after the walls
+      this.wallRepair,
+      this.wallLooters,
       this.movement,
       // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
       this.winterPlay,

@@ -25,7 +25,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameS
 import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve } from 'node:path'
 import { decodeTextdata, parseBsr, type Pk2Archive, type Pk2File } from '@sro/formats'
-import { addWeatherSounds, validateModelSounds, validateSoundIndex, type SoundCodec, type SoundFile } from '../../../shared/src/sound.ts'
+import { addSiegeSounds, addWeatherSounds, validateModelSounds, validateSoundIndex, type SoundCodec, type SoundFile } from '../../../shared/src/sound.ts'
 import { loadConfig, openArchive } from '../node-io.ts'
 import { addUniqueAndTownSounds, finishModel, finishSoundIndex, planSoundIndex, type ModelInput, type SoundScope } from '../sound/build.ts'
 import { addCoastSounds } from '../sound/coast.ts'
@@ -216,6 +216,8 @@ async function main(): Promise<void> {
     sources.set(id, { path: p })
   }
   addTownSynthSounds(plan, synth.keys())
+  // Siege of Jangan, layer 2 (docs/SIEGE.md §9.4): the walls' structure, blast, falling-stone, bell and hammer cues.
+  addSiegeSounds(plan)
 
   // ---- encode into a staging folder ----
   const staging = join(outDir, `.sound-staging-${process.pid}`)

@@ -422,6 +422,11 @@ export class NavWorld {
   private trT: number[] = []
   private trCell: number[] = []
   private reachCache: NavReach | null = null
+  /** Siege (docs/SIEGE.md §4.1): per instance index, 1 = switched off (skipped by every query). */
+  private disabled = new Uint8Array(0)
+  private disabledCount = 0
+  /** Siege (§4.1): forced tile states by global tile key (tileKey), consulted before the region's cell map. */
+  private readonly tileOverrides = new Map<number, 0 | 1>()
 
   constructor(data: NavData) {
     this.navData = data
@@ -450,6 +455,12 @@ export class NavWorld {
       }
     }
     this.stamp = new Uint32Array(this.instances.length)
+    if (this.disabled.length !== this.instances.length) {
+      const next = new Uint8Array(this.instances.length)
+      next.set(this.disabled.subarray(0, Math.min(this.disabled.length, next.length)))
+      this.disabled = next
+    }
+    this.disabledCount = this.disabled.reduce((n, v) => n + v, 0)
     const lists = new Map<number, number[]>()
     for (const inst of this.instances) {
       for (let bz = Math.floor(inst.minZ / BUCKET); bz <= Math.floor(inst.maxZ / BUCKET); bz++) {
@@ -476,6 +487,13 @@ export class NavWorld {
   editInstances(edits: NavInstanceEdits): Int32Array {
     const result = editNavInstances(this.navData, edits)
     this.navData = result.data
+    // switched-off instances stay off at their new index (a replaced slot keeps its state; appended ones start on)
+    const disabled = new Uint8Array(result.data.instances.length)
+    this.disabled.forEach((v, i) => {
+      const j = result.remap[i]!
+      if (v && j >= 0) disabled[j] = 1
+    })
+    this.disabled = disabled
     this.buildObjects(result.data, this.models)
     this.stampId = 0
     this.reachCache = null
@@ -506,6 +524,64 @@ export class NavWorld {
 
   get instanceCount(): number {
     return this.instances.length
+  }
+
+  // --- runtime switches (docs/SIEGE.md §4.1: wall thirds that break) ------------------------------------------------
+
+  /**
+   * Switches an object instance off (or back on): a disabled instance is skipped by locate, the terrain walker's
+   * edge tests, the walkable components and debugEdges, as if it were not there. O(1); the components are rebuilt on
+   * their next use. Returns whether the state changed. Meant for solids nobody stands on (wall bodies): a position
+   * held on a disabled instance's cell keeps walking on it.
+   */
+  setInstanceEnabled(index: number, on: boolean): boolean {
+    if (!Number.isInteger(index) || index < 0 || index >= this.instances.length) throw new Error(`nav: no instance ${index}`)
+    const v = on ? 0 : 1
+    if (this.disabled[index] === v) return false
+    this.disabled[index] = v
+    this.disabledCount += on ? -1 : 1
+    this.reachCache = null
+    return true
+  }
+
+  isInstanceEnabled(index: number): boolean {
+    return this.disabled[index] !== 1
+  }
+
+  /**
+   * Forces one terrain tile open or closed (null: back to the region's own cell). `tile` is the region-local index
+   * tz * 96 + tx. An override is kept whether or not the region is loaded now (streaming), and applies only while it
+   * is: an unloaded tile stays "no terrain". A forced-open tile walks like an open cell (heights come from the shared
+   * height grid, so it needs no cell of its own: the converter's "takes an open neighbour's cell" has no other effect
+   * at run time). Returns whether the state changed; the components are rebuilt on their next use.
+   */
+  setTileOverride(regionId: number, tile: number, mode: 'open' | 'closed' | null): boolean {
+    if (!Number.isInteger(tile) || tile < 0 || tile >= NVM_TILES * NVM_TILES) throw new Error(`nav: bad tile ${tile}`)
+    const rx = regionId & 0xff, rz = (regionId >> 8) & 0x7f
+    const key = tileKey(rx * NVM_TILES + (tile % NVM_TILES), rz * NVM_TILES + Math.floor(tile / NVM_TILES))
+    const before = this.tileOverrides.get(key)
+    if (mode === null) {
+      if (before === undefined) return false
+      this.tileOverrides.delete(key)
+    } else {
+      const v = mode === 'open' ? 0 : 1
+      if (before === v) return false
+      this.tileOverrides.set(key, v)
+    }
+    this.reachCache = null
+    return true
+  }
+
+  /** The override of a tile ('open' / 'closed'), or null. */
+  tileOverride(regionId: number, tile: number): 'open' | 'closed' | null {
+    const rx = regionId & 0xff, rz = (regionId >> 8) & 0x7f
+    const v = this.tileOverrides.get(tileKey(rx * NVM_TILES + (tile % NVM_TILES), rz * NVM_TILES + Math.floor(tile / NVM_TILES)))
+    return v === undefined ? null : v === 0 ? 'open' : 'closed'
+  }
+
+  /** How many tiles are overridden and instances switched off (diagnostics). */
+  get runtimeSwitches(): { tiles: number; disabled: number } {
+    return { tiles: this.tileOverrides.size, disabled: this.disabledCount }
   }
 
   instanceInfo(index: number): { id: number; objId: number; model: string; x: number; y: number; z: number; yaw: number; cells: number } {
@@ -542,6 +618,10 @@ export class NavWorld {
     if (rx < 0 || rz < 0 || rx > 255 || rz > 127) return 2
     const r = this.regions.get((rz << 8) | rx)
     if (!r) return 2
+    if (this.tileOverrides.size) {
+      const o = this.tileOverrides.get(tileKey(tx, tz))
+      if (o !== undefined) return o
+    }
     const cell = r.tileCells[(tz - rz * NVM_TILES) * NVM_TILES + (tx - rx * NVM_TILES)]!
     return cell >= 0 && cell < r.openCellCount ? 0 : 1
   }
@@ -594,6 +674,7 @@ export class NavWorld {
       for (let li = 0; li < list.length; li++) {
         const inst = this.instances[list[li]!]!
         if (x < inst.minX || x > inst.maxX || z < inst.minZ || z > inst.maxZ) continue
+        if (this.disabled[inst.index] === 1) continue
         const m = inst.model
         const lx = inst.localX(x, z)
         const lz = inst.localZ(x, z)
@@ -628,6 +709,7 @@ export class NavWorld {
       instances: this.instances,
       tileState: (tx, tz) => this.tileState(tx, tz),
       terrainHeight: (x, z) => this.terrainHeight(x, z),
+      ...(this.disabledCount ? { instanceEnabled: (i: number) => this.disabled[i] !== 1 } : {}),
     }))
   }
 
@@ -980,6 +1062,7 @@ export class NavWorld {
           const ii = list[li]!
           if (this.stamp[ii] === stampId) continue
           this.stamp[ii] = stampId
+          if (this.disabled[ii] === 1) continue
           const inst = this.instances[ii]!
           if (inst.maxX < minX || inst.minX > maxX || inst.maxZ < minZ || inst.minZ > maxZ) continue
           const m = inst.model
@@ -1141,6 +1224,7 @@ export class NavWorld {
     const out: NavDebugEdge[] = []
     for (const inst of this.instances) {
       if (inst.maxX < minX || inst.minX > maxX || inst.maxZ < minZ || inst.minZ > maxZ) continue
+      if (this.disabled[inst.index] === 1) continue
       const m = inst.model
       const push = (a: number, b: number, flag: number, outline: boolean) => out.push({
         ax: inst.worldX(m.vx[a]!, m.vz[a]!), ay: inst.src.y + m.vy[a]!, az: inst.worldZ(m.vx[a]!, m.vz[a]!),
@@ -1156,6 +1240,11 @@ export class NavWorld {
     }
     return out
   }
+}
+
+/** Global tile key (a tile x stays below 2^15 on the 256-region grid). */
+function tileKey(tx: number, tz: number): number {
+  return tz * 32768 + tx
 }
 
 /** Closest point of cell c (local XZ) to (x, z). */

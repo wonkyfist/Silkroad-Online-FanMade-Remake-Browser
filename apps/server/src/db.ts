@@ -343,6 +343,33 @@ const MIGRATIONS: string[] = [
   );
   CREATE INDEX winter_stats_rank ON winter_stats(season, hits DESC);
   `,
+  // 17: Siege of Jangan, the walls (docs/SIEGE.md §5.3, §10.3; siege/store.ts): each wall segment's integrity (ip, an
+  // integer in [-50 %, 100 %] of maxIp), its stage and the repair queued for it (layer 3), per world; and a log of what
+  // damaged or repaired it (cause: lightning, tornado, raider, ram, sapper, warlord, keg, natural, builders, kit, gm).
+  `
+  CREATE TABLE wall_segments (
+    world TEXT NOT NULL,
+    id TEXT NOT NULL,
+    ip INTEGER NOT NULL,
+    stage TEXT NOT NULL,
+    queued INTEGER NOT NULL DEFAULT 0,
+    last_cause TEXT,
+    updated_at INTEGER NOT NULL,
+    PRIMARY KEY (world, id)
+  );
+  CREATE TABLE wall_log (
+    id INTEGER PRIMARY KEY,
+    world TEXT NOT NULL,
+    seg TEXT NOT NULL,
+    at INTEGER NOT NULL,
+    cause TEXT NOT NULL,
+    delta INTEGER NOT NULL,
+    stage TEXT NOT NULL,
+    character_id INTEGER,
+    data TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE INDEX wall_log_at ON wall_log(at);
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */

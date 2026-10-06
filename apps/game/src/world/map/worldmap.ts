@@ -159,6 +159,30 @@ export interface MapMarker {
   kind: 'shop' | 'teleport' | 'storage' | 'npc'
 }
 
+/**
+ * Siege of Jangan, layer 2 (docs/SIEGE.md §9.3): shapes another feature draws over the map (glTF metres): a line
+ * (`to`, `width` px), a ring (`radius` m) or a dot. Sources are global, so a feature can add one before the window
+ * exists; a throwing source is dropped.
+ */
+export interface MapOverlayShape {
+  x: number
+  z: number
+  color: string
+  to?: { x: number; z: number }
+  width?: number
+  radius?: number
+}
+export type MapOverlaySource = () => Iterable<MapOverlayShape>
+const overlaySources = new Set<MapOverlaySource>()
+
+/** Adds an overlay source drawn on every redraw; returns the remove function. */
+export function addWorldMapOverlay(fn: MapOverlaySource): () => void {
+  overlaySources.add(fn)
+  return () => {
+    overlaySources.delete(fn)
+  }
+}
+
 export interface WorldMapSource {
   transform: MapTransform
   /** Absolute or page-relative URL of the image, or of each region's minimap tile when composing. */
@@ -456,6 +480,8 @@ export class WorldMapWindow extends Window {
       ctx.stroke()
     }
 
+    this.drawOverlays(ctx, toCanvas, T.worldToPx(1, 0).px - T.worldToPx(0, 0).px)
+
     const placed: Box[] = []
     const free = (b: Box) => !placed.some(o => b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0)
     const label = (text: string, x: number, y: number, color: string, font: string, force = false): boolean => {
@@ -529,6 +555,44 @@ export class WorldMapWindow extends Window {
 
     if (me && self) drawArrow(ctx, me.x, me.y, self.yaw)
     this.updateInfo(self)
+  }
+
+  /** The overlay sources' shapes (`pxPerM`: map pixels per metre at zoom 1). */
+  private drawOverlays(ctx: CanvasRenderingContext2D, toCanvas: (x: number, z: number) => { x: number; y: number }, pxPerM: number): void {
+    for (const src of overlaySources) {
+      try {
+        for (const s of src()) {
+          const p = toCanvas(s.x, s.z)
+          ctx.beginPath()
+          if (s.to) {
+            const q = toCanvas(s.to.x, s.to.z)
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(q.x, q.y)
+            ctx.strokeStyle = s.color
+            ctx.lineWidth = (s.width ?? 2) * Math.max(1, Math.min(2, this.zoom))
+            ctx.lineCap = 'round'
+            ctx.stroke()
+          } else if (s.radius !== undefined && s.radius > 0) {
+            ctx.arc(p.x, p.y, Math.max(2, s.radius * pxPerM * this.zoom), 0, Math.PI * 2)
+            ctx.globalAlpha = 0.18
+            ctx.fillStyle = s.color
+            ctx.fill()
+            ctx.globalAlpha = 0.9
+            ctx.strokeStyle = s.color
+            ctx.lineWidth = 1.5
+            ctx.stroke()
+            ctx.globalAlpha = 1
+          } else {
+            ctx.arc(p.x, p.y, s.width ?? 2.5, 0, Math.PI * 2)
+            ctx.fillStyle = s.color
+            ctx.fill()
+          }
+        }
+      } catch (err) {
+        console.error('[map] overlay source failed', err)
+        overlaySources.delete(src)
+      }
+    }
   }
 
   private updateInfo(self: { x: number; z: number } | null): void {

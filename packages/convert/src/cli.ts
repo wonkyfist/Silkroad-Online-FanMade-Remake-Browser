@@ -6,6 +6,7 @@ import { census, formatCensus } from './census.ts'
 import { convertMany, PRESETS } from './gltf/output.ts'
 import { coastExportCli, coastImportCli } from './tools/coast-blender.ts'
 import { exportMovesCli } from './tools/export-moves.ts'
+import { siegeWallsCli } from './tools/siege-walls.ts'
 import { townGraphCli } from './town/build-graph.ts'
 import { exportTownCli } from './town/export-town.ts'
 import { convertLockPath, withConvertLock } from './world/convert-lock.ts'
@@ -46,6 +47,9 @@ const USAGE = `Usage: pnpm sro <command> [args]
   world-edit publish [--world jangan-fields]
                                Publish the layers through the checks (docs/WORLD_EDITOR.md §6; built by WE-A)
   trees <command> [args]       The tree tool (docs/TREES.md Part W; not part of the public release)
+  siege-walls [plan|cut|nav|all] [--world jangan-fields] [--replan] [--no-blender] [--no-opt]
+                               Jangan's destructible walls (docs/SIEGE.md §3): the segment plan (content/siege/jangan.json),
+                               the Blender cut, the nav split and breach tiles -> <world>/siege/ (+ out-opt)
 `
 
 function asArchive(name: string | undefined): ArchiveName {
@@ -306,6 +310,9 @@ switch (command) {
     break
   case 'trees':
     process.exitCode = await treesVerb(args, cfg)
+    break
+  case 'siege-walls':
+    process.exitCode = await siegeWallsCli(args, cfg)
     break
   default:
     console.log(USAGE)

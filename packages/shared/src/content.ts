@@ -357,6 +357,9 @@ export interface ItemUse {
   warmthGlowMs?: number
   /** A holiday gift box: opening it rolls winter-play.ts rollGift. */
   gift?: true
+  // ---- Siege of Jangan, layer 3 (docs/SIEGE.md §2.4; authored items only) ----
+  /** A Mason's Kit: used at a wall segment, a repair channel (siege/repair.ts). */
+  masonKit?: true
 }
 
 /** The worn-item stats a +1 enhancement raises (ItemDef.perPlus keys). */

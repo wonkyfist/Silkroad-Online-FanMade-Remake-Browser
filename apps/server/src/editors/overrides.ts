@@ -575,7 +575,7 @@ export interface ContentState {
   root: string
   world: string
   /** The exported content before any override (GameData's arrays are rebuilt from these). */
-  base: { nests: NestDef[]; npcs: NpcDef[]; npcShop: Map<string, string> }
+  base: { nests: NestDef[]; npcs: NpcDef[]; npcShop: Map<string, string>; /** Built-in NPCs' models (the siege's Master Mason Ko). */ npcModel?: Map<string, string> }
   nests: NestOverrideFile
   npcs: NpcOverrideFile
   /** Problems found reading each file (for `content status`). */
@@ -633,7 +633,20 @@ export function applyLayers(data: GameData, st: ContentState): void {
     else if (data.shops.has(id)) data.npcShop.set(code, id)
   }
   data.npcModel.clear()
+  for (const [k, v] of st.base.npcModel ?? []) data.npcModel.set(k, v)
   for (const [k, v] of model) data.npcModel.set(k, v)
+}
+
+/**
+ * A built-in NPC installed by a module after the content state was captured (docs/SIEGE.md §2.4: Master Mason Ko): it
+ * joins the exported base, so the GM NPC editor's re-layering keeps it, its shop and its model. No-op without a state.
+ */
+export function addBaseNpc(data: GameData, npc: NpcDef, model?: string): void {
+  const st = STATES.get(data)
+  if (!st) return
+  if (!st.base.npcs.some((n) => n.code === npc.code)) st.base.npcs.push(npc)
+  if (npc.shop) st.base.npcShop.set(npc.code, npc.shop)
+  if (model) (st.base.npcModel ??= new Map()).set(npc.code, model)
 }
 
 /**

@@ -495,6 +495,16 @@ export class GameAudio implements EntitySoundHost {
     if (this.backend.ready) this.backend.setListener(pos, forward)
   }
 
+  /** The listener's head (null before the first setListener); Siege of Jangan's wall sounds aim from it. */
+  get listenerPos(): Vec3Like | null {
+    return this.listener
+  }
+
+  /** Loads these files now (Siege of Jangan: the walls' sounds once the walls are in view). */
+  preloadFiles(ids: readonly string[]): void {
+    this.bank.preload(ids)
+  }
+
   /** Who is "you" and "your target" for voice priorities. */
   setFocus(selfId: number, targetId: number): void {
     this.selfId = selfId

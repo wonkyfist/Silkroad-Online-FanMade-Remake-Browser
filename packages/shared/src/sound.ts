@@ -296,6 +296,50 @@ export function addWeatherSounds(plan: { files: Set<string>; ambient: Set<string
   for (const [k, c] of Object.entries(WEATHER_CUES)) plan.index.cues[k] = { ...c, files: [...c.files] }
 }
 
+/**
+ * Siege of Jangan, layer 2 (docs/SIEGE.md §9.4): the retail files the walls use, in every export scope. The fortress
+ * war's structure damage and destroy sounds (`bldg/common/structure_dmg` 1.3 s, `structure_destroy` 4.6 s, as
+ * stored), the bomb explosions (`common/explode_bomb1/2`, `common/stone_bomb`), and, already exported by other cues,
+ * the Stone Ghost's thuds (falling stone), the temple bell (the town's alarm) and the town's hammer strokes (repair).
+ */
+export const SIEGE_SOUND_FILES: readonly string[] = [
+  'bldg/common/structure_dmg', 'bldg/common/structure_destroy',
+  'common/explode_bomb1', 'common/explode_bomb2', 'common/stone_bomb',
+  'monster/cm_gstone_thud_a', 'monster/cm_gstone_thud_b',
+  'env/bell towel 3',
+]
+
+/**
+ * The walls' cues (the client, apps/game/src/world/walls/sound.ts, takes these over the index's whenever the index has
+ * the files, as for WEATHER_CUES). Several files = one at random. `siege.repair` names the town's synthesized hammer
+ * (town/hammer_1..3, docs/SOUND.md §9), not a retail file.
+ */
+export const SIEGE_CUES: Readonly<Record<string, Readonly<SoundCue>>> = {
+  'siege.wall.chip': { files: ['bldg/common/structure_dmg'], gain: 0.8, category: 'sfx' },
+  'siege.wall.collapse': { files: ['bldg/common/structure_destroy'], gain: 1, category: 'sfx' },
+  'siege.wall.blast': { files: ['common/explode_bomb2'], gain: 1, category: 'sfx' },
+  'siege.keg.blast': { files: ['common/explode_bomb1', 'common/stone_bomb'], gain: 1, category: 'sfx' },
+  'siege.stone.fall': { files: ['monster/cm_gstone_thud_a', 'monster/cm_gstone_thud_b'], gain: 0.9, category: 'sfx' },
+  'siege.bell': { files: ['env/bell towel 3'], gain: 1, category: 'ambient' },
+  'siege.repair': { files: ['town/hammer_1', 'town/hammer_2', 'town/hammer_3'], gain: 0.8, category: 'sfx' },
+}
+
+/**
+ * Adds the siege files and cues to an export plan (`planSoundIndex`'s result fits structurally), after the town's
+ * synthesized files (the hammer). A file without a source ends in report.notExported; `finishSoundIndex` drops a cue
+ * left without a file.
+ */
+export function addSiegeSounds(plan: { files: Set<string>; ambient: Set<string>; index: { cues: Record<string, SoundCue> } }): void {
+  for (const id of SIEGE_SOUND_FILES) {
+    plan.files.add(id)
+    if (id.startsWith('env/')) plan.ambient.add(id)
+  }
+  for (const [k, c] of Object.entries(SIEGE_CUES)) {
+    const files = c.files.filter(f => SIEGE_SOUND_FILES.includes(f) || plan.files.has(f))
+    if (files.length) plan.index.cues[k] = { ...c, files }
+  }
+}
+
 // ---- validation ---------------------------------------------------------------------------------------
 
 function isObj(v: unknown): v is Record<string, unknown> {

@@ -110,6 +110,10 @@ describe('routing', () => {
       'storm',
       // storm series step 3 (docs/WEATHER.md §13): the lightning tornado
       'tornado',
+      // Siege of Jangan (docs/SIEGE.md §5.1): the walls, then (layer 3) repair and the looters
+      'walls',
+      'wallRepair',
+      'wallLooters',
       // wave 10 (docs/WAVE_PLAN6.md §3): the jump (movement.ts, lane MV-P)
       'movement',
       // docs/WINTER.md §13: the winter gameplay layer and its five modules
@@ -399,9 +403,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(16)
-      expect(store.schemaVersion).toBe(16)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(16)
+      expect(SCHEMA_VERSION).toBe(17)
+      expect(store.schemaVersion).toBe(17)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(17)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

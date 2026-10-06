@@ -36,6 +36,8 @@ import { SNOWBALL_USAGE } from './winter-play/snowballs.ts'
 import { WARMTH_USAGE } from './winter-play/warmth.ts'
 import { YETI_USAGE } from './winter-play/yeti.ts'
 import { STORM_USAGE } from './storm/service.ts'
+import { WALL_USAGE } from './siege/walls.ts'
+import { MASON_USAGE } from './siege/repair.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
 
@@ -526,6 +528,18 @@ export const COMMANDS: Record<string, Command> = {
     usage: STORM_USAGE,
     about: 'Storms: show the storm status and effects, start one now (or with a forecast), stop it, preview a full storm effects, charge a monster, or call / stop a lightning tornado.',
     run: ({ ctx, args, self }) => ctx.gameplay.storm.gm(args, Date.now(), self),
+  },
+  // Siege of Jangan (docs/SIEGE.md §12): the destructible walls; body in siege/walls.ts.
+  wall: {
+    usage: WALL_USAGE,
+    about: "Jangan's walls: status of the 33 segments (or one, with its log), set one's integrity (% or a stage), damage it, breach it, repair one or all, reset them all.",
+    run: ({ ctx, args }) => ctx.gameplay.walls.gm(args, Date.now()),
+  },
+  // Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5): repair queues, builders, looters; body in siege/repair.ts.
+  mason: {
+    usage: MASON_USAGE,
+    about: "Wall repair: queued donations and who is repairing, queue free work on a segment (or where needed), clear queues, run the builders now, the looters at the gaps (spawn now or clear).",
+    run: ({ ctx, args }) => ctx.gameplay.wallRepair.gm(args, Date.now()),
   },
   // Wave 11 (docs/UNIQUES.md §3.9; lane U-S): the world bosses; body in uniques.ts.
   unique: {

@@ -143,12 +143,15 @@ export class NpcDialogs implements GameplayModule {
       case 'guild':
         // Wave 8 (docs/SYSTEMS_SOCIAL.md §5.2): the Guild Manager.
         return GUILD_MANAGER_NPCS.includes(npc.code)
+      case 'mason':
+        // Siege of Jangan layer 3 (docs/SIEGE.md §2.4): Master Mason Ko's donations, while the walls are on.
+        return this.g.wallRepair.offers(npc.code)
     }
   }
 
   /** What the dialog of `npc` offers `p`, in the dialog's order (the client shows 'repair' as shop buttons, D13). */
   servicesOf(p: Player | null, npc: Npc): NpcService[] {
-    return (['shop', 'storage', 'quest', 'repair', 'guild'] as const).filter((s) => this.has(p, npc, s))
+    return (['shop', 'storage', 'quest', 'repair', 'guild', 'mason'] as const).filter((s) => this.has(p, npc, s))
   }
 
   /**

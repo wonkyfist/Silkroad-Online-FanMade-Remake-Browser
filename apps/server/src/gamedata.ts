@@ -255,9 +255,16 @@ export class GameData {
     return this.towns.find((t) => t.world === world)
   }
 
-  /** Whether x/z lies in a town safe area of `world`. */
+  /**
+   * Siege of Jangan (docs/SIEGE.md §2.5, §5.2): a predicate that takes points out of the safe areas (the breach zones
+   * behind open walls; set by the walls module), or null. It only ever removes safety; the town rectangles stay content.
+   */
+  unsafeAt: ((world: string, x: number, z: number) => boolean) | null = null
+
+  /** Whether x/z lies in a town safe area of `world` (and not in a breach zone, `unsafeAt`). */
   inSafeArea(world: string, x: number, z: number): boolean {
-    return this.towns.some((t) => t.world === world && t.safeArea && Math.abs(x - t.safeArea.x) <= t.safeArea.halfX && Math.abs(z - t.safeArea.z) <= t.safeArea.halfZ)
+    const inTown = this.towns.some((t) => t.world === world && t.safeArea && Math.abs(x - t.safeArea.x) <= t.safeArea.halfX && Math.abs(z - t.safeArea.z) <= t.safeArea.halfZ)
+    return inTown && !(this.unsafeAt?.(world, x, z) ?? false)
   }
 
   /**

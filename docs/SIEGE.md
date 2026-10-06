@@ -1,8 +1,78 @@
 # Siege of Jangan: destructible walls, wall-breakers jailed by Hunters
 
-**Status (2026-10-05): spec only, nothing built.** Written at HEAD `fdfcb04`. Builds on the storm series
+**Status (2026-10-06): layers 0 and 1 built** (the cut, walls that break and walk through); layers 2 (looks and sound)
+and 3 (repair) built, see their status notes below; layers 4-6 are spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
+(`<world>/siege/models/cj_<side>_cut.glb`, one glb per side with a node per piece; `siege/walls-nav.bin`), never in
+`content/` (retail meshes are never committed); `nav.bin` / `nav-objects.bin` keep the retail wall instances and the
+server and client switch them off at load (re-runnable without re-exporting the nav); the Blender script is
+`packages/convert/tools/blender/siege_cut_walls.py` and the step `pnpm sro siege-walls`; the segment ends snap to
+half texture repeats (lengths 39-55 m); the breach probe walks from the field inward and counts once past the inner face
+(the palace wall stands 1.1 m behind N4-N8, so those gaps open onto it); cut sides of a piece block (an arch's
+underpass stays inside the gatehouse piece); layer 1 shows cracks as a dark overlay and gaps with a pile of blocks
+(layer 2 brings the real crack textures, collapse and mounds). Written at HEAD `fdfcb04`. Builds on the storm series
 (docs/WEATHER.md §2.7 `LightningService.onStrike`, §13 `TornadoService.onTornado`) and borrows the event, settings and
 admin patterns of docs/PLAY_THE_BOSS.md.
+
+**Layer 3 status (2026-10-06): built** (repair). Server `apps/server/src/siege/{repair,looters}.ts` (GameplayModules
+`wallRepair`, `wallLooters`, after `walls`); shared rules and content `packages/shared/src/siege-repair.ts`; client
+`apps/game/src/world/features/siege-repair.ts` and the donation window `apps/game/src/hud/mason.ts`. Built as written,
+with these deviations: **no migration** (the queue is `wall_segments.queued` of migration 17; donations are logged to
+`wall_log` with cause `donation`, delta 0); Master Mason Ko is code `NPC_SIEGE_MASON_KO` wearing the Blacksmith's model
+(`NPC_CH_SMITH`) at (128, -75) on the main street 75 m north of the south gate (east side, facing the road), outside
+every breach zone so looters at a gap never reach him; his NPC service is `mason` (NpcService, additive) beside his shop (Mason's Kit 1,500, Stone Block
+1,200); a far kit answers `too_far` with a message (no new `wall_far` reason); the builders work in 15 s steps (0.25 %
+each) and keep going during a siege; the queue cap (50 %) is per segment, "where it is needed" water-fills the worst
+segments first; only what the queue can take is charged (blocks first, the last block may round past the cap); the kit
+channel reuses the item cast bar (`itemCast` / `itemCastEnd`) and chains while kits last; looters (3 Bandits, 5 min) are
+re-checked every 5 s and leave within one pass of the segment closing, not persisted (they refill after a restart); the
+repair numbers are admin-panel settings now (Settings → "Siege of Jangan: wall repair", live, `WALL_*` env, over
+`content/siege/jangan.json` `settings.walls`), the `siege_settings` table stays with layer 4; GM `mason` (status, queue,
+clear, build, looters). `WallSegView` / `wallUpdate` carry `repairing` (builders or a kit at work: the scaffolding and
+hammers of layer 2) and `queued`; `walls` carries `repair` (WallRepairTerms). Saltpeter is left to layer 5.
+
+**Layer 2 status (2026-10-06): built** (looks and sound). Client `apps/game/src/world/walls/`: `look.ts` (pure: segment
+→ look, i.e. thirds down, crack level per third, scaffold, hammer; what a change sets off; tiers; the sound steps and
+roll-off), `rubble.ts` (pure, seeded: pile layout with each chunk's place in the wall, the fall motion, the broken-end
+notch profile, teeth), `stone.ts` (generated geometry: broken chunks, the mound, the end cap, a timber), `cracks.ts`
+(the crack art, painted at run time), `scaffold.ts`, `map.ts` (minimap / world-map shapes), `sound.ts` (`WallAudio`),
+`dressing.ts` (draws it all), `view.ts` (loads the cut, as layer 1). Built with these deviations from §3.1/§9.2: **no
+Blender variants**. Everything is made at run time from the cut glbs and the walls' own materials, so the export stays
+as it is:
+- **cracks**: projected decals (`CreateDecal`) on a third's brick faces, alpha-blended and unlit, from a painted atlas
+  of stair-step cracks along the mortar courses. Level 2 adds broken-out pockets. 2-3 decals per face at level 1, 3-6
+  at level 2. A standing third beside a gap is always level 2.
+- **broken ends** instead of `broken_l/_r`: the end vertices of a standing third beside a gap are pulled back along the
+  axis by a seeded, ragged notch profile (nothing below 0.2-0.5 of the height, up to ≈ 6 m at the top), so a breach
+  opens as a ragged V. A generated broken face closes the end (the cut leaves it open), and broken stones ("teeth")
+  sit on the slope. The thirds' own vertices come back when the gap closes.
+- **rubble**: per downed third, a faceted mound draped over the terrain (low in the middle where people walk through,
+  heaped against the ends) in the wall's own brick material (cj_wall01, its lightmap read at one lit texel). On it lie
+  60 (Low) / 130 (Medium) / 170 (High) broken blocks, thin instances of 6 meshes per side (3 shapes × brick / core
+  look, the side's wall01 / wall02 materials), so they are lit like the wall on Classic and PBR alike.
+- **collapse**: on a live change only (not the enter-world snapshot), the downed third's own pile chunks start inside
+  the wall and fall onto their resting places (gravity, a tumble, one hop; 1.5-3 s, the face peeling from the top), so
+  the pile that stays is the stone that fell, with no swap and no leftover chunks. The mound rises under a dust cloud
+  (pooled particle systems, 2 on Low, 4 above), small bits fly and fade (a fixed ring of slots after the pile's
+  instances), and the camera shakes within 150 m (Options → Camera shake).
+- **scaffold**: thin instances of one timber in a painted wood material (PBR on the PBR path), over the standing thirds
+  while `repairing` (layer 3) and over `a` / `c` of a segment climbing out of rubble (`scaffold`, and live
+  rubble → breached on the client). Low draws the outer face only. The hammer (`town/hammer_1..3`) sounds every 2-4 s
+  while `repairing`.
+- **sounds**: exported by the sound step (`SIEGE_SOUND_FILES` / `SIEGE_CUES` / `addSiegeSounds` in
+  packages/shared/src/sound.ts): `bldg/common/structure_dmg` (59 KB) and `structure_destroy` (203 KB),
+  `common/explode_bomb1` (109 KB), `explode_bomb2` (81 KB) and `stone_bomb` (76 KB). They are PCM .wav (528 KB in all)
+  because this machine has no ffmpeg; a run with ffmpeg turns them into .ogg. The Stone Ghost's thuds and the bell
+  `env/bell towel 3` were already exported. Cues per moment: chip; crack plus a falling stone; breach = blast,
+  collapse, stones, then the alarm bell; collapse = two crashes, stones, bell. Each cue has its own long roll-off
+  (chip 180 m, breach and collapse 750 m, bell 900 m), placed on the line to the source at the panner distance of that
+  gain (the town bell's way).
+- **maps**: the minimap (`HudMarker.to`: a line) and the world map (`addWorldMapOverlay`) draw damaged thirds (amber
+  cracked, orange deep, red breached, dark red rubble), a blue line along a segment under repair, and the breach zones
+  as red rings. Intact stone is not drawn.
+Tests: `apps/game/test/walls-{look,rubble,dressing}.test.ts` (dressing on a NullEngine: snapshot vs live, the fall
+ends in the snapshot's pile, bits vanish, scaffold, notch restore, no scene growth over cycles, nothing created per
+frame, dispose leaves nothing), `packages/convert/test/sound-siege.test.ts`. The render-lab go/no-go is the user's.
+Screenshots: `siege-preview/layer2-*.png`.
 
 > **Trello card (player-facing summary)**
 > - Jangan's outer walls can now be damaged, section by section: cracked, breached, then rubble.
@@ -697,6 +767,7 @@ start; a sparse DB patch `siege_settings` for the operator's live numbers and sc
 | `wall` | status of all 33 (stage, %) |
 | `wall <seg> <pct>` / `wall <seg> intact\|cracked\|breached\|rubble` | set |
 | `wall repair <seg\|all>` / `wall break <seg>` | full repair / breach now (as a GM cause, no Wanted) |
+| `mason [status]` / `mason queue <seg\|any> <pct>` / `mason clear <seg\|all>` / `mason build [steps]` / `mason looters [spawn\|clear]` | layer 3 (built): queues and kits at work, free work, run the builders now, the looters at the gaps |
 | `siege start [warningMin]` / `stop` / `status` / `wave <1-3>` / `warlord` | the event |
 | `law wanted <name> [off]` / `law jail <name> <minutes> [reason]` / `law release <name>` / `law pardon <name>` / `law forgive <name>` | the law |
 | `law hunter <name> licence\|revoke\|duty on\|off` | Hunters |

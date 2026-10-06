@@ -256,8 +256,8 @@ describe('migration 15', () => {
       v14.close()
       const store = openStore(root)
       try {
-        expect(SCHEMA_VERSION).toBe(16)
-        expect(store.schemaVersion).toBe(16)
+        expect(SCHEMA_VERSION).toBe(17)
+        expect(store.schemaVersion).toBe(17)
         expect(store.newsMark(4)).toEqual({ createdAt: 123, mark: null })
         expect(store.newsMark(99)).toBeNull()
         expect(store.setNewsMark(4, { date: '2026-10-05', id: 'x' })).toBe(true)

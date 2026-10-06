@@ -53,6 +53,19 @@ export const navInstanceId = (regionId: number, uid: number) => (((regionId & 0x
 
 const normKey = (p: string) => p.replace(/\\/g, '/').toLowerCase()
 
+/**
+ * Adds a set of extra instances (e.g. the Siege of Jangan's wall pieces, `siege/walls-nav.bin`: models and instances,
+ * no regions) to a world's nav data in one edit: each piece is put by id (appended; an id already there is replaced
+ * in its slot, so installing twice changes nothing). Returns the puts for `NavWorld.editInstances` / editNavInstances.
+ */
+export function navPiecePuts(pieces: Pick<NavData, 'models' | 'instances'>): NavInstancePut[] {
+  return pieces.instances.map(inst => {
+    const model = pieces.models[inst.model]
+    if (!model) throw new Error(`nav pieces: instance 0x${(inst.id >>> 0).toString(16)} has no model ${inst.model}`)
+    return { id: inst.id >>> 0, objId: inst.objId, model, x: inst.x, y: inst.y, z: inst.z, yaw: inst.yaw }
+  })
+}
+
 /** Applies instance edits to NavData (pure). Throws on a linked instance, a duplicate put id or a bad model. */
 export function editNavInstances(data: NavData, edits: NavInstanceEdits): NavInstanceEditResult {
   const byId = new Map<number, number>()

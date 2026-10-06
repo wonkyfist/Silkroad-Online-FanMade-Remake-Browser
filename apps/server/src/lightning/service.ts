@@ -97,6 +97,11 @@ export class LightningService implements GameplayModule, StrikeSink {
   private readonly nonLethal = new Set<number>()
   private nextId = 1
   private readonly listeners = new Set<(e: StrikeEvent) => void>()
+  /**
+   * Siege of Jangan (docs/SIEGE.md §2.5): false for a wall-walk rod whose wall is down (a breached third has no top),
+   * so a strike there lands as ground. Set by the walls module; null: every rod stands.
+   */
+  wallRodUp: ((x: number, z: number) => boolean) | null = null
 
   constructor(
     private readonly g: LightningHost,
@@ -300,7 +305,7 @@ export class LightningService implements GameplayModule, StrikeSink {
   private near(at: Vec3, within: number, now: number): StrikeTarget | null {
     return pickNear({
       anchor: { x: at[0], z: at[2] },
-      rods: this.rods?.near(at[0], at[2], within) ?? [],
+      rods: (this.rods?.near(at[0], at[2], within) ?? []).filter((r) => r.kind !== 'wall' || !this.wallRodUp || this.wallRodUp(r.x, r.z)),
       bodies: this.bodies(at[0], at[2], within, now),
       ground: this.groundAt,
       safe: this.safeAt,

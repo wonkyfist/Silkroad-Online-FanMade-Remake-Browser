@@ -1232,3 +1232,13 @@ Without a drawn crowd (Town life Off, switched live or at entry; Low; a crowd th
 
 **Checked in the running game**, in the plaza at noon: with Full the bed plays (busy 1.0). With Off, set live and
 also from world entry, the bed is 0, no loops play and no murmurs are heard in 25 s, while a dog still barks.
+
+## 11. Siege of Jangan, the walls (docs/SIEGE.md §9.4, layer 2)
+
+Every scope adds `SIEGE_SOUND_FILES` and `SIEGE_CUES` (packages/shared/src/sound.ts `addSiegeSounds`, called after the
+town synthesis): the fortress war's `bldg/common/structure_dmg` and `structure_destroy`, `common/explode_bomb1/2`
+and `common/stone_bomb` (new), plus the Stone Ghost's thuds, `env/bell towel 3` and the town hammer (already
+exported). The cues are `siege.wall.chip`, `siege.wall.collapse`, `siege.wall.blast`, `siege.keg.blast`,
+`siege.stone.fall`, `siege.bell` (ambient) and `siege.repair`. The client (`apps/game/src/world/walls/sound.ts`)
+plays them 3D with each cue's own long roll-off, like the town bell. The 2026-10-06 export had no ffmpeg, so the five
+new files are PCM .wav (528 KB, §10.4); a run with ffmpeg makes them .ogg.

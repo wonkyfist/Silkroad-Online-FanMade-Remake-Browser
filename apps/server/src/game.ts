@@ -690,6 +690,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
           c.close(CLOSE_CODE.shutdown, 'server shutting down')
         }
         ctx.persist([...world.players.values()])
+        // docs/SIEGE.md §5.3: the walls' unsaved integrity
+        gameplay.walls.flush()
         for (const ws of wss.clients) ws.terminate()
         wss.close()
         await new Promise<void>((resolve) => {
