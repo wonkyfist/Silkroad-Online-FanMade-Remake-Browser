@@ -6,6 +6,7 @@
  */
 import { ACCOUNT_NAME, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, type ApiLoginResponse } from '@sro/shared'
 import type { App, Screen, ScreenParams } from '../app.ts'
+import { openGpuHelp } from '../gpu-loss.ts'
 import { t } from '../i18n/index.ts'
 import { GameError, registrationOpen } from '../net/api.ts'
 import { prefetchStage } from '../stage/prefetch.ts'
@@ -108,6 +109,11 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
 
   root.append(...bars(art, 'outer/blackbar_up_18', 'outer/blackbar_down_notext'), logo, anchor(win, 0.5, 0.56))
   if (app.transport.mock) root.append(el('div', 'mock-badge', t('login.mockBadge')))
+  // The 3D background black while this text shows: the browser's graphics stopped (gpu-help.ts), which no page detects.
+  const blackHelp = el('button', 'gpu-help-link', t('gpu.help.link'))
+  blackHelp.type = 'button'
+  blackHelp.addEventListener('click', () => openGpuHelp())
+  root.append(blackHelp)
   app.ui.append(root)
 
   let mode: 'login' | 'register' = 'login'

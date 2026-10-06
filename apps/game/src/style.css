@@ -460,6 +460,51 @@ body:has(.screen.world) .corner {
   margin: 10px auto 0;
 }
 
+/* The "3D view is black" help (gpu-help.ts): the fixes, left-aligned, buttons in a row. */
+.gpu-help {
+  text-align: left;
+  max-width: min(560px, 92vw);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.gpu-help p {
+  margin: 8px 0 0;
+  line-height: 1.4;
+}
+
+.gpu-help-title {
+  font-weight: bold;
+  color: #ffd890;
+}
+
+.gpu-help-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.gpu-help-buttons button {
+  display: inline-block;
+  margin: 0;
+}
+
+/* The login screen's "Screen black?" link (gpu-help.ts). */
+.gpu-help-link {
+  position: absolute;
+  left: 16px;
+  bottom: calc(var(--bar-h) + 8px);
+  background: none;
+  border: none;
+  color: #c8b890;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 5;
+}
+
 .toasts {
   position: fixed;
   top: 70px;

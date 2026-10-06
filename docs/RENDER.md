@@ -75,7 +75,7 @@ Buildings and trees are what the player looks at most. After lighting, **new geo
 
 | Part | File / function | What it does |
 |---|---|---|
-| Engine | `apps/game/src/engine.ts` `createEngine` | WebGPU (`antialias: true`) or a WebGL2 fallback, `adaptToDeviceRatio` |
+| Engine | `apps/game/src/engine.ts` `createEngine` | WebGPU (`antialias: true`) or a WebGL2 fallback, `adaptToDeviceRatio`; which one: `gpu-loss.ts` `engineChoice` (Options → Graphics mode, the tab fallback after a lost device or black output: apps/game/README.md "Graphics problems") |
 | Scene and lights | `apps/game/src/screens/world.ts` `buildWorldScene` | `HemisphericLight` 0.7 plus `DirectionalLight` 1.2 for characters; `World.isolateLights` keeps them off world objects |
 | World sun | `packages/world-render/src/world.ts` `World` constructor, `applyEnv` | `DirectionalLight` fixed at (−1, −1, 0), diffuse = Diffuse(t) × 0.6; `scene.ambientColor` = ObjectAmbient(t); linear scene fog |
 | Environment | `packages/world-render/src/environment.ts` `evaluateProfile`, `approachEnv` | the 16 environment.ifo tracks per profile, sampled at t |

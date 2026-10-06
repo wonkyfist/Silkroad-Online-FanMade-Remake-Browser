@@ -1,5 +1,6 @@
 import { Engine, WebGPUEngine, type AbstractEngine } from '@babylonjs/core'
 import { gpuInfoFromEngine, type GpuInfo } from '@sro/world-render'
+import { SOFTWARE_GPU } from './settings.ts'
 
 export type EngineKind = 'WebGPU' | 'WebGL2' | 'WebGL1'
 
@@ -47,9 +48,22 @@ export function webglEngineOptions(): { stencil: boolean; adaptToDeviceRatio: bo
 /** The part of a GPUAdapter the options read (tests pass a fake). */
 export interface AdapterLike {
   readonly features: Iterable<string>
-  readonly info?: { vendor?: string; architecture?: string; isFallbackAdapter?: boolean }
+  readonly info?: { vendor?: string; architecture?: string; description?: string; isFallbackAdapter?: boolean }
   /** Older spelling of info.isFallbackAdapter. */
   readonly isFallbackAdapter?: boolean
+}
+
+/**
+ * A WebGPU adapter that is no GPU: the browser's fallback adapter (SwiftShader in Chrome, what it hands out when the
+ * GPU is blocklisted or its process keeps crashing) or a software renderer the strings name (settings.ts SOFTWARE_GPU:
+ * SwiftShader, llvmpipe, Microsoft Basic Render Driver). The 'auto' graphics mode runs WebGL2 there (gpu-loss.ts
+ * `engineChoice`).
+ */
+export function isSoftwareAdapter(adapter: AdapterLike | null | undefined): boolean {
+  if (!adapter) return false
+  if (adapter.info?.isFallbackAdapter || adapter.isFallbackAdapter) return true
+  const i = adapter.info
+  return SOFTWARE_GPU.test(`${i?.vendor ?? ''} ${i?.architecture ?? ''} ${i?.description ?? ''}`.toLowerCase())
 }
 
 type WebGPUOptions = NonNullable<ConstructorParameters<typeof WebGPUEngine>[1]>
@@ -113,16 +127,21 @@ async function preQueryAdapter(): Promise<AdapterLike | null> {
  * Prefers WebGPU and falls back to WebGL2 (a canvas that already handed out a WebGPU context is replaced first).
  * Same logic as apps/viewer/src/engine.ts, kept separate so the two apps evolve independently. Wave 9: the WebGPU
  * device gets the adapter's full limits (unless `?gpuLimits=default`) and the wanted optional features it offers.
+ * `avoidSoftware` (the 'auto' graphics mode): a software or fallback WebGPU adapter (`isSoftwareAdapter`) runs WebGL2.
  */
-export async function createEngine(canvas: HTMLCanvasElement, preferWebGPU = true, gpuLimits: GpuLimitsMode = gpuLimitsParam()): Promise<EngineResult> {
+export async function createEngine(canvas: HTMLCanvasElement, preferWebGPU = true, gpuLimits: GpuLimitsMode = gpuLimitsParam(), avoidSoftware = false): Promise<EngineResult> {
   let note: string | undefined
   if (!preferWebGPU) {
     note = 'WebGPU disabled by ?engine=webgl'
   } else {
     let engine: WebGPUEngine | undefined
     try {
-      if (await WebGPUEngine.IsSupportedAsync) {
-        const adapter = await preQueryAdapter()
+      const supported = await WebGPUEngine.IsSupportedAsync
+      const adapter = supported ? await preQueryAdapter() : null
+      if (adapter && avoidSoftware && isSoftwareAdapter(adapter)) {
+        const i = adapter.info
+        note = `WebGPU skipped: software adapter (${[i?.vendor, i?.architecture, i?.description].filter(Boolean).join(' ') || 'fallback'})`
+      } else if (supported) {
         engine = new WebGPUEngine(canvas, webgpuEngineOptions(adapter, gpuLimits))
         await engine.initAsync()
         trimBindGroupCache(engine)
@@ -133,7 +152,7 @@ export async function createEngine(canvas: HTMLCanvasElement, preferWebGPU = tru
         })
         return { engine, kind: 'WebGPU', canvas, gpu }
       }
-      note = 'WebGPU is not available in this browser'
+      note ??= 'WebGPU is not available in this browser'
     } catch (err) {
       note = `WebGPU init failed: ${err instanceof Error ? err.message : String(err)}`
       try {

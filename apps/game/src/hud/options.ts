@@ -129,6 +129,8 @@ type Patch = DeepPartial<Settings>
  */
 interface RowExtras {
   when?(s: Settings): boolean
+  /** Runs after a choice or toggle row's change was stored (Graphics mode offers a reload: gpu-loss.ts). */
+  after?(s: Settings): void
 }
 
 export type OptionRow = RowExtras & (
@@ -611,9 +613,13 @@ export class OptionsWindow extends Window {
   /** Stores a row's change, first asking its question when it has one (a Classic ↔ PBR switch rebuilds the world). */
   private commit(r: OptionRow, patch: Patch): void {
     const ask = (r.kind === 'choice' || r.kind === 'toggle') && r.confirm ? r.confirm(this.store.get(), patch) : null
-    if (!ask) return this.store.set(patch)
+    const store = () => {
+      this.store.set(patch)
+      r.after?.(this.store.get())
+    }
+    if (!ask) return store()
     void MessageBox.confirm({ art: this.art, title: t('options.rebuild.title'), text: t(ask) }).then(ok => {
-      if (ok) this.store.set(patch)
+      if (ok) store()
       else this.sync(this.store.get()) // the control goes back to the stored value
     })
   }

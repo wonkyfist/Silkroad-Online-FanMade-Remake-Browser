@@ -24,7 +24,7 @@ import { MAX_CHARACTER_SLOTS, type CharacterSummary } from '@sro/shared'
 import type { App, OwnedScene, Screen, ScreenParams } from '../app.ts'
 import { heightScale } from '@sro/appearance'
 import { weaponFamilyOf, weaponLabel } from '../content/catalog.ts'
-import { takeGpuRecovery } from '../gpu-loss.ts'
+import { recoveryToast, takeGpuRecovery } from '../gpu-loss.ts'
 import { t } from '../i18n/index.ts'
 import { STAGES, STAGE_ORBIT_MS } from '../stage/stages.ts'
 import type { Stage } from '../stage/types.ts'
@@ -463,7 +463,7 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
         const i = back ? slots.findIndex(s => s.character.id === back.characterId) : -1
         if (i >= 0) {
           selected = i
-          app.toast(t('gpu.restored'), 'info', 8000)
+          app.toast(t(back ? recoveryToast(back) : 'gpu.restored'), 'info', 8000)
           startGame()
         }
       }

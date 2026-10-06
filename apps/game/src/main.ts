@@ -2,8 +2,9 @@ import { App } from './app.ts'
 import { GameAudio, setGameAudio } from './audio/index.ts'
 import { installUiSounds } from './audio/ui-sounds.ts'
 import { loadCatalog } from './content/catalog.ts'
-import { createEngine } from './engine.ts'
-import { installGpuLossGuard, webglAfterLoss } from './gpu-loss.ts'
+import { createEngine, gpuLimitsParam } from './engine.ts'
+import { engineChoice, installGpuLossGuard, setBootedEngine, webglAfterLoss } from './gpu-loss.ts'
+import { installBlackWatchdog } from './gpu-watchdog.ts'
 import { resumeSession } from './net/resume.ts'
 import { createTransport } from './net/transport.ts'
 import { readParams } from './params.ts'
@@ -13,7 +14,7 @@ import { loginScreen } from './screens/login.ts'
 import { serversScreen } from './screens/servers.ts'
 import { splashScreen } from './screens/splash.ts'
 import { worldScreen } from './screens/world.ts'
-import { applyGraphics } from './settings.ts'
+import { applyGraphics, settings } from './settings.ts'
 import { loadGameText, t } from './i18n/index.ts'
 import { Art } from './ui/art.ts'
 import { el } from './ui/dom.ts'
@@ -25,10 +26,14 @@ async function main(): Promise<void> {
   document.body.append(boot)
 
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
-  // After repeated graphics device losses this tab runs on WebGL2 (gpu-loss.ts).
-  const lossFallback = !params.webgl && webglAfterLoss()
-  const [engineResult, catalog, art] = await Promise.all([createEngine(canvas, !params.webgl && !lossFallback), loadCatalog(), Art.load(), loadGameText()])
-  if (lossFallback) engineResult.note = 'WebGPU off for this tab after repeated graphics device losses'
+  // The engine (gpu-loss.ts engineChoice): ?engine=webgl, Options → Graphics mode, this tab's WebGL2 fallback after a
+  // lost WebGPU device or black output, else WebGPU ('auto' skips a software adapter).
+  const backend = settings.get().graphics.backend
+  const choice = engineChoice(params.webgl, backend, webglAfterLoss())
+  const [engineResult, catalog, art] = await Promise.all([createEngine(canvas, choice.webgpu, gpuLimitsParam(), choice.avoidSoftware), loadCatalog(), Art.load(), loadGameText()])
+  if (choice.why === 'fallback') engineResult.note = 'WebGPU off for this tab after a graphics device loss or black output'
+  else if (choice.why === 'setting' && !choice.webgpu) engineResult.note = 'WebGPU off by Options → Graphics mode'
+  setBootedEngine({ kind: engineResult.kind, backend, why: choice.why })
   // Options → Graphics → Resolution (UX_GAPS R4), now and on every change.
   applyGraphics(engineResult.engine)
   const fonts = await loadFonts(art.manifest)
@@ -42,7 +47,9 @@ async function main(): Promise<void> {
   const transport = createTransport(params.mock, params.gm)
   const app = new App(engineResult.engine, engineResult.kind, params, transport, catalog, art, audio.music!, audio)
   // A lost graphics device reloads straight back into the world instead of leaving it black (gpu-loss.ts).
-  installGpuLossGuard(app, engineResult.kind)
+  const gpuGuard = installGpuLossGuard(app, engineResult.kind)
+  // A 3D view that renders nothing without a loss: WebGL2 once per tab, then the help (gpu-watchdog.ts).
+  installBlackWatchdog(app.engine, detail => gpuGuard.blackOutput(detail))
   app.register('splash', splashScreen)
   app.register('login', loginScreen)
   app.register('servers', serversScreen)

@@ -49,9 +49,34 @@ pnpm --filter @sro/server dev        # the game server on :7000; Vite proxies /a
 | `?mock=1` | Uses an in-browser mock server (`src/net/mock.ts`) instead of `/api` + `/ws`. Accounts, characters and their progress (level, EXP, inventory) persist in this browser's localStorage (`sro.mock.db`). The world has three wandering bots that chat now and then, monster nests, a potion merchant and the whole gameplay loop (see "Gameplay"). **F8** in the world simulates a network drop, which exercises reconnect. |
 | `?mock=1&auto=1` | Registers or logs in as `tester`/`tester`, picks the first online server and lands on character select. Use it for quick visual checks. |
 | `?skip=1` | Skips the logo splash. |
-| `?engine=webgl` | Forces WebGL2. |
+| `?engine=webgl` | Forces WebGL2 (wins over Options → Graphics → Graphics mode and the tab's fallback). |
 | `?mock=1&gm=1` | Every mock account is a Game Master (admin), so the GM window and slash commands can be tried offline (see "GM"). Bots can be summoned, kicked and levelled. |
 | `?mute=1` | Starts with the music muted. The mute toggle in the top-right corner is remembered either way. |
+
+## Graphics problems (a black 3D view)
+
+The 2026-10-05 incident: Chrome's GPU process crashed (low RAM, other GPU-heavy programs open) and the 3D view stayed
+black while the HUD worked. What the client does about it:
+
+- **Which renderer a load starts** (`src/gpu-loss.ts` `engineChoice`): `?engine=webgl`, then Options → Graphics →
+  **Graphics mode** (Automatic / WebGPU / WebGL2 (compatibility), stored in `sro.settings`, applies after a reload and
+  offers "Reload now", which goes straight back into the world), then this tab's WebGL2 fallback (sessionStorage
+  `sro.gpu.webgl`), then WebGPU. Automatic also runs WebGL2 when the WebGPU adapter is a fallback/software one
+  (SwiftShader, Microsoft Basic Render Driver: `src/engine.ts` `isSoftwareAdapter`). Choosing a mode in Options clears
+  the tab's fallback. The engine in use shows in the stats line (Ctrl+Shift+F) and in Options ("Renderer").
+- **Lost device** (`src/gpu-loss.ts`): the first lost WebGPU device reloads straight back into the world on WebGL2 for
+  the rest of the tab; a lost WebGL2 context is restored in place or reloaded after 6 s; 4 losses in 10 min stop with a
+  Reload button.
+- **Black output** (`src/gpu-watchdog.ts`): during normal play the drawn frame is read back as 8×8 pixels every few
+  seconds (2 s right after entering, a teleport, a graphics rebuild or the tab coming back; 15 s later on; nothing while
+  loading or hidden). Three empty samples in a row (any time of day), or three pure-black ones while the sun is up, move
+  a WebGPU tab to WebGL2 once per tab session (`sro.gpu.switched`); after that, or on WebGL2, the game shows the
+  "3D view is black" help. `__sroBlackWatch.probe()` in the console logs what the next frame's readback sees.
+- **What no page can detect**: Chrome's compositor dropping a correctly drawn canvas (software compositing after a
+  GPU-process crash: both WebGPU and WebGL2 black, the readback still fine). The help covers it on request:
+  Esc → **Screen black?**, and the **Screen black?** link on the login screen (`src/gpu-help.ts`). It says to open the
+  game in another browser (Edge), or press Shift+Esc in Chrome → "GPU Process" → End process, then reload (other tabs
+  stay open).
 
 ## Screens (`src/screens/*`, state machine in `src/app.ts`)
 

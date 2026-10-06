@@ -73,6 +73,7 @@ import { ensureWorldStyles } from '../world/style.ts'
 import { LOADING_PICTURES, LoadingOverlay, ProgressSet } from './loading.ts'
 import { describeError } from './login.ts'
 import { GraphicsWarmup, type WarmupResult } from './warmup.ts'
+import { watchArm, watchWorld } from '../gpu-watchdog.ts'
 
 /**
  * `window.__sroWarmup` (console, LAB): the graphics warm-up behind the loading picture (screens/warmup.ts). `enabled`
@@ -446,6 +447,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     warmupSwitch.last = r
     // The watchdog's grace starts again once the overlay is gone.
     graphics?.watchdog.reset(performance.now())
+    watchArm()
   }
   /** A graphics switch that rebuilt the renderer: its own short loading overlay while the world catches up. */
   const switchWarmUp = async (): Promise<void> => {
@@ -824,9 +826,12 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
       await warmUp(loading, 0.97)
       if (disposed) return
       await loading.finish()
+      if (disposed) return
+      // The black-output watchdog judges from here on (gpu-watchdog.ts; the sun says whether black is possible).
+      watchWorld({ sunElevationDeg: () => jangan?.world.sky.state.sunElevationDeg ?? null })
       updateMusic(true)
       chat.add('system', t('world.welcome', { world: character.location || t('world.town'), name: msg.self.name }))
-    }
+    } else watchArm()
   }
 
   /** jangan_town inside the town's safe area, jangan_field outside (checked about once a second). */
@@ -1313,6 +1318,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
       warmOverlays.clear()
       offDecorator?.()
       offDecorator = null
+      watchWorld(null)
       graphics?.dispose()
       graphics = null
       remasterLight?.dispose()

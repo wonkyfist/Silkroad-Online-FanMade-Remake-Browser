@@ -77,6 +77,12 @@ export type GrassStyle = 'retail' | 'field'
  * The PBR presets only: Low (Classic) and the Low guard always draw retail (`EffectiveGraphics.trees`).
  */
 export type TreesSetting = 'new' | 'retail'
+/**
+ * Options → Graphics → Graphics mode (gpu-loss.ts `engineChoice`): 'auto' is WebGPU unless this tab fell back to WebGL2
+ * or the WebGPU adapter is a software one; 'webgl2' is the compatibility mode. Read at boot (applies after a reload);
+ * `?engine=webgl` wins.
+ */
+export type GraphicsBackend = 'auto' | 'webgpu' | 'webgl2'
 
 /**
  * Wave 9 "Advanced" graphics overrides (docs/WAVE_PLAN3.md §4.3): each is 'auto' (the preset's value, render/quality.ts
@@ -175,6 +181,8 @@ export interface Settings {
      * true (nothing to keep); a blob saved before the release (v: 1 without the key) starts false.
      */
     releaseMigrated: boolean
+    /** The renderer the next load starts (GraphicsBackend); 'auto' by default. */
+    backend: GraphicsBackend
   }
   ui: {
     /** Unused since the retail scale steps (kept for old saved settings); see scaleMode. */
@@ -251,6 +259,8 @@ export const WILDLIFE_SETTINGS: readonly WildlifeSetting[] = ['on', 'off']
 export const TOWN_LIFE_SETTINGS: readonly TownLifeSetting[] = ['auto', 'off', 'low', 'full']
 /** Wave 12: Options → Graphics → Trees. */
 export const TREES_SETTINGS: readonly TreesSetting[] = ['new', 'retail']
+/** Options → Graphics → Graphics mode. */
+export const GRAPHICS_BACKENDS: readonly GraphicsBackend[] = ['auto', 'webgpu', 'webgl2']
 /** Wave 9B (TX-R): the Options texture tiers (pbr/maps.ts TEXTURE_SETTINGS). */
 export const TEXTURE_SETTINGS: readonly TextureSetting[] = WR_TEXTURE_SETTINGS
 export const ADVANCED_CHOICES: { readonly [K in Exclude<keyof AdvancedGraphics, 'toneMap'>]: readonly AdvancedGraphics[K][] } = {
@@ -292,6 +302,7 @@ export function defaultSettings(): Settings {
       modern: false,
       recommended: null,
       releaseMigrated: true,
+      backend: 'auto',
     },
     ui: {
       scale: 1,
@@ -370,6 +381,7 @@ export function normalizeSettings(raw: unknown): Settings {
       recommended: recommendation(g.recommended),
       // Like firstRun: a saved blob without the key was saved before the release and still gets its one-time move.
       releaseMigrated: bool(g.releaseMigrated, r.v !== 1),
+      backend: oneOf(g.backend, GRAPHICS_BACKENDS, d.graphics.backend),
     },
     ui: {
       scale: num(u.scale, d.ui.scale, UI_SCALE_MIN, UI_SCALE_MAX, 0.05),
@@ -562,7 +574,7 @@ const known = (v: string | undefined): string => {
  */
 const AMD_APU = /radeon(\(tm\))?\s+(graphics|vega\s*\d+\s+graphics|\d{3}m\b)/
 /** Software renderers (no GPU at all): SwiftShader, llvmpipe / softpipe, Microsoft Basic Render Driver. */
-const SOFTWARE_GPU = /swiftshader|llvmpipe|softpipe|basic render/
+export const SOFTWARE_GPU = /swiftshader|llvmpipe|softpipe|basic render/
 
 /**
  * An integrated or software GPU (docs/WAVE_PLAN3.md §5.1 first-run rule): Intel without "Arc", the gen-12lp / xe-lpg
