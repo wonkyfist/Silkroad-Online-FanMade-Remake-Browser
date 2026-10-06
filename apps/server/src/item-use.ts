@@ -50,6 +50,11 @@ export class ItemUses implements GameplayModule {
   readonly handles: readonly GameplayRequest[] = ['itemUse']
   /** Return-scroll casts in progress, by player entity id. */
   private readonly casts = new Map<number, Cast>()
+  /**
+   * Winter (docs/WINTER.md §13): items another module uses itself (a warm drink, a gift box), asked in order after the
+   * cooldown check and before the built-in kinds. A hook that takes the item answers exactly once and returns true.
+   */
+  readonly hooks: ((p: Player, def: ItemDef, bag: number, group: string, answer: Answer, now: number) => boolean)[] = []
 
   constructor(readonly g: Gameplay) {}
 
@@ -82,6 +87,7 @@ export class ItemUses implements GameplayModule {
     if (!def || !use) return answer(fail('not_usable'))
     const group = use.cooldownGroup ?? def.code
     if ((p.cooldowns.get(group) ?? 0) > now) return answer(fail('cooldown'))
+    for (const h of this.hooks) if (h(p, def, bag, group, answer, now)) return
     // Wave 8 (D52): horse summons and Recovery Kits belong to the mounts module.
     if (use.summon || use.target === 'mount') return this.g.mounts.useItem(p, def, bag, answer, now)
     if (use.returnToTown) return this.startReturn(p, def, bag, answer, now)
@@ -91,7 +97,7 @@ export class ItemUses implements GameplayModule {
   }
 
   /** Takes one of the item at `bag` and arms its cooldown group; the answer goes out after the commit. */
-  private consume(p: Player, def: ItemDef, bag: number, group: string, answer: Answer, now: number): InvDraft | null {
+  consume(p: Player, def: ItemDef, bag: number, group: string, answer: Answer, now: number): InvDraft | null {
     const { result, draft } = this.g.store.inventoryTx(p.characterId, (d) => takeFromBag(d, bag, 1))
     if (!result.ok) {
       answer(result)

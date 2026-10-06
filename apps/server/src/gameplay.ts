@@ -79,6 +79,7 @@ import { LightningService } from './lightning/service.ts'
 import { StormService } from './storm/service.ts'
 import { TornadoService } from './storm/tornado.ts'
 import { MovementService } from './movement.ts'
+import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
 import { Pilot } from './pilot/service.ts'
 import { WorldClock } from './world-clock.ts'
@@ -309,6 +310,11 @@ export class Gameplay implements AiHost {
   // wave 10 (docs/WAVE_PLAN6.md §3; lane MV-P): the jump
   readonly movement: MovementService
   /**
+   * The winter gameplay layer (docs/WINTER.md §13; winter-play/): body warmth, snowball fights, snow spirits, the Ice
+   * Yeti and gift boxes, only in the snow season (or a GM preview). Its five modules are registered right after it.
+   */
+  readonly winterPlay: WinterPlay
+  /**
    * Wave 11 (docs/UNIQUES.md §3; WAVE_PLAN7 §4.2): unique monsters as world bosses (uniques.ts, lane U-S). null when
    * UNIQUES=off: the Spawner then keeps the unique groups as plain nests (the wave-10 behaviour).
    */
@@ -366,6 +372,7 @@ export class Gameplay implements AiHost {
     this.storm = new StormService(this)
     this.tornado = new TornadoService(this)
     this.movement = new MovementService(this)
+    this.winterPlay = new WinterPlay(this)
     this.uniques = uniquesOn ? new Uniques(this) : null
     this.pilot = this.uniques ? new Pilot(this, this.uniques) : null
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
@@ -389,6 +396,9 @@ export class Gameplay implements AiHost {
       // docs/WEATHER.md §13: after the storm (it reads the storm event)
       this.tornado,
       this.movement,
+      // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
+      this.winterPlay,
+      ...this.winterPlay.parts,
       // wave 11 (docs/WAVE_PLAN7.md §4.2): the uniques module, when UNIQUES=on
       ...(this.uniques ? [this.uniques] : []),
       // Play the Boss (docs/PLAY_THE_BOSS.md §3.1): after uniques
@@ -1155,12 +1165,15 @@ export class Gameplay implements AiHost {
     // Wave 11 (docs/UNIQUES.md §3.4): a module may replace a mob's whole loot (a unique's own table, plus levels and
     // elixirs included); null keeps the normal table and the authored elixir drop.
     // Wave 8 (D51): the authored elixir drop joins the loot loop below (droppedAt / dropFrom like any drop).
-    const unique = this.uniques?.drops(m, now) ?? null
+    // docs/WINTER.md §13.4: the Ice Yeti's own loot replaces the table like a unique's.
+    const unique = this.uniques?.drops(m, now) ?? this.winterPlay.yeti.drops(m) ?? null
     // Storms (docs/WEATHER.md §12.4): a charged monster drops more, and its gear may come +1.
     const bonus = this.storm.lootBonus(m)
     const drops: RolledDrop[] = unique ?? this.storm.plusLoot(m, [
       ...rollDrops(this.data.drops.get(m.def.code), this.rng, (c) => this.data.items.has(c), { gold: (this.config.goldRate ?? 1) * bonus.gold, drop: (this.config.dropRate ?? 1) * bonus.drop }),
       ...this.alchemy.extraDrops(m),
+      // docs/WINTER.md §13.5: a holiday gift box in the season
+      ...this.winterPlay.gifts.extraDrops(m),
     ])
     const corpse = this.world.livePoint(m, now)
     const from: Vec3 = [corpse.x, corpse.y, corpse.z]
@@ -1267,6 +1280,8 @@ export class Gameplay implements AiHost {
       if (this.storm.panicking(m, now)) continue
       // Play the Boss (docs/PLAY_THE_BOSS.md §3.2): a player steers her; her AI only runs while it has her back.
       if (m.pilot?.steering === 'player') continue
+      // docs/WINTER.md §13.4: the Ice Yeti stands still while she winds up a move.
+      if (m.holdUntil !== undefined && now < m.holdUntil) continue
       thinkMob(m, this)
       if (m.ai === 'idle') this.regenMob(m, now)
     }
@@ -1360,8 +1375,10 @@ export class Gameplay implements AiHost {
   private regenPlayer(p: Player, now: number): void {
     if ((p.hp >= p.maxHp && p.mp >= p.maxMp) || now - p.lastCombatAt < REGEN.outOfCombatMs || now < p.nextRegenAt) return
     p.nextRegenAt = now + REGEN.intervalMs
-    const hp = Math.min(p.maxHp, p.hp + Math.max(1, p.maxHp * REGEN.playerPct))
-    const mp = Math.min(p.maxMp, p.mp + Math.max(1, p.maxMp * REGEN.playerPct))
+    // docs/WINTER.md §13.1: the cold slows the regeneration (1 when warm, outside the season and in towns)
+    const mul = this.winterPlay.regenMul(p)
+    const hp = Math.min(p.maxHp, p.hp + Math.max(1, p.maxHp * REGEN.playerPct) * mul)
+    const mp = Math.min(p.maxMp, p.mp + Math.max(1, p.maxMp * REGEN.playerPct) * mul)
     this.setVitals(p, hp, mp)
   }
 

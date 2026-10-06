@@ -45,6 +45,18 @@ describe('WinterClient (docs/WINTER.md §8)', () => {
     expect(c.raw.cover).toBeLessThan(before)
   })
 
+  it('a GM time-lapse (WinterSync.speed) integrates the snow as many times faster', () => {
+    const snow = weatherParams('snow')
+    const fast = new WinterClient()
+    const slow = new WinterClient()
+    fast.enter({ ...W, cover: 0, speed: 30 }, T0)
+    slow.enter({ ...W, cover: 0 }, T0)
+    fast.frame(T0 + 120_000, 0.1, snow, 1)
+    slow.frame(T0 + 3_600_000, 0.1, snow, 1)
+    expect(fast.raw.cover).toBeCloseTo(slow.raw.cover, 3)
+    expect(fast.raw.cover).toBeGreaterThan(0.1)
+  })
+
   it('a GM preview draws the full look (× the strength) without touching the state; its end eases back', () => {
     const c = new WinterClient()
     c.enter({ ...W, season: false, cover: 0, frost: 0 }, T0)

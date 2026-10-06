@@ -532,7 +532,7 @@ All additive, protocol v1; server and client deploy together. **Client → serve
 | `weather` / `WeatherSync` (extended) | `from` / `to` may be `'snow'` or `'blizzard'`; `intensity` 0.4..1 also for `snow`; `fromVec.snow?: 0..1` (absent from an older server = 0) | as before. In season the server sends the schedule's rain as `snow` and its storms (and storm events) as `blizzard`; a GM hold is sent as typed |
 | `storm` / `StormStatus` (extended) | `winter?: true` (the precipitation is snow, a storm is a blizzard); effect ids gain `'snow'` (no pct) and `'drifts'` (signed pct: run speed during a blizzard) | as before |
 
-- `WinterSync` = `{season: boolean, cover: 0..1, frost: 0..1, at (server ms), strength: 0..1 (the admin snow strength), start: 'MM-DD', end: 'MM-DD' (inclusive; start > end wraps the new year), timeZone: string (1..64), preview?: true}`.
+- `WinterSync` = `{season: boolean, cover: 0..1, frost: 0..1, at (server ms), strength: 0..1 (the admin snow strength), start: 'MM-DD', end: 'MM-DD' (inclusive; start > end wraps the new year), timeZone: string (1..64), preview?: true, speed?: 1..120}`. `speed` (GM `winter speed`, absent = 1) multiplies the time the client integrates the cover and frost with.
 - Clients carry `cover` and `frost` forward from `at` with the shared `stepWinter`, under the blended weather they show and the sky's daylight, as they do the surface wetness. They ease what they draw toward each new message. `preview` draws cover = `strength` and frost = 1 and leaves the state alone.
 - **Older clients** ignore `winter` (an unknown type) and drop `StormStatus.winter`. They reject a `weather` with an unknown kind and a `storm` with an unknown effect id (closed lists), like any closed-list addition. Server and client ship together.
 
@@ -545,7 +545,41 @@ All additive, protocol v1; server and client deploy together. **Client → serve
 | `winter` | Season on or not, dates and time zone, days to the next change, cover, frost, snowfall, strength, preview, the tornado knob | `WinterSync` |
 | `winter preview [on\|off]` | Every client draws the full season look; the season, its dates and the snow are unchanged | `WinterSync` |
 | `winter cover <0-1>` / `winter frost <0-1>` | Set the snow now (it keeps building up or melting with the weather) | `WinterSync` |
+| `winter speed <1-120\|off>` | Time-lapse of the snow for testing (`WinterSync.speed`); `1` or `off` = real time; not persisted | `WinterSync` |
 | `weather snow[:0.4-1] [minutes] [transitionS]` / `weather blizzard ...` | Snow as a GM weather hold, any time of the year (it never changes the season) | `WeatherSync` |
+
+### Winter gameplay: warmth, snowballs, the Ice Yeti, gift boxes (docs/WINTER.md §13)
+
+All additive, protocol v1; server and client deploy together. The shared rules and types are in `packages/shared/src/winter-play.ts` (`WINTER_PLAY`, `warmthLevel`, `warmthLossPerS`, `snowballArc`, `snowballFlightMs`, `inCone`, `rollGift`, `installWinterContent`, `WarmthState`, `WinterPlayState`, `WinterBoard`). Everything happens only while the snow season is on or a GM previews it.
+
+**Client → server** (GameplayRequests: one `actionResult` each; rate limits snowball 3/s burst 6, winterBoard 1/s burst 3):
+
+| t | fields | rules |
+|---|---|---|
+| `snowball` | `target?: entity id` xor `x?, z?` (both coordinates) | throw at a player or monster in sight (≤ 20 m, else `too_far`) or a ground point (clamped to 20 m). Refused `not_usable` (with a message) out of the season or in thin snow, `mounted`, `cooldown` (1.2 s), `not_found` / `invalid_target`, `dead` |
+| `winterBoard` | — | answered with `winterBoard` |
+
+`itemUse` also opens a Holiday Gift Box (`ItemUse.gift`; `inventory_full` keeps the box; `cooldown` 0.4 s) and drinks Ginger Tea (`ItemUse.warmth`, `warmthGlowMs`; `not_usable` out of the season, the tea is kept).
+
+**Server → client:**
+
+| t | fields | sent |
+|---|---|---|
+| `winterPlay` | `play: {on, snowballs, fires?: Vec3[] (≤ 64, the winter campfires), season?: '2026-27'}` | to everyone when the layer turns on or off or snowballs become possible or not (or a GM snowball test), on an admin change, and on enter while on |
+| `warmth` | `warmth: {value 0..max, max, rate (per s, negative = cooling), level: 'warm'\|'chilly'\|'cold'\|'freezing', at (server ms), source?: 'fire'\|'town'\|'tea', safe?: true, drained?: HP}` | to the player only, while on: on a level / source / safe change, every 5 points, every 10 s while it moves, with each cold HP drain. The client carries `value` forward at `rate` |
+| `snowball` | `id, from (entity), fromPos, to, at (server ms), ms (1..10000), peakM (0..50), target?, big?: true` | to the viewers of the thrower and the target when it is thrown (`big`: the Ice Yeti's barrage). The arc is `snowballArc(fromPos, to, peakM, (now − at) / ms)` |
+| `snowballSplat` | `id, pos, hit?: entity, slowMs?, score?` | at the landing, to the same viewers and whoever it hit; `score` (the thrower's hits this winter) only in the thrower's copy. A hit player is slowed, never damaged |
+| `winterBoard` | `board: {season, top: {name, hits}[] (≤ 20), me: {hits, thrown, hitBy, rank?}}` | the answer to `winterBoard` |
+| `giftOpened` | `item, rewards: ItemStack[] (≤ 8), gold?, rare?: true` | to the opener, after its `inventoryUpdate` |
+| `yetiSkill` | `id (the yeti), skill: 'slam'\|'breath'\|'barrage'\|'roar', at (lands, server ms), castMs, pos, yaw, radiusM, angleDeg?` | to her viewers when she winds up a move; the damage arrives as `combat` (`aoe: true`), the barrage as `snowball {big}` and its hits as `combat` |
+| `uniqueNotice` | `mob: 'MOB_WINTER_ICE_YETI'` | the Ice Yeti appears or is defeated, as any unique |
+
+- Every message is validated strictly (closed lists for `level`, `source`, `skill`); unknown extra keys are dropped. An older client ignores the new message types.
+- The winter monsters (`MOB_WINTER_SNOW_SPRITE`, `MOB_WINTER_SNOW_SPIRIT`, `MOB_WINTER_ICE_YETI`) and items (`ITEM_WINTER_GINGER_TEA`, `ITEM_WINTER_GIFT_BOX`) are ordinary entity and item codes; both sides derive their definitions with `installWinterContent` from the retail bases in the export.
+
+**Database:** migration 16 adds `winter_stats (character_id, season, hits, thrown, hit_by, gifts, updated_at)`; the Ice Yeti's timer is a row of `uniques` (code `MOB_WINTER_ICE_YETI`).
+
+**GM** (role `gm`; also typed in chat): `wintergame`, `yeti [spawn [here] | kill | despawn | timer <min|now> | skill <move>]`, `gift [n [player]]`, `warmth [0-100 [player]]`, `snowball [test [s] | stats [player] | reset]` (docs/WINTER.md §13.6).
 
 ### Admin panel: registration switch and bans (docs/ADMIN.md)
 

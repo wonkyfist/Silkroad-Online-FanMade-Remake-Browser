@@ -79,7 +79,8 @@ export class WinterClient {
       const since = (now - this.stateAt) / 1000
       if (since > 0) {
         // a long gap (a hidden tab) integrates in one call: stepWinter sub-steps it and caps it at 72 h
-        this.state = stepWinter(this.state, weather, { season: s.season, daylight: clamp01(daylight) }, since)
+        // a GM time-lapse (WinterSync.speed) runs the snow as many times faster, as on the server
+        this.state = stepWinter(this.state, weather, { season: s.season, daylight: clamp01(daylight) }, since * (s.speed ?? 1))
         this.stateAt = now
       } else if (since < -REBASE_S) this.stateAt = now
     }

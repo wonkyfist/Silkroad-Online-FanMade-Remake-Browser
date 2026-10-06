@@ -5,6 +5,7 @@ import {
   FROST_ICE,
   WINTER_DEFAULTS,
   WINTER_MAX_STEP_S,
+  WINTER_LIMITS,
   WINTER_RESYNC_MS,
   blendWeather,
   hostTimeZone,
@@ -43,14 +44,16 @@ import type { WinterSeason } from './weather.ts'
  * - The wire: `winter` to every player in the world when the season begins or ends, a GM or the admin changes it, and
  *   every 10 minutes; `sync(now)` is the late joiner's (worldEnter.world.winter).
  * - GM `winter`: the status; `winter preview [on|off]` shows the full season look to everyone without touching the
- *   season, the dates or the integrated snow; `winter cover <0-1>` / `winter frost <0-1>` set the snow now. Forcing a
+ *   season, the dates or the integrated snow; `winter cover <0-1>` / `winter frost <0-1>` set the snow now;
+ *   `winter speed <1-120>` is a test time-lapse (the cover and frost settle and melt that many times faster; `speed 1` or
+ *   `off` ends it; in the sync so clients follow; never persisted). Forcing a
  *   snowfall is the weather's (`weather snow`, `weather blizzard`), which does not touch the season either.
  * - Other modules read `state(now)` (season, cover, frost, snowing): the hook a later gameplay layer (cold, snowballs)
  *   builds on.
  */
 
 export const WINTER_FILE = 'winter.json'
-export const WINTER_USAGE = 'winter [preview [on | off] | cover <0-1> | frost <0-1>]'
+export const WINTER_USAGE = 'winter [preview [on | off] | cover <0-1> | frost <0-1> | speed <1-120 | off>]'
 
 /** Integration interval (ms) and the save interval while the snow changes. */
 const TICK_MS = 1000
@@ -104,6 +107,8 @@ export class WinterService implements GameplayModule, WinterSeason {
   private weather: WinterWeatherSource | null = null
   private daylightAt: (now: number) => number = () => 1
   private preview = false
+  /** GM `winter speed`: the snow's time-lapse factor (1 = real time; runtime only). */
+  private speed = 1
   private lastTick = -Infinity
   private lastSent = -Infinity
   private lastSeason: boolean | null = null
@@ -182,7 +187,13 @@ export class WinterService implements GameplayModule, WinterSeason {
       timeZone: d.timeZone,
     }
     if (this.preview) s.preview = true
+    if (this.speed !== 1) s.speed = this.speed
     return s
+  }
+
+  /** The GM time-lapse factor (1 = real time). */
+  get timeLapse(): number {
+    return this.speed
   }
 
   // ---- lifecycle -------------------------------------------------------------------------------------------
@@ -238,6 +249,15 @@ export class WinterService implements GameplayModule, WinterSeason {
       this.send(now)
       return ok(this.preview ? 'Winter: preview on: everyone sees the full season look (the season, its dates and the snow are unchanged; `winter preview off` ends it).' : 'Winter: preview off.', this.sync(now))
     }
+    if (a === 'speed') {
+      const raw = (args[1] ?? '').toLowerCase()
+      const v = raw === 'off' ? 1 : num(args[1])
+      if (args.length !== 2 || v === null || v < WINTER_LIMITS.speed[0] || v > WINTER_LIMITS.speed[1]) return fail(`Usage: ${WINTER_USAGE}`)
+      this.integrate(now)
+      this.speed = v
+      this.send(now)
+      return ok(v === 1 ? 'Winter: speed back to real time.' : `Winter: time-lapse x${v}: the snow settles and melts ${v} times faster (\`winter speed off\` ends it; not kept across a restart).`, this.sync(now))
+    }
     if (a === 'cover' || a === 'frost') {
       const v = num(args[1])
       if (v === null || v < 0 || v > 1 || args.length !== 2) return fail(`Usage: ${WINTER_USAGE}`)
@@ -256,7 +276,7 @@ export class WinterService implements GameplayModule, WinterSeason {
     const change = this.enabled ? nextSeasonChange(now, d) : null
     const when = change ? `; it ${change.begins ? 'begins' : 'ends'} in about ${Math.max(0, Math.round((change.at - now) / 86_400_000))} day(s)` : ''
     const season = !this.enabled ? 'off (WINTER=off)' : s.season ? 'on' : 'not now'
-    return `Winter: season ${season} (${d.start} to ${d.end}, ${d.timeZone})${when}; snow cover ${s.cover.toFixed(2)}, frost ${s.frost.toFixed(2)}${s.frozen ? ' (ponds frozen)' : ''}, snowfall ${s.snowing.toFixed(2)}; strength ${this.strength()}${this.preview ? '; GM preview on' : ''}; tornadoes in blizzards ${this.host.config.winterTornado ? 'on' : 'off'}.`
+    return `Winter: season ${season} (${d.start} to ${d.end}, ${d.timeZone})${when}; snow cover ${s.cover.toFixed(2)}, frost ${s.frost.toFixed(2)}${s.frozen ? ' (ponds frozen)' : ''}, snowfall ${s.snowing.toFixed(2)}; strength ${this.strength()}${this.preview ? '; GM preview on' : ''}${this.speed !== 1 ? `; time-lapse x${this.speed}` : ''}; tornadoes in blizzards ${this.host.config.winterTornado ? 'on' : 'off'}.`
   }
 
   // ---- internals -------------------------------------------------------------------------------------------
@@ -271,7 +291,7 @@ export class WinterService implements GameplayModule, WinterSeason {
       this.stepAt = now
       return
     }
-    this.snow = stepWinter(this.snow, this.weather.params(now), { season: this.active(now), daylight: this.daylightAt(now) }, dtS)
+    this.snow = stepWinter(this.snow, this.weather.params(now), { season: this.active(now), daylight: this.daylightAt(now) }, dtS * this.speed)
     this.stepAt = now
   }
 

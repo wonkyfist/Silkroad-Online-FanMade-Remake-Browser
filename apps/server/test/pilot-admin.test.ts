@@ -242,8 +242,8 @@ describe('migration 14 (§5.4: settings, volunteers, blocks)', () => {
       v13.close()
       const store = openStore(root)
       try {
-        expect(SCHEMA_VERSION).toBe(15)
-        expect(store.schemaVersion).toBe(15)
+        expect(SCHEMA_VERSION).toBe(16)
+        expect(store.schemaVersion).toBe(16)
         expect(cols(store.db, 'pilot_settings')).toEqual([['code', 0, 1], ['json', 1, 0], ['rev', 1, 0], ['updated_at', 1, 0], ['updated_by', 0, 0]])
         expect(cols(store.db, 'pilot_volunteers')).toEqual([['event_id', 1, 1], ['account_id', 1, 2], ['character_id', 1, 0], ['at', 1, 0], ['draw', 0, 0]])
         expect(cols(store.db, 'pilot_blocks')).toEqual([['account_id', 0, 1], ['until', 1, 0], ['reason', 1, 0], ['by_account', 0, 0], ['at', 1, 0]])

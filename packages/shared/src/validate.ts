@@ -129,6 +129,7 @@ import { LIGHTNING_GM_DIST_M, RAIN_INTENSITY_MIN, WEATHER_KINDS, WEATHER_LIMITS,
 import { HAZARD_CAUSES, STRIKE_KINDS, STRIKE_LIMITS, STRIKE_SOURCES } from './lightning.ts'
 import { STORM_EFFECT_IDS, STORM_LIMITS, STORM_PHASES, type StormEffect } from './storm.ts'
 import { MONTH_DAY_RE, WINTER_LIMITS } from './winter.ts'
+import { WARMTH_LEVELS, WARMTH_SOURCES, WINTER_PLAY_LIMITS, YETI_SKILLS, type WarmthState, type WinterBoard, type WinterPlayState, type WinterServerMessage } from './winter-play.ts'
 import { TORNADO_LIMITS } from './tornado.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
 import {
@@ -256,6 +257,9 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   pilotAct: ['t', 'ability'],
   pilotTaunt: ['t', 'line'],
   pilotQuit: ['t'],
+  // winter gameplay (docs/WINTER.md §13)
+  snowball: ['t'],
+  winterBoard: ['t'],
 }
 
 /** Keys a client message may omit. */
@@ -281,6 +285,8 @@ const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]
   stallBuy: ['plus', 'durability'],
   // Play the Boss
   pilotAct: ['target', 'x', 'z', 'repeat'],
+  // winter gameplay: a target entity, or a ground point
+  snowball: ['target', 'x', 'z'],
 }
 
 const MAX_ID = Number.MAX_SAFE_INTEGER
@@ -567,6 +573,15 @@ function clientMessage(v: unknown): ClientMessage {
     // ---- wave 10: the jump (docs/MOVEMENT.md §5); no fields ----
     case 'jump':
       return { t: 'jump' }
+    // ---- winter gameplay (docs/WINTER.md §13) ----
+    case 'snowball': {
+      const hasPoint = has(v, 'x') || has(v, 'z')
+      if (has(v, 'target') === hasPoint) fail('snowball needs a target or a point, not both')
+      if (has(v, 'target')) return { t: 'snowball', target: int(v, 'target', 1, MAX_ID) }
+      return { t: 'snowball', x: num(v, 'x', -MAX_COORD, MAX_COORD), z: num(v, 'z', -MAX_COORD, MAX_COORD) }
+    }
+    case 'winterBoard':
+      return { t: 'winterBoard' }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -1314,6 +1329,7 @@ function winterSync(v: unknown): WinterSync {
     timeZone: str(o, 'timeZone', 64, 1),
   }
   if (o.preview !== undefined && bool(o, 'preview')) w.preview = true
+  if (o.speed !== undefined) w.speed = num(o, 'speed', WINTER_LIMITS.speed[0], WINTER_LIMITS.speed[1])
   return w
 }
 
@@ -1882,6 +1898,15 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.at !== undefined) m.at = num(o, 'at', 0, BIG)
       return m
     }
+    // winter gameplay (docs/WINTER.md §13)
+    case 'warmth':
+    case 'winterPlay':
+    case 'snowball':
+    case 'snowballSplat':
+    case 'winterBoard':
+    case 'giftOpened':
+    case 'yetiSkill':
+      return winterPlayMessage(o)
     // Play the Boss (docs/PLAY_THE_BOSS.md §5.2)
     case 'huntEvent':
     case 'pilotOffer':
@@ -1893,6 +1918,104 @@ function serverMessage(v: unknown): ServerMessage {
     case 'huntRoar':
     case 'huntTaunt':
       return pilotMessage(o)
+    default:
+      fail('unknown message type')
+  }
+}
+
+// ---- winter gameplay (docs/WINTER.md §13) ------------------------------------------------------------------------
+
+function warmthState(v: unknown): WarmthState {
+  const o = rec(v, 'warmth')
+  const L = WINTER_PLAY_LIMITS
+  const w: WarmthState = {
+    value: num(o, 'value', 0, L.warmth),
+    max: num(o, 'max', 1, L.warmth),
+    rate: num(o, 'rate', -L.rate, L.rate),
+    level: oneOf(o, 'level', WARMTH_LEVELS),
+    at: num(o, 'at', 0, BIG),
+  }
+  if (w.value > w.max) fail('warmth above its max')
+  if (o.source !== undefined) w.source = oneOf(o, 'source', WARMTH_SOURCES)
+  if (o.safe !== undefined && bool(o, 'safe')) w.safe = true
+  if (o.drained !== undefined) w.drained = int(o, 'drained', 0, BIG)
+  return w
+}
+
+function winterPlayState(v: unknown): WinterPlayState {
+  const o = rec(v, 'play')
+  const p: WinterPlayState = { on: bool(o, 'on'), snowballs: bool(o, 'snowballs') }
+  if (o.fires !== undefined) p.fires = boundedList(o, 'fires', WINTER_PLAY_LIMITS.fires, (f) => vec3({ f }, 'f'))
+  if (o.season !== undefined) p.season = str(o, 'season', 16)
+  return p
+}
+
+function winterBoard(v: unknown): WinterBoard {
+  const o = rec(v, 'board')
+  const me = rec(o.me, 'me')
+  const b: WinterBoard = {
+    season: str(o, 'season', 16),
+    top: boundedList(o, 'top', WINTER_PLAY_LIMITS.board, (r) => {
+      const row = rec(r, 'row')
+      return { name: str(row, 'name', 64, 1), hits: int(row, 'hits', 0, BIG) }
+    }),
+    me: { hits: int(me, 'hits', 0, BIG), thrown: int(me, 'thrown', 0, BIG), hitBy: int(me, 'hitBy', 0, BIG) },
+  }
+  if (me.rank !== undefined) b.me.rank = int(me, 'rank', 1, BIG)
+  return b
+}
+
+function winterPlayMessage(o: Record<string, unknown>): WinterServerMessage {
+  const L = WINTER_PLAY_LIMITS
+  switch (o.t) {
+    case 'warmth':
+      return { t: 'warmth', warmth: warmthState(o.warmth) }
+    case 'winterPlay':
+      return { t: 'winterPlay', play: winterPlayState(o.play) }
+    case 'snowball': {
+      const m: Extract<WinterServerMessage, { t: 'snowball' }> = {
+        t: 'snowball',
+        id: int(o, 'id', 1, MAX_ID),
+        from: int(o, 'from', 1, MAX_ID),
+        fromPos: vec3(o, 'fromPos'),
+        to: vec3(o, 'to'),
+        at: num(o, 'at', 0, BIG),
+        ms: num(o, 'ms', 1, L.flightMs),
+        peakM: num(o, 'peakM', 0, L.peakM),
+      }
+      if (o.target !== undefined) m.target = int(o, 'target', 1, MAX_ID)
+      if (o.big !== undefined && bool(o, 'big')) m.big = true
+      return m
+    }
+    case 'snowballSplat': {
+      const m: Extract<WinterServerMessage, { t: 'snowballSplat' }> = { t: 'snowballSplat', id: int(o, 'id', 1, MAX_ID), pos: vec3(o, 'pos') }
+      if (o.hit !== undefined) m.hit = int(o, 'hit', 1, MAX_ID)
+      if (o.slowMs !== undefined) m.slowMs = int(o, 'slowMs', 0, MAX_ACTION_MS)
+      if (o.score !== undefined) m.score = int(o, 'score', 0, BIG)
+      return m
+    }
+    case 'winterBoard':
+      return { t: 'winterBoard', board: winterBoard(o.board) }
+    case 'giftOpened': {
+      const m: Extract<WinterServerMessage, { t: 'giftOpened' }> = { t: 'giftOpened', item: codeName(o, 'item'), rewards: boundedList(o, 'rewards', L.rewards, (r) => itemStack(r, 'reward')) }
+      if (o.gold !== undefined) m.gold = int(o, 'gold', 0, MAX_GOLD)
+      if (o.rare !== undefined && bool(o, 'rare')) m.rare = true
+      return m
+    }
+    case 'yetiSkill': {
+      const m: Extract<WinterServerMessage, { t: 'yetiSkill' }> = {
+        t: 'yetiSkill',
+        id: int(o, 'id', 1, MAX_ID),
+        skill: oneOf(o, 'skill', YETI_SKILLS),
+        at: num(o, 'at', 0, BIG),
+        castMs: num(o, 'castMs', 0, L.castMs),
+        pos: vec3(o, 'pos'),
+        yaw: num(o, 'yaw', -TAU, TAU),
+        radiusM: num(o, 'radiusM', 0, L.radiusM),
+      }
+      if (o.angleDeg !== undefined) m.angleDeg = num(o, 'angleDeg', 0, 360)
+      return m
+    }
     default:
       fail('unknown message type')
   }

@@ -31,6 +31,10 @@ import { NEST_USAGE, runNestCommand } from './editors/nest-edit.ts'
 import { NPC_USAGE, runNpcCommand } from './editors/npc-edit.ts'
 import { WEATHER_USAGE } from './weather.ts'
 import { WINTER_USAGE } from './winter.ts'
+import { GIFT_USAGE } from './winter-play/gifts.ts'
+import { SNOWBALL_USAGE } from './winter-play/snowballs.ts'
+import { WARMTH_USAGE } from './winter-play/warmth.ts'
+import { YETI_USAGE } from './winter-play/yeti.ts'
 import { STORM_USAGE } from './storm/service.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
@@ -489,6 +493,33 @@ export const COMMANDS: Record<string, Command> = {
     usage: WINTER_USAGE,
     about: 'The snow season: show it (dates, snow cover, frost), preview the full season look for everyone without changing the season, or set the snow cover or the frost now. Snowfall: weather snow / weather blizzard.',
     run: ({ ctx, args }) => ctx.gameplay.winter.gm(args, Date.now()),
+  },
+  // docs/WINTER.md §13.6: the winter gameplay layer; bodies in winter-play/*.ts. They work any time (a GM can try them
+  // outside the season); what they set only acts while the layer is on (the season, or `winter preview on`).
+  wintergame: {
+    usage: 'wintergame',
+    about: 'Winter gameplay: is the layer on (season or preview), can snowballs be thrown, snow spirits, the Ice Yeti, fires, the scoreboard season.',
+    run: ({ ctx }) => ctx.gameplay.winterPlay.gmStatus(Date.now()),
+  },
+  yeti: {
+    usage: YETI_USAGE,
+    about: 'The Ice Yeti (winter world boss): status, spawn at a lair or in front of you (announced), kill or despawn (silent), set the timer, or make her use a move (slam, breath, barrage, roar).',
+    run: ({ ctx, args, self }) => ctx.gameplay.winterPlay.yeti.gm(self, args, Date.now()),
+  },
+  gift: {
+    usage: GIFT_USAGE,
+    about: 'Give Holiday Gift Boxes (1-50) to yourself or a player; right-click opens one.',
+    run: ({ ctx, args, self }) => ctx.gameplay.winterPlay.gifts.gm(self, args),
+  },
+  warmth: {
+    usage: WARMTH_USAGE,
+    about: "Show or set a player's body warmth (0-100; 0 = freezing).",
+    run: ({ ctx, args, self }) => ctx.gameplay.winterPlay.warmth.gm(self, args, Date.now()),
+  },
+  snowball: {
+    usage: SNOWBALL_USAGE,
+    about: 'Snowballs: status; a test that lets everyone throw for a while (season and snow or not); stats of a player; clear the scoreboard.',
+    run: ({ ctx, args, self }) => ctx.gameplay.winterPlay.snowballs.gm(self, args, Date.now()),
   },
   // docs/WEATHER.md §12.5: storm events and their effects; body in storm/service.ts.
   storm: {

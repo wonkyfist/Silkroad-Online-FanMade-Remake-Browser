@@ -146,6 +146,29 @@ describe('the winter module (docs/WINTER.md §2, §5, §6)', () => {
   })
 })
 
+describe('the GM time-lapse (winter speed)', () => {
+  it('runs the cover and the frost N times faster, says so in the sync and the status, and ends with speed 1 or off', () => {
+    const a = winter(DEC)
+    const b = winter(DEC)
+    for (const h of [a, b]) h.set(weatherParams('snow'))
+    expect(a.w.gm(['speed', '60'], DEC)).toMatchObject({ ok: true })
+    expect(a.winters().at(-1)!.speed).toBe(60)
+    expect(a.w.describe(DEC)).toMatch(/time-lapse x60/)
+    // one minute at x60 = one hour at x1
+    a.run(DEC + 1000, DEC + 60_000)
+    b.run(DEC + 1000, DEC + 3_600_000, 60_000)
+    expect(a.w.state(DEC + 60_000).cover).toBeCloseTo(b.w.state(DEC + 3_600_000).cover, 2)
+    expect(a.w.state(DEC + 60_000).cover).toBeGreaterThan(0.1)
+    expect(a.w.gm(['speed', 'off'], DEC + 60_000)).toMatchObject({ ok: true })
+    expect(a.w.sync(DEC + 60_000).speed).toBeUndefined()
+    expect(a.w.timeLapse).toBe(1)
+    for (const bad of [['speed'], ['speed', '0'], ['speed', '121'], ['speed', 'x']]) expect(a.w.gm(bad, DEC)).toMatchObject({ ok: false })
+    // never by default; a bad speed never reaches a client
+    expect(b.w.sync(DEC).speed).toBeUndefined()
+    expect(parseServerMessage(JSON.stringify({ t: 'winter', winter: { ...a.w.sync(DEC), speed: 500 } })).ok).toBe(false)
+  })
+})
+
 describe('the weather in winter (docs/WINTER.md §3)', () => {
   /** A WeatherService whose season is on (or off) by the stand-in. */
   function weather(now: number, season: (t: number) => boolean, storms = false) {

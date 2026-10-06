@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WINTER_DEFAULTS, WORLD_FOLDER, hostTimeZone, parseMonthDay, validTimeZone, type Role, type WeatherKind } from '@sro/shared'
+import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WINTER_DEFAULTS, WINTER_PLAY, WORLD_FOLDER, hostTimeZone, parseMonthDay, validTimeZone, type Role, type WeatherKind } from '@sro/shared'
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -181,6 +181,33 @@ export interface ServerConfig {
   winterStrength?: number
   /** Tornadoes in blizzards (WINTER_TORNADO, default off). */
   winterTornado?: boolean
+  // ---- winter gameplay (docs/WINTER.md §13); optional, absent = WINTER_PLAY's default; the admin panel changes them live ----
+  /** The winter gameplay layer (WINTER_PLAY, on (default) | off): warmth, snowballs, winter monsters, gift boxes in the season. */
+  winterPlay?: boolean
+  /** Warmth lost per minute outdoors by day (WARMTH_LOSS_PER_MIN, default 6, 0..60; 0 = the cold never bites). */
+  warmthLossPerMin?: number
+  /** A blizzard chills this many times faster (WARMTH_BLIZZARD_MUL, default 2.5, 1..10). */
+  warmthBlizzardMul?: number
+  /** Every fire's warming x this (WARMTH_FIRE_MUL, default 1, 0..5). */
+  warmthFireMul?: number
+  /** Freezing: percent of max HP lost every 5 s, never below 10 % (COLD_DRAIN_PCT, default 1, 0..10; 0 = no drain). */
+  coldDrainPct?: number
+  /** Snow cover needed for snowballs (SNOWBALL_COVER, default 0.35, 0..1). */
+  snowballCover?: number
+  /** A snowball hit slows a player by this percent for 1.5 s (SNOWBALL_SLOW_PCT, default 30, 0..90). */
+  snowballSlowPct?: number
+  /** Snow spirits per field x this (SNOW_SPIRIT_SCALE, default 1, 0..3; 0 = none). */
+  snowSpiritScale?: number
+  /** The Ice Yeti respawns about this many minutes after a kill (YETI_RESPAWN_MIN, default 120, 5..1440). */
+  yetiRespawnMin?: number
+  /** The Ice Yeti's HP x this (YETI_HP_MUL, default 1, 0.05..10). */
+  yetiHpMul?: number
+  /** Chance (percent) of a gift box from a monster killed in the season (GIFT_DROP_PCT, default 3, 0..100). */
+  giftDropPct?: number
+  /** Gift boxes the Ice Yeti drops (GIFT_YETI_COUNT, default 4, 0..20). */
+  giftYetiCount?: number
+  /** Chance (percent) of a rare extra reward per gift box (GIFT_RARE_PCT, default 4, 0..100). */
+  giftRarePct?: number
   // ---- wave 11 (docs/WAVE_PLAN7.md §3.4); optional like wave 3's, absent = the default ----
   /**
    * Unique monsters are world bosses run by the uniques module (UNIQUES, on (default) | off; docs/UNIQUES.md §3.2): the
@@ -472,6 +499,20 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     winterTz: timeZone(env, 'WINTER_TZ'),
     winterStrength: num(env, 'WINTER_STRENGTH', WINTER_DEFAULTS.strength, 0, 1),
     winterTornado: onOff(env, 'WINTER_TORNADO', WINTER_DEFAULTS.tornado),
+    // winter gameplay (docs/WINTER.md §13)
+    winterPlay: onOff(env, 'WINTER_PLAY', WINTER_PLAY.enabled),
+    warmthLossPerMin: num(env, 'WARMTH_LOSS_PER_MIN', WINTER_PLAY.warmth.lossPerMin, 0, 60),
+    warmthBlizzardMul: num(env, 'WARMTH_BLIZZARD_MUL', WINTER_PLAY.warmth.blizzardMul, 1, 10),
+    warmthFireMul: num(env, 'WARMTH_FIRE_MUL', 1, 0, 5),
+    coldDrainPct: num(env, 'COLD_DRAIN_PCT', WINTER_PLAY.warmth.drainPct, 0, 10),
+    snowballCover: num(env, 'SNOWBALL_COVER', WINTER_PLAY.snowball.cover, 0, 1),
+    snowballSlowPct: num(env, 'SNOWBALL_SLOW_PCT', WINTER_PLAY.snowball.slowPct, 0, 90),
+    snowSpiritScale: num(env, 'SNOW_SPIRIT_SCALE', WINTER_PLAY.spirits.countScale, 0, 3),
+    yetiRespawnMin: num(env, 'YETI_RESPAWN_MIN', WINTER_PLAY.yeti.respawnMin, 5, 1440),
+    yetiHpMul: num(env, 'YETI_HP_MUL', WINTER_PLAY.yeti.hpMul, 0.05, 10),
+    giftDropPct: num(env, 'GIFT_DROP_PCT', WINTER_PLAY.gifts.dropPct, 0, 100),
+    giftYetiCount: Math.floor(num(env, 'GIFT_YETI_COUNT', WINTER_PLAY.gifts.yetiCount, 0, 20)),
+    giftRarePct: num(env, 'GIFT_RARE_PCT', WINTER_PLAY.gifts.rarePct, 0, 100),
     // wave 11 (docs/WAVE_PLAN7.md §3.4)
     uniques: onOff(env, 'UNIQUES', true),
     // admin panel (docs/ADMIN.md)

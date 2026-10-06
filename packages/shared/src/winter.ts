@@ -179,6 +179,8 @@ export function stepWinter(s: Readonly<WinterState>, w: WinterWeather, c: Winter
 export const WINTER_LIMITS = {
   /** The admin strength knob. */
   strength: [0, 1] as const,
+  /** GM `winter speed`: the time-lapse factor of the cover and frost (1 = real time). */
+  speed: [1, 120] as const,
 } as const
 
 /** A `winter` resync goes out this often even when nothing changed (the client integrates in between). */

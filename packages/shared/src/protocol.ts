@@ -19,6 +19,7 @@ import type { HazardCause, StrikeKind, StrikeSource } from './lightning.ts'
 import type { StormEffect, StormPhase } from './storm.ts'
 // Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
 import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
+import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -332,6 +333,11 @@ export interface WinterSync {
   timeZone: string
   /** A GM preview of the full season look (`winter preview`): draw cover 1, frost 1; the season itself is unchanged. */
   preview?: true
+  /**
+   * GM `winter speed` (a test time-lapse, 1..120; absent = 1): the cover and the frost settle and melt this many times
+   * faster; clients integrate with the same factor. Never set by default, not kept across a restart.
+   */
+  speed?: number
 }
 
 /** A placed lightning strike (docs/WEATHER.md §2.7; the `strike` message). */
@@ -593,6 +599,8 @@ export type ClientMessage =
   | { t: 'jump' }
   // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1; pilot.ts). GameplayRequests: one actionResult each. ----
   | PilotClientMessage
+  // ---- winter gameplay (docs/WINTER.md §13; winter-play.ts). GameplayRequests: one actionResult each. ----
+  | WinterClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -907,6 +915,8 @@ export type ServerMessage =
   | { t: 'uniqueNotice'; event: UniqueNoticeEvent; mob: string; name: string; area?: string; by?: string; party?: boolean; roar?: boolean; at?: number }
   // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.2; pilot.ts) ----
   | PilotServerMessage
+  // ---- winter gameplay (docs/WINTER.md §13; winter-play.ts): warmth, snowballs, the scoreboard, gifts, the Ice Yeti ----
+  | WinterServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1063,6 +1073,12 @@ export type GameplayRequest =
   | 'jump'
   // Play the Boss (docs/PLAY_THE_BOSS.md §5.1)
   | PilotRequest
+  // winter gameplay (docs/WINTER.md §13)
+  | WinterRequest
+
+/** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
+export type WinterRequest = 'snowball' | 'winterBoard'
+export const WINTER_REQUESTS: readonly WinterRequest[] = ['snowball', 'winterBoard']
 
 /** Wave 8 combat and item requests (docs/SYSTEMS_COMBAT.md §7.2). */
 export const COMBAT_W8_REQUESTS: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss', 'repair', 'alchemyReinforce', 'alchemyCancel', 'berserk']
@@ -1087,6 +1103,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...GUILD_REQUESTS,
   'jump',
   ...PILOT_REQUESTS,
+  ...WINTER_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1421,6 +1438,9 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   jump: { perSecond: 2, burst: 3 },
   // Play the Boss (docs/PLAY_THE_BOSS.md §5.1)
   ...PILOT_RATE_LIMITS,
+  // winter gameplay (docs/WINTER.md §13): the 1.2 s throw cooldown is tighter; the board is a small query
+  snowball: { perSecond: 3, burst: 6 },
+  winterBoard: { perSecond: 1, burst: 3 },
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */

@@ -168,6 +168,8 @@ export interface Mob extends Mover {
   pilot?: { player: number | null; steering: 'player' | 'ai' }
   /** Play the Boss, Stalk (§3.5): non-staff viewers other than her pilot see her only within this many metres. */
   veil?: number
+  /** Winter (docs/WINTER.md §13.3): the Ice Yeti winds up a move until this server ms; Gameplay.tick runs no AI for her. */
+  holdUntil?: number
 }
 
 /** A live quest encounter (docs/QUESTS.md §1.6): who summoned it and when it leaves unkilled. */

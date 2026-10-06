@@ -351,6 +351,12 @@ export interface ItemUse {
   summon?: string
   /** Recovery Kits: 'mount' = the effect applies to the user's horse, not the user. Absent = self. */
   target?: 'mount'
+  // ---- winter (docs/WINTER.md §13; authored items only) ----
+  /** A warm drink: warmth points at once (in the snow season), then `warmthGlowMs` of a slower loss. */
+  warmth?: number
+  warmthGlowMs?: number
+  /** A holiday gift box: opening it rolls winter-play.ts rollGift. */
+  gift?: true
 }
 
 /** The worn-item stats a +1 enhancement raises (ItemDef.perPlus keys). */

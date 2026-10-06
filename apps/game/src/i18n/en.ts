@@ -39,6 +39,7 @@ import { enPilot } from './en-pilot.ts'
 import { enGpu } from './en-gpu.ts'
 import { enStorm } from './en-storm.ts'
 import { enNews } from './en-news.ts'
+import { enWinterPlay } from './en-winter-play.ts'
 
 export const en = {
   // ---- per-lane string files (each lane edits only its own) ------------------------------------
@@ -83,6 +84,8 @@ export const en = {
   ...enGpu,
   // The "What's new" window (docs/CHANGELOG_WINDOW.md).
   ...enNews,
+  // The winter gameplay layer (docs/WINTER.md §13).
+  ...enWinterPlay,
 
   // ---- boot / app shell ----------------------------------------------------------------------
   'boot.loading': 'Loading...',

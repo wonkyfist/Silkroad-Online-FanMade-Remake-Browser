@@ -290,21 +290,25 @@ const TERRAIN_POST_GLSL = /* glsl */ `#ifdef SRO_SNOW
 `
 
 // ---- grass (every grass shader: the Classic scatter, the field and the meadow ring). vertexSway: frost flattens the
-// blades (to 45 %) and the snow buries a share of them (cover); fragmentColor: the frost pales them toward a cold grey,
+// blades (to 45 %) and the snow buries them: the deeper the cover, the shorter the blades that still show (sunk into
+// the snow) and the more of them gone, all of them under a full cover (snwC reaches 1 at cover 0.87; a blade goes when
+// its hash is under snwC², so a dusting leaves most standing); fragmentColor: the frost pales them toward a cold grey,
 // keeping their light (luminance-preserving, so it works lit or HDR). ----
 
 const GRASS_SWAY_WGSL = /* wgsl */ `#ifdef SRO_SNOW
   {
-    let snwH = 1.0 - 0.55 * clamp(uniforms.snwA.y, 0.0, 1.0);
-    let snwGone = step(fract(sin(dot(root.xz, vec2f(12.9898, 78.233))) * 43758.5453), uniforms.snwA.x * 0.45);
+    let snwC = clamp(uniforms.snwA.x * 1.15, 0.0, 1.0);
+    let snwH = (1.0 - 0.55 * clamp(uniforms.snwA.y, 0.0, 1.0)) * (1.0 - 0.75 * snwC);
+    let snwGone = step(fract(sin(dot(root.xz, vec2f(12.9898, 78.233))) * 43758.5453), snwC * snwC);
     p = vec3f(p.x, root.y + (p.y - root.y) * snwH * (1.0 - snwGone), p.z);
   }
 #endif
 `
 const GRASS_SWAY_GLSL = /* glsl */ `#ifdef SRO_SNOW
   {
-    float snwH = 1.0 - 0.55 * clamp(snwA.y, 0.0, 1.0);
-    float snwGone = step(fract(sin(dot(root.xz, vec2(12.9898, 78.233))) * 43758.5453), snwA.x * 0.45);
+    float snwC = clamp(snwA.x * 1.15, 0.0, 1.0);
+    float snwH = (1.0 - 0.55 * clamp(snwA.y, 0.0, 1.0)) * (1.0 - 0.75 * snwC);
+    float snwGone = step(fract(sin(dot(root.xz, vec2(12.9898, 78.233))) * 43758.5453), snwC * snwC);
     p.y = root.y + (p.y - root.y) * snwH * (1.0 - snwGone);
   }
 #endif

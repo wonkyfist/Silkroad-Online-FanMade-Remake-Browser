@@ -4,9 +4,10 @@
  *   1. /out/data/characters.json (data export; format read tolerantly, see parseCharactersJson)
  *   2. /out/index.json (converter index), deriving ids from file names: char/china/chinaman_x -> CHAR_CH_MAN_X
  */
-import { CONTENT_FILES, contentEntries, PLAYER_MODELS_CH, STARTER_WEAPONS, type CosDef, type ItemDef, type MobDef, type StarterWeapon } from '@sro/shared'
+import { CONTENT_FILES, contentEntries, installWinterContent, PLAYER_MODELS_CH, STARTER_WEAPONS, type CosDef, type ItemDef, type MobDef, type StarterWeapon } from '@sro/shared'
 import { gameText, t, type StringKey } from '../i18n/index.ts'
 import { builtinTables, fetchContentTables, type ContentTables } from './gameplay.ts'
+import { applyWinterIcons } from './winter-icons.ts'
 
 export { STARTER_WEAPONS }
 
@@ -402,6 +403,9 @@ export async function loadCatalog(): Promise<Catalog> {
     console.warn('[content] gameplay content unavailable; using the builtin stand-ins', err)
     return builtinTables()
   })
+  // docs/WINTER.md §13: the winter monsters (derived from their retail bases), Ginger Tea and the gift box, with painted icons
+  installWinterContent(content)
+  applyWinterIcons(content.items)
   console.info(`[content] mobs ${content.mobs.size}, items ${content.items.size}; exported: ${content.exported.join(', ') || 'none (builtin stand-ins)'}`)
   // Horses (lane MR-C): cos.json, when exported.
   const cos = await fetchJson(`${OUT}data/${CONTENT_FILES.cos}`).then(parseCosJson, () => [])

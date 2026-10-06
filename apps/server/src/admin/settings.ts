@@ -1,4 +1,4 @@
-import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WINTER_DEFAULTS, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
+import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WINTER_DEFAULTS, WINTER_PLAY, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
 import { MOB_SKILL_DAMAGE_MODES, W8_DEFAULTS, type ServerConfig } from '../config.ts'
 import type { GameContext } from '../game.ts'
 import type { AdminStore } from './store.ts'
@@ -50,6 +50,9 @@ const COMBAT = 'Combat and items'
 const SOCIAL = 'Guilds and stalls'
 const STORMS = 'Weather and storms'
 const WINTER = 'Winter season'
+const WINTER_GAME = 'Winter gameplay'
+/** docs/WINTER.md §13: a winter-gameplay knob changed: the layer re-evaluates at once (on/off, snowballs, shop tab). */
+const winterPlayLive = (ctx: GameContext): void => ctx.gameplay.winterPlay.refresh()
 
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
@@ -125,6 +128,20 @@ export const SETTINGS: readonly SettingSpec[] = [
   { ...text('winterTz', 'WINTER_TZ', 'Season time zone', WINTER, hostTimeZone(), 'live', { placeholder: 'Europe/Berlin', check: (v) => (validTimeZone(v) ? null : 'must be an IANA time zone like Europe/Berlin or UTC'), note: "Default: the server's own time zone." }), onLive: winterLive },
   { ...num('winterStrength', 'WINTER_STRENGTH', 'Snow strength', WINTER, 0, 1, WINTER_DEFAULTS.strength, 'live', 'How white a full snow cover looks (0 = snow falls but never lies, 1 = the full winter look).'), onLive: winterLive },
   bool('winterTornado', 'WINTER_TORNADO', 'Tornadoes in blizzards', WINTER, WINTER_DEFAULTS.tornado, 'live', 'Off (default): during the snow season storms are blizzards without tornadoes.'),
+  // docs/WINTER.md §13: the winter gameplay layer (only in the snow season, or while a GM previews it; applied live)
+  { ...bool('winterPlay', 'WINTER_PLAY', 'Winter gameplay on', WINTER_GAME, WINTER_PLAY.enabled, 'live', 'Body warmth, snowball fights, snow spirits, the Ice Yeti and gift boxes during the snow season. Off: the season only changes the look.'), onLive: winterPlayLive },
+  num('warmthLossPerMin', 'WARMTH_LOSS_PER_MIN', 'Warmth lost per minute outdoors', WINTER_GAME, 0, 60, WINTER_PLAY.warmth.lossPerMin, 'live', 'By day without snowfall (out of 100). Night x1.5, snowfall up to x1.5, a blizzard x the next setting. 0 = the cold never bites. Towns never chill.'),
+  num('warmthBlizzardMul', 'WARMTH_BLIZZARD_MUL', 'Blizzard chill multiplier', WINTER_GAME, 1, 10, WINTER_PLAY.warmth.blizzardMul, 'live'),
+  num('warmthFireMul', 'WARMTH_FIRE_MUL', 'Fire warming multiplier', WINTER_GAME, 0, 5, 1, 'live', 'Campfires warm 6 points/s within 8 m, braziers 5 within 6 m, lamps 2 within 3.5 m (x this). Towns warm 3 points/s.'),
+  num('coldDrainPct', 'COLD_DRAIN_PCT', 'Freezing HP drain (% of max HP per 5 s)', WINTER_GAME, 0, 10, WINTER_PLAY.warmth.drainPct, 'live', 'Only at 0 warmth, never below 10 % of max HP: the cold alone never kills. 0 = no drain.'),
+  num('snowballCover', 'SNOWBALL_COVER', 'Snow cover needed for snowballs', WINTER_GAME, 0, 1, WINTER_PLAY.snowball.cover, 'live', '0..1 (the snow on the ground). Below it nobody can scoop a snowball.'),
+  num('snowballSlowPct', 'SNOWBALL_SLOW_PCT', 'Snowball slow (%)', WINTER_GAME, 0, 90, WINTER_PLAY.snowball.slowPct, 'live', 'A hit player runs this much slower for 1.5 s. Snowballs never hurt players.'),
+  num('snowSpiritScale', 'SNOW_SPIRIT_SCALE', 'Snow spirits per field (scale)', WINTER_GAME, 0, 3, WINTER_PLAY.spirits.countScale, 'live', '7 fields of 4-5 spirits at 1. 0 = no snow spirits.'),
+  num('yetiRespawnMin', 'YETI_RESPAWN_MIN', 'Ice Yeti respawn (minutes)', WINTER_GAME, 5, 1440, WINTER_PLAY.yeti.respawnMin, 'live', 'Rolled within 25 % either way after a kill. A timer already running keeps its time.'),
+  num('yetiHpMul', 'YETI_HP_MUL', 'Ice Yeti HP multiplier', WINTER_GAME, 0.05, 10, WINTER_PLAY.yeti.hpMul, 'live', '30,000 HP at 1. Applies to her next spawn.'),
+  num('giftDropPct', 'GIFT_DROP_PCT', 'Gift box chance per kill (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.dropPct, 'live', 'Any monster killed during the season.'),
+  int('giftYetiCount', 'GIFT_YETI_COUNT', 'Gift boxes from the Ice Yeti', WINTER_GAME, 0, 20, WINTER_PLAY.gifts.yetiCount, 'live'),
+  num('giftRarePct', 'GIFT_RARE_PCT', 'Rare gift reward chance (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.rarePct, 'live', 'Per box, on top of its two rewards: an elixir, Lucky Powders or a pile of gold.'),
 ]
 
 export const SETTING_BY_KEY: ReadonlyMap<string, SettingSpec> = new Map(SETTINGS.map((s) => [s.key, s]))

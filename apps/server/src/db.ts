@@ -327,6 +327,22 @@ const MIGRATIONS: string[] = [
   ALTER TABLE accounts ADD COLUMN news_seen_date TEXT;
   ALTER TABLE accounts ADD COLUMN news_seen_id TEXT;
   `,
+  // 16: winter gameplay (docs/WINTER.md §13.2): each character's snowball fight per winter ("2026-27"): hits landed,
+  // snowballs thrown, times hit, gift boxes opened. The winter scoreboard ranks `hits`. Statements live in
+  // winter-play/snowballs.ts. (The Ice Yeti's timer is a row of the `uniques` table, code MOB_WINTER_ICE_YETI.)
+  `
+  CREATE TABLE winter_stats (
+    character_id INTEGER NOT NULL REFERENCES characters(id),
+    season TEXT NOT NULL,
+    hits INTEGER NOT NULL DEFAULT 0,
+    thrown INTEGER NOT NULL DEFAULT 0,
+    hit_by INTEGER NOT NULL DEFAULT 0,
+    gifts INTEGER NOT NULL DEFAULT 0,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (character_id, season)
+  );
+  CREATE INDEX winter_stats_rank ON winter_stats(season, hits DESC);
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */
