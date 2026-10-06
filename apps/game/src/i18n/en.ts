@@ -40,6 +40,7 @@ import { enGpu } from './en-gpu.ts'
 import { enStorm } from './en-storm.ts'
 import { enSiege } from './en-siege.ts'
 import { enSiegeRepair } from './en-siege-repair.ts'
+import { enSiegeLaw } from './en-siege-law.ts'
 import { enNews } from './en-news.ts'
 import { enWinterPlay } from './en-winter-play.ts'
 
@@ -76,6 +77,7 @@ export const en = {
   ...enStorm,
   ...enSiege,
   ...enSiegeRepair,
+  ...enSiegeLaw,
   // Wave 10 (docs/WAVE_PLAN6.md D15): the jump's toasts (MV-C).
   ...enMovement,
   // Wave 11 (docs/WAVE_PLAN7.md D8): the unique-monster announcements (U-H).

@@ -108,6 +108,36 @@ const GROUPS: { title: string; about: string; fields: FieldDef[] }[] = [
       { path: 'rewards.minPoints', label: 'Nothing under (points)' },
     ],
   },
+  {
+    title: 'Thunder Kegs (players)',
+    about: 'The players’ keg (Old Fang, west of town): its price, who may plant it, where, and what it does. A breach by a player keg makes the planter Wanted.',
+    fields: [
+      { path: 'keg.gold', label: 'Price (gold)' },
+      { path: 'keg.saltpeter', label: 'Saltpeter per keg' },
+      { path: 'keg.carry', label: 'Kegs carried at most' },
+      { path: 'keg.damagePct', label: 'A blast takes (% of a segment)' },
+      { path: 'keg.plantSec', label: 'Planting (s)' },
+      { path: 'keg.fuseSec', label: 'Fuse (s)' },
+      { path: 'keg.defuseSec', label: 'Defusing (s)' },
+      { path: 'keg.cooldownMin', label: 'One plant per account every (min)' },
+      { path: 'keg.minLevel', label: 'Planter level at least' },
+      { path: 'keg.minPlayHours', label: 'Planter played (h) at least' },
+      { path: 'keg.faceM', label: 'Plant within (m) of the outer face', hint: 'the ditch rims keep walkers 6-9 m out' },
+      { path: 'keg.noticeMin', label: 'One plant notice per segment every (min)' },
+    ],
+  },
+  {
+    title: 'The law',
+    about: 'Warrants for wall-breakers: the bounty (paid by the server), how long a warrant runs (online time), accomplices, forgiveness and treason.',
+    fields: [
+      { path: 'law.bountyBase', label: 'Bounty per offence (gold)' },
+      { path: 'law.bountyCapMul', label: 'Bounty grows up to offence' },
+      { path: 'law.wantedOnlineHours', label: 'Warrant lapses after (online h)', step: 0.25 },
+      { path: 'law.accompliceWindowMin', label: 'Accomplices: kegs within (min)' },
+      { path: 'law.forgiveDays', label: 'One offence forgiven per (clean days)' },
+      { path: 'law.treasonMul', label: 'Treason (during a siege) ×', step: 0.5 },
+    ],
+  },
 ]
 
 function valueAt(s: SiegeEventSettings, path: string): unknown {

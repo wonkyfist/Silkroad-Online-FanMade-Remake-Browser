@@ -413,6 +413,55 @@ const MIGRATIONS: string[] = [
     updated_by INTEGER
   );
   `,
+  // 19: Siege of Jangan, jobs and the law (docs/SIEGE.md §8, §10.3; siege/law-store.ts). Layer 5 writes warrants (one
+  // per Wanted character and breach: role breaker / accomplice, the offence level, the bounty, treason, the online time
+  // left before it lapses; status open, captured, lapsed or pardoned) and law_records (per ACCOUNT: the offence level
+  // and when the last offence was; last_plant_at = the account's last Thunder Keg, the 30 min plant cooldown). char_jobs
+  // (the Hunter licence and duty) and jail_terms (the Garrison Stockade) are created here for layer 6.
+  `
+  CREATE TABLE char_jobs (
+    character_id INTEGER NOT NULL,
+    job TEXT NOT NULL,
+    rank INTEGER NOT NULL DEFAULT 1,
+    points INTEGER NOT NULL DEFAULT 0,
+    licensed_at INTEGER NOT NULL,
+    revoked_until INTEGER,
+    on_duty INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (character_id, job)
+  );
+  CREATE TABLE warrants (
+    id INTEGER PRIMARY KEY,
+    account_id INTEGER NOT NULL,
+    character_id INTEGER NOT NULL,
+    reason TEXT NOT NULL,
+    role TEXT NOT NULL,
+    wall TEXT,
+    offence INTEGER NOT NULL,
+    bounty INTEGER NOT NULL,
+    treason INTEGER NOT NULL DEFAULT 0,
+    issued_at INTEGER NOT NULL,
+    online_ms_left INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    closed_at INTEGER,
+    captors TEXT NOT NULL DEFAULT '[]'
+  );
+  CREATE INDEX warrants_open ON warrants(status, character_id);
+  CREATE TABLE jail_terms (
+    character_id INTEGER PRIMARY KEY,
+    account_id INTEGER NOT NULL,
+    warrant_id INTEGER,
+    starts_at INTEGER NOT NULL,
+    ends_at INTEGER NOT NULL,
+    served_ms INTEGER NOT NULL DEFAULT 0,
+    chores INTEGER NOT NULL DEFAULT 0
+  );
+  CREATE TABLE law_records (
+    account_id INTEGER PRIMARY KEY,
+    offences INTEGER NOT NULL DEFAULT 0,
+    last_offence_at INTEGER,
+    last_plant_at INTEGER
+  );
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */

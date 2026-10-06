@@ -23,6 +23,7 @@ import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
 import type { WallServerMessage } from './siege.ts'
 import { WALL_RATE_LIMITS, WALL_REQUESTS, type WallClientMessage, type WallRequest } from './siege-repair.ts'
 import { SIEGE_RATE_LIMITS, SIEGE_REQUESTS, type SiegeClientMessage, type SiegeRequest, type SiegeRole, type SiegeServerMessage } from './siege-event.ts'
+import { LAW_FAIL_REASONS, LAW_RATE_LIMITS, LAW_REQUESTS, type LawClientMessage, type LawFailReason, type LawRequest, type LawServerMessage } from './siege-law.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -242,6 +243,9 @@ export interface EntityState {
   // ---- Siege of Jangan, layer 4 (docs/SIEGE.md §6.5, §10.2) ----
   /** Mobs: a siege monster's role (the client hangs a keg on a sapper, draws the Town Bell, flags the army). */
   siege?: SiegeRole
+  // ---- Siege of Jangan, layer 5 (docs/SIEGE.md §8.1, §10.2) ----
+  /** Players: Wanted for breaking the town wall, with this bounty (gold); the red "WANTED" label line. */
+  wanted?: number
 }
 
 export interface WorldInfo {
@@ -611,6 +615,8 @@ export type ClientMessage =
   | WallClientMessage
   // ---- Siege of Jangan, layer 4: the siege event (docs/SIEGE.md §10.1; siege-event.ts). GameplayRequests. ----
   | SiegeClientMessage
+  // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.1; siege-law.ts). GameplayRequests. ----
+  | LawClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -689,6 +695,8 @@ export type ServerMessage =
       honor?: string
       /** Storm (docs/WEATHER.md §12): the mob became storm-charged (true) or lost it (false). */
       charged?: boolean
+      /** Siege of Jangan layer 5: the player became Wanted with this bounty (or it changed); 0 = no longer Wanted. */
+      wanted?: number
     }
   /**
    * GM addition: this account's role changed while connected (`pnpm gm grant|revoke`; the server
@@ -931,6 +939,8 @@ export type ServerMessage =
   | WallServerMessage
   // ---- Siege of Jangan, layer 4: the siege event (docs/SIEGE.md §10.2; siege-event.ts) ----
   | SiegeServerMessage
+  // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.2; siege-law.ts) ----
+  | LawServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1092,6 +1102,8 @@ export type GameplayRequest =
   // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
   | WallRequest
   | SiegeRequest
+  // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
+  | LawRequest
 
 /** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
 export type WinterRequest = 'snowball' | 'winterBoard'
@@ -1123,6 +1135,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...WINTER_REQUESTS,
   ...WALL_REQUESTS,
   ...SIEGE_REQUESTS,
+  ...LAW_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1250,6 +1263,8 @@ export type ActionFailReason =
   | 'bad_name'
   // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
   | PilotFailReason
+  /** Siege of Jangan layer 5: a Thunder Keg limit (carry, the per-account plant cooldown). */
+  | LawFailReason
 
 export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'not_found', 'invalid_target', 'target_dead', 'dead', 'not_dead', 'too_far', 'unreachable', 'not_owner',
@@ -1265,6 +1280,7 @@ export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'name_taken', 'bad_name',
   'armor_mix',
   ...PILOT_FAIL_REASONS,
+  ...LAW_FAIL_REASONS,
 ]
 
 export type HitOutcome = 'hit' | 'crit' | 'miss' | 'block'
@@ -1464,6 +1480,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   ...WALL_RATE_LIMITS,
   // Siege of Jangan, layer 4 (docs/SIEGE.md §10.1)
   ...SIEGE_RATE_LIMITS,
+  // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
+  ...LAW_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */
@@ -1557,10 +1575,10 @@ export interface SkillCooldown {
 /**
  * What an NPC dialog offers; the server decides per NPC. Wave 8: 'repair' (NpcDef.roles; the client shows it as the
  * shop window's Repair buttons, not as a dialog option) and 'guild' (GUILD_MANAGER_NPCS). Siege of Jangan layer 3:
- * 'mason' (Master Mason Ko's donations, docs/SIEGE.md §2.4).
+ * 'mason' (Master Mason Ko's donations, docs/SIEGE.md §2.4). Layer 5: 'fence' (Old Fang crafts a Thunder Keg, §7).
  */
-export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason'
-export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason']
+export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason' | 'fence'
+export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason', 'fence']
 
 /** Why a dialog closed without the client asking ('closed' = replaced by another npcTalk). */
 export type NpcCloseReason = 'closed' | 'too_far' | 'dead' | 'warp' | 'gone'

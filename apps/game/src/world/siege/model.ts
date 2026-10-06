@@ -5,6 +5,7 @@
  */
 import { WALL_SIDE_NAMES, waveOf, type ServerMessage, type SiegeApproach, type SiegeContribKind, type SiegeRewardView, type SiegeView, type WallSide, type WallStage } from '@sro/shared'
 import { t, type StringKey } from '../../i18n/index.ts'
+import { compassOf } from '../pilot-model.ts'
 
 /** "4:07" (m:ss), "1:02:03" past an hour; 0 below zero. */
 export function fmtClock(ms: number): string {
@@ -36,6 +37,29 @@ export function siegeLines(v: SiegeView, now: number): { head: string; timer: st
   else if ((v.phase === 'wave1' || v.phase === 'wave2') && v.nextAt) timer = t('siege.nextWave', { time: fmtClock(v.nextAt - now) })
   else if (v.phase === 'wave3' && v.endsAt) timer = t('siege.timeLeft', { time: fmtClock(v.endsAt - now) })
   return { head, timer }
+}
+
+/** The bare clock of the timer line (the folded panel's), null when there is no timer. */
+export function siegeClock(v: SiegeView, now: number): string | null {
+  const at = v.phase === 'warning' || v.phase === 'wave1' || v.phase === 'wave2' ? v.nextAt : v.phase === 'wave3' ? v.endsAt : undefined
+  return at ? fmtClock(at - now) : null
+}
+
+/** Where the Warlord is from the own character, (dx, dz) = his position − mine in glTF metres: "38 m to the north-east". */
+export function warlordWhere(dx: number, dz: number): string {
+  const d = Math.hypot(dx, dz)
+  if (d < 6) return t('siege.where.here')
+  // the bearing is 0 along +X (east) and π/2 along −Z (north)
+  return t('siege.where.far', { dist: Math.round(d), dir: t(`hunt.dir.${compassOf(Math.atan2(-dz, dx))}` as StringKey) })
+}
+
+/**
+ * How far (px) the quest tracker below the panel moves down so the two never overlap: the panel's bottom plus `gap`
+ * past the tracker's own top, 0 when the panel ends above it.
+ */
+export function trackerShift(panelBottom: number, trackerTop: number, gap = 8): number {
+  if (!Number.isFinite(panelBottom) || !Number.isFinite(trackerTop)) return 0
+  return Math.max(0, Math.ceil(panelBottom + gap - trackerTop))
 }
 
 /** The meta line: defenders, foes, breaches. */

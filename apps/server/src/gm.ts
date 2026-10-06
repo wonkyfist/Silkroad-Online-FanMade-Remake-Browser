@@ -38,6 +38,7 @@ import { YETI_USAGE } from './winter-play/yeti.ts'
 import { STORM_USAGE } from './storm/service.ts'
 import { WALL_USAGE } from './siege/walls.ts'
 import { MASON_USAGE } from './siege/repair.ts'
+import { LAW_USAGE } from './siege/law.ts'
 import { SIEGE_USAGE } from './siege/event.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
@@ -541,6 +542,12 @@ export const COMMANDS: Record<string, Command> = {
     usage: SIEGE_USAGE,
     about: 'The Siege of Jangan: status, start one now (warning minutes), stop it (no rewards), send a wave now, bring out the Bandit Warlord, show the lanes.',
     run: ({ ctx, args, self }) => ctx.gameplay.siege.gm(self, args, Date.now()),
+  },
+  // Siege of Jangan layer 5 (docs/SIEGE.md §8, §12): warrants, the offence record, Thunder Kegs; body in siege/law.ts.
+  law: {
+    usage: LAW_USAGE,
+    about: "The law: open warrants and recent keg hits, a character's offence record, issue or close a warrant, make one lapse (online minutes left), pardon, forgive offences, capture (pays the bounty), clear the keg cooldown, burning kegs.",
+    run: ({ ctx, args, self }) => ctx.gameplay.law.gm(self, args, Date.now()),
   },
   // Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5): repair queues, builders, looters; body in siege/repair.ts.
   mason: {

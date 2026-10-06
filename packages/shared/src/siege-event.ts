@@ -154,8 +154,9 @@ export const SIEGE_MOBS: readonly SiegeMobSpec[] = [
   { code: SIEGE_EVENT_CODES.sapper, base: 'MOB_CH_BANDIT', name: 'Bandit Sapper', rarity: 'normal', hpMul: 0.6, speedMul: 0.8, scale: 100 },
   // a Stone Ghost giant driven against the stone
   { code: SIEGE_EVENT_CODES.ram, base: 'MOB_CH_STONEGHOST', name: 'Stone Ram', rarity: 'normal', hpMul: 1.5, speedMul: 1, scale: 100 },
-  // the Bandit Warlord: not a world unique (no timer), only the siege spawns him
-  { code: SIEGE_EVENT_CODES.warlord, base: 'MOB_CH_BANDIT', name: 'Bandit Warlord', rarity: 'unique', hpMul: 1, speedMul: 1, scale: 160 },
+  // the Bandit Warlord: not a world unique (no timer), only the siege spawns him; 220 % so he towers over
+  // his army (the client paints him in dark red armour with a banner, world/siege/warlord.ts)
+  { code: SIEGE_EVENT_CODES.warlord, base: 'MOB_CH_BANDIT', name: 'Bandit Warlord', rarity: 'unique', hpMul: 1, speedMul: 1, scale: 220 },
 ]
 
 /** The MobDef of a siege monster: the base's model and skills with the spec's changes. */
@@ -356,6 +357,43 @@ export interface SiegeEventSettings {
     titlePoints: number
     minPoints: number
   }
+  /** Layer 5 (docs/SIEGE.md §7, §11.2): the players' Thunder Keg. */
+  keg: {
+    /** A blast takes this % of a segment. */
+    damagePct: number
+    /** The plant: a timed cast (s), then the fuse (s); a defuse channel (s). */
+    plantSec: number
+    fuseSec: number
+    defuseSec: number
+    /** One plant per account per this many minutes. */
+    cooldownMin: number
+    /** The planter: level and played hours (characters.played_ms). */
+    minLevel: number
+    minPlayHours: number
+    /** Old Fang's price: gold and Saltpeter. */
+    gold: number
+    saltpeter: number
+    /** Kegs one character may carry. */
+    carry: number
+    /** Plant within this distance of a segment's outer face (m; the ditch rims keep walkers 6-9 m out of it). */
+    faceM: number
+    /** At most one plant notice per segment per this many minutes. */
+    noticeMin: number
+  }
+  /** Layer 5 (docs/SIEGE.md §8.1, §8.5, §11.2): warrants and the offence record. */
+  law: {
+    /** Bounty = bountyBase × min(offence, bountyCapMul) (an accomplice half, treason × treasonMul). */
+    bountyBase: number
+    bountyCapMul: number
+    /** A warrant lapses after this many hours of the Wanted's online time. */
+    wantedOnlineHours: number
+    /** Kegs on the same segment this many minutes before the breach make accomplices. */
+    accompliceWindowMin: number
+    /** One offence level is forgiven per this many clean days. */
+    forgiveDays: number
+    /** Kegs during a siege: bounty and sentence × this. */
+    treasonMul: number
+  }
 }
 
 export const SIEGE_EVENT_DEFAULTS: Readonly<SiegeEventSettings> = Object.freeze({
@@ -384,6 +422,8 @@ export const SIEGE_EVENT_DEFAULTS: Readonly<SiegeEventSettings> = Object.freeze(
   },
   bell: { hp: 30_000, repairPct: 0.5, zoneM: 60 },
   rewards: { goldPerPoint: 50, goldCap: 30_000, pointsPerSeal: 50, sealCap: 10, lossShare: 0.25, titleTop: 3, titlePoints: 300, minPoints: 20 },
+  keg: { damagePct: 60, plantSec: 5, fuseSec: 15, defuseSec: 3, cooldownMin: 30, minLevel: 18, minPlayHours: 10, gold: 50_000, saltpeter: 3, carry: 2, faceM: 10, noticeMin: 2 },
+  law: { bountyBase: 20_000, bountyCapMul: 4, wantedOnlineHours: 2, accompliceWindowMin: 10, forgiveDays: 30, treasonMul: 2 },
 }) as SiegeEventSettings
 
 export type SiegeEventPatch = {
@@ -436,6 +476,24 @@ export const SIEGE_EVENT_BOUNDS: Readonly<Record<string, readonly [number, numbe
   'rewards.titleTop': [0, 100],
   'rewards.titlePoints': [0, 1_000_000],
   'rewards.minPoints': [0, 1_000_000],
+  'keg.damagePct': [1, 150],
+  'keg.plantSec': [1, 60],
+  'keg.fuseSec': [3, 120],
+  'keg.defuseSec': [1, 30],
+  'keg.cooldownMin': [0, 1440],
+  'keg.minLevel': [1, 200],
+  'keg.minPlayHours': [0, 1000],
+  'keg.gold': [0, 10_000_000],
+  'keg.saltpeter': [0, 50],
+  'keg.carry': [1, 10],
+  'keg.faceM': [2, 20],
+  'keg.noticeMin': [0, 60],
+  'law.bountyBase': [0, 10_000_000],
+  'law.bountyCapMul': [1, 20],
+  'law.wantedOnlineHours': [0.05, 48],
+  'law.accompliceWindowMin': [0, 120],
+  'law.forgiveDays': [1, 365],
+  'law.treasonMul': [1, 5],
 }
 
 /** Every editable path: 'enabled', 'schedule.slots', 'schedule.tz' and the numbers. */

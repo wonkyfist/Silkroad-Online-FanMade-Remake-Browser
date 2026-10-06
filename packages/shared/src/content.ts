@@ -360,6 +360,9 @@ export interface ItemUse {
   // ---- Siege of Jangan, layer 3 (docs/SIEGE.md §2.4; authored items only) ----
   /** A Mason's Kit: used at a wall segment, a repair channel (siege/repair.ts). */
   masonKit?: true
+  // ---- Siege of Jangan, layer 5 (docs/SIEGE.md §7; authored items only) ----
+  /** A Thunder Keg: planted at a wall segment's outer foot (siege/keg.ts). */
+  thunderKeg?: true
 }
 
 /** The worn-item stats a +1 enhancement raises (ItemDef.perPlus keys). */

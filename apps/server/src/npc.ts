@@ -146,12 +146,15 @@ export class NpcDialogs implements GameplayModule {
       case 'mason':
         // Siege of Jangan layer 3 (docs/SIEGE.md §2.4): Master Mason Ko's donations, while the walls are on.
         return this.g.wallRepair.offers(npc.code)
+      case 'fence':
+        // Siege of Jangan layer 5 (docs/SIEGE.md §7): Old Fang crafts Thunder Kegs, while the walls are on.
+        return this.g.kegs.offers(npc.code)
     }
   }
 
   /** What the dialog of `npc` offers `p`, in the dialog's order (the client shows 'repair' as shop buttons, D13). */
   servicesOf(p: Player | null, npc: Npc): NpcService[] {
-    return (['shop', 'storage', 'quest', 'repair', 'guild', 'mason'] as const).filter((s) => this.has(p, npc, s))
+    return (['shop', 'storage', 'quest', 'repair', 'guild', 'mason', 'fence'] as const).filter((s) => this.has(p, npc, s))
   }
 
   /**

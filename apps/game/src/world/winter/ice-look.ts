@@ -203,7 +203,11 @@ export function iceLookOf(mesh: AbstractMesh): IceLook | undefined {
 /** The attachment for a winter monster's view (null for every other view). */
 export function iceLook(v: EntityView): EntityAttachment | null {
   const look = v.state.kind === 'mob' ? ICE_LOOKS[v.state.model] : undefined
-  if (!look) return null
+  return look ? lookAttachment(v, look) : null
+}
+
+/** Paints view `v`'s actor with `look` (the same plugin, any ramp: the Siege's Bandit Warlord wears a dark red one). */
+export function lookAttachment(v: EntityView, look: IceLook): EntityAttachment {
   const mine = new Set<AbstractMesh>()
   let frames = 0
 

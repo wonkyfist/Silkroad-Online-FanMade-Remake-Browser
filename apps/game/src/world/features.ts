@@ -49,6 +49,7 @@ import { tornadoFeature } from './features/tornado.ts'
 import { wallsFeature } from './features/walls.ts'
 import { siegeRepairFeature } from './features/siege-repair.ts'
 import { siegeFeature } from './features/siege.ts'
+import { lawFeature } from './features/law.ts'
 import { newsFeature } from './features/news.ts'
 
 export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
@@ -187,6 +188,8 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   siegeRepairFeature, // world/features/siege-repair.ts
   // Siege of Jangan, layer 4 (docs/SIEGE.md §9.3): the siege HUD, banners, the Town Bell, kegs, the reward window.
   siegeFeature, // world/features/siege.ts
+  // Siege of Jangan, layer 5 (docs/SIEGE.md §8, §9.3): the WANTED label, the law's banners, your warrant, Old Fang, the plant prompt.
+  lawFeature, // world/features/law.ts
   // The "What's new" window (docs/CHANGELOG_WINDOW.md): unseen update notes once per login, the Esc menu entry and J.
   newsFeature, // world/features/news.ts
   // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.

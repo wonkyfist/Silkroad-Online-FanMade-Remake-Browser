@@ -309,12 +309,13 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   }
   let dataVersion = store.dataVersion()
   // Play the Boss (docs/PLAY_THE_BOSS.md §3.9): the game socket's IP of a player (the same-IP associates).
-  gameplay.pilot?.connect({
-    ipOf: (p) => {
-      for (const c of sockets.values()) if (c.player === p) return c.ip
-      return null
-    },
-  })
+  const ipOf = (p: Player): string | null => {
+    for (const c of sockets.values()) if (c.player === p) return c.ip
+    return null
+  }
+  gameplay.pilot?.connect({ ipOf })
+  // Siege of Jangan layer 5 (docs/SIEGE.md §8.6): the same-IP associates of wall-breakers.
+  gameplay.law.connect({ ipOf })
   const adminApi = new AdminApi(ctx, adminStore, settings, startedAt)
 
   const loginFailures = new FailureLimiter(5, 15 * 60_000)

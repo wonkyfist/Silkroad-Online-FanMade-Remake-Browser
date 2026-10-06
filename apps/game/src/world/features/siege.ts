@@ -1,17 +1,23 @@
 /**
  * Siege of Jangan, layer 4 on the client (docs/SIEGE.md §9.2, §9.3, §9.5): the siege event.
  *
- * - **The HUD** (hud/siege-hud.ts): while a siege runs (and a minute after it ends) the panel under the notices shows
- *   the phase, the timer to the next wave (or the end), the Town Bell's HP, the Warlord's HP in the last wave, the 33
- *   wall segments as pips coloured by stage (from `walls` / `wallUpdate`; the segments the army attacks outlined), the
- *   defenders, foes and breaches (`siegeEvent`).
+ * - **The HUD** (hud/siege-hud.ts): while a siege runs (and a minute after it ends) the panel under the minimap shows
+ *   the phase, the timer to the next wave (or the end), the Town Bell's HP, the Warlord's HP in the last wave and, while
+ *   he is in view, where he is; the 33 wall segments as pips coloured by stage (from `walls` / `wallUpdate`), the
+ *   defenders, foes and breaches (`siegeEvent`). It folds to one line and two slim bars; the quest tracker under it
+ *   moves down while it is open.
  * - **Banners** (`siegeNotice`) on the one NoticeBanner queue: the warning with the approaches, each wave, a breach, a
  *   keg planted / defused / blown, the end. The warning also rings the temple bell three times and starts the town's
  *   alarm (the town feature's 60 s alarm), the server's `[Siege]` chat lines tell the rest.
  * - **The Town Bell**: the siege's Bell mob (no model of its own) is drawn as a bronze bell in a timber frame on a stone
  *   plinth (world/siege/props.ts); it swings when it is hit; its label says a defender's hit repairs it.
- * - **The army**: sappers carry a keg on their back; every siege monster's label says "Siege army". Rams, raiders,
- *   archers and the Warlord are retail models (the Warlord is a Bandit at 160 %, the rams Stone Ghost giants).
+ * - **The army**: sappers carry a keg on their back; every siege monster's label says "Siege army". Rams, raiders and
+ *   archers are retail models (the rams Stone Ghost giants).
+ * - **The Warlord** (world/siege/warlord.ts): a Bandit at 220 % in blackened, crimson armour with a gold edge (the
+ *   ice-look plugin with his own ramp), a war banner on his back, a turning ring at his feet, a red beacon over him from
+ *   afar, a boss name plate ("Leader of the siege army", the HP bar always shown) and a gold-ringed red dot on the
+ *   minimap. The final assault opens with his war horn (a retail war cry pitched down, twice, and a shout); his roar
+ *   sounds where he first comes into view.
  * - **Kegs** (`keg` / `kegEnd`): a keg prop at the foot of the wall with its fuse's sparks; within 3 m a prompt over the
  *   hotbar offers Defuse (`kegDefuse`) and shows the progress; a blast plays the fireball, the smoke, a flash and
  *   `common/explode_bomb1` (or stone_bomb).
@@ -26,11 +32,13 @@ import { gameAudio } from '../../audio/index.ts'
 import { KegPrompt, SiegeHud, SiegeRewardWindow } from '../../hud/siege-hud.ts'
 import { inWorld } from '../../hud/unique-notice.ts'
 import { t, type StringKey } from '../../i18n/index.ts'
-import type { EntityView } from '../entities.ts'
+import type { EntityAttachment, EntityView } from '../entities.ts'
 import type { HudMarker, HudMinimap } from '../jangan/minimap.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
 import { blastFx, buildBell, buildKeg, fuseSparks, type BellProp, type KegProp, type PropPath } from '../siege/props.ts'
-import { fmtClock, kegInReach, noticeText, pipLook, pipOrder, rewardLines, siegeLines, siegeMeta, wallText, type KegState } from '../siege/model.ts'
+import { fmtClock, kegInReach, noticeText, pipLook, pipOrder, rewardLines, siegeClock, siegeLines, siegeMeta, trackerShift, wallText, warlordWhere, type KegState } from '../siege/model.ts'
+import { buildWarlordGear, WARLORD_LOOK, type WarlordGear } from '../siege/warlord.ts'
+import { lookAttachment } from '../winter/ice-look.ts'
 
 /** The HUD stays this long after the end (ms). */
 const AFTER_END_MS = 60_000
@@ -39,10 +47,22 @@ const HUD_EVERY_S = 0.25
 /** A keg within this reach offers Defuse (m; the server allows 3). */
 const KEG_REACH_M = 2.8
 /** Sound files (the sound export's ids). */
-const BELL_FILE = 'env/bell_towel_3'
+const BELL_FILE = 'env/bell towel 3'
 const BLAST_FILES = ['common/explode_bomb1', 'common/stone_bomb']
 /** The temple bell's three strokes at the warning (s apart). */
 const TOLL_S = 2.4
+/**
+ * The Warlord's war horn at the final assault: a retail war cry pitched down (twice) and a Bandit's shout, [file,
+ * rate, gain, delay s]; his roar where he comes into view.
+ */
+const HORN: readonly (readonly [string, number, number, number])[] = [
+  ['monster/wcm_eking_waveshout_a', 0.5, 1, 0],
+  ['monster/wcm_eking_waveshout_a', 0.45, 0.9, 1.25],
+  ['monster/cm_bandit_shout_a', 0.62, 1, 2.6],
+]
+const ROAR: readonly [string, number] = ['monster/cm_bandit_shout_b', 0.58]
+/** Sounds wait this long for their buffer (ms; the horn's files are not preloaded). */
+const SOUND_WAIT_MS = 2500
 
 interface Keg extends KegState {
   prop: KegProp | null
@@ -60,6 +80,10 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
   let minimap: HudMinimap | null = null
   let offMarkers: (() => void) | null = null
   let lastReward: SiegeRewardView | null = null
+  /** The Warlord's view while he is in view (the HUD says where he is). */
+  let lord: EntityView | null = null
+  /** The quest tracker this panel pushed down (its margin is reset when the panel closes). */
+  let pushed: HTMLElement | null = null
   const offs: (() => void)[] = []
 
   const hud = new SiegeHud()
@@ -98,11 +122,11 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
   }
 
   // ---- sounds --------------------------------------------------------------------------------------------------
-  const play = (file: string, pos: { x: number; y: number; z: number } | null, gain = 1) => {
+  const play = (file: string, pos: { x: number; y: number; z: number } | null, gain = 1, rate = 1) => {
     const a = gameAudio()
     if (!a?.index?.files?.[file]) return
-    if (pos) a.playFile(file, { pos, gain, bus: 'sfx', kind: 'other', self: true, priority: 1 })
-    else a.playFile(file, { gain, bus: 'ambient', kind: 'other', self: true, priority: 1 })
+    if (pos) a.playFile(file, { pos, gain, rate, bus: 'sfx', kind: 'other', self: true, priority: 1, waitMs: SOUND_WAIT_MS })
+    else a.playFile(file, { gain, rate, bus: 'ambient', kind: 'other', self: true, priority: 1, waitMs: SOUND_WAIT_MS })
   }
   const tolls: ReturnType<typeof setTimeout>[] = []
   const alarm = () => {
@@ -114,16 +138,21 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
       console.warn('[siege] town alarm failed', err)
     }
   }
+  const horn = () => {
+    for (const [file, rate, gain, at] of HORN) tolls.push(setTimeout(() => play(file, null, gain, rate), at * 1000))
+  }
   offs.push(() => tolls.splice(0).forEach(clearTimeout))
 
   // ---- the HUD ---------------------------------------------------------------------------------------------------
   const refreshHud = (now: number) => {
     const on = view !== null && (view.phase !== 'ended' || now < hideAt)
     if (!on) {
-      hud.set(null, { head: '', timer: null, meta: '' })
+      hud.set(null, { head: '', timer: null, clock: null, meta: '' })
     } else {
       const l = siegeLines(view!, now)
-      hud.set(view, { ...l, meta: siegeMeta(view!) })
+      const me = selfView()
+      const where = lord && !lord.dead && me ? warlordWhere(lord.pos.x - me.pos.x, lord.pos.z - me.pos.z) : null
+      hud.set(view, { ...l, clock: siegeClock(view!, now), meta: siegeMeta(view!), where })
       hud.setPips(
         pipOrder(segs.keys()).map((id) => {
           const s = segs.get(id)!
@@ -131,7 +160,7 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
         }),
       )
     }
-    hud.setBelow(app.notices.showing !== null)
+    placeTracker(on)
     // the keg prompt
     const k = nearKeg()
     if (!k) prompt.set(null, fmtClock)
@@ -141,6 +170,27 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
       prompt.set({ fuseMs: k.fuseEndsAt - now, defuse: mine ? { frac, leftMs: k.defuse!.endsAt - now } : null }, fmtClock)
     }
   }
+
+  /** Moves the quest tracker (same column, top 262) below the open panel; puts it back when the panel closes. */
+  const placeTracker = (open: boolean) => {
+    const qt = ctx.hud.layer.querySelector<HTMLElement>('.quest-tracker')
+    if (pushed && pushed !== qt) {
+      pushed.style.marginTop = ''
+      pushed = null
+    }
+    if (!qt) return
+    let want = ''
+    if (open && !qt.hidden) {
+      const px = trackerShift(hud.root.offsetTop + hud.root.offsetHeight, parseFloat(getComputedStyle(qt).top))
+      if (px > 0) want = `${px}px`
+    }
+    if (qt.style.marginTop !== want) qt.style.marginTop = want
+    pushed = want ? qt : null
+  }
+  offs.push(() => {
+    if (pushed) pushed.style.marginTop = ''
+    pushed = null
+  })
 
   // ---- kegs ------------------------------------------------------------------------------------------------------
   const putKeg = (m: Extract<ServerMessage, { t: 'keg' }>) => {
@@ -194,6 +244,12 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
       let keg: KegProp | null = null
       let ready = false
       let built = false
+      // the Warlord: his paint (per mesh), his banner, ring and beacon, his name plate
+      const warlord = role === 'warlord'
+      const look: EntityAttachment | null = warlord ? lookAttachment(v, WARLORD_LOOK) : null
+      let gear: WarlordGear | null = null
+      let roared = false
+      if (warlord) lord = v
       /** The props wait for the world (its material path: PBR or Classic). */
       const build = () => {
         if (built || !ctx.world()) return
@@ -211,6 +267,10 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
           keg.root.scaling.setAll(0.75)
           keg.root.position.set(0, 0.95, -0.42)
           keg.root.rotation.x = -0.25
+        } else if (warlord) {
+          const body = v.actor?.root
+          if (!body) return
+          gear = buildWarlordGear(ctx.scene, `siegeWarlord${v.id}`, body, v.root, path(), (x, z) => ctx.world()?.heightAt(x, z) ?? NaN)
         }
       }
       return {
@@ -219,11 +279,24 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
           if (role === 'bell') {
             v.setLabelLine('siege', t('siege.label.bell'))
             if (v.placeholder) v.placeholder.isVisible = false
-          } else v.setLabelLine('siege', role === 'sapper' ? t('siege.label.sapper') : t('siege.label.army'))
+          } else v.setLabelLine('siege', role === 'sapper' ? t('siege.label.sapper') : warlord ? t('siege.label.warlord') : t('siege.label.army'))
+          if (warlord) {
+            v.setLabelClass('siege-warlord', true)
+            look!.loaded?.()
+            if (!roared && !v.dead) {
+              roared = true
+              play(ROAR[0], { x: v.pos.x, y: v.pos.y + 3, z: v.pos.z }, 1, ROAR[1])
+            }
+          }
           build()
         },
-        update(_now, dt) {
+        update(now, dt) {
           if (ready && !built) build()
+          if (look) {
+            look.update?.(now, dt)
+            const cam = ctx.scene.activeCamera?.globalPosition
+            gear?.update(performance.now() / 1000, dt, cam ? Math.hypot(cam.x - v.pos.x, cam.z - v.pos.z) : 0, !v.dead)
+          }
           if (!bell) return
           const b = bells.get(v.id)
           const hp = v.state.hp ?? 0
@@ -235,6 +308,9 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
           bell?.dispose()
           keg?.dispose()
           bells.delete(v.id)
+          look?.dispose()
+          gear?.dispose()
+          if (lord === v) lord = null
         },
       }
     }),
@@ -244,6 +320,11 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
   function* markers(): Iterable<HudMarker> {
     if (!view || view.phase === 'ended') return
     for (const v of ctx.views()) if (v.kind === 'mob' && v.state.model === SIEGE_EVENT_CODES.bell && !v.dead) yield { x: v.pos.x, z: v.pos.z, color: '#ffd953', size: 4 }
+    // the Warlord: a red dot in a gold ring
+    if (lord && !lord.dead) {
+      yield { x: lord.pos.x, z: lord.pos.z, color: '#ffc94a', size: 6 }
+      yield { x: lord.pos.x, z: lord.pos.z, color: '#e0201a', size: 4.2 }
+    }
     const blink = Math.floor(performance.now() / 350) % 2 === 0
     if (blink) for (const k of kegs.values()) yield { x: k.x, z: k.z, color: '#ff7a2a', size: 3.5 }
   }
@@ -278,6 +359,14 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
     },
     /** Siege monsters in view: role, mode-less (the client has no mode), position. */
     army: () => [...ctx.views()].filter((v) => v.kind === 'mob' && v.state.siege).map((v) => ({ id: v.id, role: v.state.siege, x: Math.round(v.pos.x), z: Math.round(v.pos.z), hp: v.state.hp })),
+    /** The Warlord in view: where, how tall, his label's classes. */
+    warlord: () => (lord ? { id: lord.id, x: lord.pos.x, y: lord.pos.y, z: lord.pos.z, height: lord.height, scale: lord.scale } : null),
+    /** The Warlord's paint (live: the plugin reads it every draw, so a console edit shows at once). */
+    look: WARLORD_LOOK,
+    /** Fold (true) or open (false) the panel. */
+    fold: (on: boolean) => hud.setFolded(on),
+    /** The war horn of the final assault. */
+    horn: () => horn(),
     reward: (r?: SiegeRewardView) => showReward(r ?? lastReward ?? { event: 0, outcome: 'won', points: 412, rank: 1, of: 9, gold: 20_600, seals: 8, title: 'jangan_defender', top: [{ name: 'Aki', points: 412 }, { name: 'Mei', points: 260 }, { name: 'Ryu', points: 133 }], parts: { damage: 352, defuse: 30, bell: 30 } }),
   }
   if (typeof window !== 'undefined') (window as unknown as { __sroSiege?: unknown }).__sroSiege = debug
@@ -305,6 +394,7 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
         case 'siegeNotice': {
           const text = noticeText(msg)
           if (msg.event === 'phase' && msg.phase === 'warning') alarm()
+          if (msg.event === 'phase' && msg.phase === 'wave3') horn()
           if (text) app.notices.show(text, { kind: 'unique', title: t('siege.title'), live: inWorld, ms: msg.event === 'phase' ? 8000 : 6000 })
           break
         }

@@ -73,6 +73,12 @@ export const enSiege = {
   'siege.label.army': 'Siege army',
   'siege.label.sapper': 'Carries a keg',
   'siege.label.bell': 'Hit it to repair it',
+  'siege.label.warlord': 'Leader of the siege army',
+  // the panel's fold button, where the Warlord is
+  'siege.hud.fold': 'Fold the siege panel',
+  'siege.hud.unfold': 'Open the siege panel',
+  'siege.where.far': 'He is {dist} m to the {dir}',
+  'siege.where.here': 'He is right here!',
   // the title (EntityState.honor; shown by the Play the Boss label code as pilot.honor.<code>)
   'pilot.honor.jangan_defender': 'Defender of Jangan',
 } as const

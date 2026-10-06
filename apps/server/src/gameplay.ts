@@ -82,6 +82,8 @@ import { WallService } from './siege/walls.ts'
 import { WallRepair } from './siege/repair.ts'
 import { WallLooters } from './siege/looters.ts'
 import { SiegeService } from './siege/event.ts'
+import { ThunderKegs } from './siege/keg.ts'
+import { LawService } from './siege/law.ts'
 import { MovementService } from './movement.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
@@ -323,6 +325,12 @@ export class Gameplay implements AiHost {
    */
   readonly siege: SiegeService
   /**
+   * Siege of Jangan layer 5 (docs/SIEGE.md §7, §8; siege/keg.ts, law.ts): the players' Thunder Keg (Old Fang, Saltpeter,
+   * plant, defuse, blast) and the law (warrants, the WANTED label, the online-time lapse, the per-account record).
+   */
+  readonly kegs: ThunderKegs
+  readonly law: LawService
+  /**
    * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
    * falls as snow. Other modules read `winter.state(now)`.
    */
@@ -400,6 +408,8 @@ export class Gameplay implements AiHost {
     this.uniques = uniquesOn ? new Uniques(this) : null
     this.pilot = this.uniques ? new Pilot(this, this.uniques) : null
     this.siege = new SiegeService(this, this.walls)
+    this.kegs = new ThunderKegs(this, this.walls)
+    this.law = new LawService(this)
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
     this.mobSkills.summonPolicy = (m) => this.uniques?.summonPolicy(m) ?? null
     if (!this.world.decorators.includes(dropTag)) this.world.decorators.push(dropTag)
@@ -427,6 +437,9 @@ export class Gameplay implements AiHost {
       this.wallLooters,
       // docs/SIEGE.md §6: the siege event, after the walls, repair and looters it reads
       this.siege,
+      // docs/SIEGE.md §7, §8: the players' Thunder Kegs and the law (Wanted), after the siege (treason, kegDefuse)
+      this.kegs,
+      this.law,
       this.movement,
       // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
       this.winterPlay,

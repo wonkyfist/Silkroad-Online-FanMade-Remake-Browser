@@ -133,6 +133,7 @@ import { WARMTH_LEVELS, WARMTH_SOURCES, WINTER_PLAY_LIMITS, YETI_SKILLS, type Wa
 import { TORNADO_LIMITS } from './tornado.ts'
 import { WALL_FX_KINDS, WALL_LIMITS, WALL_SEGMENT_ID, WALL_STAGES, type WallRepairTerms, type WallSegView, type WallServerMessage } from './siege.ts'
 import { MAX_DONATE_BLOCKS } from './siege-repair.ts'
+import { LAW_LIMITS, LAW_NOTICE_EVENTS, type LawServerMessage, type WantedView } from './siege-law.ts'
 import {
   SIEGE_APPROACHES,
   SIEGE_CONTRIB_KINDS,
@@ -280,6 +281,8 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   wallRepair: ['t', 'seg'],
   // Siege of Jangan, layer 4 (docs/SIEGE.md §10.1)
   kegDefuse: ['t', 'id'],
+  // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
+  kegCraft: ['t', 'npc'],
 }
 
 /** Keys a client message may omit. */
@@ -618,6 +621,9 @@ function clientMessage(v: unknown): ClientMessage {
     // ---- Siege of Jangan, layer 4 (docs/SIEGE.md §10.1) ----
     case 'kegDefuse':
       return { t: 'kegDefuse', id: int(v, 'id', 1, MAX_ID) }
+    // ---- Siege of Jangan, layer 5 (docs/SIEGE.md §10.1) ----
+    case 'kegCraft':
+      return { t: 'kegCraft', npc: npcId(v) }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -980,6 +986,8 @@ function entity(v: unknown): EntityState {
   if (o.charged !== undefined && bool(o, 'charged')) e.charged = true
   // Siege of Jangan, layer 4 (docs/SIEGE.md §10.2)
   if (o.siege !== undefined) e.siege = oneOf(o, 'siege', SIEGE_ROLES)
+  // Siege of Jangan, layer 5 (docs/SIEGE.md §10.2)
+  if (o.wanted !== undefined) e.wanted = int(o, 'wanted', 1, LAW_LIMITS.bounty)
   return e
 }
 
@@ -1634,6 +1642,8 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.honor !== undefined) m.honor = honorCode(o, 'honor', true)
       // storms (docs/WEATHER.md §12)
       if (o.charged !== undefined) m.charged = bool(o, 'charged')
+      // Siege of Jangan layer 5: the bounty, 0 = no longer Wanted
+      if (o.wanted !== undefined) m.wanted = int(o, 'wanted', 0, LAW_LIMITS.bounty)
       return m
     }
     case 'role':
@@ -1968,6 +1978,10 @@ function serverMessage(v: unknown): ServerMessage {
     case 'keg':
     case 'kegEnd':
       return siegeMessage(o)
+    // Siege of Jangan, player kegs and Wanted (docs/SIEGE.md §10.2)
+    case 'lawNotice':
+    case 'lawState':
+      return lawMessage(o)
     default:
       fail('unknown message type')
   }
@@ -2092,6 +2106,35 @@ function siegeMessage(o: Record<string, unknown>): SiegeServerMessage {
     default:
       return { t: 'kegEnd', id: int(o, 'id', 1, MAX_ID), how: oneOf(o, 'how', ['blast', 'defused', 'cancelled'] as const) }
   }
+}
+
+// ---- Siege of Jangan, player kegs and Wanted (docs/SIEGE.md §10.2; siege-law.ts) -------------------------------------
+
+function wantedView(v: unknown): WantedView {
+  const o = rec(v, 'wanted')
+  const w: WantedView = {
+    bounty: int(o, 'bounty', 0, LAW_LIMITS.bounty),
+    lapseMs: int(o, 'lapseMs', 0, LAW_LIMITS.lapseMs),
+    offence: int(o, 'offence', 1, LAW_LIMITS.offences),
+    role: oneOf(o, 'role', ['breaker', 'accomplice'] as const),
+  }
+  if (o.treason !== undefined && bool(o, 'treason')) w.treason = true
+  return w
+}
+
+function lawMessage(o: Record<string, unknown>): LawServerMessage {
+  if (o.t === 'lawState') {
+    const m: Extract<LawServerMessage, { t: 'lawState' }> = { t: 'lawState', offences: int(o, 'offences', 0, LAW_LIMITS.offences) }
+    if (o.wanted !== undefined) m.wanted = wantedView(o.wanted)
+    return m
+  }
+  const m: Extract<LawServerMessage, { t: 'lawNotice' }> = { t: 'lawNotice', event: oneOf(o, 'event', LAW_NOTICE_EVENTS) }
+  if (o.wall !== undefined) m.wall = wallSegId(o, 'wall')
+  if (o.name !== undefined) m.name = str(o, 'name', 64, 1)
+  if (o.bounty !== undefined) m.bounty = int(o, 'bounty', 0, LAW_LIMITS.bounty)
+  if (o.treason !== undefined && bool(o, 'treason')) m.treason = true
+  if (o.accomplices !== undefined) m.accomplices = boundedList(o, 'accomplices', LAW_LIMITS.accomplices, (x) => str({ n: x }, 'n', 64, 1))
+  return m
 }
 
 // ---- winter gameplay (docs/WINTER.md §13) ------------------------------------------------------------------------

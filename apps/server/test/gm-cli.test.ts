@@ -123,7 +123,7 @@ describe('migration v2', () => {
     const store = openStore(dir)
     try {
       // v1 -> latest (v3 adds character stats and items on top of v2)
-      expect(store.schemaVersion).toBe(18)
+      expect(store.schemaVersion).toBe(19)
       expect(store.accountByName('old')!.role).toBe('player')
       expect(() => store.db.prepare("UPDATE accounts SET role = 'god'").run()).toThrow(/CHECK/)
       const cols = (store.db.prepare('PRAGMA table_info(gm_audit)').all() as { name: string }[]).map((c) => c.name)

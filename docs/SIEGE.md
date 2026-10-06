@@ -1,7 +1,8 @@
 # Siege of Jangan: destructible walls, wall-breakers jailed by Hunters
 
 **Status (2026-10-06): layers 0 and 1 built** (the cut, walls that break and walk through); layers 2 (looks and sound)
-and 3 (repair) and 4 (the siege event) built, see their status notes below; layers 5-6 are spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
+and 3 (repair), 4 (the siege event) and 5 (player kegs and Wanted) built, see their status notes below; layer 6 is
+spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
 (`<world>/siege/models/cj_<side>_cut.glb`, one glb per side with a node per piece; `siege/walls-nav.bin`), never in
 `content/` (retail meshes are never committed); `nav.bin` / `nav-objects.bin` keep the retail wall instances and the
 server and client switch them off at load (re-runnable without re-exporting the nav); the Blender script is
@@ -12,6 +13,45 @@ underpass stays inside the gatehouse piece); layer 1 shows cracks as a dark over
 (layer 2 brings the real crack textures, collapse and mounds). Written at HEAD `fdfcb04`. Builds on the storm series
 (docs/WEATHER.md §2.7 `LightningService.onStrike`, §13 `TornadoService.onTornado`) and borrows the event, settings and
 admin patterns of docs/PLAY_THE_BOSS.md.
+
+**Layer 5 status (2026-10-06): built** (player kegs and Wanted). Server `apps/server/src/siege/{keg,law,law-store}.ts`
+(GameplayModules `kegs` and `law`, after `siege`); shared rules, content and protocol `packages/shared/src/siege-law.ts`
+(settings groups `keg` and `law` in siege-event.ts); client `apps/game/src/world/features/law.ts`, `hud/law-hud.ts`,
+`i18n/en-siege-law.ts`; admin Numbers cards "Thunder Kegs" and "The law"; migration **19** (all four tables of §10.3:
+`char_jobs`, `warrants`, `jail_terms`, `law_records`). Built as written (all §16.2 defaults), with these deviations:
+- **The plant reach**: `keg.faceM` is **10 m**, not 6: the ditch rims stop walkers 6.3 (E) to 9.2 m (N) out of the outer
+  face (measured on the export), so 6 m could not be reached on most segments. Kegs are refused in a safe area
+  (`safe_zone`), over a gatehouse or a corner span (`wrong_place`), from the town side (`wrong_place`), farther out
+  (`too_far`) and at an open segment. The keg lies where the planter stands.
+- **The sapper keg rules are shared** (`keg.ts`: one id space, the `keg` message, the defuse channel, the 6 m blast);
+  `kegDefuse` stays the siege module's request and hands a player keg to `kegs`. The planter and the planter's associates
+  may not defuse it (`not_usable`). A player keg defused during a siege counts 30 points; player kegs outlive a siege.
+- **Craft**: Old Fang's `fence` NPC service (NpcService, additive) and `kegCraft {npc}` (a new GameplayRequest): 50,000
+  gold + 3 Saltpeter; level 18 and 10 h played are checked at the craft too; the carry limit answers `keg_limit` (the only
+  new ActionFailReason; the cooldown answers it too). Old Fang is `NPC_SIEGE_OLD_FANG` at (-520, -232) wearing the Casino
+  Guardian's model. The keg is `canTrade/canDrop/canStore/canSell: false`, stack 1; Saltpeter drops from Bandits and
+  Bandit Archers (2 %, their tables) and siege monsters (2 %).
+- **The plant**: a 5 s cast on the item cast bar (`itemCast` / `itemCastEnd`, interrupted like the Mason's Kit). The
+  plant notice goes out when the cast starts (`lawNotice plant`, no name, ≤ 1 per segment per 2 min). The per-account
+  cooldown is `law_records.last_plant_at` (an added column).
+- **Accomplices** are found from `wall_log` (cause `keg`, the planter as character_id), so a restart between kegs keeps
+  them. One offence per ACCOUNT per breach (an alt that also kegged is an accomplice but the account's level rises once).
+- **Notices**: `lawNotice` (plant, wanted, defused, lapsed, pardoned, captured) and `lawState` instead of extending
+  `siegeNotice`; during a siege the siege's own breach banner is skipped for a keg breach (the law's names the traitor).
+- **The online clock**: the warrant's time runs while the Wanted is in the world (saved every 30 s and at logout);
+  `EntityState.wanted` (the bounty) and `entityUpdate.wanted` (0 clears) draw the red label; the own HUD shows the
+  bounty, the online time left, the offence and treason (no "Hunters can attack you" line before layer 6).
+- **Associates rule of layer 4**: a siege's traitors (breakers and accomplices of a treason breach) and their
+  associates (party, guild, same account, same IP) get no siege rewards (`LawService.barredFromSiege`).
+- **Layer 6 hooks**: `law.wantedOf / isWanted / bountyOf / onWanted` (readable state), `law.capture(characterId,
+  captors, now)` (closes the warrants `captured`, pays the bounty from the server by share, associates of the Wanted get
+  nothing, returns the sentence), `law.kegRefusal(p)` (the jail and Hunter duty will refuse kegs there). The 7-day pair
+  rule and the jail are layer 6.
+- **GM** `law [status] | record | wanted [off] | lapse <min> | pardon | forgive [all] | capture [captor] | cooldown |
+  kegs` (the spec's `law jail/release/hunter` come with layer 6; the admin Law tab too).
+- Tests: `apps/server/test/siege-law.test.ts`, `packages/shared/test/siege-law.test.ts`, `apps/game/test/law-hud.test.ts`.
+  Screenshots: `siege-preview/layer5-*.png`. Not done: the planter still sees the siege HUD's Defuse prompt over the own
+  keg (the server refuses it).
 
 **Layer 4 status (2026-10-06): built** (the siege event). Server `apps/server/src/siege/{event,army,lanes,event-store,
 event-admin}.ts` (GameplayModule `siege`, after `wallLooters`); shared rules, content and protocol
@@ -34,8 +74,16 @@ event-admin}.ts` (GameplayModule `siege`, after `wallLooters`); shared rules, co
   sapper does not count as alive for the early-wave rule.
 - **Roster**: raiders 2 Bandits : 1 Tiger; elite = Bandit champions; authored rows (installSiegeEventContent, server and
   client) `MOB_SIEGE_SAPPER` (Bandit, 60 % HP, 0.8 speed), `MOB_SIEGE_STONE_RAM` (Stone Ghost × 1.5 HP, spawned
-  giant), `MOB_SIEGE_WARLORD` (Bandit at 160 %, unique, HP 60,000 × s^0.9, attack × 3), `MOB_SIEGE_TOWN_BELL`. Siege
+  giant), `MOB_SIEGE_WARLORD` (Bandit at 220 %, unique, HP 60,000 × s^0.9, attack × 3), `MOB_SIEGE_TOWN_BELL`. Siege
   mobs give 50 % EXP and drop nothing (Saltpeter waits for layer 5).
+- **The Warlord's look** (polish, client `world/siege/warlord.ts`): the ice-look plugin with his own ramp (blackened
+  crimson, a gold edge; `lookAttachment`), a war banner on his back, a ring at his feet tilted to the slope, a red
+  beacon that fades in past 18 m, a boss name plate ("Leader of the siege army", HP bar always shown), a gold-ringed
+  minimap dot, the HUD line "He is N m to the …"; wave 3 opens with his war horn (`wcm_eking_waveshout_a` pitched down
+  twice and a Bandit shout), and he roars where he first comes into view.
+- **The siege panel** (polish) sits under the minimap in the quest tracker's column (top 200, 200 wide; the tracker moves
+  down while it is open), folds to one line and two slim bars (remembered per browser); the banners keep the top centre
+  to themselves and the reward window opens under their line.
 - **Sapper kegs** are not entities: `keg` / `kegEnd` messages and a client prop (banded barrel, fuse sparks; the blast:
   fireball, smoke, flash, `common/explode_bomb1` / `stone_bomb`). Defuse from a HUD prompt within 3 m (`kegDefuse`,
   3 s, broken by moving or damage), not a click on the prop. Blast: `sapperIp` and 25 % max HP within 6 m

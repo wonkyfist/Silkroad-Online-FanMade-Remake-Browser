@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
   DEFENDER_MIN_LEVEL,
+  LAW_CODES,
+  SALTPETER_DROP,
   DEFENDER_RANGE_M,
   SIEGE_APPROACHES,
   SIEGE_EVENT_CODES,
@@ -52,6 +54,7 @@ import type { MeshNav } from '../nav.ts'
 import { nextSlotAt } from '../pilot/lottery.ts'
 import type { Mob, Player } from '../world.ts'
 import { Army, outerPath, slotOffset, slotStart, SWING_MS, type ArmyHost, type SiegeMob } from './army.ts'
+import { KEG_BLAST_M, KEG_DEFUSE_M, KEG_HURT, beginDefuse, blastHurt, defuseStep, kegMessage, nextKegId, type KegDefuse } from './keg.ts'
 import { registerSiegeAdmin } from './event-admin.ts'
 import { SiegeStore, type SiegeEventRow } from './event-store.ts'
 import { LEG_EPS_M, readSiegeLanes, validateLanes, type ApproachLanes, type Lane } from './lanes.ts'
@@ -82,7 +85,9 @@ import type { WallEvent, WallService } from './walls.ts'
  *   are gone within 60 s, the Bell 60 s after the end; breaches stay (looters move in). No town penalty.
  * - **Rewards**: contribution points (siege-event.ts SIEGE_POINTS: damage, sappers stopped, kegs defused, kit repairs,
  *   donations, Bell repairs, a player's hits on the Bell repair it); paid to the defenders online at the end (gold,
- *   Siege Seals, the "Defender of Jangan" title), each one gets `siegeReward`. Siege monsters give 50 % EXP, no loot.
+ *   Siege Seals, the "Defender of Jangan" title), each one gets `siegeReward`; layer 5: the traitors of the siege (player
+ *   kegs) and their associates get nothing (LawService.barredFromSiege). Siege monsters give 50 % EXP and no loot but
+ *   Saltpeter (2 %).
  * - **Persistence** (migration 18): siege_events (phase, approaches, stats), siege_log, siege_contrib, siege_settings.
  *   A restart during the warning resumes (≥ 3 min left); during a wave the siege ends `restart`.
  * - **GM** `siege` (SIEGE_USAGE), the admin page (event-admin.ts).
@@ -103,10 +108,8 @@ export const VIEW_EVERY_MS = 1000
 export const SAVE_EVERY_MS = 60_000
 /** The army steps this often (ms). */
 export const ARMY_STEP_MS = 200
-/** Keg: blast radius, defuse reach (m), share of max HP the blast takes. */
-export const KEG_BLAST_M = 6
-export const KEG_DEFUSE_M = 3
-export const KEG_HURT = 0.25
+/** Keg: blast radius, defuse reach (m), share of max HP the blast takes (siege/keg.ts: the rules every keg shares). */
+export { KEG_BLAST_M, KEG_DEFUSE_M, KEG_HURT }
 /** The ground this close to a lane from an open gap to the Bell is not safe during a wave (m). */
 export const CORRIDOR_M = 20
 /** A defender's Bell repair hits count at most this often (ms). */
@@ -145,7 +148,7 @@ interface Keg {
   at: Vec3
   fuseEndsAt: number
   sapper: number | null
-  defuse: { player: number; characterId: number; name: string; endsAt: number; x: number; z: number; hp: number } | null
+  defuse: KegDefuse | null
 }
 
 export interface SiegeEv {
@@ -208,7 +211,6 @@ export class SiegeService implements GameplayModule {
   private schedKey = ''
   private booted = false
   private storeCache: SiegeStore | null = null
-  private kegSeq = 0
   private rng: () => number
   readonly army: Army
   private readonly honors = new Map<number, string | null>()
@@ -635,9 +637,11 @@ export class SiegeService implements GameplayModule {
     let place = 0
     for (const c of list) {
       const pts = Math.floor(c.points)
-      const rank = pts >= rs.minPoints ? ++place : 0
-      const r = siegeReward(pts, rank, outcome, rs)
       const p = online.get(c.characterId)
+      // §6.6 associates: the siege's traitors (layer 5 kegs) and their associates get nothing
+      const barred = this.g.law.barredFromSiege(ev.id, c.characterId, p ?? null)
+      const rank = pts >= rs.minPoints && !barred ? ++place : 0
+      const r = barred ? { gold: 0, seals: 0, title: false } : siegeReward(pts, rank, outcome, rs)
       let gold = 0
       let seals = 0
       let title: string | undefined
@@ -726,9 +730,11 @@ export class SiegeService implements GameplayModule {
     return true
   }
 
-  /** Gameplay's loot: siege monsters drop nothing (null: not a siege monster). */
+  /** Gameplay's loot: siege monsters drop nothing but, at 2 %, Saltpeter (layer 5; null: not a siege monster). */
   drops(m: Mob): RolledDrop[] | null {
-    return m.siege ? [] : null
+    if (!m.siege) return null
+    if (m.siege.role === 'bell' || !this.g.data.items.has(LAW_CODES.saltpeter)) return []
+    return this.g.rng() < SALTPETER_DROP ? [{ code: LAW_CODES.saltpeter, count: 1 }] : []
   }
 
   mobDied(m: Mob, _now: number, _credit: ReadonlySet<number>, owner: KillOwner): void {
@@ -746,8 +752,11 @@ export class SiegeService implements GameplayModule {
       ev.breaches.add(e.id)
       this.store.update(ev.id, { breaches: ev.breaches.size })
       this.store.log(ev.id, 'breach', { seg: e.id, cause: e.cause }, e.at)
-      this.notice({ t: 'siegeNotice', event: 'breach', wall: e.id })
-      this.chat(`[Siege] ${cap(wallName(e.id))} is breached! The army pours toward the Town Bell.`)
+      // a player's Thunder Keg: the law names the traitor (law.ts); the army pours in all the same
+      if (e.cause !== 'keg') {
+        this.notice({ t: 'siegeNotice', event: 'breach', wall: e.id })
+        this.chat(`[Siege] ${cap(wallName(e.id))} is breached! The army pours toward the Town Bell.`)
+      }
       this.corridorsFor(ev)
     }
     if (e.characterId === null) return
@@ -796,7 +805,7 @@ export class SiegeService implements GameplayModule {
     const ev = this.ev
     if (!ev || ev.phase === 'ended') return
     const now = this.g.now
-    const k: Keg = { id: ++this.kegSeq, seg: lane.seg, at, fuseEndsAt: now + this.settings.army.fuseSec * 1000, sapper: m.id, defuse: null }
+    const k: Keg = { id: nextKegId(), seg: lane.seg, at, fuseEndsAt: now + this.settings.army.fuseSec * 1000, sapper: m.id, defuse: null }
     ev.kegs.set(k.id, k)
     this.sendKeg(k)
     this.notice({ t: 'siegeNotice', event: 'plant', wall: lane.seg })
@@ -807,28 +816,22 @@ export class SiegeService implements GameplayModule {
   }
 
   private sendKeg(k: Keg): void {
-    const msg: Extract<ServerMessage, { t: 'keg' }> = { t: 'keg', id: k.id, seg: k.seg, x: k.at[0], y: k.at[1], z: k.at[2], fuseEndsAt: k.fuseEndsAt, sapper: true }
-    if (k.defuse) msg.defuse = { by: k.defuse.player, endsAt: k.defuse.endsAt }
-    this.notice(msg)
+    this.notice(kegMessage(k, true))
   }
 
   private tickKegs(ev: SiegeEv, now: number): void {
     for (const k of [...ev.kegs.values()]) {
-      const d = k.defuse
-      if (d) {
-        const p = this.g.world.players.get(d.player)
-        const q = p && this.g.world.positionAt(p, now)
-        if (!p || p.dead || !q || Math.hypot(q[0] - d.x, q[2] - d.z) > 0.75 || p.hp < d.hp) {
-          k.defuse = null
-          this.sendKeg(k)
-        } else if (now >= d.endsAt) {
-          ev.kegs.delete(k.id)
-          this.notice({ t: 'kegEnd', id: k.id, how: 'defused' })
-          this.notice({ t: 'siegeNotice', event: 'defused', wall: k.seg, name: p.name })
-          this.contrib(p, 'defuse', SIEGE_POINTS.defuse)
-          this.store.log(ev.id, 'defused', { seg: k.seg, keg: k.id, by: p.name }, now)
-          continue
-        }
+      const d = defuseStep(this.g, k, now)
+      if (d?.state === 'broken') {
+        k.defuse = null
+        this.sendKeg(k)
+      } else if (d?.state === 'done') {
+        ev.kegs.delete(k.id)
+        this.notice({ t: 'kegEnd', id: k.id, how: 'defused' })
+        this.notice({ t: 'siegeNotice', event: 'defused', wall: k.seg, name: d.p.name })
+        this.contrib(d.p, 'defuse', SIEGE_POINTS.defuse)
+        this.store.log(ev.id, 'defused', { seg: k.seg, keg: k.id, by: d.p.name }, now)
+        continue
       }
       if (now < k.fuseEndsAt) continue
       ev.kegs.delete(k.id)
@@ -840,14 +843,12 @@ export class SiegeService implements GameplayModule {
     this.notice({ t: 'kegEnd', id: k.id, how: 'blast' })
     this.walls.change(k.seg, -this.settings.army.sapperIp, 'sapper', now, { at: k.at, fx: 'chip', data: { keg: k.id } })
     this.store.log(ev.id, 'blast', { seg: k.seg, keg: k.id }, now)
-    for (const p of this.g.world.playersNear(k.at[0], k.at[2], KEG_BLAST_M, now)) {
-      if (!p.dead) this.g.hazardHit(p, Math.round(p.maxHp * KEG_HURT), 'keg', now, undefined, true)
-    }
-    for (const m of [...this.g.world.mobs.values()]) {
-      if (m.ai === 'dead' || m.siege?.role === 'bell') continue
-      const q = this.g.world.positionAt(m, now)
-      if (Math.hypot(q[0] - k.at[0], q[2] - k.at[2]) <= KEG_BLAST_M) this.g.hazardHit(m, Math.round(m.maxHp * KEG_HURT), 'keg', now)
-    }
+    blastHurt(this.g, k.at, now)
+  }
+
+  /** Layer 5: a player's Thunder Keg defused during a siege counts as a defused keg (siege/keg.ts). */
+  creditDefuse(p: Player): void {
+    if (this.running()) this.contrib(p, 'defuse', SIEGE_POINTS.defuse)
   }
 
   // ---- requests ----------------------------------------------------------------------------------------------
@@ -856,12 +857,12 @@ export class SiegeService implements GameplayModule {
     if (msg.t !== 'kegDefuse') return answer(fail('not_found'))
     const ev = this.ev
     const k = ev?.kegs.get(msg.id)
-    if (!ev || !k) return answer(fail('not_found', 'That keg is gone.'))
+    // not a sapper's keg: the players' Thunder Kegs (layer 5)
+    if (!ev || !k) return this.g.kegs.defuse(p, msg.id, answer, now)
     const q = this.g.world.positionAt(p, now)
     if (Math.hypot(q[0] - k.at[0], q[2] - k.at[2]) > KEG_DEFUSE_M) return answer(fail('too_far', 'Get closer to the keg to defuse it.'))
     if (k.defuse && k.defuse.player !== p.id) return answer(fail('busy', 'Someone is defusing it already.'))
-    this.g.world.halt(p, now)
-    k.defuse = { player: p.id, characterId: p.characterId, name: p.name, endsAt: now + this.settings.army.defuseSec * 1000, x: q[0], z: q[2], hp: p.hp }
+    beginDefuse(this.g, p, k, this.settings.army.defuseSec, now)
     this.sendKeg(k)
     answer(true)
   }
@@ -874,11 +875,7 @@ export class SiegeService implements GameplayModule {
     const ev = this.ev
     if (!ev) return
     p.send({ t: 'siegeEvent', view: this.view(ev, now) })
-    for (const k of ev.kegs.values()) {
-      const msg: Extract<ServerMessage, { t: 'keg' }> = { t: 'keg', id: k.id, seg: k.seg, x: k.at[0], y: k.at[1], z: k.at[2], fuseEndsAt: k.fuseEndsAt, sapper: true }
-      if (k.defuse) msg.defuse = { by: k.defuse.player, endsAt: k.defuse.endsAt }
-      p.send(msg)
-    }
+    for (const k of ev.kegs.values()) p.send(kegMessage(k, true))
   }
 
   // ---- the tick ------------------------------------------------------------------------------------------------

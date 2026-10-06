@@ -116,6 +116,9 @@ describe('routing', () => {
       'wallLooters',
       // layer 4: the siege event
       'siege',
+      // layer 5: the players' Thunder Kegs and the law (Wanted)
+      'kegs',
+      'law',
       // wave 10 (docs/WAVE_PLAN6.md §3): the jump (movement.ts, lane MV-P)
       'movement',
       // docs/WINTER.md §13: the winter gameplay layer and its five modules
@@ -405,9 +408,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(18)
-      expect(store.schemaVersion).toBe(18)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(18)
+      expect(SCHEMA_VERSION).toBe(19)
+      expect(store.schemaVersion).toBe(19)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(19)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })
