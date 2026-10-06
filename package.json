@@ -15,6 +15,7 @@
     "admin": "pnpm --filter @sro/admin dev",
     "gm": "pnpm --filter @sro/server gm",
     "verify-install": "tsx apps/server/src/cli/verify-install.ts",
+    "changelog": "tsx apps/server/src/cli/changelog-md.ts",
     "deploy": "tsx deploy/run.ts deploy.sh",
     "deploy:gm": "tsx deploy/run.ts gm.sh"
   },

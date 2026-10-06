@@ -62,9 +62,11 @@ A paragraph with **bold** and *italic* text.
 ## 2. The deploy step
 
 1. Write `content/changelog/<date>-<slug>.md` and its images (§1); run the news test.
-2. Commit them with the update. `pnpm deploy` ships the committed tree (`git archive HEAD`), so the server reads the
+2. Run `pnpm changelog`: it regenerates **CHANGELOG.md** at the repository root (the GitHub changelog, same text and
+   pictures, newest first). `apps/server/test/changelog-md.test.ts` fails while CHANGELOG.md is out of date.
+3. Commit them with the update. `pnpm deploy` ships the committed tree (`git archive HEAD`), so the server reads the
    new entry when it restarts.
-3. Nothing else: every account that has not seen the entry gets the window at its next login. Players online during
+4. Nothing else: every account that has not seen the entry gets the window at its next login. Players online during
    the deploy see it the next time they log in (a reconnect does not count).
 
 To fix a typo on the live server without a deploy, use the admin panel (§4); fold the fix back into the repo file at

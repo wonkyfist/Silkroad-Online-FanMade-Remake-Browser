@@ -2,6 +2,9 @@
 
 Discord: https://discord.gg/qQEf6Jehq
 
+📰 **[Changelog: what's new in every update](CHANGELOG.md)** (with pictures; the same notes the game shows in its
+"What's new" window) · 🗺️ **[Roadmap](https://trello.com/b/7HHw6KUC/jangan-silkroad-online-fan-remake-roadmap)**
+
 A non-commercial, fan-made remake of the Jangan area of **Silkroad Online (vSRO 1.188)** that runs in the browser.
 The game client, the game server, the converter and the World Editor were written from scratch in TypeScript
 (Babylon.js 9 in the browser, Node 24 + SQLite on the server). It is a hobby project for playing with friends: nothing
