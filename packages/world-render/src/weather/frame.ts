@@ -33,6 +33,14 @@ export interface WeatherFrame {
   boltOwned?: boolean
   /** Seconds, wrapping at 3600 (shader time). */
   time: number
+  /**
+   * Winter additions (docs/WINTER.md §7; absent = 0, as before): the snowfall rate 0..1 (the flakes; 1 = a blizzard),
+   * the snow cover 0..1 on the ground, roofs and trees (after the admin strength) and the frost 0..1 (frozen ponds,
+   * frosted grass, the cold grade). The game's winter feature fills them from the server's `winter` state.
+   */
+  snow?: number
+  cover?: number
+  frost?: number
 }
 
 const C = WEATHER_PARAMS.clear

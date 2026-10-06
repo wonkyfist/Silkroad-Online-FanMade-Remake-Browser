@@ -11,7 +11,7 @@ import { ROAR_S, TORNADO_SYNTH, roarGain, roarPcm, whooshPcm } from '../src/audi
 import { SettingsStore } from '../src/settings.ts'
 import type { WorldFeatureContext } from '../src/world/features.ts'
 import { tornadoFeature, tornadoShake, tornadoTierFor, tornadoTipLine, tornadoWarnLine } from '../src/world/features/tornado.ts'
-import { MAX_STRIKE_ARCS, TORNADO_TIERS, TornadoFx, type TornadoTier } from '../src/world/storm/tornado-fx.ts'
+import { MAX_STRIKE_ARCS, TORNADO_RESOURCES, TORNADO_TIERS, TRAIL_STEP_M, TornadoFx, type TornadoTier } from '../src/world/storm/tornado-fx.ts'
 import { compass, tornadoInfo } from '../src/world/storm/tornado-status.ts'
 
 const T0 = Date.UTC(2026, 9, 5, 12)
@@ -44,26 +44,37 @@ function setup() {
 
 describe('TornadoFx on a NullEngine (fixed resources, no leaks)', () => {
   for (const tier of ['low', 'medium', 'high'] as TornadoTier[]) {
-    it(`${tier}: three meshes, materials and textures through a whole life with bolts; capacity holds; dispose returns to the baseline`, () => {
+    it(`${tier}: five meshes, five materials, four textures through a whole life with bolts; capacity holds; dispose returns to the baseline`, () => {
       const s = setup()
       const base = s.count()
       const fx = new TornadoFx(s.scene, 99, tier)
-      const after = { meshes: base.meshes + 3, materials: base.materials + 3, textures: base.textures + 3 }
+      const R = TORNADO_RESOURCES
+      const after = { meshes: base.meshes + R.meshes, materials: base.materials + R.materials, textures: base.textures + R.textures }
       expect(s.count()).toEqual(after)
       const spec = TORNADO_TIERS[tier]
-      expect(fx.stats().funnelVerts).toBe(spec.shells * (spec.seg + 1) * spec.rings)
+      expect(fx.stats().funnelVerts).toBe((spec.shells * spec.rings + spec.cloudRings) * (spec.seg + 1))
       let maxQuads = 0
+      let maxChunks = 0
       let frame = 0
+      const ground = (_x: number, _z: number, y: number) => y + 0.5
       for (let t = T0; t < T0 + 90_000; t += 50) {
         const presence = Math.min(1, (t - T0) / 20_000)
         if (frame % 40 === 0) fx.strikeArc([20, 0, (frame % 7) * 3], t + 100)
-        fx.update(t, { pos: [0, 0, 0], presence, heading: 0.3, strength: 1, light: 0.6, flash: frame % 50 === 0 ? 2 : 0 }, s.camera)
+        // walking north at 3 m/s (the torn-ground trail follows it)
+        const z = Math.max(0, t - T0 - 20_000) * 0.003
+        fx.update(t, { pos: [0, 0, z], presence, heading: 0, strength: 1, light: 0.6, flash: frame % 50 === 0 ? 2 : 0, ground }, s.camera)
         if (++frame % 17 === 0) s.scene.render()
         maxQuads = Math.max(maxQuads, fx.stats().quads)
-        expect(fx.stats().quads).toBeLessThanOrEqual(spec.debris + spec.dust)
+        maxChunks = Math.max(maxChunks, fx.stats().chunks)
+        expect(fx.stats().quads).toBeLessThanOrEqual(spec.puffs + spec.bands + spec.bits)
+        expect(fx.stats().chunks).toBeLessThanOrEqual(spec.chunks)
         expect(fx.stats().strikeArcs).toBeLessThanOrEqual(MAX_STRIKE_ARCS)
+        expect(fx.stats().trail).toBeLessThanOrEqual(spec.trail)
       }
-      expect(maxQuads).toBeGreaterThan(spec.dust)
+      expect(maxQuads).toBeGreaterThan(spec.puffs)
+      expect(maxChunks).toBeGreaterThan(spec.chunks / 3)
+      // 70 s on the ground at 3 m/s: the trail is full (its oldest points dropped)
+      expect(fx.stats().trail).toBe(Math.min(spec.trail, Math.floor(210 / TRAIL_STEP_M)))
       expect(s.count()).toEqual(after)
       // nothing shows at presence 0
       fx.update(T0 + 100_000, { pos: [0, 0, 0], presence: 0, heading: 0, strength: 1, light: 1, flash: 0 }, s.camera)
@@ -79,11 +90,33 @@ describe('TornadoFx on a NullEngine (fixed resources, no leaks)', () => {
     })
   }
 
+  it('flung debris lands far out, never below the ground; nothing behind the core shows through it', () => {
+    const s = setup()
+    const fx = new TornadoFx(s.scene, 5, 'high')
+    let far = 0
+    for (let t = T0 + 30_000; t < T0 + 50_000; t += 100) {
+      fx.update(t, { pos: [0, 0, 0], presence: 1, heading: 0, strength: 1, light: 1, flash: 0 }, s.camera)
+      const m = s.scene.meshes.find((x) => x.name === 'tornado:chunks')!
+      const buf = (m as unknown as { _thinInstanceDataStorage: { matrixData: Float32Array } })._thinInstanceDataStorage.matrixData
+      for (let i = 0; i < fx.stats().chunks; i++) {
+        const x = buf[i * 16 + 12]!
+        const y = buf[i * 16 + 13]!
+        const z = buf[i * 16 + 14]!
+        expect(y).toBeGreaterThanOrEqual(0)
+        if (Math.hypot(x, z) > 35) far++
+      }
+    }
+    expect(far).toBeGreaterThan(100)
+    fx.dispose()
+    s.close()
+  })
+
   it('Low draws a simpler funnel than Medium and High', () => {
-    expect(TORNADO_TIERS.low.shells).toBe(1)
-    expect(TORNADO_TIERS.medium.shells).toBeGreaterThan(1)
-    expect(TORNADO_TIERS.low.debris).toBeLessThan(TORNADO_TIERS.medium.debris)
-    expect(TORNADO_TIERS.high.debris).toBeGreaterThan(TORNADO_TIERS.medium.debris)
+    expect(TORNADO_TIERS.low.shells).toBeLessThan(TORNADO_TIERS.medium.shells)
+    expect(TORNADO_TIERS.medium.shells).toBeLessThan(TORNADO_TIERS.high.shells)
+    expect(TORNADO_TIERS.low.bits).toBeLessThan(TORNADO_TIERS.medium.bits)
+    expect(TORNADO_TIERS.high.bits).toBeGreaterThan(TORNADO_TIERS.medium.bits)
+    expect(TORNADO_TIERS.low.chunks).toBeLessThan(TORNADO_TIERS.high.chunks)
     expect(tornadoTierFor('low')).toBe('low')
     expect(tornadoTierFor('medium')).toBe('medium')
     expect(tornadoTierFor('ultra')).toBe('high')
@@ -96,6 +129,7 @@ describe('the tornado feature', () => {
     let now = T0
     const root = new TransformNode('v', s.scene)
     const view = { root, pos: new Vector3(0, 0, -40), yaw: 0, dead: false, move: undefined as unknown, actor: null, ride: null, state: { kind: 'player', id: 1 } }
+    const other = { root: new TransformNode('o', s.scene), pos: new Vector3(5, 0, -40), yaw: 0, dead: false, move: undefined, actor: null, ride: null, state: { kind: 'player', id: 2 }, displayName: () => 'Rider' }
     root.position.set(0, 0, -40)
     const ctx = {
       session: {},
@@ -103,7 +137,7 @@ describe('the tornado feature', () => {
       camera: s.camera,
       chat: { add: (_k: string, text: string) => void chat.push(text) },
       selfId: () => 1,
-      view: (id: number) => (id === 1 ? view : undefined),
+      view: (id: number) => (id === 1 ? view : id === 2 ? other : undefined),
       serverNow: () => now,
       world: () => null,
       minimap: () => null,
@@ -122,9 +156,10 @@ describe('the tornado feature', () => {
     expect(c.chat[0]).toMatch(/^A tornado is forming over Jangan field, 60 m north of you! It touches down in about 20 s/)
     expect(tornadoInfo()).toMatchObject({ phase: 'warning', dir: 'n' })
     f.onFrame!(T0 + 1000, 0.05)
-    expect(s.count()).toEqual({ meshes: base.meshes + 3, materials: base.materials + 3, textures: base.textures + 3 })
-    // Low: one shell of 20 × 10
-    expect(s.scene.meshes.find((m) => m.name === 'tornado:funnel')!.getTotalVertices()).toBe(21 * 10)
+    const R = TORNADO_RESOURCES
+    expect(s.count()).toEqual({ meshes: base.meshes + R.meshes, materials: base.materials + R.materials, textures: base.textures + R.textures })
+    // Low: two shells of 18 × 12 and a wall cloud of 4 rings
+    expect(s.scene.meshes.find((m) => m.name === 'tornado:funnel')!.getTotalVertices()).toBe(19 * (2 * 12 + 4))
     // touchdown then walking south toward the player (at z -40): the camera shakes once it is close
     c.setNow(T0 + 40_000)
     f.onFrame!(T0 + 40_000, 0.05)
@@ -138,6 +173,14 @@ describe('the tornado feature', () => {
     c.view.root.position.y = 0
     f.onFrame!(T0 + 41_600, 0.05)
     expect(c.view.root.position.y).toBeCloseTo(8, 6)
+    // another player killed by a throw: everyone near is told; your own death line is the world screen's
+    const death = { t: 'combat', attacker: 0, target: 2, hits: [{ outcome: 'hit', damage: 30, hp: 0 }], cause: 'tornado', killed: true } as ServerMessage
+    f.onCombatHit!(death as Extract<ServerMessage, { t: 'combat' }>, 0)
+    expect(c.chat.at(-1)).toBe('Rider was killed by the tornado.')
+    const lines = c.chat.length
+    f.onCombatHit!({ ...death, target: 1 } as Extract<ServerMessage, { t: 'combat' }>, 0)
+    f.onCombatHit!({ ...death, killed: undefined } as Extract<ServerMessage, { t: 'combat' }>, 0)
+    expect(c.chat.length).toBe(lines)
     // the lift and the end
     f.onMessage!({ t: 'tornado', tornado: { ...STATE, liftAt: T0 + 50_000 } } as ServerMessage)
     expect(c.chat.at(-1)).toBe('The tornado lifts back into the clouds.')
@@ -147,7 +190,7 @@ describe('the tornado feature', () => {
     // a second one, then worldEnter and dispose clear it
     f.onMessage!({ t: 'tornado', tornado: { ...STATE, id: 8 } } as ServerMessage)
     f.onFrame!(T0 + 60_000, 0.05)
-    expect(s.count().meshes).toBe(base.meshes + 3)
+    expect(s.count().meshes).toBe(base.meshes + TORNADO_RESOURCES.meshes)
     f.onMessage!({ t: 'worldEnter' } as unknown as ServerMessage)
     expect(s.count()).toEqual(base)
     f.onMessage!({ t: 'tornado', tornado: { ...STATE, id: 9 } } as ServerMessage)

@@ -388,7 +388,18 @@ export class StormService implements GameplayModule, AiStorm {
     const clock = this.g.clock.state
     const c = clockAt(clock, now)
     const sun = sunDirection(c.t, clock.declination)
-    return { rain: p.rain, storm: stormLevel(p), windMs: p.windMs, wet: w.sync(now).wet, night: nightness(sun[1]), strength }
+    const env: StormEnv = { rain: p.rain, storm: stormLevel(p, this.table), windMs: p.windMs, wet: w.sync(now).wet, night: nightness(sun[1]), strength }
+    // docs/WINTER.md §4: snowfall, and the frozen ponds keep the water spirits down
+    if (p.snow > 0) env.snow = p.snow
+    if (this.g.winter.state(now).frozen) env.frozen = true
+    return env
+  }
+
+  /** The precipitation is snow (more snow than rain; while dry: the snow season is on). */
+  private wintry(now: number): boolean {
+    const snow = this.env.snow ?? 0
+    if (snow > 0.02 || this.env.rain > 0.02) return snow > this.env.rain
+    return this.g.winter.active(now)
   }
 
   private updateStatus(now: number): void {
@@ -397,6 +408,7 @@ export class StormService implements GameplayModule, AiStorm {
     const s: StormStatus = { phase: stormPhase(this.env, forecast, this.table), effects: this.env.strength > 0 ? stormEffects(this.env, this.table) : [] }
     if (ev && forecast) s.startsAt = ev.start
     if (ev) s.endsAt = ev.end
+    if (this.wintry(now)) s.winter = true
     const key = JSON.stringify(s)
     if (key === this.statusKey) return
     this.statusKey = key
@@ -527,6 +539,6 @@ export class StormService implements GameplayModule, AiStorm {
     const nextText = next ? `next storm in ${at(next.start)} (${Math.round((next.end - next.start) / 60_000)} min)` : this.g.weather.mode === 'auto' ? 'no storm scheduled soon' : `no scheduled storms (WEATHER=${this.g.weather.mode})`
     const e = this.env
     const effects = s.effects.map((x) => `${x.id}${x.pct !== undefined ? ` ${x.pct > 0 ? '+' : ''}${x.pct}%` : ''}`).join(', ') || 'none'
-    return `Storm: ${s.phase}${when ? ` (${when})` : ''}; ${nextText}; rain ${e.rain.toFixed(2)}, storm ${e.storm.toFixed(2)}, wind ${e.windMs.toFixed(1)} m/s, wet ${e.wet.toFixed(2)}, night ${e.night.toFixed(2)}, strength ${e.strength}; effects: ${effects}; charged monsters ${this.chargedArc.size}; ${this.g.tornado.describe(now)}.`
+    return `Storm: ${s.phase}${s.winter ? ' (winter: snow, blizzards)' : ''}${when ? ` (${when})` : ''}; ${nextText}; rain ${e.rain.toFixed(2)}, snow ${(e.snow ?? 0).toFixed(2)}, storm ${e.storm.toFixed(2)}, wind ${e.windMs.toFixed(1)} m/s, wet ${e.wet.toFixed(2)}, night ${e.night.toFixed(2)}, strength ${e.strength}; effects: ${effects}; charged monsters ${this.chargedArc.size}; ${this.g.tornado.describe(now)}.`
   }
 }

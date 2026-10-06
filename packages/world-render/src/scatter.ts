@@ -390,6 +390,8 @@ export interface GroundCover {
   ready(): Promise<void>
   /** Every mesh it draws. */
   meshes(): Mesh[]
+  /** Winter (docs/WINTER.md §7.3): 0..1 frost; the flowers close and the far meadow's dots fade (optional). */
+  setWinter?(k: number): void
   dispose(): void
 }
 
@@ -551,7 +553,18 @@ export class WorldScatter {
     for (const r of this.regions.values()) this.dropChunks(r)
     this.field = f
     f.setLevel(this.levelValue)
+    if (this.winterValue > 0) f.setWinter?.(this.winterValue)
     for (const d of this.regionData.values()) f.addRegion(d)
+  }
+
+  private winterValue = 0
+
+  /** Winter (docs/WINTER.md §7.3): the frost 0..1 for the ground cover (the flowers close); the shader frost is a chunk. */
+  setWinter(k: number): void {
+    const v = Math.min(1, Math.max(0, Number.isFinite(k) ? k : 0))
+    if (Math.abs(v - this.winterValue) < 0.01 && !(v === 0 && this.winterValue !== 0)) return
+    this.winterValue = v
+    this.field?.setWinter?.(v)
   }
 
   /**

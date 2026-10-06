@@ -162,10 +162,15 @@ export interface MaterialBatchRecord {
  * stay separate draws, and so do scrolling materials (UV scroll: the converted material keeps its plugin); NL's lamps (`lampRule`, with `nightOwner` from NL's ambient index) and retail emissive
  * materials go to the region's lamp group; everything else merges.
  */
+/** Retail pond plants that stand out of the water (the converter's LILY_MODELS): hidden on a frozen pond. */
+export const POND_PLANT_SOURCES = /c_pondflower|pond_flower|lily|lotus/i
+
 export function batchClass(r: MaterialBatchRecord, nightOwner = false): BatchClass {
   if (r.path !== 'pbr' || r.unlit || r.alpha === 'blend' || r.material.alpha < 1) return 'separate'
   // UV scroll: the converted material carries the scroll plugin; a table slot would freeze it.
   if (r.uvScroll) return 'separate'
+  // docs/WINTER.md §7.5: the pond flowers keep a group of their own, so the frozen ponds can hide them (a few draws)
+  if (POND_PLANT_SOURCES.test(r.model.source)) return 'separate'
   if (r.lampModel || r.emissive || lampRule(r.model.source, r.name, nightOwner)) return 'lamp'
   return 'merge'
 }

@@ -30,6 +30,7 @@ import { CONTENT_USAGE, runContentCommand } from './editors/live.ts'
 import { NEST_USAGE, runNestCommand } from './editors/nest-edit.ts'
 import { NPC_USAGE, runNpcCommand } from './editors/npc-edit.ts'
 import { WEATHER_USAGE } from './weather.ts'
+import { WINTER_USAGE } from './winter.ts'
 import { STORM_USAGE } from './storm/service.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
@@ -482,6 +483,12 @@ export const COMMANDS: Record<string, Command> = {
     usage: WEATHER_USAGE,
     about: 'The weather: show it, hold a state, back to auto, wind, surface wetness, or a lightning strike (near you, on a spot, a player, a tree or a wall).',
     run: ({ ctx, args, self }) => ctx.gameplay.weather.gm(args, Date.now(), self),
+  },
+  // docs/WINTER.md §6: the snow season; body in winter.ts. A snowfall itself is `weather snow` / `weather blizzard`.
+  winter: {
+    usage: WINTER_USAGE,
+    about: 'The snow season: show it (dates, snow cover, frost), preview the full season look for everyone without changing the season, or set the snow cover or the frost now. Snowfall: weather snow / weather blizzard.',
+    run: ({ ctx, args }) => ctx.gameplay.winter.gm(args, Date.now()),
   },
   // docs/WEATHER.md §12.5: storm events and their effects; body in storm/service.ts.
   storm: {

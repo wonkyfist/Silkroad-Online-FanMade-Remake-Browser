@@ -43,6 +43,7 @@ import {
   MATERIAL_CLASS_PARAMS,
   PbrFoliage,
   RENDER_GRASS_CHUNKS,
+  WINTER_CHUNKS,
   RENDER_PRESETS,
   RenderGrass,
   SRO_FOLIAGE_PLUGIN,
@@ -346,7 +347,11 @@ describe('grass HDR chunks', () => {
     // Every uniform the chunks declare is in the ShaderMaterial list; the depth sampler is the only sampler.
     expect(chunk.uniforms).toEqual(GRASS_RENDER_UNIFORMS)
     expect(chunk.samplers).toEqual([GRASS_SHADOW_SAMPLER])
-    expect(WORLD_SHADER_CHUNKS.at(-1)).toBe(RENDER_GRASS_CHUNKS) // render is last at every point
+    // render is last at every point but the winter lane's (docs/WINTER.md §7.2: the frost pales the final lit colour; it fills
+    // no vertexLight, so the TAA jitter stays the last vertex write)
+    expect(WORLD_SHADER_CHUNKS.at(-2)).toBe(RENDER_GRASS_CHUNKS)
+    expect(WORLD_SHADER_CHUNKS.at(-1)).toBe(WINTER_CHUNKS)
+    expect(WINTER_CHUNKS.grass?.wgsl?.vertexLight).toBeUndefined()
   })
 
   it('build into the grass shaders after the other lanes, and the vertex tap is a comparison sample', () => {

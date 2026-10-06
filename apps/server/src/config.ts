@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WORLD_FOLDER, type Role, type WeatherKind } from '@sro/shared'
+import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WINTER_DEFAULTS, WORLD_FOLDER, hostTimeZone, parseMonthDay, validTimeZone, type Role, type WeatherKind } from '@sro/shared'
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -167,6 +167,20 @@ export interface ServerConfig {
   tornadoChance?: number
   /** The tornado's pull, throw, damage and bolts (TORNADO_STRENGTH, default 1, 0..2; 0 = it only looks). */
   tornadoStrength?: number
+  /** Its throws can kill a body already low on HP (TORNADO_LETHAL, default on; off = never below 1 HP). */
+  tornadoLethal?: boolean
+  // ---- the snow season (docs/WINTER.md §2, §6); optional, absent = WINTER_DEFAULTS; the admin panel changes them live ----
+  /** The snow season happens at all (WINTER, on (default) | off). Read as `config.winterEnabled ?? true`. */
+  winterEnabled?: boolean
+  /** First and last day of the season, `MM-DD`, inclusive (WINTER_START 12-01, WINTER_END 01-15). */
+  winterStart?: string
+  winterEnd?: string
+  /** The time zone of those days (WINTER_TZ, default the server's own). */
+  winterTz?: string
+  /** How white full cover looks (WINTER_STRENGTH, default 1, 0..1; 0 = snow falls but never lies). */
+  winterStrength?: number
+  /** Tornadoes in blizzards (WINTER_TORNADO, default off). */
+  winterTornado?: boolean
   // ---- wave 11 (docs/WAVE_PLAN7.md §3.4); optional like wave 3's, absent = the default ----
   /**
    * Unique monsters are world bosses run by the uniques module (UNIQUES, on (default) | off; docs/UNIQUES.md §3.2): the
@@ -253,6 +267,22 @@ function mobSkillDamage(raw: string | undefined): MobSkillDamage {
   const v = raw.trim().toLowerCase()
   if (!(MOB_SKILL_DAMAGE_MODES as readonly string[]).includes(v)) throw new Error(`MOB_SKILL_DAMAGE must be relative, retail or flat, got ${raw}`)
   return v as MobSkillDamage
+}
+
+/** A `MM-DD` day of the year (WINTER_START, WINTER_END). */
+function monthDay(env: NodeJS.ProcessEnv, key: string, fallback: string): string {
+  const raw = env[key]
+  if (raw === undefined || raw.trim() === '') return fallback
+  if (parseMonthDay(raw.trim()) === null) throw new Error(`${key} must be a day of the year as MM-DD (12-01), got ${raw}`)
+  return raw.trim()
+}
+
+/** An IANA time zone (WINTER_TZ); unset = the server's own. */
+function timeZone(env: NodeJS.ProcessEnv, key: string): string {
+  const raw = env[key]?.trim()
+  if (!raw) return hostTimeZone()
+  if (!validTimeZone(raw)) throw new Error(`${key} must be an IANA time zone like Europe/Berlin, got ${raw}`)
+  return raw
 }
 
 /** WEATHER modes (docs/WEATHER.md §2.3): the schedule, always clear, or one fixed state. */
@@ -434,6 +464,14 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     stormStrength: num(env, 'STORM_STRENGTH', STORM_TABLE.strength, 0, 2),
     tornadoChance: num(env, 'TORNADO_CHANCE', STORM_TABLE.tornadoChance, 0, 1),
     tornadoStrength: num(env, 'TORNADO_STRENGTH', STORM_TABLE.tornadoStrength, 0, 2),
+    tornadoLethal: onOff(env, 'TORNADO_LETHAL', STORM_TABLE.tornadoLethal),
+    // the snow season (docs/WINTER.md §6)
+    winterEnabled: onOff(env, 'WINTER', WINTER_DEFAULTS.enabled),
+    winterStart: monthDay(env, 'WINTER_START', WINTER_DEFAULTS.start),
+    winterEnd: monthDay(env, 'WINTER_END', WINTER_DEFAULTS.end),
+    winterTz: timeZone(env, 'WINTER_TZ'),
+    winterStrength: num(env, 'WINTER_STRENGTH', WINTER_DEFAULTS.strength, 0, 1),
+    winterTornado: onOff(env, 'WINTER_TORNADO', WINTER_DEFAULTS.tornado),
     // wave 11 (docs/WAVE_PLAN7.md §3.4)
     uniques: onOff(env, 'UNIQUES', true),
     // admin panel (docs/ADMIN.md)

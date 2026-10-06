@@ -885,7 +885,7 @@ export class RenderPost implements RenderPart {
       if (this.plan.bloom > 0) b.dp.bloomThreshold = bloomCutoff(this.plan.bloomThreshold, this.exposure)
       refreshOverlays(this.scene, this.exposure)
     }
-    if (this.grade && this.plan.lutGrade) this.grade.update({ sunElevationDeg: sky.sunElevationDeg, t: sky.t, cloud: this.weather.cloud, rain: this.weather.rain })
+    if (this.grade && this.plan.lutGrade) this.grade.update({ sunElevationDeg: sky.sunElevationDeg, t: sky.t, cloud: this.weather.cloud, rain: this.weather.rain, winter: this.weather.winter ?? 0 })
     if (b.ssr) {
       if (this.plan.ssr === 'puddles') {
         const pud = this.weather.puddles

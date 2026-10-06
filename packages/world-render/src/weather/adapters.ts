@@ -16,9 +16,9 @@ export function toSkyWeather(f: WeatherFrame): SkyWeather {
     cloudCover: f.cloud,
     cloudDarkness: f.cloudDark,
     cirrus: f.cirrus,
-    haze: Math.min(1, f.fog + 0.3 * f.rain),
+    haze: Math.min(1, f.fog + 0.3 * f.rain + 0.2 * (f.snow ?? 0)),
     wind: { x: f.windX * f.windMs, z: f.windZ * f.windMs },
-    precipitation: f.rain,
+    precipitation: Math.min(1, f.rain + 0.7 * (f.snow ?? 0)),
     flash: Math.min(1, f.flash / 3),
   }
 }
@@ -35,5 +35,7 @@ export function toRenderWeather(f: WeatherFrame): RenderWeather {
     // 0.2 calm .. 1.6 storm (RENDER.md §8.1 scale).
     wind: Math.min(2, f.gustMs / 8),
     flash: clamp01(f.flash / 3),
+    // docs/WINTER.md §7.6: the winter grade follows the frost and the snow on the ground
+    ...(f.frost || f.cover ? { winter: clamp01(Math.max(0.6 * (f.frost ?? 0), f.cover ?? 0)) } : {}),
   }
 }

@@ -255,6 +255,8 @@ export interface WorldInfo {
   clock?: WorldClockState
   /** Wave 9: the current weather for late joiners (docs/WEATHER.md §4.1); absent = clear. */
   weather?: WeatherSync
+  /** Winter addition (docs/WINTER.md §5): the snow season and the snow cover for late joiners; absent = no snow. */
+  winter?: WinterSync
 }
 
 /**
@@ -303,6 +305,33 @@ export interface StormStatus {
   /** forecast / storm of a storm event: server ms it is due to end. */
   endsAt?: number
   effects: StormEffect[]
+  /**
+   * Winter addition (docs/WINTER.md §4): the precipitation is snow and a storm is a blizzard (the snow season, or a GM
+   * snow / blizzard). Absent: rain and thunderstorms.
+   */
+  winter?: true
+}
+
+/**
+ * Winter addition (docs/WINTER.md §5; the `winter` message and WorldInfo.winter): the snow season and the snow on the
+ * ground. Clients carry `cover` and `frost` forward from `at` with the blended weather (winter.ts stepWinter), as
+ * they do the surface wetness, and blend toward each new message.
+ */
+export interface WinterSync {
+  /** The snow season is on now (WINTER on and today within start..end in the server's time zone). */
+  season: boolean
+  /** Snow cover 0..1 and frost 0..1 at server ms `at`. */
+  cover: number
+  frost: number
+  at: number
+  /** The admin's snow strength 0..1 (how white full cover looks). */
+  strength: number
+  /** The season's days (`MM-DD`, inclusive) and the time zone they are in, for the HUD and the GM. */
+  start: string
+  end: string
+  timeZone: string
+  /** A GM preview of the full season look (`winter preview`): draw cover 1, frost 1; the season itself is unchanged. */
+  preview?: true
 }
 
 /** A placed lightning strike (docs/WEATHER.md §2.7; the `strike` message). */
@@ -394,6 +423,7 @@ export type ClientMessage =
    * kill [entity id] (default: your current attack target), heal [player].
    * Wave 9 (docs/PROTOCOL.md "Wave 9"): time [hh:mm | day n | length min | freeze | resume | night k | season deg |
    * reset], weather [state[:intensity] [minutes] [transitionS] | auto | wind m/s [deg] | wet 0..1 [puddle] | strike [distM]].
+   * Winter (docs/WINTER.md §6): winter [preview [on|off] | cover 0..1 | frost 0..1]; `weather snow` / `weather blizzard`.
    */
   | { t: 'gm'; cmd: string; args: string[] }
   // ---- gameplay additions (docs/PROTOCOL.md). Intents only: the server decides every outcome. ----
@@ -813,6 +843,11 @@ export type ServerMessage =
   | { t: 'worldClock'; clock: WorldClockState }
   /** The weather changed (schedule or GM), a GM wind/wet override, or the 10-minute resync. */
   | { t: 'weather'; weather: WeatherSync }
+  /**
+   * Winter addition (docs/WINTER.md §5): the season began or ended, a GM changed the snow (preview, cover, frost), the
+   * admin changed the season, or the 10-minute resync; to every player in the world.
+   */
+  | { t: 'winter'; winter: WinterSync }
   /** A lightning strike at server ms `at`, `distM` 100..3000 m away toward `bearing` (radians 0..2π, like windDir). */
   | {
       t: 'lightning'

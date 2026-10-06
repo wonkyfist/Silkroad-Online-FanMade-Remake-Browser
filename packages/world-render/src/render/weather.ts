@@ -18,6 +18,8 @@ export interface RenderWeather {
   wind: number
   /** 0..1 lightning flash now (reduceFlashing is applied before it gets here). */
   flash: number
+  /** Winter addition (docs/WINTER.md §7.6): 0..1 the winter look (frost and snow cover) for the grade; absent = 0. */
+  winter?: number
 }
 
 export const CLEAR_RENDER_WEATHER: Readonly<RenderWeather> = Object.freeze({

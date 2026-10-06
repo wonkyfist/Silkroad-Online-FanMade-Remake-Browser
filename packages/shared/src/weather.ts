@@ -6,7 +6,12 @@
 
 import type { WeatherSync } from './protocol.ts'
 
-export const WEATHER_KINDS = ['clear', 'cloudy', 'overcast', 'rain', 'storm', 'fog'] as const
+/**
+ * The weather states. `snow` and `blizzard` (docs/WINTER.md §3) are the winter forms of `rain` and `storm`: the
+ * schedule never picks them itself; during the snow season the server turns its rain into snow and its storms into
+ * blizzards (`winterKind`), and a GM may hold either at any time.
+ */
+export const WEATHER_KINDS = ['clear', 'cloudy', 'overcast', 'rain', 'storm', 'fog', 'snow', 'blizzard'] as const
 export type WeatherKind = (typeof WEATHER_KINDS)[number]
 
 /** One state's parameters; the client blends vectors, the server only names states (WEATHER §2.1). */
@@ -31,10 +36,12 @@ export interface WeatherParams {
   desat: number
   /** Lightning strikes per minute (server). */
   lightning: number
+  /** Snowfall rate 0..1 (1 = a blizzard; docs/WINTER.md §3). 0 in every state but snow and blizzard. */
+  snow: number
 }
 
-const P = (cloud: number, cloudDark: number, rain: number, windMs: number, gust: number, fog: number, sun: number, desat: number, lightning: number, cirrus: number): WeatherParams =>
-  ({ cloud, cloudDark, cirrus, rain, windMs, gust, fog, sun, desat, lightning })
+const P = (cloud: number, cloudDark: number, rain: number, windMs: number, gust: number, fog: number, sun: number, desat: number, lightning: number, cirrus: number, snow = 0): WeatherParams =>
+  ({ cloud, cloudDark, cirrus, rain, windMs, gust, fog, sun, desat, lightning, snow })
 
 /** WEATHER §2.1. */
 export const WEATHER_PARAMS: Readonly<Record<WeatherKind, Readonly<WeatherParams>>> = {
@@ -44,16 +51,22 @@ export const WEATHER_PARAMS: Readonly<Record<WeatherKind, Readonly<WeatherParams
   rain: P(0.95, 0.55, 0.55, 6, 0.4, 0.35, 0.25, 0.35, 0.3, 0),
   storm: P(1, 0.85, 1, 13, 0.9, 0.45, 0.15, 0.45, 5, 0),
   fog: P(0.6, 0.2, 0, 1, 0.1, 0.85, 0.4, 0.3, 0, 0),
+  // docs/WINTER.md §3: snow keeps a lighter sky than rain (snow reflects); a blizzard is a whiteout with rare thunder-snow
+  snow: P(0.92, 0.3, 0, 3, 0.3, 0.3, 0.35, 0.3, 0, 0, 0.6),
+  blizzard: P(1, 0.55, 0, 14, 0.9, 0.75, 0.15, 0.5, 0.25, 0, 1),
 }
 
 const PARAM_KEYS = Object.keys(WEATHER_PARAMS.clear) as (keyof WeatherParams)[]
 
-/** Light rain: `rain` may carry an intensity 0.4..1 (1 for every other state). */
+/** Light rain (and light snow): `rain` and `snow` may carry an intensity 0.4..1 (1 for every other state). */
 export const RAIN_INTENSITY_MIN = 0.4
 /** Rain below this intensity has no lightning (WEATHER §2.4). */
 export const LIGHTNING_MIN_INTENSITY = 0.8
 
-/** The parameter vector of `kind` at `intensity` (rain scales rain, cloudDark and lightning; lightning 0 below 0.8). */
+/**
+ * The parameter vector of `kind` at `intensity` (rain scales rain, cloudDark and lightning; lightning 0 below 0.8;
+ * snow scales snow and cloudDark).
+ */
 export function weatherParams(kind: WeatherKind, intensity = 1): WeatherParams {
   const p = { ...WEATHER_PARAMS[kind] }
   if (kind === 'rain' && intensity < 1) {
@@ -61,8 +74,25 @@ export function weatherParams(kind: WeatherKind, intensity = 1): WeatherParams {
     p.rain *= i
     p.cloudDark *= i
     p.lightning = i >= LIGHTNING_MIN_INTENSITY ? p.lightning * i : 0
+  } else if (kind === 'snow' && intensity < 1) {
+    const i = Math.max(RAIN_INTENSITY_MIN, intensity)
+    p.snow *= i
+    p.cloudDark *= i
   }
   return p
+}
+
+/** Whether `kind` takes an intensity (`rain:0.6`, `snow:0.5`). */
+export function takesIntensity(kind: WeatherKind): boolean {
+  return kind === 'rain' || kind === 'snow'
+}
+
+/**
+ * The winter form of a state (docs/WINTER.md §3): rain falls as snow and a storm is a blizzard during the snow season;
+ * every other state is itself.
+ */
+export function winterKind(kind: WeatherKind): WeatherKind {
+  return kind === 'rain' ? 'snow' : kind === 'storm' ? 'blizzard' : kind
 }
 
 function clamp01(x: number): number {
@@ -83,7 +113,7 @@ export function smoothstep(e0: number, e1: number, x: number): number {
 export function transitionMs(from: WeatherKind, to: WeatherKind): number {
   if (from === to) return 0
   if (to === 'fog' || from === 'fog') return 180_000
-  if (to === 'storm') return 60_000
+  if (to === 'storm' || to === 'blizzard') return 60_000
   return 120_000
 }
 
@@ -100,12 +130,14 @@ export function blendFactor(sync: Pick<WeatherSync, 'start' | 'dur'>, nowMs: num
  */
 export function blendWeather(sync: Pick<WeatherSync, 'start' | 'dur' | 'from' | 'to' | 'intensity'>, nowMs: number, current?: WeatherParams): WeatherParams {
   const a = current ?? WEATHER_PARAMS[sync.from]
+  // an older start vector (no snow field) blends from no snowfall
   const b = weatherParams(sync.to, sync.intensity)
   const k = blendFactor(sync, nowMs)
   const out = {} as WeatherParams
-  for (const key of PARAM_KEYS) out[key] = mix(a[key], b[key], k)
+  for (const key of PARAM_KEYS) out[key] = mix(a[key] ?? 0, b[key], k)
   const lag = (x: number, y: number) => mix(x, y, y > x ? smoothstep(0.55, 1, k) : smoothstep(0, 0.45, k))
   out.rain = lag(a.rain, b.rain)
+  out.snow = lag(a.snow ?? 0, b.snow)
   out.lightning = lag(a.lightning, b.lightning)
   out.fog = mix(a.fog, b.fog, smoothstep(0.2, 1, k))
   return out
@@ -121,7 +153,7 @@ export function nearestWeather(p: WeatherParams): WeatherKind {
     let d = 0
     for (const key of PARAM_KEYS) {
       const s = key === 'windMs' ? 1 / 13 : key === 'lightning' ? 1 / 5 : 1
-      d += ((p[key] - q[key]) * s) ** 2
+      d += (((p[key] ?? 0) - q[key]) * s) ** 2
     }
     if (d < bestD) {
       bestD = d
@@ -144,6 +176,9 @@ export const WEATHER_NEXT: Readonly<Record<WeatherKind, readonly (readonly [Weat
   rain: [['overcast', 55], ['rain', 25], ['storm', 20]],
   storm: [['rain', 70], ['overcast', 30]],
   fog: [['clear', 50], ['cloudy', 50]],
+  // never reached by the schedule (nothing leads here): the winter forms of rain and storm (winterKind)
+  snow: [['overcast', 55], ['snow', 25], ['blizzard', 20]],
+  blizzard: [['snow', 70], ['overcast', 30]],
 }
 
 /** Dwell range of each state, minutes. */
@@ -154,6 +189,8 @@ export const WEATHER_DWELL_MIN: Readonly<Record<WeatherKind, readonly [number, n
   rain: [8, 20],
   storm: [5, 12],
   fog: [10, 25],
+  snow: [8, 20],
+  blizzard: [5, 12],
 }
 
 /** One scheduled segment: `kind` holds from `start` to `end` (server ms), after `prev`. */
@@ -371,9 +408,12 @@ export function flashAt(strike: { at: number }, nowMs: number): number {
 
 // ---- fog distance (WEATHER §7.1): the one formula both render paths use ----
 
-/** Visibility factor on the fog end: `mix(1, 0.35, fog) × mix(1, 0.75, rain)` (clear 1, storm ≈ 0.53, fog ≈ 0.45). */
-export function fogScale(p: Pick<WeatherParams, 'fog' | 'rain'>): number {
-  return (1 - 0.65 * clamp01(p.fog)) * (1 - 0.25 * clamp01(p.rain))
+/**
+ * Visibility factor on the fog end: `mix(1, 0.35, fog) × mix(1, 0.75, rain) × mix(1, 0.7, snow)` (clear 1, storm ≈
+ * 0.53, fog ≈ 0.45, snow ≈ 0.66, blizzard ≈ 0.36).
+ */
+export function fogScale(p: Pick<WeatherParams, 'fog' | 'rain'> & { snow?: number }): number {
+  return (1 - 0.65 * clamp01(p.fog)) * (1 - 0.25 * clamp01(p.rain)) * (1 - 0.3 * clamp01(p.snow ?? 0))
 }
 
 // ---- the wire (docs/WAVE_PLAN3.md §3.2) ----

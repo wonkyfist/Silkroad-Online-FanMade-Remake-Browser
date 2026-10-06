@@ -71,6 +71,49 @@ export const GRADE_WEATHER: Readonly<Record<LutWeather, Readonly<GradeParams>>> 
   rain: { gain: [0.95, 0.98, 1.03], lift: [0.002, 0.003, 0.005], gamma: 1, saturation: 0.75, contrast: 1.04 },
 }
 
+/**
+ * The winter grades (docs/WINTER.md §7.6), applied over the blended LUT by the winter weight (frost and snow cover). By
+ * day a cold, slightly desaturated balance with a little more contrast (the snow keeps its shape under a flat sky); by
+ * night the opposite white balance to the night key's blue (snow under a blue grade read as blue paint), blended by the
+ * night weight. Overcast adds contrast.
+ */
+export const GRADE_WINTER: Readonly<{ day: Readonly<GradeParams>; night: Readonly<GradeParams>; overcastContrast: number }> = {
+  day: { gain: [1.0, 1.0, 1.01], lift: [0, 0, 0.002], gamma: 1, saturation: 0.92, contrast: 1.06 },
+  night: { gain: [1.03, 1.01, 0.95], lift: [0, 0, 0], gamma: 1, saturation: 0.62, contrast: 1.02 },
+  overcastContrast: 0.05,
+}
+
+/** The winter step for a night weight (0..1) and an overcast weight (0..1). */
+export function winterGrade(night: number, overcast: number, out: GradeParams = { gain: [1, 1, 1], lift: [0, 0, 0], gamma: 1, saturation: 1, contrast: 1 }): GradeParams {
+  const n = clamp01(night)
+  const d = GRADE_WINTER.day, ni = GRADE_WINTER.night
+  for (let i = 0; i < 3; i++) {
+    out.gain[i] = d.gain[i]! + (ni.gain[i]! - d.gain[i]!) * n
+    out.lift[i] = d.lift[i]! + (ni.lift[i]! - d.lift[i]!) * n
+  }
+  out.gamma = 1
+  out.saturation = d.saturation + (ni.saturation - d.saturation) * n
+  out.contrast = d.contrast + (ni.contrast - d.contrast) * n + GRADE_WINTER.overcastContrast * clamp01(overcast) * (1 - n)
+  return out
+}
+
+/** Mixes the winter step into a LUT in place by `k` (0..1). */
+export function applyWinterToLut(data: Uint8Array, p: Readonly<GradeParams>, k: number): void {
+  const w = clamp01(k)
+  if (w <= 0) return
+  const c = [0, 0, 0]
+  for (let o = 0; o < data.length; o += 4) {
+    c[0] = data[o]! / 255
+    c[1] = data[o + 1]! / 255
+    c[2] = data[o + 2]! / 255
+    const r0 = c[0], g0 = c[1], b0 = c[2]
+    gradeColor(c, p)
+    data[o] = Math.round((r0 + (c[0]! - r0) * w) * 255)
+    data[o + 1] = Math.round((g0 + (c[1]! - g0) * w) * 255)
+    data[o + 2] = Math.round((b0 + (c[2]! - b0) * w) * 255)
+  }
+}
+
 function clamp01(x: number): number {
   return x < 0 ? 0 : x > 1 ? 1 : x
 }
@@ -206,6 +249,8 @@ export interface GradeInput {
   t: number
   cloud: number
   rain: number
+  /** Winter addition (docs/WINTER.md §7.6): 0..1 the winter look; absent = 0 (the keys alone, as before). */
+  winter?: number
 }
 
 /**
@@ -223,6 +268,9 @@ export class GradeMixer {
   private readonly data = new Uint8Array(LUT_BYTES)
   private readonly next = new Float32Array(12)
   private dirty = true
+  /** The winter weight of the last upload (docs/WINTER.md §7.6). */
+  private winterUploaded = 0
+  private readonly winterStep: GradeParams = { gain: [1, 1, 1], lift: [0, 0, 0], gamma: 1, saturation: 1, contrast: 1 }
 
   constructor(scene: Scene, strips: Partial<Record<LutKey, Uint8Array>> = {}) {
     this.strips = LUT_KEYS.map(k => strips[k] ?? builtinLutStrip(k))
@@ -246,14 +294,26 @@ export class GradeMixer {
   /** Per frame; true when the LUT was re-uploaded. */
   update(g: Readonly<GradeInput>): boolean {
     const w = gradeWeights(g.sunElevationDeg, g.t, g.cloud, g.rain, this.next)
+    const winter = clamp01(g.winter ?? 0)
     if (!this.dirty) {
-      let moved = 0
+      let moved = Math.abs(winter - this.winterUploaded)
       for (let i = 0; i < 12; i++) moved = Math.max(moved, Math.abs(w[i]! - this.uploaded[i]!))
-      if (moved <= GradeMixer.THRESHOLD) return false
+      if (moved <= GradeMixer.THRESHOLD && !(winter === 0 && this.winterUploaded !== 0)) return false
     }
     this.uploaded.set(w)
+    this.winterUploaded = winter
     this.dirty = false
     blendStrips(this.strips, w, this.data)
+    if (winter > 0) {
+      // night = the night keys' weight; overcast = the overcast and rain keys' (LUT_KEYS: time-major, 3 weathers each)
+      let night = 0
+      let overcast = 0
+      for (let i = 0; i < 12; i++) {
+        if (i >= 9) night += w[i]!
+        if (i % 3 !== 0) overcast += w[i]!
+      }
+      applyWinterToLut(this.data, winterGrade(night, overcast, this.winterStep), winter)
+    }
     this.texture.update(this.data)
     this.uploads++
     return true

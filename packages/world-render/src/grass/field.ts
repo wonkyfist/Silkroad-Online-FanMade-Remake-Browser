@@ -448,6 +448,18 @@ export class GrassField implements GroundCover, GrassFieldAccess {
     return true
   }
 
+  /** Winter (docs/WINTER.md §7.3): frost 0..1. Past half the flowers are closed and the far meadow's flower dots never show. */
+  private winter = 0
+
+  setWinter(k: number): void {
+    this.winter = Math.min(1, Math.max(0, k))
+    const l = this.level
+    if (!l) return
+    this.styleVec.z = this.winter >= 0.5 ? 0 : l.flowers
+    const r = l.ring
+    if (r) this.ringLod2.set(this.winter >= 0.5 ? 1e6 : r.dots[0], this.winter >= 0.5 ? 1e6 + 1 : r.dots[1], r.dots[2], r.dots[3])
+  }
+
   setLevel(level: ScatterLevel): void {
     this.levelName = level
     this.stats.level = level
@@ -460,7 +472,7 @@ export class GrassField implements GroundCover, GrassFieldAccess {
     }
     this.lod0.set(l.fade2[0], l.fade2[1], l.fade1[0], l.fade1[1])
     this.lod1.set(l.cut0[0], l.cut0[1], 1, 1)
-    this.styleVec.set(l.width, GRASS_FACE_CAMERA, l.flowers, l.density.blades)
+    this.styleVec.set(l.width, GRASS_FACE_CAMERA, this.winter >= 0.5 ? 0 : l.flowers, l.density.blades)
     this.view.z = l.band
     if (!this.density || this.density.clumpGrid !== l.density.clumpGrid || this.density.blades !== l.density.blades) {
       this.density = l.density
@@ -475,7 +487,7 @@ export class GrassField implements GroundCover, GrassFieldAccess {
     }
     this.ringLod0.set(r.in[0], r.in[1], r.thin1[0], r.thin1[1])
     this.ringLod1.set(r.thin2[0], r.thin2[1], r.out[0], r.out[1])
-    this.ringLod2.set(r.dots[0], r.dots[1], r.dots[2], r.dots[3])
+    this.ringLod2.set(this.winter >= 0.5 ? 1e6 : r.dots[0], this.winter >= 0.5 ? 1e6 + 1 : r.dots[1], r.dots[2], r.dots[3])
     this.ringStyle.set(r.width, r.keep2, r.keep3, 1)
     this.ringView.z = l.band
     const key = `${r.grid}|${r.keep2}|${r.keep3}`

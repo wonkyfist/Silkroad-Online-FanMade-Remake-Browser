@@ -461,6 +461,8 @@ export class Connection {
         // Wave 9 (docs/WAVE_PLAN3.md §3.3): the clock anchor and the late-joiner weather.
         clock: this.game.gameplay.clock.state,
         weather: this.game.gameplay.weather.sync(Date.now()),
+        // docs/WINTER.md §5: the snow season and the snow on the ground
+        winter: this.game.gameplay.winter.sync(Date.now()),
       },
       entities: world.snapshotFor(this.player),
       role: this.role,

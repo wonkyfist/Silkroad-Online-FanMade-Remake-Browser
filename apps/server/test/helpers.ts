@@ -38,6 +38,8 @@ export function testConfig(root: string, logs?: string[]): ServerConfig {
     mobLevelMax: 25,
     spawnMobs: true,
     giantPct: 0,
+    // docs/WINTER.md: off in tests, so a run in December still sees the schedule's rain (winter tests turn it on)
+    winterEnabled: false,
     log: (m) => logs?.push(m),
   }
 }

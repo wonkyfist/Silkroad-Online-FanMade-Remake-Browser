@@ -39,6 +39,8 @@ import { testConfig } from './helpers.ts'
 
 const T0 = Date.UTC(2026, 9, 5, 12, 0, 0)
 const T = TORNADO_TABLE
+/** A throw reaching this share of its distance is taken at once (storm/tornado.ts FAR_ENOUGH). */
+const FAR = 0.75
 
 // ---- the shared maths ----------------------------------------------------------------------------------------
 
@@ -76,9 +78,9 @@ describe('tornado maths (packages/shared tornado.ts)', () => {
   })
 
   it('pulls nothing outside its radius, slowly at the edge, faster than a run by the core, with a swirl', () => {
-    expect(pullVelocity(31, 0, 1)).toEqual([0, 0])
+    expect(pullVelocity(T.pullM + 1, 0, 1)).toEqual([0, 0])
     expect(pullVelocity(10, 0, 0)).toEqual([0, 0])
-    const edge = Math.hypot(...pullVelocity(29, 0, 1))
+    const edge = Math.hypot(...pullVelocity(T.pullM - 1, 0, 1))
     const core = Math.hypot(...pullVelocity(4, 0, 1))
     expect(edge).toBeLessThan(1.2)
     expect(core).toBeGreaterThan(5.5)
@@ -88,14 +90,27 @@ describe('tornado maths (packages/shared tornado.ts)', () => {
     expect(Math.hypot(...pullVelocity(20, 0, 2))).toBeCloseTo(2 * Math.hypot(vx, vz), 9)
   })
 
-  it('throw damage: a share of max HP, capped, scaled by the strength, never down to 0 HP', () => {
-    expect(throwDamage(1000, 1000, 1)).toBe(120)
-    expect(throwDamage(1000, 1000, 2)).toBe(240)
-    expect(throwDamage(1000, 1000, 5)).toBe(250) // the cap
+  it('throw damage: a share of max HP, capped per throw and per tornado, scaled by the strength; lethal or not', () => {
+    expect(throwDamage(1000, 1000, 1)).toBe(220)
+    expect(throwDamage(1000, 1000, 1.5)).toBe(330)
+    expect(throwDamage(1000, 1000, 5)).toBe(350) // the per-throw cap
+    expect(throwDamage(1000, 1000, 1, T, { taken: 440 })).toBe(110) // what is left of the 55 % per tornado
+    expect(throwDamage(1000, 1000, 1, T, { taken: 550 })).toBe(0)
+    expect(throwDamage(1000, 1000, 0)).toBe(0)
+    // not lethal: never down to 0 HP
     expect(throwDamage(50, 1000, 1)).toBe(49)
     expect(throwDamage(1, 1000, 1)).toBe(0)
-    expect(throwDamage(1000, 1000, 0)).toBe(0)
     for (let hp = 1; hp < 300; hp += 7) expect(hp - throwDamage(hp, 1000, 2)).toBeGreaterThanOrEqual(1)
+    // lethal: takes the last HP of a body already low, but a healthy one survives a whole tornado
+    expect(throwDamage(50, 1000, 1, T, { lethal: true })).toBe(50)
+    let hp = 1000
+    let taken = 0
+    for (let i = 0; i < 10; i++) {
+      const d = throwDamage(hp, 1000, 2, T, { taken, lethal: true })
+      hp -= d
+      taken += d
+    }
+    expect(hp).toBe(1000 - Math.round(1000 * T.damageTotalPct))
   })
 
   it('the arc rises to its apex at mid-flight and lands on the line', () => {
@@ -329,8 +344,9 @@ describe('the tornado module (storm/tornado.ts)', () => {
 
   it('pull: a body standing near the core is drawn in (sliding), a walker at the edge runs out of it', () => {
     const h = harness()
-    const near = h.enter([-180, 0, 112])
-    const edge = h.enter([-180, 0, 128])
+    const near = h.enter([-180, 0, 116])
+    const edgeZ = 100 + T.pullM - 2
+    const edge = h.enter([-180, 0, edgeZ])
     h.place(-180, 100)
     h.world.moveTo(edge.p, -180, 300, T0)
     const d0 = dist2(h.world.positionAt(near.p, T0), -180, 100)
@@ -344,27 +360,26 @@ describe('the tornado module (storm/tornado.ts)', () => {
     for (let t = T0 + 1500; t <= T0 + 8000; t += 500) h.tor.tick(t)
     const e = h.world.positionAt(edge.p, T0 + 8000)
     expect(dist2(e, -180, 100)).toBeGreaterThan(T.pullM)
-    expect(e[2]).toBeLessThan(128 + 5.5 * 8) // slowed by the pull
+    expect(e[2]).toBeLessThan(edgeZ + 5.5 * 8) // slowed by the pull
     expect(edge.inbox.some((m) => m.t === 'displace' && m.id === edge.p.id)).toBe(false) // it walked: a plain move
   })
 
-  it('throw: a body in the core flies out along the navmesh, lands on open ground, is hurt but never killed, and has no control meanwhile', () => {
+  it('throw: a body in the core flies far out along the navmesh, lands on open ground, is hurt, and has no control meanwhile', () => {
     const h = harness()
     const v = h.enter([-180, 0, 102])
-    v.p.hp = 2
     h.place(-180, 100)
     h.tor.tick(T0)
     const msg = v.inbox.find((m): m is Extract<ServerMessage, { t: 'displace' }> => m.t === 'displace' && m.kind === 'throw')!
     expect(msg).toBeDefined()
     const flown = Math.hypot(msg.to[0] - msg.from[0], msg.to[2] - msg.from[2])
-    expect(flown).toBeGreaterThanOrEqual(T.throwMinM)
+    expect(flown).toBeGreaterThanOrEqual(T.throwM[0] * FAR)
     expect(dist2(msg.to, -180, 100)).toBeGreaterThan(T.coreM + 3)
     expect(msg.ms).toBeGreaterThanOrEqual(T.throwMs[0])
     expect(msg.peakM).toBeGreaterThan(0)
     expect(h.g.skills.held(v.p, T0 + 10)).toBe(true)
     expect(h.g.onMoveTo(v.p, T0 + 200)).toBe(false) // the gate: no control in the air
     h.tor.tick(T0 + msg.ms + 1)
-    expect(v.p.hp).toBe(1)
+    expect(v.p.hp).toBe(10_000 - Math.round(10_000 * T.damagePct))
     expect(v.p.dead).toBe(false)
     expect(v.inbox.some((m) => m.t === 'combat' && m.cause === 'tornado' && m.target === v.p.id)).toBe(true)
     const end = h.world.positionAt(v.p, T0 + msg.ms + 1)
@@ -378,45 +393,93 @@ describe('the tornado module (storm/tornado.ts)', () => {
     expect(v.inbox.filter((m) => m.t === 'displace' && m.kind === 'throw')).toHaveLength(1)
   })
 
-  it('never kills: thrown again and again from full HP, a body ends at 1 HP at worst', () => {
-    const h = harness({ tornadoStrength: 2 })
-    const v = h.enter([-180, 0, 101])
-    v.p.hp = v.p.maxHp = 500
-    h.place(-180, 100, { strength: 2 })
+  /** Throws the body `v` out of a tornado at (-180, 100) `n` times (warped back into the core each time). */
+  const throwAgain = (h: ReturnType<typeof harness>, v: ReturnType<ReturnType<typeof harness>['enter']>, n: number) => {
     let t = T0
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < n; i++) {
       h.world.warp(v.p, -180, 0, 101, t)
       h.tor.tick(t)
       t += T.throwMs[1] + T.immuneMs + 100
       h.tor.tick(t)
     }
+  }
+
+  it('a healthy body survives a whole tornado: thrown again and again at strength 2, it loses at most damageTotalPct', () => {
+    const h = harness({ tornadoStrength: 2 })
+    const v = h.enter([-180, 0, 101])
+    v.p.hp = v.p.maxHp = 500
+    h.place(-180, 100, { strength: 2 })
+    throwAgain(h, v, 8)
     expect(v.p.dead).toBe(false)
-    expect(v.p.hp).toBe(1)
+    expect(v.p.hp).toBe(500 - Math.round(500 * T.damageTotalPct))
     const hits = v.inbox.filter((m): m is Extract<ServerMessage, { t: 'combat' }> => m.t === 'combat' && m.cause === 'tornado')
-    expect(hits.length).toBeGreaterThan(3)
+    expect(hits.length).toBeGreaterThanOrEqual(2)
     for (const c of hits) expect(c.hits[0]!.damage).toBeLessThanOrEqual(Math.round(500 * T.damageCapPct))
+  })
+
+  it('kills a body already low on HP (TORNADO_LETHAL, on by default): the normal death, nobody gets the kill', () => {
+    const h = harness()
+    const v = h.enter([-180, 0, 102])
+    const watcher = h.enter([-150, 0, 100])
+    v.p.hp = 300 // of 10,000: one throw takes 2,200
+    const wolf = h.spawn(WOLF, -181, 101)
+    wolf.hp = 5
+    h.place(-180, 100)
+    h.tor.tick(T0)
+    const msg = v.inbox.find((m): m is Extract<ServerMessage, { t: 'displace' }> => m.t === 'displace' && m.kind === 'throw' && m.id === v.p.id)!
+    h.tor.tick(T0 + T.throwMs[1] + 1)
+    expect(v.p.hp).toBe(0)
+    expect(v.p.dead).toBe(true)
+    const death = watcher.inbox.find((m): m is Extract<ServerMessage, { t: 'combat' }> => m.t === 'combat' && m.target === v.p.id)!
+    expect(death).toMatchObject({ attacker: 0, cause: 'tornado', killed: true })
+    expect(h.world.positionAt(v.p, T0 + msg.ms + 1)).toEqual(msg.to)
+    // a monster too (no attacker: no rewards)
+    expect(wolf.ai).toBe('dead')
+    // off: never below 1 HP
+    const off = harness({ tornadoLethal: false })
+    const w = off.enter([-180, 0, 102])
+    w.p.hp = 2
+    off.place(-180, 100)
+    off.tor.tick(T0)
+    off.tor.tick(T0 + T.throwMs[1] + 1)
+    expect(w.p.hp).toBe(1)
+    expect(w.p.dead).toBe(false)
   })
 
   it('landings respect the navmesh: never through the wall, never into the pond, never out of the world', () => {
     const h = harness()
     const s = h.place(50, 0)
     const c: Vec3 = [50, 0, 0]
+    let landed = 0
+    let far = 0
     for (let i = 0; i < 300; i++) {
       const a = (i / 300) * Math.PI * 2
       const from: NavPoint = { x: 50 + Math.cos(a) * 3, y: 0, z: Math.sin(a) * 3, surface: null }
       const end = h.tor.landing(s, from, c)
       if (!end) continue
-      expect(end.x).toBeLessThan(WallNav.WALL_X) // the wall (x 60, z -40..40) is never crossed
+      landed++
+      if (Math.hypot(end.x - from.x, end.z - from.z) >= T.throwM[0] * FAR) far++
+      // the wall (x 60, z -40..40) is never crossed: a landing past x 60 went round its end
+      if (end.x >= WallNav.WALL_X) expect(Math.abs(from.z + ((end.z - from.z) * (WallNav.WALL_X - from.x)) / (end.x - from.x))).toBeGreaterThan(40)
       expect(end.x >= 0 && end.x <= 32 && end.z >= -32 && end.z <= 0).toBe(false) // the pond
       expect(Math.hypot(end.x - from.x, end.z - from.z)).toBeGreaterThanOrEqual(T.throwMinM)
     }
-    // at the world's edge: never outside it
+    // by the wall and the pond, every body still lands somewhere, nearly all of them far out
+    expect(landed).toBe(300)
+    expect(far).toBeGreaterThan(280)
+    // at the world's edge: never outside it (in the corner: the farthest fit point of a shortened throw)
     const e = h.place(480, 480)
     for (let i = 0; i < 100; i++) {
       const end = h.tor.landing(e, { x: 481, y: 0, z: 481, surface: null }, [480, 0, 480])
-      if (!end) continue
-      expect(end.x).toBeLessThanOrEqual(500)
-      expect(end.z).toBeLessThanOrEqual(500)
+      expect(end).not.toBeNull()
+      expect(end!.x).toBeLessThanOrEqual(500)
+      expect(end!.z).toBeLessThanOrEqual(500)
+    }
+    // a pond in the way: a throw that would come down in the water lands short of it, on the shore
+    const p = h.place(-30, -16)
+    for (let i = 0; i < 50; i++) {
+      const end = h.tor.landing(p, { x: -22, y: 0, z: -16, surface: null }, [-30, 0, -16])
+      if (end) expect(end.x >= 0 && end.x <= 32 && end.z >= -32 && end.z <= 0).toBe(false)
     }
     // a town: a body at its edge is never thrown into it
     const t = h.place(-300, -230)
@@ -453,7 +516,7 @@ describe('the tornado module (storm/tornado.ts)', () => {
   })
 
   it('its lightning: telegraphed strikes around it (source tornado) that hurt but never kill', () => {
-    const h = harness()
+    const h = harness({ tornadoLethal: false }) // its throws could kill this body; its bolts never do
     const v = h.enter([-160, 0, 100])
     v.p.hp = 3
     h.place(-180, 100)

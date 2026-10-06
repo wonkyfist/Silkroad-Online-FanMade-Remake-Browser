@@ -666,7 +666,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     clearTarget()
     if (deathShown) return
     deathShown = true
-    chat.add('system', lastHitCause === 'lightning' ? t('world.diedLightning') : lastHitBy ? t('world.diedBy', { name: lastHitBy }) : t('world.died'))
+    chat.add('system', lastHitCause === 'lightning' ? t('world.diedLightning') : lastHitCause === 'tornado' ? t('world.diedTornado') : lastHitBy ? t('world.diedBy', { name: lastHitBy }) : t('world.died'))
     hud.showDeath(() => send(intents.respawn()))
   }
 

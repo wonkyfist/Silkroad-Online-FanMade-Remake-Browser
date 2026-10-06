@@ -20,6 +20,7 @@ import {
   NIGHT_CHUNKS,
   QUALITY_PRESETS,
   RENDER_GRASS_CHUNKS,
+  WINTER_CHUNKS,
   RENDER_PRESETS,
   SKY_CHUNKS,
   WEATHER_CHUNKS,
@@ -50,7 +51,8 @@ async function world(o: Parameters<typeof w10World>[0] = {}): Promise<W10Setup> 
 
 describe('the shader chunk list (D11)', () => {
   it('is sky → weather → night → coast → grass tint → render, with the two new lanes empty', () => {
-    expect(WORLD_SHADER_CHUNKS).toEqual([SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, GRASS_TINT_CHUNKS, RENDER_GRASS_CHUNKS])
+    // docs/WINTER.md §7.2: the winter lane last
+    expect(WORLD_SHADER_CHUNKS).toEqual([SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, GRASS_TINT_CHUNKS, RENDER_GRASS_CHUNKS, WINTER_CHUNKS])
     expect(WORLD_SHADER_CHUNKS.indexOf(COAST_CHUNKS)).toBe(3)
     expect(WORLD_SHADER_CHUNKS.indexOf(GRASS_TINT_CHUNKS)).toBe(4)
     expect(COAST_CHUNKS).toEqual({})
@@ -62,7 +64,7 @@ describe('the shader chunk list (D11)', () => {
   })
 
   it('with both empty, every Classic string (both languages) and name list equals the wave-9 lane list\'s', () => {
-    const wave9 = [SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, RENDER_GRASS_CHUNKS]
+    const wave9 = [SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, RENDER_GRASS_CHUNKS, WINTER_CHUNKS]
     for (const build of [terrainShaders, waterShaders, scatterShaders]) {
       const a = build(WORLD_SHADER_CHUNKS)
       const b = build(wave9)

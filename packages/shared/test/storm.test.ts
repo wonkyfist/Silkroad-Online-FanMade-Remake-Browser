@@ -123,7 +123,7 @@ describe('storm effects table (docs/WEATHER.md §12.6)', () => {
     const rain = stormEffects(RAIN).map((e) => e.id)
     expect(rain).toEqual(['wet', 'sight', 'fire', 'lightning', 'cold', 'mud'])
     const storm = stormEffects(NIGHT_STORM)
-    expect(storm.map((e) => e.id)).toEqual([...STORM_EFFECT_IDS])
+    expect(storm.map((e) => e.id)).toEqual(STORM_EFFECT_IDS.filter((id) => id !== 'snow' && id !== 'drifts'))
     const pct = Object.fromEntries(storm.map((e) => [e.id, e.pct]))
     expect(pct).toMatchObject({ wet: 20, sight: -55, fire: -25, lightning: 25, cold: 15, mud: -10, wind: 20, night: -25, undead: 25, water: 60, critters: -60, packs: 50, bandits: -50, charged: 30 })
     expect(pct.panic).toBeUndefined()

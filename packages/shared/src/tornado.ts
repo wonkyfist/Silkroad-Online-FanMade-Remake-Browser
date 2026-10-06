@@ -2,8 +2,9 @@
  * The lightning tornado (docs/WEATHER.md §13, storm series step 3): the numbers and the pure maths the server and the
  * client share. A rare storm event: a rotating funnel wanders a server-chosen path across the fields for a few minutes,
  * pulls the players and monsters near it in, throws the ones it catches back out (server-authoritative, along the
- * navmesh), hurts them without ever killing, and throws lightning at what stands around it (placed strikes, so every
- * bolt is telegraphed). It never enters a town.
+ * navmesh), hurts them (a share of max HP per throw, capped per tornado: it kills only the already hurt, and only with
+ * STORM_TABLE.tornadoLethal), and throws lightning at what stands around it (placed strikes, so every bolt is
+ * telegraphed). It never enters a town.
  *
  * - **Timeline** (`TornadoState`, the `tornado` message): `warnAt` the warning (a wall cloud lowers, the announcement),
  *   `touchAt` touchdown (it starts walking its `path` at `speedMs`), `endAt` the end of its walk, or `liftAt` when it
@@ -12,8 +13,8 @@
  * - **Pull**: inside `pullM` a body drifts toward the funnel at `pullSpeed` (slow at the edge, faster than a run at the
  *   core) with a swirl around it; its own walk carries on, so a player can run out from the edge.
  * - **Throw**: a body inside `coreM` is caught, spun up and thrown THROW_M out (clamped to the navmesh: never into a
- *   wall, water, a town or out of the world), with `throwDamage` (a share of max HP, capped, never below 1 HP), a short
- *   loss of control, then `immuneMs` before it can be caught again.
+ *   wall, water, a town or out of the world), with `throwDamage` (a share of max HP, capped per throw and per
+ *   tornado), a short loss of control, then `immuneMs` before it can be caught again.
  * - `strength` (TORNADO_STRENGTH, 0..2) scales the pull, the throw, the damage and the bolts; 0 = it only looks.
  */
 import type { TornadoState, Vec3 } from './protocol.ts'
@@ -45,44 +46,49 @@ export const TORNADO_TABLE = {
   sampleM: 6,
   // ---- pull
   /** Bodies inside this radius are pulled (m). */
-  pullM: 30,
+  pullM: 45,
   /** Pull speed toward the funnel (m/s) at the edge and at the core (strength 1). */
-  pullEdgeMs: 0.8,
-  pullCoreMs: 7,
+  pullEdgeMs: 0.9,
+  pullCoreMs: 10,
+  /** How sharply the pull grows toward the core: speed = edge + (core - edge) × (1 - d / pullM) ^ pullCurve. */
+  pullCurve: 2,
   /** The swirl: the pull is turned this far around the funnel (radians; counter-clockwise from above). */
   swirlRad: 0.55,
   /** How often the server re-plans the pulled bodies' moves (ms). */
   pullTickMs: 500,
   // ---- throw
   /** Caught inside this radius (m). */
-  coreM: 5,
+  coreM: 7,
   /** Thrown this far out (m, strength 1), uniform; never under throwMinM after the navmesh clamp. */
-  throwM: [14, 24] as readonly [number, number],
-  throwMinM: 5,
+  throwM: [35, 60] as readonly [number, number],
+  throwMinM: 6,
   /** The flight (ms) and its apex above the ground (m). */
-  throwMs: [1100, 1500] as readonly [number, number],
-  throwPeakM: [5, 9] as readonly [number, number],
+  throwMs: [1700, 2600] as readonly [number, number],
+  throwPeakM: [11, 20] as readonly [number, number],
   /** Loss of control after landing (ms; the knockdown covers the flight and this). */
-  lockMs: 900,
+  lockMs: 1600,
   /** Not caught (nor pulled) again this long after a throw (ms). */
-  immuneMs: 8000,
+  immuneMs: 9000,
   /** Throw damage: this share of max HP (strength 1) ... */
-  damagePct: 0.12,
-  /** ... at most this share of max HP whatever the strength; and never below 1 HP (never a kill). */
-  damageCapPct: 0.25,
+  damagePct: 0.22,
+  /** ... at most this share of max HP per throw whatever the strength (it kills only a body already low on HP, and only
+   *  with STORM_TABLE.tornadoLethal; otherwise never below 1 HP) ... */
+  damageCapPct: 0.35,
+  /** ... and one tornado takes at most this share of a body's max HP in all (its throws; a healthy body survives it). */
+  damageTotalPct: 0.55,
   // ---- its lightning (placed strikes, telegraphed like any other)
   /** One bolt every this many ms (strength 1), uniform. */
-  boltMs: [2200, 5200] as readonly [number, number],
+  boltMs: [1100, 2800] as readonly [number, number],
   /** Bolts land this far from the funnel (m). */
-  boltRingM: [7, 42] as readonly [number, number],
+  boltRingM: [6, 50] as readonly [number, number],
   /** Share of the bolts aimed at a body (player or monster) in the ring; the rest a tree or the ground. */
-  boltBodyShare: 0.45,
+  boltBodyShare: 0.5,
   // ---- the client
   /** The funnel's height (m) and its top radius (the wall cloud), at strength 1. */
-  heightM: 75,
-  topM: 26,
+  heightM: 92,
+  topM: 30,
   /** Felt (camera shake, the roar at full) inside this distance (m). */
-  shakeM: 60,
+  shakeM: 80,
   /** Heard out to this distance (m). */
   hearM: 900,
 } as const
@@ -163,7 +169,7 @@ export function pullVelocity(dx: number, dz: number, strength: number, t: Tornad
   const d = Math.hypot(dx, dz)
   if (!(d < t.pullM) || d < 1e-6 || strength <= 0) return [0, 0]
   const k = 1 - d / t.pullM
-  const speed = (t.pullEdgeMs + (t.pullCoreMs - t.pullEdgeMs) * k ** 1.5) * strength
+  const speed = (t.pullEdgeMs + (t.pullCoreMs - t.pullEdgeMs) * k ** t.pullCurve) * strength
   // inward unit, turned counter-clockwise (seen from above: +X east, -Z north) by the swirl
   const ix = -dx / d
   const iz = -dz / d
@@ -172,12 +178,18 @@ export function pullVelocity(dx: number, dz: number, strength: number, t: Tornad
   return [(ix * c - iz * s) * speed, (ix * s + iz * c) * speed]
 }
 
-/** Throw damage on a body (HP): damagePct × strength of max HP, at most damageCapPct of it, never down to 0. */
-export function throwDamage(hp: number, maxHp: number, strength: number, t: TornadoTable = TORNADO_TABLE): number {
-  if (!(hp > 1) || !(maxHp > 0) || strength <= 0) return 0
+/**
+ * Throw damage on a body (HP): damagePct × strength of max HP, at most damageCapPct of it per throw and what is left of
+ * damageTotalPct after `taken` (what this tornado already took from it). `lethal` (STORM_TABLE.tornadoLethal) lets it
+ * take the last HP of a body already low; otherwise it never goes below 1 HP.
+ */
+export function throwDamage(hp: number, maxHp: number, strength: number, t: TornadoTable = TORNADO_TABLE, opts: { taken?: number; lethal?: boolean } = {}): number {
+  if (!(hp > 0) || !(maxHp > 0) || strength <= 0) return 0
   const want = Math.max(1, Math.round(maxHp * t.damagePct * strength))
   const cap = Math.max(1, Math.round(maxHp * t.damageCapPct))
-  return Math.max(0, Math.min(want, cap, Math.ceil(hp) - 1))
+  const left = Math.round(maxHp * t.damageTotalPct) - Math.max(0, opts.taken ?? 0)
+  const floor = opts.lethal ? Math.ceil(hp) : Math.ceil(hp) - 1
+  return Math.max(0, Math.min(want, cap, left, floor))
 }
 
 /** Height above the straight line of a throw at flight share `f` (0..1): a parabola with its apex `peakM` at 0.5. */

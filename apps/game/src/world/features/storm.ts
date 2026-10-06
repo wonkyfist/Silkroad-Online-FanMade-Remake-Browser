@@ -63,10 +63,13 @@ function ensureStyle(): void {
 const CLOUD = '<path d="M5 10.5h9.5a3 3 0 0 0 0-6 4.2 4.2 0 0 0-8-0.8A3.4 3.4 0 0 0 5 10.5z" fill="#c8d0dc" stroke="#5a6472" stroke-width="0.8"/>'
 const DROPS = '<path d="M6 12.5l-1 2M9.5 12.5l-1 2M13 12.5l-1 2" stroke="#7fb0ff" stroke-width="1.2" stroke-linecap="round"/>'
 const BOLT = '<path d="M10.5 9l-2.6 3.6h2.2l-1.4 3.2 3.6-4.4h-2.3l1.6-2.4z" fill="#ffe36a" stroke="#a07a10" stroke-width="0.5"/>'
+/** Winter (docs/WINTER.md §4): flakes under the cloud, and the blizzard's wind streaks. */
+const FLAKES = '<g stroke="#eef4ff" stroke-width="0.9" stroke-linecap="round"><path d="M6 12.2v2.6M4.9 13.5h2.2"/><path d="M10 13v2.6M8.9 14.3h2.2"/><path d="M14 12.2v2.6M12.9 13.5h2.2"/></g>'
+const GUST = '<path d="M2.5 13.2h6.5M4 15.4h8" stroke="#dfe8f6" stroke-width="1" stroke-linecap="round"/>'
 
-/** The icon's SVG for a phase. */
-export function stormIconSvg(phase: StormStatus['phase']): string {
-  const inner = phase === 'rain' ? CLOUD + DROPS : CLOUD + BOLT
+/** The icon's SVG for a phase (winter: snow and the blizzard). */
+export function stormIconSvg(phase: StormStatus['phase'], winter = false): string {
+  const inner = winter ? (phase === 'storm' ? CLOUD + FLAKES + GUST : CLOUD + FLAKES) : phase === 'rain' ? CLOUD + DROPS : CLOUD + BOLT
   return `<svg viewBox="0 0 20 17" aria-hidden="true">${inner}</svg>`
 }
 
@@ -81,11 +84,12 @@ export function stormTipLines(s: StormStatus, now: number): { title: string; tim
   const minutes = (at: number) => Math.max(1, Math.ceil((at - now) / 60_000))
   let title: string
   let time: string | null = null
-  if (s.phase === 'forecast') title = t('storm.title.forecast', { min: s.startsAt !== undefined ? minutes(s.startsAt) : '?' })
+  const w = !!s.winter
+  if (s.phase === 'forecast') title = t(w ? 'storm.title.forecastWinter' : 'storm.title.forecast', { min: s.startsAt !== undefined ? minutes(s.startsAt) : '?' })
   else if (s.phase === 'storm') {
-    title = t('storm.title.storm')
+    title = t(w ? 'storm.title.blizzard' : 'storm.title.storm')
     if (s.endsAt !== undefined && s.endsAt > now) time = t('storm.title.ends', { min: minutes(s.endsAt) })
-  } else title = t(s.phase === 'rain' ? 'storm.title.rain' : 'storm.title.calm')
+  } else title = t(s.phase === 'rain' ? (w ? 'storm.title.snow' : 'storm.title.rain') : 'storm.title.calm')
   const effects = s.effects.map((e) => t(`storm.effect.${e.id}` as StringKey, { pct: signedPct(e.pct) }))
   return { title, time, effects }
 }
@@ -93,9 +97,10 @@ export function stormTipLines(s: StormStatus, now: number): { title: string; tim
 /** The chat line for a phase change (null: none). `prev` null = the first status after entering. */
 export function stormChatLine(prev: StormStatus['phase'] | null, s: StormStatus, now: number): string | null {
   if (s.phase === prev) return null
-  if (s.phase === 'forecast') return t('storm.chat.forecast', { min: s.startsAt !== undefined ? Math.max(1, Math.ceil((s.startsAt - now) / 60_000)) : '?' })
-  if (s.phase === 'storm') return t('storm.chat.breaks')
-  if (prev === 'storm') return t('storm.chat.passes')
+  const w = !!s.winter
+  if (s.phase === 'forecast') return t(w ? 'storm.chat.forecastWinter' : 'storm.chat.forecast', { min: s.startsAt !== undefined ? Math.max(1, Math.ceil((s.startsAt - now) / 60_000)) : '?' })
+  if (s.phase === 'storm') return t(w ? 'storm.chat.breaksWinter' : 'storm.chat.breaks')
+  if (prev === 'storm') return t(w ? 'storm.chat.passesWinter' : 'storm.chat.passes')
   return null
 }
 
@@ -164,13 +169,13 @@ export function stormFeature(ctx: WorldFeatureContext): WorldFeature {
       iconParent = parent
     }
     icon.hidden = false
-    const look = `${status.phase}${tornado ? ' tornado' : ''}`
+    const look = `${status.phase}${tornado ? ' tornado' : ''}${status.winter ? ' winter' : ''}`
     if (iconPhase !== look) {
       iconPhase = look
       icon.className = `storm-icon phase-${status.phase}${tornado ? ' tornado' : ''}`
       // keep the tooltip node, swap the picture
       for (const n of [...icon.childNodes]) if (n !== tip) n.remove()
-      icon.insertAdjacentHTML('afterbegin', stormIconSvg(status.phase))
+      icon.insertAdjacentHTML('afterbegin', stormIconSvg(status.phase, !!status.winter))
     }
     const now = pageNow()
     if (now >= nextTip) {

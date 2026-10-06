@@ -19,6 +19,11 @@
  *   material path with the classic sky (WEATHER §7.1); the modern sky dims them through SkyState (GAME).
  * - Debug: `?weather=storm` (or `rain:0.6`) holds a state offline until the first `weather` message;
  *   `window.__sroWeather` shows the frame, the sync and the level.
+ * - Winter (docs/WINTER.md §8): the snow season's state (`worldEnter.world.winter`, `winter`) is mirrored by
+ *   WinterClient (world/winter/client.ts) and its cover and frost ride in the frame (`cover`, `frost`; the snowfall
+ *   rate `snow` comes with the weather). The snow on the ground is drawn even without the new weather look (Low and its
+ *   classic combination too: the season is content); the flakes follow the weather like the rain.
+ *   `?winter=<0..1>` holds a look offline.
  */
 import type { Material, Scene } from '@babylonjs/core'
 import {
@@ -50,6 +55,7 @@ import { t } from '../../i18n/index.ts'
 import { WEATHER_SETTINGS, settings, weatherLevelFor, weatherShown, type SettingsStore, type WeatherSetting } from '../../settings.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
 import { zoneAt } from '../map/zones.ts'
+import { WinterClient, parseWinterOverride } from '../winter/client.ts'
 
 /** Zone climate follows the camera with this time constant (s): ~95 % after 10 s. */
 export const CLIMATE_TAU_S = 10 / 3
@@ -285,6 +291,8 @@ export class WeatherClient {
       cloudDark: p.cloudDark,
       cirrus: p.cirrus,
       rain: clamp01(p.rain * c.rainMul),
+      // docs/WINTER.md §3: the snowfall rate (the zone's precipitation share applies to it too)
+      snow: clamp01((p.snow ?? 0) * c.rainMul),
       fog: clamp01(p.fog + c.fogAdd),
       sun: p.sun,
       desat: p.desat,
@@ -386,6 +394,7 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
   const search = opts.search ?? (typeof location === 'undefined' ? '' : location.search)
   const zoneOf = opts.zoneAt ?? zoneAt
   const client = new WeatherClient(parseWeatherOverride(search), ctx.serverNow())
+  const winter = new WinterClient(parseWinterOverride(search))
   const audio: GameAudio | undefined = ctx.app?.audio
   const scene: Scene = ctx.scene
   const offs: Array<() => void> = []
@@ -473,6 +482,9 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
       get overridden() {
         return client.isOverridden
       },
+      get winter() {
+        return { sync: winter.current, state: winter.raw }
+      },
     }
     offs.push(() => {
       delete w.__sroWeather
@@ -491,8 +503,10 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
       const now = ctx.serverNow()
       if (msg.t === 'worldEnter') {
         client.enter(msg.world.weather, now)
+        winter.enter(msg.world.winter, now)
         nightFogTarget = nightFog = 0
       } else if (msg.t === 'weather') client.message(msg.weather, now)
+      else if (msg.t === 'winter') winter.message(msg.winter)
       else if (msg.t === 'storm') nightFogTarget = stormNightFog(msg.storm)
       else if (msg.t === 'strike') {
         // a placed strike (docs/WEATHER.md §2.7): flash and thunder from where it really is
@@ -527,7 +541,10 @@ export function weatherFeature(ctx: WorldFeatureContext, opts: WeatherFeatureOpt
       // a night storm closes the view in (docs/WEATHER.md §12.2), eased over a few seconds
       nightFog += (nightFogTarget - nightFog) * (1 - Math.exp(-Math.max(0, dt) / 3))
       const live = nightFog > 0.002 ? { ...raw, fog: Math.min(1, raw.fog + nightFog) } : raw
-      const frame = shown ? live : CLEAR_FRAME
+      // docs/WINTER.md §8: the snow on the ground and the frost, under the weather the player sees
+      const look = winter.frame(now, dt, raw, 1 - (w?.sky?.state.night ?? 0))
+      const snowy = look.cover > 0 || look.frost > 0
+      const frame = shown ? (snowy ? { ...live, cover: look.cover, frost: look.frost } : live) : snowy ? { ...CLEAR_FRAME, cover: look.cover, frost: look.frost } : CLEAR_FRAME
       world?.setWeather(frame)
       updateLights(frame)
       if (!audio) return

@@ -57,7 +57,7 @@ describe('lab query string', () => {
   })
 
   it('ignores unknown values', () => {
-    const p = parseLabParams('?preset=epic&render=raytraced&weather=snow&wxlevel=max&tonemap=agx&lut=noon&exposure=-1&clock=-5')
+    const p = parseLabParams('?preset=epic&render=raytraced&weather=hail&wxlevel=max&tonemap=agx&lut=noon&exposure=-1&clock=-5')
     expect(resolveLab(p, 'medium').active).toBe(false)
   })
 

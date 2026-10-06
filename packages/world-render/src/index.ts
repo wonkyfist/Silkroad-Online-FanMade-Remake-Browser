@@ -227,6 +227,35 @@ export { cubeDir, fillHorizonRing, fillSkyCube, shIrradiance, skySH } from './sk
 export type { SkyRadiance } from './sky/ibl.ts'
 export { ClassicSky } from './sky/classic-sky.ts'
 export { WorldWeather, isWeatherMesh } from './weather/index.ts'
+// docs/WINTER.md §7: the snow season's look
+export {
+  ICE_LIFT_M,
+  POND_PLANTS,
+  SNOWFALL_COUNTS,
+  SNOWFALL_SHADERS,
+  SNOW_CHUNK_CODE,
+  SNOW_DEFINE,
+  SNOW_NOISE,
+  SNOW_OFF_DELAY_S,
+  SNOW_PLUGIN,
+  SNOW_STD_PLUGIN,
+  SnowState,
+  Snowfall,
+  SroSnowPlugin,
+  SroSnowStdPlugin,
+  WINTER_CHUNKS,
+  WINTER_ICE_FROST,
+  WinterIce,
+  WorldWinter,
+  applyWinterToEnv,
+  attachSnow,
+  installSnow,
+  snowPbrCode,
+  snowStateOf,
+  snowStdCode,
+  uninstallSnow,
+} from './winter/index.ts'
+export type { WinterHost, WinterStats } from './winter/index.ts'
 export { addWarmupHook, runWarmupHooks, warmupHooksState, type WarmupHook, type WarmupHooksState } from './warmup-hooks.ts'
 export type { ShelterMap, WeatherHost, WeatherStats, WeatherUniforms } from './weather/index.ts'
 export { CLEAR_FRAME } from './weather/frame.ts'
@@ -329,7 +358,7 @@ export {
 export type { PlanOptions, PostPlan, PostStage, RenderPostOptions } from './render/post.ts'
 // W9 LOOK: the exposure-aware highlight overlay (hover / target) for the game's entity meshes.
 export { HIGHLIGHT_ALPHA, HIGHLIGHT_COLOR, highlightOverlayColor, highlightOverlayCount, sceneExposure, setHighlightOverlay } from './render/post.ts'
-export { GradeMixer, LUT_KEYS, builtinLutStrip, gradeWeights, loadLutStrips } from './render/grade.ts'
+export { GRADE_WINTER, GradeMixer, LUT_KEYS, applyWinterToLut, builtinLutStrip, gradeWeights, loadLutStrips, winterGrade } from './render/grade.ts'
 export type { GradeInput, GradeParams, LutKey } from './render/grade.ts'
 export { FOG_PLUGIN_NAME, HeightFog, SroFogPlugin, attachFogPlugin, fogRingU, heightFogAmount, heightFogOf } from './pbr/fog-plugin.ts'
 export {

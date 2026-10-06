@@ -119,6 +119,7 @@ import {
   type StatGain,
   type Vec3,
   type WeatherSync,
+  type WinterSync,
   type WorldClockState,
   type WorldInfo,
 } from './protocol.ts'
@@ -127,6 +128,7 @@ import { CLOCK_LIMITS } from './world-clock.ts'
 import { LIGHTNING_GM_DIST_M, RAIN_INTENSITY_MIN, WEATHER_KINDS, WEATHER_LIMITS, type WeatherParams } from './weather.ts'
 import { HAZARD_CAUSES, STRIKE_KINDS, STRIKE_LIMITS, STRIKE_SOURCES } from './lightning.ts'
 import { STORM_EFFECT_IDS, STORM_LIMITS, STORM_PHASES, type StormEffect } from './storm.ts'
+import { MONTH_DAY_RE, WINTER_LIMITS } from './winter.ts'
 import { TORNADO_LIMITS } from './tornado.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
 import {
@@ -1212,6 +1214,8 @@ function worldInfo(v: unknown): WorldInfo {
   // wave 9 (docs/WAVE_PLAN3.md §3.4): a bad clock or weather drops only that field, never the whole worldEnter
   if (o.clock !== undefined) optionalField('world.clock', () => (w.clock = clockState(o.clock)))
   if (o.weather !== undefined) optionalField('world.weather', () => (w.weather = weatherSync(o.weather)))
+  // winter addition (docs/WINTER.md §5): a bad winter drops only that field
+  if (o.winter !== undefined) optionalField('world.winter', () => (w.winter = winterSync(o.winter)))
   return w
 }
 
@@ -1286,7 +1290,31 @@ function stormStatus(v: unknown): StormStatus {
   }
   if (o.startsAt !== undefined) s.startsAt = num(o, 'startsAt', 0, BIG)
   if (o.endsAt !== undefined) s.endsAt = num(o, 'endsAt', 0, BIG)
+  // winter addition (docs/WINTER.md §4)
+  if (o.winter !== undefined && bool(o, 'winter')) s.winter = true
   return s
+}
+
+/** The snow season and cover (docs/WINTER.md §5): every field checked, unknown keys dropped. */
+function winterSync(v: unknown): WinterSync {
+  const o = rec(v, 'winter')
+  const day = (k: string) => {
+    const s = str(o, k, 5, 5)
+    if (!MONTH_DAY_RE.test(s)) fail(`${k} must be MM-DD`)
+    return s
+  }
+  const w: WinterSync = {
+    season: bool(o, 'season'),
+    cover: num(o, 'cover', 0, 1),
+    frost: num(o, 'frost', 0, 1),
+    at: num(o, 'at', 0, BIG),
+    strength: num(o, 'strength', WINTER_LIMITS.strength[0], WINTER_LIMITS.strength[1]),
+    start: day('start'),
+    end: day('end'),
+    timeZone: str(o, 'timeZone', 64, 1),
+  }
+  if (o.preview !== undefined && bool(o, 'preview')) w.preview = true
+  return w
 }
 
 /** Runs one optional sub-parse; an invalid value is dropped with a console warning instead of failing the message. */
@@ -1358,6 +1386,8 @@ function weatherVec(v: unknown): WeatherParams {
     sun: unit('sun'),
     desat: unit('desat'),
     lightning: num(o, 'lightning', 0, 60),
+    // winter addition (docs/WINTER.md §3): an older server's vector has no snowfall
+    snow: o.snow === undefined ? 0 : unit('snow'),
   }
 }
 
@@ -1786,6 +1816,9 @@ function serverMessage(v: unknown): ServerMessage {
       return { t: 'worldClock', clock: clockState(o.clock) }
     case 'weather':
       return { t: 'weather', weather: weatherSync(o.weather) }
+    // winter addition (docs/WINTER.md §5): a malformed frame is rejected, so the client keeps its old state
+    case 'winter':
+      return { t: 'winter', winter: winterSync(o.winter) }
     case 'lightning': {
       const m: ServerMessage = {
         t: 'lightning',

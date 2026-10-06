@@ -23,6 +23,7 @@ import { SurfaceProbe, type SurfaceWorld } from './surface.ts'
 import { wavBytes, type Pcm } from './synth.ts'
 import { VoicePolicy, type ActiveVoice, type VoiceBus, type VoiceKind } from './voices.ts'
 import { WeatherAudio } from './weather.ts'
+import { snowSurface } from './winter.ts'
 import { LightningAudio } from './lightning.ts'
 
 export { AudioSettings } from './settings.ts'
@@ -251,7 +252,7 @@ export class GameAudio implements EntitySoundHost {
     this.backend.setBusGain('master', muted ? 0 : s.master)
     this.backend.setBusGain('sfx', s.sfx)
     this.backend.setBusGain('ui', s.ui)
-    this.backend.setBusGain('ambient', s.ambient)
+    this.backend.setBusGain('ambient', s.ambient * this.muffle)
     this.music?.setMuted(muted)
     this.music?.setVolume(s.master * s.music)
     if (this.hidden && !s.muteHidden) this.setHidden(false)
@@ -528,7 +529,26 @@ export class GameAudio implements EntitySoundHost {
   }
 
   surfaceAt(x: number, y: number, z: number): SoundSurface {
-    return this.probe.surfaceAt(this.world, x, y, z)
+    // docs/WINTER.md §8.3: snowy ground crunches (the retail snow steps)
+    return snowSurface(this.probe.surfaceAt(this.world, x, y, z), this.snowCover)
+  }
+
+  /** Winter (docs/WINTER.md §8.3): the snow cover under the footsteps, 0..1. */
+  private snowCover = 0
+  /** Winter: the ambient bus scale under snow (1 = none). */
+  private muffle = 1
+
+  /** The snow cover the footsteps hear (the winter feature, every frame). */
+  setSnowCover(cover: number): void {
+    this.snowCover = Number.isFinite(cover) ? cover : 0
+  }
+
+  /** Muffles the ambient bus by `gain` (0..1; 1 = as set in the options), re-applied only on a real change. */
+  setAmbientMuffle(gain: number): void {
+    const g = Math.round(Math.min(1, Math.max(0, Number.isFinite(gain) ? gain : 1)) * 50) / 50
+    if (g === this.muffle) return
+    this.muffle = g
+    this.applySettings()
   }
 
   /** Wave 10 (WAVE_PLAN6 D22, lane MV-C): the loaded world's water level (World.waterLevelAt), for the jump's steps. */

@@ -16,6 +16,7 @@ import {
   GRASS_TINT_WGSL,
   NIGHT_CHUNKS,
   RENDER_GRASS_CHUNKS,
+  WINTER_CHUNKS,
   RENDER_PRESETS,
   SKY_CHUNKS,
   TerrainPbr,
@@ -82,7 +83,7 @@ describe('define off = today (the Low guard)', () => {
   it('the Classic chunk is empty: the Classic terrain strings are the other lanes\' (Classic never draws the field)', () => {
     expect(GRASS_TINT_CHUNKS).toEqual({})
     const a = terrainShaders(WORLD_SHADER_CHUNKS)
-    const b = terrainShaders([SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, RENDER_GRASS_CHUNKS])
+    const b = terrainShaders([SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, RENDER_GRASS_CHUNKS, WINTER_CHUNKS])
     expect([a.vertexWGSL, a.fragmentWGSL, a.vertexGLSL, a.fragmentGLSL]).toEqual([b.vertexWGSL, b.fragmentWGSL, b.vertexGLSL, b.fragmentGLSL])
     expect([a.uniforms, a.samplers]).toEqual([b.uniforms, b.samplers])
   })

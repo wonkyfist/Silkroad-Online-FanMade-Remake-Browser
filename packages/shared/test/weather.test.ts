@@ -54,8 +54,8 @@ describe('the seeded schedule (docs/WEATHER.md §2.3)', () => {
       expect(n.prev).toBe(seg.kind)
       expect(n.index).toBe(seg.index + 1)
       const minutes = (n.end - n.start) / 60_000
-      expect(minutes).toBeGreaterThanOrEqual({ clear: 20, cloudy: 15, overcast: 12, rain: 8, storm: 5, fog: 10 }[n.kind] - 0.001)
-      expect(minutes).toBeLessThanOrEqual({ clear: 45, cloudy: 35, overcast: 30, rain: 20, storm: 12, fog: 25 }[n.kind] + 0.001)
+      expect(minutes).toBeGreaterThanOrEqual({ clear: 20, cloudy: 15, overcast: 12, rain: 8, storm: 5, fog: 10, snow: 8, blizzard: 5 }[n.kind] - 0.001)
+      expect(minutes).toBeLessThanOrEqual({ clear: 45, cloudy: 35, overcast: 30, rain: 20, storm: 12, fog: 25, snow: 20, blizzard: 12 }[n.kind] + 0.001)
       expect(n.intensity).toBe(n.kind === 'rain' ? n.intensity : 1)
       if (n.kind === 'rain') expect(n.intensity).toBeGreaterThanOrEqual(0.4)
       expect(n.seed).toBe(n.seed >>> 0)
@@ -66,7 +66,7 @@ describe('the seeded schedule (docs/WEATHER.md §2.3)', () => {
   })
 
   it('60-day shares are within ±3 points of the measured table', () => {
-    const target: Record<WeatherKind, number> = { clear: 33.1, cloudy: 30.5, overcast: 22.4, rain: 9.9, storm: 0.9, fog: 3.1 }
+    const target: Record<WeatherKind, number> = { clear: 33.1, cloudy: 30.5, overcast: 22.4, rain: 9.9, storm: 0.9, fog: 3.1, snow: 0, blizzard: 0 }
     for (const seed of [1, 2, 3]) {
       const s = new WeatherSchedule(seed)
       const end = WEATHER_EPOCH + 60 * DAY
@@ -309,7 +309,7 @@ describe('validators (docs/WAVE_PLAN3.md §3.4)', () => {
       { t: 'worldClock', clock: { ...clock, running: 1 } },
       { t: 'worldClock', clock: { ...clock, anchorMs: undefined } },
       { t: 'worldClock' },
-      { t: 'weather', weather: { ...weather, to: 'snow' } },
+      { t: 'weather', weather: { ...weather, to: 'hail' } },
       { t: 'weather', weather: { ...weather, from: 'Clear' } },
       { t: 'weather', weather: { ...weather, dur: 600_001 } },
       { t: 'weather', weather: { ...weather, intensity: 0.3 } },

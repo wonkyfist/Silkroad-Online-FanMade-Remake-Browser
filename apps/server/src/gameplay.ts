@@ -1,6 +1,9 @@
 import {
   EQUIP_SLOTS,
   GOLD_ITEM_CODES,
+  clockAt,
+  nightness,
+  sunDirection,
   ITEM_EXPIRE_MS,
   ITEM_OWNER_MS,
   MAX_COMBAT_HITS,
@@ -71,6 +74,7 @@ import { TradeService } from './social/trade.ts'
 import { Spawner, type NestRuntime } from './spawner.ts'
 import { StorageService } from './storage-db.ts'
 import { WeatherService } from './weather.ts'
+import { WinterService } from './winter.ts'
 import { LightningService } from './lightning/service.ts'
 import { StormService } from './storm/service.ts'
 import { TornadoService } from './storm/tornado.ts'
@@ -297,6 +301,11 @@ export class Gameplay implements AiHost {
   readonly storm: StormService
   /** The lightning tornado (docs/WEATHER.md §13): a rare storm event that pulls, throws and strikes, never kills. */
   readonly tornado: TornadoService
+  /**
+   * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
+   * falls as snow. Other modules read `winter.state(now)`.
+   */
+  readonly winter: WinterService
   // wave 10 (docs/WAVE_PLAN6.md §3; lane MV-P): the jump
   readonly movement: MovementService
   /**
@@ -348,7 +357,10 @@ export class Gameplay implements AiHost {
     this.stalls = new StallService(this)
     this.guilds = new GuildService(this)
     this.clock = WorldClock.load(d.config)
+    // docs/WINTER.md: the season before the weather (a server started in December joins its snow), the snow after it
+    this.winter = new WinterService(this)
     this.weather = new WeatherService(this)
+    this.winter.attach(this.weather, (now) => this.daylight(now))
     this.lightning = new LightningService(this)
     this.weather.strikes = this.lightning
     this.storm = new StormService(this)
@@ -369,6 +381,8 @@ export class Gameplay implements AiHost {
       this.mobSkills, this.mounts, this.durability, this.repairs, this.alchemy, this.berserk,
       this.trade, this.stalls, this.guilds,
       this.weather,
+      // docs/WINTER.md: the snow cover follows the weather of this tick
+      this.winter,
       this.lightning,
       // docs/WEATHER.md §12: after the lightning (its onStrike hears the landings first)
       this.storm,
@@ -403,6 +417,12 @@ export class Gameplay implements AiHost {
   }
 
   /** Places NPCs and fills every nest. Returns a log line. */
+  /** Daylight 0..1 at server ms `now` from the world clock (1 by day, 0 from 6° below the horizon; docs/WINTER.md §2). */
+  daylight(now: number): number {
+    const c = this.clock.state
+    return 1 - nightness(sunDirection(clockAt(c, now).t, c.declination)[1])
+  }
+
   start(now = Date.now()): string {
     this.now = now
     let npcs = 0

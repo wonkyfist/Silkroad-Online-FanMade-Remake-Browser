@@ -103,6 +103,7 @@ describe('routing', () => {
       'mobSkills', 'mounts', 'durability', 'repairs', 'alchemy', 'berserk', 'trade', 'stalls', 'guilds',
       // wave 9 (docs/WAVE_PLAN3.md §6.1)
       'weather',
+      'winter',
       // storm series step 1 (docs/WEATHER.md §2.7): lightning that strikes
       'lightning',
       // storm series step 2 (docs/WEATHER.md §12): storms change everything

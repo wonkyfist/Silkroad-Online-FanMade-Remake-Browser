@@ -177,6 +177,11 @@ export class WorldWeather implements WetnessSource {
     return this.frameValue
   }
 
+  /** The precipitation tint of this frame (the rain streaks' colour; docs/WINTER.md §7.4: the flakes start from it). */
+  get precipColor(): readonly [number, number, number] {
+    return this.rainColor
+  }
+
   /** The shelter texture for the WetnessPlugin (null: none at this level). */
   shelterTexture(): { texture: BaseTexture; packed: boolean } | null {
     return this.shelterMap?.shelterTexture ?? null

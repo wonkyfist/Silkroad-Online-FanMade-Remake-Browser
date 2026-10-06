@@ -41,6 +41,7 @@ import { townSoundFeature } from './features/town-sound.ts'
 import { tradeFeature } from './features/trade.ts'
 import { uxWorldFeature } from './features/ux-world.ts'
 import { weatherFeature } from './features/weather.ts'
+import { winterFeature } from './features/winter.ts'
 import { lightningFeature } from './features/lightning.ts'
 import { stormFeature } from './features/storm.ts'
 import { tornadoFeature } from './features/tornado.ts'
@@ -166,6 +167,8 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   // Wave 9 (docs/WAVE_PLAN3.md §4.3; W9A-S writes these lines):
   skyClockFeature, // world/features/sky-clock.ts (GAME)
   weatherFeature, // world/features/weather.ts (WX-C)
+  // The snow season (docs/WINTER.md §8): footprints, breath, winter sounds; after the weather (it reads its frame).
+  winterFeature, // world/features/winter.ts
   // Storm series step 1 (docs/WEATHER.md §2.7): lightning that strikes (telegraph, bolt, aftermath), after the weather.
   lightningFeature, // world/features/lightning.ts
   // Storm series step 2 (docs/WEATHER.md §12): the weather icon and forecast, charged monsters' glow and arcs.

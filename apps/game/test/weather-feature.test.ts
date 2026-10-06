@@ -203,7 +203,7 @@ describe('WeatherClient: the server state mirrored', () => {
     expect(parseWeatherOverride('?weather=storm')).toEqual({ kind: 'storm', intensity: 1 })
     expect(parseWeatherOverride('?weather=rain:0.6')).toEqual({ kind: 'rain', intensity: 0.6 })
     expect(parseWeatherOverride('?weather=rain:0.1')).toEqual({ kind: 'rain', intensity: 0.4 })
-    expect(parseWeatherOverride('?weather=snow')).toBeNull()
+    expect(parseWeatherOverride('?weather=hail')).toBeNull()
     expect(parseWeatherOverride('')).toBeNull()
     const c = new WeatherClient({ kind: 'storm', intensity: 1 }, T0)
     c.enter(sync({ from: 'clear', to: 'clear', dur: 0 }), T0) // the mock's clear worldEnter does not end it

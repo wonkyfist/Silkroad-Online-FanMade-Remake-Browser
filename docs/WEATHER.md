@@ -41,7 +41,7 @@ measured; **[likely]** strong evidence, not proven; **[unknown]** open; **[our r
 | Topic | Decision | Status |
 |---|---|---|
 | Authority | The server owns the weather: one world-wide state with timed transitions, from a seeded schedule or a GM hold. Clients never decide the weather, only how it looks. | our rule |
-| States | `clear`, `cloudy`, `overcast`, `rain`, `storm`, `fog`. Each is a parameter vector (§2.1); transitions blend the vectors over 30-180 s. | our rule |
+| States | `clear`, `cloudy`, `overcast`, `rain`, `storm`, `fog`, and the winter forms `snow` and `blizzard` (§14, docs/WINTER.md). Each is a parameter vector (§2.1); transitions blend the vectors over 30-180 s. | our rule |
 | Zones | One world state. Zones only **modulate** it on the client (`ZONE_CLIMATE`, §2.5: the swamp is foggier and stays damp, the mountains are windier). | our rule |
 | Schedule | Markov chain over dwell segments, seeded by `WEATHER_SEED` and the segment index, so it is deterministic and survives restarts. Measured shares over 60 simulated days: clear 33 %, cloudy 31 %, overcast 22 %, rain 10 %, storm 1 %, fog 3 %. | measured (§2.3) |
 | Wire | One new server message `weather` (the full `WeatherSync`, only on changes) plus `lightning` strikes. `WorldInfo.weather` carries the current state in `worldEnter` for late joiners. GM `/weather`. | our rule |
@@ -1367,6 +1367,12 @@ throws them out (server-authoritative, along the navmesh, never into walls, wate
 of control), with damage, but **never kills** and **never enters a town**; Low graphics gets a simpler funnel; it is
 announced to everyone, with a short warning before it touches down.
 
+Revised 2026-10-06 (the user: "more aggressive looking, hit harder, throw further"): a dense, dark funnel under a
+rotating wall cloud, thick with debris, flinging it far out and tearing the ground; each throw takes about 22 % of max
+HP (at most 55 % per tornado), pulls from 45 m and throws 35-60 m on a high arc. And a decision change the same day:
+the tornado **can kill** a body already low on HP (`TORNADO_LETHAL`, default on; a healthy one survives it); its bolts
+still never kill.
+
 Code: `packages/shared/src/tornado.ts` (TORNADO_TABLE and the pure maths: `tornadoAt`, `pullVelocity`, `throwDamage`,
 `throwArc`, `tornadoRoll`), `apps/server/src/storm/tornado.ts` (the `tornado` GameplayModule),
 `apps/server/src/storm/tornado-path.ts` (the path planner), `apps/server/src/storm/water.ts` (the water planes), the
@@ -1405,23 +1411,32 @@ stands above it). Paths and throw landings avoid wet points; drifts never end in
 
 ### 13.4 Pull, throw, damage
 
-- **Pull** (every 500 ms): a body within `pullM` (30 m) drifts toward the funnel at `pullVelocity` (0.8 m/s at the edge,
-  7 m/s by the core, scaled by the strength), turned 0.55 rad around it (the swirl). Its own walk carries on: the
+- **Pull** (every 500 ms): a body within `pullM` (45 m) drifts toward the funnel at `pullVelocity` (0.9 m/s at the edge,
+  rising with the square of the closeness to 10 m/s by the core, scaled by the strength), turned 0.55 rad around it
+  (the swirl). Its own walk carries on: the
   module remembers where it was going (a move it did not give) and walks it there with the drift added, so a player at
   the edge can run out, one near the core cannot. A body standing still gets `displace {kind: 'pull'}` too (the client
   slides it without a walking clip). Leaving the pull gives the walk back. Riders are not pulled (the horse owns the
   move).
-- **Throw**: a body within `coreM` (5 m) is caught: knocked down for the flight plus 0.9 s (`lockMs`; the module's
-  `gate` refuses moves, attacks, skills, pick-ups, talks, sitting, emotes, jumps, mounting and stalls meanwhile; potions
-  stay allowed), then thrown 14-24 m (× √strength, at most × 1.4) out on the tangent of the spin. The landing is the end
-  of a straight navmesh walk from where it stood (so never through a wall or a railing), at least 5 m away, out of the
-  core, open ground, not water, not in a safe area, inside the bounds; ten directions are tried, then it is only spun in
-  place (stunned 0.9 s). The flight lasts 1.1-1.5 s with its apex 5-9 m up (`displace {kind: 'throw'}` after the `move`;
-  the `stop` comes at the landing as usual). Then 8 s (`immuneMs`) before it can be pulled or caught again.
-- **Damage**: on landing, `throwDamage` = 12 % × strength of max HP, at most 25 %, and never below 1 HP, through
-  `Gameplay.hazardHit(..., 'tornado', ..., nonLethal)` (shields absorb; `combat` with `attacker: 0`, `cause: 'tornado'`).
-  `nonLethal` caps the hit at HP − 1 after every modifier, so even a wet player at 2 HP survives.
-- **Its lightning**: one bolt every 2.2-5.2 s (÷ strength) in a 7-42 m ring around it: 45 % at a body there (its spot),
+- **Throw**: a body within `coreM` (7 m) is caught: knocked down for the flight plus 1.6 s (`lockMs`: it lies there,
+  then gets up; the module's `gate` refuses moves, attacks, skills, pick-ups, talks, sitting, emotes, jumps, mounting
+  and stalls meanwhile; potions stay allowed), then thrown 35-60 m (× √strength, at most × 1.4) out on the tangent of
+  the spin. The landing lies on a straight navmesh walk from where it stood (so never through a wall or a railing): per
+  direction, the farthest point of that walk that is fit (at least 6 m away, out of the core, open ground, not water,
+  not in a safe area, inside the bounds, and the throw never passes over a town's edge), walking back 3 m at a time from
+  a blocked end. The tangent comes first, then nine turned directions; the first reaching 75 % of its throw is taken,
+  else the farthest found; with none at all it is only spun in place (stunned 1.6 s). The flight lasts 1.7-2.6 s with
+  its apex 11-20 m up, both growing with the distance (`displace {kind: 'throw'}` after the `move`; the `stop` comes at
+  the landing as usual). Then 9 s (`immuneMs`) before it can be pulled or caught again. Monsters fly the same way.
+- **Damage**: on landing, `throwDamage` = 22 % × strength of max HP, at most 35 % per throw, and at most 55 %
+  (`damageTotalPct`) of max HP from one tornado's throws in all (a ledger per body, cleared with each new tornado),
+  through `Gameplay.hazardHit(..., 'tornado', ...)` (shields absorb; `combat` with `attacker: 0`, `cause: 'tornado'`).
+  So a healthy body always survives a tornado, and one already hurt can die: **`TORNADO_LETHAL`** (STORM_TABLE
+  .tornadoLethal, default on; admin "Tornado can kill"). A kill is the normal death path (`killed: true`, nobody's kill,
+  normal death rules; a monster drops loot only when a player had fought it, as with lightning). The victim reads "You
+  were killed by the tornado.", players around "<name> was killed by the tornado.". Off: `nonLethal` caps every hit at
+  HP − 1 after every modifier, so even a wet player at 2 HP survives.
+- **Its lightning**: one bolt every 1.1-2.8 s (÷ strength) in a 6-50 m ring around it: 50 % at a body there (its spot),
   else 40 % a tree (a lightning rod, §2.7), else open ground. Each is `LightningService.strikeAt(..., {nonLethal: true,
   source: 'tornado'})`: a normal telegraphed strike (1.2-1.8 s warning, the usual damage and stun) that never kills.
 - **Immune**: uniques (Tiger Girl among them, also by code), the Play the Boss body, a trance body, invisible GMs, the
@@ -1442,42 +1457,85 @@ throws whatever it catches" (or the touchdown countdown, or "lifting"), refreshe
 
 | Key | Default | What |
 |---|---|---|
-| `tornadoChance` / `tornadoStrength` (STORM_TABLE) | 0.3 / 1 | per-storm chance; strength 0..2 |
+| `tornadoChance` / `tornadoStrength` / `tornadoLethal` (STORM_TABLE) | 0.3 / 1 / on | per-storm chance; strength 0..2; its throws can kill the already hurt |
 | `warnMs` / `lifeMs` / `minLifeMs` / `stormFrac` | 20 s / 3-5 min / 60 s / 15-55 % | timeline |
 | `speedMs` / `spawnM` / `legM` / `sampleM` | 2.4-3.6 m/s / 110-220 m / 28-48 m / 6 m | path |
 | `townMarginM` / `edgeMarginM` | 90 / 30 m | keep-outs |
-| `pullM` / `pullEdgeMs` / `pullCoreMs` / `swirlRad` / `pullTickMs` | 30 m / 0.8 / 7 m/s / 0.55 / 500 ms | pull |
-| `coreM` / `throwM` / `throwMinM` / `throwMs` / `throwPeakM` | 5 m / 14-24 m / 5 m / 1.1-1.5 s / 5-9 m | throw |
-| `lockMs` / `immuneMs` | 0.9 s / 8 s | loss of control, grace |
-| `damagePct` / `damageCapPct` | 12 % / 25 % of max HP | damage (never below 1 HP) |
-| `boltMs` / `boltRingM` / `boltBodyShare` | 2.2-5.2 s / 7-42 m / 45 % | its lightning |
-| `heightM` / `topM` / `shakeM` / `hearM` | 75 m / 26 m / 60 m / 900 m | client look, shake, roar |
+| `pullM` / `pullEdgeMs` / `pullCoreMs` / `pullCurve` / `swirlRad` / `pullTickMs` | 45 m / 0.9 / 10 m/s / 2 / 0.55 / 500 ms | pull |
+| `coreM` / `throwM` / `throwMinM` / `throwMs` / `throwPeakM` | 7 m / 35-60 m / 6 m / 1.7-2.6 s / 11-20 m | throw |
+| `lockMs` / `immuneMs` | 1.6 s / 9 s | knocked down after landing, grace |
+| `damagePct` / `damageCapPct` / `damageTotalPct` | 22 % / 35 % / 55 % of max HP | per throw (× strength) / per throw at most / per tornado at most |
+| `boltMs` / `boltRingM` / `boltBodyShare` | 1.1-2.8 s / 6-50 m / 50 % | its lightning |
+| `heightM` / `topM` / `shakeM` / `hearM` | 92 m / 30 m / 80 m / 900 m | client look, shake, roar |
+
+Before 2026-10-06: pull 30 m (0.8-7 m/s), core 5 m, throws 14-24 m in 1.1-1.5 s with a 5-9 m apex, 0.9 s down, 8 s
+grace, 12 % per throw (at most 25 %, never below 1 HP), a bolt every 2.2-5.2 s in 7-42 m, 75 m tall.
 
 ### 13.7 Client
 
-- **Funnel** (`TornadoFx`): THREE meshes, three materials, three textures per tornado, made when it appears and
-  disposed when it is gone (and on worldEnter / dispose); nothing per bolt, arc or leaf, so nothing can leak. The meshes
-  stay enabled and are hidden with `isVisible` (the world's `EnabledMeshCandidates` list then always holds them).
-  1. Funnel (alpha blend): 1-3 nested lathe shells around a snaking axis, rebuilt on the CPU each frame: radius profile
-     (a 3 m rope at the ground flaring into a 50 m wall cloud), travelling ripples, the axis bending and leaning behind
-     its heading, shells turning at different speeds (UVs) over a streaky noise texture scrolling up, and a silhouette
-     term (denser at the edges) so it reads as a volume. It lowers out of the cloud during the warning and rises at the
-     lift.
-  2. Debris and dust (alpha blend, one atlas): leaves, twigs and grit spiral up around it tumbling; dust puffs circle its
-     foot.
-  3. Arcs (additive): jagged arcs flicker inside it; each bolt it throws (`strike.source: 'tornado'`) gets an arc from
-     its side to the impact as it lands.
-  Brightness follows the night and the lightning flash. Gameplay, so shown whatever the weather setting.
-- **Tiers** (`effectiveGraphics().renderPreset`): Low 1 shell 20×10 (360 tris), 24 debris + 10 dust; Medium 2 shells
-  32×18 (2,176 tris), 110 + 22; High/Ultra 3 shells 40×24 (5,520 tris), 220 + 34. Always 3 draw calls. CPU per frame
-  (NullEngine, this dev PC): Low 0.07 ms, Medium 0.31 ms, High 0.68 ms, only while a tornado is up; GPU cost is the
-  funnel's overdraw (1-3 translucent shells) when it fills the screen.
-- **Thrown bodies**: the server's `move` carries them; the feature lifts them on `throwArc` and spins them two turns
+- **The look** (`TornadoFx`, `world/storm/tornado-fx.ts`): FIVE meshes, five materials, four textures per tornado
+  (`TORNADO_RESOURCES`), made when it appears and disposed when it is gone (and on worldEnter / dispose); everything is
+  rebuilt in place each frame from fixed typed arrays, with no allocation per frame, bolt, arc or leaf, so nothing can
+  leak. The meshes stay enabled and are hidden with `isVisible` (the world's `EnabledMeshCandidates` list then always
+  holds them). Their draw order is fixed with `alphaIndex` (scar, funnel, chunks, sprites, arcs).
+  1. Funnel and wall cloud (alpha blend): 2-4 nested lathe shells around a snaking axis, from a dark, nearly opaque core
+     to ragged dusty outer shells (dust brown low down, slate grey up high), with three bands of turbulent ripples,
+     bulges travelling up, a foot flare and a top flare; each face darker where it faces you and lighter at the rim
+     (light through its thin edge), so it reads as a volume. Over it a rotating wall cloud (the same mesh): a wide,
+     lumpy, darker bowl that dips to swallow the funnel's top and fades into the sky at its rim. During the warning the
+     wall cloud lowers and the funnel snakes down out of it; at the lift it rises away. Its own arcs light it blue-white
+     from inside. Fog is off on all of it, so it stands as a dark silhouette from far away.
+  2. Debris sprites (alpha blend, one atlas): a thick churning dust skirt (big puffs rising and swelling round its
+     foot), rain and dust bands spiralling in along the ground (streaks stretched along their way), and leaves, straw and
+     grit spiralling up the funnel, then flung far out on a ballistic arc (leaves fall slowly), lying a moment where they
+     land; each is stretched along its motion (a cheap motion blur) and flutters.
+  3. Chunks (thin instances of one 12-triangle box, one draw call, a face shade baked in): planks, branches, rocks,
+     clods and straw tumbling up and thrown out like the sprites, stretched along their motion.
+  4. Arcs (additive): jagged arcs flicker inside it every 90 ms, a third of them leaping out into the debris, each with
+     a soft glow inside the funnel; each bolt it throws (`strike.source: 'tornado'`) gets an arc from its side to the
+     impact as it lands.
+  5. Torn ground (alpha blend, depth tested, `zOffset`): a 12 m dark ragged scar along where it walked, a point every
+     3 m on the ground's height (`TornadoFrame.ground`), each fading over 80 s.
+  Sprites and chunks behind the funnel's core fade out (it hides them; translucent meshes cannot depth-sort against
+  each other). Brightness follows the night, the storm's cloud darkness and the lightning flash. Gameplay, so shown
+  whatever the weather setting.
+- **Tiers** (`effectiveGraphics().renderPreset`): Low 2 shells 18×12 + 4 cloud rings (900 tris), 14 puffs + 10 bands +
+  36 bits, 14 chunks, 2 arcs, a 40-point scar; Medium 3 shells 28×18 + 6 (3,136 tris), 30 + 26 + 110, 48 chunks, 4
+  arcs, 72 points; High/Ultra 4 shells 36×24 + 8 (7,128 tris), 48 + 44 + 200, 120 chunks (1,440 tris), 6 arcs, 96
+  points. Always 5 draw calls (was 3). CPU per frame (NullEngine, this dev PC, a walking tornado with bolts): Low
+  0.05-0.06 ms, Medium 0.14-0.17 ms, High 0.30-0.35 ms (the old funnel, same run: 0.04, 0.12-0.18, 0.26-0.38 ms), only
+  while a tornado is up. GPU cost is the funnel's overdraw (2-4 translucent shells plus the wall cloud) when it fills
+  the screen.
+- **Thrown bodies**: the server's `move` carries them; the feature lifts them on `throwArc` and spins them three turns
   (the knockdown clips play from the status). Pulled bodies that stand slide without a walking clip.
-- **Shake**: inside 60 m (`tornadoShake`, up to 0.07 screen units by the core), harder while you are thrown; off with
+- **Shake**: inside 80 m (`tornadoShake`, up to 0.07 screen units by the core), harder while you are thrown; off with
   Options → Controls → Camera shake.
 - **Sound** (`audio/tornado.ts`): two seeded 6.5 s roar segments (rumble, a wandering "freight train" band, a howl, the
   arcs' crackle) started alternately every 4.6 s so they overlap into one roar, level `roarGain` by distance (heard to
   900 m) and presence, panned toward the funnel; a whoosh when you are thrown. Made once through
   `GameAudio.prepareSynth` (the Berserk set's path); nothing is downloaded.
 - Debug: `window.__sroTornado` (state, fx stats, tier).
+
+---
+
+## 14. Winter: snow and blizzards (docs/WINTER.md) [the user's decisions]
+
+The snow season (Dec 1 to Jan 15 in the server's time zone; admin "Winter season") is specified in docs/WINTER.md. What it changes here:
+
+- **States.**
+  - `snow`: snowfall 0.6, intensity 0.4..1 like rain.
+  - `blizzard`: snowfall 1, wind 14 m/s, fog 0.75, rare thunder-snow at 0.25 strikes/min.
+  - Both join `WEATHER_KINDS`, and every parameter vector gains `snow` (0 in the other states).
+  - The schedule never picks them itself. In season `WeatherService` turns the schedule's rain into snow, and its storms into blizzards (`winterKind`); storm events become blizzards too, after a forecast that keeps the snow falling.
+  - A GM hold is taken as typed (`weather snow` in October, `weather rain` in December) and never touches the season.
+- **Wetness.** Snow never wets (`rain` is 0 in both states). The snow cover is the winter module's own integrated state (docs/WINTER.md §2.2).
+- **Fog.** `fogScale` gains `× (1 − 0.3 snow)`, so a blizzard shows about a third of a clear day's view. The fog start gains `× (1 − 0.4 snow)`. The sky's haze and precipitation include the snowfall.
+- **Storm gameplay (§12).**
+  - A blizzard is a storm for every storm effect: the storm level takes the blizzard share of the snowfall.
+  - Snow cuts sight and weakens fire and strengthens cold like rain, but wets nobody.
+  - Drifts slow running during a blizzard, instead of mud.
+  - No water spirits rise while the ponds are frozen.
+  - `StormStatus.winter` relabels the icon, tooltip and chat ("Snowfall", "Blizzard").
+  - New effect ids `snow` and `drifts`.
+- **Tornadoes (§13).** None in the season unless `WINTER_TORNADO` (admin) is on. GM tornadoes still come.
+- **Client.** `WeatherFrame` gains `snow`, `cover` and `frost` (optional). The rain streaks give way to the GPU snowfall (`World.winter`), sized by the same weather levels.

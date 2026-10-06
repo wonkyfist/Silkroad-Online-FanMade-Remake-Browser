@@ -24,10 +24,19 @@ export const enStorm = {
   'storm.effect.bandits': 'Bandits pull back to their camps (chase range {pct}%)',
   'storm.effect.panic': 'Thunder panics the beasts near a strike',
   'storm.effect.charged': 'Monsters struck by lightning become charged: damage {pct}%, arcing hits, better loot',
+  // winter (docs/WINTER.md §4): snow and blizzards
+  'storm.title.snow': 'Snowfall',
+  'storm.title.blizzard': 'Blizzard',
+  'storm.title.forecastWinter': 'A blizzard is coming (in about {min} min)',
+  'storm.effect.snow': 'Snow: no one gets wet; the fields go quiet',
+  'storm.effect.drifts': 'Snowdrifts: running speed {pct}% outside towns',
   // chat (system) when the phase changes
   'storm.chat.forecast': 'A storm is gathering over the fields... It breaks in about {min} min.',
   'storm.chat.breaks': 'The storm breaks! The dead grow restless and the beasts fear the thunder.',
   'storm.chat.passes': 'The storm passes.',
+  'storm.chat.forecastWinter': 'The sky turns white and the wind picks up... A blizzard breaks in about {min} min.',
+  'storm.chat.breaksWinter': 'The blizzard breaks! You can barely see your own hands, and the dead stir in the snow.',
+  'storm.chat.passesWinter': 'The blizzard passes. The fields lie quiet under fresh snow.',
   // a charged monster's name label
   'storm.badge.charged': 'Charged',
   // the lightning tornado (docs/WEATHER.md §13): chat lines and the icon's tooltip line
@@ -36,6 +45,8 @@ export const enStorm = {
   'tornado.chat.where.near': '{dist} m {dir} of you',
   'tornado.chat.lift': 'The tornado lifts back into the clouds.',
   'tornado.chat.thrown': 'The tornado throws you!',
+  'tornado.chat.killedOther': '{name} was killed by the tornado.',
+  'world.diedTornado': 'You were killed by the tornado.',
   'tornado.tip.warn': 'Tornado forming {dist} m {dir}: touchdown in {s} s',
   'tornado.tip.active': 'Tornado {dist} m {dir}: it pulls in and throws whatever it catches',
   'tornado.tip.lifting': 'The tornado is lifting ({dist} m {dir})',

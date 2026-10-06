@@ -226,10 +226,14 @@ export interface AdminSettingDef {
   env: string
   label: string
   group: string
-  type: 'int' | 'number' | 'bool' | 'enum'
+  /** 'text' (winter addition): a short string, checked by the server (and `pattern`, a regular expression, in the panel). */
+  type: 'int' | 'number' | 'bool' | 'enum' | 'text'
   min?: number
   max?: number
   options?: string[]
+  /** 'text': the panel's input pattern (an anchored regular expression source) and placeholder. */
+  pattern?: string
+  placeholder?: string
   /** 'live' = takes effect at once; 'restart' = saved, used from the next start. */
   apply: 'live' | 'restart'
   note?: string

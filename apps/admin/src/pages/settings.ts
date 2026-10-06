@@ -98,6 +98,19 @@ function control(s: AdminSettingState): { el: HTMLElement; read: () => AdminSett
     const sel = h('select', { class: 'input', 'aria-label': s.label }, (s.options ?? []).map((o) => h('option', { value: o, selected: o === current }, o)))
     return { el: sel, read: () => sel.value }
   }
+  if (s.type === 'text') {
+    // docs/WINTER.md §6: the season's days (MM-DD) and its time zone; the server checks the value again
+    const inp = h('input', { class: 'input', type: 'text', value: String(current), maxlength: 64, spellcheck: 'false', autocomplete: 'off', 'aria-label': s.label, ...(s.pattern ? { pattern: s.pattern } : {}), ...(s.placeholder ? { placeholder: s.placeholder } : {}) })
+    return {
+      el: inp,
+      read: () => {
+        const v = inp.value.trim()
+        if (v === '') return null
+        if (s.pattern && !new RegExp(s.pattern).test(v)) return null
+        return v
+      },
+    }
+  }
   const inp = h('input', { class: 'input num-input', type: 'number', value: String(current), min: s.min, max: s.max, step: s.type === 'int' ? 1 : 'any', 'aria-label': s.label })
   return {
     el: inp,

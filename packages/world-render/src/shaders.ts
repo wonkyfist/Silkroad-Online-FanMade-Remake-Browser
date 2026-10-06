@@ -29,13 +29,15 @@ import { RENDER_GRASS_CHUNKS } from './render/grass-chunks.ts'
 import { ChunkSet, type TerrainPoint, type WaterPoint, type WorldShaderChunks } from './shader-chunks.ts'
 import { SKY_CHUNKS } from './sky/chunks.ts'
 import { WEATHER_CHUNKS } from './weather/chunks.ts'
+import { WINTER_CHUNKS } from './winter/chunks.ts'
 
 /**
- * Every lane's chunks in the fixed order sky → weather → night → coast → grass tint → render (docs/WAVE_PLAN3.md
- * §4.2; wave 10: docs/WAVE_PLAN6.md D11 adds CST-S's coast and GL-T's grass tint, both empty until those lanes land).
+ * Every lane's chunks in the fixed order sky → weather → night → coast → grass tint → render → winter (docs/WAVE_PLAN3.md
+ * §4.2; wave 10: docs/WAVE_PLAN6.md D11 adds CST-S's coast and GL-T's grass tint, both empty until those lanes land;
+ * docs/WINTER.md §7.2: the winter lane last, so the snow lies on the tinted, lit ground and the frost on the lit grass).
  */
 export const WORLD_SHADER_CHUNKS: readonly WorldShaderChunks[] = [
-  SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, GRASS_TINT_CHUNKS, RENDER_GRASS_CHUNKS,
+  SKY_CHUNKS, WEATHER_CHUNKS, NIGHT_CHUNKS, COAST_CHUNKS, GRASS_TINT_CHUNKS, RENDER_GRASS_CHUNKS, WINTER_CHUNKS,
 ]
 
 /** A generated shader pair per language with its ShaderMaterial name lists. */

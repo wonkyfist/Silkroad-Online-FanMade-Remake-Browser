@@ -14,6 +14,11 @@
  * - `strength` (STORM_STRENGTH, 0..2) scales every multiplier's distance from 1 (0 = no effect, 2 = twice as strong).
  *
  * Uniques and the Play the Boss body are never affected (stormMobKind 'other'); safe areas have no mud.
+ *
+ * Winter (docs/WINTER.md §4): snow (the snowfall rate ≥ `rainMin`) cuts monster sight like rain and weakens fire and
+ * strengthens cold force, but nobody gets wet (no lightning bonus, no mud); a blizzard (snowfall near 1) is a storm for
+ * every storm effect, its fresh drifts slow running outside towns instead of mud, and water spirits stay under the ice
+ * while the ponds are frozen.
  */
 import type { WeatherParams } from './weather.ts'
 import { WEATHER_PARAMS } from './weather.ts'
@@ -51,6 +56,10 @@ const DEFAULTS = {
   /** Mud: surface wetness from which running is slowed, and by how much (percent). */
   mudWetMin: 0.6,
   mudSlowPct: 10,
+  /** Winter: a blizzard's fresh drifts slow running outside towns by this much (percent). */
+  driftSlowPct: 10,
+  /** Winter: the snowfall rate at which a blizzard counts as a full storm (the `snow` state, 0.6, is none). */
+  blizzardFrom: 0.6,
   // ---- wind
   /** Ranged attacks (bows, ranged physical skills) start to miss from this wind (m/s) ... */
   windFromMs: 8,
@@ -96,6 +105,8 @@ const DEFAULTS = {
   tornadoChance: 0.3,
   /** Its pull, throw, damage and bolts are scaled by this (TORNADO_STRENGTH knob, 0..2; 0 = it only looks). */
   tornadoStrength: 1,
+  /** Its throws can kill a body already low on HP (TORNADO_LETHAL knob; off = never below 1 HP). Its bolts never kill. */
+  tornadoLethal: true as boolean,
   // ---- the server's bookkeeping
   /** How often the nest counts are reconciled with the storm (ms), and how many extras leave per nest per pass. */
   reconcileMs: 5000,
@@ -122,6 +133,10 @@ export interface StormEnv {
   night: number
   /** STORM_STRENGTH 0..2. */
   strength: number
+  /** Winter: snowfall rate 0..1 (blended; absent = 0). */
+  snow?: number
+  /** Winter: the ponds are frozen (frost ≥ FROST_ICE): no water spirits rise. */
+  frozen?: boolean
 }
 
 export const CALM_ENV: Readonly<StormEnv> = { rain: 0, storm: 0, windMs: 0, wet: 0, night: 0, strength: 1 }
@@ -140,9 +155,13 @@ function partly(mul: number, k: number, strength: number): number {
   return strong(1 + (mul - 1) * clamp01(k), strength)
 }
 
-/** The storm level of a blended parameter vector: lightning / the storm's lightning, 0..1. */
-export function stormLevel(p: Pick<WeatherParams, 'lightning'>): number {
-  return clamp01(p.lightning / WEATHER_PARAMS.storm.lightning)
+/**
+ * The storm level of a blended parameter vector, 0..1: lightning / the storm's lightning, or (winter) how far the
+ * snowfall is above `blizzardFrom` toward a full blizzard, whichever is higher.
+ */
+export function stormLevel(p: Pick<WeatherParams, 'lightning'> & { snow?: number }, t: StormTable = STORM_TABLE): number {
+  const bliz = clamp01(((p.snow ?? 0) - t.blizzardFrom) / Math.max(0.01, 1 - t.blizzardFrom))
+  return clamp01(Math.max(p.lightning / WEATHER_PARAMS.storm.lightning, bliz))
 }
 
 /** How dark it is from the sun's height (sunDirection's up component): 0 by day, 1 from 6° below the horizon. */
@@ -159,9 +178,24 @@ export function storming(env: StormEnv, t: StormTable = STORM_TABLE): boolean {
   return env.storm >= t.stormLevelMin
 }
 
+/** Winter: snow is falling (the snowfall rate at the rain threshold or above). */
+export function snowing(env: StormEnv, t: StormTable = STORM_TABLE): boolean {
+  return (env.snow ?? 0) >= t.rainMin
+}
+
+/** Winter: a blizzard rages (snow falling and the storm level up). */
+export function blizzard(env: StormEnv, t: StormTable = STORM_TABLE): boolean {
+  return snowing(env, t) && storming(env, t)
+}
+
 /** Rain's degree 0..1 above the threshold (0 below it): the rain rate itself, so a downpour is 1. */
 function rainK(env: StormEnv, t: StormTable): number {
   return raining(env, t) ? clamp01(env.rain) : 0
+}
+
+/** Rain's or snow's degree, whichever is higher (sight, fire and cold force). */
+function fallK(env: StormEnv, t: StormTable): number {
+  return Math.max(rainK(env, t), snowing(env, t) ? clamp01(env.snow ?? 0) : 0)
 }
 
 /** Night-in-a-storm degree 0..1. */
@@ -201,7 +235,7 @@ export function panics(kind: StormMobKind): boolean {
 
 /** Monster sight (aggro detection radius) multiplier: the rain, then the night in a storm. */
 export function sightMul(env: StormEnv, t: StormTable = STORM_TABLE): number {
-  return partly(t.sightRainMul, rainK(env, t), env.strength) * partly(t.nightSightMul, nightK(env, t), env.strength)
+  return partly(t.sightRainMul, fallK(env, t), env.strength) * partly(t.nightSightMul, nightK(env, t), env.strength)
 }
 
 /** Chase speed multiplier of a monster of `kind`. */
@@ -223,7 +257,7 @@ export function mobRangeMul(env: StormEnv, kind: StormMobKind, t: StormTable = S
 /** Monsters per nest multiplier of `kind`. */
 export function nestCountMul(env: StormEnv, kind: StormMobKind, t: StormTable = STORM_TABLE): number {
   if (!storming(env, t)) return 1
-  if (kind === 'water') return strong(t.waterCountMul, env.strength)
+  if (kind === 'water') return env.frozen ? 1 : strong(t.waterCountMul, env.strength)
   if (kind === 'critter') return strong(t.critterCountMul, env.strength)
   if (kind === 'predator') return strong(t.predatorCountMul, env.strength)
   return 1
@@ -239,11 +273,11 @@ export function elementOf(mastery: string | null | undefined): StormElement | nu
   return mastery === 'FIRE' ? 'fire' : mastery === 'LIGHTNING' ? 'lightning' : mastery === 'COLD' ? 'cold' : null
 }
 
-/** Damage multiplier of an element in the rain. */
+/** Damage multiplier of an element in the rain (fire and cold also in the snow; lightning only in the rain). */
 export function elementMul(env: StormEnv, element: StormElement | null, t: StormTable = STORM_TABLE): number {
   if (!element) return 1
   const mul = element === 'fire' ? t.fireRainMul : element === 'lightning' ? t.lightningRainMul : t.coldRainMul
-  return partly(mul, rainK(env, t), env.strength)
+  return partly(mul, element === 'lightning' ? rainK(env, t) : fallK(env, t), env.strength)
 }
 
 /** Whether players are wet (out in the rain). */
@@ -256,9 +290,10 @@ export function shockMul(env: StormEnv, t: StormTable = STORM_TABLE): number {
   return wet(env, t) ? strong(t.wetShockMul, env.strength) : 1
 }
 
-/** Mud: the run speed penalty in percent (0 = none) on a soaked ground. */
+/** Mud (a soaked ground) or a blizzard's drifts: the run speed penalty in percent (0 = none). */
 export function mudSlowPct(env: StormEnv, t: StormTable = STORM_TABLE): number {
-  return env.wet >= t.mudWetMin ? Math.min(90, t.mudSlowPct * env.strength) : 0
+  if (env.wet >= t.mudWetMin) return Math.min(90, t.mudSlowPct * env.strength)
+  return blizzard(env, t) ? Math.min(90, t.driftSlowPct * env.strength) : 0
 }
 
 /** Extra miss chance (0..1) of a ranged attack in the wind. */
@@ -296,6 +331,9 @@ export const STORM_EFFECT_IDS = [
   'bandits',
   'panic',
   'charged',
+  // winter (docs/WINTER.md §4)
+  'snow',
+  'drifts',
 ] as const
 export type StormEffectId = (typeof STORM_EFFECT_IDS)[number]
 
@@ -317,7 +355,7 @@ function pctOf(mul: number): number {
 export function stormPhase(env: StormEnv, forecast: boolean, t: StormTable = STORM_TABLE): StormPhase {
   if (storming(env, t)) return 'storm'
   if (forecast) return 'forecast'
-  return raining(env, t) ? 'rain' : 'calm'
+  return raining(env, t) || snowing(env, t) ? 'rain' : 'calm'
 }
 
 /** Every effect active under `env`, in STORM_EFFECT_IDS order (what the tooltip lists). */
@@ -329,28 +367,30 @@ export function stormEffects(env: StormEnv, t: StormTable = STORM_TABLE): StormE
   }
   if (env.strength <= 0) return out
   const rain = raining(env, t)
+  const snow = snowing(env, t)
   const storm = storming(env, t)
   if (rain) push('wet', pctOf(strong(t.wetShockMul, env.strength)))
   const sight = sightMul(env, t)
   if (sight < 1) push('sight', pctOf(sight))
-  if (rain) {
+  if (rain || snow) {
     push('fire', pctOf(elementMul(env, 'fire', t)))
-    push('lightning', pctOf(elementMul(env, 'lightning', t)))
+    if (rain) push('lightning', pctOf(elementMul(env, 'lightning', t)))
     push('cold', pctOf(elementMul(env, 'cold', t)))
   }
   const mud = mudSlowPct(env, t)
-  if (mud > 0) push('mud', -Math.round(mud))
+  if (mud > 0) push(env.wet >= t.mudWetMin ? 'mud' : 'drifts', -Math.round(mud))
   const wind = windMiss(env, t)
   if (wind > 0.005) push('wind', Math.max(1, Math.round(wind * 100)))
   if (storm && env.night > 0.05) push('night', pctOf(partly(t.nightSightMul, nightK(env, t), env.strength)))
   if (storm) {
     push('undead', pctOf(strong(t.undeadDamageMul, env.strength)))
-    push('water', pctOf(strong(t.waterCountMul, env.strength)))
+    if (!env.frozen) push('water', pctOf(strong(t.waterCountMul, env.strength)))
     push('critters', pctOf(strong(t.critterCountMul, env.strength)))
     push('packs', pctOf(strong(t.predatorCountMul, env.strength)))
     push('bandits', pctOf(strong(t.banditLeashMul, env.strength)))
     push('panic')
     push('charged', pctOf(strong(t.chargedDamageMul, env.strength)))
   }
+  if (snow) push('snow')
   return out
 }

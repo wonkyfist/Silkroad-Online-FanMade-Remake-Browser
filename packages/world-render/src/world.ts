@@ -81,6 +81,7 @@ import { toRenderWeather, toSkyWeather } from './weather/adapters.ts'
 import { applyWeatherToEnv, weatherFogScale } from './weather/env.ts'
 import { CLEAR_FRAME, type WeatherFrame } from './weather/frame.ts'
 import { WorldWeather } from './weather/index.ts'
+import { WorldWinter, applyWinterToEnv } from './winter/index.ts'
 import type { WeatherLevel } from './weather/presets.ts'
 
 /** Graphics presets; Low is the Classic material path (docs/WAVE_PLAN3.md D4), 'ultra' is wave 9's (D5). */
@@ -437,6 +438,11 @@ export class World {
   readonly render: WorldRender
   /** Wave 9: the weather (weather/index.ts): the shared `wx*` vectors, shelter map, ripples, rain. */
   readonly weather: WorldWeather
+  /**
+   * The snow season's look (winter/index.ts; docs/WINTER.md §7): snow cover, frost, ice and snowfall from the frame's
+   * `snow`, `cover` and `frost`. Nothing is compiled or drawn without them.
+   */
+  readonly winter: WorldWinter
   readonly materials: ObjectMaterials
   readonly objects: WorldObjects
   /** Grass and plants on the terrain (scatter.ts): regions register as they commit, chunks grow around the camera. */
@@ -557,6 +563,8 @@ export class World {
     this.contextRestored = scene.getEngine().onContextRestoredObservable.add(() => this.onContextRestored())
     this.weather = new WorldWeather(scene)
     this.weather.setLevel(opts.weatherLevel ?? 'off')
+    // docs/WINTER.md §7.1: before any world material exists, so every one gets its snow plugin at creation
+    this.winter = new WorldWinter(scene)
     this.render = new WorldRender(scene, {
       mode: opts.render ?? 'classic',
       quality: RENDER_PRESETS[this.quality],
@@ -630,6 +638,8 @@ export class World {
     this.syncSky()
     // WX-R: the weather's shared vectors, object decorator, wet-map commit step and shelter listeners (weather/index.ts).
     this.weather.attach(this)
+    // docs/WINTER.md §7: the Classic chunks' shared snow values, the ice
+    this.winter.attach(this)
     // RND-L: the PBR path's celestial light and sky cube now, its shadows at the first update (render/index.ts).
     this.render.bindWorld(this)
     // Wave 10 (W10-S): the retail-tuft filter before any region places, the wildlife (PBR), the ocean (every path).
@@ -1087,6 +1097,7 @@ export class World {
     this.sky.setWeather(toSkyWeather(frame))
     this.render.setWeather(toRenderWeather(frame))
     this.weather.setFrame(frame)
+    this.winter.setFrame(frame)
   }
 
   /** The last weather frame (CLEAR_FRAME until the weather feature sends one). */
@@ -1258,6 +1269,7 @@ export class World {
     this.sky.update(dt, camera)
     this.applyEnv()
     this.weather.update(dt, camera)
+    this.winter.update(dt, camera)
     this.render.update(camera, this.sky.state)
     this.objects.tickAnimationSpeed()
     if (camera) this.objects.update(camera.globalPosition, false, this.focus)
@@ -1311,7 +1323,12 @@ export class World {
   private envOut(): { env: EnvValues; fogStartM: number; fogEndM: number } {
     this.syncSky()
     let env = this.sky.envFor()
-    if (this.skyStyleValue === 'classic') env = applyWeatherToEnv(env, this.weatherFrame)
+    if (this.skyStyleValue === 'classic') {
+      env = applyWeatherToEnv(env, this.weatherFrame)
+      // docs/WINTER.md §7.6: the classic palette under frost and snow (identity without them)
+      const f = this.weatherFrame
+      if (f.frost || f.cover) env = applyWinterToEnv(env, f.frost ?? 0, f.cover ?? 0, this.sky.state.night)
+    }
     const scale = weatherFogScale(this.weatherFrame)
     let fogStartM = env.g10 * FOG_RANGE_M
     let fogEndM = env.g11 * FOG_RANGE_M
@@ -1411,6 +1428,7 @@ export class World {
     this.terrain.dispose()
     this.water.dispose()
     this.render.dispose()
+    this.winter.dispose()
     this.weather.dispose()
     this.sky.dispose()
     this.sun.dispose()

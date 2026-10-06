@@ -84,7 +84,7 @@ describe('ServerInfo clock and weather (docs/SCREENS.md §9)', () => {
 
   it('both bad: the welcome still parses with the plain server info', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {})
-    expect(parsedServer({ ...base, clock: { ...clock, dayMs: 1 }, weather: { ...weather, from: 'snow' } })).toEqual(base)
+    expect(parsedServer({ ...base, clock: { ...clock, dayMs: 1 }, weather: { ...weather, from: 'hail' } })).toEqual(base)
   })
 
   it('the house rule still holds for the other fields: a bad required field or world rejects the welcome', () => {

@@ -39,9 +39,11 @@ import { loadWater, type WaterIndex } from './water.ts'
  *   standing still also gets `displace {kind: 'pull'}` (the client slides it without a walking clip).
  * - **Throw**: a body inside coreM is caught: knocked down for the flight and lockMs (a short loss of control: the
  *   module's gate refuses moves and actions), thrown THROW_M out along the navmesh (a straight walk, so never through a
- *   wall; never landing in water, a town or out of the world, at least throwMinM away: else it is only spun in place),
- *   `displace {kind: 'throw'}` for the arc, and `throwDamage` on landing through Gameplay.hazardHit (cause `tornado`,
- *   non-lethal: never below 1 HP). Then immuneMs before it can be pulled or caught again.
+ *   wall; never landing in water, a town or out of the world: the farthest fit point along the throw, at least
+ *   throwMinM away; else it is only spun in place), `displace {kind: 'throw'}` for the arc, and `throwDamage` on
+ *   landing through Gameplay.hazardHit (cause `tornado`; capped per throw and at damageTotalPct per tornado, so a
+ *   healthy body survives; it kills one already low only with TORNADO_LETHAL, the normal death path, nobody's kill).
+ *   Then immuneMs before it can be pulled or caught again.
  * - **Its lightning**: a bolt every boltMs (scaled by the strength) at a body, a tree or the ground in the ring around
  *   it, placed through LightningService.strikeAt (telegraphed like every strike, `source: 'tornado'`, non-lethal).
  * - **Immune**: uniques (Tiger Girl among them), the Play the Boss body, a body in a trance, invisible GMs, the dead,
@@ -84,7 +86,14 @@ interface Thrown {
   /** Control comes back then. */
   lockUntil: number
   damage: number
+  /** The landing may take the last HP (TORNADO_LETHAL when it was caught). */
+  lethal: boolean
 }
+
+/** A throw direction whose landing reaches this share of the intended distance is taken at once. */
+const FAR_ENOUGH = 0.75
+/** The fallback walks back from a blocked landing in steps of this (m). */
+const BACK_STEP_M = 3
 
 export class TornadoService implements GameplayModule {
   readonly name = 'tornado'
@@ -104,6 +113,8 @@ export class TornadoService implements GameplayModule {
   private readonly intent = new Map<number, { x: number; z: number; speed: number }>()
   /** The startedAt of the last move this module gave a body (a different one is the body's own). */
   private readonly ours = new Map<number, number>()
+  /** HP the current tornado's throws already took from each body (capped at damageTotalPct). */
+  private readonly taken = new Map<number, number>()
   private water: WaterIndex | null = null
   private waterState: 'idle' | 'loading' | 'ready' | 'failed' = 'idle'
   private readonly listeners = new Set<(e: TornadoEvent) => void>()
@@ -127,9 +138,15 @@ export class TornadoService implements GameplayModule {
     return Math.max(0, Math.min(2, this.g.config.tornadoStrength ?? STORM_TABLE.tornadoStrength))
   }
 
-  /** The chance knob (TORNADO_CHANCE, 0..1). */
+  /** The chance knob (TORNADO_CHANCE, 0..1); 0 in the snow season unless WINTER_TORNADO (docs/WINTER.md §4). */
   chance(): number {
+    if (!this.g.winter.tornadoes(this.g.now)) return 0
     return Math.max(0, Math.min(1, this.g.config.tornadoChance ?? STORM_TABLE.tornadoChance))
+  }
+
+  /** Whether its throws can kill a body already low on HP (TORNADO_LETHAL, default on). */
+  lethal(): boolean {
+    return this.g.config.tornadoLethal ?? STORM_TABLE.tornadoLethal
   }
 
   /** Untouched by a tornado: uniques (Tiger Girl), the Play the Boss body, the dead. */
@@ -236,6 +253,7 @@ export class TornadoService implements GameplayModule {
       if (opts.gm) s.gm = true
       this.nextId = this.nextId >= 0xffffffff ? 1 : this.nextId + 1
       this.state = s
+      this.taken.clear()
       this.nextPullAt = this.nextCatchAt = touchAt
       this.nextBoltAt = touchAt + 2000
       this.g.config.log(`tornado ${s.id}: warning${area ? ` near ${area}` : ''}, touchdown at ${Math.round(s.path[0]![0])}, ${Math.round(s.path[0]![2])} in ${t.warnMs / 1000} s, ${Math.round(len)} m over ${((s.endAt - touchAt) / 60_000).toFixed(1)} min${opts.gm ? ' (GM)' : ''}`)
@@ -261,6 +279,7 @@ export class TornadoService implements GameplayModule {
     const s = this.state
     if (!s) return
     this.state = null
+    this.taken.clear()
     this.release(now)
     this.g.world.broadcast({ t: 'tornadoEnd', id: s.id, at: Math.round(now) })
     this.emit({ phase: 'end', tornado: s })
@@ -389,7 +408,11 @@ export class TornadoService implements GameplayModule {
     }
   }
 
-  /** A landing for a body at `from` thrown away from `c`: the straight walk's end, or null when none is fit. */
+  /**
+   * A landing for a body at `from` thrown away from `c`: per direction (the tangent first, then turning), the farthest
+   * fit point of the straight navmesh walk that way (so never past a wall, nor over a town's edge); the first reaching
+   * FAR_ENOUGH of its throw is taken, else the farthest found. null when none is fit.
+   */
   landing(s: TornadoState, from: NavPoint, c: Vec3): NavPoint | null {
     const t = this.table
     const rng = this.g.rng
@@ -399,15 +422,50 @@ export class TornadoService implements GameplayModule {
     // outward, turned the way the funnel spins (the body leaves on the tangent)
     const out = Math.hypot(dx, dz) > 0.3 ? Math.atan2(dz, dx) : rng() * Math.PI * 2
     const base = out + 0.9
+    let best: NavPoint | null = null
+    let bestD = 0
     for (const turn of [0, 0.5, -0.5, 1, -1, 1.6, -1.6, 2.4, -2.4, Math.PI]) {
       const a = base + turn
       const dist = (t.throwM[0] + (t.throwM[1] - t.throwM[0]) * rng()) * reach
-      const [x, z] = this.g.world.clamp(from.x + Math.cos(a) * dist, from.z + Math.sin(a) * dist)
-      const walk = this.g.nav.walk(from, x, z)
-      if (!walk) continue
-      const end = walk.end
-      if (!this.fitLanding(s, from, end, c)) continue
-      return end
+      const end = this.farthestLanding(s, from, c, a, dist)
+      if (!end) continue
+      const d = Math.hypot(end.x - from.x, end.z - from.z)
+      if (d >= dist * FAR_ENOUGH) return end
+      if (d > bestD) {
+        best = end
+        bestD = d
+      }
+    }
+    return best
+  }
+
+  /** The farthest fit landing on the straight navmesh walk from `from` along angle `a`, at most `dist` away. */
+  private farthestLanding(s: TornadoState, from: NavPoint, c: Vec3, a: number, dist: number): NavPoint | null {
+    const [x, z] = this.g.world.clamp(from.x + Math.cos(a) * dist, from.z + Math.sin(a) * dist)
+    const walk = this.g.nav.walk(from, x, z)
+    if (!walk) return null
+    const ex = walk.end.x - from.x
+    const ez = walk.end.z - from.z
+    const len = Math.hypot(ex, ez)
+    if (!(len >= this.table.throwMinM)) return null
+    // never over a town's edge: only the stretch before the first point inside a safe area
+    let reach = len
+    for (let d = BACK_STEP_M; d < len + BACK_STEP_M; d += BACK_STEP_M) {
+      const f = Math.min(1, d / len)
+      if (this.safe(from.x + ex * f, from.z + ez * f)) {
+        reach = d - BACK_STEP_M
+        break
+      }
+    }
+    if (reach === len && this.fitLanding(s, from, walk.end, c)) return walk.end
+    for (let d = Math.min(reach, len - BACK_STEP_M); d >= this.table.throwMinM; d -= BACK_STEP_M) {
+      const f = d / len
+      const px = from.x + ex * f
+      const pz = from.z + ez * f
+      // cheap checks first (closed or wet ground), the walk only for a likely spot
+      if (!this.g.nav.canWalk(px, pz) || this.ground(px, pz) === null) continue
+      const w = this.g.nav.walk(from, px, pz)
+      if (w && this.fitLanding(s, from, w.end, c)) return w.end
     }
     return null
   }
@@ -427,7 +485,9 @@ export class TornadoService implements GameplayModule {
   private throwBody(s: TornadoState, e: Body, c: Vec3, now: number): void {
     const t = this.table
     const w = this.g.world
-    const damage = throwDamage(e.hp, e.maxHp, s.strength, t)
+    const lethal = this.lethal()
+    const damage = throwDamage(e.hp, e.maxHp, s.strength, t, { taken: this.taken.get(e.id) ?? 0, lethal })
+    if (damage > 0) this.taken.set(e.id, (this.taken.get(e.id) ?? 0) + damage)
     const riding = e.kind === 'player' && !!this.g.mounts.ridden(e)
     const from = w.livePoint(e, now)
     const end = riding ? null : this.landing(s, from, c)
@@ -436,7 +496,7 @@ export class TornadoService implements GameplayModule {
     if (!end) {
       // a rider, or nowhere fit to land: spun in place, hurt, stunned a moment
       this.g.skills.applyHazardStatus(e, 'stun', t.lockMs, now)
-      this.thrown.set(e.id, { landAt: now, lockUntil: now + t.lockMs, damage })
+      this.thrown.set(e.id, { landAt: now, lockUntil: now + t.lockMs, damage, lethal })
       this.immune.set(e.id, now + t.immuneMs)
       this.land(now)
       return
@@ -457,18 +517,21 @@ export class TornadoService implements GameplayModule {
       const msg: ServerMessage = { t: 'displace', id: e.id, kind: 'throw', from: [r2(from.x), r2(from.y), r2(from.z)], to: [...e.move.to], at: Math.round(now), ms, peakM, tornado: s.id }
       w.broadcastAbout(e, msg)
     }
-    this.thrown.set(e.id, { landAt: now + ms, lockUntil: now + ms + t.lockMs, damage })
+    this.thrown.set(e.id, { landAt: now + ms, lockUntil: now + ms + t.lockMs, damage, lethal })
     this.immune.set(e.id, now + ms + t.immuneMs)
   }
 
-  /** Thrown bodies that came down take their damage (never a kill); control comes back after lockMs. */
+  /**
+   * Thrown bodies that came down take their damage (it kills one already low only when it was lethal: the normal death
+   * path, nobody's kill, loot only when a player had fought the monster); control comes back after lockMs.
+   */
   private land(now: number): void {
     for (const [id, th] of this.thrown) {
       if (th.damage > 0 && now >= th.landAt) {
         const e = this.g.world.players.get(id) ?? this.g.world.mobs.get(id)
         const dmg = th.damage
         th.damage = 0
-        if (e && !this.exempt(e)) this.g.hazardHit(e, dmg, 'tornado', now, undefined, true)
+        if (e && !this.exempt(e)) this.g.hazardHit(e, dmg, 'tornado', now, undefined, !th.lethal)
       }
       if (now >= th.lockUntil) this.thrown.delete(id)
     }
@@ -552,6 +615,7 @@ export class TornadoService implements GameplayModule {
     this.immune.delete(id)
     this.intent.delete(id)
     this.ours.delete(id)
+    this.taken.delete(id)
   }
 
   // ---- its lightning ---------------------------------------------------------------------------------------------

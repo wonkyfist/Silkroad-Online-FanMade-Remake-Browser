@@ -1,4 +1,4 @@
-import { MAX_GOLD, STORM_TABLE, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
+import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WINTER_DEFAULTS, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
 import { MOB_SKILL_DAMAGE_MODES, W8_DEFAULTS, type ServerConfig } from '../config.ts'
 import type { GameContext } from '../game.ts'
 import type { AdminStore } from './store.ts'
@@ -19,6 +19,8 @@ export interface SettingSpec extends AdminSettingDef {
   fallback: AdminSettingValue
   /** Extra work after a live change (beyond writing the config field). */
   onLive?: (ctx: GameContext) => void
+  /** 'text': the server's own check of a value (beyond `pattern`), with the problem to show. */
+  check?: (v: string) => string | null
 }
 
 const forgetAllShopGoods = (ctx: GameContext): void => {
@@ -34,12 +36,20 @@ const num = (key: Key, env: string, label: string, group: string, min: number, m
 const bool = (key: Key, env: string, label: string, group: string, fallback: boolean, apply: 'live' | 'restart', note?: string, numeric01 = false): SettingSpec =>
   ({ key, env, label, group, type: 'bool', fallback, apply, ...(note ? { note } : {}), ...(numeric01 ? { numeric01 } : {}) })
 
+const text = (key: Key, env: string, label: string, group: string, fallback: string, apply: 'live' | 'restart', o: { pattern?: string; placeholder?: string; check?: (v: string) => string | null; note?: string }): SettingSpec =>
+  ({ key, env, label, group, type: 'text', fallback, apply, ...(o.pattern ? { pattern: o.pattern } : {}), ...(o.placeholder ? { placeholder: o.placeholder } : {}), ...(o.check ? { check: o.check } : {}), ...(o.note ? { note: o.note } : {}) })
+
+/** docs/WINTER.md §6: a winter knob changed: the season is re-evaluated and every player hears it at once. */
+const winterLive = (ctx: GameContext): void => ctx.gameplay.winter.refresh()
+const dayCheck = (v: string): string | null => (parseMonthDay(v) === null ? 'must be a day of the year as MM-DD (12-01)' : null)
+
 const ACCESS = 'Access'
 const RATES = 'Progression and rates'
 const WORLD = 'World and monsters'
 const COMBAT = 'Combat and items'
 const SOCIAL = 'Guilds and stalls'
 const STORMS = 'Weather and storms'
+const WINTER = 'Winter season'
 
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
@@ -106,7 +116,15 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('stormStrength', 'STORM_STRENGTH', 'Storm effect strength', STORMS, 0, 2, STORM_TABLE.strength, 'live', 'Scales every storm and rain effect on monsters and players (0 = none, 1 = the defaults, 2 = twice as strong).'),
   // docs/WEATHER.md §13: the lightning tornado
   num('tornadoChance', 'TORNADO_CHANCE', 'Tornado chance per storm', STORMS, 0, 1, STORM_TABLE.tornadoChance, 'live', 'Chance (0..1) that a storm brings one lightning tornado somewhere in the fields near a player (0 = only GM tornadoes: storm tornado).'),
-  num('tornadoStrength', 'TORNADO_STRENGTH', 'Tornado strength', STORMS, 0, 2, STORM_TABLE.tornadoStrength, 'live', "Scales the tornado's pull, throw distance, damage and lightning (0 = it only looks; it never kills either way)."),
+  num('tornadoStrength', 'TORNADO_STRENGTH', 'Tornado strength', STORMS, 0, 2, STORM_TABLE.tornadoStrength, 'live', "Scales the tornado's pull, throw distance, damage and lightning (0 = it only looks)."),
+  bool('tornadoLethal', 'TORNADO_LETHAL', 'Tornado can kill', STORMS, STORM_TABLE.tornadoLethal, 'live', 'On (default): a throw can kill a body already low on HP (each throw about 22 % of max HP, at most 55 % per tornado, so a healthy player survives). Off: never below 1 HP. Its lightning never kills.'),
+  // docs/WINTER.md §6: the snow season (applied live; every player in the world hears the change at once)
+  { ...bool('winterEnabled', 'WINTER', 'Snow season on', WINTER, WINTER_DEFAULTS.enabled, 'live', 'Off: no snow season (rain stays rain all year). GMs can still make it snow with weather snow / weather blizzard.'), onLive: winterLive },
+  { ...text('winterStart', 'WINTER_START', 'Season starts (MM-DD)', WINTER, WINTER_DEFAULTS.start, 'live', { pattern: MONTH_DAY_RE.source, placeholder: '12-01', check: dayCheck, note: 'The first day of the snow season, in the time zone below. The first snowfall settles over hours; nothing turns white at midnight.' }), onLive: winterLive },
+  { ...text('winterEnd', 'WINTER_END', 'Season ends (MM-DD, inclusive)', WINTER, WINTER_DEFAULTS.end, 'live', { pattern: MONTH_DAY_RE.source, placeholder: '01-15', check: dayCheck, note: 'The last day of the season (a start after the end wraps the new year). The snow melts over a few hours after it.' }), onLive: winterLive },
+  { ...text('winterTz', 'WINTER_TZ', 'Season time zone', WINTER, hostTimeZone(), 'live', { placeholder: 'Europe/Berlin', check: (v) => (validTimeZone(v) ? null : 'must be an IANA time zone like Europe/Berlin or UTC'), note: "Default: the server's own time zone." }), onLive: winterLive },
+  { ...num('winterStrength', 'WINTER_STRENGTH', 'Snow strength', WINTER, 0, 1, WINTER_DEFAULTS.strength, 'live', 'How white a full snow cover looks (0 = snow falls but never lies, 1 = the full winter look).'), onLive: winterLive },
+  bool('winterTornado', 'WINTER_TORNADO', 'Tornadoes in blizzards', WINTER, WINTER_DEFAULTS.tornado, 'live', 'Off (default): during the snow season storms are blizzards without tornadoes.'),
 ]
 
 export const SETTING_BY_KEY: ReadonlyMap<string, SettingSpec> = new Map(SETTINGS.map((s) => [s.key, s]))
@@ -130,6 +148,13 @@ export function checkSetting(spec: SettingSpec, v: unknown): { value: AdminSetti
       return typeof v === 'boolean' ? { value: v } : { problem: `${spec.key} must be true or false` }
     case 'enum':
       return typeof v === 'string' && spec.options!.includes(v) ? { value: v } : { problem: `${spec.key} must be one of ${spec.options!.join(', ')}` }
+    case 'text': {
+      if (typeof v !== 'string' || v.length === 0 || v.length > 64) return { problem: `${spec.key} must be a short text` }
+      const s = v.trim()
+      if (spec.pattern && !new RegExp(spec.pattern).test(s)) return { problem: `${spec.key} must look like ${spec.placeholder ?? spec.pattern}` }
+      const problem = spec.check?.(s) ?? null
+      return problem ? { problem: `${spec.key} ${problem}` } : { value: s }
+    }
     case 'int':
     case 'number': {
       const ok = typeof v === 'number' && Number.isFinite(v) && v >= spec.min! && v <= spec.max! && (spec.type === 'number' || Number.isInteger(v))
@@ -202,7 +227,7 @@ export class SettingsState {
   view(): AdminSettingState[] {
     const saved = this.store.settings()
     return SETTINGS.map((spec) => {
-      const { fallback: _f, onLive: _o, numeric01: _n, ...def } = spec
+      const { fallback: _f, onLive: _o, numeric01: _n, check: _c, ...def } = spec
       const row = saved.get(spec.key)
       const stored = row && 'value' in checkSetting(spec, row.value) ? (row.value as AdminSettingValue) : null
       const running = spec.apply === 'live' ? readSetting(this.config, spec) : (this.started.get(spec.key) ?? readSetting(this.config, spec))

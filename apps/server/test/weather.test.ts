@@ -112,7 +112,7 @@ describe('WeatherService (docs/WEATHER.md §2–§4)', () => {
     expect(w.gm(['wind', '12', '90'], T0 + 1_501_000).ok).toBe(true)
     expect(of('weather').at(-1)!.weather).toMatchObject({ windMs: 12, windDir: Math.PI / 2 })
     expect(w.params(T0 + 1_502_000).windMs).toBe(12)
-    for (const bad of [['wind', '31'], ['wind', '5', '360'], ['wet', '1.5'], ['wet', '0.5', '-1'], ['snow'], ['clear:0.5'], ['rain:0.2'], ['rain', '0'], ['rain', '5', '601'], ['storm', 'x']]) {
+    for (const bad of [['wind', '31'], ['wind', '5', '360'], ['wet', '1.5'], ['wet', '0.5', '-1'], ['hail'], ['clear:0.5'], ['blizzard:0.5'], ['rain:0.2'], ['rain', '0'], ['rain', '5', '601'], ['storm', 'x']]) {
       expect(w.gm(bad, T0 + 1_503_000).ok, bad.join(' ')).toBe(false)
     }
     // the status line
@@ -148,7 +148,7 @@ describe('WeatherService (docs/WEATHER.md §2–§4)', () => {
     expect(loadConfig({})).toMatchObject({ weather: 'auto', weatherSeed: 1, weatherRainScale: 1 })
     expect(loadConfig({ WEATHER: 'Off', WEATHER_SEED: '4294967295', WEATHER_RAIN_SCALE: '2' })).toMatchObject({ weather: 'off', weatherSeed: 4294967295, weatherRainScale: 2 })
     expect(loadConfig({ WEATHER: 'storm' }).weather).toBe('storm')
-    expect(() => loadConfig({ WEATHER: 'snow' })).toThrow(/WEATHER/)
+    expect(() => loadConfig({ WEATHER: 'hail' })).toThrow(/WEATHER/)
     expect(() => loadConfig({ WEATHER_RAIN_SCALE: '4' })).toThrow(/WEATHER_RAIN_SCALE/)
     expect(() => loadConfig({ WEATHER_SEED: '-1' })).toThrow(/WEATHER_SEED/)
   })

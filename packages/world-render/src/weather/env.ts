@@ -109,8 +109,10 @@ export function terrainWeatherLight(
  * Fog start and end multipliers (every path): end × fogScale (`mix(1, 0.35, fog) × mix(1, 0.75, rain)`), start ×
  * `mix(1, 0.05, fog) × mix(1, 0.5, rain)`. Both are exactly 1 for a clear frame.
  */
-export function weatherFogScale(f: Pick<WeatherFrame, 'fog' | 'rain'>): { start: number; end: number } {
+export function weatherFogScale(f: Pick<WeatherFrame, 'fog' | 'rain' | 'snow'>): { start: number; end: number } {
   const fog = Math.min(1, Math.max(0, f.fog))
   const rain = Math.min(1, Math.max(0, f.rain))
-  return { start: (1 - 0.95 * fog) * (1 - 0.5 * rain), end: fogScale(f) }
+  // docs/WINTER.md §7.6: falling snow closes the view in like rain (a blizzard is a whiteout)
+  const snow = Math.min(1, Math.max(0, f.snow ?? 0))
+  return { start: (1 - 0.95 * fog) * (1 - 0.5 * rain) * (1 - 0.4 * snow), end: fogScale(f) }
 }

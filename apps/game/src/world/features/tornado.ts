@@ -24,7 +24,7 @@ import { ROAR_EVERY_S, TORNADO_SYNTH, roarGain } from '../../audio/tornado.ts'
 import { t, type StringKey } from '../../i18n/index.ts'
 import { effectiveGraphics, settings, type SettingsStore } from '../../settings.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
-import { TornadoFx, type TornadoTier } from '../storm/tornado-fx.ts'
+import { TornadoFx, type TornadoFrame, type TornadoTier } from '../storm/tornado-fx.ts'
 import { compass, setTornadoSource, type TornadoInfo } from '../storm/tornado-status.ts'
 import { panToward } from './weather.ts'
 
@@ -87,6 +87,8 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
   let roarB = false
   let prepared = false
   const shown = new Map<number, Shown>()
+  /** The funnel's frame, refilled every frame (the torn-ground trail asks the ground's height). */
+  const frame: TornadoFrame = { pos: [0, 0, 0], presence: 0, heading: 0, strength: 1, light: 1, flash: 0, ground: (x, z, y) => ctx.world()?.heightAt(x, z, y) ?? y }
 
   const pageS = () => (typeof performance === 'undefined' ? Date.now() : performance.now()) / 1000
 
@@ -224,6 +226,14 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
       } else if (msg.t === 'move') shown.delete(msg.id) // a new move (the next pull or the body's own) ends the last one
     },
 
+    onCombatHit(msg, i) {
+      // another player killed by a throw (your own death line is the world screen's)
+      if (msg.cause !== 'tornado' || !msg.killed || i !== msg.hits.length - 1) return
+      if (msg.target === (ctx.controlledId?.() ?? ctx.selfId())) return
+      const v = ctx.view(msg.target)
+      if (v?.state.kind === 'player') ctx.chat.add('system', t('tornado.chat.killedOther', { name: v.displayName() }))
+    },
+
     onFrame(now) {
       const w = ctx.world()?.world ?? null
       if (w !== world) {
@@ -245,7 +255,7 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
           if (f >= 1) continue
           v.root.position.y += throwArc(k, d.peakM)
           const body = v.ride?.actor ?? v.actor
-          body?.setYaw(v.yaw + k * Math.PI * 4)
+          body?.setYaw(v.yaw + k * Math.PI * 6)
           if (id === self) amp = Math.max(amp, THROWN_SHAKE_AMP * Math.sin(Math.PI * k))
         } else if (!v.move) {
           const x = d.from[0] + (d.to[0] - d.from[0]) * k
@@ -272,8 +282,18 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
       const ground = g ? g.heightAt(at.pos[0], at.pos[2], at.pos[1]) : at.pos[1]
       const night = world?.skyState.night ?? 0
       const flash = world?.weather.frame.flash ?? 0
-      const pos: Vec3 = [at.pos[0], Number.isFinite(ground) ? ground : at.pos[1], at.pos[2]]
-      fx.update(now, { pos, presence: at.presence, heading: at.heading, strength: state.strength, light: 0.4 * (1 - 0.8 * night), flash }, ctx.scene.activeCamera)
+      // darker under the storm's clouds: a black silhouette against a dark sky
+      const dark = world?.weather.frame.cloudDark ?? 0
+      const pos = frame.pos
+      pos[0] = at.pos[0]
+      pos[1] = Number.isFinite(ground) ? ground : at.pos[1]
+      pos[2] = at.pos[2]
+      frame.presence = at.presence
+      frame.heading = at.heading
+      frame.strength = state.strength
+      frame.light = 0.4 * (1 - 0.8 * night) * (1 - 0.3 * dark)
+      frame.flash = flash
+      fx.update(now, frame, ctx.scene.activeCamera)
       const me = listener()
       amp = Math.max(amp, tornadoShake(Math.hypot(pos[0] - me.x, pos[2] - me.z), at.presence))
       shake(amp, now)

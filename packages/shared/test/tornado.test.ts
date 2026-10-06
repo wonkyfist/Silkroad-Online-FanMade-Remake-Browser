@@ -60,5 +60,6 @@ describe('tornado protocol', () => {
     expect(STORM_TABLE.tornadoChance).toBeGreaterThan(0)
     expect(STORM_TABLE.tornadoChance).toBeLessThan(1)
     expect(STORM_TABLE.tornadoStrength).toBe(1)
+    expect(STORM_TABLE.tornadoLethal).toBe(true) // its throws can kill a body already low on HP
   })
 })

@@ -14,13 +14,14 @@ import {
   nearestWeather,
   segmentSeed,
   stepSurface,
+  takesIntensity,
   transitionMs,
   weatherParams,
+  winterKind,
   type ServerMessage,
   type SurfaceState,
   type WeatherKind,
   type WeatherParams,
-  type WeatherSegment,
   type WeatherSync,
 } from '@sro/shared'
 import { W9_DEFAULTS, type ServerConfig, type WeatherMode } from './config.ts'
@@ -51,10 +52,20 @@ import type { Player } from './world.ts'
  *   same point as everyone else, whatever `from` names (W9F P1).
  * - The wall clock stepping back (an NTP step at boot, a manual change) re-bases the module's times on the new clock
  *   and resyncs, instead of every tick waiting for the old time to come round again (W9F F3).
+ * - The snow season (docs/WINTER.md §3; with a WinterSeason, set by Gameplay): while it is on, the schedule's rain falls
+ *   as snow and its storms (and storm events) are blizzards (shared winterKind). A GM hold is taken as typed: `weather
+ *   snow` or `weather blizzard` snows at any time of the year, `weather rain` rains in December; neither touches the
+ *   season.
  */
 
 export const WEATHER_USAGE =
-  'weather [<state>[:intensity] [minutes] [transitionS] | auto | wind <m/s> [degrees] | wet <0-1> [puddle 0-1] | strike [here | sky | tree | wall | tower | distM | at <x> <z> | <player>]]'
+  'weather [<state>[:intensity] [minutes] [transitionS] | auto | wind <m/s> [degrees] | wet <0-1> [puddle 0-1] | strike [here | sky | tree | wall | tower | distM | at <x> <z> | <player>]] (snow and blizzard snow at any time; rain and snow take an intensity)'
+
+/** The snow season as the weather asks it (winter.ts WinterService; docs/WINTER.md §3). */
+export interface WinterSeason {
+  /** The season is on at server ms `now`: rain falls as snow, storms are blizzards. */
+  active(now: number): boolean
+}
 
 /** Where rolled and GM strikes go once lightning can strike (lightning/service.ts, docs/WEATHER.md §2.7). */
 export interface StrikeSink {
@@ -89,6 +100,8 @@ const KINDS_LIST = WEATHER_KINDS.join(', ')
 export interface WeatherHost {
   config: Pick<ServerConfig, 'weather' | 'weatherSeed' | 'weatherRainScale' | 'log'>
   world: { broadcast(msg: ServerMessage): void }
+  /** The snow season from the start (so a server started in December joins its snow, not rain turning to snow). */
+  winter?: WinterSeason | null
 }
 
 /** The state `tick` steers toward. */
@@ -127,7 +140,7 @@ function roundParams(p: WeatherParams): WeatherParams {
 }
 
 function label(kind: WeatherKind, intensity: number): string {
-  return kind === 'rain' && intensity < 1 ? `rain:${round(intensity)}` : kind
+  return takesIntensity(kind) && intensity < 1 ? `${kind}:${round(intensity)}` : kind
 }
 
 export class WeatherService implements GameplayModule {
@@ -152,12 +165,15 @@ export class WeatherService implements GameplayModule {
   strikes: StrikeSink | null = null
   /** Storm events (Gameplay sets the storm module's plan; null: the schedule's own storms, as before). */
   storms: StormPlan | null = null
+  /** The snow season (Gameplay sets the winter module; null: it never snows unless a GM says so). */
+  winter: WinterSeason | null = null
 
   constructor(
     private readonly host: WeatherHost,
     now = Date.now(),
   ) {
     const c = host.config
+    this.winter = host.winter ?? null
     this.mode = c.weather ?? W9_DEFAULTS.weather
     this.seed = (c.weatherSeed ?? W9_DEFAULTS.weatherSeed) >>> 0
     this.schedule = new WeatherSchedule(this.seed, { rainScale: c.weatherRainScale ?? W9_DEFAULTS.weatherRainScale })
@@ -169,8 +185,9 @@ export class WeatherService implements GameplayModule {
       // segment's own vector (its rain intensity included, as the running server blended it; W9F P1)
       const seg = this.schedule.at(now)
       const t = this.target(now)
-      this.state = this.syncOf(t, seg.prev, seg.start, transitionMs(seg.prev, seg.kind), now)
-      this.startVec = this.segmentStart(seg)
+      const prev = this.seasonal(seg.prev, now)
+      this.state = this.syncOf(t, prev, seg.start, transitionMs(seg.prev, seg.kind), now)
+      this.startVec = weatherParams(prev, seg.prevIntensity)
     } else {
       const kind = this.mode === 'off' ? 'clear' : this.mode
       this.state = this.syncOf(this.target(now), kind, now, 0, now)
@@ -277,7 +294,7 @@ export class WeatherService implements GameplayModule {
     let intensity = 1
     if (inten !== undefined) {
       const i = num(inten)
-      if (kind !== 'rain' || i === null || i < RAIN_INTENSITY_MIN || i > 1) return fail(`Only rain takes an intensity (rain:${RAIN_INTENSITY_MIN} to rain:1).`)
+      if (!takesIntensity(kind) || i === null || i < RAIN_INTENSITY_MIN || i > 1) return fail(`Only rain and snow take an intensity (rain:${RAIN_INTENSITY_MIN} to rain:1, snow:${RAIN_INTENSITY_MIN} to snow:1).`)
       intensity = round(i)
     }
     const minutes = args.length > 1 ? num(args[1]) : HOLD_DEFAULT_MIN
@@ -313,12 +330,13 @@ export class WeatherService implements GameplayModule {
     const ev = this.mode === 'off' ? null : (this.storms?.event(now) ?? null)
     if (ev && (this.mode === 'auto' || ev.gm)) {
       const windDir = this.state?.windDir ?? PREVAILING_WIND
-      if (now >= ev.start) return { kind: 'storm', intensity: 1, until: ev.end, seed: ev.seed, windDir, gm: false }
-      // the forecast: the sky darkens over the whole forecast (or the rain keeps falling) and the wind rises
+      // docs/WINTER.md §3: a storm event in the snow season is a blizzard
+      if (now >= ev.start) return { kind: this.seasonal('storm', now), intensity: 1, until: ev.end, seed: ev.seed, windDir, gm: false }
+      // the forecast: the sky darkens over the whole forecast (or the rain or snow keeps falling) and the wind rises
       const base = this.base(now)
-      const rain = base.kind === 'rain'
+      const rain = base.kind === 'rain' || base.kind === 'snow'
       return {
-        kind: rain ? 'rain' : 'overcast',
+        kind: rain ? base.kind : 'overcast',
         intensity: rain ? base.intensity : 1,
         until: ev.start,
         seed: base.seed,
@@ -342,11 +360,16 @@ export class WeatherService implements GameplayModule {
         if (n.kind !== seg.kind || n.intensity !== seg.intensity) break
         end = n
       }
-      if (this.storms && seg.kind === 'storm') return { kind: 'rain', intensity: 1, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
-      return { kind: seg.kind, intensity: seg.intensity, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
+      if (this.storms && seg.kind === 'storm') return { kind: this.seasonal('rain', now), intensity: 1, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
+      return { kind: this.seasonal(seg.kind, now), intensity: seg.intensity, until: end.end, seed: seg.seed, windDir: seg.windDir, gm: false }
     }
     const kind = this.mode === 'off' ? 'clear' : this.mode
     return { kind, intensity: 1, until: FOREVER, seed: segmentSeed(this.seed, 0), windDir: PREVAILING_WIND, gm: false }
+  }
+
+  /** `kind` in the season's form at `now` (rain → snow, storm → blizzard while the snow season is on). */
+  private seasonal(kind: WeatherKind, now: number): WeatherKind {
+    return this.winter?.active(now) ? winterKind(kind) : kind
   }
 
   private syncOf(t: Target, from: WeatherKind, start: number, dur: number, now: number): WeatherSync {
@@ -387,11 +410,6 @@ export class WeatherService implements GameplayModule {
     this.stepAt = now
   }
 
-  /** The vector a schedule segment's transition starts from: the previous segment's state at its own intensity. */
-  private segmentStart(seg: WeatherSegment): WeatherParams {
-    return weatherParams(seg.prev, seg.prevIntensity)
-  }
-
   /**
    * The wall clock stepped back (W9F F3): every time the module keeps moves by the same step, so a transition keeps its
    * progress, a hold its remaining time and lightning its gap; then a resync tells the clients the new times.
@@ -414,7 +432,8 @@ export class WeatherService implements GameplayModule {
       let p: WeatherParams
       if (this.mode === 'auto') {
         const seg = this.schedule.at(t)
-        p = blendWeather({ start: seg.start, dur: transitionMs(seg.prev, seg.kind), from: seg.prev, to: seg.kind, intensity: seg.intensity }, t, this.segmentStart(seg))
+        const to = this.seasonal(seg.kind, t)
+        p = blendWeather({ start: seg.start, dur: transitionMs(seg.prev, seg.kind), from: this.seasonal(seg.prev, t), to, intensity: seg.intensity }, t, weatherParams(this.seasonal(seg.prev, t), seg.prevIntensity))
       } else p = this.params(t)
       s = stepSurface(s, p, WARMUP_STEP_S)
     }
