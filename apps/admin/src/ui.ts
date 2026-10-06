@@ -93,11 +93,22 @@ function dialog(title: string, body: Node[], buttons: HTMLButtonElement[], onClo
     h('div', { class: 'dialog-body' }, body),
     h('div', { class: 'dialog-buttons' }, buttons),
   )
-  x.addEventListener('click', () => d.close())
-  d.addEventListener('close', () => {
+  // Finish once, from close() itself as well as from the 'close' event: an embedded or throttled browser may never fire
+  // the event (seen in the desktop app's browser pane), and a confirm button must still go through there.
+  let done = false
+  const finish = () => {
+    if (done) return
+    done = true
     onClose()
     d.remove()
-  })
+  }
+  const close = d.close.bind(d)
+  d.close = (value?: string) => {
+    close(value)
+    finish()
+  }
+  x.addEventListener('click', () => d.close())
+  d.addEventListener('close', finish)
   document.body.appendChild(d)
   d.showModal()
   return d
