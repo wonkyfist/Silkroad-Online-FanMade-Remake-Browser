@@ -14,6 +14,7 @@ import { newsEntryPage, newsPage } from './pages/news.ts'
 import './pages/boss.ts' // Play the Boss: EVENT_PAGES 'boss' (docs/PLAY_THE_BOSS.md §6.4)
 import { auditPage } from './pages/audit.ts'
 import { serversPage } from './pages/servers.ts'
+import { updatesPage } from './pages/updates.ts'
 import { svgIcon, type IconName } from './icons.ts'
 import { badge, h, serverIsLive, serverLabel } from './ui.ts'
 
@@ -66,6 +67,7 @@ const SECTIONS: { label: string; items: Route[] }[] = [
     items: [
       { path: 'settings', label: 'Settings', icon: 'settings', page: settingsPage },
       { path: 'servers', label: 'Servers', icon: 'servers', page: serversPage },
+      { path: 'updates', label: 'Updates', icon: 'download', page: updatesPage },
       { path: 'audit', label: 'Audit log', icon: 'audit', page: auditPage },
     ],
   },

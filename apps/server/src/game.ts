@@ -38,6 +38,7 @@ import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
 import { NewsStore } from './news.ts'
 import { originAllowed } from './origin.ts'
 import { acceptedEncodings, serveFile } from './static.ts'
+import type { Updater } from './updater/updater.ts'
 import { World, type Player } from './world.ts'
 
 /** Hard WebSocket frame cap: larger frames close the socket (1009). Smaller-but-too-big get bad_request. */
@@ -74,6 +75,8 @@ export interface GameContext {
    * main.ts only when such a supervisor exists; absent = the panel offers no Restart.
    */
   requestRestart?: () => void
+  /** Self-updates (docs/UPDATES.md): set by main.ts; absent in tests and embedded servers (the Updates page says so). */
+  updater?: Updater
 }
 
 export interface GameServer {

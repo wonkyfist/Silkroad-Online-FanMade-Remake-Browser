@@ -123,6 +123,19 @@ pnpm gm list                          # also: pnpm gm revoke <username>, pnpm gm
 It works on `work/server/game.db` (or `DATA_DIR/game.db`) and is safe while the server runs: the player gets the role
 within about a second. On a server hosted with the deploy scripts, use `pnpm deploy:gm grant <username>`.
 
+## Keeping your server up to date
+
+Run your server with **`pnpm serve`** instead of `pnpm server`. It restarts the server when you press Restart in the
+admin panel, after a crash, and when an update is installed.
+
+Open the admin panel (`/admin/`) → **Updates**. Your server checks this repository every hour and shows what is new.
+Choose **Install automatically** to let it update itself (optionally only at night): it backs up the database, warns
+players with a 5-minute countdown, installs and builds the new version, and rolls back by itself if the new version
+does not start. Or keep **Notify only** (the default) and press **Update now** when it suits you.
+
+This needs a `git clone` of this repository (a ZIP download cannot update itself) without local changes to the
+repository's files. On Windows run `git config core.longpaths true` once in the folder. Details: `docs/UPDATES.md`.
+
 ## The World Editor
 
 The World Editor is a local map editor for the Jangan fields: shape and paint the ground, plant trees and grass, and

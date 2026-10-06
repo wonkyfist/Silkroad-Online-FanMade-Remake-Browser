@@ -41,7 +41,7 @@ const GROUP_PREFIX = /^[a-z0-9-]{1,32}$/
 /** Prefixes the panel itself serves (a group may not shadow them). */
 export const RESERVED_PREFIXES = new Set([
   'info', 'login', 'logout', 'me', 'dashboard', 'players', 'notice', 'restart', 'accounts', 'characters', 'settings', 'audit', 'gm-audit',
-  'items', 'drops', 'mobs', 'shops', 'nests', 'npcs', 'quests', 'uniques', 'events', 'news', 'news-images',
+  'items', 'drops', 'mobs', 'shops', 'nests', 'npcs', 'quests', 'uniques', 'events', 'news', 'news-images', 'updates',
 ])
 
 const GROUPS = new Map<string, AdminRouteGroup>()

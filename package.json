@@ -11,6 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "viewer": "pnpm --filter @sro/viewer dev",
     "server": "pnpm --filter @sro/server dev",
+    "serve": "node apps/server/src/cli/supervise.ts",
     "game": "pnpm --filter @sro/game dev",
     "admin": "pnpm --filter @sro/admin dev",
     "gm": "pnpm --filter @sro/server gm",

@@ -40,6 +40,7 @@ const PATHS = {
   megaphone: ['M4 10v4h3l8 4.5v-13L7 10z', 'M18.5 9.5a3.5 3.5 0 0 1 0 5'],
   restart: ['M20 12a8 8 0 1 1-2.3-5.6', 'M20 4v5h-5'],
   users: [circle(12, 8, 4), 'M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7'],
+  download: ['M12 3.5v11', 'M7.5 10l4.5 4.5 4.5-4.5', 'M4.5 16.5v2a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-2'],
 } as const satisfies Record<string, readonly string[]>
 
 export type IconName = keyof typeof PATHS

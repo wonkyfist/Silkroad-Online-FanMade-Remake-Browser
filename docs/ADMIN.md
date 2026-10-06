@@ -19,6 +19,7 @@ notice broadcast) instead of a second copy.
 | **Events** | Unique bosses (state, next spawn, spawn now, kill / despawn, timer), broadcast notices, and the scheduled events: *Play the Boss* (docs/PLAY_THE_BOSS.md §6) plugs in through §3.1 as the "Night of the Tiger" sub-page (`pages/boss.ts`): what runs now (the call and its volunteers, the offer, the hunt with her HP and the crowd) with Start a call, Force-pick and Stop; tabs for the weekly schedule (in the server's time zone), the numbers of §6.2 (default, bounds, per-field reset, the server's 422 messages inline, saves carry the rev), the event log with each event's timeline and volunteers in draw order, the lottery blocks and an eligibility check. |
 | **Audit log** | Every admin action (who, from where, what, when, before / after, ok) and, on a second tab, the GM command log (`gm_audit`). |
 | **Servers** | Server profiles (§2.1): which game server the panel edits. |
+| **Updates** | Self-updates from the public GitHub repository (docs/UPDATES.md): running and latest commit, the new "What's new" entries and commits, mode **Off / Notify only (default) / Install automatically**, check interval, install window, **Check now**, **Update now** (backup, countdown, restart through `pnpm serve`), progress and log, history, **Roll back** the last update. |
 
 Out of scope: changing roles (§4), deleting accounts or characters, editing skills or shops, the World Editor (host
 PC only), the Play the Boss gameplay itself (the panel drives its events and numbers, §3.1).
@@ -86,7 +87,7 @@ admin, 404, 409 conflict, 413 body too big, 422 content that does not validate (
 | `GET dashboard` | | `AdminDashboard` (server info, players, lobby) |
 | `POST players/:characterId/kick` / `town` | `{reason?}` / – | |
 | `POST notice` | `{text}` | `{recipients}` |
-| `POST restart` | | 202, then the process exits with 75 (systemd starts it again) |
+| `POST restart` | | 202, then the process exits with 75 (systemd or `pnpm serve` starts it again) |
 | `GET accounts` | `?q=&role=&banned=&page=&size=` | `AdminPage<AdminAccountRow>` |
 | `POST accounts` | `{username, password}` | `AdminAccountDetail` (a player) |
 | `GET accounts/:id` | | `AdminAccountDetail` (characters, storage) |
@@ -105,6 +106,9 @@ admin, 404, 409 conflict, 413 body too big, 422 content that does not validate (
 | `GET uniques`, `POST uniques/:code/{spawn,kill,despawn,timer}` | `{camp?}`, `{minutes \| 'now' \| 'clear'}` | |
 | `GET events` | | `{events: AdminEventInfo[]}` |
 | `GET audit`, `GET gm-audit` | `?q=&action=&page=` | |
+| `GET updates` | | `AdminUpdatesView` (docs/UPDATES.md §5) |
+| `PUT updates/settings` | `{values: {mode?, intervalMin?, windowEnabled?, windowStart?, windowEnd?, windowTz?, repoUrl?, branch?}}` | `AdminUpdatesView` |
+| `POST updates/check` / `install` / `cancel` / `rollback` | | 202 (the check runs in the background) / 202 / 200 / 202; 409 with the reasons when it cannot |
 
 ### 3.1 Extension points (Play the Boss)
 
@@ -169,6 +173,7 @@ Layers, lowest first:
 | Runtime overrides | `DATA_DIR/content/`: `nests.override.json`, `npcs.override.json`, `quests/*.json` (the GM editors and the panel), `items.override.json`, `drops.override.json` (the panel), `history/` (every previous version) | the running server |
 | Runtime settings | `game.db` `admin_settings` (over the environment: `silkroad.env`, then `silkroad.local.env`) | the panel |
 | Accounts, characters, bans, sessions, audit | `game.db` | the server |
+| Self-update settings, the run in progress, its history | `DATA_DIR/updates/{settings,state,history}.json` (not in `game.db`: the supervisor reads them and a database restore must not rewind them); backups in `DATA_DIR/backups/` | the Updates page, the updater, `pnpm serve` (docs/UPDATES.md) |
 
 **Admin tables** sit in `game.db` (so the deploy's database snapshot includes them) but outside the numbered gameplay
 migrations: `admin/store.ts` creates `admin_sessions`, `admin_audit`, `admin_settings` and `account_bans` with
@@ -209,9 +214,10 @@ production the server serves `/out/data/items.json` merged with them, so the cli
 stats after a reload. Drop overrides apply to the next kill. NPC, nest and quest edits apply live as their GM
 commands do.
 
-**Restart**: offered only when the server runs as the systemd service (`INVOCATION_ID` is set). The server saves and
-closes like on SIGTERM, then exits with code 75; the unit's `Restart=on-failure` starts it again 5 s later. In
-development (no supervisor) the button is hidden and the panel says to restart by hand.
+**Restart**: offered only when a supervisor will start the server again: the systemd service (`INVOCATION_ID` is set)
+or `pnpm serve` (the update supervisor, docs/UPDATES.md §4, sets `SRO_SUPERVISOR=1`). The server saves and closes like
+on SIGTERM, then exits with code 75; the unit's `Restart=on-failure` starts it again 5 s later, `pnpm serve` at once.
+In development (`pnpm server`, no supervisor) the button is hidden and the panel says to restart by hand.
 
 ## 7. Deploy
 
@@ -219,5 +225,8 @@ development (no supervisor) the button is hidden and the panel says to restart b
   `silkroad.env` gets `ADMIN_DIST=$APP/current/apps/admin/dist`. The deploy's health check reports `/admin/`.
 - The admin tables are in `game.db` and the override files in `DATA_DIR/content/`: both survive deploys, and the
   activation snapshot covers the tables.
+- A release unpacked by `deploy/*.sh` has `.deploy-sha` and no `.git`: its Updates page says the deploy scripts update
+  it, and the updater never fetches or installs anything there (docs/UPDATES.md §2). `AUTO_UPDATE=off` turns it off
+  on any server.
 - Making an account admin: `pnpm deploy:gm grant <name> --role admin` (or `pnpm gm grant <name> --role admin` on the
   host). The panel is then at `http://<host>:7000/admin/`. See docs/PLAYTEST.md "Admin panel".

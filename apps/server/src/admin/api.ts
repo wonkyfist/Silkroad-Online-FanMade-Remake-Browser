@@ -28,6 +28,7 @@ import * as characters from './characters.ts'
 import * as content from './content.ts'
 import { AdminError, bad, body, conflict, idOf, isObj, notFound, paging, search, segment, str } from './http.ts'
 import * as news from './news.ts'
+import * as updates from './updates.ts'
 import { adminEvents, adminRouteGroup } from './routes.ts'
 import type { SettingsState } from './settings.ts'
 import type { AdminStore } from './store.ts'
@@ -158,6 +159,13 @@ function routes(api: AdminApi): Route[] {
     r('GET', `news/${CODE}`, (c, m) => news.newsDetail(c, segment(m[1]))),
     r('PUT', `news/${CODE}`, (c, m) => news.putNews(c, segment(m[1]))),
     r('DELETE', `news/${CODE}`, (c, m) => news.deleteNews(c, segment(m[1]))),
+    // self-updates (docs/UPDATES.md)
+    r('GET', 'updates', (c) => updates.updatesView(c)),
+    r('PUT', 'updates/settings', (c) => updates.putUpdateSettings(c)),
+    r('POST', 'updates/check', (c) => updates.checkUpdates(c), 202),
+    r('POST', 'updates/install', (c) => updates.installUpdate(c), 202),
+    r('POST', 'updates/cancel', (c) => updates.cancelUpdate(c)),
+    r('POST', 'updates/rollback', (c) => updates.rollbackUpdate(c), 202),
   ]
 }
 

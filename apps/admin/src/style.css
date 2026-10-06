@@ -3214,3 +3214,48 @@ div.row-actions {
     aspect-ratio: 16 / 9;
   }
 }
+
+/* ---- Updates page (docs/UPDATES.md) ------------------------------------------------------------------------------ */
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  padding: 3px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-3);
+  font-size: var(--fs-xs);
+}
+
+.steps li.done {
+  border-color: rgba(143, 209, 138, 0.35);
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.steps li.now {
+  border-color: var(--gold);
+  background: var(--accent-soft);
+  color: var(--gold-2);
+  font-weight: 600;
+}
+
+.update-entry {
+  margin: 0 0 var(--sp-3);
+}
+
+.update-entry h4 {
+  margin: 0 0 2px;
+  font-size: var(--fs-md);
+}
+
+.update-entry p {
+  margin: 4px 0 0;
+}
