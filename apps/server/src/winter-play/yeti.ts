@@ -9,7 +9,7 @@ import type { Mob, Player } from '../world.ts'
 import type { WinterPlay } from './service.ts'
 
 /**
- * The Ice Yeti (docs/WINTER.md §13.4): the snow season's world boss, a Yeoha grown huge under ice and fur. A
+ * The Ice Yeti (docs/WINTER.md §13.4): the snow season's world boss, a Big-Eyed Ghost grown huge under white fur. A
  * GameplayModule named `iceYeti`:
  *
  * - **Season only.** While the winter layer is on she spawns 10-30 min after it begins (or after a boot), at one of the

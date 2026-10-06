@@ -217,7 +217,7 @@ describe('the season gate (docs/WINTER.md §13)', () => {
 
   it('installs the winter content without replacing anything', () => {
     const h = harness()
-    expect(h.data.mob(WINTER_CODES.yeti)).toMatchObject({ name: 'Ice Yeti', rarity: 'unique', scale: 260 })
+    expect(h.data.mob(WINTER_CODES.yeti)).toMatchObject({ name: 'Ice Yeti', rarity: 'unique', scale: 330 })
     expect(h.data.mob(WINTER_CODES.spirit)).toMatchObject({ name: 'Snow Spirit', aggressive: true })
     expect(h.data.item(WINTER_CODES.gift)?.use?.gift).toBe(true)
     expect(h.data.item(WINTER_CODES.tea)?.use?.warmth).toBe(WINTER_PLAY.tea.warmth)

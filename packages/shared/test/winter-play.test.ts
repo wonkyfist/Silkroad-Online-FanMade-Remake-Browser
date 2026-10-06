@@ -156,11 +156,13 @@ describe('the winter content', () => {
     expect(installWinterContent({ mobs, items, drops })).toEqual({ mobs: 3, items: 2, drops: 1 })
     expect(installWinterContent({ mobs, items, drops })).toEqual({ mobs: 0, items: 0, drops: 0 })
     const yeti = mobs.get(WINTER_CODES.yeti)!
-    expect(yeti.model?.glb).toBe('/out/mob/MOB_CH_YEOHA.glb')
-    expect(yeti).toMatchObject({ name: 'Ice Yeti', rarity: 'unique', scale: 260, skills: ['MSKILL_X'] })
+    expect(yeti.model?.glb).toBe('/out/mob/MOB_CH_BIGEYEGHOST.glb')
+    expect(yeti).toMatchObject({ name: 'Ice Yeti', rarity: 'unique', scale: 330, skills: ['MSKILL_X'] })
     expect(drops.get(WINTER_CODES.spirit)?.gold).toEqual({ chance: 1, amount: [1, 2] })
     expect(isWinterMob(WINTER_CODES.sprite)).toBe(true)
-    expect(isWinterMob('MOB_CH_YEOHA')).toBe(false)
+    expect(isWinterMob('MOB_CH_BIGEYEGHOST')).toBe(false)
+    // the sprites and the spirits are Water Ghosts (the slave and the ghost), the yeti the Big-Eyed Ghost
+    expect(WINTER_MOBS.map((m) => m.base)).toEqual(['MOB_CH_WATERGHOST_CLON', 'MOB_CH_WATERGHOST', 'MOB_CH_BIGEYEGHOST'])
     // no base in the export: still a monster (drawn as a placeholder)
     const bare = new Map<string, MobDef>()
     installWinterContent({ mobs: bare, items: new Map(), drops: new Map() })

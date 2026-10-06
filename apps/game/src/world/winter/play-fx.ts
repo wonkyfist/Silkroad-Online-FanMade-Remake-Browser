@@ -1,6 +1,7 @@
 /**
  * Winter gameplay FX (docs/WINTER.md §13.7): snowballs in flight and their splats, the Ice Yeti's telegraphs and their
- * landings, the frost glints around winter monsters and the winter campfires. Cheap like storm/fx.ts: TWO dynamic quad
+ * landings, the frost around winter monsters (glints, a cold halo, snow drifting down them, the yeti's glowing eyes and
+ * frosty breath) and the winter campfires. Cheap like storm/fx.ts: TWO dynamic quad
  * meshes (an alpha-blended one for snow, telegraphs and logs, an additive one for glows, flames and frost), one 128²
  * texture, rebuilt each frame from what is live (at most CAP quads each); nothing is created per snowball, splat or
  * fire, so nothing can leak, and `dispose` frees the five objects.
@@ -28,8 +29,12 @@ export const FIRE_VIEW_M = 140
 const SNOW: RGB = [0.97, 0.98, 1]
 const ICE: RGB = [0.55, 0.8, 1]
 const SHADOW: RGB = [0.16, 0.2, 0.3]
-/** A snowball: blue-white, a shade under the snow so it stands out. */
-const BALL_TINT: RGB = [0.86, 0.91, 1]
+/** A snowball: blue-white, a shade under the snow, with a dark rim and an icy halo so it stands out on white. */
+const BALL_TINT: RGB = [0.56, 0.69, 0.92]
+/** The splat's chunks and ring. */
+const CHUNK: RGB = [0.42, 0.58, 0.9]
+/** The yeti's eyes. */
+const EYE: RGB = [0.25, 0.7, 1]
 const FROST: RGB = [0.75, 0.9, 1]
 const FLAME: RGB = [1, 0.55, 0.18]
 const FLAME_CORE: RGB = [1, 0.85, 0.45]
@@ -73,7 +78,19 @@ export interface FrostBody {
   r: number
   h: number
   big: boolean
+  /** Facing (yawTowards convention: 0 = +Z), the model's scale and its head joint (the yeti's eyes and breath). */
+  yaw?: number
+  scale?: number
+  head?: V3 | null
 }
+
+/**
+ * The yeti's eye and mouth from her head joint, in model metres (× her scale) along her facing. Her base is the
+ * one-eyed Big-Eyed Ghost (eyeSide 0: one eye; > 0: a pair that far apart).
+ */
+export const YETI_FACE = { eyeFwd: 0.16, eyeUp: 0.26, eyeSide: 0, eyeSize: 0.09, mouthFwd: 0.22, mouthUp: 0.06 } as const
+/** One frosty breath every this many ms (three puffs). */
+export const BREATH_MS = 1700
 
 interface Splat {
   pos: V3
@@ -101,7 +118,7 @@ function fxTexture(scene: Scene): RawTexture {
         // a snowball: a solid round with a soft rim, lit from the top left
         a = Math.max(0, Math.min(1, (0.92 - d) * 12))
         // a darker rim and lit from the top left, so a snowball reads against white snow
-        shade = (0.62 + 0.38 * Math.max(0, Math.min(1, 0.6 - 0.5 * (u + v)))) * (1 - 0.35 * Math.max(0, d - 0.6) / 0.4)
+        shade = (0.6 + 0.4 * Math.max(0, Math.min(1, 0.6 - 0.5 * (u + v)))) * (1 - (0.55 * Math.max(0, d - 0.55)) / 0.45)
       } else if (x < q) a = Math.max(0, 1 - Math.abs(d - 0.82) * 7) ** 1.5
       else a = Math.max(0, Math.min(1, (0.97 - d) * 20))
       const i = (y * w + x) * 4
@@ -231,11 +248,11 @@ export class WinterPlayFx {
     const big = this.flights.get(id)?.big ?? false
     this.flights.delete(id)
     const flakes: Splat['flakes'] = []
-    const n = big ? 16 : 10
+    const n = big ? 24 : 16
     for (let i = 0; i < n; i++) {
       const a = Math.random() * Math.PI * 2
-      const up = 0.3 + Math.random() * 0.9
-      flakes.push({ d: [Math.cos(a), up, Math.sin(a)], s: (big ? 3.2 : 2.2) * (0.5 + Math.random() * 0.7) })
+      const up = 0.4 + Math.random() * 1.1
+      flakes.push({ d: [Math.cos(a), up, Math.sin(a)], s: (big ? 3.8 : 2.8) * (0.5 + Math.random() * 0.7) })
     }
     this.splats.push({ pos: [...pos], at, big, flakes })
     while (this.splats.length > MAX_SPLATS) this.splats.shift()
@@ -275,7 +292,7 @@ export class WinterPlayFx {
       for (let i = this.splats.length - 1; i >= 0; i--) {
         const s = this.splats[i]!
         if (now - s.at > SPLAT_MS) this.splats.splice(i, 1)
-        else if (now >= s.at) this.splat(s, now)
+        else if (now >= s.at) this.splat(s, now, ground)
       }
       for (let i = this.telegraphs.length - 1; i >= 0; i--) {
         const t = this.telegraphs[i]!
@@ -305,31 +322,37 @@ export class WinterPlayFx {
   private flight(f: Flight, now: number, ground: (x: number, z: number, y: number) => number): void {
     const k = Math.min(1, (now - f.at) / f.ms)
     const p = snowballArc(f.from, f.to, f.peakM, k)
-    const size = f.big ? 0.75 : 0.36
-    // a short powder trail, then the ball
-    for (let j = 1; j <= 3; j++) {
-      const q = snowballArc(f.from, f.to, f.peakM, Math.max(0, k - j * 0.035))
-      this.sprite(this.soft, q, size * (1 - j * 0.18), SNOW, 0.45 - j * 0.12, GLOW)
+    const size = f.big ? 0.9 : 0.52
+    // a powder trail, an icy halo (it shows against snow and sky alike), then the ball with its dark rim
+    for (let j = 1; j <= 5; j++) {
+      const q = snowballArc(f.from, f.to, f.peakM, Math.max(0, k - j * 0.03))
+      this.sprite(this.soft, q, size * (1 - j * 0.12), CHUNK, 0.6 - j * 0.1, GLOW)
     }
+    this.sprite(this.soft, p, size * 2, ICE, f.big ? 0.45 : 0.38, GLOW)
     this.sprite(this.soft, p, size, BALL_TINT, 1, BALL)
-    if (f.big) this.sprite(this.glow, p, size * 2.2, ICE, 0.25, GLOW)
     // its shadow on the snow: where it is, at a glance
     const gy = ground(p[0], p[2], Math.min(f.from[1], f.to[1]) - 1)
     this.groundDisc([p[0], gy + 0.06, p[2]], size * 0.9, SHADOW, 0.45)
   }
 
-  private splat(s: Splat, now: number): void {
+  private splat(s: Splat, now: number, ground: (x: number, z: number, y: number) => number): void {
     const t = (now - s.at) / 1000
     const life = 1 - (now - s.at) / SPLAT_MS
     const g = 9.8
-    for (const fl of s.flakes) {
+    for (let i = 0; i < s.flakes.length; i++) {
+      const fl = s.flakes[i]!
       const x = s.pos[0] + fl.d[0] * fl.s * t
       const y = s.pos[1] + fl.d[1] * fl.s * t - 0.5 * g * t * t * 0.6
       const z = s.pos[2] + fl.d[2] * fl.s * t
-      this.sprite(this.soft, [x, y, z], s.big ? 0.22 : 0.15, BALL_TINT, life, BALL)
+      // dark-rimmed chunks and soft powder in turn
+      if (i % 2) this.sprite(this.soft, [x, y, z], (s.big ? 0.4 : 0.3) * (0.6 + 0.4 * life), CHUNK, Math.min(1, life * 1.4), BALL)
+      else this.sprite(this.soft, [x, y, z], (s.big ? 0.5 : 0.36) * (1.3 - 0.5 * life), SNOW, 0.75 * life, GLOW)
     }
-    const puff = (s.big ? 1.6 : 0.9) * (0.4 + 0.6 * (1 - life))
-    this.sprite(this.soft, s.pos, puff, SNOW, 0.65 * life, GLOW)
+    const grow = 1 - life
+    // an icy burst, a frosty flash and a ring of powder on the ground
+    this.sprite(this.soft, s.pos, (s.big ? 2.2 : 1.4) * (0.45 + 0.75 * grow), ICE, 0.7 * life, GLOW)
+    this.sprite(this.glow, s.pos, (s.big ? 3 : 2) * (0.5 + 0.5 * grow), FROST, 0.35 * life * life, GLOW)
+    this.groundRing([s.pos[0], ground(s.pos[0], s.pos[2], s.pos[1] - 1) + 0.07, s.pos[2]], (s.big ? 1.8 : 1.1) * (0.3 + grow), 0.35, CHUNK, 0.55 * life)
   }
 
   private telegraph(t: Telegraph, now: number, ground: (x: number, z: number, y: number) => number): void {
@@ -374,7 +397,7 @@ export class WinterPlayFx {
   }
 
   private frost(b: FrostBody, now: number): void {
-    const n = b.big ? 7 : 3
+    const n = b.big ? 9 : 4
     for (let i = 0; i < n; i++) {
       const a = now / (b.big ? 1400 : 900) + (i / n) * Math.PI * 2 + b.id
       const r = b.r * (b.big ? 1.1 : 1.3)
@@ -382,8 +405,47 @@ export class WinterPlayFx {
       const tw = 0.5 + 0.5 * Math.sin(now / 90 + i * 2.3 + b.id)
       this.sprite(this.glow, [b.x + Math.cos(a) * r, y, b.z + Math.sin(a) * r], b.big ? 0.5 : 0.28, FROST, 0.55 * tw, GLOW)
     }
-    // a cold mist at the feet
-    this.sprite(this.glow, [b.x, b.y + b.h * 0.15, b.z], b.r * (b.big ? 4 : 3), ICE, b.big ? 0.12 : 0.08, GLOW)
+    // snow drifting down around the body, as if it sheds it
+    const flakes = b.big ? 14 : 8
+    for (let i = 0; i < flakes; i++) {
+      const ph = (now / (b.big ? 3200 : 2400) + i / flakes + b.id * 0.137) % 1
+      const a = i * 2.39996 + now / 2600 + b.id
+      const r = b.r * (0.5 + 0.7 * ((i * 0.618) % 1))
+      this.sprite(this.soft, [b.x + Math.cos(a) * r, b.y + b.h * 1.15 * (1 - ph), b.z + Math.sin(a) * r], b.big ? 0.16 : 0.1, SNOW, 0.9 * Math.sin(Math.PI * ph), BALL)
+    }
+    // a cold halo round the body and a mist at the feet
+    this.sprite(this.glow, [b.x, b.y + b.h * 0.5, b.z], b.h * (b.big ? 1.3 : 1.6), ICE, b.big ? 0.07 : 0.12, GLOW)
+    this.sprite(this.glow, [b.x, b.y + b.h * 0.15, b.z], b.r * (b.big ? 4 : 3), ICE, b.big ? 0.14 : 0.1, GLOW)
+    if (b.head && b.yaw !== undefined) this.face(b, b.head, b.yaw, b.scale ?? 1, now)
+  }
+
+  /** The yeti's glowing eyes (fading as she turns away) and her frosty breath, from her head joint. */
+  private face(b: FrostBody, head: V3, yaw: number, k: number, now: number): void {
+    const fx = Math.sin(yaw)
+    const fz = Math.cos(yaw)
+    const o = YETI_FACE
+    const dx = this.eye[0] - head[0]
+    const dz = this.eye[2] - head[2]
+    const facing = Math.max(0, Math.min(1, ((fx * dx + fz * dz) / (Math.hypot(dx, dz) || 1) + 0.15) * 2.5))
+    if (facing > 0) {
+      const pulse = 0.85 + 0.15 * Math.sin(now / 240 + b.id)
+      for (let side = o.eyeSide > 0 ? -1 : 1; side <= 1; side += 2) {
+        const c: V3 = [head[0] + (fx * o.eyeFwd + fz * side * o.eyeSide) * k, head[1] + o.eyeUp * k, head[2] + (fz * o.eyeFwd - fx * side * o.eyeSide) * k]
+        this.sprite(this.glow, c, o.eyeSize * k, EYE, 0.65 * facing * pulse, GLOW)
+        this.sprite(this.glow, c, o.eyeSize * 0.3 * k, FROST, 0.5 * facing, GLOW)
+      }
+    }
+    // three puffs per breath from the mouth, drifting forward and up as they grow and fade
+    const mx = head[0] + fx * o.mouthFwd * k
+    const my = head[1] + o.mouthUp * k
+    const mz = head[2] + fz * o.mouthFwd * k
+    for (let i = 0; i < 3; i++) {
+      const t = ((now + b.id * 397) % BREATH_MS) / BREATH_MS - i * 0.12
+      if (t <= 0 || t >= 0.7) continue
+      const u = t / 0.7
+      const d = (0.1 + u * 0.4) * k
+      this.sprite(this.soft, [mx + fx * d, my + u * 0.1 * k, mz + fz * d], (0.1 + u * 0.35) * k, FROST, 0.7 * (1 - u), GLOW)
+    }
   }
 
   private fire(f: Vec3, now: number, ground: (x: number, z: number, y: number) => number): void {

@@ -304,14 +304,14 @@ Two new monsters, made from retail models (`WINTER_MOBS`; the client draws them 
 
 | Monster | From | Level | HP | Notes |
 |---|---|---|---|---|
-| Snow Sprite | Big-Eyed Ghost | 5 | 140 | passive; four fields south of Jangan (4-5 each) |
+| Snow Sprite | Water Ghost Slave | 5 | 140 | passive; four fields south of Jangan (4-5 each) |
 | Snow Spirit | Water Ghost | 9 | 230 | aggressive; three fields in the north-west water meadows (5 each) |
 
 They fill their fields when the layer turns on (`SNOW_SPIRIT_SCALE` × the counts; 0 = none), refill one 45-90 s after a death, and leave when it turns off (idle ones four per 5 s pass, fighting ones when idle again or after 2 min). Their loot is their base ghost's table; any season kill may also drop a gift box (§13.5). The fields are not Spawner nests (the GM nest editor and the storm counts do not touch them).
 
 ### 13.4 The Ice Yeti (`yeti.ts`)
 
-The season's world boss: a Yeoha at 2.6 × its size with frosted white fur, level 20, 30,000 HP (`YETI_HP_MUL`), physical attack 150-190.
+The season's world boss: a Big-Eyed Ghost (the hulking one-eyed ape) at 3.3 × its size (about 5 m) in white fur, level 20, 30,000 HP (`YETI_HP_MUL`), physical attack 150-190.
 
 - **Spawns** 10-30 min after the layer turns on (or after a boot in the season) at one of three lairs in the snowy north-western Yeoha hills (`YETI_LAIRS`, the first that places on the navmesh in a random order); **respawns** `YETI_RESPAWN_MIN` (120) ± 25 % after a kill; **retreats** (despawns quietly, "The Ice Yeti retreats into the mountains.") when the layer turns off, and rolls a new first spawn next season. Her timer is a row of the `uniques` table (code `MOB_WINTER_ICE_YETI`): a restart keeps it, and if she was alive she comes back 1-2 min after the boot.
 - **Announced like Tiger Girl**: `uniqueNotice` appeared (with the area, and her roar for players within 120 m) and defeated (the loot-owner group). A GM kill or despawn is silent.
@@ -366,8 +366,9 @@ To try everything outside December: `winter preview on` (the look and the layer)
 ### 13.7 The client
 
 - **Content**: the catalog installs the same derived monsters and items (`installWinterContent`) after loading the export, and paints the two item icons on a canvas (`content/winter-icons.ts`). The potion shop's Winter tab follows `winterPlay.on`.
-- **The ice look** (`world/winter/ice-look.ts`): an icy overlay (the exposure-aware overlay the hover tint uses) on that monster's own meshes only (spirits cold blue, the yeti frosted white); the actor shading ignores material colours, so a tinted material clone would not show. It comes back the frame after a hover ends or a part merge, and clears with the view.
-- **FX** (`world/winter/play-fx.ts`): two dynamic quad meshes (alpha-blended snow and telegraphs, additive glows and flames), one texture, nothing per snowball or fire: snowballs and big snowballs in flight, splats, the yeti's telegraphs (a filling disc and a pulsing ring; a cone for the breath; a shrinking ring for the roar) and their landings, frost glints and a cold mist around winter monsters, the campfires (stones, logs, flames, embers).
+- **The ice look** (`world/winter/ice-look.ts`): the winter monsters share their glbs, and so their materials, with the ordinary monsters of the same model, so the look is a material plugin (`SroIceLook`) on that shared PBR material, strength read per draw from the drawn mesh: the winter monster's meshes bind their look (`ICE_LOOKS`), every other mesh amount 0 and draws as before. Right after the albedo texture is read (retail, sro-pbr or remaster alike) the texel's luminance picks a colour on a ramp (`dark` to `light`), so the texture's detail stays and its hue goes; the yeti also gets fine strands along the texture's V (`fur`), white fur with blue-grey folds; the spirits pale ice. The retail self-glow is recoloured and a cold fresnel rim is added (divided by the exposure, so it reads the same at night): the spirits' icy edge without alpha blending, so every body stays solid. Nothing is cloned or derived per monster (no texture, no material, no per-frame allocation); the plugin stays on the material (inert at amount 0) because Babylon cannot remove an active plugin. The attachment tags the meshes when the model is in, re-scans every `SCAN_FRAMES` (10) frames (a part merge's new mesh; the remastered set's material swap, which gets the plugin then) and untags them with the view; the hover tint (an overlay) still draws on top.
+- **The yeti's clips** (`YETI_CLIPS`, clips the Big-Eyed Ghost has; a test checks them against the export): slam ATTACK2, breath and barrage ATTACK1, roar STAND2.
+- **FX** (`world/winter/play-fx.ts`): two dynamic quad meshes (alpha-blended snow and telegraphs, additive glows and flames), one texture, nothing per snowball or fire: snowballs and big snowballs in flight, splats, the yeti's telegraphs (a filling disc and a pulsing ring; a cone for the breath; a shrinking ring for the roar) and their landings, the frost around winter monsters (glints, a cold halo, a mist at the feet, snow drifting down their bodies; the yeti's glowing eye and frosty breath, placed from her head joint by `YETI_FACE` and fading as she turns away), the campfires (stones, logs, flames, embers). A snowball is a blue-white ball with a dark rim, an icy halo and a powder trail, and its splat a burst of dark-rimmed chunks and powder, an icy puff and a ring of powder on the ground, so both read on white snow.
 - **Sounds** (`audio/winter-play.ts`, synthesized, nothing downloaded): throw, splat, the yeti's roar, slam and frost breath, the gift chime, the campfire crackle, the freezing shiver.
 - `window.__sroWinterPlay` shows the state and the FX counts.
 

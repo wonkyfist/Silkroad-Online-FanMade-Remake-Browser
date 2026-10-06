@@ -5,7 +5,8 @@
  * This file holds what the server and the client share: the one table of default numbers (WINTER_PLAY; the admin panel's
  * "Winter gameplay" settings override some of them), the pure rules (warmth levels and rates, the snowball flight, the
  * yeti's frost cone), the authored winter content (derived from retail monsters and items the export already has, so no
- * retail data is committed: a snow spirit is a recoloured ghost, the yeti a giant Yeoha) and the wire types.
+ * retail data is committed: a snow spirit is a recoloured Water Ghost, the yeti a giant white Big-Eyed Ghost) and the wire
+ * types.
  * Environment-neutral: no node:*, no DOM.
  */
 import type { DropTable, ItemDef, ItemStack, MobDef, NestDef, Range, ShopDef } from './content.ts'
@@ -276,12 +277,12 @@ export interface WinterMobSpec {
 }
 
 export const WINTER_MOBS: readonly WinterMobSpec[] = [
-  // a Big-Eyed Ghost frozen white: the soft one near the southern fields
-  { code: WINTER_CODES.sprite, base: 'MOB_CH_BIGEYEGHOST', name: 'Snow Sprite', rarity: 'normal', level: 5, hp: 140, physAttack: [30, 36], physDefence: 10, magDefence: 18, hitRate: 33, parryRate: 33, scale: 115, radius: 0.6, walkSpeed: 1.4, runSpeed: 5.5, attackRange: 0.6, attackIntervalMs: 1600, aggressive: false, exp: 110 },
-  // a Water Ghost turned to drifting snow: it comes for you
+  // a Water Ghost Slave frozen to ice: the soft one near the southern fields
+  { code: WINTER_CODES.sprite, base: 'MOB_CH_WATERGHOST_CLON', name: 'Snow Sprite', rarity: 'normal', level: 5, hp: 140, physAttack: [30, 36], physDefence: 10, magDefence: 18, hitRate: 33, parryRate: 33, scale: 115, radius: 0.6, walkSpeed: 1.4, runSpeed: 5.5, attackRange: 0.6, attackIntervalMs: 1600, aggressive: false, exp: 110 },
+  // a Water Ghost turned to ice and drifting snow: it comes for you
   { code: WINTER_CODES.spirit, base: 'MOB_CH_WATERGHOST', name: 'Snow Spirit', rarity: 'normal', level: 9, hp: 230, physAttack: [58, 66], physDefence: 18, magDefence: 34, hitRate: 42, parryRate: 42, scale: 110, radius: 0.6, walkSpeed: 1.5, runSpeed: 5.5, attackRange: 1.6, attackIntervalMs: 2000, aggressive: true, exp: 220 },
-  // a Yeoha grown huge under ice and fur: the world boss of the snowy mountains
-  { code: WINTER_CODES.yeti, base: 'MOB_CH_YEOHA', name: 'Ice Yeti', rarity: 'unique', level: 20, hp: 30_000, physAttack: [150, 190], physDefence: 45, magDefence: 55, hitRate: 65, parryRate: 40, scale: 260, radius: 2.6, walkSpeed: 1.6, runSpeed: 6.5, attackRange: 2.5, attackIntervalMs: 2800, aggressive: true, exp: 120_000 },
+  // a Big-Eyed Ghost (the hulking ape) grown huge under white fur: the world boss of the snowy mountains
+  { code: WINTER_CODES.yeti, base: 'MOB_CH_BIGEYEGHOST', name: 'Ice Yeti', rarity: 'unique', level: 20, hp: 30_000, physAttack: [150, 190], physDefence: 45, magDefence: 55, hitRate: 65, parryRate: 40, scale: 330, radius: 2.6, walkSpeed: 1.6, runSpeed: 6.5, attackRange: 2.5, attackIntervalMs: 2800, aggressive: true, exp: 120_000 },
 ]
 
 /** The MobDef of a winter monster: the base's model and skills (when the export has it) with the spec's numbers. */

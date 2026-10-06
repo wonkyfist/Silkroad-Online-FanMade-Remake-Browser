@@ -26,6 +26,9 @@ Press **B** to scoop up snow and throw a snowball at your target (or straight ah
 
 ## Winter monsters and a new boss
 
+![The Ice Yeti](img/oct6-winter-yeti.jpg "The Ice Yeti: a huge white beast with a glowing eye.")
+![Snow spirits](img/oct6-winter-spirits.jpg "Snow sprites and snow spirits roam the snowy fields.")
+
 - **Snow sprites and snow spirits** appear in the snowy fields during the season.
 - The **Ice Yeti**, a huge new world boss, makes its lair in the north-western hills. Its arrival is announced to everyone. Watch for its ground slam, frost breath and snowball barrage, and the snow spirits it calls when it's hurt.
 

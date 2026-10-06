@@ -1,23 +1,29 @@
 /**
  * The winter gameplay layer on the client (docs/WINTER.md §13.7): WinterPlayFx on a NullEngine (fixed resources however
- * many snowballs, splats and telegraphs; nothing left after dispose), the ice look (an overlay on that actor only, cleared with
- * the view), the HUD's pure rules (the warmth carried forward, when the bar shows, the warnings, the vignette, the gift
+ * many snowballs, splats, telegraphs and frosty bodies; nothing left after dispose), the ice look (a plugin on the shared
+ * material that recolours only that actor's meshes, follows merges and material swaps, clears with the view; the yeti's
+ * clips exist on her base), the HUD's pure rules (the warmth carried forward, when the bar shows, the warnings, the vignette, the gift
  * lines), the synthesized sounds, the strings, and the feature on a stub world (B throws at the target or ahead, the
  * layer's state, the shop tab, splats on name tags, the yeti's telegraphs, cleanup).
  */
-import { ArcRotateCamera, Mesh, NullEngine, Scene, StandardMaterial, TransformNode, Vector3 } from '@babylonjs/core'
-import { WINTER_CODES, type ClientMessage, type ServerMessage, type ShopDef, type WarmthState } from '@sro/shared'
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { ArcRotateCamera, Mesh, NullEngine, PBRMaterial, Scene, StandardMaterial, TransformNode, Vector3 } from '@babylonjs/core'
+import { WINTER_CODES, WINTER_MOBS, type ClientMessage, type ServerMessage, type ShopDef, type WarmthState } from '@sro/shared'
 import { describe, expect, it } from 'vitest'
 import { SYNTH_RATE } from '../src/audio/synth.ts'
 import { WINTER_PLAY_SYNTH, giftPcm, roarPcm, splatPcm, throwPcm } from '../src/audio/winter-play.ts'
 import { t, type StringKey } from '../src/i18n/index.ts'
 import type { WorldFeatureContext } from '../src/world/features.ts'
-import { THROW_AHEAD_M, throwPoint, winterPlayFeature } from '../src/world/features/winter-play.ts'
-import { ICE_TINTS, iceLook } from '../src/world/winter/ice-look.ts'
+import { THROW_AHEAD_M, YETI_CLIPS, throwPoint, winterPlayFeature } from '../src/world/features/winter-play.ts'
+import { ICE_LOOKS, ICE_PLUGIN, SCAN_FRAMES, iceCode, iceLook, iceLookOf, icePluginFor } from '../src/world/winter/ice-look.ts'
 import { CAP, MAX_FLIGHTS, MAX_SPLATS, MAX_TELEGRAPHS, WinterPlayFx } from '../src/world/winter/play-fx.ts'
 import { frostOpacity, giftLines, warmthColor, warmthNow, warmthVisible, warningFor } from '../src/world/winter/play-hud.ts'
 
 const T0 = Date.UTC(2026, 11, 20, 12)
+const REPO = fileURLToPath(new URL('../../../', import.meta.url))
+const MOBS_JSON = join(REPO, 'work/out/data/mobs.json')
 
 function setup() {
   const engine = new NullEngine()
@@ -39,7 +45,7 @@ describe('WinterPlayFx on a NullEngine (fixed resources, no leaks)', () => {
       if (i % 2) fx.addSplat(i, [10, 1, 0], T0 + i * 10 + 700)
       if (i % 9 === 0) fx.addTelegraph({ id: 9, skill: (['slam', 'breath', 'barrage', 'roar'] as const)[i % 4]!, pos: [0, 0, 0], yaw: 0, radiusM: 8, angleDeg: 70, start: T0 + i * 10, at: T0 + i * 10 + 900 })
     }
-    const bodies = Array.from({ length: 30 }, (_, i) => ({ id: i, x: i, y: 0, z: 0, r: 1, h: 2, big: i === 0 }))
+    const bodies = Array.from({ length: 30 }, (_, i) => ({ id: i, x: i, y: 0, z: 0, r: 1, h: 2, big: i === 0, yaw: 0.5, scale: 3.3, head: i === 0 ? ([0, 4, 0] as [number, number, number]) : null }))
     const fires = Array.from({ length: 20 }, (_, i): [number, number, number] => [i * 3, 0, 5])
     for (let now = T0; now < T0 + 4000; now += 33) {
       fx.update(now, s.camera, bodies, fires, (_x, _z, y) => y)
@@ -61,38 +67,80 @@ describe('WinterPlayFx on a NullEngine (fixed resources, no leaks)', () => {
 })
 
 describe('the ice look', () => {
-  it('overlays that actor only, comes back after a hover ends or a merge, clears with the view', () => {
+  /** A uniform buffer that records the last value per name. */
+  const fakeUbo = () => {
+    const v = new Map<string, number[]>()
+    return { v, ubo: { updateFloat4: (n: string, ...xs: number[]) => v.set(n, xs) } }
+  }
+
+  it('tags that actor\'s meshes only, on the shared material (one plugin, no clone), follows merges and swaps, untags with the view', () => {
     const s = setup()
-    const shared = new StandardMaterial('ghost', s.scene)
+    const shared = new PBRMaterial('ghost', s.scene)
     const other = new Mesh('other-ghost', s.scene)
     other.material = shared
     const m1 = new Mesh('spirit-body', s.scene)
     m1.material = shared
-    const actor = { meshes: [m1], allMeshes: () => actor.meshes }
+    const std = new Mesh('std', s.scene)
+    std.material = new StandardMaterial('std', s.scene)
+    const actor = { meshes: [m1, std], allMeshes: () => actor.meshes }
     const view = { state: { kind: 'mob', model: WINTER_CODES.spirit, id: 5 }, actor }
+    const materials = s.scene.materials.length
+    const textures = s.scene.textures.length
     const a = iceLook(view as never)!
     expect(iceLook({ state: { kind: 'mob', model: 'MOB_CH_WATERGHOST', id: 6 } } as never)).toBeNull()
     a.loaded!()
-    expect(m1.renderOverlay).toBe(true)
-    expect(m1.overlayAlpha).toBeCloseTo(ICE_TINTS[WINTER_CODES.spirit]!.alpha)
-    expect(other.renderOverlay).toBeFalsy()
+    expect(iceLookOf(m1)).toBe(ICE_LOOKS[WINTER_CODES.spirit])
+    expect(iceLookOf(other)).toBeUndefined()
+    expect(iceLookOf(std)).toBeUndefined()
     expect(m1.material).toBe(shared)
-    // a hover ended (the overlay off) and a merge made a new mesh: both get it back on the next frame
-    m1.renderOverlay = false
+    expect(shared.pluginManager?.getPlugin(ICE_PLUGIN)).toBe(icePluginFor(shared))
+    expect(icePluginFor(std.material)).toBeNull()
+    // per draw: the tagged mesh binds its look, any other mesh of the material amount 0
+    const plugin = icePluginFor(shared)!
+    const t1 = fakeUbo()
+    plugin.hardBindForSubMesh(t1.ubo as never, s.scene, s.engine, { getMesh: () => m1 } as never)
+    expect(t1.v.get('sroIceA')![0]).toBe(1)
+    expect(t1.v.get('sroIceB')!.slice(0, 3)).toEqual([...ICE_LOOKS[WINTER_CODES.spirit]!.light])
+    const t2 = fakeUbo()
+    plugin.hardBindForSubMesh(t2.ubo as never, s.scene, s.engine, { getMesh: () => other } as never)
+    expect(t2.v.get('sroIceA')![0]).toBe(0)
+    // a merge made a new mesh, and the remastered set swapped m1's material: both are picked up by the next scan
     const merged = new Mesh('merged', s.scene)
     merged.material = shared
+    const remastered = new PBRMaterial('ghost (remaster)', s.scene)
+    m1.material = remastered
     actor.meshes = [m1, merged]
-    a.update!(T0, 0.016)
-    expect(m1.renderOverlay).toBe(true)
-    expect(merged.renderOverlay).toBe(true)
+    for (let i = 0; i < SCAN_FRAMES; i++) a.update!(T0, 0.016)
+    expect(iceLookOf(merged)).toBe(ICE_LOOKS[WINTER_CODES.spirit])
+    expect(remastered.pluginManager?.getPlugin(ICE_PLUGIN)).toBeTruthy()
+    // nothing made but the two materials of this test: no texture, no material clone
+    expect(s.scene.materials.length).toBe(materials + 1)
+    expect(s.scene.textures.length).toBe(textures)
     a.dispose()
-    expect(m1.renderOverlay).toBe(false)
-    expect(merged.renderOverlay).toBe(false)
+    expect(iceLookOf(m1)).toBeUndefined()
+    expect(iceLookOf(merged)).toBeUndefined()
     s.close()
   })
 
-  it('every winter monster has a tint', () => {
-    for (const code of [WINTER_CODES.sprite, WINTER_CODES.spirit, WINTER_CODES.yeti]) expect(ICE_TINTS[code]).toBeDefined()
+  it('every winter monster has a look; the shader code for both languages', () => {
+    for (const code of [WINTER_CODES.sprite, WINTER_CODES.spirit, WINTER_CODES.yeti]) expect(ICE_LOOKS[code]).toBeDefined()
+    expect(ICE_LOOKS[WINTER_CODES.yeti]!.fur).toBeGreaterThan(0)
+    for (const lang of ['glsl', 'wgsl'] as const) {
+      const c = iceCode(lang)
+      expect(Object.keys(c).sort()).toEqual(['CUSTOM_FRAGMENT_BEFORE_FINALCOLORCOMPOSITION', 'CUSTOM_FRAGMENT_UPDATE_ALPHA'])
+      expect(c.CUSTOM_FRAGMENT_UPDATE_ALPHA).toContain('surfaceAlbedo')
+      expect(c.CUSTOM_FRAGMENT_BEFORE_FINALCOLORCOMPOSITION).toContain('finalEmissive')
+      expect(Object.values(c).join('').includes('uniforms.')).toBe(lang === 'wgsl')
+    }
+  })
+
+  it.skipIf(!existsSync(MOBS_JSON))('the yeti\'s clips are clips her base model has (work/out)', () => {
+    const mobs = JSON.parse(readFileSync(MOBS_JSON, 'utf8')) as { entries: { code: string; model?: { sidecar?: string } }[] }
+    const base = WINTER_MOBS.find((m) => m.code === WINTER_CODES.yeti)!.base
+    const sidecar = mobs.entries.find((e) => e.code === base)?.model?.sidecar
+    expect(sidecar).toBeTruthy()
+    const clips = (JSON.parse(readFileSync(join(REPO, 'work', sidecar!), 'utf8')) as { animations: { name: string }[] }).animations.map((a) => a.name)
+    for (const clip of Object.values(YETI_CLIPS)) expect(clips).toContain(clip)
   })
 })
 

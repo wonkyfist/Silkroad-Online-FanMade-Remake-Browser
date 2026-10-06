@@ -9,9 +9,10 @@
  *   thrower plays its throw clip (TROW) when the model has one; the arc, the powder trail and the splat are
  *   world/winter/play-fx.ts; a hit shows "Splat!" on the name tag (and a white splash on your own screen), with a whoosh
  *   and a thump. The server decides everything; refusals are toasted by the HUD.
- * - **Winter monsters** (world/winter/ice-look.ts): snow spirits and the Ice Yeti drawn in ice (an icy overlay on
- *   their own meshes), with frost glints around them; the yeti's telegraphs on the ground (slam, breath cone, barrage,
- *   roar), her clips and her synthesized roar, slam and breath.
+ * - **Winter monsters** (world/winter/ice-look.ts): snow spirits and the Ice Yeti drawn in ice and white fur (a material
+ *   plugin recolours their own meshes), with frost glints, drifting snow, the yeti's glowing eyes and breath; the
+ *   yeti's telegraphs on the ground (slam, breath cone, barrage, roar), her clips and her synthesized roar, slam and
+ *   breath.
  * - **Gift boxes**: the opening toast with its box animation, a chime and the rewards; Ginger Tea and the box have
  *   painted icons (content/winter-icons.ts).
  * - **Campfires** from `winterPlay.fires`: drawn by the FX (logs, flames, embers) with a crackle when you are close.
@@ -36,9 +37,11 @@ export const THROW_AHEAD_M = 12
 export const SPLAT_LABEL_MS = 1200
 /** Frost glints are drawn on winter monsters within this of the camera (m). */
 export const FROST_VIEW_M = 70
-/** The yeti's clip per move. */
-export const YETI_CLIPS: Readonly<Record<YetiSkill, string>> = { slam: 'ATTACK3', breath: 'ATTACK2', barrage: 'ATTACK1', roar: 'STAND2' }
-const YETI_SOUNDS: Readonly<Partial<Record<YetiSkill, string>>> = { slam: 'synth/wp_slam', breath: 'synth/wp_breath', roar: 'synth/wp_roar' }
+/** The yeti's clip per move: clips her base (the Big-Eyed Ghost) has; STAND2 is its chest-out idle. */
+export const YETI_CLIPS: Readonly<Record<YetiSkill, string>> = { slam: 'ATTACK2', breath: 'ATTACK1', barrage: 'ATTACK1', roar: 'STAND2' }
+/** The joint the yeti's eyes and breath follow. */
+const HEAD_JOINT = 'Bip01 Head'
+const YETI_SOUNDS:Readonly<Partial<Record<YetiSkill, string>>> = { slam: 'synth/wp_slam', breath: 'synth/wp_breath', roar: 'synth/wp_roar' }
 
 /** The ground point a targetless throw aims at: THROW_AHEAD_M along the facing (yawTowards convention). */
 export function throwPoint(x: number, z: number, yaw: number): { x: number; z: number } {
@@ -68,6 +71,7 @@ export function winterPlayFeature(ctx: WorldFeatureContext): WorldFeature {
   const fires: Vec3[] = []
   const nearFires: Vec3[] = []
   const bodies: FrostBody[] = []
+  const bodyPool: { body: FrostBody; head: [number, number, number] }[] = []
 
   const debug = typeof window !== 'undefined' ? (window as unknown as { __sroWinterPlay?: unknown }) : null
   if (debug) {
@@ -252,7 +256,26 @@ export function winterPlayFeature(ctx: WorldFeatureContext): WorldFeature {
         const p = v.root.position
         if (Math.hypot(p.x - cam.x, p.z - cam.z) > FROST_VIEW_M) continue
         const h = v.height
-        bodies.push({ id: v.id, x: p.x, y: p.y, z: p.z, r: Math.max(0.5, h * 0.3), h, big: v.state.model === WINTER_CODES.yeti })
+        // pooled bodies (one per winter monster in view, reused every frame)
+        const slot = (bodyPool[bodies.length] ??= { body: { id: 0, x: 0, y: 0, z: 0, r: 0, h: 0, big: false }, head: [0, 0, 0] })
+        const b = slot.body
+        b.id = v.id
+        b.x = p.x
+        b.y = p.y
+        b.z = p.z
+        b.r = Math.max(0.5, h * 0.3)
+        b.h = h
+        b.big = v.state.model === WINTER_CODES.yeti
+        b.yaw = v.yaw
+        b.scale = v.scale
+        const head = b.big ? v.actor?.joint(HEAD_JOINT)?.getAbsolutePosition() : undefined
+        if (head) {
+          slot.head[0] = head.x
+          slot.head[1] = head.y
+          slot.head[2] = head.z
+        }
+        b.head = head ? slot.head : null
+        bodies.push(b)
       }
       nearFires.length = 0
       for (const f of fires) if (Math.hypot(f[0] - cam.x, f[2] - cam.z) <= FIRE_VIEW_M) nearFires.push(f)
