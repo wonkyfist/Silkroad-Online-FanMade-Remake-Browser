@@ -48,6 +48,7 @@ import { stormFeature } from './features/storm.ts'
 import { tornadoFeature } from './features/tornado.ts'
 import { wallsFeature } from './features/walls.ts'
 import { siegeRepairFeature } from './features/siege-repair.ts'
+import { siegeFeature } from './features/siege.ts'
 import { newsFeature } from './features/news.ts'
 
 export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
@@ -184,6 +185,8 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   wallsFeature, // world/features/walls.ts
   // Siege of Jangan, layer 3 (docs/SIEGE.md §2.4): Master Mason Ko's donation window and the repair numbers.
   siegeRepairFeature, // world/features/siege-repair.ts
+  // Siege of Jangan, layer 4 (docs/SIEGE.md §9.3): the siege HUD, banners, the Town Bell, kegs, the reward window.
+  siegeFeature, // world/features/siege.ts
   // The "What's new" window (docs/CHANGELOG_WINDOW.md): unseen update notes once per login, the Esc menu entry and J.
   newsFeature, // world/features/news.ts
   // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.

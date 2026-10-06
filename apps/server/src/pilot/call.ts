@@ -36,8 +36,12 @@ export const WHY_TEXT: Readonly<Record<PilotIneligible, string>> = {
   busy: 'Finish what you are doing to volunteer.',
 }
 
+/** A Night of the Tiger due during a Siege of Jangan waits this long, at most this many times (docs/SIEGE.md §6.7). */
+export const SIEGE_WAIT_MS = 30 * 60_000
+export const SIEGE_WAITS = 3
+
 export class Lottery {
-  private readonly scheds = new Map<string, { key: string; next: number | null }>()
+  private readonly scheds = new Map<string, { key: string; next: number | null; waits?: number; waitUntil?: number }>()
   private recentCache: { n: number; at: number; set: Set<number> } | null = null
 
   constructor(readonly s: Pilot) {}
@@ -234,9 +238,24 @@ export class Lottery {
     if (sc.next === null) return
     const slot = sc.next
     const callAt = slot - callMs
-    if (now < callAt) return
+    if (now < Math.max(callAt, sc.waitUntil ?? 0)) return
+    // Siege of Jangan (docs/SIEGE.md §6.7): one big event at a time; a night due during a siege waits 30 min (3 times)
+    const siege = this.g.siege?.busyWhy() ?? null
+    if (siege && (sc.waits ?? 0) < SIEGE_WAITS) {
+      sc.waits = (sc.waits ?? 0) + 1
+      sc.waitUntil = now + SIEGE_WAIT_MS
+      this.g.config.log(`pilot: the Night of the Tiger of ${new Date(slot).toISOString()} waits 30 min: ${siege}`)
+      return
+    }
+    const waited = sc.waits ? (sc.waitUntil ?? callAt) : callAt
+    sc.waits = 0
+    sc.waitUntil = 0
     sc.next = nextSlotAt(st.schedule.slots, st.schedule.tz, slot)
-    const late = now - callAt
+    if (siege) {
+      this.g.config.log(`pilot: the Night of the Tiger of ${new Date(slot).toISOString()} is skipped: ${siege}`)
+      return
+    }
+    const late = now - waited
     const when = new Date(slot).toISOString()
     if (late > MISSED_GRACE_MS) {
       this.g.config.log(`pilot: the Night of the Tiger of ${when} is ${Math.round(late / 60_000)} min late (the server was down or the clock jumped); skipped`)
@@ -249,7 +268,7 @@ export class Lottery {
       this.g.config.log(`pilot: the Night of the Tiger of ${when} is skipped: ${why}`)
       return
     }
-    this.open(conf, 'schedule', st.call.minutes, now, late > 1000 ? Math.max(slot, now + RESUME_MS) : slot)
+    this.open(conf, 'schedule', st.call.minutes, now, waited !== callAt ? now + callMs : late > 1000 ? Math.max(slot, now + RESUME_MS) : slot)
   }
 
   /** Boot: the newest night whose call should have opened more than 30 min ago and has no event is logged as skipped. */

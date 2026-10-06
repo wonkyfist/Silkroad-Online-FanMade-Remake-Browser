@@ -55,10 +55,11 @@ export const STONE_BLOCK_PRICE = 1200
 /** Chance of a Stone Block per Stone Ghost kill (its own drop group). */
 export const STONE_BLOCK_DROP = 0.08
 
-/** Retail icons reused (the converted icon export, OUT/icons/...): a grey stone, and a tool bag. */
+/** Retail icons reused (the converted icon export, OUT/icons/...): a grey stone, a tool bag; layer 4's Siege Seal: the honor medals. */
 export const SIEGE_ICONS = {
   block: '/out/icons/item/etc/material_stone.png',
   kit: '/out/icons/item/etc/material_bag.png',
+  seal: '/out/icons/item/etc/honor_medals.png',
 } as const
 
 /** The Mason's Kit and the Stone Block (no retail rows: authored). */

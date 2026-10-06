@@ -155,9 +155,9 @@ describe('migration v7 (quests)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(17)
-      expect(store.schemaVersion).toBe(17)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(17)
+      expect(SCHEMA_VERSION).toBe(18)
+      expect(store.schemaVersion).toBe(18)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(18)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234 })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

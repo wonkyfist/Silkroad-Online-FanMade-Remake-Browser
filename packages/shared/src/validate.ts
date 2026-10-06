@@ -133,6 +133,19 @@ import { WARMTH_LEVELS, WARMTH_SOURCES, WINTER_PLAY_LIMITS, YETI_SKILLS, type Wa
 import { TORNADO_LIMITS } from './tornado.ts'
 import { WALL_FX_KINDS, WALL_LIMITS, WALL_SEGMENT_ID, WALL_STAGES, type WallRepairTerms, type WallSegView, type WallServerMessage } from './siege.ts'
 import { MAX_DONATE_BLOCKS } from './siege-repair.ts'
+import {
+  SIEGE_APPROACHES,
+  SIEGE_CONTRIB_KINDS,
+  SIEGE_LIMITS,
+  SIEGE_NOTICE_EVENTS,
+  SIEGE_OUTCOMES,
+  SIEGE_PHASES,
+  SIEGE_ROLES,
+  type SiegeContribKind,
+  type SiegeRewardView,
+  type SiegeServerMessage,
+  type SiegeView,
+} from './siege-event.ts'
 import { MAX_QUEST_BAG_CODES, MAX_QUEST_OBJECTIVES, MAX_REWARD_CHOICES, OBJECTIVE_ID, QUEST_ID } from './quests.ts'
 import {
   HUNT_OUTCOMES,
@@ -265,6 +278,8 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
   wallDonate: ['t', 'npc'],
   wallRepair: ['t', 'seg'],
+  // Siege of Jangan, layer 4 (docs/SIEGE.md §10.1)
+  kegDefuse: ['t', 'id'],
 }
 
 /** Keys a client message may omit. */
@@ -600,6 +615,9 @@ function clientMessage(v: unknown): ClientMessage {
     }
     case 'wallRepair':
       return { t: 'wallRepair', seg: wallSegId(v, 'seg') }
+    // ---- Siege of Jangan, layer 4 (docs/SIEGE.md §10.1) ----
+    case 'kegDefuse':
+      return { t: 'kegDefuse', id: int(v, 'id', 1, MAX_ID) }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -960,6 +978,8 @@ function entity(v: unknown): EntityState {
   if (o.honor !== undefined) e.honor = honorCode(o, 'honor')
   // storms (docs/WEATHER.md §12)
   if (o.charged !== undefined && bool(o, 'charged')) e.charged = true
+  // Siege of Jangan, layer 4 (docs/SIEGE.md §10.2)
+  if (o.siege !== undefined) e.siege = oneOf(o, 'siege', SIEGE_ROLES)
   return e
 }
 
@@ -1941,6 +1961,13 @@ function serverMessage(v: unknown): ServerMessage {
     case 'wallUpdate':
     case 'wallFx':
       return wallMessage(o)
+    // Siege of Jangan, the siege event (docs/SIEGE.md §10.2)
+    case 'siegeEvent':
+    case 'siegeNotice':
+    case 'siegeReward':
+    case 'keg':
+    case 'kegEnd':
+      return siegeMessage(o)
     default:
       fail('unknown message type')
   }
@@ -1993,6 +2020,77 @@ function wallMessage(o: Record<string, unknown>): WallServerMessage {
         x: num(o, 'x', -c, c), y: num(o, 'y', -c, c), z: num(o, 'z', -c, c), at: num(o, 'at', 0, BIG),
       }
     }
+  }
+}
+
+// ---- Siege of Jangan, the siege event (docs/SIEGE.md §10.2; siege-event.ts) ------------------------------------------
+
+function siegeView(v: unknown): SiegeView {
+  const o = rec(v, 'view')
+  const s: SiegeView = { id: int(o, 'id', 0, MAX_ID), phase: oneOf(o, 'phase', SIEGE_PHASES), approaches: boundedList(o, 'approaches', 4, (x) => oneOf({ a: x }, 'a', SIEGE_APPROACHES)) }
+  if (o.nextAt !== undefined) s.nextAt = num(o, 'nextAt', 0, BIG)
+  if (o.endsAt !== undefined) s.endsAt = num(o, 'endsAt', 0, BIG)
+  if (o.bellPct !== undefined) s.bellPct = num(o, 'bellPct', 0, 100)
+  if (o.defenders !== undefined) s.defenders = int(o, 'defenders', 0, 100_000)
+  if (o.warlordPct !== undefined) s.warlordPct = num(o, 'warlordPct', 0, 100)
+  if (o.foes !== undefined) s.foes = int(o, 'foes', 0, 100_000)
+  if (o.breaches !== undefined) s.breaches = int(o, 'breaches', 0, 1000)
+  if (o.outcome !== undefined) s.outcome = oneOf(o, 'outcome', SIEGE_OUTCOMES)
+  return s
+}
+
+function siegeReward(v: unknown): SiegeRewardView {
+  const o = rec(v, 'reward')
+  const P = SIEGE_LIMITS.maxPoints
+  const r: SiegeRewardView = {
+    event: int(o, 'event', 0, MAX_ID), outcome: oneOf(o, 'outcome', SIEGE_OUTCOMES), points: int(o, 'points', 0, P), rank: int(o, 'rank', 0, 100_000),
+    of: int(o, 'of', 0, 100_000), gold: int(o, 'gold', 0, MAX_GOLD), seals: int(o, 'seals', 0, 1_000_000),
+    top: boundedList(o, 'top', SIEGE_LIMITS.top, (x) => {
+      const t = rec(x, 'top')
+      return { name: str(t, 'name', 64, 1), points: int(t, 'points', 0, P) }
+    }),
+    parts: {},
+  }
+  if (o.title !== undefined) r.title = honorCode(o, 'title')
+  const parts = rec(o.parts, 'parts')
+  for (const [k, n] of Object.entries(parts)) {
+    if (!SIEGE_CONTRIB_KINDS.includes(k as SiegeContribKind)) fail('parts: unknown kind')
+    if (typeof n !== 'number' || !Number.isInteger(n) || n < 0 || n > P) fail('parts: bad points')
+    r.parts[k as SiegeContribKind] = n
+  }
+  return r
+}
+
+function siegeMessage(o: Record<string, unknown>): SiegeServerMessage {
+  const c = SIEGE_LIMITS.coord
+  switch (o.t) {
+    case 'siegeEvent':
+      return { t: 'siegeEvent', view: siegeView(o.view) }
+    case 'siegeNotice': {
+      const m: Extract<SiegeServerMessage, { t: 'siegeNotice' }> = { t: 'siegeNotice', event: oneOf(o, 'event', SIEGE_NOTICE_EVENTS) }
+      if (o.phase !== undefined) m.phase = oneOf(o, 'phase', SIEGE_PHASES)
+      if (o.outcome !== undefined) m.outcome = oneOf(o, 'outcome', SIEGE_OUTCOMES)
+      if (o.wall !== undefined) m.wall = wallSegId(o, 'wall')
+      if (o.name !== undefined) m.name = str(o, 'name', 64, 1)
+      if (o.approaches !== undefined) m.approaches = boundedList(o, 'approaches', 4, (x) => oneOf({ a: x }, 'a', SIEGE_APPROACHES))
+      return m
+    }
+    case 'siegeReward':
+      return { t: 'siegeReward', reward: siegeReward(o.reward) }
+    case 'keg': {
+      const m: Extract<SiegeServerMessage, { t: 'keg' }> = {
+        t: 'keg', id: int(o, 'id', 1, MAX_ID), seg: wallSegId(o, 'seg'),
+        x: num(o, 'x', -c, c), y: num(o, 'y', -c, c), z: num(o, 'z', -c, c), fuseEndsAt: num(o, 'fuseEndsAt', 0, BIG),
+      }
+      if (o.sapper !== undefined && bool(o, 'sapper')) m.sapper = true
+      if (o.defuse !== undefined) {
+        const d = rec(o.defuse, 'defuse')
+        m.defuse = { by: int(d, 'by', 0, MAX_ID), endsAt: num(d, 'endsAt', 0, BIG) }
+      }
+      return m
+    }
+    default:
+      return { t: 'kegEnd', id: int(o, 'id', 1, MAX_ID), how: oneOf(o, 'how', ['blast', 'defused', 'cancelled'] as const) }
   }
 }
 

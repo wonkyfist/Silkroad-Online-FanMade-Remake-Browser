@@ -342,6 +342,23 @@ describe('the weekly night (§2.2, §2.4, §6.2)', () => {
     expect(s.pilot.store.list(Number.MAX_SAFE_INTEGER, 10)).toHaveLength(1)
   })
 
+  it('a night due during a Siege of Jangan waits 30 min (docs/SIEGE.md §6.7), then opens', () => {
+    const s = setup(NIGHT)
+    s.tick(100)
+    let siege: string | null = 'the Siege of Jangan is on (wave2)'
+    s.g.siege.busyWhy = () => siege
+    s.h.now = 20 * MIN - 100
+    s.tick(100)
+    expect(s.pilot.event).toBeNull()
+    expect(s.h.logs.some((l) => /Night of the Tiger .* waits 30 min: the Siege of Jangan is on/.test(l))).toBe(true)
+    s.tick(10 * MIN)
+    expect(s.pilot.event).toBeNull()
+    siege = null
+    s.tick(21 * MIN)
+    expect(s.pilot.event).toMatchObject({ phase: 'call', origin: 'schedule' })
+    expect(s.pilot.event!.callEndsAt - s.pilot.event!.createdAt).toBe(10 * MIN)
+  })
+
   it('off (enabled false) or no slots: no night; a GM start still works', () => {
     const s = setup({ ...NIGHT, enabled: false })
     s.h.now = 25 * MIN

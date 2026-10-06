@@ -38,6 +38,7 @@ import { YETI_USAGE } from './winter-play/yeti.ts'
 import { STORM_USAGE } from './storm/service.ts'
 import { WALL_USAGE } from './siege/walls.ts'
 import { MASON_USAGE } from './siege/repair.ts'
+import { SIEGE_USAGE } from './siege/event.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
 
@@ -534,6 +535,12 @@ export const COMMANDS: Record<string, Command> = {
     usage: WALL_USAGE,
     about: "Jangan's walls: status of the 33 segments (or one, with its log), set one's integrity (% or a stage), damage it, breach it, repair one or all, reset them all.",
     run: ({ ctx, args }) => ctx.gameplay.walls.gm(args, Date.now()),
+  },
+  // Siege of Jangan layer 4 (docs/SIEGE.md §6, §12): the siege event; body in siege/event.ts.
+  siege: {
+    usage: SIEGE_USAGE,
+    about: 'The Siege of Jangan: status, start one now (warning minutes), stop it (no rewards), send a wave now, bring out the Bandit Warlord, show the lanes.',
+    run: ({ ctx, args, self }) => ctx.gameplay.siege.gm(self, args, Date.now()),
   },
   // Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5): repair queues, builders, looters; body in siege/repair.ts.
   mason: {

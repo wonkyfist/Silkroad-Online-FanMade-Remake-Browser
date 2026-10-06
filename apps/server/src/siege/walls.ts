@@ -102,6 +102,21 @@ export interface WallChange {
   stageBefore: WallStage
 }
 
+/**
+ * Layer 4 (siege/event.ts): every integrity change (`delta` ≠ 0) and every note (a donation: `delta` 0), with its
+ * cause and who did it, for the siege's contribution points.
+ */
+export interface WallEvent {
+  id: string
+  cause: string
+  delta: number
+  stage: WallStage
+  stageBefore: WallStage
+  characterId: number | null
+  data: Record<string, unknown>
+  at: number
+}
+
 /** What the module needs of Gameplay (tests pass a stand-in). */
 /**
  * Layer 3: the admin panel's live numbers (config.ts, admin/settings.ts 'Siege of Jangan'): a config field that is set
@@ -162,8 +177,14 @@ export class WallService implements GameplayModule {
   private readonly wasRubble = new Set<string>()
   private nextTornadoAt = 0
   private nextNaturalAt = 0
-  /** Layer 4 sets this while a siege runs (wider zones, no natural repair). */
+  /** Layer 4 sets this while a siege runs (wider zones, no natural repair); refreshZones() after it flips. */
   sieging: () => boolean = () => false
+  /**
+   * Layer 4: more ground that is not safe besides the breach zones (the Town Bell's circle and the lanes from the open
+   * gaps to it during a siege wave). Consulted by GameData.unsafeAt with the zones.
+   */
+  extraUnsafe: ((x: number, z: number) => boolean) | null = null
+  private readonly listeners: ((e: WallEvent) => void)[] = []
   /** Layer 3 (siege/repair.ts): whether builders or a kit are working on a segment now (WallSegView.repairing). */
   repairingOf: (id: string) => boolean = () => false
 
@@ -213,7 +234,7 @@ export class WallService implements GameplayModule {
     }
     this.navState = pieces ? new WallNavState(walls, indexOf) : null
     this.applyNav()
-    g.data.unsafeAt = (world, x, z) => world === g.config.world && inBreachZone(this.zones, x, z) !== null
+    g.data.unsafeAt = (world, x, z) => world === g.config.world && (inBreachZone(this.zones, x, z) !== null || (this.extraUnsafe?.(x, z) ?? false))
     if (g.lightning) {
       g.lightning.onStrike((e) => this.onStrike(e))
       g.lightning.wallRodUp = (x, z) => this.rodUp(x, z)
@@ -288,7 +309,46 @@ export class WallService implements GameplayModule {
   /** A wall_log row that changes no integrity (layer 3: a donation, with who gave what). */
   note(id: string, cause: string, now: number, characterId: number | null, data: Record<string, unknown>): void {
     const s = this.segs.get(id)
-    if (s) this.store?.log(id, now, cause, 0, s.stage, characterId, data)
+    if (!s) return
+    this.store?.log(id, now, cause, 0, s.stage, characterId, data)
+    this.emit({ id, cause, delta: 0, stage: s.stage, stageBefore: s.stage, characterId, data, at: now })
+  }
+
+  /** Layer 4: hears every change and note (returns the unsubscribe). */
+  onWallEvent(fn: (e: WallEvent) => void): () => void {
+    this.listeners.push(fn)
+    return () => {
+      const i = this.listeners.indexOf(fn)
+      if (i >= 0) this.listeners.splice(i, 1)
+    }
+  }
+
+  private emit(e: WallEvent): void {
+    for (const fn of this.listeners) {
+      try {
+        fn(e)
+      } catch (err) {
+        this.g.config.log(`walls: a listener failed: ${(err as Error)?.stack ?? err}`)
+      }
+    }
+  }
+
+  /** Layer 4: the breach zones again (a siege started or ended: their radius changes). */
+  refreshZones(): void {
+    this.applyNav()
+  }
+
+  /** Layer 4 (lane checks): runs `fn` with segment `id` at `stage` on the nav, then puts the nav back as it is. */
+  withStage<T>(id: string, stage: WallStage, fn: () => T): T {
+    if (!this.navState || !this.segs.has(id)) return fn()
+    const stages = new Map([...this.segs].map(([k, s]) => [k, s.stage]))
+    stages.set(id, stage)
+    this.navState.apply(this.g.nav as MeshNav, stages)
+    try {
+      return fn()
+    } finally {
+      this.applyNav()
+    }
   }
 
   /** A segment's look changed without its integrity (layer 3: repairing on or off): sends its wallUpdate soon. */
@@ -345,6 +405,7 @@ export class WallService implements GameplayModule {
     const change: WallChange = { id, before, after, stage: s.stage, stageBefore }
     if (s.stage !== stageBefore) this.stageChanged(s, stageBefore, now, opts.at)
     else if (opts.fx) this.fx(id, opts.fx, now, opts.at)
+    this.emit({ id, cause, delta: after - before, stage: s.stage, stageBefore, characterId: opts.characterId ?? null, data: opts.data ?? {}, at: now })
     return change
   }
 

@@ -82,6 +82,7 @@ import { applyWeatherToEnv, weatherFogScale } from './weather/env.ts'
 import { CLEAR_FRAME, type WeatherFrame } from './weather/frame.ts'
 import { WorldWeather } from './weather/index.ts'
 import { WorldWinter, applyWinterToEnv } from './winter/index.ts'
+import { installNearFade, uninstallNearFade, type NearFadeState } from './trees/near-fade.ts'
 import type { WeatherLevel } from './weather/presets.ts'
 
 /** Graphics presets; Low is the Classic material path (docs/WAVE_PLAN3.md D4), 'ultra' is wave 9's (D5). */
@@ -443,6 +444,8 @@ export class World {
    * `snow`, `cover` and `frost`. Nothing is compiled or drawn without them.
    */
   readonly winter: WorldWinter
+  /** docs/FOREST.md D-F18: foliage near the camera and between it and the player dithers out (trees/near-fade.ts). */
+  readonly nearFade: NearFadeState
   readonly materials: ObjectMaterials
   readonly objects: WorldObjects
   /** Grass and plants on the terrain (scatter.ts): regions register as they commit, chunks grow around the camera. */
@@ -565,6 +568,7 @@ export class World {
     this.weather.setLevel(opts.weatherLevel ?? 'off')
     // docs/WINTER.md §7.1: before any world material exists, so every one gets its snow plugin at creation
     this.winter = new WorldWinter(scene)
+    this.nearFade = installNearFade(scene)
     this.render = new WorldRender(scene, {
       mode: opts.render ?? 'classic',
       quality: RENDER_PRESETS[this.quality],
@@ -575,6 +579,7 @@ export class World {
     // RND-W: the PBR water follows the renderer too (water.ts; its Classic branch is unchanged).
     this.water.follow({ render: this.render, weather: this.weather })
     this.materials = new ObjectMaterials(scene, assets)
+    this.nearFade.attach(this.materials)
     // UV scroll (uv-scroll.ts): the retail scrolling textures run on the world clock (the server's once setClock ran).
     this.materials.uvScroll.clock = () => this.serverNow()
     this.materials.mode = this.render.mode
@@ -1270,6 +1275,7 @@ export class World {
     this.applyEnv()
     this.weather.update(dt, camera)
     this.winter.update(dt, camera)
+    this.nearFade.update(camera)
     this.render.update(camera, this.sky.state)
     this.objects.tickAnimationSpeed()
     if (camera) this.objects.update(camera.globalPosition, false, this.focus)
@@ -1429,6 +1435,7 @@ export class World {
     this.water.dispose()
     this.render.dispose()
     this.winter.dispose()
+    uninstallNearFade(this.scene)
     this.weather.dispose()
     this.sky.dispose()
     this.sun.dispose()

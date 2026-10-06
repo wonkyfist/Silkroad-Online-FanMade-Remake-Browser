@@ -84,6 +84,16 @@ export async function siegeWallsCli(args: string[], cfg: SroConfig): Promise<num
       console.error(`siege-walls: the plan is bad: ${problems.join('; ')}`)
       return 1
     }
+    // A re-plan keeps what later layers authored in the same file: the settings patches and the siege lanes (layer 4).
+    if (existsSync(SIEGE_PLAN_FILE)) {
+      try {
+        const old = JSON.parse(readFileSync(SIEGE_PLAN_FILE, 'utf8')) as { settings?: Record<string, unknown>; siege?: unknown }
+        if (old.settings && typeof old.settings === 'object') plan.settings = { ...plan.settings, ...old.settings } as SiegePlan['settings']
+        if (old.siege !== undefined) (plan as SiegePlan & { siege?: unknown }).siege = old.siege
+      } catch {
+        // an unreadable old plan has nothing to keep
+      }
+    }
     mkdirSync(dirname(SIEGE_PLAN_FILE), { recursive: true })
     writeFileSync(SIEGE_PLAN_FILE, `${JSON.stringify(plan, null, 2)}\n`)
     log(`plan: ${relative(REPO_ROOT, SIEGE_PLAN_FILE)} (texture repeat ${SIDES.map(s => `${s} ${plan.texture[s]?.repeatM ?? '?'}`).join(', ')} m)`)

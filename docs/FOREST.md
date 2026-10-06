@@ -279,7 +279,7 @@ This is why the forest is instanced (§5) [decision].
 | D-F15 | **Far forest = a canopy card ring** (180 m → the stream edge) **+ a canopy carpet** (the grass ring window gains a forest channel) **+ a baked canopy shade** (Medium+) | forests read to the horizon for one draw and no geometry, the GRASS_FAR way |
 | D-F16 | **No per-preset tree thinning**; Medium and High draw every forest tree (they differ in bands, card reach, understory, shadows); Low draws none | trunks are server-side: a tree hidden on one preset would be an invisible wall |
 | D-F17 | **Low unchanged** (no forest, retail only; the Low guard) | the user's rule and the Low guard; Low's invisible trunks skirt by ≤ 1 m (§4.6, Q-F1) |
-| D-F18 | **Camera-near foliage fade**: foliage within 3 m of the camera, or in the capsule from the camera to the player, dithers out | in dense forest the game camera (default 9 m, ≈ 4 m above the player; 2.5–40 m) sits inside the small pines' and mid trees' crowns; the lab's 24 m camera showed it too (fact-check, FF11) |
+| D-F18 | **Camera-near foliage fade**: foliage within 3 m of the camera, or in the capsule from the camera to the player, dithers out. **Implemented** (`world-render/src/trees/near-fade.ts`; §5.5): thins from 6 m, gone by 2 m; capsule 1.2 m + 0.8 m feather | in dense forest the game camera (default 9 m, ≈ 4 m above the player; 2.5–40 m) sits inside the small pines' and mid trees' crowns; the lab's 24 m camera showed it too (fact-check, FF11) |
 | D-F19 | **Ground cover by the grass field**: under the forest the grass density × (1 − 0.45 × canopy) and GRASS_LIFE's broadleaf / clover vertex kind gains a fern variant | a forest floor for zero draws and zero rows |
 | D-F20 | **One `content/forest/forest.json`** (seed, densities, palette, exclusions, biome table) read by the pass, the editor and the tests | the forest is data; a tuning round never touches code |
 | D-F21 | **Option: Graphics → Forest: On (default on Medium+) / Off**; Off draws nothing new (as Low) | a lever for weak machines without touching the preset |
@@ -768,6 +768,22 @@ lever if LAB-12F disagrees is **cut 8a** (§8: one LOD2 per archetype in F2: −
   prototype's first Yeoha shot (the lab's 24 m camera) put a bamboo spray across the whole game view; the game's
   default camera (9 m, ≈ 4 m above the player; fact-check, FF11) sits at the height of the small pines' and mid trees'
   crowns, so in a dense forest it is often inside one.
+- **Implemented** (`packages/world-render/src/trees/near-fade.ts`, `SroNearFadePlugin`; tests `near-fade.test.ts`):
+  - **Ramps** (tuned on the bigleaf crown at (−35, 75) and the Jangan garden trees at (300, −60)): foliage starts to thin at
+    `NEAR_START_M` 6 m and is gone at `NEAR_GONE_M` 2 m. A hard 3 m cut popped whole cards, and the bigleaf's cards are
+    several metres wide. Leaves in the camera → camera-target capsule are gone within `CAPSULE_R_M` 1.2 m and fully back
+    at 2.0 m (about half are kept at 1.5 m). The target is the orbit camera's target, the player's head (1.5 m up).
+  - **Pattern:** a 4 × 4 Bayer discard at `CUSTOM_FRAGMENT_MAIN_BEGIN`, so a faded fragment skips every texture fetch.
+  - **Materials:** every foliage path, on both backends (WGSL and GLSL):
+    - PBR: any material with the foliage plugin. This covers the retail trees, bushes and flowers, the region batch's tree
+      groups and the new species' LOD0 overlay; cloth groups are excluded.
+    - Classic / Low: the StandardMaterials ObjectMaterials converts for a foliage model, tagged by a decorator.
+    - Leaves (class foliage, or cut-out Classic) get both fades. Wood gets only the near fade. Skinned meshes, grass,
+      buildings and characters are untouched.
+  - **Cost:** three vec4 uniforms per material, written at bind with no allocation. The defines depend only on the
+    material and `World.nearFade.setEnabled`, so nothing recompiles per frame. In headless Chrome the frame time was the
+    same with the fade on and off (18.0 ms median, vsync-bound).
+  - **Shadows** are untouched: the casters use their own depth shaders, so a faded crown still shades the ground.
 
 ### 5.6 Shadows [decision]
 

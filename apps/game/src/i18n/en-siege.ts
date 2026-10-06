@@ -1,5 +1,6 @@
 /**
- * English strings of the Siege of Jangan (docs/SIEGE.md §9.5), layer 1: the walls that break. Spread into en.ts.
+ * English strings of the Siege of Jangan (docs/SIEGE.md §9.5): layer 1 (the walls that break) and layer 4 (the siege
+ * event: the HUD, the banners, the kegs, the reward window, the army's labels). Spread into en.ts.
  */
 export const enSiege = {
   'wall.chat.breach': 'The {side} wall of Jangan has been breached ({id})! The ground behind the gap is no longer safe.',
@@ -9,4 +10,69 @@ export const enSiege = {
   'wall.stage.cracked': 'Cracked',
   'wall.stage.breached': 'Breached',
   'wall.stage.rubble': 'Rubble',
+  // ---- layer 4: the siege event (docs/SIEGE.md §9.3, §9.5) ----
+  'siege.title': 'Siege of Jangan',
+  'siege.phase.warning': 'An army marches on Jangan',
+  'siege.phase.wave1': 'Wave {n} of 3',
+  'siege.phase.wave2': 'Wave {n} of 3',
+  'siege.phase.wave3': 'The final assault',
+  'siege.phase.ended': 'The siege is over',
+  'siege.arrives': 'The army arrives in {time}',
+  'siege.nextWave': 'Next wave in {time}',
+  'siege.timeLeft': '{time} left',
+  'siege.bell': 'Town Bell',
+  'siege.warlord': 'Bandit Warlord',
+  'siege.defenders': '{n} defenders',
+  'siege.foes': '{n} foes',
+  'siege.breaches': '{n} breaches',
+  'siege.walls': 'Walls',
+  'siege.approach.W': 'the west road',
+  'siege.approach.S': 'the south fields',
+  'siege.approach.E': 'the east road',
+  'siege.approach.N': 'the north fields',
+  'siege.from': 'From {list}',
+  'siege.and': '{a} and {b}',
+  'siege.outcome.won': 'Jangan stands! The Bandit Warlord has fallen.',
+  'siege.outcome.lost_bell': 'The Town Bell has fallen.',
+  'siege.outcome.lost_time': 'The Warlord withdrew with his plunder.',
+  'siege.outcome.cancelled': 'The siege was called off.',
+  'siege.outcome.restart': 'The siege was interrupted.',
+  // banners (the NoticeBanner queue)
+  'siege.notice.warning': 'Scouts report an army marching on Jangan from {list}!',
+  'siege.notice.wave1': 'The army attacks the walls!',
+  'siege.notice.wave2': 'Wave 2: archers and Stone Rams join the assault!',
+  'siege.notice.wave3': 'The Bandit Warlord leads the final assault!',
+  'siege.notice.breach': 'The army broke through {wall}! Defend the Town Bell!',
+  'siege.notice.plant': 'A sapper has planted a keg at {wall}!',
+  'siege.notice.defused': '{name} defused a keg at {wall}.',
+  'siege.notice.blast': 'A keg blew at {wall}!',
+  'siege.wall': 'the {side} wall ({id})',
+  // kegs
+  'siege.keg.defuse': 'Defuse the keg',
+  'siege.keg.defusing': 'Defusing… {time}',
+  'siege.keg.fuse': 'Fuse {time}',
+  // the reward window
+  'siege.reward.cap': 'Siege of Jangan',
+  'siege.reward.won': 'Victory!',
+  'siege.reward.lost': 'Defeat',
+  'siege.reward.over': 'The siege is over',
+  'siege.reward.points': 'Your contribution: {points} points (rank {rank} of {of})',
+  'siege.reward.pointsNoRank': 'Your contribution: {points} points (too few for a reward)',
+  'siege.reward.gold': 'Gold: {gold}',
+  'siege.reward.seals': 'Siege Seals: {seals}',
+  'siege.reward.title': 'Title earned: {title}',
+  'siege.reward.top': 'Finest defenders',
+  'siege.reward.part.damage': 'fighting {n}',
+  'siege.reward.part.sapper': 'sappers stopped {n}',
+  'siege.reward.part.defuse': 'kegs defused {n}',
+  'siege.reward.part.kit': 'repairs {n}',
+  'siege.reward.part.donation': 'donations {n}',
+  'siege.reward.part.bell': 'Bell repairs {n}',
+  'siege.reward.close': 'Close',
+  // labels over the army
+  'siege.label.army': 'Siege army',
+  'siege.label.sapper': 'Carries a keg',
+  'siege.label.bell': 'Hit it to repair it',
+  // the title (EntityState.honor; shown by the Play the Boss label code as pilot.honor.<code>)
+  'pilot.honor.jangan_defender': 'Defender of Jangan',
 } as const

@@ -187,6 +187,11 @@ export class Pilot implements GameplayModule {
     return ip
   }
 
+  /** Siege of Jangan (siege/event.ts): a title granted elsewhere into the shared table; shown from now on. */
+  honorGranted(characterId: number, code: string): void {
+    this.honors.set(characterId, code)
+  }
+
   private honorOf(characterId: number): string | null {
     let h = this.honors.get(characterId)
     if (h === undefined) {

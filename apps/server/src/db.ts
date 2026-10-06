@@ -370,6 +370,49 @@ const MIGRATIONS: string[] = [
   );
   CREATE INDEX wall_log_at ON wall_log(at);
   `,
+  // 18: Siege of Jangan, the siege event (docs/SIEGE.md §6, §10.3; siege/event-store.ts): one row per siege (origin
+  // schedule / gm / admin; phase warning, wave1..3, ended; outcome won, lost_bell, lost_time, cancelled, restart, or
+  // skipped for a scheduled slot that did not run; approaches and stats as JSON), its timeline (siege_log), every
+  // defender's points and what they were paid (siege_contrib), and the admin panel's settings patch (siege_settings,
+  // one row per code, 'jangan'; rev for stale saves).
+  `
+  CREATE TABLE siege_events (
+    id INTEGER PRIMARY KEY,
+    origin TEXT NOT NULL,
+    phase TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    wave1_at INTEGER,
+    ended_at INTEGER,
+    outcome TEXT,
+    approaches TEXT NOT NULL,
+    defenders INTEGER NOT NULL DEFAULT 0,
+    breaches INTEGER NOT NULL DEFAULT 0,
+    stats TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE TABLE siege_log (
+    id INTEGER PRIMARY KEY,
+    event_id INTEGER NOT NULL REFERENCES siege_events(id) ON DELETE CASCADE,
+    at INTEGER NOT NULL,
+    kind TEXT NOT NULL,
+    data TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE INDEX siege_log_event ON siege_log(event_id, id);
+  CREATE TABLE siege_contrib (
+    event_id INTEGER NOT NULL,
+    character_id INTEGER NOT NULL,
+    points INTEGER NOT NULL,
+    gold INTEGER NOT NULL DEFAULT 0,
+    seals INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (event_id, character_id)
+  );
+  CREATE TABLE siege_settings (
+    code TEXT PRIMARY KEY,
+    json TEXT NOT NULL,
+    rev INTEGER NOT NULL DEFAULT 1,
+    updated_at INTEGER NOT NULL,
+    updated_by INTEGER
+  );
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */

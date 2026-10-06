@@ -1,7 +1,7 @@
 # Siege of Jangan: destructible walls, wall-breakers jailed by Hunters
 
 **Status (2026-10-06): layers 0 and 1 built** (the cut, walls that break and walk through); layers 2 (looks and sound)
-and 3 (repair) built, see their status notes below; layers 4-6 are spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
+and 3 (repair) and 4 (the siege event) built, see their status notes below; layers 5-6 are spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
 (`<world>/siege/models/cj_<side>_cut.glb`, one glb per side with a node per piece; `siege/walls-nav.bin`), never in
 `content/` (retail meshes are never committed); `nav.bin` / `nav-objects.bin` keep the retail wall instances and the
 server and client switch them off at load (re-runnable without re-exporting the nav); the Blender script is
@@ -12,6 +12,54 @@ underpass stays inside the gatehouse piece); layer 1 shows cracks as a dark over
 (layer 2 brings the real crack textures, collapse and mounds). Written at HEAD `fdfcb04`. Builds on the storm series
 (docs/WEATHER.md §2.7 `LightningService.onStrike`, §13 `TornadoService.onTornado`) and borrows the event, settings and
 admin patterns of docs/PLAY_THE_BOSS.md.
+
+**Layer 4 status (2026-10-06): built** (the siege event). Server `apps/server/src/siege/{event,army,lanes,event-store,
+event-admin}.ts` (GameplayModule `siege`, after `wallLooters`); shared rules, content and protocol
+`packages/shared/src/siege-event.ts`; client `apps/game/src/world/features/siege.ts`, `world/siege/{model,props}.ts`,
+`hud/siege-hud.ts`; admin `apps/admin/src/pages/siege.ts`; migration **18** (`siege_events`, `siege_log`, `siege_contrib`,
+`siege_settings`). Built as written (all §16.2 defaults), with these deviations:
+- **Lanes**: authored with a grid search over the jangan-fields nav (a scratch tool, not committed) and stored in
+  `content/siege/jangan.json` `siege` (the bell, per approach a muster ≈ 350-600 m out and 3 target segments: W2/W5/W6,
+  S3/S4/S7, E3/E4/E6, N2/N3/N9; the other segments are never assaulted). Checked at every start with straight walks
+  (`lanes.ts validateLanes`: outer legs, the foot, the gap with the segment breached, inner legs; 4 ms; a failing lane is
+  dropped and logged); the wall-plan re-plan keeps the block. The ditch rims stop walkers 4-7 m short of the outer face,
+  so the army assaults from the rim (`FOOT_M` 14).
+- **Wards**: the gatehouse spans of walls.json (`*-gate` fixed spans) on the wall's centre line, not jangan.json
+  (World.mobWalkClip, siege mobs only).
+- **March**: `marchSpeed` 3 m/s (§13's "≈ 2 min from the muster"; sappers × 0.8), 3 abreast on the outer legs; a blocked
+  leg drops the formation, then walks back onto the lane line, then to the last waypoint, and only then puts the monster
+  on its waypoint. **Engage**: a defender within 15 m (or a hit) hands the monster to its own chase AI (home where it
+  broke off, leash 40 m), no heal on the way back. **Archers** stop 25 m out and shoot defenders within 35 m; they never
+  go inside. **Sappers** plant (8 s), then run back to the muster and are gone after 60 s (one keg each); a fleeing
+  sapper does not count as alive for the early-wave rule.
+- **Roster**: raiders 2 Bandits : 1 Tiger; elite = Bandit champions; authored rows (installSiegeEventContent, server and
+  client) `MOB_SIEGE_SAPPER` (Bandit, 60 % HP, 0.8 speed), `MOB_SIEGE_STONE_RAM` (Stone Ghost × 1.5 HP, spawned
+  giant), `MOB_SIEGE_WARLORD` (Bandit at 160 %, unique, HP 60,000 × s^0.9, attack × 3), `MOB_SIEGE_TOWN_BELL`. Siege
+  mobs give 50 % EXP and drop nothing (Saltpeter waits for layer 5).
+- **Sapper kegs** are not entities: `keg` / `kegEnd` messages and a client prop (banded barrel, fuse sparks; the blast:
+  fireball, smoke, flash, `common/explode_bomb1` / `stone_bomb`). Defuse from a HUD prompt within 3 m (`kegDefuse`,
+  3 s, broken by moving or damage), not a click on the prop. Blast: `sapperIp` and 25 % max HP within 6 m
+  (HazardCause `keg`, non-lethal for players).
+- **The Town Bell** is a Mob without a model (the client draws a bronze bell in a timber frame on a stone plinth, PBR or
+  Classic materials painted at run time; it swings when hit). It stands from the warning to 60 s after the end, not
+  permanently. Players cannot damage it: a defender's hit repairs 0.5 % (≤ 1 per 2 s, 15 points). During a wave its 60 m
+  circle and 20 m corridors along the inner lanes of open gaps are not safe (WallService.extraUnsafe), so defenders and
+  monsters fight there.
+- **Rewards** are paid to defenders online at the end (rows for everyone in siege_contrib); the associates rule has no
+  one to apply to before layer 5's kegs. Siege Seals are an item `ITEM_SIEGE_SEAL` (the honor-medals icon; Seal shops
+  come with Ko / Yun later). The title `jangan_defender` goes into the shared titles table (`pilot_honors`).
+- **Schedule**: the slot is the warning's start; a skipped slot writes a `skipped` siege_events row; a Night of the Tiger
+  running makes the siege wait 30 min (twice), and a Night due during a siege waits 30 min (three times, pilot/call.ts).
+- **Settings**: groups `enabled`, `schedule`, `timing`, `waves`, `army`, `bell`, `rewards` (SIEGE_EVENT_BOUNDS; keg, law
+  and hunter come with layers 5-6), defaults ⊕ `settings.siege` ⊕ the `siege_settings` patch. Admin routes: GET, PUT
+  settings, POST settings/reset, start, stop, wall, GET events[/:id] (no law routes yet); the page: Walls (a top-down plan,
+  click to set or repair), Now, Schedule, Numbers, Sieges.
+- **GM** `siege [status] | start [warningMin] | stop | wave <1-3> | warlord | lanes | army`.
+- **Protocol** (additive): `siegeEvent`, `siegeNotice` (phase, breach, plant, defused, blast), `siegeReward`, `keg`,
+  `kegEnd`, `kegDefuse`; `EntityState.siege` (role); Gameplay.createMob takes an `init` so the spawn message carries it.
+- Not done: the load gate (§15; `maxMobs` 220 caps it) and the bot-client mini siege; the tests run the event on a
+  flat world with a stand-in wall (`siege-event.test.ts`) and the lanes / march on the real export
+  (`siege-event-real.test.ts`). Screenshots: `siege-preview/layer4-*.png`.
 
 **Layer 3 status (2026-10-06): built** (repair). Server `apps/server/src/siege/{repair,looters}.ts` (GameplayModules
 `wallRepair`, `wallLooters`, after `walls`); shared rules and content `packages/shared/src/siege-repair.ts`; client

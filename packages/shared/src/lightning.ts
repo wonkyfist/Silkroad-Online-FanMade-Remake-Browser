@@ -17,7 +17,7 @@ export type StrikeKind = (typeof STRIKE_KINDS)[number]
  * Damage without an attacker (`combat.cause`, attacker 0). Later steps of the storm series add their own: `arc` is a
  * storm-charged monster's hit arcing to a player nearby (docs/WEATHER.md §12.4).
  */
-export const HAZARD_CAUSES = ['lightning', 'arc', 'tornado'] as const
+export const HAZARD_CAUSES = ['lightning', 'arc', 'tornado', 'keg'] as const
 export type HazardCause = (typeof HAZARD_CAUSES)[number]
 
 /** Who threw a strike (LightningStrike.source, additive): a tornado's bolts (docs/WEATHER.md §13). */

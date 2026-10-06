@@ -22,6 +22,7 @@ import { VISIBLE_SLOTS } from './inventory.ts'
 import { FlatNav, ValidatorNav, legsLength, pointOnLegs, type NavPoint, type NavProvider } from './nav.ts'
 import type { Progress } from './progression.ts'
 import { gmTag } from './gm-tag.ts'
+import type { SiegeMob } from './siege/army.ts'
 
 /**
  * Authoritative world simulation: every entity (players, mobs, NPCs, ground items), straight-line moves, the
@@ -170,6 +171,11 @@ export interface Mob extends Mover {
   veil?: number
   /** Winter (docs/WINTER.md §13.3): the Ice Yeti winds up a move until this server ms; Gameplay.tick runs no AI for her. */
   holdUntil?: number
+  /**
+   * Siege of Jangan, layer 4 (docs/SIEGE.md §6.3; siege/army.ts): a siege monster. The army drives it (march, assault,
+   * the way in, flight); Gameplay.tick runs its AI only while `mode` is 'engage'. Its walks stop at the gate wards.
+   */
+  siege?: SiegeMob
 }
 
 /** A live quest encounter (docs/QUESTS.md §1.6): who summoned it and when it leaves unkilled. */
@@ -310,6 +316,8 @@ export class World {
    * optional fields (skills: `effects`, UX-B: `gm`, ...). Lanes register theirs from their own module.
    */
   readonly decorators: ((e: Entity, s: EntityState) => void)[] = [gmTag, npcTag, ownerPartyTag]
+  /** Siege of Jangan, layer 4 (siege/event.ts): clips a siege monster's walk at the gate wards (null: no ward in the way). */
+  mobWalkClip: ((m: Mob, ax: number, az: number, bx: number, bz: number) => [number, number] | null) | null = null
   viewRange = DEFAULT_VIEW_RANGE
   private nextEntityId = 1
   private timer: NodeJS.Timeout | null = null
@@ -771,7 +779,12 @@ export class World {
   walkEntity(p: Player | Mob, x: number, z: number, speed: number, now = Date.now()): { blocked: boolean } | null {
     const start = this.livePoint(p, now)
     const from: Vec3 = [start.x, start.y, start.z]
-    const [cx, cz] = this.clamp(x, z)
+    let [cx, cz] = this.clamp(x, z)
+    // Siege of Jangan (docs/SIEGE.md §4.3): a siege monster's walk stops at a warded gate.
+    if (p.kind === 'mob' && p.siege && this.mobWalkClip) {
+      const c = this.mobWalkClip(p, start.x, start.z, cx, cz)
+      if (c) [cx, cz] = c
+    }
     const walk = this.nav.walk(start, cx, cz)
     const end = walk?.end
     if (!walk || !end || Math.hypot(end.x - from[0], end.z - from[2]) < MIN_MOVE_M) {

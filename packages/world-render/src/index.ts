@@ -485,6 +485,28 @@ export type { RipplePoint, WaterProfile, WaterProfileId } from './pbr/water-town
 // ---- wave 12 seams (docs/WAVE_PLAN8.md §4.2, W12-SA: the object side) ------------------------------------------
 // TREES Part W: World.trees (T12-N's part; null on Classic), the tree mode, the batch's swap source.
 export { StubTrees, createTreesPart } from './trees/index.ts'
+export {
+  CAPSULE_FEATHER_M,
+  CAPSULE_MIN_M,
+  CAPSULE_R_M,
+  NEAR_FADE_DEFINES,
+  NEAR_FADE_PLUGIN,
+  NEAR_FADE_UNIFORMS,
+  NEAR_GONE_M,
+  NEAR_START_M,
+  NearFadeState,
+  SroNearFadePlugin,
+  attachNearFade,
+  bayer4,
+  installNearFade,
+  nearFadeCode,
+  nearFadeKeep,
+  nearFadeKeeps,
+  nearFadeKindOf,
+  nearFadeStateOf,
+  uninstallNearFade,
+} from './trees/near-fade.ts'
+export type { NearFadeKind } from './trees/near-fade.ts'
 export { TREES_MODES, placementKey, placementOfKey } from './trees/types.ts'
 export type { TreeLibraryEntry, TreesFactory, TreesHost, TreesMode, TreesPart } from './trees/types.ts'
 export { treeSwapSourceOf } from './batch/types.ts'

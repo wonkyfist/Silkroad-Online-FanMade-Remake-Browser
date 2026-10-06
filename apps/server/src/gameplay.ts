@@ -81,6 +81,7 @@ import { TornadoService } from './storm/tornado.ts'
 import { WallService } from './siege/walls.ts'
 import { WallRepair } from './siege/repair.ts'
 import { WallLooters } from './siege/looters.ts'
+import { SiegeService } from './siege/event.ts'
 import { MovementService } from './movement.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
@@ -317,6 +318,11 @@ export class Gameplay implements AiHost {
   readonly wallRepair: WallRepair
   readonly wallLooters: WallLooters
   /**
+   * Siege of Jangan layer 4 (docs/SIEGE.md §6; siege/event.ts, army.ts, lanes.ts): the siege event, its army, the Town
+   * Bell, sapper kegs, rewards and schedule. Inert while the walls are, or without lanes that walk.
+   */
+  readonly siege: SiegeService
+  /**
    * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
    * falls as snow. Other modules read `winter.state(now)`.
    */
@@ -393,6 +399,7 @@ export class Gameplay implements AiHost {
     this.winterPlay = new WinterPlay(this)
     this.uniques = uniquesOn ? new Uniques(this) : null
     this.pilot = this.uniques ? new Pilot(this, this.uniques) : null
+    this.siege = new SiegeService(this, this.walls)
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
     this.mobSkills.summonPolicy = (m) => this.uniques?.summonPolicy(m) ?? null
     if (!this.world.decorators.includes(dropTag)) this.world.decorators.push(dropTag)
@@ -418,6 +425,8 @@ export class Gameplay implements AiHost {
       // docs/SIEGE.md §2.4, §2.5: repair and looters, after the walls
       this.wallRepair,
       this.wallLooters,
+      // docs/SIEGE.md §6: the siege event, after the walls, repair and looters it reads
+      this.siege,
       this.movement,
       // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
       this.winterPlay,
@@ -571,6 +580,8 @@ export class Gameplay implements AiHost {
   restored(m: Mob): void {
     // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): during the event no refill and no reset at home.
     if (m.pilot) return
+    // docs/SIEGE.md §6.3: a siege monster back from a chase is not healed.
+    if (m.siege) return
     // H11-FURY-1: the AI got her home (a leash reset); the uniques module resets her fight here, whatever else this
     // tick does to her afterwards (a projectile or DoT landing before its tick would hide the reset from a poll).
     this.uniques?.homeReached(m)
@@ -583,9 +594,10 @@ export class Gameplay implements AiHost {
 
   /**
    * A new mob in the world. `tuning` (quest encounters, docs/QUESTS.md §1.6) multiplies its HP and attack here and
-   * its kill EXP in killExp; the Mob keeps it.
+   * its kill EXP in killExp; the Mob keeps it. `init` (Siege of Jangan) finishes the mob before anyone sees it (its
+   * spawn message carries what init set).
    */
-  createMob(def: MobDef, variant: MobVariant, x: number, z: number, y: number, nest: NestDef | null, now: number, surface: NavPoint['surface'] = null, tuning?: MobTuning): Mob {
+  createMob(def: MobDef, variant: MobVariant, x: number, z: number, y: number, nest: NestDef | null, now: number, surface: NavPoint['surface'] = null, tuning?: MobTuning, init?: (m: Mob) => void): Mob {
     const maxHp = Math.max(1, Math.round(def.hp * VARIANT_RULES[variant].hp * (tuning?.hpMul ?? 1)))
     const tactics = nest?.tactics
     const combat = mobCombatStats(def, variant, tuning?.attackMul ?? 1)
@@ -624,6 +636,7 @@ export class Gameplay implements AiHost {
     if (tuning) mob.tuning = tuning
     // H11-CU-1: a ridden mob's death (the composite's DIE1) must play out before the corpse goes.
     if (def.ride) mob.corpseMs = RIDDEN_CORPSE_MS
+    init?.(mob)
     this.world.addEntity(mob, now)
     return mob
   }
@@ -1075,6 +1088,8 @@ export class Gameplay implements AiHost {
     if (t.kind === 'player' ? t.dead : t.ai === 'dead') return { dealt: 0, killed: false, hits: [] }
     // Play the Boss (docs/PLAY_THE_BOSS.md §3.3): a body in a trance cannot be hurt (no message: nothing landed).
     if (t.kind === 'player' && t.trance) return { dealt: 0, killed: false, hits: [] }
+    // Siege of Jangan (docs/SIEGE.md §6.3, §6.6): a defender's hit on the Town Bell repairs it (no damage, no message).
+    if (this.siege.bellHit(a, t, now)) return { dealt: 0, killed: false, hits: [] }
     if (t.kind === 'mob' && t.ai === 'return') {
       // Rule (anti leash-kiting): a mob running home after giving up evades every hit; it is restored at home.
       a.lastCombatAt = now
@@ -1103,6 +1118,8 @@ export class Gameplay implements AiHost {
     this.durability.afterHits(a, t, hits, extra, now)
     // Play the Boss: damage to or from the boss and her summons (downs, Stalk, the fight flag; pilot/service.ts).
     this.pilot?.onHits(a, t, dealt, now)
+    // Siege of Jangan (docs/SIEGE.md §6.6): damage to siege monsters is a defender's contribution.
+    this.siege.onHits(a, t, dealt, now)
     // Storms (docs/WEATHER.md §12.4): a charged monster's hit arcs to a player nearby.
     this.storm.afterHits(a, t, dealt, now)
     if (t.kind === 'mob') {
@@ -1189,7 +1206,8 @@ export class Gameplay implements AiHost {
     // elixirs included); null keeps the normal table and the authored elixir drop.
     // Wave 8 (D51): the authored elixir drop joins the loot loop below (droppedAt / dropFrom like any drop).
     // docs/WINTER.md §13.4: the Ice Yeti's own loot replaces the table like a unique's.
-    const unique = this.uniques?.drops(m, now) ?? this.winterPlay.yeti.drops(m) ?? null
+    // docs/SIEGE.md §6.5: siege monsters drop nothing (a siege is not a farm).
+    const unique = this.uniques?.drops(m, now) ?? this.winterPlay.yeti.drops(m) ?? this.siege.drops(m) ?? null
     // Storms (docs/WEATHER.md §12.4): a charged monster drops more, and its gear may come +1.
     const bonus = this.storm.lootBonus(m)
     const drops: RolledDrop[] = unique ?? this.storm.plusLoot(m, [
@@ -1289,6 +1307,8 @@ export class Gameplay implements AiHost {
         if (now - m.diedAt >= (m.corpseMs ?? CORPSE_MS)) this.world.removeEntity(m.id)
         continue
       }
+      // Siege of Jangan (docs/SIEGE.md §6.3): the army drives its monsters; their own AI runs only in a fight.
+      if (m.siege && m.siege.mode !== 'engage') continue
       if (m.ai === 'idle') {
         const pos = this.world.positionAt(m, now)
         if (!active.some((q) => (q[0] - pos[0]) ** 2 + (q[2] - pos[2]) ** 2 <= wake)) {
@@ -1315,7 +1335,8 @@ export class Gameplay implements AiHost {
 
   private regenMob(m: Mob, now: number): void {
     // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): hiding never heals the boss during the event.
-    if (m.pilot || m.hp >= m.maxHp || now - m.lastCombatAt < REGEN.outOfCombatMs || now < m.nextRegenAt) return
+    // docs/SIEGE.md §6.3: siege monsters (and the Town Bell) never regenerate.
+    if (m.pilot || m.siege || m.hp >= m.maxHp || now - m.lastCombatAt < REGEN.outOfCombatMs || now < m.nextRegenAt) return
     m.nextRegenAt = now + REGEN.intervalMs
     m.hp = Math.min(m.maxHp, m.hp + Math.max(1, Math.round(m.maxHp * REGEN.mobPct)))
     this.world.broadcastAbout(m, { t: 'entityUpdate', id: m.id, hp: m.hp })

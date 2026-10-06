@@ -3259,3 +3259,64 @@ div.row-actions {
 .update-entry p {
   margin: 4px 0 0;
 }
+
+/* ---- Siege of Jangan: the walls plan (pages/siege.ts; positions set through the CSSOM, the CSP allows no style attributes) ---- */
+.siege-map {
+  position: relative;
+  margin: 4px auto 0;
+  max-width: 100%;
+  background: rgba(120, 110, 90, 0.12);
+  border: 1px solid rgba(201, 163, 92, 0.25);
+  border-radius: 4px;
+}
+.siege-seg {
+  position: absolute;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+}
+button.siege-seg {
+  cursor: pointer;
+}
+button.siege-seg:hover,
+button.siege-seg:focus-visible {
+  outline: 2px solid #fff3c4;
+  outline-offset: 1px;
+}
+.siege-seg.intact { background: #8c8270; }
+.siege-seg.cracked { background: #e3b23c; }
+.siege-seg.deep { background: #e9792c; }
+.siege-seg.breached { background: #e0281c; }
+.siege-seg.rubble { background: #6e140c; }
+.siege-seg.fixed { background: #4a4a4a; }
+.siege-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  color: #cdbf9f;
+  pointer-events: none;
+}
+.siege-bell {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #ffd953;
+  box-shadow: 0 0 6px #ffd953;
+}
+.siege-legend {
+  margin-top: 6px;
+}
+.siege-legend span {
+  margin-right: 12px;
+  white-space: nowrap;
+}
+.siege-legend .siege-swatch {
+  position: static;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  vertical-align: -1px;
+}

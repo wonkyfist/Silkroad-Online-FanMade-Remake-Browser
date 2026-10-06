@@ -22,6 +22,7 @@ import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClient
 import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
 import type { WallServerMessage } from './siege.ts'
 import { WALL_RATE_LIMITS, WALL_REQUESTS, type WallClientMessage, type WallRequest } from './siege-repair.ts'
+import { SIEGE_RATE_LIMITS, SIEGE_REQUESTS, type SiegeClientMessage, type SiegeRequest, type SiegeRole, type SiegeServerMessage } from './siege-event.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -238,6 +239,9 @@ export interface EntityState {
   // ---- storm additions (docs/WEATHER.md §12) ----
   /** Mobs: storm-charged (it survived a lightning strike): the blue electric glow, until the storm ends or it dies. */
   charged?: true
+  // ---- Siege of Jangan, layer 4 (docs/SIEGE.md §6.5, §10.2) ----
+  /** Mobs: a siege monster's role (the client hangs a keg on a sapper, draws the Town Bell, flags the army). */
+  siege?: SiegeRole
 }
 
 export interface WorldInfo {
@@ -605,6 +609,8 @@ export type ClientMessage =
   | WinterClientMessage
   // ---- Siege of Jangan, layer 3: repair (docs/SIEGE.md §10.1; siege-repair.ts). GameplayRequests. ----
   | WallClientMessage
+  // ---- Siege of Jangan, layer 4: the siege event (docs/SIEGE.md §10.1; siege-event.ts). GameplayRequests. ----
+  | SiegeClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -923,6 +929,8 @@ export type ServerMessage =
   | WinterServerMessage
   // ---- Siege of Jangan, the walls (docs/SIEGE.md §10.2; siege.ts): stages, integrity, cosmetic moments ----
   | WallServerMessage
+  // ---- Siege of Jangan, layer 4: the siege event (docs/SIEGE.md §10.2; siege-event.ts) ----
+  | SiegeServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1083,6 +1091,7 @@ export type GameplayRequest =
   | WinterRequest
   // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
   | WallRequest
+  | SiegeRequest
 
 /** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
 export type WinterRequest = 'snowball' | 'winterBoard'
@@ -1113,6 +1122,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...PILOT_REQUESTS,
   ...WINTER_REQUESTS,
   ...WALL_REQUESTS,
+  ...SIEGE_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1452,6 +1462,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   winterBoard: { perSecond: 1, burst: 3 },
   // Siege of Jangan, layer 3 (docs/SIEGE.md §10.1)
   ...WALL_RATE_LIMITS,
+  // Siege of Jangan, layer 4 (docs/SIEGE.md §10.1)
+  ...SIEGE_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */

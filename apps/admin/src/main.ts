@@ -12,6 +12,7 @@ import { questsPage } from './pages/quests.ts'
 import { eventsPage } from './pages/events.ts'
 import { newsEntryPage, newsPage } from './pages/news.ts'
 import './pages/boss.ts' // Play the Boss: EVENT_PAGES 'boss' (docs/PLAY_THE_BOSS.md §6.4)
+import './pages/siege.ts' // Siege of Jangan: EVENT_PAGES 'siege' (docs/SIEGE.md §11.4)
 import { auditPage } from './pages/audit.ts'
 import { serversPage } from './pages/servers.ts'
 import { updatesPage } from './pages/updates.ts'
