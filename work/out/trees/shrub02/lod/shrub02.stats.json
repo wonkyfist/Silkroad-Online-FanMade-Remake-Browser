@@ -1,0 +1,51 @@
+{
+ "species": "shrub02",
+ "archetype": "shrub_dome",
+ "kind": "plant",
+ "seed": 11,
+ "target": {
+  "h": 4.22,
+  "w": 6.2
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 304,
+   "byMaterial": {
+    "bark": 168,
+    "leaf": 136
+   },
+   "cards": 34,
+   "frontNormalY": 1.0,
+   "vertices": 412,
+   "heightM": 4.22,
+   "widthM": 6.2,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.51
+   ],
+   "crownRadius": 2.72,
+   "bytes": 206844
+  },
+  "1": {
+   "triangles": 40,
+   "byMaterial": {
+    "leaf": 40
+   },
+   "cards": 10,
+   "frontNormalY": 1.0,
+   "vertices": 80,
+   "heightM": 4.22,
+   "widthM": 5.892,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.51
+   ],
+   "crownRadius": 2.72,
+   "bytes": 145140
+  }
+ }
+}

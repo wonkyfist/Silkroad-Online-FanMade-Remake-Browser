@@ -7,7 +7,7 @@
  * Wave-8 mount point M9 (decision D12): `registerSlotDecorator(fn)` adds signs (durability, magic, rare) to every
  * item slot render; the built-in sign is `plus` from the stack.
  */
-import type { EquipSlot, ItemDef, ItemStack } from '@sro/shared'
+import { rarityOf, type EquipSlot, type ItemDef, type ItemStack } from '@sro/shared'
 import type { Art } from '../ui/art.ts'
 import { el } from '../ui/dom.ts'
 import { kitArt } from '../ui/kit/host.ts'
@@ -106,7 +106,7 @@ export function registerSlotDecorator(fn: SlotDecorator): () => void {
 
 /** The signs a stack shows: `plus` from the stack, then each decorator's partial (later wins). A throwing decorator is skipped. */
 export function slotSigns(stack: ItemStack, def: ItemDef | undefined): SlotSigns {
-  const parts: (Partial<SlotSigns> | null | undefined)[] = [{ plus: stack.plus ?? 0, rare: isRareCode(stack.code) }]
+  const parts: (Partial<SlotSigns> | null | undefined)[] = [{ plus: stack.plus ?? 0, rare: isRareCode(stack.code), rarity: rarityOf(stack.code) ?? undefined }]
   for (const fn of decorators) {
     try {
       parts.push(fn(stack, def))

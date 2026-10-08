@@ -1,0 +1,71 @@
+{
+ "species": "dh_poplar",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 81,
+ "target": {
+  "h": 40.22,
+  "w": 11.86
+ },
+ "normalUp": 0.3,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 2852,
+   "byMaterial": {
+    "bark": 1432,
+    "leaf": 1420
+   },
+   "cards": 355,
+   "frontNormalY": 0.189,
+   "vertices": 3962,
+   "heightM": 40.22,
+   "widthM": 11.86,
+   "crownCentre": [
+    0.27,
+    0.35,
+    20.65
+   ],
+   "crownRadius": 13.57,
+   "bytes": 376232
+  },
+  "1": {
+   "triangles": 904,
+   "byMaterial": {
+    "bark": 264,
+    "leaf": 640
+   },
+   "cards": 160,
+   "frontNormalY": 0.185,
+   "vertices": 1496,
+   "heightM": 40.22,
+   "widthM": 11.86,
+   "crownCentre": [
+    0.27,
+    0.35,
+    20.65
+   ],
+   "crownRadius": 13.57,
+   "bytes": 246164
+  },
+  "2": {
+   "triangles": 430,
+   "byMaterial": {
+    "bark": 190,
+    "leaf": 240
+   },
+   "cards": 60,
+   "frontNormalY": 0.237,
+   "vertices": 648,
+   "heightM": 40.22,
+   "widthM": 11.86,
+   "crownCentre": [
+    0.27,
+    0.35,
+    20.65
+   ],
+   "crownRadius": 13.57,
+   "bytes": 202604
+  }
+ }
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "shops",
-  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "generatedAt": "2026-10-07T00:19:58.014Z",
   "sources": [
     "client:refshopgroup.txt",
     "client:refmappingshopgroup.txt",
@@ -43,7 +43,8 @@
           "items": [
             "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01",
             "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02",
-            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03"
+            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03",
+            "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04"
           ]
         }
       ],

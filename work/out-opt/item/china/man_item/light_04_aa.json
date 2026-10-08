@@ -1,0 +1,118 @@
+{
+  "source": "res/item/china/man_item/light_04_aa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_04_aa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 5,
+    "attachPointName": "_aa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "light_04_aa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "light_04_aa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\light_04.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\light_04_aa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "light_04_aa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\light_04_aa.bms",
+      "material": "light_04_aa",
+      "vertices": 78,
+      "triangles": 96,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Hand",
+        "Bip01 R Forearm",
+        "Bip01 L Hand",
+        "Bip01 L Forearm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 78,
+    "triangles": 96,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.09775567054748535,
+    "boundsMin": [
+      -0.8072207570075989,
+      1.4520217180252075,
+      -0.08303765207529068
+    ],
+    "boundsMax": [
+      0.8072186708450317,
+      1.5497773885726929,
+      0.024923162534832954
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

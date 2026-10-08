@@ -10,12 +10,13 @@ import { DAY_MS, HOUR_MS, drawWeight, drawWeighted, ineligible, nextSlotAt, slot
 
 const E = PILOT_DEFAULTS.eligibility
 const NOW = Date.UTC(2026, 9, 5, 12)
-const OK: EligibilityFacts = { level: 20, playedMs: 10 * HOUR_MS, dead: false, busy: false, blockedUntil: null, lastTurnAt: null, recent: false }
+// a level-25 character (the Climb: PILOT_DEFAULTS.eligibility.minLevel 25, was 20)
+const OK: EligibilityFacts = { level: 25, playedMs: 10 * HOUR_MS, dead: false, busy: false, blockedUntil: null, lastTurnAt: null, recent: false }
 
 describe('eligibility (§3.9)', () => {
   it('level, play time, cooldown, recent turns, block, death, busy; each reason alone and in the client order', () => {
     expect(ineligible(OK, E, NOW)).toBeNull()
-    expect(ineligible({ ...OK, level: 19 }, E, NOW)).toBe('level')
+    expect(ineligible({ ...OK, level: 24 }, E, NOW)).toBe('level')
     expect(ineligible({ ...OK, playedMs: 10 * HOUR_MS - 1 }, E, NOW)).toBe('playtime')
     expect(ineligible({ ...OK, lastTurnAt: NOW - 13 * DAY_MS }, E, NOW)).toBe('cooldown')
     expect(ineligible({ ...OK, lastTurnAt: NOW - 14 * DAY_MS }, E, NOW)).toBeNull()

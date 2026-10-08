@@ -1,0 +1,50 @@
+{
+ "species": "barley",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 59,
+ "target": {
+  "h": 1.93,
+  "w": 11.24
+ },
+ "normalUp": 0.0,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 72,
+   "byMaterial": {
+    "leaf": 72
+   },
+   "cards": 18,
+   "frontNormalY": -0.039,
+   "vertices": 144,
+   "heightM": 1.93,
+   "widthM": 11.24,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.23
+   ],
+   "crownRadius": 1.0,
+   "bytes": 157980
+  },
+  "1": {
+   "triangles": 28,
+   "byMaterial": {
+    "leaf": 28
+   },
+   "cards": 7,
+   "frontNormalY": -0.038,
+   "vertices": 56,
+   "heightM": 1.93,
+   "widthM": 11.24,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.23
+   ],
+   "crownRadius": 1.0,
+   "bytes": 153480
+  }
+ }
+}

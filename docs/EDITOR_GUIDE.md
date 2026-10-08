@@ -43,7 +43,7 @@ nobody can walk (slopes steeper than 35° close by themselves, and a closed tile
 flatten a mountain, paint its ground open with Walkable). Ground outside the playable area, in the sea or under a
 building or object can't be opened (the editor says so).
 
-Trees: the editor plants the **new trees** (35 species). On Low graphics the game shows the old tree in the same spot.
+Trees: the editor plants the **new trees** (29 species). On Low graphics the game shows the old tree in the same spot.
 A tree keeps between 85 % and 115 % of its size; buildings keep their size.
 
 ## Undo, revert, save

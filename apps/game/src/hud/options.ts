@@ -25,6 +25,7 @@ import {
   SKY_SETTINGS,
   TEXTURE_SETTINGS,
   TONE_MAPS,
+  TOWN_LIFE_OFF,
   TOWN_LIFE_SETTINGS,
   TREES_SETTINGS,
   WILDLIFE_SETTINGS,
@@ -116,6 +117,9 @@ export const OPTIONAL_ROWS: ReadonlySet<string> = new Set<string>([
   // Wave 12 (docs/WAVE_PLAN8.md D9, W12-G; TREES Part W): the new trees and plants (LoadWorldOptions.trees) through
   // world/graphics.ts.
   'graphics.trees',
+  // CHARACTERS §16.2: the licensed characters' springs (three/char-physics.ts through world/graphics.ts).
+  'graphics.hairCloth',
+  'graphics.bodyPhysics',
 ])
 
 /** Rows other lanes register that only mean something with the new look on (the weather feature's two rows). */
@@ -305,7 +309,8 @@ export function optionRows(host: OptionsHost, s: Settings = settings.get(), roll
         choices: TOWN_LIFE_SETTINGS.map(v => ({ value: v, label: t(`options.townLife.${v}`) })),
         get: x => x.graphics.townLife,
         patch: v => ({ graphics: { townLife: v as Settings['graphics']['townLife'] } }),
-        when: advancedShown(rollout),
+        // hidden while the townsfolk are switched off (settings.ts TOWN_LIFE_OFF)
+        when: s => !TOWN_LIFE_OFF && advancedShown(rollout)(s),
       },
       // Wave 12 (TREES Part W): our 35 species or the retail trees and plants; the PBR presets only (Low keeps retail).
       {
@@ -317,6 +322,9 @@ export function optionRows(host: OptionsHost, s: Settings = settings.get(), roll
         patch: v => ({ graphics: { trees: v as Settings['graphics']['trees'] } }),
         when: advancedShown(rollout),
       },
+      // CHARACTERS §16.2: hair and cloth / body springs on the licensed characters; the PBR presets only (Low has none).
+      { id: 'graphics.hairCloth', kind: 'toggle', label: 'options.hairCloth', get: x => x.graphics.hairCloth, patch: v => ({ graphics: { hairCloth: v } }), when: advancedShown(rollout) },
+      { id: 'graphics.bodyPhysics', kind: 'toggle', label: 'options.bodyPhysics', get: x => x.graphics.bodyPhysics, patch: v => ({ graphics: { bodyPhysics: v } }), when: advancedShown(rollout) },
       // Wave 9B (TX-R): the texture tier, read when a material or a terrain tile loads, so it applies after a reload.
       // With the new look only (without it every texture is retail: the Low guard).
       {

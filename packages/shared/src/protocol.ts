@@ -11,12 +11,15 @@
  * so the art can be replaced later without touching gameplay or saved data.
  */
 
+import type { ClimbArtTree } from './climb-rewards.ts'
 import type { EquipSlot, ItemStack, MobVariant } from './content.ts'
 import type { QuestDef, QuestFile, QuestIssue, QuestItemDef, QuestLocation } from './quests.ts'
 import type { WorldClockState } from './world-clock.ts'
 import type { WeatherKind, WeatherParams } from './weather.ts'
 import type { HazardCause, StrikeKind, StrikeSource } from './lightning.ts'
 import type { StormEffect, StormPhase } from './storm.ts'
+import type { RarityTier } from './rarity.ts'
+import type { CharLook } from './look.ts'
 // Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
 import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
 import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
@@ -24,6 +27,7 @@ import type { WallServerMessage } from './siege.ts'
 import { WALL_RATE_LIMITS, WALL_REQUESTS, type WallClientMessage, type WallRequest } from './siege-repair.ts'
 import { SIEGE_RATE_LIMITS, SIEGE_REQUESTS, type SiegeClientMessage, type SiegeRequest, type SiegeRole, type SiegeServerMessage } from './siege-event.ts'
 import { LAW_FAIL_REASONS, LAW_RATE_LIMITS, LAW_REQUESTS, type LawClientMessage, type LawFailReason, type LawRequest, type LawServerMessage } from './siege-law.ts'
+import { HUNTER_FAIL_REASONS, HUNTER_RATE_LIMITS, HUNTER_REQUESTS, type HunterClientMessage, type HunterFailReason, type HunterRequest, type HunterServerMessage } from './siege-hunter.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -131,6 +135,10 @@ export interface CharacterSummary {
   equip?: Partial<Record<EquipSlot, string>>
   /** Weapon glow addition: the enhancement (+N, 1..255) of the visible slots in `equip` that have one; absent = all +0. */
   equipPlus?: Partial<Record<EquipSlot, number>>
+  /** Look addition (look.ts, docs/CHARACTERS.md §16.8): the character's look (body, outfit, face, colours, build). */
+  look?: CharLook
+  /** Creator addition (docs/CHARACTERS.md §16.10): true while the character may still re-customise its look once (made before the creator); absent = done. */
+  customise?: boolean
 }
 
 export interface MoveState {
@@ -196,6 +204,8 @@ export interface EntityState {
   height?: number
   /** Players: Volume (build) choice 0..4 (default 2). */
   volume?: number
+  /** Players (look addition, look.ts, docs/CHARACTERS.md §16.8): the look every client draws them with. */
+  look?: CharLook
   // ---- wave 3 additions (docs/WAVE_PLAN.md §2.1) ----
   /** Players and mobs: active buffs, debuffs, statuses, imbues and toggles (at most MAX_EFFECTS_PER_ENTITY), so late joiners see them. */
   effects?: EffectState[]
@@ -246,6 +256,11 @@ export interface EntityState {
   // ---- Siege of Jangan, layer 5 (docs/SIEGE.md §8.1, §10.2) ----
   /** Players: Wanted for breaking the town wall, with this bounty (gold); the red "WANTED" label line. */
   wanted?: number
+  // ---- Siege of Jangan, layer 6 (docs/SIEGE.md §8.2, §8.5, §10.2) ----
+  /** Players: an on-duty Hunter of this rank (0-5); the blue Hunter badge. Absent: not on duty. */
+  hunter?: number
+  /** Players: serving a sentence in the Garrison Stockade. */
+  jailed?: true
 }
 
 export interface WorldInfo {
@@ -413,8 +428,10 @@ export type ClientMessage =
   | { t: 'hello'; version: number; token: string }
   | { t: 'charList' }
   | { t: 'nameCheck'; name: string }
-  | { t: 'charCreate'; name: string; model: string; weapon: StarterWeapon; height?: number; volume?: number; outfit?: StarterOutfit }
+  | { t: 'charCreate'; name: string; model: string; weapon: StarterWeapon; height?: number; volume?: number; outfit?: StarterOutfit; look?: CharLook }
   | { t: 'charDelete'; id: number }
+  /** Creator addition (§16.10): the one-time re-customise of a character made before the creator (lobby only); no look = keep its default. */
+  | { t: 'charLook'; id: number; look?: CharLook }
   | { t: 'enterWorld'; id: number }
   | { t: 'moveTo'; x: number; z: number }
   /**
@@ -546,6 +563,10 @@ export type ClientMessage =
   | { t: 'alchemyCancel' }
   /** Enter Berserk with a full gauge (PlayerStats.hwan === HWAN_MAX). */
   | { t: 'berserk' }
+  /** The Climb (docs/CLIMB.md §5.1): pick Art `art` for a tree's tier (the first pick is free; a change costs gold). */
+  | { t: 'climbArt'; tree: ClimbArtTree; tier: number; art: string }
+  /** The Climb (docs/CLIMB.md §7.3): wear title `code` (one the character holds; '' = the newest held). */
+  | { t: 'climbTitle'; code: string }
   // ---- wave 8: trade (docs/SYSTEMS_SOCIAL.md §3.4) ----
   /** Ask player entity `target` for an exchange. */
   | { t: 'tradeRequest'; target: number }
@@ -617,6 +638,7 @@ export type ClientMessage =
   | SiegeClientMessage
   // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.1; siege-law.ts). GameplayRequests. ----
   | LawClientMessage
+  | HunterClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -632,6 +654,8 @@ export type ServerMessage =
   | { t: 'nameCheck'; name: string; available: boolean; reason?: string }
   | { t: 'charCreated'; character: CharacterSummary }
   | { t: 'charDeleted'; id: number }
+  /** Creator addition (docs/CHARACTERS.md §16.10): the look was saved (or the offer skipped); the summary carries it, no `customise`. */
+  | { t: 'charLookSet'; character: CharacterSummary }
   /** `role` is a GM addition (absent from older servers = 'player'). */
   | { t: 'worldEnter'; self: EntityState; world: WorldInfo; entities: EntityState[]; role?: Role }
   | { t: 'worldLeft' }
@@ -697,6 +721,10 @@ export type ServerMessage =
       charged?: boolean
       /** Siege of Jangan layer 5: the player became Wanted with this bounty (or it changed); 0 = no longer Wanted. */
       wanted?: number
+      /** Layer 6: went on duty as a Hunter of this rank (or the rank changed); -1 = off duty. */
+      hunter?: number
+      /** Layer 6: jailed (true) or released (false). */
+      jailed?: boolean
     }
   /**
    * GM addition: this account's role changed while connected (`pnpm gm grant|revoke`; the server
@@ -741,6 +769,18 @@ export type ServerMessage =
   | { t: 'statsDelta'; stats: Partial<PlayerStats>; gain?: StatGain }
   /** Someone visible (you included) reached a new level; play the level-up effect. */
   | { t: 'levelUp'; id: number; level: number }
+  /**
+   * The Climb (docs/CLIMB.md §6.1, §6.3): what the own death cost. 'lost' = exp EXP (pct % of the bar) taken;
+   * 'empty' = the bar was empty, nothing taken; 'grace' = a death inside the grace window, nothing taken; 'refund' = a
+   * resurrection gave exp back. graceMs = the grace window left (0 = none). Sent after the death's entityUpdate.
+   */
+  | { t: 'deathPenalty'; outcome: DeathPenaltyOutcome; exp: number; pct: number; graceMs: number }
+  /**
+   * The Climb's rewards (docs/CLIMB.md §5.1, §7.3): the titles held (codes, newest first), the one worn (null = the
+   * newest), the Arts picked ("<tree>:<tier>" -> art id), the achievement counters (code -> kills so far). After
+   * worldEnter and on every change.
+   */
+  | { t: 'climb'; titles: string[]; title: string | null; arts: Record<string, string>; progress: Record<string, number> }
   /** Own inventory, in full: after worldEnter and whenever the client may be out of sync. */
   | { t: 'inventory'; inventory: Inventory }
   /** Changed bag/equipment slots (item null = now empty) and the new gold total if it changed. */
@@ -750,7 +790,7 @@ export type ServerMessage =
    * addition): the +N of the slots that have one, as EntityState.equipPlus; absent = all +0. A change of +N alone
    * (alchemy, GM `plus`) is announced too.
    */
-  | { t: 'appearance'; id: number; equip: Partial<Record<EquipSlot, string>>; plus?: Partial<Record<EquipSlot, number>> }
+  | { t: 'appearance'; id: number; equip: Partial<Record<EquipSlot, string>>; plus?: Partial<Record<EquipSlot, number>>; look?: CharLook }
   // ---- wave 3: skills (docs/SKILLS.md §10.2) ----
   /**
    * Own skills, in full: enter-world after `inventory`. `skills` = the highest learned row per skill group;
@@ -931,6 +971,12 @@ export type ServerMessage =
    * Tiger Girl!"); both absent on a kill nobody owns. The town reacts to `appeared` (a cosmetic 60 s alarm).
    */
   | { t: 'uniqueNotice'; event: UniqueNoticeEvent; mob: string; name: string; area?: string; by?: string; party?: boolean; roar?: boolean; at?: number }
+  /**
+   * docs/RARITY.md §4.3: a rare weapon (Seal of Star / Moon / Sun) dropped for `by` (the loot owner) from a monster.
+   * World sockets only, every player in the world, for drops of rank RARE_ANNOUNCE_FROM and up. `item` is the seal
+   * code, `name` its English name (shown when the client has none for `item`).
+   */
+  | { t: 'rareNotice'; by: string; item: string; name: string; tier: RarityTier }
   // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.2; pilot.ts) ----
   | PilotServerMessage
   // ---- winter gameplay (docs/WINTER.md §13; winter-play.ts): warmth, snowballs, the scoreboard, gifts, the Ice Yeti ----
@@ -941,6 +987,7 @@ export type ServerMessage =
   | SiegeServerMessage
   // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.2; siege-law.ts) ----
   | LawServerMessage
+  | HunterServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1003,8 +1050,8 @@ export const GM_COMMAND = /^[a-z]{1,16}$/
 export const GM_MAX_ARGS = 8
 /** Code points per gm arg. */
 export const GM_MAX_ARG_LENGTH = 100
-/** Highest level `setlevel` accepts unless the server sets LEVEL_CAP. */
-export const DEFAULT_LEVEL_CAP = 20
+/** Highest level `setlevel` accepts unless the server sets LEVEL_CAP (25 since the Climb, docs/CLIMB.md §9.3a; was 20). */
+export const DEFAULT_LEVEL_CAP = 25
 
 /** True for roles allowed to run GM commands. */
 export function isStaff(role: Role | undefined): boolean {
@@ -1088,6 +1135,8 @@ export type GameplayRequest =
   | 'sit' | 'emote'
   // wave 8: combat and items
   | 'mountRide' | 'mountDismount' | 'mountDismiss' | 'repair' | 'alchemyReinforce' | 'alchemyCancel' | 'berserk'
+  // the Climb (docs/CLIMB.md §5.1, §7.3)
+  | 'climbArt' | 'climbTitle'
   // wave 8: trade, stalls, guilds
   | 'tradeRequest' | 'tradeRespond' | 'tradeOffer' | 'tradeTake' | 'tradeGold' | 'tradeLock' | 'tradeAccept' | 'tradeCancel'
   | 'stallCreate' | 'stallItem' | 'stallItemRemove' | 'stallText' | 'stallOpen' | 'stallClose' | 'stallVisit' | 'stallLeave' | 'stallBuy'
@@ -1104,6 +1153,8 @@ export type GameplayRequest =
   | SiegeRequest
   // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
   | LawRequest
+  // Siege of Jangan, layer 6 (docs/SIEGE.md §10.1)
+  | HunterRequest
 
 /** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
 export type WinterRequest = 'snowball' | 'winterBoard'
@@ -1136,6 +1187,8 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...WALL_REQUESTS,
   ...SIEGE_REQUESTS,
   ...LAW_REQUESTS,
+  ...HUNTER_REQUESTS,
+  'climbArt', 'climbTitle',
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1265,6 +1318,7 @@ export type ActionFailReason =
   | PilotFailReason
   /** Siege of Jangan layer 5: a Thunder Keg limit (carry, the per-account plant cooldown). */
   | LawFailReason
+  | HunterFailReason
 
 export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'not_found', 'invalid_target', 'target_dead', 'dead', 'not_dead', 'too_far', 'unreachable', 'not_owner',
@@ -1281,6 +1335,7 @@ export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'armor_mix',
   ...PILOT_FAIL_REASONS,
   ...LAW_FAIL_REASONS,
+  ...HUNTER_FAIL_REASONS,
 ]
 
 export type HitOutcome = 'hit' | 'crit' | 'miss' | 'block'
@@ -1392,6 +1447,8 @@ export const ITEM_EXPIRE_MS = 120_000
  * Beyond it the request is answered with actionResult reason 'rate_limited' and counts as a strike.
  */
 export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { perSecond: number; burst: number }>>> = {
+  // the creator's one-time re-customise (§16.10; lobby): a few tries, never a flood
+  charLook: { perSecond: 0.2, burst: 3 },
   attack: { perSecond: 5, burst: 10 },
   stopAction: { perSecond: 5, burst: 10 },
   useSkill: { perSecond: 5, burst: 10 },
@@ -1442,6 +1499,9 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   alchemyReinforce: { perSecond: 2, burst: 5 },
   alchemyCancel: { perSecond: 2, burst: 5 },
   berserk: { perSecond: 2, burst: 5 },
+  // the Climb (docs/CLIMB.md §5.1, §7.3): clicks in the skill and character windows
+  climbArt: { perSecond: 2, burst: 4 },
+  climbTitle: { perSecond: 2, burst: 4 },
   tradeRequest: { perSecond: 1, burst: 3 },
   stallCreate: { perSecond: 1, burst: 3 },
   stallClose: { perSecond: 1, burst: 3 },
@@ -1482,6 +1542,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   ...SIEGE_RATE_LIMITS,
   // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
   ...LAW_RATE_LIMITS,
+  // Siege of Jangan, layer 6 (docs/SIEGE.md §10.1)
+  ...HUNTER_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */
@@ -1558,6 +1620,10 @@ export interface EffectState {
   source?: number
 }
 
+/** ServerMessage deathPenalty.outcome (docs/CLIMB.md §6.1). */
+export type DeathPenaltyOutcome = 'lost' | 'empty' | 'grace' | 'refund'
+export const DEATH_PENALTY_OUTCOMES: readonly DeathPenaltyOutcome[] = ['lost', 'empty', 'grace', 'refund']
+
 export type CastEndReason = 'interrupted' | 'cancelled' | 'target_lost'
 export const CAST_END_REASONS: readonly CastEndReason[] = ['interrupted', 'cancelled', 'target_lost']
 
@@ -1576,9 +1642,10 @@ export interface SkillCooldown {
  * What an NPC dialog offers; the server decides per NPC. Wave 8: 'repair' (NpcDef.roles; the client shows it as the
  * shop window's Repair buttons, not as a dialog option) and 'guild' (GUILD_MANAGER_NPCS). Siege of Jangan layer 3:
  * 'mason' (Master Mason Ko's donations, docs/SIEGE.md §2.4). Layer 5: 'fence' (Old Fang crafts a Thunder Keg, §7).
+ * Layer 6: 'hunter' (Captain Yun: the licence and the duty, §8.2), 'warden' (Warden Bae: the sentence, §8.5).
  */
-export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason' | 'fence'
-export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason', 'fence']
+export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason' | 'fence' | 'hunter' | 'warden'
+export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason', 'fence', 'hunter', 'warden']
 
 /** Why a dialog closed without the client asking ('closed' = replaced by another npcTalk). */
 export type NpcCloseReason = 'closed' | 'too_far' | 'dead' | 'warp' | 'gone'

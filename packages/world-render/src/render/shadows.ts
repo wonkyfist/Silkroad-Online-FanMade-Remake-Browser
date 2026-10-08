@@ -56,6 +56,7 @@
  *   stay one per region.
  */
 import {
+  BoundingInfo,
   CascadedShadowGenerator,
   DrawWrapper,
   Material,
@@ -99,6 +100,7 @@ import type { RegionData } from '../regions.ts'
 import type { CommitStepAfter } from '../stream.ts'
 import { uvScrollPluginOf } from '../uv-scroll.ts'
 import type { RenderPart } from './index.ts'
+import { LIGHT_LOOK } from './look.ts'
 import type { RenderQuality, ShadowQuality } from './quality.ts'
 
 /** Layer-mask bit of the shadow proxies: outside Babylon's default camera mask 0x0FFFFFFF and WORLD_OBJECT_LAYER. */
@@ -128,18 +130,28 @@ export interface CsmSettings {
   lambda: number
   blend: number
   filter: CsmFilter
+  /** PCSS light size (shadow-map uv), 0 = PCF (ShadowQuality.soft). */
+  soft: number
 }
 
-export function csmSettings(q: Readonly<ShadowQuality>): CsmSettings {
+/**
+ * Lighting pass 2 (docs/LIGHTING.md §6): on WebGL2 the cascades are at most this size. The 2048² shadow map was the
+ * largest part of WebGL2 High's ~11 ms GPU (ANGLE/D3D11: no shadows −3.3 ms, 1024² −1.5…2.3 ms at the plaza);
+ * WebGPU keeps 2048².
+ */
+export const WEBGL2_SHADOW_MAP_MAX = 1024
+
+export function csmSettings(q: Readonly<ShadowQuality>, o: { webgl?: boolean } = {}): CsmSettings {
   // Medium 2 cascades, High 3, Ultra 4 (RENDER §4.3's columns).
   const tier = q.cascades <= 2 ? 0 : q.cascades === 3 ? 1 : 2
   return {
-    mapSize: q.mapSize,
+    mapSize: o.webgl ? Math.min(q.mapSize, WEBGL2_SHADOW_MAP_MAX) : q.mapSize,
     cascades: q.cascades,
     maxZ: q.distanceM,
     lambda: [0.7, 0.8, 0.85][tier]!,
     blend: [0.1, 0.08, 0.05][tier]!,
     filter: (['low', 'medium', 'high'] as const)[tier]!,
+    soft: q.soft ?? 0,
   }
 }
 
@@ -1202,12 +1214,17 @@ export function selectCasters(cam: Vector3, q: Readonly<ShadowQuality>, i: Caste
     if (!(k > 0)) continue
     if (Vector3.DistanceSquared(cam, root.getAbsolutePosition()) > charM * charM) continue
     const from = out.length
-    if (root.getTotalVertices() > 0) out.push(root)
-    for (const m of root.getChildMeshes(false)) if (m.isEnabled() && m.getTotalVertices() > 0) out.push(m)
+    if (root.getTotalVertices() > 0 && !noCast(root)) out.push(root)
+    // `metadata.sroNoCast`: a part that must not cast (hair cards and lashes: the shadow map draws their whole quads,
+    // which printed hard rectangles on the face, CHARACTERS §16.3)
+    for (const m of root.getChildMeshes(false)) if (m.isEnabled() && m.getTotalVertices() > 0 && !noCast(m)) out.push(m)
     if (i.limited && k < q.cascades) for (let n = from; n < out.length; n++) i.limited.set(out[n]!, k)
   }
   return out
 }
+
+const noCast = (m: AbstractMesh): boolean =>
+  !!(m.metadata as { sroNoCast?: unknown } | null | undefined)?.sroNoCast || !!(m.material?.metadata as { sroNoCast?: unknown } | null | undefined)?.sroNoCast
 
 /** The same meshes in the same order. */
 const sameList = (a: readonly AbstractMesh[] | null | undefined, b: readonly AbstractMesh[]): boolean =>
@@ -1266,6 +1283,10 @@ export class WorldShadows implements RenderPart {
   private readonly now: () => number
   private lastRefresh = -Infinity
   private readonly lastCam = new Vector3(NaN, NaN, NaN)
+  /** PCSS: the casters' depth bounds around the eye (see pcssBounds). */
+  private readonly pcssMin = new Vector3()
+  private readonly pcssMax = new Vector3()
+  private pcssInfo: BoundingInfo | null = null
   private seenVersion = -1
   private dirty = true
   private readonly offs: Array<() => void> = []
@@ -1306,7 +1327,7 @@ export class WorldShadows implements RenderPart {
 
   private applyQuality(): void {
     const q = this.quality.shadows
-    const next = q ? csmSettings(q) : null
+    const next = q ? csmSettings(q, { webgl: !this.scene.getEngine().isWebGPU }) : null
     const same = !!next && !!this.settings && next.mapSize === this.settings.mapSize && next.cascades === this.settings.cascades
     if (!same) {
       this.generator?.dispose()
@@ -1330,8 +1351,21 @@ export class WorldShadows implements RenderPart {
       g.autoCalcDepthBounds = false
       g.bias = 0.002
       g.normalBias = 0.02
-      g.usePercentageCloserFiltering = true
-      g.filteringQuality = FILTER_QUALITY[next.filter]
+      const pcss = next.soft > 0 && LIGHT_LOOK.softShadows
+      // PCSS turns Babylon's depth clamp off, so the cascades' near plane comes from the casters' bounding info; ours
+      // (merged proxies, thin instances) under-reported it and distant terrain casters were clipped: the shaded slopes
+      // read sunlit. The bounds are a fixed box around the eye instead (pcssBounds).
+      g.freezeShadowCastersBoundingInfo = pcss
+      if (pcss) {
+        // PCSS (docs/LIGHTING.md §4) keeps the comparison depth map: the grass root tap and the shafts read it as before.
+        g.useContactHardeningShadow = true
+        g.contactHardeningLightSizeUVRatio = next.soft
+        // High: 16 blocker taps + 16 PCF taps (+1.3 ms GPU at 1080p on the dev GPU with 32); Ultra 16 + 32.
+        g.filteringQuality = next.filter === 'high' ? ShadowGenerator.QUALITY_MEDIUM : ShadowGenerator.QUALITY_LOW
+      } else {
+        g.usePercentageCloserFiltering = true
+        g.filteringQuality = FILTER_QUALITY[next.filter]
+      }
       this.installCascadeFilter()
     }
     this.dirty = true
@@ -1445,12 +1479,23 @@ export class WorldShadows implements RenderPart {
   update(camera: Camera | null): void {
     if (this.disposed || !camera || !this.settings) return
     const cam = camera.globalPosition
+    if (this.generator?.useContactHardeningShadow) this.pcssBounds(this.generator, cam)
     // BT-S: the merged cut-out casters collapse group-3 pieces past their range from this eye.
     const objects = this.host.objects as { drawRangeScale?: number }
     this.proxies.setEye(cam, (GROUP_RANGE_M[3] ?? 48) * (objects.drawRangeScale ?? 1))
     const moved = !(Vector3.DistanceSquared(cam, this.lastCam) < CASTER_REFRESH_M * CASTER_REFRESH_M)
     const walked = this.characters.size > 0 && this.now() - this.lastRefresh >= CHARACTER_REFRESH_MS
     if (moved || walked || this.dirty || this.casterVersion() !== this.seenVersion) this.refreshCasters(cam)
+  }
+
+  /** PCSS: the casters' bounds = the shadow distance + 400 m around the eye, 300 m below to 800 m above it. */
+  private pcssBounds(g: CascadedShadowGenerator, cam: Vector3): void {
+    const r = (this.settings?.maxZ ?? 150) + 400
+    this.pcssMin.set(cam.x - r, cam.y - 300, cam.z - r)
+    this.pcssMax.set(cam.x + r, cam.y + 800, cam.z + r)
+    if (!this.pcssInfo) this.pcssInfo = new BoundingInfo(this.pcssMin, this.pcssMax)
+    else this.pcssInfo.reConstruct(this.pcssMin, this.pcssMax)
+    g.shadowCastersBoundingInfo = this.pcssInfo
   }
 
   /** Rebuilds the render list around `cam` (RENDER §4.3 ShadowCasters.update). */

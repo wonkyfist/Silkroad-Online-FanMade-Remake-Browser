@@ -60,20 +60,20 @@ describe.skipIf(!HAS_CONFIG)('equipment export (real client)', () => {
       const c = result.manifest.characters.find(ch => ch.code === code)!
       characters.set(code, convertResource(c.bsr, { read: p => data.read(p) }).document)
     }
-  })
+  }, 60_000) // degree 4 (CLIMB §4.1.2) adds 42 models: about 4 s alone, past 10 s under the full suite
   afterAll(() => {
     if (out) rmSync(out, { recursive: true, force: true })
   })
 
-  it('selects both genders, all six armour parts, shields and weapons of degrees 1-3', () => {
+  it('selects both genders, all six armour parts, shields and weapons of degrees 1-4 (4: CLIMB §4.1.2)', () => {
     const { items, characters: chars } = result.manifest
     expect(chars).toHaveLength(26)
     const armour = items.filter(i => i.armorClass)
-    // 2 genders x 3 classes x 3 degrees x 7 parts (HA CA SA BA LA AA FA) x A/B/C + 18 creation defaults.
-    expect(armour).toHaveLength(2 * 3 * 3 * 7 * 3 + 18)
-    // 9 plus the creation-default shield.
-    expect(items.filter(i => i.slot === 'shield')).toHaveLength(9 + 1)
-    expect(items.filter(i => i.slot === 'weapon')).toHaveLength(5 * 9 + 5)
+    // 2 genders x 3 classes x 4 degrees x 7 parts (HA CA SA BA LA AA FA) x A/B/C + 18 creation defaults.
+    expect(armour).toHaveLength(2 * 3 * 4 * 7 * 3 + 18)
+    // 12 plus the creation-default shield.
+    expect(items.filter(i => i.slot === 'shield')).toHaveLength(12 + 1)
+    expect(items.filter(i => i.slot === 'weapon')).toHaveLength(5 * 12 + 5)
     // CA head items ("crown") have no model; every other item has one.
     expect(items.filter(i => !i.model).every(i => /_CA_/.test(i.code))).toBe(true)
     expect(items.filter(i => /_CA_/.test(i.code)).every(i => !i.model)).toBe(true)
@@ -161,7 +161,9 @@ describe.skipIf(!HAS_CONFIG)('equipment export (real client)', () => {
 
   it('every REPLACE model covers the body parts it hides (no gaps outside the hair)', () => {
     expect(result.coverage.length).toBeGreaterThan(70)
-    for (const c of result.coverage) expect(bodyGaps(c.reports), `${c.bsr} ${JSON.stringify(c.reports)}`).toBe(0)
+    // retail's own gap (CLIMB §4.1.2): woman clothes_04_la leaves 1 pelvis vertex of 73 uncovered by 7 cm; kept as shipped
+    const KNOWN: Record<string, number> = { 'res/item/china/woman_item/clothes_04_la.bsr': 1 }
+    for (const c of result.coverage) expect(bodyGaps(c.reports), `${c.bsr} ${JSON.stringify(c.reports)}`).toBe(KNOWN[c.bsr] ?? 0)
   })
 
   for (const [set, expected] of Object.entries(STARTER_HIDES)) {

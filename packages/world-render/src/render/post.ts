@@ -70,12 +70,16 @@ import { GradeMixer, loadLutStrips } from './grade.ts'
 import type { RenderPart, WorldRender } from './index.ts'
 import { BLOOM_WEIGHT, lightShaftLevel, type AntiAliasing, type RenderPath, type RenderQuality, type ToneMap } from './quality.ts'
 import { CLEAR_RENDER_WEATHER, type RenderWeather } from './weather.ts'
-import { LightShafts, SHAFT_TUNING, planShafts, shaftLook, type ShaftMode, type ShaftPlan, type ShaftShadowSource, type ShaftTuning } from './volumetrics/shafts.ts'
+import { LightShafts, SHAFT_TUNING, SHAFT_TUNING_V1, planShafts, shaftLook, type ShaftMode, type ShaftPlan, type ShaftShadowSource, type ShaftTuning } from './volumetrics/shafts.ts'
+import { EyeAdaptation } from './adaptation.ts'
+import { LIGHT_LOOK } from './look.ts'
+import { atmosphereLook } from './atmosphere.ts'
+import { DEFAULT_HEIGHT_FALLOFF_M } from '../pbr/fog-plugin.ts'
 
-export type PostStage = 'fsr' | 'ssao' | 'ssr' | 'taa' | 'shafts' | 'default'
+export type PostStage = 'fsr' | 'ssao' | 'ssr' | 'taa' | 'shafts' | 'adapt' | 'default'
 
-/** The fixed stage order (see the file comment). */
-export const POST_STAGE_ORDER: readonly PostStage[] = ['fsr', 'ssao', 'ssr', 'taa', 'shafts', 'default']
+/** The fixed stage order (see the file comment; 'adapt' = eye adaptation, render/adaptation.ts). */
+export const POST_STAGE_ORDER: readonly PostStage[] = ['fsr', 'ssao', 'ssr', 'taa', 'shafts', 'adapt', 'default']
 
 /**
  * Prepass stages (SSAO, SSR, TAA reprojection) need more than WebGPU's default 16 inter-stage variables (RENDER §3.5).
@@ -118,6 +122,8 @@ export interface PostPlan {
   fsrScale: number
   /** The sun shafts (render/volumetrics/shafts.ts), null = none. */
   shafts: ShaftPlan | null
+  /** Eye adaptation (render/adaptation.ts): the bounded auto exposure after the shafts. */
+  adapt: boolean
   /** Why a stage the preset asks for was dropped (for the perf overlay and logs). */
   dropped: string[]
 }
@@ -137,6 +143,8 @@ export interface PlanOptions {
   lightShafts?: boolean
   /** The shafts' path: 'auto' (volumetrics/shafts.ts planShafts: march, hybrid or screen), or forced (the lab). */
   shaftsMode?: 'auto' | ShaftMode
+  /** Eye adaptation where the block asks for it (default true; false: the A/B, LIGHT_LOOK.eyeAdaptation). */
+  eyeAdaptation?: boolean
 }
 
 /** The stack of a preset on this GPU (see the file comment for the rules). */
@@ -144,12 +152,14 @@ export function planPost(mode: RenderPath, q: Readonly<RenderQuality>, gpu: Read
   const plan: PostPlan = {
     stages: [], prepass: false, aa: q.aa, msaa: 1, fxaa: false, sharpen: false, taaReprojection: false, bloom: 0, bloomThreshold: null,
     bloomWeight: BLOOM_WEIGHT, toneMap: 'none',
-    lutGrade: false, ssao: null, ssr: 'off', fsrScale: 0, shafts: null, dropped: [],
+    lutGrade: false, ssao: null, ssr: 'off', fsrScale: 0, shafts: null, adapt: false, dropped: [],
   }
   if (mode !== 'pbr' || !q.hdr) return plan
   const prepassOk = gpu.maxInterStageShaderVariables >= MIN_PREPASS_VARYINGS
   const why = `prepass needs ${MIN_PREPASS_VARYINGS} inter-stage variables (GPU: ${gpu.maxInterStageShaderVariables})`
-  if (q.ssao && o.ssao === false) plan.dropped.push('ssao: off (RenderPostOptions.ssao)')
+  const scale0 = o.renderScale ?? q.renderScale
+  if (q.ssao?.optional && scale0 < 1) plan.dropped.push('ssao: optional, render scale < 1 keeps FSR')
+  else if (q.ssao && o.ssao === false) plan.dropped.push('ssao: off (RenderPostOptions.ssao)')
   else if (q.ssao) {
     if (prepassOk) plan.ssao = { ratio: q.ssao.halfRes ? 0.5 : 1, samples: q.ssao.samples }
     else plan.dropped.push(`ssao: ${why}`)
@@ -188,8 +198,12 @@ export function planPost(mode: RenderPath, q: Readonly<RenderQuality>, gpu: Read
     if (o.lightShafts === false) plan.dropped.push('shafts: off (RenderPostOptions.lightShafts)')
     else plan.shafts = planShafts(q, { mode: o.shaftsMode })
   }
+  if (q.eyeAdaptation) {
+    if (o.eyeAdaptation === false) plan.dropped.push('adapt: off (LIGHT_LOOK.eyeAdaptation)')
+    else plan.adapt = true
+  }
   const has: Record<PostStage, boolean> = {
-    fsr: plan.fsrScale > 0, ssao: plan.ssao !== null, ssr: plan.ssr !== 'off', taa: plan.aa === 'taa', shafts: plan.shafts !== null, default: true,
+    fsr: plan.fsrScale > 0, ssao: plan.ssao !== null, ssr: plan.ssr !== 'off', taa: plan.aa === 'taa', shafts: plan.shafts !== null, adapt: plan.adapt, default: true,
   }
   plan.stages = POST_STAGE_ORDER.filter(s => has[s])
   return plan
@@ -266,6 +280,7 @@ interface Built {
   taa: TAARenderingPipeline | null
   dp: DefaultRenderingPipeline
   shafts: LightShafts | null
+  adapt: EyeAdaptation | null
   stages: PostStage[]
 }
 
@@ -575,6 +590,7 @@ export class RenderPost implements RenderPart {
       ssao: this.ssao,
       lightShafts: this.lightShafts,
       shaftsMode: this.shaftsMode,
+      eyeAdaptation: LIGHT_LOOK.eyeAdaptation,
     })
   }
 
@@ -645,6 +661,7 @@ export class RenderPost implements RenderPart {
     let ssr: SSRRenderingPipeline | null = null
     let taa: TAARenderingPipeline | null = null
     let shafts: LightShafts | null = null
+    let adapt: EyeAdaptation | null = null
     // An unsupported pipeline was never attached; its dispose may throw on the half-built parts.
     const drop = (dispose: () => void): null => {
       try {
@@ -680,8 +697,9 @@ export class RenderPost implements RenderPart {
         const a = new SSAO2RenderingPipeline('sroSsao', scene, { ssaoRatio: s.ratio, blurRatio: s.ratio }, [camera], this.ssaoGeometryBuffer, half)
         if (!a.isSupported) return drop(() => a.dispose(false))
         a.samples = s.samples
-        a.radius = 1.5
-        a.totalStrength = 1
+        // Lighting pass 2: wider and stronger contact darkening (grounding of feet, walls, props).
+        a.radius = 2
+        a.totalStrength = 1.35
         a.expensiveBlur = true
         seedSsaoCamera(a, camera)
         return a
@@ -747,14 +765,25 @@ export class RenderPost implements RenderPart {
       shafts = tryBuild('shafts', () => {
         if (!engine.getCaps().textureHalfFloatRender) throw new Error('no half-float render target')
         if (engine.useReverseDepthBuffer) throw new Error('reverse depth buffer')
-        return new LightShafts(scene, camera, sp, { shadows: () => this.shadowSource(), samples: first === 'shafts' ? p.msaa : 1 })
+        return new LightShafts(scene, camera, sp, { shadows: () => this.shadowSource(), samples: first === 'shafts' ? p.msaa : 1, adapt: () => adapt })
+      })
+    }
+
+    // Eye adaptation (docs/LIGHTING.md §2): metered off the chain; the shafts' composite applies it, or without shafts a
+    // pass of its own after them (they read the scene depth from the first pass: never in front of them). The scene
+    // renders into the first pass built: it takes the plan's MSAA samples there.
+    const sceneFirst = (s: PostStage) => stages.length === 0 && (first === 'default' || first === 'shafts' || first === s)
+    if (p.adapt) {
+      adapt = tryBuild('adapt', () => {
+        if (!engine.getCaps().textureHalfFloatRender) throw new Error('no half-float render target')
+        return new EyeAdaptation(scene, camera, { applyPass: !shafts, samples: sceneFirst('adapt') ? p.msaa : 1 })
       })
     }
 
     // TAA unsupported on this device: FXAA instead, and no sharpen.
     const noTaa = p.aa === 'taa' && !taa
     const dp = new DefaultRenderingPipeline('sroPost', true, scene, [camera], false)
-    dp.samples = first === 'default' || (first === 'shafts' && !shafts) ? p.msaa : 1
+    dp.samples = sceneFirst('adapt') ? p.msaa : 1
     dp.fxaaEnabled = p.fxaa || noTaa
     dp.bloomEnabled = p.bloom > 0
     if (p.bloom > 0) {
@@ -778,7 +807,7 @@ export class RenderPost implements RenderPart {
 
     // The shafts were pushed before 'default': keep the fixed order whatever was built.
     stages.sort((a, b) => POST_STAGE_ORDER.indexOf(a) - POST_STAGE_ORDER.indexOf(b))
-    return { camera, fsr, ssao, ssr, taa, dp, shafts, stages }
+    return { camera, fsr, ssao, ssr, taa, dp, shafts, adapt, stages }
   }
 
   /** The sun's CSM the shafts march through (the shadow part's generator; null before it exists). */
@@ -800,6 +829,7 @@ export class RenderPost implements RenderPart {
     this.render.taaJitter.set(0, 0)
     if (!b) return
     b.dp.dispose()
+    b.adapt?.dispose()
     b.shafts?.dispose()
     b.taa?.dispose()
     b.ssr?.dispose(false)
@@ -866,6 +896,11 @@ export class RenderPost implements RenderPart {
     const moved = Math.abs(exposure - this.exposure) > 0.002 * this.exposure
     if (moved) this.exposure = exposure
     if (this.fog.active) {
+      // Lighting pass 2: the all-day atmosphere (aerial haze, morning mist in the hollows, evening haze).
+      const atm = atmosphereLook(sky.sunElevationDeg, sky.t, LIGHT_LOOK.atmosphere ? 1 : 0)
+      this.fog.densityScale = atm.density
+      this.fog.startScale = atm.start
+      this.fog.heightFalloffM = LIGHT_LOOK.atmosphere ? atm.falloffM : DEFAULT_HEIGHT_FALLOFF_M
       this.fog.update(sky, this.exposure, this.plan.toneMap)
       const ring = this.quality.horizonRingFog && sky.horizonRing !== null
       if (ring !== this.fog.ringActive) this.fog.setActive(true, ring)
@@ -885,6 +920,7 @@ export class RenderPost implements RenderPart {
       if (this.plan.bloom > 0) b.dp.bloomThreshold = bloomCutoff(this.plan.bloomThreshold, this.exposure)
       refreshOverlays(this.scene, this.exposure)
     }
+    if (this.grade) this.grade.setLegacy(!LIGHT_LOOK.cinematicGrade)
     if (this.grade && this.plan.lutGrade) this.grade.update({ sunElevationDeg: sky.sunElevationDeg, t: sky.t, cloud: this.weather.cloud, rain: this.weather.rain, winter: this.weather.winter ?? 0 })
     if (b.ssr) {
       if (this.plan.ssr === 'puddles') {
@@ -896,10 +932,17 @@ export class RenderPost implements RenderPart {
       if (env && env.isCube && b.ssr.environmentTexture !== env) b.ssr.environmentTexture = env as CubeTexture
     }
     if (b.shafts) this.updateShafts(b.shafts, sky)
+    if (b.adapt) b.adapt.setFrame(this.exposure, sky.sunElevationDeg, this.weather)
+  }
+
+  /** The eye adaptation built now (null: none; the lab reads its state). */
+  get adaptation(): EyeAdaptation | null {
+    return this.built?.adapt ?? null
   }
 
   /** The shafts' look this frame: the key light as the surfaces get it, the haze colour, the weather, the fog. */
   private updateShafts(shafts: LightShafts, sky: Readonly<SkyState>): void {
+    shafts.glowOn = LIGHT_LOOK.lanternGlow
     const cal = (this.render.lighting as { calibration?: { sun: number } } | null)?.calibration
     const fog = this.fog.active ? this.fog.a.x * this.fog.a.w : 0
     const start = this.fog.a.z
@@ -913,7 +956,7 @@ export class RenderPost implements RenderPart {
       weather: this.weather,
       fogDensity: fog,
       fogStartM: start,
-    }, this.shaftTuning), sky)
+    }, LIGHT_LOOK.atmosphere ? this.shaftTuning : SHAFT_TUNING_V1), sky)
   }
 
   /** The shafts built now (null: none; the lab and the perf overlay read them). */

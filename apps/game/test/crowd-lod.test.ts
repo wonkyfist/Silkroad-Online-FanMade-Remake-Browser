@@ -12,8 +12,10 @@ import {
   AnimationGroup,
   ArcRotateCamera,
   AssetContainer,
+  Buffer as BabylonBuffer,
   Constants,
   Matrix,
+  Mesh as BabylonMesh,
   MeshBuilder,
   NullEngine,
   Scene,
@@ -245,6 +247,39 @@ describe('setMergeParts (alike parts drawn as one)', () => {
     q.setVerticesData(VertexBuffer.UVKind, new Array(q.getTotalVertices() * 2).fill(0), false, 2)
     p.setVerticesBuffer(new VertexBuffer(scene.getEngine(), new Uint16Array(p.getTotalVertices() * 2), VertexBuffer.UVKind, { size: 2, type: Constants.UNSIGNED_SHORT, normalized: true }))
     expect(mergeSkinnedParts([p, q])).toBeNull()
+  })
+
+  it('mergeSkinnedParts joins interleaved parts (the licensed glbs) and keeps them interleaved', () => {
+    const { scene } = setup()
+    const engine = scene.getEngine()
+    // position (3 floats) + normal (3 floats) in one buffer, stride 24 bytes, as the glTF loader binds an interleaved view
+    const part = (name: string, x: number) => {
+      const m = new BabylonMesh(name, scene)
+      const data = new Float32Array([x, 0, 0, 0, 1, 0, x, 1, 0, 0, 1, 0, x, 0, 1, 0, 1, 0])
+      const buf = new BabylonBuffer(engine, new Uint8Array(data.buffer), false, 24, false, false, true)
+      m.setVerticesBuffer(new VertexBuffer(engine, buf, VertexBuffer.PositionKind, { stride: 24, offset: 0, size: 3, type: Constants.FLOAT, useBytes: true, takeBufferOwnership: true }))
+      m.setVerticesBuffer(new VertexBuffer(engine, buf, VertexBuffer.NormalKind, { stride: 24, offset: 12, size: 3, type: Constants.FLOAT, useBytes: true, takeBufferOwnership: true }))
+      m.setIndices([0, 1, 2], 3)
+      return m
+    }
+    const a = part('a', 1)
+    const b = part('b', 2)
+    const merged = mergeSkinnedParts([a, b])!
+    expect(merged).not.toBeNull()
+    expect(merged.getTotalVertices()).toBe(6)
+    const pos = merged.getVertexBuffer(VertexBuffer.PositionKind)!
+    const nor = merged.getVertexBuffer(VertexBuffer.NormalKind)!
+    // the parts' layout byte for byte: one shared buffer, the same stride and offsets (the same render pipeline)
+    expect(pos.getWrapperBuffer()).toBe(nor.getWrapperBuffer())
+    expect([pos.byteStride, pos.byteOffset, nor.byteStride, nor.byteOffset]).toEqual([24, 0, 24, 12])
+    expect(Array.from(merged.getVerticesData(VertexBuffer.PositionKind)!)).toEqual([1, 0, 0, 1, 1, 0, 1, 0, 1, 2, 0, 0, 2, 1, 0, 2, 0, 1])
+    expect(Array.from(merged.getVerticesData(VertexBuffer.NormalKind)!)).toEqual(new Array(6).fill([0, 1, 0]).flat())
+    expect(Array.from(merged.getIndices()!)).toEqual([0, 1, 2, 3, 4, 5])
+    // a part laid out otherwise (not interleaved) does not join
+    const c = MeshBuilder.CreateBox('c', { size: 1 }, scene)
+    c.removeVerticesData(VertexBuffer.UVKind)
+    expect(mergeSkinnedParts([a, c])).toBeNull()
+    merged.dispose()
   })
 
   it('a re-dress drops the merge and makes it again from the parts shown now', () => {

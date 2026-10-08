@@ -32,7 +32,7 @@ import type { SkillPhase } from '../../three/models.ts'
 import type { EntityView } from '../entities.ts'
 import type { CombatMessage, WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
 import { isPiloting } from '../pilot-model.ts'
-import { damageFlight, isFlight, parseMove, SkillFx, type FxSkill, type StatusParticle } from '../skill-fx.ts'
+import { damageFlight, isFlight, parseMove, FX_BATCH_POOL, SkillFx, type FxSkill, type StatusParticle } from '../skill-fx.ts'
 import { ActionPlayer, clipTypeOf, mobSkillDef, type ActionPort, type PhasePlan, type SkillAction } from '../skills-view.ts'
 
 /** Requests whose refusals the HUD toasts for us. */
@@ -82,7 +82,7 @@ export function portOf(v: EntityView | undefined, view: (id: number) => EntityVi
           if (prev) prev.ms += p.ms
           continue
         }
-        list.push({ clip, ms: p.ms, loop: p.loop })
+        list.push({ clip, ms: p.ms, loop: p.loop, ...(p.speed ? { speed: p.speed } : {}) })
       }
       if (!list.length) return null
       const token = a.playSkill(list)
@@ -198,7 +198,7 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
   const state = new SkillState(catalog)
   const effects = new EffectBook()
   const tooltip = new Tooltip(app.art)
-  const fx = new SkillFx(ctx.scene)
+  const fx = new SkillFx(ctx.scene, undefined, { batchPool: FX_BATCH_POOL })
   void fx.load()
   // LAB (G-11): the console handle for the effect budget A/B (`__sroSkillFx.setOtherHits(n)`, `.stats`)
   if (typeof window !== 'undefined') (window as unknown as { __sroSkillFx?: SkillFx }).__sroSkillFx = fx

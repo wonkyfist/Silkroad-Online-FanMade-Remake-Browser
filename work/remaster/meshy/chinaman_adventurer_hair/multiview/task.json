@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea2f-c45f-773d-ab2d-80b4758b0f67",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea2f-c45f-773d-ab2d-80b4758b0f67.png?Expires=1790894690&Signature=DTBHhVyqjo9bX~XpvKjcL4~L3AvYPVwN9yPHx1p1IT8~2k5y6-ax9JZ4pPbciGQjC86k1dlTnK28ZsWA-bOUI1lEVhqEjhUR5wP3Cb9~XPk46rxfUn7onjLLFkKstn3fxxOeeDrjQVok4mRTqW2kY0SbWefohnS5v9u4YQIWg5tTyCPH~WmV~R2gu8dsQmepWEOmTN7IlaoX~~rSOAcqJ80U~2wNUhGUTOulIatLEAHzXQKvk7DiEZz5hgyisxbT6WmTYsOU4kbf5tl-lroWuLQH9yG3pzLApMGKahTiK46V2F7SmzVyzuJfam1K6eTSWf35lFYrAHpmE1VyfUopNg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea2f-c45f-773d-ab2d-80b4758b0f67.png?Expires=1790894690&Signature=o~B0-vICGAHuerP0ds4FNdAfz3KWAICRhTbrhxoS-tVrFpNoNaqnWM1hqO9rFhmeDzKpMIpcTPWpKn0Kc2LX9rBO43bo4Yo~Bl~eW74xyVzNuMSv1plPcHm0~apnztmj2cqQ69E1~~JGDv2Vdsxvw-9seSZPSL-vkVk1xax8BPtaWsASHWRImLZs-A6mB-qNzGILIFDVJzhwFC1smbn-Ia8KelAH8V03GFROhtut5K8XqdyFm6PiftOv7GIefdLy6ksCo-DSEM4pF05AWNOwFFladFyUWcJbNR1CuFUVs3OlKHOatFrhBXJvpkP~WI~QrsyayQrARr9-TmIdHu8P7w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea2f-c45f-773d-ab2d-80b4758b0f67.png?Expires=1790894690&Signature=JsMPt~WmDiE6IYj0Kl3VOvb3P~mvkMTXPY9xLof0bPDldgmjc4ogaGtmLiJqIlyFdhqmEpjjKA1FdGWjmpaj6m0ZVuu9bfyOphjBxEQfbKyBxCs4r7NtrdQSpSU7CGF9Ev3-qi6-NNXN9BdwjloZR16tks40F8Dh2xpTJNx2zHdkDtMj9FmgreJq5hKuxWiwZBA570xKJndKv1sraI6pZPegQmi2Jn79dRFMbbHYdbsFmGN0Lp02HH1hKmat1DgTlYfUdSvjFEXcmweKSNjbf9bvEALV~mD5HydC3yzzDwuMXH3r9eqAqdYdunDBn3UAssXdXZcs6GdDNVodpvjPrQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea2f-c45f-773d-ab2d-80b4758b0f67.png?Expires=1790894690&Signature=lzeZDtkSPEFB91rYyCqnSendWO2Kgr~Q-SXukMROAt6Y6ptBr-bduHCNwUWYb1fEGKWmMPHotZtTApw411iWB-C~0dZLNDp4YJZQzQeladvRp0lN0IrUEEvYk-AT3f-26aTBgc8mHH761IMfeqHBuiufQOYb5fJAgU8No-zy5z4tPfNND3uSPXFXtW5rmbY1u7SMrTHH8lpq6mEW45oxCwG0bvWxbaIDRcw8xHUZOcaVGN9Z3krQVFxmZSTkMOc2esruYEoCp3ZRx9CjPyDSnEZnO4l0Xic5xkKXwtN8D8AShSdXxQ9d7slP~7oHNIxYfwfXpeWWhp9rcSOcOqFb0g__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790635397158,
+  "progress": 100,
+  "started_at": 1790635397165,
+  "finished_at": 1790635490274,
+  "expires_at": 1790894690274,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea2f-c45f-773d-ab2d-80b4758b0f67/output/model.glb?Expires=1790894690&Signature=Blcb1zBeBGsvMgWvbTx4bw2MTJ~i-SmVPfoaVFLbgroWwO7-BaWEEB1ajtdjc8zxZXyezyjICrZ9zwGueD7pBiFEX2mEpRixA6cFBA8kGFm3mpbwFMNsy9NVMPkofTCDMP6aFnCmycOYS9hFf9VxqpOLui500FEjLAPWaZilUM7GQgsqmc1TlZJswEfpulQyiOqf3foYqERgJuHJIlmBbKwlJy0c66P0JAD20lGEOaDM9fY5I0xdfNfEmJAvZtydLl-laYgz0tN0WFdyPmskJvWag2WFqUOdd-pMkbHteGcYFLlKdtjQfDOaXPduJuGrmLss3EIfjUkyugMKtFriLw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_hair\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_hair\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_hair\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_hair\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_hair\\view_right.png"
+    ],
+    "prompt": "Keep the exact shape, colour and strand direction. Short-to-medium straight hair in chestnut to dark reddish brown, layered, with a fringe falling over the forehead and longer layered strands down the back of the neck; strands flow downward and slightly sideways, darker near the roots with warm auburn highlights toward the tips. Target: realistic hair with fine individual strands, natural sheen and anisotropic highlights, soft shadow at the roots, clean tapered strand tips. Keep a single natural hair colour. No text, no logos, no hats, ribbons or accessories."
+  }
+}

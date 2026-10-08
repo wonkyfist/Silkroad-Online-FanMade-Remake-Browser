@@ -122,10 +122,14 @@ describe.skipIf(!HAVE)('the retail aggressive set (real export)', () => {
   })
   const nestsOf = (code: string, list: NestDef[] = d.nests) => list.filter((n) => n.mob === code)
 
-  it('398 of the 825 Jangan nests attack on sight (397 with the repo override of the tomb entrance pack)', () => {
+  it('398 of the 825 Jangan nests attack on sight (300 with the repo overrides: the tomb entrance pack, the Climb passive B4 border and emptied nests)', () => {
     expect(exported).toHaveLength(825)
     expect(exported.filter((n) => n.tactics.aggressive)).toHaveLength(398)
-    expect(d.nests.filter((n) => n.tactics.aggressive)).toHaveLength(397)
+    // docs/CLIMB.md §2.1 (D32) and §2.2: the 15 Tomb Approach nests within 100 m of a B1/B2 nest are passive (5416 among them), the 21
+    // nests outside the cap-25 world (x-155 canyon, Hyeongcheon 30) are removed (19 of them aggressive), and since the island
+    // (docs/COAST.md §4.1, CLIMB D52) the 104 more of the drowned Western China side (64 aggressive): 825 - 125 = 700
+    expect(d.nests).toHaveLength(700)
+    expect(d.nests.filter((n) => n.tactics.aggressive)).toHaveLength(300)
     // PLAYTEST §12 decision 8: the Broken Stone Ghosts at the Qin-Shi Tomb entrance only fight back
     expect(exported.find((n) => n.id === 5416)).toMatchObject({ mob: 'MOB_CH_STONEGHOST_CLON', tactics: { aggressive: true } })
     expect(d.nests.find((n) => n.id === 5416)!.tactics.aggressive).toBe(false)

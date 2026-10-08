@@ -339,6 +339,7 @@ interface CsmLike {
   numCascades: number
   shadowMaxZ: number
   usePercentageCloserFiltering: boolean
+  useContactHardeningShadow?: boolean
   getShadowMap(): RenderTargetTexture | null
   getCascadeTransformMatrix(i: number): Matrix | null
   getDarkness(): number
@@ -524,6 +525,7 @@ export class RenderGrass {
 function csmOf(shadows: RenderPart | null, q: Readonly<RenderQuality>): CsmLike | null {
   if (!q.foliage.grassRootShadow || !shadows) return null
   const g = (shadows as { generator?: CsmLike | null }).generator ?? null
-  if (!g || !g.usePercentageCloserFiltering || !g.getShadowMap()) return null
+  // PCF or PCSS: both keep the comparison depth map the tap reads.
+  if (!g || !(g.usePercentageCloserFiltering || g.useContactHardeningShadow) || !g.getShadowMap()) return null
   return g
 }

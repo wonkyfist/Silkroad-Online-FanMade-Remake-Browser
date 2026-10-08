@@ -18,6 +18,7 @@
  */
 import type { DropTable, ItemDef, NpcDef } from './content.ts'
 import type { SiegeEventSettings } from './siege-event.ts'
+import type { HunterView, JailView } from './siege-hunter.ts'
 import type { WallsExport, WallsSegment, WallsSideInfo } from './siege.ts'
 
 // ---- content -----------------------------------------------------------------------------------------------------------
@@ -256,8 +257,11 @@ export type LawServerMessage =
    * keg at `wall`), `lapsed` / `pardoned` / `captured` (`name`'s warrant ended).
    */
   | { t: 'lawNotice'; event: LawNoticeEvent; wall?: string; name?: string; bounty?: number; treason?: true; accomplices?: string[] }
-  /** The own law state, on enter-world and on every change: absent `wanted` = not Wanted. */
-  | { t: 'lawState'; wanted?: WantedView; offences: number }
+  /**
+   * The own law state, on enter-world and on every change: absent `wanted` = not Wanted. Layer 6: `hunter` (a licence
+   * was ever bought: its state), `jail` (serving a sentence: the time left, the chores).
+   */
+  | { t: 'lawState'; wanted?: WantedView; offences: number; hunter?: HunterView; jail?: JailView }
 
 export type LawClientMessage =
   /** Craft a Thunder Keg at Old Fang (NPC entity `npc`, his `fence` service). */

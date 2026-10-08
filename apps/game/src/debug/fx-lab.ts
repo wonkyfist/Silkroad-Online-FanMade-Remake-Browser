@@ -18,7 +18,7 @@
  */
 import { CreateScreenshotAsync, Matrix, Vector3, type ArcRotateCamera, type Scene } from '@babylonjs/core'
 import { FxInstance, FxLibrary, type FxEffect, type FxRootPose } from '@sro/fx'
-import type { CombatHit, EffectState, ServerMessage, SkillDef, SkillStatusKind } from '@sro/shared'
+import { DEFAULT_LEVEL_CAP, type CombatHit, type EffectState, type ServerMessage, type SkillDef, type SkillStatusKind } from '@sro/shared'
 import type { App } from '../app.ts'
 import { STARTER_WEAPON_ITEMS } from '../content/builtin.ts'
 import { OUT } from '../content/catalog.ts'
@@ -29,7 +29,7 @@ import { isFlight, SkillFx, stageRoll } from '../world/skill-fx.ts'
 import { planPhases } from '../world/skills-view.ts'
 
 /** Level cap of the lines the lab plays (mastery level). */
-const CAP = 20
+const CAP = DEFAULT_LEVEL_CAP
 /** Time tolerance of a stage (one 30 fps frame + one 60 fps frame, ms). */
 const TOL_MS = 50
 /** A spawn this much later than expected still matches (then it is "late"). */

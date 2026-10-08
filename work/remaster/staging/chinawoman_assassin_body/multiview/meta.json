@@ -1,0 +1,36 @@
+{
+ "part": "chinawoman_assassin_body",
+ "meshy": "work\\remaster\\meshy\\chinawoman_assassin_body\\multiview\\base_color.png",
+ "local": "work\\texpipe\\master\\prim\\mtrl\\char\\china\\woman\\chinawoman_assassin_body\\albedo.png",
+ "local_source": "tp-master",
+ "size": [
+  4096,
+  4096
+ ],
+ "retail_size": [
+  512,
+  256
+ ],
+ "u_min": 0.45,
+ "feather_texels": 1.5,
+ "gates": {
+  "face_psnr_vs_retail": {
+   "result": 32.33,
+   "local": 32.6,
+   "meshy": 15.3
+  },
+  "outside_face_changed_px": 0,
+  "outside_face_px": 14151996,
+  "body_detail_lap": {
+   "meshy": 1.27,
+   "local": 1.149,
+   "result": 1.27
+  },
+  "body_psnr_result_vs_meshy": 138.13,
+  "seam_ring_mean_abs_rgb_meshy_vs_local": 37.24,
+  "face_px": 2625381,
+  "full_weight_px": 2362164,
+  "feather_px": 12,
+  "pass": true
+ }
+}

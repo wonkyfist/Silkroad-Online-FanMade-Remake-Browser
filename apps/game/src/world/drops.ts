@@ -3,7 +3,8 @@
  * (`ItemDef.dropModel`, AssocFileDrop128: gold piles by amount `drop_ch_money_small/normal/large`, `drop_ch_equip`
  * bundles, `drop_ch_acc`, `drop_ch_bag` pouches, `drop_scroll`, ...) with the sparkle its BSR binds to it (sidecar
  * `particles`: the money glow, the yellow equipment twinkles, the red potion twinkles), lying still at a yaw seeded
- * by the entity id (every viewer agrees). No spin, bob or beam.
+ * by the entity id (every viewer agrees). No spin or bob; a rare weapon (Seal of Star / Moon / Sun) stands in its tier's
+ * beam once it has landed (rarity-beam.ts, docs/RARITY.md §5.5).
  * A fresh drop (`EntityState.droppedAt` within TOSS_FRESH_MS) is tossed from `dropFrom` (the corpse) in an arc to its
  * spot, then equipment and accessories play their ATTREADY bounce once and rest on STAND1. Drops already on the ground
  * when they come into view skip the toss. Items without a drop model use the quest bundle, then a small box.
@@ -11,12 +12,13 @@
  * which the fx-world feature calls with the entity's state once the view has loaded.
  */
 import { Color3, CreateBox, StandardMaterial, TransformNode, type Mesh, type Scene } from '@babylonjs/core'
-import type { ItemDef, Vec3 } from '@sro/shared'
+import { rarityOf, type ItemDef, type RarityTier, type Vec3 } from '@sro/shared'
 import { HIGHLIGHT_COLOR, setHighlightOverlay } from '@sro/world-render'
 import { ModelLibrary, type CharacterActor, type ModelSource } from '../three/models.ts'
 import { ModelParticles, readParticles } from './fx/model-particles.ts'
 import { fxBudget } from './fx/quality.ts'
 import { systemFxFor, type FxRunner } from './fx/system-fx.ts'
+import { RarityBeam } from './rarity-beam.ts'
 
 /** A drop is fresh (tossed) when its spawn arrives within this of `droppedAt` (ms). */
 export const TOSS_FRESH_MS = 1500
@@ -200,6 +202,11 @@ export class DropVisual {
   private landed = true
   private placed = false
   private readonly model: ModelSource
+  /** A seal's tier (docs/RARITY.md §5.5) and its beam, made when it lands. */
+  readonly rarity: RarityTier | null
+  private beam: RarityBeam | null = null
+  /** Dropped just now (the seal's drop moment plays) or found lying there (only its mark). */
+  private fresh = true
 
   constructor(private readonly assets: DropAssets, readonly isGold: boolean, readonly def: ItemDef | undefined) {
     const id = ++serial
@@ -207,6 +214,7 @@ export class DropVisual {
     this.body = new TransformNode(`dropBody${id}`, assets.scene)
     this.body.parent = this.root
     this.model = dropModelOf(def)
+    this.rarity = rarityOf(def?.code)
     void this.load(this.model)
   }
 
@@ -258,6 +266,12 @@ export class DropVisual {
     if (this.placed || this.disposed) return
     this.placed = true
     this.body.rotation.y = dropYaw(p.id)
+    this.fresh = isFreshDrop(p.droppedAt, p.now)
+    // landed before it was placed (its model came first): an old drop shows only its mark
+    if (!this.fresh && this.beam && this.rarity) {
+      this.beam.dispose()
+      this.beam = new RarityBeam(this.assets.scene, this.rarity, this.root, false)
+    }
     if (p.from && isFreshDrop(p.droppedAt, p.now)) {
       const from: [number, number, number] = [p.from[0] - p.at[0], p.from[1] - p.at[1] + TOSS_FROM_UP_M, p.from[2] - p.at[2]]
       if (Math.hypot(from[0], from[1], from[2]) > 0.05) {
@@ -292,6 +306,7 @@ export class DropVisual {
   /** Landed: the bounce clip (equipment, accessories) when it was tossed, then the sparkle (a slot of the budget). */
   private land(bounce: boolean): void {
     this.landed = true
+    if (this.rarity && !this.beam && !this.disposed) this.beam = new RarityBeam(this.assets.scene, this.rarity, this.root, this.fresh)
     const a = this.actor
     if (!a) return
     if (bounce) a.playClip('ATTREADY')
@@ -336,6 +351,7 @@ export class DropVisual {
       }
     }
     this.particles?.update(dt * 1000)
+    this.beam?.update(dt)
   }
 
   dispose(): void {
@@ -347,6 +363,8 @@ export class DropVisual {
     this.assets.releaseSparkle(this)
     this.actor?.dispose()
     this.actor = null
+    this.beam?.dispose()
+    this.beam = null
     this.box?.dispose()
     this.root.dispose(false, false)
   }

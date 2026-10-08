@@ -1,0 +1,36 @@
+{
+ "part": "chinawoman_bogy_body",
+ "meshy": "work\\remaster\\meshy\\chinawoman_bogy_body\\multiview\\base_color.png",
+ "local": "work\\texpipe\\master\\prim\\mtrl\\char\\china\\woman\\chinawoman_bogy_body\\albedo.png",
+ "local_source": "tp-master",
+ "size": [
+  4096,
+  4096
+ ],
+ "retail_size": [
+  512,
+  256
+ ],
+ "u_min": 0.45,
+ "feather_texels": 1.5,
+ "gates": {
+  "face_psnr_vs_retail": {
+   "result": 32.73,
+   "local": 34.05,
+   "meshy": 16.0
+  },
+  "outside_face_changed_px": 0,
+  "outside_face_px": 13925711,
+  "body_detail_lap": {
+   "meshy": 1.054,
+   "local": 1.058,
+   "result": 1.054
+  },
+  "body_psnr_result_vs_meshy": 138.13,
+  "seam_ring_mean_abs_rgb_meshy_vs_local": 27.75,
+  "face_px": 2851806,
+  "full_weight_px": 2570121,
+  "feather_px": 12,
+  "pass": true
+ }
+}

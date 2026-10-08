@@ -28,8 +28,10 @@ import {
   Vector3,
   Vector4,
   type AbstractMesh,
+  type BaseTexture,
   type Scene,
 } from '@babylonjs/core'
+import { FOLIAGE_PIVOT_KIND, TREE_BAND_SAMPLER, TREE_BAND_TEX_W, TREE_PIVOT_FLOATS } from '../pbr/foliage-plugin.ts'
 import { addWarmupHook } from '../warmup-hooks.ts'
 import '@babylonjs/core/ShadersWGSL/ShadersInclude/instancesDeclaration.js'
 import '@babylonjs/core/ShadersWGSL/ShadersInclude/instancesVertex.js'
@@ -59,12 +61,28 @@ attribute position: vec3f;
 uniform viewProjection: mat4x4f;
 uniform shParams: vec4f;
 varying vY: f32;
+#ifdef SH_BAND
+attribute ${FOLIAGE_PIVOT_KIND}: vec4f;
+var ${TREE_BAND_SAMPLER}: texture_2d<f32>;
+var ${TREE_BAND_SAMPLER}Sampler: sampler;
+#endif
 
 @vertex
 fn main(input: VertexInputs) -> FragmentInputs {
 #include<instancesVertex>
 #include<bonesVertex>
-  let wp = finalWorld * vec4f(vertexInputs.position, 1.0);
+  var wp = finalWorld * vec4f(vertexInputs.position, 1.0);
+#ifdef SH_BAND
+  {
+    let shBw = u32(round(vertexInputs.${FOLIAGE_PIVOT_KIND}.w));
+    let shTier = shBw & 3u;
+    if (shTier != 0u) {
+      let shSlot = i32(shBw >> 2u);
+      let shBand = u32(round(textureLoad(${TREE_BAND_SAMPLER}, vec2i(shSlot % ${TREE_BAND_TEX_W}, shSlot / ${TREE_BAND_TEX_W}), 0).r * 255.0));
+      if (shBand != shTier) { wp = finalWorld * vec4f(vertexInputs.${FOLIAGE_PIVOT_KIND}.xyz, 1.0); }
+    }
+  }
+#endif
   vertexOutputs.position = uniforms.viewProjection * wp;
   vertexOutputs.vY = wp.y - uniforms.shParams.x;
 }
@@ -91,11 +109,26 @@ attribute vec3 position;
 uniform mat4 viewProjection;
 uniform vec4 shParams;
 varying float vY;
+#ifdef SH_BAND
+attribute vec4 ${FOLIAGE_PIVOT_KIND};
+uniform highp sampler2D ${TREE_BAND_SAMPLER};
+#endif
 
 void main(void) {
 #include<instancesVertex>
 #include<bonesVertex>
   vec4 wp = finalWorld * vec4(position, 1.0);
+#ifdef SH_BAND
+  {
+    int shBw = int(${FOLIAGE_PIVOT_KIND}.w + 0.5);
+    int shTier = shBw & 3;
+    if (shTier != 0) {
+      int shSlot = shBw >> 2;
+      int shBand = int(texelFetch(${TREE_BAND_SAMPLER}, ivec2(shSlot % ${TREE_BAND_TEX_W}, shSlot / ${TREE_BAND_TEX_W}), 0).r * 255.0 + 0.5);
+      if (shBand != shTier) wp = finalWorld * vec4(${FOLIAGE_PIVOT_KIND}.xyz, 1.0);
+    }
+  }
+#endif
   gl_Position = viewProjection * wp;
   vY = wp.y - shParams.x;
 }
@@ -130,6 +163,17 @@ export const SHELTER_SHADERS = { vertexWGSL: HEIGHT_VS_WGSL, fragmentWGSL: HEIGH
 
 /** Where the map may draw from: every candidate mesh (filtered to the square at render time). */
 export type ShelterCandidates = () => Iterable<AbstractMesh>
+
+/**
+ * The region batch's merged tree groups (BT-T / T12-W: the 4-float `sroPivot`, root xyz + band slot × 4 + tier) hold
+ * every tier of a swapped tree (LOD1 and LOD2); the foliage plugin's band collapse (SRO_FOL_BAND) moves the tiers a
+ * tree's band does not show to its root in the vertex stage. The height pass must do the same (SH_BAND, with the
+ * world's band texture), or the hidden tiers of every tree in the region draw a solid roof ~40 m up over the whole
+ * town (the Jangan plaza never got wet: PLAZA-RAIN).
+ */
+export function isBandedTreeMesh(m: AbstractMesh): boolean {
+  return m.getVertexBuffer?.(FOLIAGE_PIVOT_KIND)?.getSize() === TREE_PIVOT_FLOATS
+}
 
 /** The world-xz → shelter-uv mapping (the chunks' `wxOccUv`), for the CPU side. */
 export function shelterUv(m: Readonly<Vector4>, cx: number, cz: number, x: number, z: number): [number, number] {
@@ -178,9 +222,18 @@ export class WeatherShelter implements ShelterMap {
   private notReady = 0
   private disposed = false
   private readonly list: AbstractMesh[] = []
+  private readonly treeList: AbstractMesh[] = []
+  /** SH_BAND (PLAZA-RAIN): the height material of the banded tree groups, made when a band texture first exists. */
+  private treeMaterial: ShaderMaterial | null = null
+  private readonly treeBand: () => BaseTexture | null
   private readonly offWarmup: () => void
 
-  constructor(readonly scene: Scene, private readonly candidates: ShelterCandidates, opts: { resolution?: number } = {}) {
+  constructor(
+    readonly scene: Scene,
+    private readonly candidates: ShelterCandidates,
+    opts: { resolution?: number; treeBand?: () => BaseTexture | null } = {},
+  ) {
+    this.treeBand = opts.treeBand ?? (() => null)
     registerShaders()
     const engine = scene.getEngine()
     this.resolution = opts.resolution ?? SHELTER_RESOLUTION
@@ -231,15 +284,19 @@ export class WeatherShelter implements ShelterMap {
 
     this.texture.getCustomRenderList = () => {
       this.list.length = 0
+      this.treeList.length = 0
       const cx = this.pending.x, cz = this.pending.z
       const r = SHELTER_SIZE_M / 2
+      const tree = this.treeHeightMaterial()
       for (const m of this.candidates()) {
         if (m.isDisposed() || !m.isEnabled() || !m.isVisible || !m.getTotalVertices()) continue
         const bb = m.getBoundingInfo().boundingBox
         if (bb.maximumWorld.x < cx - r || bb.minimumWorld.x > cx + r || bb.maximumWorld.z < cz - r || bb.minimumWorld.z > cz + r) continue
         this.list.push(m)
+        if (tree && isBandedTreeMesh(m)) this.treeList.push(m)
       }
       this.texture.setMaterialForRendering(this.list, this.material)
+      if (tree && this.treeList.length) this.texture.setMaterialForRendering(this.treeList, tree)
       return this.list
     }
     // A mesh whose height effect is still compiling makes Babylon retry the render next frame; after 30 tries it draws
@@ -270,7 +327,39 @@ export class WeatherShelter implements ShelterMap {
       seen.add(key)
       if (!this.material.isReady(m, inst || m.hasThinInstances)) ready = false
     }
+    // PLAZA-RAIN: the banded tree groups' SH_BAND variant (once the band texture exists).
+    const tree = this.treeHeightMaterial()
+    if (tree) {
+      for (const m of this.candidates()) {
+        if (m.isDisposed() || !m.getTotalVertices() || !isBandedTreeMesh(m)) continue
+        if (!tree.isReady(m, false)) ready = false
+        break
+      }
+    }
     return ready
+  }
+
+  /**
+   * The SH_BAND height material, bound to the world's current band texture (null while there is none: the tree groups
+   * then show every tier in the world too, and the plain material draws what they draw).
+   */
+  private treeHeightMaterial(): ShaderMaterial | null {
+    const band = this.treeBand()
+    if (!band) return null
+    if (!this.treeMaterial) {
+      const engine = this.scene.getEngine()
+      this.treeMaterial = new ShaderMaterial('wxShelterHeightTree', this.scene, 'sroShelterHeight', {
+        attributes: ['position', FOLIAGE_PIVOT_KIND],
+        uniforms: ['world', 'viewProjection', 'shParams'],
+        samplers: [TREE_BAND_SAMPLER],
+        defines: ['#define SH_BAND', ...(this.packed ? ['#define WX_OCC8'] : [])],
+        shaderLanguage: engine.isWebGPU ? ShaderLanguage.WGSL : ShaderLanguage.GLSL,
+      })
+      this.treeMaterial.backFaceCulling = false
+      this.treeMaterial.setVector4('shParams', this.params)
+    }
+    this.treeMaterial.setTexture(TREE_BAND_SAMPLER, band)
+    return this.treeMaterial
   }
 
   /** The map texture as the plugins read it. */
@@ -391,10 +480,13 @@ export class WeatherShelter implements ShelterMap {
     this.texture.getCustomRenderList = null
     this.texture.dispose()
     this.material.dispose()
+    this.treeMaterial?.dispose()
+    this.treeMaterial = null
     this.camera.dispose()
     this.cpu = null
     this.onRendered = null
     this.list.length = 0
+    this.treeList.length = 0
   }
 }
 

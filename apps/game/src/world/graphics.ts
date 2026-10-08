@@ -63,6 +63,7 @@ import { framePace, type FramePace } from './frame-pace.ts'
 import { CrowdBudget, crowdShadowRule, type CrowdView } from './crowd-budget.ts'
 import type { EntityAttachment, EntityView } from './entities.ts'
 import { CHARACTER_LIGHTS, characterLightIntensities } from './features/weather.ts'
+import { setCharPhysicsConfig } from '../three/char-physics.ts'
 
 /**
  * Character materials on the PBR path take this many lights (D12: the celestial light, the night pool fallback's 2 and
@@ -357,6 +358,7 @@ export class WorldGraphics {
     if (canSwitch && e.render === 'pbr') w.setRenderMode('pbr')
     const life = seams.life
     life?.setEnabled(e.wildlife)
+    setCharPhysicsConfig(e.charPhysics)
     if (life && this.o.threats && life !== this.threatsTo) {
       this.threatsTo = life
       life.setThreats?.(this.o.threats)

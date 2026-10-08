@@ -56,6 +56,9 @@ export const enRender = {
   'options.wildlife': 'Wildlife',
   'options.wildlife.on': 'On',
   'options.wildlife.off': 'Off',
+  // CHARACTERS §16.2: the licensed characters' springs (settings.ts graphics.hairCloth, graphics.bodyPhysics)
+  'options.hairCloth': 'Hair & cloth physics',
+  'options.bodyPhysics': 'Body physics',
   // Wave 11 (docs/TOWN_LIFE.md §8.2): Options → Graphics → Town life (settings.ts graphics.townLife)
   'options.townLife': 'Town life',
   'options.townLife.auto': 'Auto',
@@ -69,7 +72,7 @@ export const enRender = {
   'options.advanced.batching': 'World batching',
   'options.advanced.batching.on': 'On',
   'options.advanced.batching.off': 'Off',
-  'options.advanced.lightShafts': 'Light shafts',
+  'options.advanced.lightShafts': 'Volumetric light',
   'options.advanced.lightShafts.auto': 'Auto',
   'options.advanced.lightShafts.off': 'Off',
   'options.advanced.lightShafts.low': 'Low',

@@ -41,6 +41,19 @@ export interface GradeParams {
   saturation: number
   /** Contrast around the 0.45 pivot. */
   contrast: number
+  /**
+   * Lighting pass 2 (docs/LIGHTING.md §5): a filmic S-curve blended in by this share (0 = none; toe down, shoulder
+   * up, steeper mids), the split tone (shadows × `shadowTint`, highlights × `highlightTint` by luma, at `split`),
+   * the skin line (`skin`: orange-red, mid-saturation colours turn towards a yellower hue and keep their saturation,
+   * so skin stops reading pink under a warm, saturated grade) and `demagenta` (low-saturation magenta and lavender
+   * hues turn towards blue: no lavender faces and walls under the twilight sky).
+   */
+  curve?: number
+  split?: number
+  shadowTint?: RGB
+  highlightTint?: RGB
+  skin?: number
+  demagenta?: number
 }
 
 export const IDENTITY_GRADE: Readonly<GradeParams> = Object.freeze<GradeParams>({ gain: [1, 1, 1], lift: [0, 0, 0], gamma: 1, saturation: 1, contrast: 1 })
@@ -51,13 +64,27 @@ export const IDENTITY_GRADE: Readonly<GradeParams> = Object.freeze<GradeParams>(
  * bluer and deeper (gamma 1.06 → 1, more contrast) now that NIGHT_AMBIENT lights the shadowed sides.
  */
 export const GRADE_TIME: Readonly<Record<LutTime, Readonly<GradeParams>>> = {
-  // Cool shadows, a pink-gold top end, a touch more saturation.
+  // Lighting pass 2 (docs/LIGHTING.md §5): a filmic S-curve, warm sun / cool shadow split tones, the skin line.
+  // Dawn: rose-gold highlights over cool shadows.
+  dawn: { gain: [1.05, 0.99, 0.94], lift: [0.004, 0.004, 0.014], gamma: 1.02, saturation: 1.08, contrast: 1.02,
+    curve: 0.3, split: 1, shadowTint: [0.94, 0.99, 1.08], highlightTint: [1.05, 1.0, 0.93], skin: 0.8, demagenta: 0.4 },
+  // Day: warm sun, cool shade, a filmic curve (richer contrast without crushing), colour from separation rather than a
+  // global boost; the skin line keeps faces from going pink (G/R towards 0.8).
+  day: { gain: [1.02, 1.0, 0.97], lift: [0, 0, 0.004], gamma: 0.98, saturation: 1.06, contrast: 1.0,
+    curve: 0.38, split: 1, shadowTint: [0.93, 0.98, 1.09], highlightTint: [1.05, 1.0, 0.93], skin: 1 },
+  // Golden hour: amber highlights, deep teal-blue shadows, a strong curve, no magenta.
+  dusk: { gain: [1.08, 1.0, 0.86], lift: [0.004, 0.004, 0.008], gamma: 1.0, saturation: 1.08, contrast: 1.0,
+    curve: 0.4, split: 1, shadowTint: [0.92, 0.98, 1.1], highlightTint: [1.1, 1.0, 0.84], skin: 0.9, demagenta: 0.8 },
+  // Moonlit: dark but readable, silver-blue highlights, deep navy shadows, no lavender.
+  night: { gain: [0.82, 0.94, 1.1], lift: [0.003, 0.007, 0.02], gamma: 0.94, saturation: 0.85, contrast: 1.0,
+    curve: 0.25, split: 1, shadowTint: [0.9, 0.97, 1.12], highlightTint: [0.98, 1.0, 1.04], skin: 0.5, demagenta: 1 },
+}
+
+/** The time grades before lighting pass 2 (the A/B's "before": LIGHT_LOOK.cinematicGrade off). */
+export const GRADE_TIME_V1: Readonly<Record<LutTime, Readonly<GradeParams>>> = {
   dawn: { gain: [1.05, 0.99, 0.94], lift: [0.004, 0.004, 0.014], gamma: 1.02, saturation: 1.08, contrast: 1.02 },
-  // Slightly warm and rich: the "warmer, deeper" day.
-  day: { gain: [1.02, 1.0, 0.97], lift: [0, 0, 0.004], gamma: 1, saturation: 1.06, contrast: 1.04 },
-  // Golden hour: warm gain, warm (not blue) shadow lift.
+  day: { gain: [1.02, 1.0, 0.97], lift: [0, 0, 0.004], gamma: 0.96, saturation: 1.1, contrast: 1.06 },
   dusk: { gain: [1.08, 1.0, 0.86], lift: [0.008, 0.005, 0.002], gamma: 1.02, saturation: 1.06, contrast: 1.03 },
-  // Moonlit navy: blue gain, lifted blue shadows so the night stays readable, deeper mids.
   night: { gain: [0.8, 0.92, 1.12], lift: [0.004, 0.008, 0.024], gamma: 0.9, saturation: 0.9, contrast: 1.03 },
 }
 
@@ -126,9 +153,88 @@ export function gradeColor(c: number[], p: Readonly<GradeParams>): number[] {
     if (p.gamma !== 1) v = Math.pow(v, 1 / p.gamma)
     c[i] = v
   }
+  if (p.split) splitTone(c, p.split, p.shadowTint ?? ONE, p.highlightTint ?? ONE)
   const luma = 0.2126 * c[0]! + 0.7152 * c[1]! + 0.0722 * c[2]!
-  for (let i = 0; i < 3; i++) c[i] = clamp01((luma + (c[i]! - luma) * p.saturation - 0.45) * p.contrast + 0.45)
+  // The skin line's protection: skin hues get at most half the saturation boost.
+  const sat = p.skin && p.saturation > 1 ? 1 + (p.saturation - 1) * (1 - 0.5 * skinWeight(c) * Math.min(1, p.skin)) : p.saturation
+  for (let i = 0; i < 3; i++) c[i] = clamp01((luma + (c[i]! - luma) * sat - 0.45) * p.contrast + 0.45)
+  if (p.curve) for (let i = 0; i < 3; i++) c[i] = filmicS(c[i]!, p.curve)
+  // The skin line and the de-magenta last, so the warm split and the curve cannot push skin back to pink.
+  if (p.skin || p.demagenta) hueCorrect(c, p.skin ?? 0, p.demagenta ?? 0)
   return c
+}
+
+const ONE: RGB = [1, 1, 1]
+
+/** The filmic S in display space: a smoothstep (slope 0 at black and white) blended in by k. */
+export function filmicS(v: number, k: number): number {
+  const x = clamp01(v)
+  const s = x * x * (3 - 2 * x)
+  return x + (s - x) * k
+}
+
+/** Split tone: shadows × sTint, highlights × hTint, weighted by luma (luma-preserving). */
+function splitTone(c: number[], amount: number, sTint: Readonly<RGB>, hTint: Readonly<RGB>): void {
+  const l = 0.2126 * c[0]! + 0.7152 * c[1]! + 0.0722 * c[2]!
+  const w = smoothstep(0.08, 0.75, l)
+  const t0 = 1 + (sTint[0] + (hTint[0] - sTint[0]) * w - 1) * amount
+  const t1 = 1 + (sTint[1] + (hTint[1] - sTint[1]) * w - 1) * amount
+  const t2 = 1 + (sTint[2] + (hTint[2] - sTint[2]) * w - 1) * amount
+  const r = c[0]! * t0, g = c[1]! * t1, b = c[2]! * t2
+  const l2 = 0.2126 * r + 0.7152 * g + 0.0722 * b
+  const k = l2 > 1e-5 ? l / l2 : 1
+  c[0] = clamp01(r * k)
+  c[1] = clamp01(g * k)
+  c[2] = clamp01(b * k)
+}
+
+/** Hue (degrees 0..360), saturation (max − min) / max and value of a colour. */
+function hueSat(c: readonly number[]): [number, number, number] {
+  const r = c[0]!, g = c[1]!, b = c[2]!
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn
+  if (d < 1e-6) return [0, 0, mx]
+  let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4
+  h *= 60
+  if (h < 0) h += 360
+  return [h, d / Math.max(1e-6, mx), mx]
+}
+
+function fromHsv(h: number, s: number, v: number, out: number[]): void {
+  const hh = (((h % 360) + 360) % 360) / 60
+  const i = Math.floor(hh), f = hh - i
+  const p = v * (1 - s), q = v * (1 - s * f), t = v * (1 - s * (1 - f))
+  const rgb = [[v, t, p], [q, v, p], [p, v, t], [p, q, v], [t, p, v], [v, p, q]][i % 6]!
+  out[0] = rgb[0]!
+  out[1] = rgb[1]!
+  out[2] = rgb[2]!
+}
+
+/** How much a colour is skin: hue −12…45° (full 8–30°), saturation 0.12…0.8 (the red lacquer and roofs are above). */
+export function skinWeight(c: readonly number[]): number {
+  const [h, s] = hueSat(c)
+  const hh = h > 300 ? h - 360 : h
+  const wh = smoothstep(-12, 8, hh) * (1 - smoothstep(30, 45, hh))
+  const ws = smoothstep(0.12, 0.2, s) * (1 - smoothstep(0.68, 0.8, s))
+  return wh * ws
+}
+
+/** The skin line (hue towards 34°) and the de-magenta (hues 250–356° at low saturation towards 225°). */
+function hueCorrect(c: number[], skin: number, demagenta: number): void {
+  const [h, s, v] = hueSat(c)
+  if (s < 1e-4) return
+  let nh = h
+  if (skin > 0) {
+    const w = skinWeight(c) * Math.min(1, skin)
+    if (w > 0) {
+      const hh = h > 300 ? h - 360 : h
+      nh = hh + (34 - hh) * 0.75 * w
+    }
+  }
+  if (demagenta > 0 && h >= 250 && h <= 356) {
+    const wm = smoothstep(250, 275, h) * (1 - smoothstep(342, 356, h)) * (1 - smoothstep(0.25, 0.45, s)) * Math.min(1, demagenta)
+    nh = h + (225 - h) * 0.8 * wm
+  }
+  if (nh !== h) fromHsv(nh, s, v, c)
 }
 
 /**
@@ -157,9 +263,9 @@ export function makeLutStrip(steps: ReadonlyArray<Readonly<GradeParams>>, out = 
 }
 
 /** The built-in strip of a key (time grade, then weather grade). */
-export function builtinLutStrip(key: LutKey): Uint8Array {
+export function builtinLutStrip(key: LutKey, legacy = false): Uint8Array {
   const [t, w] = key.split('_') as [LutTime, LutWeather]
-  return makeLutStrip([GRADE_TIME[t], GRADE_WEATHER[w]])
+  return makeLutStrip([(legacy ? GRADE_TIME_V1 : GRADE_TIME)[t], GRADE_WEATHER[w]])
 }
 
 function smoothstep(e0: number, e1: number, x: number): number {
@@ -283,6 +389,16 @@ export class GradeMixer {
     this.texture.wrapU = this.texture.wrapV = this.texture.wrapR = Texture.CLAMP_ADDRESSMODE
     this.texture.level = 1
   }
+
+  /** The lab's A/B: the built-in keys of before lighting pass 2 (true) or today's (false); the next update re-uploads. */
+  setLegacy(legacy: boolean): void {
+    if (legacy === this.legacy) return
+    this.legacy = legacy
+    for (let i = 0; i < LUT_KEYS.length; i++) this.strips[i] = builtinLutStrip(LUT_KEYS[i]!, legacy)
+    this.dirty = true
+  }
+
+  private legacy = false
 
   /** Replaces one key's strip (a loaded PNG); the next update re-uploads. */
   setStrip(key: LutKey, strip: Uint8Array): void {

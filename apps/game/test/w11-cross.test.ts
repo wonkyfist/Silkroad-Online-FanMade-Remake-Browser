@@ -24,6 +24,7 @@ import '@babylonjs/loaders/glTF/2.0/index.js'
 import { phaseForSolarTime, type EntityState, type ServerMessage, type TownFile, type WorldClockState } from '@sro/shared'
 import { isTownMesh, type World } from '@sro/world-render'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { setTownLifeOff } from '../src/settings.ts'
 
 /** The town sound's registration (townSoundFeature needs a GameAudio): the test's TownAudio stands in for it. */
 const sound = vi.hoisted(() => ({ audio: null as null | { setFolkCounter(fn: unknown): void; setExternal(e: unknown): void }, counter: null as unknown }))
@@ -51,6 +52,9 @@ import type { WorldFeatureContext } from '../src/world/features.ts'
 import { townFeature } from '../src/world/features/town.ts'
 import { scheduleFolkCounter, setTownFolkCounter } from '../src/world/features/town-sound.ts'
 import { WorldGraphics, worldTown } from '../src/world/graphics.ts'
+
+// Town life is switched off in the game (settings.ts TOWN_LIFE_OFF); these tests cover the system itself.
+setTownLifeOff(false)
 
 const ROOT = join(import.meta.dirname, '../../..')
 const JANGAN = JSON.parse(readFileSync(join(ROOT, 'content/town/jangan.json'), 'utf8')) as TownFile

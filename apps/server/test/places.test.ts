@@ -46,18 +46,18 @@ describe('places.json (units)', () => {
       { name: 'jangan', x: 0, z: 0, group: 'town' },
       { name: 'spawn', x: 0, z: 0, group: 'town' },
       { name: 'grassland', x: 10, z: 10, group: 'fields' },
-      { name: 'western-china-ferry', x: -1440, z: -480, group: 'fields' },
+      { name: 'jangan-ferry', x: -1824, z: 96, group: 'fields' },
       { name: 'beach-south', x: 480, z: 1228.8, group: 'coast' },
     ]
     const authored: Place[] = [
       { name: 'plaza', x: 97, z: -63, group: 'town' },
-      { name: 'western-china-ferry', x: -1419.8, z: -344.3, group: 'fields' },
+      { name: 'jangan-ferry', x: -1810.5, z: 60.2, group: 'fields' },
       { name: 'jangan-south-beach', x: 480, z: 1276, group: 'coast', aliases: ['beach-south'] },
       { name: 'spawn', x: 1, z: 1, group: 'town' },
     ]
     const m = mergePlaces(base, authored, 'Jangan')
-    expect(m.places.map((p) => p.name)).toEqual(['jangan', 'spawn', 'grassland', 'western-china-ferry', 'plaza', 'jangan-south-beach'])
-    expect(m.places.find((p) => p.name === 'western-china-ferry')).toMatchObject({ x: -1419.8, z: -344.3 })
+    expect(m.places.map((p) => p.name)).toEqual(['jangan', 'spawn', 'grassland', 'jangan-ferry', 'plaza', 'jangan-south-beach'])
+    expect(m.places.find((p) => p.name === 'jangan-ferry')).toMatchObject({ x: -1810.5, z: 60.2 })
     expect(m.places.find((p) => p.name === 'spawn')).toMatchObject({ x: 0, z: 0 })
     expect(m.problems).toEqual(["places.json: spawn: spawn is the town spawn's name"])
     expect(findPlace(m.places, 'beach-south')?.name).toBe('jangan-south-beach')
@@ -276,8 +276,12 @@ describe.skipIf(!FIELDS_READY)('the teleport places on the real jangan-fields ex
   it('has the town spots, the retail areas, the coast and the 11 Tiger Girl camps, beach-south as an alias', () => {
     const names = kept.map((p) => p.name)
     for (const n of ['plaza', 'palace-steps', 'south-gate', 'north-gate', 'east-gate', 'west-gate', 'market', 'smith', 'stable', 'pond', 'storage']) expect(names).toContain(n)
-    // the 13 retail areas: Jangan itself is the town spawn (tp jangan), the other 12 are fields
-    expect(kept.filter((p) => p.group === 'fields')).toHaveLength(12)
+    // the 12 retail areas: Jangan itself is the town spawn (tp jangan), the other 11 are fields, plus the Climb's two
+    // high-country places (ferry-heights, sea-cliffs). The Western China side across the strait is open sea now
+    // (docs/COAST.md §4.1): no western-china-ferry.
+    expect(kept.filter((p) => p.group === 'fields')).toHaveLength(13)
+    for (const n of ['ferry-heights', 'sea-cliffs', 'canyon-lord-lair']) expect(names).toContain(n)
+    expect(names.filter((n) => /western-china|donwhang|okmungwan|earth-ghost/.test(n))).toEqual([])
     for (let i = 1; i <= 11; i++) expect(names).toContain(`tiger-camp-${i}`)
     expect(names).toContain('jangan-south-beach')
     expect(names).not.toContain('beach-south')
@@ -296,7 +300,7 @@ describe.skipIf(!FIELDS_READY)('the teleport places on the real jangan-fields ex
     }
   })
 
-  it('town spots are in Jangan, area places in their own area (western-china-ferry too), the coast above the sea, camps by their nests', () => {
+  it('town spots are in Jangan, area places in their own area, the coast above the sea, camps by their nests', () => {
     const origin = setup.regionOrigin
     for (const a of authored.places) {
       const zone = data.zoneName(a.x, a.z, origin)
@@ -309,7 +313,8 @@ describe.skipIf(!FIELDS_READY)('the teleport places on the real jangan-fields ex
         expect(Math.hypot(nest.x - a.x, nest.z - a.z), a.name).toBeLessThan(40)
       }
     }
-    expect(authored.places.find((p) => p.name === 'western-china-ferry')?.snap?.area).toBe('Western China Ferry')
+    // nothing authored points at the drowned Western China side or toward Donwhang
+    expect(authored.places.filter((p) => /western china|donwhang/i.test(`${p.name} ${p.snap?.area ?? ''}`))).toEqual([])
     // the camps are all of Tiger Girl's
     const camps = data.nests.filter((n) => n.mob === 'MOB_CH_TIGERWOMAN' && n.world === 'jangan').map((n) => n.id).sort()
     expect(authored.places.filter((p) => p.group === 'bosses').map((p) => p.snap!.nest).sort()).toEqual(camps)

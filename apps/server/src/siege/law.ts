@@ -5,6 +5,7 @@ import {
   wallName,
   wantedBounty,
   wantedOnlineMs,
+  type CaptureRule,
   type ServerMessage,
   type SiegeEventSettings,
   type WantedView,
@@ -13,7 +14,7 @@ import {
 } from '@sro/shared'
 import type { Gameplay } from '../gameplay.ts'
 import type { GmResult } from '../gm.ts'
-import { addGold, type Fail } from '../inventory.ts'
+import { addGold, fail, type Fail } from '../inventory.ts'
 import type { GameplayModule } from '../modules.ts'
 import type { Player } from '../world.ts'
 import type { Planter } from './keg.ts'
@@ -43,7 +44,10 @@ import { LawStore, type WarrantRow } from './law-store.ts'
  * - GM `law` (LAW_USAGE).
  */
 
-export const LAW_USAGE = 'law [status] | law record <name> | law wanted <name> [off] | law lapse <name> [minutes] | law pardon <name> | law forgive <name> [all] | law capture <name> [captor] | law cooldown <name> | law kegs'
+const DAY_MS = 86_400_000
+
+export const LAW_USAGE =
+  'law [status] | law record <name> | law wanted <name> [off] | law lapse <name> [minutes] | law pardon <name> | law forgive <name> [all] | law capture <name> [captor] | law cooldown <name> | law kegs | law jail <name> <minutes> [reason] | law release <name> | law hunter <name> [licence|revoke|duty on|off]'
 /** Open warrants' online time is written this often (ms). */
 export const LAW_SAVE_MS = 30_000
 
@@ -81,6 +85,8 @@ export interface CaptureResult {
   bounty: number
   /** characterId -> gold paid. */
   paid: Map<number, number>
+  /** Layer 6: every captor judged: the gold paid, whether the capture counts for them, the rule that withheld a reward. */
+  captors: { characterId: number; name: string; gold: number; credit: boolean; rule?: CaptureRule }[]
   /** The sentence the jail serves (ms; layer 6). */
   sentenceMs: number
   offence: number
@@ -97,6 +103,7 @@ export class LawService implements GameplayModule {
   private readonly open = new Map<number, OpenWarrant[]>()
   private hits: KegHit[] = []
   private booted = false
+  private nextPrune = 0
   private storeCache: LawStore | null = null
   private ipLookup: ((p: Player) => string | null) | null = null
   private readonly accounts = new Map<number, number | null>()
@@ -171,8 +178,10 @@ export class LawService implements GameplayModule {
     return a.ip !== null && this.ipOf(q) === a.ip
   }
 
-  /** Layer 6 hook: the jail and Hunter duty refuse kegs (null: allowed). */
-  kegRefusal(_p: Player): Fail | null {
+  /** Layer 6: the jail and Hunter duty refuse kegs (null: allowed). */
+  kegRefusal(p: Player): Fail | null {
+    if (this.g.jail.jailedNow(p)) return fail('jailed', 'Not from the Garrison Stockade.')
+    if (this.g.hunters.onDuty(p)) return fail('not_usable', 'A Hunter on duty does not blow up walls (and one who does loses the licence).')
     return null
   }
 
@@ -212,6 +221,14 @@ export class LawService implements GameplayModule {
     return v
   }
 
+  /** Every open warrant with its online time left (live for the online; the admin's Law tab). */
+  openList(): { row: WarrantRow; leftMs: number; online: boolean }[] {
+    return this.store.allOpen().map((row) => {
+      const live = this.open.get(row.character_id)?.find((w) => w.id === row.id)
+      return { row, leftMs: Math.max(0, Math.round(live ? live.leftMs : row.online_ms_left)), online: !!live }
+    })
+  }
+
   /** Listeners on a character's Wanted state (bounty 0 = no longer Wanted). */
   onWanted(fn: (characterId: number, bounty: number) => void): () => void {
     this.listeners.push(fn)
@@ -219,6 +236,11 @@ export class LawService implements GameplayModule {
       const i = this.listeners.indexOf(fn)
       if (i >= 0) this.listeners.splice(i, 1)
     }
+  }
+
+  /** The most a bounty may be (gold): law.bountyKegPct % of the Thunder Keg's price. */
+  bountyCap(): number {
+    return Math.floor((this.g.siege.settings.keg.gold * this.settings.bountyKegPct) / 100)
   }
 
   /** The account's offence level now (forgiveness applied). */
@@ -250,7 +272,8 @@ export class LawService implements GameplayModule {
     this.boot(now)
     const win = this.settings.accompliceWindowMin * 60_000
     this.hits = this.hits.filter((h) => now - h.at <= win)
-    const prior = [...new Set(this.hits.filter((h) => h.seg === seg && h.characterId !== planter.characterId).map((h) => h.characterId))]
+    // layer 6: a released prisoner's pardon covers older kegs (no accomplice from them)
+    const prior = [...new Set(this.hits.filter((h) => h.seg === seg && h.characterId !== planter.characterId && !this.g.jail.pardoned(h.characterId, now)).map((h) => h.characterId))]
     this.hits.push({ seg, at: now, characterId: planter.characterId })
     if (!opened) return
     // everyone on this breach is charged now: their hits on the segment are spent
@@ -274,6 +297,8 @@ export class LawService implements GameplayModule {
         this.barred.set(ev.id, list)
       }
     }
+    // layer 6: a Hunter who breaks a wall loses the licence (docs/SIEGE.md §8.2)
+    for (const x of issued) this.g.hunters.revokeFor(x.characterId, now, 'you broke the wall of Jangan')
     this.g.config.log(`law: ${breaker.name} breached ${seg}${treason ? ' (treason)' : ''}: ${issued.map((x) => `${x.name} ${x.role} offence ${x.offence} bounty ${x.bounty}`).join(', ')}`)
   }
 
@@ -293,7 +318,8 @@ export class LawService implements GameplayModule {
         levels.set(acc, rec.offences)
       }
       const offence = levels.get(acc)!
-      const bounty = wantedBounty(offence, x.role, treason, s)
+      // anti-collusion: a bounty never pays more than the keg cost (law.bountyKegPct of keg.gold)
+      const bounty = Math.min(wantedBounty(offence, x.role, treason, s), this.bountyCap())
       const leftMs = wantedOnlineMs(s)
       const id = this.store.issue({ account: acc, character: x.characterId, reason: 'wall', role: x.role, wall, offence, bounty, treason, issuedAt: now, onlineMsLeft: leftMs })
       const name = this.g.store.characterById(x.characterId)?.name ?? `#${x.characterId}`
@@ -328,10 +354,15 @@ export class LawService implements GameplayModule {
     }
   }
 
-  private sendState(p: Player, now: number): void {
+  /** The own law state: the warrant, the offence level, and (layer 6) the Hunter's and the prisoner's state. */
+  sendState(p: Player, now: number): void {
     const msg: Extract<ServerMessage, { t: 'lawState' }> = { t: 'lawState', offences: this.offences(this.accountOf(p.characterId) ?? 0, now) }
     const w = this.open.get(p.characterId)?.length ? this.wantedOf(p.characterId) : null
     if (w) msg.wanted = w
+    const h = this.g.hunters.viewOf(p, now)
+    if (h) msg.hunter = h
+    const j = this.g.jail.viewOf(p, now)
+    if (j) msg.jail = j
     p.send(msg)
   }
 
@@ -351,37 +382,112 @@ export class LawService implements GameplayModule {
   }
 
   /**
-   * Layer 6's capture hook: the Wanted `characterId` is caught. Every open warrant closes `captured`; the bounty is paid
-   * by the server to `captors` by `share` (associates of the Wanted get nothing); returns the sentence (the longest of
-   * its warrants) for the jail. null: not Wanted.
+   * Layer 6's capture: the Wanted `characterId` is caught. Every open warrant closes `captured` (the jail follows);
+   * the bounty is paid by the server to `captors` by `share`, under the anti-collusion rules (docs/SIEGE.md §8.6):
+   * - `associate` (party, guild, the same account, the same IP) and `contact` / `lookout` (the accounts traded, used a
+   *   stall, partied within `law.contactDays`, or the Hunter watched the keg) claim nothing and get no capture credit
+   *   (their share goes to the others);
+   * - `pair`: the same Hunter account caught the same Wanted account within `law.pairCooldownDays`: no gold, no credit
+   *   (the share stays with the server);
+   * - `repeat`: each earlier capture of the Wanted account in that window takes `law.repeatPct` % off; from
+   *   `law.repeatMax` captures on nothing is paid and nobody gets credit;
+   * - `daily_cap`: a Hunter account earns at most `hunter.dailyBountyCap` gold of bounties per 24 h.
+   * Every withheld reward is a law_flags row (the admin Law tab). Returns the sentence (the longest of the warrants)
+   * for the jail; null: not Wanted.
    */
   capture(characterId: number, captors: { player: Player; share: number }[], now: number): CaptureResult | null {
     const list = this.warrantsOf(characterId)
     if (!list.length) return null
-    const bounty = list.reduce((s, w) => s + w.bounty, 0)
-    const assoc = this.associates(characterId)
-    const fair = captors.filter((c) => c.share > 0 && !this.isAssociate(assoc, c.player))
-    const total = fair.reduce((s, c) => s + c.share, 0)
-    const paid = new Map<number, number>()
-    for (const c of fair) {
-      const gold = Math.floor((bounty * c.share) / total)
-      if (gold <= 0) continue
-      const { result, draft } = this.g.store.inventoryTx(c.player.characterId, (d) => addGold(d, gold))
-      if (!result.ok) continue
-      this.g.afterInventory(c.player, draft)
-      paid.set(c.player.characterId, gold)
-      c.player.send({ t: 'chat', channel: 'system', text: `The garrison pays you ${gold.toLocaleString('en-US')} gold of the bounty.` })
-    }
-    const closed = this.close(characterId, 'captured', now, [...paid].map(([c, gold]) => ({ character: c, gold })))
-    const name = this.g.store.characterById(characterId)?.name ?? `#${characterId}`
-    this.broadcast({ t: 'lawNotice', event: 'captured', name, bounty })
     const s = this.settings
+    const bounty = list.reduce((sum, w) => sum + w.bounty, 0)
+    const wantedAcc = this.accountOf(characterId)
+    const assoc = this.associates(characterId)
+    const hunters = this.g.hunters.store
+    const earlier = wantedAcc === null ? [] : hunters.capturesOf(wantedAcc, now - s.pairCooldownDays * DAY_MS)
+    const repeatMul = earlier.length >= s.repeatMax ? 0 : (1 - s.repeatPct / 100) ** earlier.length
+    const judged = captors
+      .filter((c) => c.share > 0)
+      .map((c) => {
+        const acc = this.accountOf(c.player.characterId)
+        let rule: CaptureRule | null = null
+        if (this.isAssociate(assoc, c.player)) rule = 'associate'
+        else {
+          const met = acc !== null && wantedAcc !== null ? this.store.contactSince(acc, wantedAcc, now - s.contactDays * DAY_MS) : null
+          if (met) rule = met === 'lookout' ? 'lookout' : 'contact'
+          else if (acc !== null && earlier.some((e) => e.captors.some((x) => (x.account ?? this.accountOf(x.character)) === acc))) rule = 'pair'
+        }
+        return { ...c, acc, rule }
+      })
+    // associates and contacts leave the split; a pair-rule captor's share stays with the server
+    const counted = judged.filter((c) => c.rule === null || c.rule === 'pair')
+    const total = counted.reduce((sum, c) => sum + c.share, 0)
+    const allShares = judged.reduce((sum, c) => sum + c.share, 0)
+    const dayCap = this.g.siege.settings.hunter.dailyBountyCap
+    const paid = new Map<number, number>()
+    const out: CaptureResult['captors'] = []
+    const records: { character: number; account: number | null; gold: number; credit: boolean; rule?: CaptureRule }[] = []
+    const name = this.g.store.characterById(characterId)?.name ?? `#${characterId}`
+    const flag = (c: { player: Player; acc: number | null }, rule: CaptureRule, withheld: number) => {
+      this.store.flag({ at: now, wanted_character: characterId, wanted_account: wantedAcc ?? 0, hunter_character: c.player.characterId, hunter_account: c.acc, rule, withheld }, { wanted: name, hunter: c.player.name })
+      this.g.config.log(`law: ${c.player.name}'s reward for ${name} withheld (${rule}, ${withheld} gold)`)
+    }
+    for (const c of judged) {
+      const full = total > 0 && (c.rule === null || c.rule === 'pair') ? Math.floor((bounty * c.share) / total) : Math.floor((bounty * c.share) / Math.max(1, allShares))
+      let gold = 0
+      let rule: CaptureRule | undefined = c.rule ?? undefined
+      let credit = c.rule === null
+      if (c.rule !== null) flag(c, c.rule, Math.floor(full * repeatMul))
+      else {
+        gold = Math.floor(full * repeatMul)
+        if (gold < full) {
+          rule = 'repeat'
+          if (repeatMul === 0) credit = false
+          flag(c, 'repeat', full - gold)
+        }
+        if (gold > 0 && c.acc !== null) {
+          const since = now - DAY_MS
+          const earned = hunters.capturesSince(since).reduce((sum, e) => sum + e.captors.filter((x) => (x.account ?? this.accountOf(x.character)) === c.acc).reduce((t, x) => t + (x.gold ?? 0), 0), 0)
+          const room = Math.max(0, dayCap - earned)
+          if (gold > room) {
+            flag(c, 'daily_cap', gold - room)
+            rule = 'daily_cap'
+            gold = room
+          }
+        }
+      }
+      if (gold > 0) {
+        const g = gold
+        const { result, draft } = this.g.store.inventoryTx(c.player.characterId, (d) => addGold(d, g))
+        if (result.ok) {
+          this.g.afterInventory(c.player, draft)
+          paid.set(c.player.characterId, gold)
+          c.player.send({ t: 'chat', channel: 'system', text: `The garrison pays you ${gold.toLocaleString('en-US')} gold of the bounty.` })
+        } else gold = 0
+      }
+      records.push(rule ? { character: c.player.characterId, account: c.acc, gold, credit, rule } : { character: c.player.characterId, account: c.acc, gold, credit })
+      out.push(rule ? { characterId: c.player.characterId, name: c.player.name, gold, credit, rule } : { characterId: c.player.characterId, name: c.player.name, gold, credit })
+    }
+    const closed = this.close(characterId, 'captured', now, records)
+    this.broadcast({ t: 'lawNotice', event: 'captured', name, bounty })
     return {
       warrants: closed.map((w) => w.id),
       bounty,
       paid,
+      captors: out,
       sentenceMs: Math.max(0, ...list.map((w) => sentenceMs(w.offence, w.role, w.treason, s))),
       offence: Math.max(...list.map((w) => w.offence)),
+    }
+  }
+
+  /** Two characters' accounts met (a party; a lookout at a keg): the anti-collusion record (law_contacts). */
+  contact(a: number, b: number, kind: 'party' | 'lookout', now: number): void {
+    const x = this.accountOf(a)
+    const y = this.accountOf(b)
+    if (x === null || y === null || x === y) return
+    try {
+      this.store.touchContact(x, y, kind, now)
+    } catch (e) {
+      this.g.config.log(`law: a contact could not be saved: ${(e as Error)?.message ?? e}`)
     }
   }
 
@@ -418,6 +524,14 @@ export class LawService implements GameplayModule {
 
   tick(now: number): void {
     this.boot(now)
+    if (now >= this.nextPrune) {
+      this.nextPrune = now + 3_600_000
+      try {
+        this.store.pruneContacts(now - this.settings.contactDays * DAY_MS)
+      } catch {
+        // an old schema (tests that build one): nothing to prune
+      }
+    }
     for (const p of this.g.world.players.values()) {
       const list = this.open.get(p.characterId)
       if (!list?.length) continue
@@ -475,7 +589,17 @@ export class LawService implements GameplayModule {
     }
     if (verb === 'kegs') return { ok: true, message: this.g.kegs.describe(now) }
     const name = a[1]
-    if (!name) return { ok: false, message: `Usage: ${LAW_USAGE}` }
+    if (!name) {
+      if (verb === 'jail') {
+        const terms = this.g.jail.list(now)
+        return { ok: true, message: `In the Garrison Stockade (${terms.length}):\n${terms.map((t) => `${t.name}: ${fmtHours(t.leftMs)} left, ${t.chores} chores${t.online ? ' (online)' : ''}`).join('\n') || 'nobody'}` }
+      }
+      return { ok: false, message: `Usage: ${LAW_USAGE}` }
+    }
+    // layer 6: the jail and the Hunters
+    if (verb === 'jail') return this.g.jail.gmJail(name, Number(a[2]), a.slice(3).join(' '), now, who)
+    if (verb === 'release') return this.g.jail.gmRelease(name, now)
+    if (verb === 'hunter') return this.g.hunters.gm(name, a[2] ?? 'status', a[3], now)
     const row = this.g.store.characterByName(name.replace(/^@/, ''))
     if (!row) return { ok: false, message: `No character named ${name}.` }
     const acc = row.account_id
@@ -530,7 +654,9 @@ export class LawService implements GameplayModule {
       const captor = a[2] ? [...this.g.world.players.values()].find((p) => p.name.toLowerCase() === a[2]!.toLowerCase()) : self
       const r = this.capture(row.id, captor ? [{ player: captor, share: 1 }] : [], now)
       if (!r) return { ok: false, message: `${row.name} is not Wanted.` }
-      return { ok: true, message: `${row.name} is captured: ${r.warrants.length} warrant(s) closed, bounty ${r.bounty.toLocaleString('en-US')} gold (${[...r.paid].map(([c, g]) => `${this.g.store.characterById(c)?.name}: ${g}`).join(', ') || 'nobody paid'}); sentence ${fmtHours(r.sentenceMs)} (the jail comes with layer 6).`, data: { bounty: r.bounty, sentenceMs: r.sentenceMs } }
+      this.g.hunters.credit(r, row.name, now)
+      this.g.jail.imprison(row.id, r.sentenceMs, r.warrants[0] ?? null, now, `offence ${r.offence}, by ${who}`)
+      return { ok: true, message: `${row.name} is captured: ${r.warrants.length} warrant(s) closed, bounty ${r.bounty.toLocaleString('en-US')} gold (${[...r.paid].map(([c, g]) => `${this.g.store.characterById(c)?.name}: ${g}`).join(', ') || 'nobody paid'}); jailed for ${fmtHours(r.sentenceMs)}.`, data: { bounty: r.bounty, sentenceMs: r.sentenceMs } }
     }
     if (verb === 'cooldown') {
       this.store.setPlant(acc, null)

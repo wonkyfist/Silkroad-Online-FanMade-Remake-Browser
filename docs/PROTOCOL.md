@@ -519,6 +519,19 @@ from characterInfo's `ride` column (today only Tiger Girl on `bluetiger.glb`, jo
 exports. `content/uniques.json` (`UniquesFile`, `checkUniquesFile`; the server's start check) and the two town files
 (`TownFile` / `TownDressingFile`, `validateTownFile`) are in §14.
 
+### Rare weapons: the rare-drop notice (docs/RARITY.md §4.3)
+
+Additive, protocol v1: **one server message, no client request.** A seal (Seal of Star / Moon / Sun, `_A/_B/_C_RARE`)
+is an ordinary item code everywhere else (`ItemStack.code`, `EntityState.model` of a ground item, `equip`), so the
+looks need nothing new on the wire. An older client drops `rareNotice` (unknown type).
+
+| Direction | t | fields |
+|---|---|---|
+| server → client (world sockets only) | `rareNotice` | `by` (the loot owner's name, non-empty, ≤ 64), `item` (the seal code, ≤ 128), `name` (its English name, ≤ 64), `tier` (`'star'` | `'moon'` | `'sun'`) |
+
+- **Who gets it:** every player in the world when a monster's seal of rank `RARE_ANNOUNCE_FROM` and up (default 3 =
+  Sun) lands for its loot owner; never the lobby, no replay. The GM `rarity drop` sends it too.
+
 ### Winter: the snow season (docs/WINTER.md)
 
 All additive, protocol v1; server and client deploy together. **Client → server: nothing new.** The GM command `winter` uses the existing `gm` path. The shared maths is in `packages/shared/src/winter.ts` (`inSeason`, `nextSeasonChange`, `stepWinter`, `WINTER_RATES`, `FROST_ICE`, `WINTER_DEFAULTS`).

@@ -37,10 +37,10 @@ import { convertSkinnedItem } from './skinned-item.ts'
 
 export const GENERATOR = 'silkroad-web convert (packages/convert/src/equipment)'
 
-/** Chinese armour (degrees 1-3, parts HA CA SA BA LA AA FA, A/B/C and the creation defaults). */
-export const ARMOR_CODE = /^ITEM_CH_([MW])_(CLOTHES|LIGHT|HEAVY)_0([1-3])_(HA|CA|SA|BA|LA|AA|FA)_[ABC](_DEF)?$/
-export const SHIELD_CODE = /^ITEM_CH_SHIELD_0([1-3])_[ABC](_DEF)?$/
-export const WEAPON_CODE = /^ITEM_CH_(SWORD|BLADE|SPEAR|TBLADE|BOW)_0([1-3])_[ABC](_DEF)?$/
+/** Chinese armour (degrees 1-4, parts HA CA SA BA LA AA FA, A/B/C and the creation defaults; 4: docs/CLIMB.md §4.1.2). */
+export const ARMOR_CODE = /^ITEM_CH_([MW])_(CLOTHES|LIGHT|HEAVY)_0([1-4])_(HA|CA|SA|BA|LA|AA|FA)_[ABC](_DEF)?$/
+export const SHIELD_CODE = /^ITEM_CH_SHIELD_0([1-4])_[ABC](_DEF)?$/
+export const WEAPON_CODE = /^ITEM_CH_(SWORD|BLADE|SPEAR|TBLADE|BOW)_0([1-4])_[ABC](_DEF)?$/
 
 /** itemdata TypeID4 of Chinese armour -> equip slot (openroad textdata-itemdata; checked against the part suffix). */
 export const ARMOR_SLOT_BY_TID4: Readonly<Record<number, EquipSlot>> = { 1: 'head', 2: 'shoulders', 3: 'chest', 4: 'legs', 5: 'hands', 6: 'feet' }

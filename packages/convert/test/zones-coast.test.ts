@@ -8,6 +8,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { buildZones, coastAreaNamer } from '../src/data/zones.ts'
 import { parseCoastConfig } from '../src/world/coast/config.ts'
+import { configDrowns } from '../src/world/coast/drown.ts'
 import { REPO_ROOT } from '../src/node-io.ts'
 
 const cfg = parseCoastConfig(readFileSync(join(REPO_ROOT, 'content', 'coast', 'coast.json'), 'utf8'))
@@ -29,8 +30,40 @@ describe('coast area names (P-DATA)', () => {
     expect(name(175, 95, false)).toBe('East Shelf Beach')
     expect(name(176, 104, true)).toBe('Qin-Shi Tomb Beach')
     expect(name(166, 104, true)).toBe('Jangan Bay')
-    expect(name(155, 99, false)).toBeNull() // Option A's corridor is land
+    expect(name(155, 99, false)).toBeNull() // Option A's corridor (drowned now: buildZones clears it, below)
     expect(name(154, 93, true)).toBe('Western Strait')
+    // the sections whose line lies in the drowned area name nothing (N1, N2, A-S, A-N): the nearest kept section does
+    for (const [x, z] of [[158, 104], [162, 104], [153, 95], [150, 104]]) {
+      expect(['Western China Beach', 'Spur Cove', 'Canyon Beach', 'Northern Road Beach']).not.toContain(name(x, z, true))
+    }
+  })
+
+  it('drowns the Western China side and the land bridge toward Donwhang, whole regions, never Jangan land (COAST §4.1)', () => {
+    // Donwhang town (153, 102-103), the Entrance, the Western China Ferry, Main Road and Ruins, Earth Ghost Canyon
+    for (const [x, z] of [[153, 102], [153, 103], [155, 102], [156, 101], [158, 99], [160, 102], [161, 100], [154, 97], [162, 101]]) {
+      expect(configDrowns(cfg, x, z), `${x}_${z}`).toBe(true)
+    }
+    // Jangan: the town, the ferry shore, North-Tiger Mt., Yeoha's Forest, the bay, the Western Strait coast
+    for (const [x, z] of [[168, 97], [158, 96], [161, 97], [157, 95], [162, 98], [163, 99], [165, 103], [155, 93], [154, 91]]) {
+      expect(configDrowns(cfg, x, z), `${x}_${z}`).toBe(false)
+    }
+  })
+
+  it('buildZones gives a drowned region no name, area, continent or town', () => {
+    const header = ['//Service', 'CodeName128', 'x', 'x', 'x', 'x', 'x', 'x', 'English']
+    const row = (id: number, en: string) => ['1', String(id), 'k', '', '', '', '', '', en]
+    const zones = buildZones({
+      regions: [{ x: 153, z: 102 }, { x: 158, z: 99 }, { x: 158, z: 96 }],
+      zoneNames: [row((102 << 8) | 153, 'Western China Donwhang'), row((99 << 8) | 158, 'Western China Ferry'), row((96 << 8) | 158, 'Jangan Ferry')],
+      zoneHeader: header,
+      refregion: [[String((102 << 8) | 153), '153', '102', 'West_China', 'Town_Dunhwang'], [String((96 << 8) | 158), '158', '96', 'CHINA', '???']],
+      towns: [{ code: 'DUNHWANG', regions: [(102 << 8) | 153] }],
+      coastArea: name,
+      drowned: (x, z) => configDrowns(cfg, x, z),
+    })
+    expect(zones.map(z => [z.name, z.area, z.continent, z.town ?? null])).toEqual([
+      ['', null, null, null], ['', null, null, null], ['Jangan Ferry', null, 'CHINA', null],
+    ])
   })
 
   it('buildZones keeps the client name and fills only the nameless regions', () => {

@@ -2100,6 +2100,14 @@ body:has(.screen.world) .corner {
   top: 102px;
 }
 
+.hud-death-penalty {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 142px;
+  color: #ff9a80;
+}
+
 .kit-btn.hud-death-button {
   position: absolute;
   left: 62px;
@@ -2155,4 +2163,174 @@ body.hud-dragging * {
 .hud-help-keys {
   margin-left: 14px;
   color: #ffe9a6;
+}
+
+/* ---- the character creator (docs/CHARACTERS.md §16.9; screens/creator.ts) ---------------------------------------- */
+
+.creator .creator-panel,
+.creator .creator-side {
+  pointer-events: auto;
+  position: absolute;
+  color: var(--c-text, #fff);
+  font: 12px var(--font-body);
+}
+.creator .creator-panel-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.creator .creator-panel .kit-box-body {
+  display: flex;
+  gap: 6px;
+}
+.creator .creator-tabs {
+  flex: 0 0 auto;
+  gap: 2px;
+}
+.creator .creator-tabs .kit-tab {
+  min-width: 72px;
+}
+.creator .creator-content {
+  flex: 0 0 226px;
+  width: 226px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
+}
+.creator .creator-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+}
+/* buttons, plates and sliders keep their art size (a squeezed plate pushed its label off the art) */
+.creator .creator-row > .kit-btn,
+.creator .creator-row > .kit-slider,
+.creator .creator-row > .icon-btn,
+.creator .creator-row > .arrow {
+  flex-shrink: 0;
+}
+.creator .creator-row-end {
+  justify-content: flex-end;
+}
+.creator .creator-label {
+  flex: 0 0 64px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.creator .creator-heading {
+  margin-top: 4px;
+  color: var(--c-caption, #fff7ca);
+}
+.creator .creator-slider {
+  flex: 0 0 auto;
+}
+.creator .creator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 50px);
+  gap: 4px;
+}
+.creator .creator-grid.small {
+  grid-template-columns: repeat(5, 40px);
+}
+.creator .creator-grid.swatches {
+  grid-template-columns: repeat(8, 24px);
+  gap: 3px;
+}
+.creator .creator-grid.swatches.big {
+  grid-template-columns: repeat(5, 36px);
+  gap: 6px;
+}
+.creator .creator-grid.styles {
+  grid-template-columns: repeat(3, 48px);
+}
+.creator .creator-pick {
+  height: 50px;
+  padding: 0;
+  border: 1px solid #5a4a2a;
+  border-radius: 2px;
+  background: #111 center / cover no-repeat;
+  color: #e9dcb4;
+  font: bold 14px var(--font-body);
+  cursor: inherit;
+}
+.creator .creator-grid.small .creator-pick {
+  height: 40px;
+}
+.creator .creator-grid.swatches .creator-pick {
+  height: 24px;
+  font-size: 11px;
+}
+.creator .creator-grid.swatches.big .creator-pick {
+  height: 36px;
+}
+.creator .creator-grid.styles .creator-pick {
+  height: 30px;
+}
+.creator .creator-pick:hover {
+  border-color: #c9a85a;
+}
+.creator .creator-pick.on {
+  border: 2px solid #ffd66b;
+  box-shadow: 0 0 6px rgba(255, 214, 107, 0.6);
+}
+.creator .creator-note,
+.creator .creator-intro {
+  margin: 0;
+  line-height: 16px;
+  color: var(--c-hint, #cfc6ad);
+}
+.creator .creator-side .kit-box-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.creator .creator-side .field {
+  width: 138px;
+  height: 20px;
+  font: 12px/18px var(--font-body);
+  padding: 0 4px;
+  border: 1px solid #6b5a33;
+  background: #0b0a09;
+  color: #fff;
+  pointer-events: auto;
+}
+.creator .creator-value {
+  flex: 1 1 auto;
+  text-align: center;
+  white-space: nowrap;
+}
+.creator .creator-status {
+  min-height: 16px;
+  color: #b8e08a;
+}
+.creator .creator-status.bad {
+  color: #ff8a7a;
+}
+.creator .sex-button.on {
+  filter: drop-shadow(0 0 3px rgba(255, 214, 107, 0.7));
+}
+/* below 1280×720 at --ui 1 the panels shrink with the viewport (the turntable stays in the middle) */
+@media (max-height: 700px), (max-width: 1180px) {
+  .creator .creator-panel.anchored,
+  .creator .creator-side.anchored {
+    transform: translate(-50%, -50%) scale(calc(var(--ui) * 0.82));
+  }
+  .creator .creator-rotate.anchored {
+    transform: translate(-50%, -50%) scale(calc(var(--ui) * 0.82));
+  }
+}
+@media (max-height: 560px), (max-width: 900px) {
+  .creator .creator-panel.anchored,
+  .creator .creator-side.anchored {
+    transform: translate(-50%, -50%) scale(calc(var(--ui) * 0.66));
+  }
 }

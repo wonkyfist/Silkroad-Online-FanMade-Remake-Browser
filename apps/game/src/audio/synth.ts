@@ -166,3 +166,89 @@ export const BERSERK_SYNTH: Readonly<Record<string, () => Pcm>> = {
   'synth/bz_boom': () => boomPcm(),
   'synth/bz_exhale': () => exhalePcm(),
 }
+
+/** Two-pole resonant band-pass (RBJ, constant 0 dB peak) in place: centre `hz` (number or per-sample), quality `q`. */
+function bandpass(s: Float32Array, rate: number, hz: number | ((i: number) => number), q: number): Float32Array {
+  const out = new Float32Array(s.length)
+  let x1 = 0
+  let x2 = 0
+  let y1 = 0
+  let y2 = 0
+  for (let i = 0; i < s.length; i++) {
+    const f = typeof hz === 'number' ? hz : hz(i)
+    const w = (2 * Math.PI * f) / rate
+    const alpha = Math.sin(w) / (2 * q)
+    const a0 = 1 + alpha
+    const x = s[i]!
+    const y = (alpha * x - alpha * x2 + 2 * Math.cos(w) * y1 - (1 - alpha) * y2) / a0
+    out[i] = y
+    x2 = x1
+    x1 = x
+    y2 = y1
+    y1 = y
+  }
+  return out
+}
+
+/**
+ * Tiger Girl's roar (world/features/tiger-moves.ts), layered under the retail cm_bluetiger_find: a ragged throat pulse
+ * (65 → 105 → 50 Hz with jitter) through two jaw formants that open and close, a 26 Hz rattle of low noise (the growl),
+ * and a sub swell; 2.0 s, the peak about 0.35 s in.
+ */
+export function tigerRoarPcm(seed = 53): Pcm {
+  const rate = SYNTH_RATE
+  const n = Math.floor(rate * 2.0)
+  const rnd = synthRng(seed)
+  const pulse = new Float32Array(n)
+  let phase = 0
+  let jitter = 0
+  for (let i = 0; i < n; i++) {
+    const t = i / rate
+    // Pitch: up fast as the jaws open, a long falling tail.
+    const f0 = t < 0.3 ? 65 + 40 * (t / 0.3) : 50 + 55 * Math.exp(-(t - 0.3) / 0.6)
+    if (i % 64 === 0) jitter = (rnd() * 2 - 1) * 0.12
+    phase += (f0 * (1 + jitter)) / rate
+    if (phase >= 1) phase -= 1
+    // A glottal-ish pulse: a sharp sawtooth with a little noise in each period.
+    pulse[i] = (1 - 2 * phase) * 0.8 + (rnd() * 2 - 1) * 0.35
+  }
+  const open = (i: number) => {
+    const t = i / rate
+    return Math.min(1, t / 0.25) * Math.exp(-Math.max(0, t - 0.6) / 0.7)
+  }
+  const f1 = bandpass(pulse, rate, i => 260 + 260 * open(i), 3)
+  const f2 = bandpass(pulse, rate, i => 650 + 500 * open(i), 4)
+  const growl = new Float32Array(n)
+  for (let i = 0; i < n; i++) growl[i] = rnd() * 2 - 1
+  lowpass(growl, rate, 700)
+  lowpass(growl, rate, 900)
+  const s = new Float32Array(n)
+  for (let i = 0; i < n; i++) {
+    const t = i / rate
+    const env = (1 - Math.exp(-t / 0.06)) * Math.exp(-Math.max(0, t - 0.45) / 0.55)
+    const rattle = 0.55 + 0.45 * Math.sin(2 * Math.PI * 26 * t + Math.sin(2 * Math.PI * 3.1 * t) * 2)
+    const sub = Math.sin(2 * Math.PI * (44 - 8 * Math.min(1, t)) * t) * Math.min(1, t / 0.2) * Math.exp(-t / 0.9)
+    s[i] = (f1[i]! * 1.4 + f2[i]! * 0.7) * env * rattle + growl[i]! * env * rattle * 1.6 + sub * 0.55
+  }
+  lowpass(s, rate, 2400)
+  return { rate, samples: normalize(s, 0.95) }
+}
+
+/** The pounce's landing: a heavy body thump (80 → 32 Hz) over a short burst of low gravel noise; 0.7 s. */
+export function tigerThudPcm(seed = 59): Pcm {
+  const rate = SYNTH_RATE
+  const s = new Float32Array(Math.floor(rate * 0.7))
+  const rnd = synthRng(seed)
+  thump(s, rate, 0, 80, 32, 0.12, 1, rnd)
+  const grit = new Float32Array(s.length)
+  for (let i = 0; i < grit.length; i++) grit[i] = (rnd() * 2 - 1) * Math.exp(-(i / rate) / 0.09)
+  lowpass(grit, rate, 600)
+  for (let i = 0; i < s.length; i++) s[i] = s[i]! + grit[i]! * 1.2
+  return { rate, samples: normalize(s, 0.95) }
+}
+
+/** Tiger Girl's synthesized layers by id (GameAudio.prepareSynth keys). */
+export const TIGER_SYNTH: Readonly<Record<string, () => Pcm>> = {
+  'synth/tg_roar': () => tigerRoarPcm(),
+  'synth/tg_thud': () => tigerThudPcm(),
+}

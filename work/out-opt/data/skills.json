@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "skills",
-  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "generatedAt": "2026-10-06T20:57:59.063Z",
   "sources": [
     "client:skilldata.txt",
     "client:skilleffect.txt",
@@ -13401,6 +13401,5731 @@
           "args": [
             4,
             1
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_SMASH_A_09",
+      "id": 298,
+      "name": "Strike Smash",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 60,
+      "category": "melee",
+      "castMs": 411,
+      "actionMs": 1022,
+      "cooldownMs": 3000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_smash_a.png",
+      "group": "SKILL_CH_SWORD_SMASH_A",
+      "animation": {
+        "shot": "SKILL_1"
+      },
+      "damage": {
+        "physPct": 143,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swing your sword to inflict great damage to the enemy.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "overlap": 33554432,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            143,
+            47,
+            57,
+            143
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_1S_08",
+      "id": 321,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 8,
+      "sp": 62,
+      "mp": 85,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 428,
+      "cooldownMs": 8000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "chainNext": "SKILL_CH_SWORD_CHAIN_A_2S_08",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 30,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            30,
+            47,
+            57,
+            30
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_08",
+      "chainIndex": 1
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_2S_08",
+      "id": 329,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 8,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 612,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "chainNext": "SKILL_CH_SWORD_CHAIN_A_3S_08",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 53,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            53,
+            47,
+            57,
+            53
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_08",
+      "chainIndex": 2
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_3S_08",
+      "id": 337,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 8,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 993,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 120,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 3
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            120,
+            47,
+            57,
+            120
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_08",
+      "chainIndex": 3
+    },
+    {
+      "code": "SKILL_CH_SWORD_KNOCKDOWN_A_02",
+      "id": 605,
+      "name": "Blood Blade Force",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 2,
+      "sp": 62,
+      "mp": 88,
+      "category": "melee",
+      "castMs": 759,
+      "actionMs": 1107,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_knockdown_a.png",
+      "group": "SKILL_CH_SWORD_KNOCKDOWN_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 187,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Destroy the enemy with your force infused sword.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "statuses": [
+        {
+          "status": "knockdown",
+          "level": 21,
+          "chancePct": 50
+        }
+      ],
+      "overlap": 134217728,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            187,
+            47,
+            57,
+            187
+          ]
+        },
+        {
+          "tag": "ko",
+          "args": [
+            21,
+            50
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_DOWNATTACK_A_02",
+      "id": 639,
+      "name": "Flower Bloom Blade",
+      "mastery": "BICHEON",
+      "masteryLevel": 21,
+      "skillLevel": 2,
+      "sp": 62,
+      "mp": 78,
+      "category": "melee",
+      "castMs": 698,
+      "actionMs": 802,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_downattack_a.png",
+      "group": "SKILL_CH_SWORD_DOWNATTACK_A",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          47,
+          57
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Runs towards the fallen enemy and strikes him again.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "requiresTargetState": 1,
+      "overlap": 184549376,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            150,
+            47,
+            57,
+            150
+          ]
+        },
+        {
+          "tag": "da",
+          "args": [
+            125
+          ]
+        },
+        {
+          "tag": "reqc",
+          "args": [
+            1
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_PIERCE_A_09",
+      "id": 708,
+      "name": "Wolf Bite Spear",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 94,
+      "category": "melee",
+      "castMs": 568,
+      "actionMs": 1032,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_pierce_a.png",
+      "group": "SKILL_CH_SPEAR_PIERCE_A",
+      "animation": {
+        "shot": "SKILL_1"
+      },
+      "damage": {
+        "physPct": 160,
+        "magPct": 0,
+        "flat": [
+          57,
+          73
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Holds the spear with two hands and applies the piercing attack at the enemy in front.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "pierce",
+        "distance": 0.2,
+        "maxTargets": 2,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          3,
+          2,
+          2,
+          35,
+          24
+        ]
+      },
+      "overlap": 285212672,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            160,
+            57,
+            73,
+            160
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            3,
+            2,
+            2,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_ROUNDAREA_A_02",
+      "id": 806,
+      "name": "Ghost Spear - Petal",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 21,
+      "skillLevel": 2,
+      "sp": 62,
+      "mp": 157,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 2200,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_roundarea_a.png",
+      "group": "SKILL_CH_SPEAR_ROUNDAREA_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 220,
+        "magPct": 0,
+        "flat": [
+          57,
+          73
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swings the spear wide to attack the enemies nearby.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "caster",
+        "distance": 2.1,
+        "maxTargets": 5,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          1,
+          21,
+          5,
+          35,
+          24
+        ]
+      },
+      "overlap": 452984832,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            220,
+            57,
+            73,
+            220
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            1,
+            21,
+            5,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_CRITICAL_A_09",
+      "id": 952,
+      "name": "Anti Devil Bow - Missile",
+      "mastery": "PACHEON",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 68,
+      "category": "ranged",
+      "castMs": 300,
+      "actionMs": 530,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_critical_a.png",
+      "group": "SKILL_CH_BOW_CRITICAL_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_40"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          42,
+          57
+        ],
+        "hits": 1
+      },
+      "preparingMs": 670,
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches the arrow of high hitting ratio with all might.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_STRAIGHT",
+            "delayMs": 0,
+            "speed": 500
+          }
+        }
+      ],
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 553648128,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            150,
+            42,
+            57,
+            150
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "cr",
+          "args": [
+            20,
+            0
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_CHAIN_A_08",
+      "id": 975,
+      "name": "2 Arrow Combo",
+      "mastery": "PACHEON",
+      "masteryLevel": 21,
+      "skillLevel": 8,
+      "sp": 62,
+      "mp": 40,
+      "category": "ranged",
+      "castMs": 440,
+      "actionMs": 560,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_chain_a.png",
+      "group": "SKILL_CH_BOW_CHAIN_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 50,
+        "magPct": 0,
+        "flat": [
+          42,
+          57
+        ],
+        "hits": 2
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches two arrows in relay.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 500
+          }
+        },
+        {
+          "phase": "SHOT",
+          "event": 2,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 500
+          }
+        }
+      ],
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 603979776,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            50,
+            42,
+            57,
+            50
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "mc",
+          "args": [
+            2,
+            2
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GIGONGTA_A_09",
+      "id": 1108,
+      "name": "Ice River Force",
+      "mastery": "COLD",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 166,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_gigongta_a.png",
+      "group": "SKILL_CH_COLD_GIGONGTA_A",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          41,
+          61
+        ],
+        "hits": 1
+      },
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Makes the enemy get frozen or frostbitten by infusing the force of Ice into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 5000,
+      "statuses": [
+        {
+          "status": "freeze",
+          "level": 62,
+          "chancePct": 5
+        },
+        {
+          "status": "frostbite",
+          "level": 62,
+          "chancePct": 25
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            5000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            41,
+            61,
+            100
+          ]
+        },
+        {
+          "tag": "fz",
+          "args": [
+            62,
+            5
+          ]
+        },
+        {
+          "tag": "fb",
+          "args": [
+            62,
+            25
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GIGONGJANG_A_04",
+      "id": 1151,
+      "name": "Cold wave - Arrest",
+      "mastery": "COLD",
+      "masteryLevel": 21,
+      "skillLevel": 4,
+      "sp": 62,
+      "mp": 173,
+      "category": "ranged",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_gigongjang_a.png",
+      "group": "SKILL_CH_COLD_GIGONGJANG_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "kind": "debuff",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Makes distant enemies frostbitten by launching the force of Ice at them.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_STRAIGHT",
+            "delayMs": 0,
+            "speed": 200
+          }
+        }
+      ],
+      "statuses": [
+        {
+          "status": "frostbite",
+          "level": 62,
+          "chancePct": 100
+        }
+      ],
+      "overlap": 822083584,
+      "params": [
+        {
+          "tag": "fb",
+          "args": [
+            62,
+            100
+          ]
+        },
+        {
+          "tag": "tant",
+          "args": [
+            208
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_GIGONGTA_A_09",
+      "id": 1253,
+      "name": "Thunder Tiger Force",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 166,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_gigongta_a.png",
+      "group": "SKILL_CH_LIGHTNING_GIGONGTA_A",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          40,
+          74
+        ],
+        "hits": 1
+      },
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Strikes the enemy with electricity, infusing the thunder force into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 5000,
+      "area": {
+        "shape": "chain",
+        "distance": 3.5,
+        "maxTargets": 2,
+        "reductionPct": 80,
+        "targetMask": 24,
+        "raw": [
+          1,
+          6,
+          35,
+          2,
+          80,
+          24
+        ]
+      },
+      "statuses": [
+        {
+          "status": "shock",
+          "level": 62,
+          "chancePct": 20,
+          "extra": [
+            50
+          ]
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            5000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            40,
+            74,
+            100
+          ]
+        },
+        {
+          "tag": "es",
+          "args": [
+            62,
+            20,
+            50
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            6,
+            35,
+            2,
+            80,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_GYEONGGONG_A_04",
+      "id": 1278,
+      "name": "Grass Walk - Flow",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 21,
+      "skillLevel": 4,
+      "sp": 62,
+      "mp": 173,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 2000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_gyeonggong_a.png",
+      "group": "SKILL_CH_LIGHTNING_GYEONGGONG_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the character's agility a little for a certain amount of time.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 400840,
+      "overlap": 6,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            400840
+          ]
+        },
+        {
+          "tag": "hste",
+          "args": [
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_CHUNDUNG_A_03",
+      "id": 1310,
+      "name": "Shock Lion Shout",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 21,
+      "skillLevel": 3,
+      "sp": 62,
+      "mp": 147,
+      "category": "ranged",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_chundung_a.png",
+      "group": "SKILL_CH_LIGHTNING_CHUNDUNG_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          58,
+          108
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Gives a certain amount of damage to the enemy by interrupting their operation of inner force.",
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 2,
+        "maxTargets": 3,
+        "reductionPct": 0,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          20,
+          3,
+          0,
+          24
+        ]
+      },
+      "overlap": 1006632960,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            10,
+            100,
+            58,
+            108,
+            33
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            20,
+            3,
+            0,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GIGONGTA_A_09",
+      "id": 1377,
+      "name": "River Fire force",
+      "mastery": "FIRE",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 166,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_gigongta_a.png",
+      "group": "SKILL_CH_FIRE_GIGONGTA_A",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          50,
+          83
+        ],
+        "hits": 1
+      },
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the attack power of Force by infusing the force of Fire into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 5000,
+      "statuses": [
+        {
+          "status": "burn",
+          "level": 62,
+          "chancePct": 25,
+          "extra": [
+            17
+          ]
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            5000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            50,
+            83,
+            100
+          ]
+        },
+        {
+          "tag": "bu",
+          "args": [
+            62,
+            25,
+            17
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GANGGI_A_03",
+      "id": 1416,
+      "name": "Basic Fire protection",
+      "mastery": "FIRE",
+      "masteryLevel": 21,
+      "skillLevel": 3,
+      "sp": 62,
+      "mp": 173,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_ganggi_a.png",
+      "group": "SKILL_CH_FIRE_GANGGI_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Exercises the Fire Force to increase the resistence against magic.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 400840,
+      "overlap": 3,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            400840
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            0,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_SELFHEAL_A_09",
+      "id": 1518,
+      "name": "Self Breathe Heal",
+      "mastery": "FORCE",
+      "masteryLevel": 21,
+      "skillLevel": 9,
+      "sp": 62,
+      "mp": 52,
+      "category": "buff",
+      "castMs": 1,
+      "actionMs": 1000,
+      "cooldownMs": 2100,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_selfheal_a.png",
+      "group": "SKILL_CH_WATER_SELFHEAL_A",
+      "animation": {
+        "ready": "READY04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "heal",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Recovers one's own HP.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 0,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "heal": {
+        "hp": 286,
+        "hpPct": 0,
+        "mp": 0,
+        "mpPct": 0
+      },
+      "params": [
+        {
+          "tag": "heal",
+          "args": [
+            286
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_SHIELD_A_05",
+      "id": 551,
+      "name": "Castle Shield",
+      "mastery": "BICHEON",
+      "masteryLevel": 22,
+      "skillLevel": 5,
+      "sp": 71,
+      "mp": 55,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 60000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/sword_shield_a.png",
+      "group": "SKILL_CH_SWORD_SHIELD_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increase the physical defense power by infusing energy into the shield.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 15000,
+      "requiresItem": {
+        "typeId3": 4,
+        "typeId4": 1
+      },
+      "overlap": 16777295,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            15000
+          ]
+        },
+        {
+          "tag": "reqi",
+          "args": [
+            4,
+            1
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            103
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_GEOMGI_A_05",
+      "id": 584,
+      "name": "Soul Cut Blade",
+      "mastery": "BICHEON",
+      "masteryLevel": 22,
+      "skillLevel": 5,
+      "sp": 71,
+      "mp": 55,
+      "category": "ranged",
+      "castMs": 341,
+      "actionMs": 792,
+      "cooldownMs": 4000,
+      "range": 12,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_geomgi_a.png",
+      "group": "SKILL_CH_SWORD_GEOMGI_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "damage": {
+        "physPct": 113,
+        "magPct": 0,
+        "flat": [
+          49,
+          60
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swing your sword and launch the blade force at the distant enemy.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2,
+          "projectile": {
+            "move": "MOV_STRAIGHT",
+            "delayMs": 0,
+            "speed": 300
+          }
+        }
+      ],
+      "overlap": 83886080,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            113,
+            49,
+            60,
+            113
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_SPIN_A_06",
+      "id": 729,
+      "name": "Bloody Fan Storm",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 22,
+      "skillLevel": 6,
+      "sp": 71,
+      "mp": 55,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 60000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_spin_a.png",
+      "group": "SKILL_CH_SPEAR_SPIN_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increase magical defense power by creating wind energy with the spear.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 15000,
+      "overlap": 335544401,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            15000
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            0,
+            103
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_FRONTAREA_A_07",
+      "id": 763,
+      "name": "Dancing Demon Spear",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 22,
+      "skillLevel": 7,
+      "sp": 71,
+      "mp": 132,
+      "category": "melee",
+      "castMs": 862,
+      "actionMs": 1138,
+      "cooldownMs": 3000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_frontarea_a.png",
+      "group": "SKILL_CH_SPEAR_FRONTAREA_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "damage": {
+        "physPct": 200,
+        "magPct": 0,
+        "flat": [
+          60,
+          77
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Sweep your spear in a large motion to attack many enemies simultaneously in front.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 1,
+        "maxTargets": 3,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          10,
+          3,
+          35,
+          24
+        ]
+      },
+      "overlap": 352321536,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            200,
+            60,
+            77,
+            200
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            10,
+            3,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_STUN_A_05",
+      "id": 785,
+      "name": "Soul Spear - Move",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 22,
+      "skillLevel": 5,
+      "sp": 71,
+      "mp": 148,
+      "category": "melee",
+      "castMs": 1128,
+      "actionMs": 1372,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_stun_a.png",
+      "group": "SKILL_CH_SPEAR_STUN_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "damage": {
+        "physPct": 250,
+        "magPct": 0,
+        "flat": [
+          60,
+          77
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swing the spear to hit the enemy hard and stun him.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "statuses": [
+        {
+          "status": "stun",
+          "level": 3,
+          "chancePct": 20,
+          "durationMs": 5000
+        }
+      ],
+      "overlap": 402653184,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            250,
+            60,
+            77,
+            250
+          ]
+        },
+        {
+          "tag": "st",
+          "args": [
+            5000,
+            20,
+            3
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_CALL_A_05",
+      "id": 996,
+      "name": "White Hawk Summon",
+      "mastery": "PACHEON",
+      "masteryLevel": 22,
+      "skillLevel": 5,
+      "sp": 71,
+      "mp": 110,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 1000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_call_a.png",
+      "group": "SKILL_CH_BOW_CALL_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the hitting ratio by summoning a white hawk.\nUsable only when using a bow.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "durationMs": 405882,
+      "overlap": 18,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            405882
+          ]
+        },
+        {
+          "tag": "hr",
+          "args": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_PIERCE_A_05",
+      "id": 1029,
+      "name": "Autumn Wind - Flame",
+      "mastery": "PACHEON",
+      "masteryLevel": 22,
+      "skillLevel": 5,
+      "sp": 71,
+      "mp": 80,
+      "category": "ranged",
+      "castMs": 300,
+      "actionMs": 530,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_pierce_a.png",
+      "group": "SKILL_CH_BOW_PIERCE_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_40"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          45,
+          60
+        ],
+        "hits": 1
+      },
+      "preparingMs": 670,
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches a strong arrow which penetrates many enemies in front.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_PIERCE",
+            "delayMs": 0,
+            "speed": 400
+          }
+        }
+      ],
+      "area": {
+        "shape": "projectile_pierce",
+        "distance": 1,
+        "maxTargets": 3,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          4,
+          10,
+          3,
+          35,
+          24
+        ]
+      },
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 654311424,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            150,
+            45,
+            60,
+            150
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            4,
+            10,
+            3,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GANGGI_A_08",
+      "id": 1131,
+      "name": "Weak Guard of Ice",
+      "mastery": "COLD",
+      "masteryLevel": 22,
+      "skillLevel": 8,
+      "sp": 71,
+      "mp": 183,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 2000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_ganggi_a.png",
+      "group": "SKILL_CH_COLD_GANGGI_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Exercises the Frost Protecting Force to increase the physical resistence.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 405882,
+      "overlap": 2,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            405882
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_HEAL_A_06",
+      "id": 1554,
+      "name": "Heal - Medical Hand",
+      "mastery": "FORCE",
+      "masteryLevel": 22,
+      "skillLevel": 6,
+      "sp": 71,
+      "mp": 137,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 3000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_heal_a.png",
+      "group": "SKILL_CH_WATER_HEAL_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_1"
+      },
+      "preparingMs": 1000,
+      "kind": "heal",
+      "targets": {
+        "required": true,
+        "groups": [
+          "self",
+          "ally",
+          "party"
+        ]
+      },
+      "description": "Recovers the selected target's HP.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "heal": {
+        "hp": 687,
+        "hpPct": 0,
+        "mp": 0,
+        "mpPct": 0
+      },
+      "params": [
+        {
+          "tag": "heal",
+          "args": [
+            687
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_BINGPAN_A_01",
+      "id": 102,
+      "name": "Frost Nova - Wind",
+      "mastery": "COLD",
+      "masteryLevel": 23,
+      "skillLevel": 1,
+      "sp": 80,
+      "mp": 232,
+      "category": "ranged",
+      "castMs": 1129,
+      "actionMs": 0,
+      "cooldownMs": 6000,
+      "range": 5,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_bingpan_a.png",
+      "group": "SKILL_CH_COLD_BINGPAN_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "kind": "debuff",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Makes the enemies get frozen or frostbitten by freezing the ground in front.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "area": {
+        "shape": "projectile_pierce",
+        "distance": 2,
+        "maxTargets": 3,
+        "reductionPct": 0,
+        "targetMask": 24,
+        "raw": [
+          1,
+          4,
+          20,
+          3,
+          0,
+          24
+        ]
+      },
+      "statuses": [
+        {
+          "status": "freeze",
+          "level": 66,
+          "chancePct": 50
+        },
+        {
+          "status": "frostbite",
+          "level": 66,
+          "chancePct": 100
+        }
+      ],
+      "overlap": 872415232,
+      "params": [
+        {
+          "tag": "fz",
+          "args": [
+            66,
+            50
+          ]
+        },
+        {
+          "tag": "fb",
+          "args": [
+            66,
+            100
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            4,
+            20,
+            3,
+            0,
+            24
+          ]
+        },
+        {
+          "tag": "tant",
+          "args": [
+            232
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_JIPJUNG_A_01",
+      "id": 119,
+      "name": "Concentration - 1st",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 23,
+      "skillLevel": 1,
+      "sp": 80,
+      "mp": 116,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_jipjung_a.png",
+      "group": "SKILL_CH_LIGHTNING_JIPJUNG_A",
+      "animation": {
+        "ready": "READY03",
+        "wait": "WAIT03",
+        "shot": "SKILL_3"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases temporarily the character's parry ratio for a certain amount of time.",
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 410924,
+      "overlap": 13,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            410924
+          ]
+        },
+        {
+          "tag": "er",
+          "args": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_HWABYEOK_A_01",
+      "id": 136,
+      "name": "Fire Wall - Tower",
+      "mastery": "FIRE",
+      "masteryLevel": 23,
+      "skillLevel": 1,
+      "sp": 80,
+      "mp": 232,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_hwabyeok_a.png",
+      "group": "SKILL_CH_FIRE_HWABYEOK_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Absorbs the magical attack by creating a wall of fire.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "toggle": {
+        "intervalMs": 5000,
+        "mp": 58
+      },
+      "overlap": 11,
+      "params": [
+        {
+          "tag": "onff",
+          "args": [
+            5000,
+            58
+          ]
+        },
+        {
+          "tag": "pw",
+          "args": [
+            11,
+            1159,
+            0,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_HARMONY_A_01",
+      "id": 155,
+      "name": "Harmony Therapy",
+      "mastery": "FORCE",
+      "masteryLevel": 23,
+      "skillLevel": 1,
+      "sp": 80,
+      "mp": 193,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 300000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_harmony_a.png",
+      "group": "SKILL_CH_WATER_HARMONY_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the speed of recovery and exercises the blocking magic against a preemptive strike from the monsters.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 300000,
+      "area": {
+        "shape": "caster",
+        "distance": 6,
+        "maxTargets": 0,
+        "reductionPct": 0,
+        "targetMask": 7,
+        "raw": [
+          3,
+          1,
+          60,
+          0,
+          0,
+          7
+        ]
+      },
+      "overlap": 1224736788,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            300000
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            3,
+            1,
+            60,
+            0,
+            0,
+            7
+          ]
+        },
+        {
+          "tag": "pola",
+          "args": [
+            1,
+            33
+          ]
+        },
+        {
+          "tag": "irgc",
+          "args": [
+            20,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_1S_09",
+      "id": 322,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 9,
+      "sp": 80,
+      "mp": 94,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 428,
+      "cooldownMs": 8000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "chainNext": "SKILL_CH_SWORD_CHAIN_A_2S_09",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 30,
+        "magPct": 0,
+        "flat": [
+          52,
+          64
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            30,
+            52,
+            64,
+            30
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_09",
+      "chainIndex": 1
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_2S_09",
+      "id": 330,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 9,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 612,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "chainNext": "SKILL_CH_SWORD_CHAIN_A_3S_09",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 53,
+        "magPct": 0,
+        "flat": [
+          52,
+          64
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            53,
+            52,
+            64,
+            53
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_09",
+      "chainIndex": 2
+    },
+    {
+      "code": "SKILL_CH_SWORD_CHAIN_A_3S_09",
+      "id": 338,
+      "name": "Illusion Chain",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 9,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 993,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_chain_a.png",
+      "group": "SKILL_CH_SWORD_CHAIN_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 120,
+        "magPct": 0,
+        "flat": [
+          52,
+          64
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 3
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            120,
+            52,
+            64,
+            120
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SWORD_CHAIN_A_1S_09",
+      "chainIndex": 3
+    },
+    {
+      "code": "SKILL_CH_SWORD_KNOCKDOWN_A_03",
+      "id": 606,
+      "name": "Blood Blade Force",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 3,
+      "sp": 80,
+      "mp": 98,
+      "category": "melee",
+      "castMs": 759,
+      "actionMs": 1107,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_knockdown_a.png",
+      "group": "SKILL_CH_SWORD_KNOCKDOWN_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 187,
+        "magPct": 0,
+        "flat": [
+          52,
+          64
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Destroy the enemy with your force infused sword.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "statuses": [
+        {
+          "status": "knockdown",
+          "level": 23,
+          "chancePct": 50
+        }
+      ],
+      "overlap": 134217728,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            187,
+            52,
+            64,
+            187
+          ]
+        },
+        {
+          "tag": "ko",
+          "args": [
+            23,
+            50
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_DOWNATTACK_A_03",
+      "id": 640,
+      "name": "Flower Bloom Blade",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 3,
+      "sp": 80,
+      "mp": 87,
+      "category": "melee",
+      "castMs": 698,
+      "actionMs": 802,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_downattack_a.png",
+      "group": "SKILL_CH_SWORD_DOWNATTACK_A",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          52,
+          64
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Runs towards the fallen enemy and strikes him again.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "requiresTargetState": 1,
+      "overlap": 184549376,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            150,
+            52,
+            64,
+            150
+          ]
+        },
+        {
+          "tag": "da",
+          "args": [
+            125
+          ]
+        },
+        {
+          "tag": "reqc",
+          "args": [
+            1
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_ROUNDAREA_A_03",
+      "id": 807,
+      "name": "Ghost Spear - Petal",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 23,
+      "skillLevel": 3,
+      "sp": 80,
+      "mp": 175,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 2200,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_roundarea_a.png",
+      "group": "SKILL_CH_SPEAR_ROUNDAREA_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 220,
+        "magPct": 0,
+        "flat": [
+          63,
+          82
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swings the spear wide to attack the enemies nearby.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "caster",
+        "distance": 2.2,
+        "maxTargets": 5,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          1,
+          22,
+          5,
+          35,
+          24
+        ]
+      },
+      "overlap": 452984832,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            220,
+            63,
+            82,
+            220
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            1,
+            22,
+            5,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_CHAIN_A_09",
+      "id": 976,
+      "name": "2 Arrow Combo",
+      "mastery": "PACHEON",
+      "masteryLevel": 23,
+      "skillLevel": 9,
+      "sp": 80,
+      "mp": 44,
+      "category": "ranged",
+      "castMs": 440,
+      "actionMs": 560,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_chain_a.png",
+      "group": "SKILL_CH_BOW_CHAIN_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "damage": {
+        "physPct": 50,
+        "magPct": 0,
+        "flat": [
+          47,
+          64
+        ],
+        "hits": 2
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches two arrows in relay.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 500
+          }
+        },
+        {
+          "phase": "SHOT",
+          "event": 2,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 500
+          }
+        }
+      ],
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 603979776,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            50,
+            47,
+            64,
+            50
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "mc",
+          "args": [
+            2,
+            2
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_NORMAL_A_02",
+      "id": 1050,
+      "name": "Demon Soul Arrow",
+      "mastery": "PACHEON",
+      "masteryLevel": 23,
+      "skillLevel": 2,
+      "sp": 80,
+      "mp": 97,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_normal_a.png",
+      "group": "SKILL_CH_BOW_NORMAL_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Launches a long range arrow with all might.\nUsable only when using a bow.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "durationMs": 410924,
+      "requiresItem": {
+        "typeId3": 6,
+        "typeId4": 6
+      },
+      "overlap": 19,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            410924
+          ]
+        },
+        {
+          "tag": "ru",
+          "args": [
+            22
+          ]
+        },
+        {
+          "tag": "reqi",
+          "args": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_BINGBYEOK_A_03",
+      "id": 1165,
+      "name": "Crystal Wall",
+      "mastery": "COLD",
+      "masteryLevel": 23,
+      "skillLevel": 3,
+      "sp": 80,
+      "mp": 232,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 10000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_bingbyeok_a.png",
+      "group": "SKILL_CH_COLD_BINGBYEOK_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Absorbs the physical attack by creating the wall of ice.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "toggle": {
+        "intervalMs": 5000,
+        "mp": 58
+      },
+      "overlap": 11,
+      "params": [
+        {
+          "tag": "onff",
+          "args": [
+            5000,
+            58
+          ]
+        },
+        {
+          "tag": "pw",
+          "args": [
+            7,
+            1159,
+            0,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_CHUNDUNG_A_04",
+      "id": 1311,
+      "name": "Shock Lion Shout",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 23,
+      "skillLevel": 4,
+      "sp": 80,
+      "mp": 164,
+      "category": "ranged",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_chundung_a.png",
+      "group": "SKILL_CH_LIGHTNING_CHUNDUNG_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          65,
+          121
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Gives a certain amount of damage to the enemy by interrupting their operation of inner force.",
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 2,
+        "maxTargets": 3,
+        "reductionPct": 0,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          20,
+          3,
+          0,
+          24
+        ]
+      },
+      "overlap": 1006632960,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            10,
+            100,
+            65,
+            121,
+            33
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            20,
+            3,
+            0,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_SHIELD_A_06",
+      "id": 1398,
+      "name": "Fire Shield - Phoenix",
+      "mastery": "FIRE",
+      "masteryLevel": 23,
+      "skillLevel": 6,
+      "sp": 80,
+      "mp": 193,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 2000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_shield_a.png",
+      "group": "SKILL_CH_FIRE_SHIELD_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Decreases the power of abnormal state by infusing the force into the shield.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 410924,
+      "requiresItem": {
+        "typeId3": 4,
+        "typeId4": 1
+      },
+      "overlap": 16,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            410924
+          ]
+        },
+        {
+          "tag": "bgra",
+          "args": [
+            63,
+            33,
+            0
+          ]
+        },
+        {
+          "tag": "reqi",
+          "args": [
+            4,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GANGGI_A_04",
+      "id": 1417,
+      "name": "Basic Fire protection",
+      "mastery": "FIRE",
+      "masteryLevel": 23,
+      "skillLevel": 4,
+      "sp": 80,
+      "mp": 193,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_ganggi_a.png",
+      "group": "SKILL_CH_FIRE_GANGGI_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Exercises the Fire Force to increase the resistence against magic.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 410924,
+      "overlap": 3,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            410924
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            0,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_CURE_A_06",
+      "id": 1539,
+      "name": "Force Cure - Poison",
+      "mastery": "FORCE",
+      "masteryLevel": 23,
+      "skillLevel": 6,
+      "sp": 80,
+      "mp": 77,
+      "category": "buff",
+      "castMs": 1,
+      "actionMs": 1000,
+      "cooldownMs": 2100,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_cure_a.png",
+      "group": "SKILL_CH_WATER_CURE_A",
+      "animation": {
+        "ready": "READY01",
+        "shot": "SKILL_1"
+      },
+      "preparingMs": 1000,
+      "kind": "cure",
+      "targets": {
+        "required": true,
+        "groups": [
+          "self",
+          "ally",
+          "party"
+        ]
+      },
+      "description": "Randomly cures 2 bad statuses.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "params": [
+        {
+          "tag": "curt",
+          "args": [
+            63,
+            66
+          ]
+        },
+        {
+          "tag": "curl",
+          "args": [
+            25145280,
+            100,
+            3
+          ]
+        },
+        {
+          "tag": "rcur",
+          "args": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_RESURRECTION_A_03",
+      "id": 1575,
+      "name": "Soul Rebirth Art",
+      "mastery": "FORCE",
+      "masteryLevel": 23,
+      "skillLevel": 3,
+      "sp": 80,
+      "mp": 193,
+      "category": "buff",
+      "castMs": 2000,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_resurrection_a.png",
+      "group": "SKILL_CH_WATER_RESURRECTION_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_1"
+      },
+      "preparingMs": 1000,
+      "kind": "resurrect",
+      "targets": {
+        "required": true,
+        "groups": [
+          "ally",
+          "party"
+        ],
+        "deadBody": true
+      },
+      "description": "Resurrects the dead character.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "heal": {
+        "hp": 0,
+        "hpPct": 10,
+        "mp": 0,
+        "mpPct": 10
+      },
+      "params": [
+        {
+          "tag": "heal",
+          "args": [
+            0,
+            10,
+            0,
+            10
+          ]
+        },
+        {
+          "tag": "resu",
+          "args": [
+            33,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_SHIELD_A_02",
+      "id": 8093,
+      "name": "Snow Shield - Novice",
+      "mastery": "COLD",
+      "masteryLevel": 23,
+      "skillLevel": 2,
+      "sp": 80,
+      "mp": 116,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 180000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_shield_a.png",
+      "group": "SKILL_CH_COLD_SHIELD_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Portions of damage received will be reduced from MP, and more MP than received damage will be reduced.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 6,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 120000,
+      "overlap": 973078611,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            120000
+          ]
+        },
+        {
+          "tag": "dgmp",
+          "args": [
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_SHIELDPD_A_02",
+      "id": 30574,
+      "name": "Glacial Flame Bicheon Force",
+      "mastery": "BICHEON",
+      "masteryLevel": 23,
+      "skillLevel": 2,
+      "sp": 80,
+      "mp": 116,
+      "category": "buff",
+      "castMs": 1300,
+      "actionMs": 700,
+      "cooldownMs": 180000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/sword_shieldpd_a.png",
+      "group": "SKILL_CH_SWORD_SHIELDPD_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Decreases the physical defense power of the shield and increases the physical attack power for a period of time.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 7,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 120000,
+      "requiresItem": {
+        "typeId3": 4,
+        "typeId4": 1
+      },
+      "overlap": 268435548,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            120000
+          ]
+        },
+        {
+          "tag": "spda",
+          "args": [
+            19,
+            31
+          ]
+        },
+        {
+          "tag": "reqi",
+          "args": [
+            4,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_CHAIN_A_1S_01",
+      "id": 55,
+      "name": "Chain Spear - Tiger",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 24,
+      "skillLevel": 1,
+      "sp": 89,
+      "mp": 167,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 891,
+      "cooldownMs": 8000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_chain_a.png",
+      "group": "SKILL_CH_SPEAR_CHAIN_A",
+      "chainNext": "SKILL_CH_SPEAR_CHAIN_A_2S_01",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 50,
+        "magPct": 0,
+        "flat": [
+          67,
+          86
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            50,
+            67,
+            86,
+            50
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SPEAR_CHAIN_A_1S_01",
+      "chainIndex": 1
+    },
+    {
+      "code": "SKILL_CH_SPEAR_CHAIN_A_2S_01",
+      "id": 56,
+      "name": "Chain Spear - Tiger",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 24,
+      "skillLevel": 1,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 771,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_chain_a.png",
+      "group": "SKILL_CH_SPEAR_CHAIN_A",
+      "chainNext": "SKILL_CH_SPEAR_CHAIN_A_3S_01",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 63,
+        "magPct": 0,
+        "flat": [
+          67,
+          86
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            63,
+            67,
+            86,
+            63
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SPEAR_CHAIN_A_1S_01",
+      "chainIndex": 2
+    },
+    {
+      "code": "SKILL_CH_SPEAR_CHAIN_A_3S_01",
+      "id": 57,
+      "name": "Chain Spear - Tiger",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 24,
+      "skillLevel": 1,
+      "sp": 0,
+      "mp": 0,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 1071,
+      "cooldownMs": 0,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_chain_a.png",
+      "group": "SKILL_CH_SPEAR_CHAIN_A",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 160,
+        "magPct": 0,
+        "flat": [
+          67,
+          86
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Applies 3 combo attack.",
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 3
+        }
+      ],
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            160,
+            67,
+            86,
+            160
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ],
+      "chainRoot": "SKILL_CH_SPEAR_CHAIN_A_1S_01",
+      "chainIndex": 3
+    },
+    {
+      "code": "SKILL_CH_SWORD_GEOMGI_A_06",
+      "id": 585,
+      "name": "Soul Cut Blade",
+      "mastery": "BICHEON",
+      "masteryLevel": 24,
+      "skillLevel": 6,
+      "sp": 89,
+      "mp": 61,
+      "category": "ranged",
+      "castMs": 341,
+      "actionMs": 792,
+      "cooldownMs": 4000,
+      "range": 12,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_geomgi_a.png",
+      "group": "SKILL_CH_SWORD_GEOMGI_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "damage": {
+        "physPct": 113,
+        "magPct": 0,
+        "flat": [
+          55,
+          67
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swing your sword and launch the blade force at the distant enemy.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2,
+          "projectile": {
+            "move": "MOV_STRAIGHT",
+            "delayMs": 0,
+            "speed": 300
+          }
+        }
+      ],
+      "overlap": 83886080,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            113,
+            55,
+            67,
+            113
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_FRONTAREA_A_08",
+      "id": 764,
+      "name": "Dancing Demon Spear",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 24,
+      "skillLevel": 8,
+      "sp": 89,
+      "mp": 147,
+      "category": "melee",
+      "castMs": 862,
+      "actionMs": 1138,
+      "cooldownMs": 3000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_frontarea_a.png",
+      "group": "SKILL_CH_SPEAR_FRONTAREA_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "damage": {
+        "physPct": 200,
+        "magPct": 0,
+        "flat": [
+          67,
+          86
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Sweep your spear in a large motion to attack many enemies simultaneously in front.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 1,
+        "maxTargets": 3,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          10,
+          3,
+          35,
+          24
+        ]
+      },
+      "overlap": 352321536,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            200,
+            67,
+            86,
+            200
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            10,
+            3,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_STUN_A_06",
+      "id": 786,
+      "name": "Soul Spear - Move",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 24,
+      "skillLevel": 6,
+      "sp": 89,
+      "mp": 165,
+      "category": "melee",
+      "castMs": 1128,
+      "actionMs": 1372,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_stun_a.png",
+      "group": "SKILL_CH_SPEAR_STUN_A",
+      "animation": {
+        "shot": "SKILL_5"
+      },
+      "damage": {
+        "physPct": 250,
+        "magPct": 0,
+        "flat": [
+          67,
+          86
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swing the spear to hit the enemy hard and stun him.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "statuses": [
+        {
+          "status": "stun",
+          "level": 3,
+          "chancePct": 20,
+          "durationMs": 5000
+        }
+      ],
+      "overlap": 402653184,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            250,
+            67,
+            86,
+            250
+          ]
+        },
+        {
+          "tag": "st",
+          "args": [
+            5000,
+            20,
+            3
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_PIERCE_A_06",
+      "id": 1030,
+      "name": "Autumn Wind - Flame",
+      "mastery": "PACHEON",
+      "masteryLevel": 24,
+      "skillLevel": 6,
+      "sp": 89,
+      "mp": 89,
+      "category": "ranged",
+      "castMs": 300,
+      "actionMs": 530,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_pierce_a.png",
+      "group": "SKILL_CH_BOW_PIERCE_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_40"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          50,
+          67
+        ],
+        "hits": 1
+      },
+      "preparingMs": 670,
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches a strong arrow which penetrates many enemies in front.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_PIERCE",
+            "delayMs": 0,
+            "speed": 400
+          }
+        }
+      ],
+      "area": {
+        "shape": "projectile_pierce",
+        "distance": 1,
+        "maxTargets": 3,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          4,
+          10,
+          3,
+          35,
+          24
+        ]
+      },
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 654311424,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            150,
+            50,
+            67,
+            150
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            4,
+            10,
+            3,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GANGGI_A_09",
+      "id": 1132,
+      "name": "Weak Guard of Ice",
+      "mastery": "COLD",
+      "masteryLevel": 24,
+      "skillLevel": 9,
+      "sp": 89,
+      "mp": 204,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 2000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_ganggi_a.png",
+      "group": "SKILL_CH_COLD_GANGGI_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Exercises the Frost Protecting Force to increase the physical resistence.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 415966,
+      "overlap": 2,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            415966
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GIGONGJANG_A_05",
+      "id": 1152,
+      "name": "Cold wave - Arrest",
+      "mastery": "COLD",
+      "masteryLevel": 24,
+      "skillLevel": 5,
+      "sp": 89,
+      "mp": 204,
+      "category": "ranged",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_gigongjang_a.png",
+      "group": "SKILL_CH_COLD_GIGONGJANG_A",
+      "animation": {
+        "shot": "SKILL_2"
+      },
+      "kind": "debuff",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Makes distant enemies frostbitten by launching the force of Ice at them.",
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_STRAIGHT",
+            "delayMs": 0,
+            "speed": 200
+          }
+        }
+      ],
+      "statuses": [
+        {
+          "status": "frostbite",
+          "level": 68,
+          "chancePct": 100
+        }
+      ],
+      "overlap": 822083584,
+      "params": [
+        {
+          "tag": "fb",
+          "args": [
+            68,
+            100
+          ]
+        },
+        {
+          "tag": "tant",
+          "args": [
+            244
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_GYEONGGONG_A_05",
+      "id": 1279,
+      "name": "Grass Walk - Flow",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 24,
+      "skillLevel": 5,
+      "sp": 89,
+      "mp": 204,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 2000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_gyeonggong_a.png",
+      "group": "SKILL_CH_LIGHTNING_GYEONGGONG_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the character's agility a little for a certain amount of time.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 415966,
+      "overlap": 6,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            415966
+          ]
+        },
+        {
+          "tag": "hste",
+          "args": [
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GONGUP_A_03",
+      "id": 1410,
+      "name": "Flame body - Wisdom",
+      "mastery": "FIRE",
+      "masteryLevel": 24,
+      "skillLevel": 3,
+      "sp": 89,
+      "mp": 204,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_gongup_a.png",
+      "group": "SKILL_CH_FIRE_GONGUP_A",
+      "animation": {
+        "ready": "READY03",
+        "wait": "WAIT03",
+        "shot": "SKILL_3"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases physical damage by  burning your own body.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 415966,
+      "overlap": 4,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            415966
+          ]
+        },
+        {
+          "tag": "dru",
+          "args": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_HEAL_A_07",
+      "id": 1555,
+      "name": "Heal - Medical Hand",
+      "mastery": "FORCE",
+      "masteryLevel": 24,
+      "skillLevel": 7,
+      "sp": 89,
+      "mp": 153,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 3000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_heal_a.png",
+      "group": "SKILL_CH_WATER_HEAL_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_1"
+      },
+      "preparingMs": 1000,
+      "kind": "heal",
+      "targets": {
+        "required": true,
+        "groups": [
+          "self",
+          "ally",
+          "party"
+        ]
+      },
+      "description": "Recovers the selected target's HP.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "heal": {
+        "hp": 764,
+        "hpPct": 0,
+        "mp": 0,
+        "mpPct": 0
+      },
+      "params": [
+        {
+          "tag": "heal",
+          "args": [
+            764
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_AREA_A_01",
+      "id": 85,
+      "name": "Berserker Arrow",
+      "mastery": "PACHEON",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 132,
+      "category": "ranged",
+      "castMs": 800,
+      "actionMs": 530,
+      "cooldownMs": 8000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_area_a.png",
+      "group": "SKILL_CH_BOW_AREA_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_40"
+      },
+      "damage": {
+        "physPct": 200,
+        "magPct": 0,
+        "flat": [
+          52,
+          71
+        ],
+        "hits": 1
+      },
+      "preparingMs": 670,
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Launches an arrow with a small amount of blasting powder.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 450
+          }
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 4,
+        "maxTargets": 4,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          40,
+          4,
+          35,
+          24
+        ]
+      },
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 704643072,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            200,
+            52,
+            71,
+            200
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            40,
+            4,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "hr",
+          "args": [
+            15,
+            0
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_COLD_GIGONGTA_B_01",
+      "id": 91,
+      "name": "Ice Jade Force",
+      "mastery": "COLD",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 206,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 6000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/cold_gigongta_b.png",
+      "group": "SKILL_CH_COLD_GIGONGTA_B",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          50,
+          76
+        ],
+        "hits": 1
+      },
+      "requires": [
+        {
+          "group": "SKILL_CH_COLD_GIGONGTA_A",
+          "level": 9
+        }
+      ],
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Makes the enemy get frozen or frostbitten by infusing the force of Ice into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 0,
+        "column": 0,
+        "row": 1
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 6000,
+      "statuses": [
+        {
+          "status": "freeze",
+          "level": 70,
+          "chancePct": 5
+        },
+        {
+          "status": "frostbite",
+          "level": 70,
+          "chancePct": 25
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            6000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            50,
+            76,
+            100
+          ]
+        },
+        {
+          "tag": "fz",
+          "args": [
+            70,
+            5
+          ]
+        },
+        {
+          "tag": "fb",
+          "args": [
+            70,
+            25
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_GIGONGTA_B_01",
+      "id": 108,
+      "name": "Thunder Sky Force",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 206,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 6000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_gigongta_b.png",
+      "group": "SKILL_CH_LIGHTNING_GIGONGTA_B",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          49,
+          91
+        ],
+        "hits": 1
+      },
+      "requires": [
+        {
+          "group": "SKILL_CH_LIGHTNING_GIGONGTA_A",
+          "level": 9
+        }
+      ],
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Strikes the enemy with electricity, infusing the thunder force into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 0,
+        "row": 1
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 6000,
+      "area": {
+        "shape": "chain",
+        "distance": 4,
+        "maxTargets": 2,
+        "reductionPct": 80,
+        "targetMask": 24,
+        "raw": [
+          1,
+          6,
+          40,
+          2,
+          80,
+          24
+        ]
+      },
+      "statuses": [
+        {
+          "status": "shock",
+          "level": 70,
+          "chancePct": 20,
+          "extra": [
+            50
+          ]
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            6000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            49,
+            91,
+            100
+          ]
+        },
+        {
+          "tag": "es",
+          "args": [
+            70,
+            20,
+            50
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            6,
+            40,
+            2,
+            80,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GIGONGTA_B_01",
+      "id": 125,
+      "name": "Extreme Fire force",
+      "mastery": "FIRE",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 206,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 6000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_gigongta_b.png",
+      "group": "SKILL_CH_FIRE_GIGONGTA_B",
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          62,
+          103
+        ],
+        "hits": 1
+      },
+      "requires": [
+        {
+          "group": "SKILL_CH_FIRE_GIGONGTA_A",
+          "level": 9
+        }
+      ],
+      "kind": "imbue",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the attack power of Force by infusing the force of Fire into the weapon.",
+      "instant": true,
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 0,
+        "row": 1
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 6000,
+      "statuses": [
+        {
+          "status": "burn",
+          "level": 70,
+          "chancePct": 25,
+          "extra": [
+            21
+          ]
+        }
+      ],
+      "overlap": 1,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            6000
+          ]
+        },
+        {
+          "tag": "att",
+          "args": [
+            8,
+            100,
+            62,
+            103,
+            100
+          ]
+        },
+        {
+          "tag": "bu",
+          "args": [
+            70,
+            25,
+            21
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_WATER_SELFHEAL_B_01",
+      "id": 144,
+      "name": "Self Force Heal",
+      "mastery": "FORCE",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 64,
+      "category": "buff",
+      "castMs": 1,
+      "actionMs": 1000,
+      "cooldownMs": 2100,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/water_selfheal_b.png",
+      "group": "SKILL_CH_WATER_SELFHEAL_B",
+      "animation": {
+        "ready": "READY04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "requires": [
+        {
+          "group": "SKILL_CH_WATER_SELFHEAL_A",
+          "level": 9
+        }
+      ],
+      "kind": "heal",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Recovers one's own HP a little bit more.",
+      "ui": {
+        "tab": "force",
+        "page": 3,
+        "column": 0,
+        "row": 1
+      },
+      "aniGroup": "DEFAULT",
+      "heal": {
+        "hp": 354,
+        "hpPct": 0,
+        "mp": 0,
+        "mpPct": 0
+      },
+      "params": [
+        {
+          "tag": "heal",
+          "args": [
+            354
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_SHIELD_A_06",
+      "id": 552,
+      "name": "Castle Shield",
+      "mastery": "BICHEON",
+      "masteryLevel": 25,
+      "skillLevel": 6,
+      "sp": 98,
+      "mp": 64,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 60000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/sword_shield_a.png",
+      "group": "SKILL_CH_SWORD_SHIELD_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increase the physical defense power by infusing energy into the shield.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 15000,
+      "requiresItem": {
+        "typeId3": 4,
+        "typeId4": 1
+      },
+      "overlap": 16777295,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            15000
+          ]
+        },
+        {
+          "tag": "reqi",
+          "args": [
+            4,
+            1
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            121
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_KNOCKDOWN_A_04",
+      "id": 607,
+      "name": "Blood Blade Force",
+      "mastery": "BICHEON",
+      "masteryLevel": 25,
+      "skillLevel": 4,
+      "sp": 98,
+      "mp": 109,
+      "category": "melee",
+      "castMs": 759,
+      "actionMs": 1107,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_knockdown_a.png",
+      "group": "SKILL_CH_SWORD_KNOCKDOWN_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 187,
+        "magPct": 0,
+        "flat": [
+          58,
+          71
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Destroy the enemy with your force infused sword.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 2
+        }
+      ],
+      "statuses": [
+        {
+          "status": "knockdown",
+          "level": 25,
+          "chancePct": 50
+        }
+      ],
+      "overlap": 134217728,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            187,
+            58,
+            71,
+            187
+          ]
+        },
+        {
+          "tag": "ko",
+          "args": [
+            25,
+            50
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SWORD_DOWNATTACK_A_04",
+      "id": 641,
+      "name": "Flower Bloom Blade",
+      "mastery": "BICHEON",
+      "masteryLevel": 25,
+      "skillLevel": 4,
+      "sp": 98,
+      "mp": 97,
+      "category": "melee",
+      "castMs": 698,
+      "actionMs": 802,
+      "cooldownMs": 4000,
+      "range": 0,
+      "weapons": [
+        "sword",
+        "blade"
+      ],
+      "icon": "/out/icon/skill/china/sword_downattack_a.png",
+      "group": "SKILL_CH_SWORD_DOWNATTACK_A",
+      "animation": {
+        "shot": "SKILL_7"
+      },
+      "damage": {
+        "physPct": 150,
+        "magPct": 0,
+        "flat": [
+          58,
+          71
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Runs towards the fallen enemy and strikes him again.",
+      "ui": {
+        "tab": "weapon",
+        "page": 0,
+        "column": 5,
+        "row": 0
+      },
+      "aniGroup": "SWORD",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "requiresTargetState": 1,
+      "overlap": 184549376,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            150,
+            58,
+            71,
+            150
+          ]
+        },
+        {
+          "tag": "da",
+          "args": [
+            125
+          ]
+        },
+        {
+          "tag": "reqc",
+          "args": [
+            1
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_SPIN_A_07",
+      "id": 730,
+      "name": "Bloody Fan Storm",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 25,
+      "skillLevel": 7,
+      "sp": 98,
+      "mp": 64,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 0,
+      "cooldownMs": 60000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_spin_a.png",
+      "group": "SKILL_CH_SPEAR_SPIN_A",
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increase magical defense power by creating wind energy with the spear.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 1,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 15000,
+      "overlap": 335544401,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            15000
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            0,
+            121
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_SPEAR_ROUNDAREA_A_04",
+      "id": 808,
+      "name": "Ghost Spear - Petal",
+      "mastery": "HEUKSAL",
+      "masteryLevel": 25,
+      "skillLevel": 4,
+      "sp": 98,
+      "mp": 194,
+      "category": "melee",
+      "castMs": 0,
+      "actionMs": 2200,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [
+        "spear",
+        "glaive"
+      ],
+      "icon": "/out/icon/skill/china/spear_roundarea_a.png",
+      "group": "SKILL_CH_SPEAR_ROUNDAREA_A",
+      "animation": {
+        "shot": "SKILL_6"
+      },
+      "damage": {
+        "physPct": 220,
+        "magPct": 0,
+        "flat": [
+          70,
+          90
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Swings the spear wide to attack the enemies nearby.",
+      "ui": {
+        "tab": "weapon",
+        "page": 1,
+        "column": 4,
+        "row": 0
+      },
+      "aniGroup": "SPEAR",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "caster",
+        "distance": 2.3,
+        "maxTargets": 5,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          1,
+          23,
+          5,
+          35,
+          24
+        ]
+      },
+      "overlap": 452984832,
+      "autoAttack": 1,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            5,
+            220,
+            70,
+            90,
+            220
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            1,
+            23,
+            5,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_CALL_A_06",
+      "id": 997,
+      "name": "White Hawk Summon",
+      "mastery": "PACHEON",
+      "masteryLevel": 25,
+      "skillLevel": 6,
+      "sp": 98,
+      "mp": 129,
+      "category": "buff",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 1000,
+      "range": 0,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_call_a.png",
+      "group": "SKILL_CH_BOW_CALL_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Increases the hitting ratio by summoning a white hawk.\nUsable only when using a bow.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 2,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "durationMs": 421008,
+      "overlap": 18,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            421008
+          ]
+        },
+        {
+          "tag": "hr",
+          "args": [
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_LIGHTNING_CHUNDUNG_A_05",
+      "id": 1312,
+      "name": "Shock Lion Shout",
+      "mastery": "LIGHTNING",
+      "masteryLevel": 25,
+      "skillLevel": 5,
+      "sp": 98,
+      "mp": 182,
+      "category": "ranged",
+      "castMs": 0,
+      "actionMs": 1000,
+      "cooldownMs": 4000,
+      "range": 15,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/lightning_chundung_a.png",
+      "group": "SKILL_CH_LIGHTNING_CHUNDUNG_A",
+      "animation": {
+        "shot": "SKILL_3"
+      },
+      "damage": {
+        "physPct": 0,
+        "magPct": 100,
+        "flat": [
+          72,
+          134
+        ],
+        "hits": 1
+      },
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Gives a certain amount of damage to the enemy by interrupting their operation of inner force.",
+      "ui": {
+        "tab": "force",
+        "page": 1,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1
+        }
+      ],
+      "area": {
+        "shape": "target",
+        "distance": 2,
+        "maxTargets": 3,
+        "reductionPct": 0,
+        "targetMask": 24,
+        "raw": [
+          1,
+          2,
+          20,
+          3,
+          0,
+          24
+        ]
+      },
+      "overlap": 1006632960,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            10,
+            100,
+            72,
+            134,
+            33
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            2,
+            20,
+            3,
+            0,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_FIRE_GANGGI_A_05",
+      "id": 1418,
+      "name": "Basic Fire protection",
+      "mastery": "FIRE",
+      "masteryLevel": 25,
+      "skillLevel": 5,
+      "sp": 98,
+      "mp": 214,
+      "category": "buff",
+      "castMs": 1000,
+      "actionMs": 1000,
+      "cooldownMs": 5000,
+      "range": 0,
+      "weapons": [],
+      "icon": "/out/icon/skill/china/fire_ganggi_a.png",
+      "group": "SKILL_CH_FIRE_GANGGI_A",
+      "animation": {
+        "ready": "READY04",
+        "wait": "WAIT04",
+        "shot": "SKILL_4"
+      },
+      "preparingMs": 1000,
+      "kind": "buff",
+      "targets": {
+        "required": false,
+        "groups": []
+      },
+      "description": "Exercises the Fire Force to increase the resistence against magic.",
+      "ui": {
+        "tab": "force",
+        "page": 2,
+        "column": 3,
+        "row": 0
+      },
+      "aniGroup": "DEFAULT",
+      "durationMs": 421008,
+      "overlap": 3,
+      "params": [
+        {
+          "tag": "dura",
+          "args": [
+            421008
+          ]
+        },
+        {
+          "tag": "defp",
+          "args": [
+            0,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SKILL_CH_BOW_SPECIAL_A_01",
+      "id": 7942,
+      "name": "Mind Bow - Flower",
+      "mastery": "PACHEON",
+      "masteryLevel": 25,
+      "skillLevel": 1,
+      "sp": 98,
+      "mp": 121,
+      "category": "ranged",
+      "castMs": 300,
+      "actionMs": 530,
+      "cooldownMs": 8000,
+      "range": 20.4,
+      "weapons": [
+        "bow"
+      ],
+      "icon": "/out/icon/skill/china/bow_special_a.png",
+      "group": "SKILL_CH_BOW_SPECIAL_A",
+      "animation": {
+        "ready": "READY01",
+        "wait": "WAIT01",
+        "shot": "SKILL_40"
+      },
+      "damage": {
+        "physPct": 187,
+        "magPct": 0,
+        "flat": [
+          58,
+          71
+        ],
+        "hits": 1
+      },
+      "preparingMs": 670,
+      "kind": "attack",
+      "targets": {
+        "required": true,
+        "groups": [
+          "enemy_mob",
+          "enemy_player"
+        ]
+      },
+      "description": "Shoots out an arrow that attacks many targets by following the enemy.",
+      "ui": {
+        "tab": "weapon",
+        "page": 2,
+        "column": 7,
+        "row": 0
+      },
+      "aniGroup": "BOW",
+      "hitCues": [
+        {
+          "phase": "SHOT",
+          "event": 1,
+          "projectile": {
+            "move": "MOV_UPR",
+            "delayMs": 0,
+            "speed": 450
+          }
+        }
+      ],
+      "area": {
+        "shape": "caster",
+        "distance": 20.4,
+        "maxTargets": 2,
+        "reductionPct": 35,
+        "targetMask": 24,
+        "raw": [
+          1,
+          1,
+          204,
+          2,
+          35,
+          24
+        ]
+      },
+      "consumes": {
+        "typeId3": 4,
+        "typeId4": 1,
+        "count": 1
+      },
+      "overlap": 788529152,
+      "autoAttack": 2,
+      "params": [
+        {
+          "tag": "att",
+          "args": [
+            6,
+            187,
+            58,
+            71,
+            187
+          ]
+        },
+        {
+          "tag": "cnsm",
+          "args": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "tag": "efr",
+          "args": [
+            1,
+            1,
+            204,
+            2,
+            35,
+            24
+          ]
+        },
+        {
+          "tag": "getv",
+          "args": [
+            1296122196
           ]
         }
       ]

@@ -7,6 +7,10 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { stubCrowdAssets } from '../../../packages/world-render/src/town/crowd.ts'
 import { plazaStandIn, townPartWith, type TownPlan } from '../../../packages/world-render/src/town/index.ts'
 import { w10World, type W10Setup } from '../../../packages/world-render/test/w10-fixture.ts'
+import { WorldRender } from '../../../packages/world-render/src/render/index.ts'
+
+// The world's own motion MSAA request (render/index.ts msaaForMotion) would read as a town leftover; these tests check the town's.
+WorldRender.msaaForMotion = false
 import {
   ScrubClock,
   TOWN_SCENES,

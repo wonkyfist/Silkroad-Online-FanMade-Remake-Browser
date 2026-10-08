@@ -211,7 +211,8 @@ describe.skipIf(!hasExport)('the jangan-fields export', () => {
       if (g.weight > 0) expect([t.source, luma(...g.base) < luma(...g.tip)]).toEqual([t.source, true])
     }
     expect(entries.filter(e => e.grass.weight === 1).length).toBeGreaterThanOrEqual(10)
-    expect(entries.filter(e => e.grass.weight === GRASSY_DIRT_WEIGHT).length).toBeGreaterThanOrEqual(3)
+    // the grassy dirt (wc_grass02_01 and kin) painted only the drowned Western China side (docs/COAST.md §4.1): 3 -> 1
+    expect(entries.filter(e => e.grass.weight === GRASSY_DIRT_WEIGHT).length).toBeGreaterThanOrEqual(1)
     // the pass's output makes a valid manifest
     const out: WorldManifest = { ...m, tiles: m.tiles.map(t => ({ ...t, grass: by.get(t.id)! })) }
     expect(validateWorldManifest(out)).toEqual([])

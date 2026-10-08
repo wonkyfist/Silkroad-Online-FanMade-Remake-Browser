@@ -1,0 +1,41 @@
+{
+  "id": "01a0ea2d-bd6b-7354-ba9e-cbfc0f398e2f",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "Keep the exact design, colours and pattern placement. A Chinese heavy lamellar cuirass over a padded tunic. Torso: a grid of rust-brown hardened leather and copper plates in horizontal rows, each fixed with small round iron rivets, dark gaps between plates. Across the upper chest and upper back: a band of dark hammered iron with large dome rivets. Shoulder straps of deep red lacquered leather ending in small gold ornamental clasp plaques; a pale cream stand-up collar. Long sleeves of cream-ivory quilted linen with soft folds, finished with dark teal-green cloth cuffs. Target: aged copper and leather plates with patina, scratches and edge wear, hammered iron with dents, woven linen with visible weave and stitching, glossy red lacquer. No text, no logos.",
+  "image_style_url": "",
+  "status": "SUCCEEDED",
+  "created_at": 1790635263174,
+  "progress": 100,
+  "started_at": 1790635263180,
+  "finished_at": 1790635340030,
+  "expires_at": 1790894540030,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea2d-bd6b-7354-ba9e-cbfc0f398e2f/output/model.glb?Expires=1790894540&Signature=J~fUWL-USp9hiYbsp4DgwVuWyxT45r1bzuLNSVSQZUKBE9-AU8HHUZxyGTguhHWWVZTUiJCf1N2mBJbGQYLj16rcqZO-Cuyl3EFRfBATS~0fCgUtt77LqjvpVA~dB10bwV4Vb4n~BOX3hUuh4rNcb6cDBkvqdhqnzhDdPApLEvtOjrC93tPBQWl4cTatSHUFg565x6iklLIWkuLbCPu2lQC6Ng3brEacgpB6kcSGgipw5Hj16wXHlDjeKxUGF2udvy1asVJ1fJaxfBQMBb-h5NJ6wiVyRIpkJ-W-tlA93SJi5UybiOaOrpvBSjipsi4w11FnrxtvzQNGn3MRksyr8w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and pattern placement. A Chinese heavy lamellar cuirass over a padded tunic. Torso: a grid of rust-brown hardened leather and copper plates in horizontal rows, each fixed with small round iron rivets, dark gaps between plates. Across the upper chest and upper back: a band of dark hammered iron with large dome rivets. Shoulder straps of deep red lacquered leather ending in small gold ornamental clasp plaques; a pale cream stand-up collar. Long sleeves of cream-ivory quilted linen with soft folds, finished with dark teal-green cloth cuffs. Target: aged copper and leather plates with patina, scratches and edge wear, hammered iron with dents, woven linen with visible weave and stitching, glossy red lacquer. No text, no logos."
+  }
+}

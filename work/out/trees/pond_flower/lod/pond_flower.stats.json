@@ -1,0 +1,50 @@
+{
+ "species": "pond_flower",
+ "archetype": "water_plant",
+ "kind": "plant",
+ "seed": 75,
+ "target": {
+  "h": 0.48,
+  "w": 1.67
+ },
+ "normalUp": 1.0,
+ "normalRule": "up",
+ "lods": {
+  "0": {
+   "triangles": 24,
+   "byMaterial": {
+    "leaf": 24
+   },
+   "cards": 6,
+   "frontNormalY": 1.0,
+   "vertices": 48,
+   "heightM": 0.48,
+   "widthM": 1.67,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.06
+   ],
+   "crownRadius": 1.0,
+   "bytes": 41044
+  },
+  "1": {
+   "triangles": 12,
+   "byMaterial": {
+    "leaf": 12
+   },
+   "cards": 3,
+   "frontNormalY": 1.0,
+   "vertices": 24,
+   "heightM": 0.48,
+   "widthM": 1.67,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.06
+   ],
+   "crownRadius": 1.0,
+   "bytes": 39816
+  }
+ }
+}

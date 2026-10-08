@@ -9,6 +9,7 @@ import { resumeSession } from './net/resume.ts'
 import { createTransport } from './net/transport.ts'
 import { readParams } from './params.ts'
 import { charCreateScreen } from './screens/charcreate.ts'
+import { creatorScreen } from './screens/creator.ts'
 import { charSelectScreen } from './screens/charselect.ts'
 import { loginScreen } from './screens/login.ts'
 import { serversScreen } from './screens/servers.ts'
@@ -55,6 +56,7 @@ async function main(): Promise<void> {
   app.register('servers', serversScreen)
   app.register('charselect', charSelectScreen)
   app.register('charcreate', charCreateScreen)
+  app.register('creator', creatorScreen)
   app.register('world', worldScreen)
 
   // The corner: the master mute (localStorage['sro.muted']). The engine name is in the world's stats line and the log.
@@ -81,6 +83,8 @@ async function main(): Promise<void> {
   }
 
   if (params.fxlab) await import('./debug/fx-lab.ts').then(m => m.installFxLab(app), err => console.error('[fxlab] failed to load', err))
+  if (params.charbench) await import('./debug/charbench.ts').then(m => m.installCharBench(app), err => console.error('[charbench] failed to load', err))
+  if (params.rarelab) await import('./debug/rarity-lab.ts').then(m => m.installRarityLab(app), err => console.error('[rarelab] failed to load', err))
   // A refresh keeps you logged in: the tab's saved token goes straight to character select (UX_GAPS L1).
   const resumed = await resumeSession(app).catch(err => {
     console.warn('[resume] failed', err)

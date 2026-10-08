@@ -61,8 +61,10 @@ describe('items: horse, Recovery Kits, elixirs, Lucky Powders (synthetic)', () =
     expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A', [3, 3, 10, 1])).toBe(true)
     expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_B', [3, 3, 10, 1], { 61: '2' })).toBe(false)
     expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03', [3, 3, 10, 2], { 61: '3' })).toBe(true)
-    // Powders 4-9 have ItemDef.degree 2-3 and would pass MAX_ITEM_DEGREE: the code keeps them out.
-    expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04', [3, 3, 10, 2], { 61: '4' })).toBe(false)
+    // Powders 5-9 have ItemDef.degree 2-3 and would pass MAX_ITEM_DEGREE: the code keeps them out. The 4th matches
+    // degree 4, the Climb's cap tier (docs/CLIMB.md §4.1.2), and is exported.
+    expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04', [3, 3, 10, 2], { 61: '4' })).toBe(true)
+    expect(exported('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_05', [3, 3, 10, 2], { 61: '5' })).toBe(false)
     expect(classifyItem(itemDataRow(row(itemCells('X', [3, 3, 10, 1]))))).toEqual({ category: 'alchemy' })
   })
 
@@ -240,7 +242,8 @@ describe.skipIf(!hasPort)('wave-8 export on the real data (docs/SYSTEMS_COMBAT.m
     for (const k of ['WEAPON', 'SHIELD', 'ARMOR', 'ACCESSARY']) {
       expect(item(`ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_${k}_A`).icon).toBe(`/out/icon/item/etc/archemy_reinforce_recipe_${k.toLowerCase()}_b.png`)
     }
-    expect(entries<ItemDef>(CONTENT_FILES.items).some(i => /PROB_UP_A_0[4-9]|RECIPE_\w+_B$|HORSE[23]$/.test(i.code))).toBe(false)
+    expect(item('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04').reinforce).toMatchObject({ kind: 'powder', degree: 4 })
+    expect(entries<ItemDef>(CONTENT_FILES.items).some(i => /PROB_UP_A_0[5-9]|RECIPE_\w+_B$|HORSE[23]$/.test(i.code))).toBe(false)
   })
 
   it('types perPlus (Copper Sword +2.4 / +4.1 per plus)', () => {
@@ -267,13 +270,13 @@ describe.skipIf(!hasPort)('wave-8 export on the real data (docs/SYSTEMS_COMBAT.m
     expect(out.report.counts.mobSkills).toBeGreaterThanOrEqual(43)
   })
 
-  it('Machun sells the Red Horse and the kits; Jinjin the three powders; Chulsan and Mrs Jang repair', () => {
+  it('Machun sells the Red Horse and the kits; Jinjin the four powders (the 4th: degree 4, CLIMB D53); Chulsan and Mrs Jang repair', () => {
     const shops = entries<ShopDef>(CONTENT_FILES.shops)
     const stable = shops.find(s => s.id === 'STORE_CH_STABLE')!
     expect(stable.npcs).toEqual(['NPC_CH_HORSE'])
     expect(stable.tabs.flatMap(t => t.items)).toEqual(['ITEM_COS_C_HORSE1', 'ITEM_ETC_COS_HP_POTION_01', 'ITEM_ETC_COS_HP_POTION_02', 'ITEM_ETC_COS_HP_POTION_03'])
     expect(shops.find(s => s.id === 'STORE_CH_ACCESSORY')!.tabs.flatMap(t => t.items).filter(i => /ARCHEMY/.test(i))).toEqual(
-      ['ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01', 'ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02', 'ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03'],
+      ['ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01', 'ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02', 'ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03', 'ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04'],
     )
     const npcs = entries<NpcDef>(CONTENT_FILES.npcs)
     const roles = (code: string) => npcs.find(n => n.code === code)?.roles ?? []

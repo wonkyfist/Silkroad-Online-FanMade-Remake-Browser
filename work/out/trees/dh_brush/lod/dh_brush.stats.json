@@ -1,0 +1,71 @@
+{
+ "species": "dh_brush",
+ "archetype": "deadwood",
+ "kind": "tree",
+ "seed": 89,
+ "target": {
+  "h": 38.85,
+  "w": 40.57
+ },
+ "normalUp": 0.5,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 400,
+   "byMaterial": {
+    "bark": 352,
+    "leaf": 48
+   },
+   "cards": 12,
+   "frontNormalY": 0.694,
+   "vertices": 358,
+   "heightM": 38.85,
+   "widthM": 40.57,
+   "crownCentre": [
+    22.65,
+    17.35,
+    19.2
+   ],
+   "crownRadius": 12.61,
+   "bytes": 275852
+  },
+  "1": {
+   "triangles": 144,
+   "byMaterial": {
+    "bark": 120,
+    "leaf": 24
+   },
+   "cards": 6,
+   "frontNormalY": 0.554,
+   "vertices": 136,
+   "heightM": 38.536,
+   "widthM": 40.622,
+   "crownCentre": [
+    22.65,
+    17.35,
+    19.2
+   ],
+   "crownRadius": 12.61,
+   "bytes": 263644
+  },
+  "2": {
+   "triangles": 110,
+   "byMaterial": {
+    "bark": 94,
+    "leaf": 16
+   },
+   "cards": 4,
+   "frontNormalY": 0.649,
+   "vertices": 104,
+   "heightM": 37.177,
+   "widthM": 40.491,
+   "crownCentre": [
+    22.65,
+    17.35,
+    19.2
+   ],
+   "crownRadius": 12.61,
+   "bytes": 261900
+  }
+ }
+}

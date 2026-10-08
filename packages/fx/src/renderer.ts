@@ -151,7 +151,57 @@ export class FxLibrary {
     return mat
   }
 
+  /**
+   * Perf audit (docs/PERF_AUDIT.md): a disposed instance's batch meshes wait here, at most this many per (material,
+   * kind, geometry), for the next instance that needs the same kind of batch (0 = no pool: they are disposed). A new
+   * Babylon mesh per hit effect, and its dispose (a splice through every scene mesh), cost ≈ 1 ms a frame with 50
+   * fighters in view. Hidden meshes in the pool draw nothing.
+   */
+  poolLimit = 0
+  /** Perf audit: a batch that drew nothing and drew nothing last frame uploads nothing (it is hidden either way). */
+  static skipEmptyUploads = true
+  private readonly pool = new Map<string, Batch[]>()
+  private readonly geometryIds = new WeakMap<FxMeshData, number>()
+  private nextGeometryId = 0
+
+  /** The pool key of a batch: material, kind, geometry. */
+  batchKey(material: StandardMaterial, kind: string, geometry: FxMeshData | null): string {
+    let g = 0
+    if (geometry) {
+      g = this.geometryIds.get(geometry) ?? 0
+      if (!g) this.geometryIds.set(geometry, (g = ++this.nextGeometryId))
+    }
+    return `${material.uniqueId}|${kind}|${g}`
+  }
+
+  /** A pooled batch of `key`, hidden and empty (undefined: none waiting). */
+  takeBatch(key: string): Batch | undefined {
+    return this.pool.get(key)?.pop()
+  }
+
+  /** Keeps `b` for a later instance; false when the pool of its key is full (the caller disposes it). */
+  giveBatch(b: Batch): boolean {
+    if (this.poolLimit <= 0 || b.mesh.isDisposed()) return false
+    let list = this.pool.get(b.poolKey)
+    if (!list) this.pool.set(b.poolKey, (list = []))
+    if (list.length >= this.poolLimit) return false
+    b.drawn = 0
+    b.uploadedEmpty = false
+    b.mesh.isVisible = false
+    list.push(b)
+    return true
+  }
+
+  /** Batch meshes waiting in the pool (tests, the bench). */
+  get pooled(): number {
+    let n = 0
+    for (const l of this.pool.values()) n += l.length
+    return n
+  }
+
   dispose(): void {
+    for (const l of this.pool.values()) for (const b of l) b.dispose()
+    this.pool.clear()
     for (const m of this.materials.values()) m.dispose()
     for (const t of this.textures.values()) t.dispose()
     this.materials.clear()
@@ -208,15 +258,17 @@ function stageFactor(op: FxStageOp): number {
 
 type Kind = 'plate' | 'mesh' | 'pipe' | 'dpipe'
 
-class Batch {
+export class Batch {
   readonly mesh: Mesh
   capacity = 0
   positions = new Float32Array(0)
   colors = new Float32Array(0)
   uvs = new Float32Array(0)
   drawn = 0
+  /** The last upload was of an empty batch (FxLibrary.skipEmptyUploads). */
+  uploadedEmpty = false
 
-  constructor(scene: Scene, name: string, material: StandardMaterial, readonly kind: Kind, readonly geometry: FxMeshData | null) {
+  constructor(scene: Scene, name: string, material: StandardMaterial, readonly kind: Kind, readonly geometry: FxMeshData | null, readonly poolKey = '') {
     this.mesh = new Mesh(name, scene)
     this.mesh.material = material
     this.mesh.isPickable = false
@@ -252,6 +304,9 @@ class Batch {
   }
 
   upload(): void {
+    // nothing drawn now nor at the last upload: the buffers already hold zeros and the mesh is hidden
+    if (this.drawn === 0 && this.uploadedEmpty && FxLibrary.skipEmptyUploads) return
+    this.uploadedEmpty = this.drawn === 0
     this.mesh.updateVerticesData(VertexBuffer.PositionKind, this.positions)
     this.mesh.updateVerticesData(VertexBuffer.ColorKind, this.colors)
     this.mesh.updateVerticesData(VertexBuffer.UVKind, this.uvs)
@@ -306,7 +361,15 @@ export class FxInstance {
       geometry = m.mesh >= 0 ? this.library.meshGeometry(this.effect.meshes[m.mesh]!) : null
       if (!geometry || geometry.indices.length === 0) kind = 'plate'
     }
-    return new Batch(scene, `fx:${this.effect.key}#${i}:${node.name}`, this.library.material(this.effect, m), kind, geometry)
+    const material = this.library.material(this.effect, m)
+    const key = this.library.batchKey(material, kind, geometry)
+    const name = `fx:${this.effect.key}#${i}:${node.name}`
+    const pooled = this.library.takeBatch(key)
+    if (pooled) {
+      pooled.mesh.name = name
+      return pooled
+    }
+    return new Batch(scene, name, material, kind, geometry, key)
   }
 
   get stats(): FxStats {
@@ -350,7 +413,7 @@ export class FxInstance {
 
   dispose(): void {
     this.disposed = true
-    for (const b of this.batches) b?.dispose()
+    for (const b of this.batches) if (b && !this.library.giveBatch(b)) b.dispose()
     this.batches = []
   }
 

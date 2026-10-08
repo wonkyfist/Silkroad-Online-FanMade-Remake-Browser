@@ -284,7 +284,9 @@ export function sandCoverage(r: CoastResult, cfg: CoastConfig, masks: SeaMasks, 
       out.shore++
       const x = xOf(r, col)
       const z = zOf(r, row)
-      if (r.landFade[i]! >= 0.5 || r.joinSoft[i]! > 0.02 || inBayMouth(r, cfg, x, z) || nearLandEdge(r, row, col)) {
+      // the drowned area's and the opened water's shore (./drown.ts) is the kept retail bank of the old strait and the
+      // bay: no beach is made there
+      if (r.landFade[i]! >= 0.5 || r.joinSoft[i]! > 0.02 || inBayMouth(r, cfg, x, z) || nearLandEdge(r, row, col) || r.masks.drowned?.[i] || r.masks.openBed?.[i]) {
         out.exempt++
         continue
       }
@@ -351,7 +353,7 @@ export function riverMouthFills(r: CoastResult, retail: Float64Array): { checked
   const filled: Array<{ x: number; z: number; byM: number }> = []
   let checked = 0
   for (let i = 0; i < r.h.length; i++) {
-    if (m.inPlay[i] || !m.wetR[i] || !m.kept[i] || r.joinSoft[i]! < 0.5) continue
+    if (m.inPlay[i] || !m.wetR[i] || !m.kept[i] || r.joinSoft[i]! < 0.5 || m.openBed?.[i]) continue
     checked++
     const by = r.h[i]! - retail[i]!
     if (by > 0.01 && filled.length < 200) {

@@ -14,6 +14,7 @@ import {
   type ServerMessage,
   type StarterWeapon,
   type Vec3,
+  type CharLook,
 } from '@sro/shared'
 import type { NavLeg, NavSurface } from '@sro/nav'
 import type { Bounds } from './content.ts'
@@ -102,12 +103,16 @@ export interface Player extends Mover {
   nextSwingAt: number
   /** Last time this player dealt or took damage. */
   lastCombatAt: number
+  /** Last time a monster's hit landed on this player (the Climb's combat linger, climb/penalty.ts). Runtime only. */
+  lastMobHitAt?: number
   nextRegenAt: number
   /** Item cooldown group -> time it ends. */
   cooldowns: Map<string, number>
   /** Character creation Height/Volume choices (0..4, default 2). */
   height: number
   volume: number
+  /** The look every client draws this player with (look.ts, docs/CHARACTERS.md §16.8); absent = clients use the default. */
+  look?: CharLook
   /**
    * Play the Boss (docs/PLAY_THE_BOSS.md §3.1): the entity whose position this player's interest is centred on (the boss
    * it steers); absent, or gone from the world, = its own position. Runtime only.
@@ -118,7 +123,7 @@ export interface Player extends Mover {
 }
 
 export type NewPlayer = Pick<Player, 'characterId' | 'name' | 'model' | 'level' | 'weapon' | 'pos' | 'yaw' | 'send'> &
-  Partial<Pick<Player, 'staff' | 'gender' | 'progress' | 'gold' | 'hp' | 'mp' | 'dead' | 'equip' | 'combat' | 'surface' | 'height' | 'volume'>>
+  Partial<Pick<Player, 'staff' | 'gender' | 'progress' | 'gold' | 'hp' | 'mp' | 'dead' | 'equip' | 'combat' | 'surface' | 'height' | 'volume' | 'look'>>
 
 export type MobAiState = 'idle' | 'chase' | 'return' | 'dead'
 
@@ -421,6 +426,7 @@ export class World {
       path: null,
       height: p.height ?? DEFAULT_HEIGHT,
       volume: p.volume ?? DEFAULT_VOLUME,
+      ...(p.look ? { look: p.look } : {}),
     }
     if (player.dead) player.hp = 0
     const now = Date.now()
@@ -661,6 +667,7 @@ export class World {
       if (Object.keys(plus).length > 0) s.equipPlus = plus
       s.height = e.height
       s.volume = e.volume
+      if (e.look) s.look = e.look
       return s
     }
     if (e.kind === 'mob') {

@@ -40,6 +40,10 @@ export function testConfig(root: string, logs?: string[]): ServerConfig {
     giantPct: 0,
     // docs/WINTER.md: off in tests, so a run in December still sees the schedule's rain (winter tests turn it on)
     winterEnabled: false,
+    // docs/WEATHER.md §12: clear weather and no scheduled storms in tests, so a run at any hour is not slowed,
+    // struck or wet (storm and lightning tests set their own)
+    stormsPerDay: 0,
+    weather: 'off',
     log: (m) => logs?.push(m),
   }
 }

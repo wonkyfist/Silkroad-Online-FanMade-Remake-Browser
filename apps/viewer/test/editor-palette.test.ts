@@ -1,6 +1,6 @@
 // WE-U: the paint palette (docs/WORLD_EDITOR.md §4.3, D20; WAVE_PLAN8 D19) and the editor's small pure helpers: the
-// curated content/world-edits/jangan-fields/palette.json (108 rows by surface, every export tile once), the fallback
-// groups, the swatch choice (the remastered 512 albedo first), the budget line against the §7.2 guardrails, the
+// curated content/world-edits/jangan-fields/palette.json (65 rows by surface, every export tile once; 108 before Jangan
+// became an island, docs/COAST.md §4.1), the fallback groups, the swatch choice (the remastered 512 albedo first), the budget line against the §7.2 guardrails, the
 // render-on-demand gate, the library list.
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
@@ -15,10 +15,10 @@ const MANIFEST = new URL('../../../work/out/world/jangan-fields/manifest.json', 
 const palette = JSON.parse(readFileSync(PALETTE, 'utf8')) as PaletteFile
 
 describe('palette.json', () => {
-  it('is valid: 108 rows, each tile once, on a known surface; every surface used', () => {
+  it('is valid: 65 rows, each tile once, on a known surface; every surface used', () => {
     expect(validatePalette(palette)).toEqual([])
-    expect(palette.tiles.length).toBe(108)
-    expect(new Set(palette.tiles.map(r => r.tile)).size).toBe(108)
+    expect(palette.tiles.length).toBe(65)
+    expect(new Set(palette.tiles.map(r => r.tile)).size).toBe(65)
     for (const s of SURFACES) expect(palette.tiles.some(r => r.surface === s)).toBe(true)
     expect(palette.surfaces.map(s => s.id)).toEqual([...SURFACES])
   })

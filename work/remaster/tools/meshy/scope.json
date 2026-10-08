@@ -1,0 +1,3410 @@
+{
+ "version": 1,
+ "about": "Meshy Retexture scope (read by work/remaster/tools/meshy/pack.py). One part = one Meshy multiview job = one retail texture. glb/material/meshes: the representative game meshes (paths under work/out/); extraSources: more game meshes on the SAME texture packed into the same pack glb (their UV islands differ, so Meshy must see them all); layout \"spread\": extra sources are placed side by side with node translations (vertex bytes untouched); sharedWith: other game glbs whose material uses this texture with byte-identical UVs (not packed; install.py writes the result for them too). rotation: null, \"upright\" (glTF -90 deg about X: +Z tip up), \"shield-front\" (the shield face toward the front camera) or a quaternion [x,y,z,w]. tier/priority: firing order (work/tmp/w9-meshy-scope.md). coverage: share of the texture union covered by each packed or shared mesh (256x256 UV raster).",
+ "selection": {
+  "bodies": "first 3 male and first 3 female Chinese models in creation order (PLAYER_MODELS_CH, packages/shared/src/protocol.ts)",
+  "items": "Chinese weapons, shields and armour (garment/protector/armor, male and female, head/shoulders/chest/legs/hands/feet) in work/out/equipment/equipment.json with reqLevel <= 20, deduped by source texture (.ddj)",
+  "excluded": "the *_CA_* items have no model; textures used only by items above level 20 (e.g. *_03_ba) are out of scope; terrain has its own local pipeline"
+ },
+ "parts": [
+  {
+   "id": "chinaman_adventurer_body",
+   "label": "Male Chinese adventurer (starter body): skin, face, underwear",
+   "category": "body",
+   "tier": "1",
+   "priority": 19,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_ADVENTURER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_adventurer_body.ddj",
+   "glb": "char/china/chinaman_adventurer.glb",
+   "material": "chinaman_body",
+   "meshes": [
+    "chinaman_Adventurer_face",
+    "man_arm_lower",
+    "man_arm_upper",
+    "man_calf",
+    "man_pelvis",
+    "man_thigh",
+    "man_torso_lower",
+    "man_torso_upper"
+   ],
+   "rotation": null,
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "chinaman_adventurer_hair",
+   "label": "Male Chinese adventurer hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 20,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_ADVENTURER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_adventurer_hair.ddj",
+   "glb": "char/china/chinaman_adventurer.glb",
+   "material": "chinaman_hair",
+   "meshes": [
+    "chinaman_Adventurer_hair"
+   ],
+   "rotation": null,
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "ch_m_heavy_01_ba",
+   "label": "Copper Armor (male heavy, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 13,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_BA_A_DEF"
+   ],
+   "allCodes": [
+    "ITEM_CH_M_HEAVY_01_BA_A_DEF",
+    "ITEM_CH_M_HEAVY_01_BA_A",
+    "ITEM_CH_M_HEAVY_01_BA_B",
+    "ITEM_CH_M_HEAVY_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_ba.ddj",
+   "glb": "equipment/china/man_item/heavy_01_ba.glb",
+   "material": "heavy_01_ba",
+   "meshes": [
+    "heavy_01_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_ba:heavy_01_ba": 1.0
+   },
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "ch_m_heavy_01_la",
+   "label": "Copper Hose (male heavy, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 14,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_LA_A_DEF"
+   ],
+   "allCodes": [
+    "ITEM_CH_M_HEAVY_01_LA_A_DEF",
+    "ITEM_CH_M_HEAVY_01_LA_A",
+    "ITEM_CH_M_HEAVY_01_LA_B",
+    "ITEM_CH_M_HEAVY_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_la.ddj",
+   "glb": "equipment/china/man_item/heavy_01_la.glb",
+   "material": "heavy_01_la",
+   "meshes": [
+    "heavy_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_la:heavy_01_la": 1.0
+   },
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "ch_m_heavy_01_fa",
+   "label": "Copper Footgear (male heavy, boots)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 15,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_FA_A_DEF"
+   ],
+   "allCodes": [
+    "ITEM_CH_M_HEAVY_01_FA_A_DEF",
+    "ITEM_CH_M_HEAVY_01_FA_A",
+    "ITEM_CH_M_HEAVY_01_FA_B",
+    "ITEM_CH_M_HEAVY_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_fa.ddj",
+   "glb": "equipment/china/man_item/heavy_01_fa.glb",
+   "material": "heavy_01_fa",
+   "meshes": [
+    "heavy_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_fa:heavy_01_fa": 1.0
+   },
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "ch_sword_01",
+   "label": "Copper Sword (starter one-handed sword)",
+   "category": "weapon",
+   "tier": "1",
+   "priority": 32,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_SWORD_01_A_DEF"
+   ],
+   "allCodes": [
+    "ITEM_CH_SWORD_01_A_DEF",
+    "ITEM_CH_SWORD_01_A",
+    "ITEM_CH_SWORD_01_B",
+    "ITEM_CH_SWORD_01_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.ddj",
+   "glb": "equipment/china/weapon/sword_01.glb",
+   "material": "sword1_2_3",
+   "meshes": [
+    "sword_01"
+   ],
+   "rotation": "upright",
+   "coverage": {
+    "sword_01": 0.312,
+    "sword_02": 0.365,
+    "sword_03": 0.323
+   },
+   "note": "first test batch (2026-09-28): multiview result in work/remaster/meshy; keep id, glb and meshes unchanged"
+  },
+  {
+   "id": "ch_m_clothes_01_ba",
+   "label": "Cotton Suit (male garment, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 1,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_BA_A_DEF",
+    "ITEM_CH_M_CLOTHES_01_BA_A",
+    "ITEM_CH_M_CLOTHES_01_BA_B",
+    "ITEM_CH_M_CLOTHES_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_ba.ddj",
+   "glb": "equipment/china/man_item/clothes_01_ba.glb",
+   "material": "clothes_01_ba",
+   "meshes": [
+    "clothes_01_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_ba:clothes_01_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_01_la",
+   "label": "Cotton Trousers (male garment, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 2,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_LA_A_DEF",
+    "ITEM_CH_M_CLOTHES_01_LA_A",
+    "ITEM_CH_M_CLOTHES_01_LA_B",
+    "ITEM_CH_M_CLOTHES_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_la.ddj",
+   "glb": "equipment/china/man_item/clothes_01_la.glb",
+   "material": "clothes_01_la",
+   "meshes": [
+    "clothes_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_la:clothes_01_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_01_fa",
+   "label": "Cotton Shoes (male garment, feet)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 3,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_FA_A_DEF",
+    "ITEM_CH_M_CLOTHES_01_FA_A",
+    "ITEM_CH_M_CLOTHES_01_FA_B",
+    "ITEM_CH_M_CLOTHES_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_fa.ddj",
+   "glb": "equipment/china/man_item/clothes_01_fa.glb",
+   "material": "clothes_01_fa",
+   "meshes": [
+    "clothes_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_fa:clothes_01_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_01_ba",
+   "label": "Cotton Suit (female garment, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 4,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_01_BA_A_DEF",
+    "ITEM_CH_W_CLOTHES_01_BA_A",
+    "ITEM_CH_W_CLOTHES_01_BA_B",
+    "ITEM_CH_W_CLOTHES_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_ba.ddj",
+   "glb": "equipment/china/woman_item/clothes_01_ba.glb",
+   "material": "clothes_01_ba",
+   "meshes": [
+    "clothes_01_ba"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/woman_item/clothes_01_ba.glb",
+     "material": "clothes_01_la_2s",
+     "meshes": [
+      "clothes_01_ba_2s"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_ba:clothes_01_ba": 0.74,
+    "clothes_01_la_2s:clothes_01_ba_2s": 0.261
+   }
+  },
+  {
+   "id": "ch_w_clothes_01_la",
+   "label": "Cotton Trousers (female garment, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 5,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_01_LA_A_DEF",
+    "ITEM_CH_W_CLOTHES_01_LA_A",
+    "ITEM_CH_W_CLOTHES_01_LA_B",
+    "ITEM_CH_W_CLOTHES_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_la.ddj",
+   "glb": "equipment/china/woman_item/clothes_01_la.glb",
+   "material": "clothes_01_la",
+   "meshes": [
+    "clothes_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_la:clothes_01_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_01_fa",
+   "label": "Cotton Shoes (female garment, feet)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 6,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_01_FA_A_DEF",
+    "ITEM_CH_W_CLOTHES_01_FA_A",
+    "ITEM_CH_W_CLOTHES_01_FA_B",
+    "ITEM_CH_W_CLOTHES_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_fa.ddj",
+   "glb": "equipment/china/woman_item/clothes_01_fa.glb",
+   "material": "clothes_01_fa",
+   "meshes": [
+    "clothes_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_fa:clothes_01_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_ba",
+   "label": "Cloth Lamellar (male protector, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 7,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_BA_A_DEF",
+    "ITEM_CH_M_LIGHT_01_BA_A",
+    "ITEM_CH_M_LIGHT_01_BA_B",
+    "ITEM_CH_M_LIGHT_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_ba.ddj",
+   "glb": "equipment/china/man_item/light_01_ba.glb",
+   "material": "light_01_ba",
+   "meshes": [
+    "light_01_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_ba:light_01_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_la",
+   "label": "Cloth Tasset (male protector, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 8,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_LA_A_DEF",
+    "ITEM_CH_M_LIGHT_01_LA_A",
+    "ITEM_CH_M_LIGHT_01_LA_B",
+    "ITEM_CH_M_LIGHT_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_la.ddj",
+   "glb": "equipment/china/man_item/light_01_la.glb",
+   "material": "light_01_la",
+   "meshes": [
+    "light_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_la:light_01_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_fa",
+   "label": "Cloth Boots (male protector, feet)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 9,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_FA_A_DEF",
+    "ITEM_CH_M_LIGHT_01_FA_A",
+    "ITEM_CH_M_LIGHT_01_FA_B",
+    "ITEM_CH_M_LIGHT_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_fa.ddj",
+   "glb": "equipment/china/man_item/light_01_fa.glb",
+   "material": "light_01_fa",
+   "meshes": [
+    "light_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_fa:light_01_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_ba",
+   "label": "Cloth Lamellar (female protector, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 10,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_BA_A_DEF",
+    "ITEM_CH_W_LIGHT_01_BA_A",
+    "ITEM_CH_W_LIGHT_01_BA_B",
+    "ITEM_CH_W_LIGHT_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_ba.ddj",
+   "glb": "equipment/china/woman_item/light_01_ba.glb",
+   "material": "Light_01_ba",
+   "meshes": [
+    "Light_01_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_ba:Light_01_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_la",
+   "label": "Cloth Tasset (female protector, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 11,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_LA_A_DEF",
+    "ITEM_CH_W_LIGHT_01_LA_A",
+    "ITEM_CH_W_LIGHT_01_LA_B",
+    "ITEM_CH_W_LIGHT_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_la.ddj",
+   "glb": "equipment/china/woman_item/light_01_la.glb",
+   "material": "Light_01_la",
+   "meshes": [
+    "Light_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_la:Light_01_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_fa",
+   "label": "Cloth Boots (female protector, feet)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 12,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_FA_A_DEF",
+    "ITEM_CH_W_LIGHT_01_FA_A",
+    "ITEM_CH_W_LIGHT_01_FA_B",
+    "ITEM_CH_W_LIGHT_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_fa.ddj",
+   "glb": "equipment/china/woman_item/light_01_fa.glb",
+   "material": "Light_01_fa",
+   "meshes": [
+    "Light_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_fa:Light_01_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_ba",
+   "label": "Copper Armor (female armor, chest)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 16,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_BA_A_DEF",
+    "ITEM_CH_W_HEAVY_01_BA_A",
+    "ITEM_CH_W_HEAVY_01_BA_B",
+    "ITEM_CH_W_HEAVY_01_BA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_ba.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_ba.glb",
+   "material": "Heavy_01_ba",
+   "meshes": [
+    "Heavy_01_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_ba:Heavy_01_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_la",
+   "label": "Copper Hose (female armor, legs)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 17,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_LA_A_DEF",
+    "ITEM_CH_W_HEAVY_01_LA_A",
+    "ITEM_CH_W_HEAVY_01_LA_B",
+    "ITEM_CH_W_HEAVY_01_LA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_la.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_la.glb",
+   "material": "Heavy_01_la",
+   "meshes": [
+    "Heavy_01_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_la:Heavy_01_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_fa",
+   "label": "Copper Footgear (female armor, feet)",
+   "category": "clothing",
+   "tier": "1",
+   "priority": 18,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_FA_A_DEF",
+    "ITEM_CH_W_HEAVY_01_FA_A",
+    "ITEM_CH_W_HEAVY_01_FA_B",
+    "ITEM_CH_W_HEAVY_01_FA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_fa.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_fa.glb",
+   "material": "Heavy_01_fa",
+   "meshes": [
+    "Heavy_01_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_fa:Heavy_01_fa": 1.0
+   }
+  },
+  {
+   "id": "chinaman_bogy_body",
+   "label": "Male Chinese bogy (Angungroi): base body (skin, face)",
+   "category": "body",
+   "tier": "1",
+   "priority": 21,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_BOGY"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_bogy_body.ddj",
+   "glb": "char/china/chinaman_bogy.glb",
+   "material": "chinaman_body",
+   "meshes": [
+    "man_arm_lower",
+    "man_arm_upper",
+    "man_calf",
+    "man_pelvis",
+    "man_thigh",
+    "man_torso_lower",
+    "man_torso_upper",
+    "chinaman_Bogy_face"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinaman_bogy_hair",
+   "label": "Male Chinese bogy (Angungroi) hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 22,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_BOGY"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_bogy_hair.ddj",
+   "glb": "char/china/chinaman_bogy.glb",
+   "material": "chinaman_hair",
+   "meshes": [
+    "chinaman_Bogy_hair"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinaman_fighter_body",
+   "label": "Male Chinese fighter (Dokgohak): base body (skin, face)",
+   "category": "body",
+   "tier": "1",
+   "priority": 23,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_FIGHTER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_fighter_body.ddj",
+   "glb": "char/china/chinaman_fighter.glb",
+   "material": "chinaman_body",
+   "meshes": [
+    "man_arm_lower",
+    "man_arm_upper",
+    "man_calf",
+    "man_pelvis",
+    "man_thigh",
+    "man_torso_lower",
+    "man_torso_upper",
+    "chinaman_fighter_face"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinaman_fighter_hair",
+   "label": "Male Chinese fighter (Dokgohak) hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 24,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_MAN_FIGHTER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\man\\chinaman_fighter_hair.ddj",
+   "glb": "char/china/chinaman_fighter.glb",
+   "material": "chinaman_hair",
+   "meshes": [
+    "chinaman_fighter_hair"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_adventurer_body",
+   "label": "Female Chinese adventurer (Imseolgun): base body (skin, face)",
+   "category": "body",
+   "tier": "1",
+   "priority": 25,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_ADVENTURER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_adventurer_body.ddj",
+   "glb": "char/china/chinawoman_adventurer.glb",
+   "material": "chinawoman_body",
+   "meshes": [
+    "woman_arm_fore",
+    "woman_arm_upper",
+    "woman_calf",
+    "woman_pelvis",
+    "woman_thigh",
+    "woman_torso_lower",
+    "woman_torso_upper",
+    "chinawoman_Adventurer_face"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_adventurer_hair",
+   "label": "Female Chinese adventurer (Imseolgun) hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 26,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_ADVENTURER"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_adventurer_hair.ddj",
+   "glb": "char/china/chinawoman_adventurer.glb",
+   "material": "chinawoman_hair",
+   "meshes": [
+    "chinawoman_Adventurer_hair"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_assassin_body",
+   "label": "Female Chinese assassin (Aisa): base body (skin, face)",
+   "category": "body",
+   "tier": "1",
+   "priority": 27,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_ASSASSIN"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_assassin_body.ddj",
+   "glb": "char/china/chinawoman_assassin.glb",
+   "material": "chinawoman_body",
+   "meshes": [
+    "woman_arm_fore",
+    "woman_arm_upper",
+    "woman_calf",
+    "woman_pelvis",
+    "woman_thigh",
+    "woman_torso_lower",
+    "woman_torso_upper",
+    "chinawoman_Assassin_face"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_assassin_hair",
+   "label": "Female Chinese assassin (Aisa) hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 28,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_ASSASSIN"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_assassin_hair.ddj",
+   "glb": "char/china/chinawoman_assassin.glb",
+   "material": "chinawoman_hair",
+   "meshes": [
+    "chinawoman_Assassin_hair"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_bogy_body",
+   "label": "Female Chinese bogy (Anryeong): base body (skin, face)",
+   "category": "body",
+   "tier": "1",
+   "priority": 29,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_BOGY"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy_body.ddj",
+   "glb": "char/china/chinawoman_bogy.glb",
+   "material": "chinawoman_body",
+   "meshes": [
+    "woman_arm_fore",
+    "woman_arm_upper",
+    "woman_calf",
+    "woman_pelvis",
+    "woman_thigh",
+    "woman_torso_lower",
+    "woman_torso_upper",
+    "chinawoman_Bogy_face"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "chinawoman_bogy_hair",
+   "label": "Female Chinese bogy (Anryeong) hair",
+   "category": "body",
+   "tier": "1",
+   "priority": 30,
+   "starter": true,
+   "codes": [
+    "CHAR_CH_WOMAN_BOGY"
+   ],
+   "level": null,
+   "degrees": [],
+   "texture": "prim\\mtrl\\char\\china\\woman\\chinawoman_bogy_hair.ddj",
+   "glb": "char/china/chinawoman_bogy.glb",
+   "material": "chinawoman_hair",
+   "meshes": [
+    "chinawoman_Bogy_hair01"
+   ],
+   "rotation": null
+  },
+  {
+   "id": "ch_blade_01_02_03",
+   "label": "Copper Blade / Infantry Hand Blade / Mhong tribe Cutting Blade (blade degrees 1-2-3, one shared texture blade1_5)",
+   "category": "weapon",
+   "tier": "1",
+   "priority": 31,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_BLADE_01_A_DEF",
+    "ITEM_CH_BLADE_01_A",
+    "ITEM_CH_BLADE_01_B",
+    "ITEM_CH_BLADE_01_C",
+    "ITEM_CH_BLADE_02_A",
+    "ITEM_CH_BLADE_02_B",
+    "ITEM_CH_BLADE_02_C",
+    "ITEM_CH_BLADE_03_A",
+    "ITEM_CH_BLADE_03_B"
+   ],
+   "level": 1,
+   "degrees": [
+    1,
+    2,
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\blade1_5.ddj",
+   "glb": "equipment/china/weapon/blade_01.glb",
+   "material": "blade1_5",
+   "meshes": [
+    "blade_01"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/weapon/blade_02.glb",
+     "material": "blade1_5",
+     "meshes": [
+      "blade_02"
+     ]
+    },
+    {
+     "glb": "equipment/china/weapon/blade_03.glb",
+     "material": "blade1_5",
+     "meshes": [
+      "blade_03"
+     ]
+    }
+   ],
+   "layout": "spread",
+   "rotation": "upright",
+   "coverage": {
+    "blade_01": 0.331,
+    "blade_02": 0.276,
+    "blade_03": 0.402
+   }
+  },
+  {
+   "id": "ch_spear_01_02_03",
+   "label": "Crescent / Infantry Long Pike / Vicious Snake Spear (spear degrees 1-2-3, one shared texture spear_1_5)",
+   "category": "weapon",
+   "tier": "1",
+   "priority": 33,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_SPEAR_01_A_DEF",
+    "ITEM_CH_SPEAR_01_A",
+    "ITEM_CH_SPEAR_01_B",
+    "ITEM_CH_SPEAR_01_C",
+    "ITEM_CH_SPEAR_02_A",
+    "ITEM_CH_SPEAR_02_B",
+    "ITEM_CH_SPEAR_02_C",
+    "ITEM_CH_SPEAR_03_A",
+    "ITEM_CH_SPEAR_03_B"
+   ],
+   "level": 1,
+   "degrees": [
+    1,
+    2,
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\spear_1_5.ddj",
+   "glb": "equipment/china/weapon/spear_01.glb",
+   "material": "spear_1_5",
+   "meshes": [
+    "spear_01"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/weapon/spear_02.glb",
+     "material": "spear_1_5",
+     "meshes": [
+      "spear_02"
+     ]
+    },
+    {
+     "glb": "equipment/china/weapon/spear_03.glb",
+     "material": "spear_1_5",
+     "meshes": [
+      "spear_03"
+     ]
+    }
+   ],
+   "layout": "spread",
+   "rotation": "upright",
+   "coverage": {
+    "spear_01": 0.263,
+    "spear_02": 0.291,
+    "spear_03": 0.446
+   }
+  },
+  {
+   "id": "ch_tblade_01_02_03",
+   "label": "Glaive / Bronze Glaive / Merchant's Hook Glaive (glaive degrees 1-2-3, one shared texture tblade_1_5)",
+   "category": "weapon",
+   "tier": "1",
+   "priority": 34,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_TBLADE_01_A_DEF",
+    "ITEM_CH_TBLADE_01_A",
+    "ITEM_CH_TBLADE_01_B",
+    "ITEM_CH_TBLADE_01_C",
+    "ITEM_CH_TBLADE_02_A",
+    "ITEM_CH_TBLADE_02_B",
+    "ITEM_CH_TBLADE_02_C",
+    "ITEM_CH_TBLADE_03_A",
+    "ITEM_CH_TBLADE_03_B"
+   ],
+   "level": 1,
+   "degrees": [
+    1,
+    2,
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\tblade_1_5.ddj",
+   "glb": "equipment/china/weapon/tblade_01.glb",
+   "material": "tblade_1_5",
+   "meshes": [
+    "tblade_01"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/weapon/tblade_02.glb",
+     "material": "tblade_1_5",
+     "meshes": [
+      "tblade_02"
+     ]
+    },
+    {
+     "glb": "equipment/china/weapon/tblade_03.glb",
+     "material": "tblade_1_5",
+     "meshes": [
+      "tblade_03"
+     ]
+    }
+   ],
+   "layout": "spread",
+   "rotation": "upright",
+   "coverage": {
+    "tblade_01": 0.319,
+    "tblade_02": 0.383,
+    "tblade_03": 0.299
+   }
+  },
+  {
+   "id": "ch_bow_01_02_03",
+   "label": "Copper Bow / Infantry Bronz Bow / Strong Iron Bow (bow degrees 1-2-3, one shared texture bow_1_5)",
+   "category": "weapon",
+   "tier": "1",
+   "priority": 35,
+   "starter": true,
+   "codes": [
+    "ITEM_CH_BOW_01_A_DEF",
+    "ITEM_CH_BOW_01_A",
+    "ITEM_CH_BOW_01_B",
+    "ITEM_CH_BOW_01_C",
+    "ITEM_CH_BOW_02_A",
+    "ITEM_CH_BOW_02_B",
+    "ITEM_CH_BOW_02_C",
+    "ITEM_CH_BOW_03_A",
+    "ITEM_CH_BOW_03_B"
+   ],
+   "level": 1,
+   "degrees": [
+    1,
+    2,
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\bow_1_5.ddj",
+   "glb": "equipment/china/weapon/bow_01.glb",
+   "material": "bow_1_5",
+   "meshes": [
+    "bow_01"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/weapon/bow_02.glb",
+     "material": "bow_1_5",
+     "meshes": [
+      "bow_02"
+     ]
+    },
+    {
+     "glb": "equipment/china/weapon/bow_03.glb",
+     "material": "bow_1_5",
+     "meshes": [
+      "bow_03"
+     ]
+    }
+   ],
+   "layout": "spread",
+   "rotation": "upright",
+   "coverage": {
+    "bow_01": 0.195,
+    "bow_02": 0.295,
+    "bow_03": 0.51
+   }
+  },
+  {
+   "id": "ch_m_clothes_01_ha",
+   "label": "Cotton Hat (male garment, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 36,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_HA_A",
+    "ITEM_CH_M_CLOTHES_01_HA_B",
+    "ITEM_CH_M_CLOTHES_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_ha.ddj",
+   "glb": "equipment/china/man_item/clothes_01_ha.glb",
+   "material": "clothes_01_ha",
+   "meshes": [
+    "clothes_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_ha:clothes_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_01_sa",
+   "label": "Cotton Talisman (male garment, shoulders); texture shared with woman_item/clothes_01_sa.glb",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 37,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_SA_A",
+    "ITEM_CH_M_CLOTHES_01_SA_B",
+    "ITEM_CH_M_CLOTHES_01_SA_C",
+    "ITEM_CH_W_CLOTHES_01_SA_A",
+    "ITEM_CH_W_CLOTHES_01_SA_B",
+    "ITEM_CH_W_CLOTHES_01_SA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_sa.ddj",
+   "glb": "equipment/china/man_item/clothes_01_sa.glb",
+   "material": "clothes_01_sa",
+   "meshes": [
+    "clothes_01_sa"
+   ],
+   "sharedWith": [
+    {
+     "glb": "equipment/china/woman_item/clothes_01_sa.glb",
+     "material": "clothes_01_sa",
+     "meshes": [
+      "clothes_01_sa"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_sa:clothes_01_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_01_aa",
+   "label": "Cotton Wristlet (male garment, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 38,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_01_AA_A",
+    "ITEM_CH_M_CLOTHES_01_AA_B",
+    "ITEM_CH_M_CLOTHES_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_01_aa.ddj",
+   "glb": "equipment/china/man_item/clothes_01_aa.glb",
+   "material": "clothes_01_aa",
+   "meshes": [
+    "clothes_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_aa:clothes_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_01_ha",
+   "label": "Cotton Hat (female garment, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 39,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_01_HA_A",
+    "ITEM_CH_W_CLOTHES_01_HA_B",
+    "ITEM_CH_W_CLOTHES_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_ha.ddj",
+   "glb": "equipment/china/woman_item/clothes_01_ha.glb",
+   "material": "clothes_01_ha",
+   "meshes": [
+    "clothes_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_ha:clothes_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_01_aa",
+   "label": "Cotton Wristlet (female garment, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 40,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_01_AA_A",
+    "ITEM_CH_W_CLOTHES_01_AA_B",
+    "ITEM_CH_W_CLOTHES_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_01_aa.ddj",
+   "glb": "equipment/china/woman_item/clothes_01_aa.glb",
+   "material": "clothes_01_aa",
+   "meshes": [
+    "clothes_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_01_aa:clothes_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_ha",
+   "label": "Cloth Headgear (male protector, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 41,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_HA_A",
+    "ITEM_CH_M_LIGHT_01_HA_B",
+    "ITEM_CH_M_LIGHT_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_ha.ddj",
+   "glb": "equipment/china/man_item/light_01_ha.glb",
+   "material": "light_01_ha",
+   "meshes": [
+    "light_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_ha:light_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_sa",
+   "label": "Cloth Shell (male protector, shoulders)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 42,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_SA_A",
+    "ITEM_CH_M_LIGHT_01_SA_B",
+    "ITEM_CH_M_LIGHT_01_SA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_sa.ddj",
+   "glb": "equipment/china/man_item/light_01_sa.glb",
+   "material": "light_01_sa",
+   "meshes": [
+    "light_01_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_sa:light_01_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_01_aa",
+   "label": "Cloth Glove (male protector, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 43,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_01_AA_A",
+    "ITEM_CH_M_LIGHT_01_AA_B",
+    "ITEM_CH_M_LIGHT_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_01_aa.ddj",
+   "glb": "equipment/china/man_item/light_01_aa.glb",
+   "material": "light_01_aa",
+   "meshes": [
+    "light_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_01_aa:light_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_ha",
+   "label": "Cloth Headgear (female protector, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 44,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_HA_A",
+    "ITEM_CH_W_LIGHT_01_HA_B",
+    "ITEM_CH_W_LIGHT_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_ha.ddj",
+   "glb": "equipment/china/woman_item/light_01_ha.glb",
+   "material": "Light_01_ha",
+   "meshes": [
+    "Light_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_ha:Light_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_sa",
+   "label": "Cloth Shell (female protector, shoulders)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 45,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_SA_A",
+    "ITEM_CH_W_LIGHT_01_SA_B",
+    "ITEM_CH_W_LIGHT_01_SA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_sa.ddj",
+   "glb": "equipment/china/woman_item/light_01_sa.glb",
+   "material": "Light_01_sa",
+   "meshes": [
+    "Light_01_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_sa:Light_01_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_01_aa",
+   "label": "Cloth Glove (female protector, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 46,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_01_AA_A",
+    "ITEM_CH_W_LIGHT_01_AA_B",
+    "ITEM_CH_W_LIGHT_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_01_aa.ddj",
+   "glb": "equipment/china/woman_item/light_01_aa.glb",
+   "material": "Light_01_aa",
+   "meshes": [
+    "Light_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_01_aa:Light_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_01_ha",
+   "label": "Copper Casque (male armor, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 47,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_HA_A",
+    "ITEM_CH_M_HEAVY_01_HA_B",
+    "ITEM_CH_M_HEAVY_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_ha.ddj",
+   "glb": "equipment/china/man_item/heavy_01_ha.glb",
+   "material": "heavy_01_ha",
+   "meshes": [
+    "heavy_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_ha:heavy_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_01_sa",
+   "label": "Copper Shoulder (male armor, shoulders)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 48,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_SA_A",
+    "ITEM_CH_M_HEAVY_01_SA_B",
+    "ITEM_CH_M_HEAVY_01_SA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_sa.ddj",
+   "glb": "equipment/china/man_item/heavy_01_sa.glb",
+   "material": "heavy_01_sa",
+   "meshes": [
+    "heavy_01_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_sa:heavy_01_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_01_aa",
+   "label": "Copper Bracer (male armor, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 49,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_01_AA_A",
+    "ITEM_CH_M_HEAVY_01_AA_B",
+    "ITEM_CH_M_HEAVY_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_01_aa.ddj",
+   "glb": "equipment/china/man_item/heavy_01_aa.glb",
+   "material": "heavy_01_aa",
+   "meshes": [
+    "heavy_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_01_aa:heavy_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_ha",
+   "label": "Copper Casque (female armor, head)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 50,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_HA_A",
+    "ITEM_CH_W_HEAVY_01_HA_B",
+    "ITEM_CH_W_HEAVY_01_HA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_ha.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_ha.glb",
+   "material": "Heavy_01_ha",
+   "meshes": [
+    "Heavy_01_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_ha:Heavy_01_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_sa",
+   "label": "Copper Shoulder (female armor, shoulders)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 51,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_SA_A",
+    "ITEM_CH_W_HEAVY_01_SA_B",
+    "ITEM_CH_W_HEAVY_01_SA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_sa.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_sa.glb",
+   "material": "Heavy_01_sa",
+   "meshes": [
+    "Heavy_01_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_sa:Heavy_01_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_01_aa",
+   "label": "Copper Bracer (female armor, hands)",
+   "category": "clothing",
+   "tier": "2",
+   "priority": 52,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_01_AA_A",
+    "ITEM_CH_W_HEAVY_01_AA_B",
+    "ITEM_CH_W_HEAVY_01_AA_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_01_aa.ddj",
+   "glb": "equipment/china/woman_item/heavy_01_aa.glb",
+   "material": "Heavy_01_aa",
+   "meshes": [
+    "Heavy_01_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_01_aa:Heavy_01_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_shield_01",
+   "label": "Copper Shield (shield degree 1)",
+   "category": "shield",
+   "tier": "2",
+   "priority": 53,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_SHIELD_01_A_DEF",
+    "ITEM_CH_SHIELD_01_A",
+    "ITEM_CH_SHIELD_01_B",
+    "ITEM_CH_SHIELD_01_C"
+   ],
+   "level": 1,
+   "degrees": [
+    1
+   ],
+   "texture": "prim\\mtrl\\item\\china\\armor\\shield_01.ddj",
+   "glb": "equipment/china/shield/shield_01.glb",
+   "material": "Shield_01",
+   "meshes": [
+    "Shield_01"
+   ],
+   "rotation": "shield-front"
+  },
+  {
+   "id": "ch_m_clothes_02_ba",
+   "label": "Small Linen Suit (male garment, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 54,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_BA_A",
+    "ITEM_CH_M_CLOTHES_02_BA_B",
+    "ITEM_CH_M_CLOTHES_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_ba.ddj",
+   "glb": "equipment/china/man_item/clothes_02_ba.glb",
+   "material": "clothes_02_ba",
+   "meshes": [
+    "clothes_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_ba:clothes_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_02_la",
+   "label": "Small Linen Trousers (male garment, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 55,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_LA_A",
+    "ITEM_CH_M_CLOTHES_02_LA_B",
+    "ITEM_CH_M_CLOTHES_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_la.ddj",
+   "glb": "equipment/china/man_item/clothes_02_la.glb",
+   "material": "clothes_02_la",
+   "meshes": [
+    "clothes_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_la:clothes_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_02_fa",
+   "label": "Small Linen Shoes (male garment, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 56,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_FA_A",
+    "ITEM_CH_M_CLOTHES_02_FA_B",
+    "ITEM_CH_M_CLOTHES_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_fa.ddj",
+   "glb": "equipment/china/man_item/clothes_02_fa.glb",
+   "material": "clothes_02_fa",
+   "meshes": [
+    "clothes_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_fa:clothes_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_02_ha",
+   "label": "Small Linen Hat (male garment, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 57,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_HA_A",
+    "ITEM_CH_M_CLOTHES_02_HA_B",
+    "ITEM_CH_M_CLOTHES_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_ha.ddj",
+   "glb": "equipment/china/man_item/clothes_02_ha.glb",
+   "material": "clothes_02_ha",
+   "meshes": [
+    "clothes_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_ha:clothes_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_02_sa",
+   "label": "Small Linen Talisman (male garment, shoulders); texture shared with woman_item/clothes_02_sa.glb",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 58,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_SA_A",
+    "ITEM_CH_M_CLOTHES_02_SA_B",
+    "ITEM_CH_M_CLOTHES_02_SA_C",
+    "ITEM_CH_W_CLOTHES_02_SA_A",
+    "ITEM_CH_W_CLOTHES_02_SA_B",
+    "ITEM_CH_W_CLOTHES_02_SA_C"
+   ],
+   "level": 9,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_sa.ddj",
+   "glb": "equipment/china/man_item/clothes_02_sa.glb",
+   "material": "clothes_02_sa",
+   "meshes": [
+    "clothes_02_sa"
+   ],
+   "sharedWith": [
+    {
+     "glb": "equipment/china/woman_item/clothes_02_sa.glb",
+     "material": "clothes_02_sa",
+     "meshes": [
+      "clothes_02_sa"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_sa:clothes_02_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_02_aa",
+   "label": "Small Linen Wristlet (male garment, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 59,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_02_AA_A",
+    "ITEM_CH_M_CLOTHES_02_AA_B",
+    "ITEM_CH_M_CLOTHES_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_02_aa.ddj",
+   "glb": "equipment/china/man_item/clothes_02_aa.glb",
+   "material": "clothes_02_aa",
+   "meshes": [
+    "clothes_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_aa:clothes_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_02_ba",
+   "label": "Small Linen Suit (female garment, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 60,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_02_BA_A",
+    "ITEM_CH_W_CLOTHES_02_BA_B",
+    "ITEM_CH_W_CLOTHES_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_02_ba.ddj",
+   "glb": "equipment/china/woman_item/clothes_02_ba.glb",
+   "material": "clothes_02_ba",
+   "meshes": [
+    "clothes_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_ba:clothes_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_02_la",
+   "label": "Small Linen Trousers (female garment, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 61,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_02_LA_A",
+    "ITEM_CH_W_CLOTHES_02_LA_B",
+    "ITEM_CH_W_CLOTHES_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_02_la.ddj",
+   "glb": "equipment/china/woman_item/clothes_02_la.glb",
+   "material": "clothes_02_la",
+   "meshes": [
+    "clothes_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_la:clothes_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_02_fa",
+   "label": "Small Linen Shoes (female garment, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 62,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_02_FA_A",
+    "ITEM_CH_W_CLOTHES_02_FA_B",
+    "ITEM_CH_W_CLOTHES_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_02_fa.ddj",
+   "glb": "equipment/china/woman_item/clothes_02_fa.glb",
+   "material": "clothes_02_fa",
+   "meshes": [
+    "clothes_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_fa:clothes_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_02_ha",
+   "label": "Small Linen Hat (female garment, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 63,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_02_HA_A",
+    "ITEM_CH_W_CLOTHES_02_HA_B",
+    "ITEM_CH_W_CLOTHES_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_02_ha.ddj",
+   "glb": "equipment/china/woman_item/clothes_02_ha.glb",
+   "material": "clothes_02_ha",
+   "meshes": [
+    "clothes_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_ha:clothes_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_02_aa",
+   "label": "Small Linen Wristlet (female garment, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 64,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_02_AA_A",
+    "ITEM_CH_W_CLOTHES_02_AA_B",
+    "ITEM_CH_W_CLOTHES_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_02_aa.ddj",
+   "glb": "equipment/china/woman_item/clothes_02_aa.glb",
+   "material": "clothes_02_aa",
+   "meshes": [
+    "clothes_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_02_aa:clothes_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_ba",
+   "label": "Small Quilting Lamellar (male protector, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 65,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_BA_A",
+    "ITEM_CH_M_LIGHT_02_BA_B",
+    "ITEM_CH_M_LIGHT_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_ba.ddj",
+   "glb": "equipment/china/man_item/light_02_ba.glb",
+   "material": "light_02_ba",
+   "meshes": [
+    "light_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_ba:light_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_la",
+   "label": "Small Quilting Tasset (male protector, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 66,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_LA_A",
+    "ITEM_CH_M_LIGHT_02_LA_B",
+    "ITEM_CH_M_LIGHT_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_la.ddj",
+   "glb": "equipment/china/man_item/light_02_la.glb",
+   "material": "light_02_la",
+   "meshes": [
+    "light_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_la:light_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_fa",
+   "label": "Small Quilting Boots (male protector, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 67,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_FA_A",
+    "ITEM_CH_M_LIGHT_02_FA_B",
+    "ITEM_CH_M_LIGHT_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_fa.ddj",
+   "glb": "equipment/china/man_item/light_02_fa.glb",
+   "material": "light_02_fa",
+   "meshes": [
+    "light_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_fa:light_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_ha",
+   "label": "Small Quilting Headgear (male protector, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 68,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_HA_A",
+    "ITEM_CH_M_LIGHT_02_HA_B",
+    "ITEM_CH_M_LIGHT_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_ha.ddj",
+   "glb": "equipment/china/man_item/light_02_ha.glb",
+   "material": "light_02_ha",
+   "meshes": [
+    "light_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_ha:light_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_sa",
+   "label": "Small Quilting Shell (male protector, shoulders)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 69,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_SA_A",
+    "ITEM_CH_M_LIGHT_02_SA_B",
+    "ITEM_CH_M_LIGHT_02_SA_C"
+   ],
+   "level": 9,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_sa.ddj",
+   "glb": "equipment/china/man_item/light_02_sa.glb",
+   "material": "light_02_sa",
+   "meshes": [
+    "light_02_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_sa:light_02_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_02_aa",
+   "label": "Small Quilting Glove (male protector, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 70,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_02_AA_A",
+    "ITEM_CH_M_LIGHT_02_AA_B",
+    "ITEM_CH_M_LIGHT_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_02_aa.ddj",
+   "glb": "equipment/china/man_item/light_02_aa.glb",
+   "material": "light_02_aa",
+   "meshes": [
+    "light_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_02_aa:light_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_ba",
+   "label": "Small Quilting Lamellar (female protector, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 71,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_BA_A",
+    "ITEM_CH_W_LIGHT_02_BA_B",
+    "ITEM_CH_W_LIGHT_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_ba.ddj",
+   "glb": "equipment/china/woman_item/light_02_ba.glb",
+   "material": "Light_02_ba",
+   "meshes": [
+    "Light_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_ba:Light_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_la",
+   "label": "Small Quilting Tasset (female protector, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 72,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_LA_A",
+    "ITEM_CH_W_LIGHT_02_LA_B",
+    "ITEM_CH_W_LIGHT_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_la.ddj",
+   "glb": "equipment/china/woman_item/light_02_la.glb",
+   "material": "Light_02_la",
+   "meshes": [
+    "Light_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_la:Light_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_fa",
+   "label": "Small Quilting Boots (female protector, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 73,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_FA_A",
+    "ITEM_CH_W_LIGHT_02_FA_B",
+    "ITEM_CH_W_LIGHT_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_fa.ddj",
+   "glb": "equipment/china/woman_item/light_02_fa.glb",
+   "material": "Light_02_fa",
+   "meshes": [
+    "Light_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_fa:Light_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_ha",
+   "label": "Small Quilting Headgear (female protector, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 74,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_HA_A",
+    "ITEM_CH_W_LIGHT_02_HA_B",
+    "ITEM_CH_W_LIGHT_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_ha.ddj",
+   "glb": "equipment/china/woman_item/light_02_ha.glb",
+   "material": "Light_02_ha",
+   "meshes": [
+    "Light_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_ha:Light_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_sa",
+   "label": "Small Quilting Shell (female protector, shoulders)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 75,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_SA_A",
+    "ITEM_CH_W_LIGHT_02_SA_B",
+    "ITEM_CH_W_LIGHT_02_SA_C"
+   ],
+   "level": 9,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_sa.ddj",
+   "glb": "equipment/china/woman_item/light_02_sa.glb",
+   "material": "Light_02_sa",
+   "meshes": [
+    "Light_02_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_sa:Light_02_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_02_aa",
+   "label": "Small Quilting Glove (female protector, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 76,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_02_AA_A",
+    "ITEM_CH_W_LIGHT_02_AA_B",
+    "ITEM_CH_W_LIGHT_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_02_aa.ddj",
+   "glb": "equipment/china/woman_item/light_02_aa.glb",
+   "material": "Light_02_aa",
+   "meshes": [
+    "Light_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_02_aa:Light_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_ba",
+   "label": "Infantry Bronze Armor (male armor, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 77,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_BA_A",
+    "ITEM_CH_M_HEAVY_02_BA_B",
+    "ITEM_CH_M_HEAVY_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_ba.ddj",
+   "glb": "equipment/china/man_item/heavy_02_ba.glb",
+   "material": "heavy_02_ba",
+   "meshes": [
+    "heavy_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_ba:heavy_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_la",
+   "label": "Infantry Bronze Hose (male armor, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 78,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_LA_A",
+    "ITEM_CH_M_HEAVY_02_LA_B",
+    "ITEM_CH_M_HEAVY_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_la.ddj",
+   "glb": "equipment/china/man_item/heavy_02_la.glb",
+   "material": "heavy_02_la",
+   "meshes": [
+    "heavy_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_la:heavy_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_fa",
+   "label": "Infantry Bronze Footgear (male armor, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 79,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_FA_A",
+    "ITEM_CH_M_HEAVY_02_FA_B",
+    "ITEM_CH_M_HEAVY_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_fa.ddj",
+   "glb": "equipment/china/man_item/heavy_02_fa.glb",
+   "material": "heavy_02_fa",
+   "meshes": [
+    "heavy_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_fa:heavy_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_ha",
+   "label": "Infantry Bronze Casque (male armor, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 80,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_HA_A",
+    "ITEM_CH_M_HEAVY_02_HA_B",
+    "ITEM_CH_M_HEAVY_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_ha.ddj",
+   "glb": "equipment/china/man_item/heavy_02_ha.glb",
+   "material": "heavy_02_ha",
+   "meshes": [
+    "heavy_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_ha:heavy_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_sa",
+   "label": "Infantry Bronze Shoulder (male armor, shoulders)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 81,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_SA_A",
+    "ITEM_CH_M_HEAVY_02_SA_B",
+    "ITEM_CH_M_HEAVY_02_SA_C"
+   ],
+   "level": 9,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_sa.ddj",
+   "glb": "equipment/china/man_item/heavy_02_sa.glb",
+   "material": "heavy_02_sa",
+   "meshes": [
+    "heavy_02_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_sa:heavy_02_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_02_aa",
+   "label": "Infantry Bronze Bracer (male armor, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 82,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_02_AA_A",
+    "ITEM_CH_M_HEAVY_02_AA_B",
+    "ITEM_CH_M_HEAVY_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_02_aa.ddj",
+   "glb": "equipment/china/man_item/heavy_02_aa.glb",
+   "material": "heavy_02_aa",
+   "meshes": [
+    "heavy_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_aa:heavy_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_ba",
+   "label": "Infantry Bronze Armor (female armor, chest)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 83,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_BA_A",
+    "ITEM_CH_W_HEAVY_02_BA_B",
+    "ITEM_CH_W_HEAVY_02_BA_C"
+   ],
+   "level": 13,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_ba.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_ba.glb",
+   "material": "Heavy_02_ba",
+   "meshes": [
+    "Heavy_02_ba"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_02_ba:Heavy_02_ba": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_la",
+   "label": "Infantry Bronze Hose (female armor, legs)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 84,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_LA_A",
+    "ITEM_CH_W_HEAVY_02_LA_B",
+    "ITEM_CH_W_HEAVY_02_LA_C"
+   ],
+   "level": 12,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_la.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_la.glb",
+   "material": "Heavy_02_la",
+   "meshes": [
+    "Heavy_02_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_02_la:Heavy_02_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_fa",
+   "label": "Infantry Bronze Footgear (female armor, feet)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 85,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_FA_A",
+    "ITEM_CH_W_HEAVY_02_FA_B",
+    "ITEM_CH_W_HEAVY_02_FA_C"
+   ],
+   "level": 10,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_fa.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_fa.glb",
+   "material": "Heavy_02_fa",
+   "meshes": [
+    "Heavy_02_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_02_fa:Heavy_02_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_ha",
+   "label": "Infantry Bronze Casque (female armor, head)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 86,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_HA_A",
+    "ITEM_CH_W_HEAVY_02_HA_B",
+    "ITEM_CH_W_HEAVY_02_HA_C"
+   ],
+   "level": 11,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_ha.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_ha.glb",
+   "material": "Heavy_02_ha",
+   "meshes": [
+    "Heavy_02_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_02_ha:Heavy_02_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_sa",
+   "label": "Infantry Bronze Shoulder (female armor, shoulders)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 87,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_SA_A",
+    "ITEM_CH_W_HEAVY_02_SA_B",
+    "ITEM_CH_W_HEAVY_02_SA_C"
+   ],
+   "level": 9,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_sa.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_sa.glb",
+   "material": "Heavy_02_sa",
+   "meshes": [
+    "Heavy_02_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_02_sa:Heavy_02_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_02_aa",
+   "label": "Infantry Bronze Bracer (female armor, hands)",
+   "category": "clothing",
+   "tier": "3a",
+   "priority": 88,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_02_AA_A",
+    "ITEM_CH_W_HEAVY_02_AA_B",
+    "ITEM_CH_W_HEAVY_02_AA_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_02_aa.ddj",
+   "glb": "equipment/china/woman_item/heavy_02_aa.glb",
+   "material": "heavy_02_aa",
+   "meshes": [
+    "heavy_02_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_02_aa:heavy_02_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_sword_02_03",
+   "label": "Infantry Bronze Sword / Bloody Sharp Sword (sword degrees 2-3, one shared texture sword1_2_3); sword_01 (same texture, disjoint islands) is part ch_sword_01",
+   "category": "weapon",
+   "tier": "3a",
+   "priority": 89,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_SWORD_02_A",
+    "ITEM_CH_SWORD_02_B",
+    "ITEM_CH_SWORD_02_C",
+    "ITEM_CH_SWORD_03_A",
+    "ITEM_CH_SWORD_03_B"
+   ],
+   "level": 8,
+   "degrees": [
+    2,
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\weapon\\sword1_2_3.ddj",
+   "glb": "equipment/china/weapon/sword_02.glb",
+   "material": "sword1_2_3",
+   "meshes": [
+    "sword_02"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/weapon/sword_03.glb",
+     "material": "sword1_2_3",
+     "meshes": [
+      "sword_03"
+     ]
+    }
+   ],
+   "layout": "spread",
+   "rotation": "upright",
+   "coverage": {
+    "sword_01": 0.312,
+    "sword_02": 0.365,
+    "sword_03": 0.323
+   }
+  },
+  {
+   "id": "ch_shield_02_1",
+   "label": "Bronze Shield (shield degree 2, face)",
+   "category": "shield",
+   "tier": "3a",
+   "priority": 90,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_SHIELD_02_A",
+    "ITEM_CH_SHIELD_02_B",
+    "ITEM_CH_SHIELD_02_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\armor\\shield_02_1.ddj",
+   "glb": "equipment/china/shield/shield_02.glb",
+   "material": "Shield_02_1",
+   "meshes": [
+    "Shield_02_1"
+   ],
+   "rotation": "shield-front"
+  },
+  {
+   "id": "ch_shield_02_2",
+   "label": "Bronze Shield (shield degree 2, fur side strips: the second texture of shield_02)",
+   "category": "shield",
+   "tier": "3a",
+   "priority": 91,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_SHIELD_02_A",
+    "ITEM_CH_SHIELD_02_B",
+    "ITEM_CH_SHIELD_02_C"
+   ],
+   "level": 8,
+   "degrees": [
+    2
+   ],
+   "texture": "prim\\mtrl\\item\\china\\armor\\shield_02_2.ddj",
+   "glb": "equipment/china/shield/shield_02.glb",
+   "material": "Shield_01_2",
+   "meshes": [
+    "Shield_02_2"
+   ],
+   "rotation": "shield-front"
+  },
+  {
+   "id": "ch_m_clothes_03_la",
+   "label": "Sungdo Silk Trousers (male garment, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 92,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_la.ddj",
+   "glb": "equipment/china/man_item/clothes_03_la.glb",
+   "material": "clothes_03_la",
+   "meshes": [
+    "clothes_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_la:clothes_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_03_fa",
+   "label": "Sungdo Silk Shoes (male garment, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 93,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_03_FA_A",
+    "ITEM_CH_M_CLOTHES_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_fa.ddj",
+   "glb": "equipment/china/man_item/clothes_03_fa.glb",
+   "material": "clothes_03_fa",
+   "meshes": [
+    "clothes_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_fa:clothes_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_03_ha",
+   "label": "Sungdo Silk Hat (male garment, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 94,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_ha.ddj",
+   "glb": "equipment/china/man_item/clothes_03_ha.glb",
+   "material": "clothes_03_ha",
+   "meshes": [
+    "clothes_03_ha"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/man_item/clothes_03_ha.glb",
+     "material": "clothes_03_ha_2s",
+     "meshes": [
+      "clothes_03_ha_2s"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_ha:clothes_03_ha": 0.938,
+    "clothes_03_ha_2s:clothes_03_ha_2s": 0.062
+   }
+  },
+  {
+   "id": "ch_m_clothes_03_sa",
+   "label": "Sungdo Silk Talisman (male garment, shoulders); texture shared with woman_item/clothes_03_sa.glb",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 95,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_03_SA_A",
+    "ITEM_CH_M_CLOTHES_03_SA_B",
+    "ITEM_CH_W_CLOTHES_03_SA_A",
+    "ITEM_CH_W_CLOTHES_03_SA_B"
+   ],
+   "level": 17,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_sa.ddj",
+   "glb": "equipment/china/man_item/clothes_03_sa.glb",
+   "material": "clothes_03_sa",
+   "meshes": [
+    "clothes_03_sa"
+   ],
+   "sharedWith": [
+    {
+     "glb": "equipment/china/woman_item/clothes_03_sa.glb",
+     "material": "clothes_03_sa",
+     "meshes": [
+      "clothes_03_sa"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_sa:clothes_03_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_clothes_03_aa",
+   "label": "Sungdo Silk Wristlet (male garment, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 96,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_CLOTHES_03_AA_A",
+    "ITEM_CH_M_CLOTHES_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\clothes_03_aa.ddj",
+   "glb": "equipment/china/man_item/clothes_03_aa.glb",
+   "material": "clothes_03_aa",
+   "meshes": [
+    "clothes_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_aa:clothes_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_03_la",
+   "label": "Sungdo Silk Trousers (female garment, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 97,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_la.ddj",
+   "glb": "equipment/china/woman_item/clothes_03_la.glb",
+   "material": "clothes_03_la",
+   "meshes": [
+    "clothes_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_la:clothes_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_03_fa",
+   "label": "Sungdo Silk Shoes (female garment, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 98,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_03_FA_A",
+    "ITEM_CH_W_CLOTHES_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_fa.ddj",
+   "glb": "equipment/china/woman_item/clothes_03_fa.glb",
+   "material": "clothes_03_fa",
+   "meshes": [
+    "clothes_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_fa:clothes_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_clothes_03_ha",
+   "label": "Sungdo Silk Hat (female garment, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 99,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_ha.ddj",
+   "glb": "equipment/china/woman_item/clothes_03_ha.glb",
+   "material": "clothes_03_ha",
+   "meshes": [
+    "clothes_03_ha"
+   ],
+   "extraSources": [
+    {
+     "glb": "equipment/china/woman_item/clothes_03_ha.glb",
+     "material": "clothes_03_ha_2s",
+     "meshes": [
+      "clothes_03_ha_2s"
+     ]
+    }
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_ha:clothes_03_ha": 0.857,
+    "clothes_03_ha_2s:clothes_03_ha_2s": 0.143
+   }
+  },
+  {
+   "id": "ch_w_clothes_03_aa",
+   "label": "Sungdo Silk Wristlet (female garment, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 100,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_CLOTHES_03_AA_A",
+    "ITEM_CH_W_CLOTHES_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\clothes_03_aa.ddj",
+   "glb": "equipment/china/woman_item/clothes_03_aa.glb",
+   "material": "clothes_03_aa",
+   "meshes": [
+    "clothes_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "clothes_03_aa:clothes_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_03_la",
+   "label": "Oh Iron Tasset (male protector, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 101,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_la.ddj",
+   "glb": "equipment/china/man_item/light_03_la.glb",
+   "material": "light_03_la",
+   "meshes": [
+    "light_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_03_la:light_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_03_fa",
+   "label": "Oh Iron Boots (male protector, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 102,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_03_FA_A",
+    "ITEM_CH_M_LIGHT_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_fa.ddj",
+   "glb": "equipment/china/man_item/light_03_fa.glb",
+   "material": "light_03_fa",
+   "meshes": [
+    "light_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_03_fa:light_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_03_ha",
+   "label": "Oh Iron Headgear (male protector, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 103,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_ha.ddj",
+   "glb": "equipment/china/man_item/light_03_ha.glb",
+   "material": "light_03_ha",
+   "meshes": [
+    "light_03_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_03_ha:light_03_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_03_sa",
+   "label": "Oh Iron Shell (male protector, shoulders)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 104,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_03_SA_A",
+    "ITEM_CH_M_LIGHT_03_SA_B"
+   ],
+   "level": 17,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_sa.ddj",
+   "glb": "equipment/china/man_item/light_03_sa.glb",
+   "material": "light_03_sa",
+   "meshes": [
+    "light_03_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_03_sa:light_03_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_light_03_aa",
+   "label": "Oh Iron Glove (male protector, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 105,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_LIGHT_03_AA_A",
+    "ITEM_CH_M_LIGHT_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\light_03_aa.ddj",
+   "glb": "equipment/china/man_item/light_03_aa.glb",
+   "material": "light_03_aa",
+   "meshes": [
+    "light_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "light_03_aa:light_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_03_la",
+   "label": "Oh Iron Tasset (female protector, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 106,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_la.ddj",
+   "glb": "equipment/china/woman_item/light_03_la.glb",
+   "material": "Light_03_la",
+   "meshes": [
+    "Light_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_03_la:Light_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_03_fa",
+   "label": "Oh Iron Boots (female protector, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 107,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_03_FA_A",
+    "ITEM_CH_W_LIGHT_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_fa.ddj",
+   "glb": "equipment/china/woman_item/light_03_fa.glb",
+   "material": "Light_03_fa",
+   "meshes": [
+    "Light_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_03_fa:Light_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_03_ha",
+   "label": "Oh Iron Headgear (female protector, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 108,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_ha.ddj",
+   "glb": "equipment/china/woman_item/light_03_ha.glb",
+   "material": "Light_03_ha",
+   "meshes": [
+    "Light_03_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_03_ha:Light_03_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_03_sa",
+   "label": "Oh Iron Shell (female protector, shoulders)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 109,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_03_SA_A",
+    "ITEM_CH_W_LIGHT_03_SA_B"
+   ],
+   "level": 17,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_sa.ddj",
+   "glb": "equipment/china/woman_item/light_03_sa.glb",
+   "material": "Light_03_sa",
+   "meshes": [
+    "Light_03_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_03_sa:Light_03_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_light_03_aa",
+   "label": "Oh Iron Glove (female protector, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 110,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_LIGHT_03_AA_A",
+    "ITEM_CH_W_LIGHT_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\light_03_aa.ddj",
+   "glb": "equipment/china/woman_item/light_03_aa.glb",
+   "material": "Light_03_aa",
+   "meshes": [
+    "Light_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Light_03_aa:Light_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_03_la",
+   "label": "Oh Scale Hose (male armor, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 111,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_la.ddj",
+   "glb": "equipment/china/man_item/heavy_03_la.glb",
+   "material": "heavy_03_la",
+   "meshes": [
+    "heavy_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_03_la:heavy_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_03_fa",
+   "label": "Oh Scale Footgear (male armor, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 112,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_03_FA_A",
+    "ITEM_CH_M_HEAVY_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_fa.ddj",
+   "glb": "equipment/china/man_item/heavy_03_fa.glb",
+   "material": "heavy_03_fa",
+   "meshes": [
+    "heavy_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_03_fa:heavy_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_03_ha",
+   "label": "Oh Scale Casque (male armor, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 113,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_ha.ddj",
+   "glb": "equipment/china/man_item/heavy_03_ha.glb",
+   "material": "heavy_03_ha",
+   "meshes": [
+    "heavy_03_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_03_ha:heavy_03_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_03_sa",
+   "label": "Oh Scale Shoulder (male armor, shoulders)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 114,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_03_SA_A",
+    "ITEM_CH_M_HEAVY_03_SA_B"
+   ],
+   "level": 17,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_sa.ddj",
+   "glb": "equipment/china/man_item/heavy_03_sa.glb",
+   "material": "heavy_03_sa",
+   "meshes": [
+    "heavy_03_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_03_sa:heavy_03_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_m_heavy_03_aa",
+   "label": "Oh Scale Bracer (male armor, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 115,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_M_HEAVY_03_AA_A",
+    "ITEM_CH_M_HEAVY_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\man_item\\heavy_03_aa.ddj",
+   "glb": "equipment/china/man_item/heavy_03_aa.glb",
+   "material": "heavy_03_aa",
+   "meshes": [
+    "heavy_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "heavy_03_aa:heavy_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_03_la",
+   "label": "Oh Scale Hose (female armor, legs)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 116,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_03_LA_A"
+   ],
+   "level": 20,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_la.ddj",
+   "glb": "equipment/china/woman_item/heavy_03_la.glb",
+   "material": "Heavy_03_la",
+   "meshes": [
+    "Heavy_03_la"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_03_la:Heavy_03_la": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_03_fa",
+   "label": "Oh Scale Footgear (female armor, feet)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 117,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_03_FA_A",
+    "ITEM_CH_W_HEAVY_03_FA_B"
+   ],
+   "level": 18,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_fa.ddj",
+   "glb": "equipment/china/woman_item/heavy_03_fa.glb",
+   "material": "Heavy_03_fa",
+   "meshes": [
+    "Heavy_03_fa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_03_fa:Heavy_03_fa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_03_ha",
+   "label": "Oh Scale Casque (female armor, head)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 118,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_03_HA_A"
+   ],
+   "level": 19,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_ha.ddj",
+   "glb": "equipment/china/woman_item/heavy_03_ha.glb",
+   "material": "Heavy_03_ha",
+   "meshes": [
+    "Heavy_03_ha"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_03_ha:Heavy_03_ha": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_03_sa",
+   "label": "Oh Scale Shoulder (female armor, shoulders)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 119,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_03_SA_A",
+    "ITEM_CH_W_HEAVY_03_SA_B"
+   ],
+   "level": 17,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_sa.ddj",
+   "glb": "equipment/china/woman_item/heavy_03_sa.glb",
+   "material": "Heavy_03_sa",
+   "meshes": [
+    "Heavy_03_sa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_03_sa:Heavy_03_sa": 1.0
+   }
+  },
+  {
+   "id": "ch_w_heavy_03_aa",
+   "label": "Oh Scale Bracer (female armor, hands)",
+   "category": "clothing",
+   "tier": "3b",
+   "priority": 120,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_W_HEAVY_03_AA_A",
+    "ITEM_CH_W_HEAVY_03_AA_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\woman_item\\heavy_03_aa.ddj",
+   "glb": "equipment/china/woman_item/heavy_03_aa.glb",
+   "material": "Heavy_03_aa",
+   "meshes": [
+    "Heavy_03_aa"
+   ],
+   "rotation": null,
+   "coverage": {
+    "Heavy_03_aa:Heavy_03_aa": 1.0
+   }
+  },
+  {
+   "id": "ch_shield_03",
+   "label": "Infantry Iron Shield (shield degree 3)",
+   "category": "shield",
+   "tier": "3b",
+   "priority": 121,
+   "starter": false,
+   "codes": [
+    "ITEM_CH_SHIELD_03_A",
+    "ITEM_CH_SHIELD_03_B"
+   ],
+   "level": 16,
+   "degrees": [
+    3
+   ],
+   "texture": "prim\\mtrl\\item\\china\\armor\\shield_03.ddj",
+   "glb": "equipment/china/shield/shield_03.glb",
+   "material": "Shield_03",
+   "meshes": [
+    "Shield_03"
+   ],
+   "rotation": "shield-front"
+  }
+ ]
+}

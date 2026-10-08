@@ -1,0 +1,123 @@
+{
+  "source": "res/item/china/woman_item/light_04_ba.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_04_ba",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "Light_04_ba"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "Light_04_ba",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\light_04.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\light_04_ba.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Light_04_ba",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\light_04_ba.bms",
+      "material": "Light_04_ba",
+      "vertices": 173,
+      "triangles": 246,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Clavicle",
+        "Bip01 Spine1",
+        "Bip01 R UpperArm",
+        "Bip01 Neck",
+        "Bip01 Neck1",
+        "Bone01",
+        "Bip01 Spine",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 173,
+    "triangles": 246,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.31693530082702637,
+    "boundsMin": [
+      -0.15419360995292664,
+      1.205245852470398,
+      -0.13542361557483673
+    ],
+    "boundsMax": [
+      0.15418729186058044,
+      1.5221811532974243,
+      0.1162300854921341
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

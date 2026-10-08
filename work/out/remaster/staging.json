@@ -1,0 +1,103 @@
+{
+ "format": "sro-remaster",
+ "version": 1,
+ "$note": "REVIEW STAGING, not loaded by the game. Meshy multiview albedo (bodies: local face pasted back) + local L3 maps. Promote entries into manifest.json only after review.",
+ "textures": {
+  "equipment/china/man_item/clothes_01_ba#clothes_01_ba": {
+   "albedo": "staging/ch_m_clothes_01_ba/multiview/albedo.webp",
+   "normal": "staging/ch_m_clothes_01_ba/multiview/normal.webp",
+   "metallic": "staging/ch_m_clothes_01_ba/multiview/metallic.webp",
+   "roughness": "staging/ch_m_clothes_01_ba/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/clothes_01_ba#clothes_01_ba": {
+   "albedo": "staging/ch_w_clothes_01_ba/multiview/albedo.webp",
+   "normal": "staging/ch_w_clothes_01_ba/multiview/normal.webp",
+   "metallic": "staging/ch_w_clothes_01_ba/multiview/metallic.webp",
+   "roughness": "staging/ch_w_clothes_01_ba/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/light_01_ba#light_01_ba": {
+   "albedo": "staging/ch_m_light_01_ba/multiview/albedo.webp",
+   "normal": "staging/ch_m_light_01_ba/multiview/normal.webp",
+   "metallic": "staging/ch_m_light_01_ba/multiview/metallic.webp",
+   "roughness": "staging/ch_m_light_01_ba/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/light_01_ba#light_01_ba": {
+   "albedo": "staging/ch_w_light_01_ba/multiview/albedo.webp",
+   "normal": "staging/ch_w_light_01_ba/multiview/normal.webp",
+   "metallic": "staging/ch_w_light_01_ba/multiview/metallic.webp",
+   "roughness": "staging/ch_w_light_01_ba/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/clothes_01_la#clothes_01_la": {
+   "albedo": "staging/ch_m_clothes_01_la/multiview/albedo.webp",
+   "normal": "staging/ch_m_clothes_01_la/multiview/normal.webp",
+   "metallic": "staging/ch_m_clothes_01_la/multiview/metallic.webp",
+   "roughness": "staging/ch_m_clothes_01_la/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/light_01_la#light_01_la": {
+   "albedo": "staging/ch_w_light_01_la/multiview/albedo.webp",
+   "normal": "staging/ch_w_light_01_la/multiview/normal.webp",
+   "metallic": "staging/ch_w_light_01_la/multiview/metallic.webp",
+   "roughness": "staging/ch_w_light_01_la/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_adventurer#chinaman_adventurer_body": {
+   "albedo": "staging/chinaman_adventurer_body/multiview/albedo.webp",
+   "normal": "staging/chinaman_adventurer_body/multiview/normal.webp",
+   "metallic": "staging/chinaman_adventurer_body/multiview/metallic.webp",
+   "roughness": "staging/chinaman_adventurer_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_bogy#chinaman_bogy_body": {
+   "albedo": "staging/chinaman_bogy_body/multiview/albedo.webp",
+   "normal": "staging/chinaman_bogy_body/multiview/normal.webp",
+   "metallic": "staging/chinaman_bogy_body/multiview/metallic.webp",
+   "roughness": "staging/chinaman_bogy_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_fighter#chinaman_fighter_body": {
+   "albedo": "staging/chinaman_fighter_body/multiview/albedo.webp",
+   "normal": "staging/chinaman_fighter_body/multiview/normal.webp",
+   "metallic": "staging/chinaman_fighter_body/multiview/metallic.webp",
+   "roughness": "staging/chinaman_fighter_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_adventurer#chinawoman_adventurer_body": {
+   "albedo": "staging/chinawoman_adventurer_body/multiview/albedo.webp",
+   "normal": "staging/chinawoman_adventurer_body/multiview/normal.webp",
+   "metallic": "staging/chinawoman_adventurer_body/multiview/metallic.webp",
+   "roughness": "staging/chinawoman_adventurer_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_assassin#chinawoman_assassin_body": {
+   "albedo": "staging/chinawoman_assassin_body/multiview/albedo.webp",
+   "normal": "staging/chinawoman_assassin_body/multiview/normal.webp",
+   "metallic": "staging/chinawoman_assassin_body/multiview/metallic.webp",
+   "roughness": "staging/chinawoman_assassin_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_bogy#chinawoman_bogy_body": {
+   "albedo": "staging/chinawoman_bogy_body/multiview/albedo.webp",
+   "normal": "staging/chinawoman_bogy_body/multiview/normal.webp",
+   "metallic": "staging/chinawoman_bogy_body/multiview/metallic.webp",
+   "roughness": "staging/chinawoman_bogy_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  }
+ }
+}

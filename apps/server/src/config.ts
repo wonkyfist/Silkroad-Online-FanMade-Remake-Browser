@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DEFAULT_LEVEL_CAP, MAX_GOLD, STORM_TABLE, WEATHER_KINDS, WINTER_DEFAULTS, WINTER_PLAY, WORLD_FOLDER, hostTimeZone, parseMonthDay, validTimeZone, type Role, type WeatherKind } from '@sro/shared'
+import { CLIMB_PENALTY, DEFAULT_LEVEL_CAP, MAX_GOLD, RARE_PCT_MAX, RARITY_DEFAULTS, STORM_TABLE, WEATHER_KINDS, WINTER_DEFAULTS, WINTER_PLAY, WORLD_FOLDER, hostTimeZone, parseMonthDay, validTimeZone, type Role, type WeatherKind } from '@sro/shared'
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -43,8 +43,29 @@ export interface ServerConfig {
   helloTimeoutMs: number
   /** Trust X-Forwarded-For for rate limiting (only behind a reverse proxy you control). */
   trustProxy: boolean
-  /** Highest level GM `setlevel` accepts (LEVEL_CAP, default 20). */
+  /** The level cap: EXP stops, shops, quests and GM `setlevel` follow (LEVEL_CAP, default 25 since the Climb; was 20). */
   levelCap: number
+  /**
+   * The Climb (docs/CLIMB.md, CLIMB, default on): the re-levelled monsters, the cap-25 EXP curve (content/climb/levels.json),
+   * the level-difference EXP rule and the one-time move of saved characters to the curve. Absent (tests) = off.
+   */
+  climb?: boolean
+  /**
+   * The Climb's death penalty (docs/CLIMB.md §6, layer L4; DEATH_PENALTY, default on with CLIMB): a monster death from
+   * penaltyFromLevel loses penaltyMinPct..penaltyMaxPct % of the bar (never a de-level); one loss per penaltyGraceMin
+   * minutes (penaltyGraceHighMin from penaltyGraceHighFrom, D51); a player leaving within penaltyLingerS s of monster
+   * damage stays that long (F6). Absent = CLIMB_PENALTY's numbers. The admin panel changes them live.
+   */
+  deathPenalty?: boolean
+  penaltyFromLevel?: number
+  penaltyMinPct?: number
+  penaltyMaxPct?: number
+  penaltyGraceMin?: number
+  penaltyGraceHighFrom?: number
+  penaltyGraceHighMin?: number
+  penaltyLingerS?: number
+  /** The Climb's monster roles (docs/CLIMB.md §2.3, layer L3; CLIMB_ROLES, default on with CLIMB): packs, ranged, healers, cowards. */
+  climbRoles?: boolean
   /** How often (ms) the server checks the database for role changes made by `pnpm gm` while it runs. */
   rolePollMs: number
   /** Interest radius in metres: clients receive entities within this distance (VIEW_RANGE, default 120). */
@@ -208,6 +229,21 @@ export interface ServerConfig {
   giftYetiCount?: number
   /** Chance (percent) of a rare extra reward per gift box (GIFT_RARE_PCT, default 4, 0..100). */
   giftRarePct?: number
+  // ---- rare weapons (docs/RARITY.md §4); the admin panel changes them live ----
+  /** Percent of ordinary weapon drops that become a Seal of Star / Moon / Sun (RARE_STAR_PCT 4, RARE_MOON_PCT 1, RARE_SUN_PCT 0.25; 0..100). */
+  rareStarPct?: number
+  rareMoonPct?: number
+  rareSunPct?: number
+  /** Every player hears a rare drop from this rank (RARE_ANNOUNCE_FROM, default 3 = Sun, 1 Star, 2 Moon, 0 off). */
+  rareAnnounceFrom?: number
+  /**
+   * The Climb (docs/CLIMB.md §4.1, D41, D53): a weapon of the cap tier (degree 4) rolls Seal of Moon or Sun only from a
+   * monster of at least this level (RARE_TOP_MIN_LEVEL, default 25 = the cap band; 0 = any); below it such a roll becomes
+   * a Seal of Star. Lower degrees keep the normal rates.
+   */
+  rareTopMinLevel?: number
+  /** D54: the same rule for the degree below the cap tier (degree 3) from this level (RARE_MID_MIN_LEVEL, default 21). */
+  rareMidMinLevel?: number
   // ---- Siege of Jangan, layer 3: repair (docs/SIEGE.md §2.4, §11.2); optional, absent = content/siege/jangan.json's
   // numbers (else WALL_DEFAULTS); the admin panel changes them live (siege/walls.ts WALL_KNOBS) ----
   /** Natural repair, % per 10 min (WALL_NATURAL_PCT, default 1, 0..10). */
@@ -459,6 +495,16 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     rolePollMs: 1000,
     viewRange: num(env, 'VIEW_RANGE', 120, 20, 2000),
     mobLevelMax: Math.floor(num(env, 'MOB_LEVEL_MAX', levelCap + 5, 0, 1000)),
+    climb: onOff(env, 'CLIMB', true),
+    climbRoles: onOff(env, 'CLIMB_ROLES', true),
+    deathPenalty: onOff(env, 'DEATH_PENALTY', true),
+    penaltyFromLevel: Math.floor(num(env, 'PENALTY_FROM_LEVEL', CLIMB_PENALTY.fromLevel, 1, 300)),
+    penaltyMinPct: Math.floor(num(env, 'PENALTY_MIN_PCT', CLIMB_PENALTY.minPct, 0, 100)),
+    penaltyMaxPct: Math.floor(num(env, 'PENALTY_MAX_PCT', CLIMB_PENALTY.maxPct, 0, 100)),
+    penaltyGraceMin: num(env, 'PENALTY_GRACE_MIN', CLIMB_PENALTY.graceMin, 0, 1440),
+    penaltyGraceHighFrom: Math.floor(num(env, 'PENALTY_GRACE_HIGH_FROM', CLIMB_PENALTY.graceHighFrom, 1, 300)),
+    penaltyGraceHighMin: num(env, 'PENALTY_GRACE_HIGH_MIN', CLIMB_PENALTY.graceHighMin, 0, 1440),
+    penaltyLingerS: num(env, 'PENALTY_LINGER_S', CLIMB_PENALTY.lingerS, 0, 60),
     spawnMobs: bool(env, 'SPAWN_MOBS', true),
     giantPct: num(env, 'GIANT_PCT', 1, 0, 100),
     nav: navMode(env.NAV),
@@ -537,6 +583,13 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     giftDropPct: num(env, 'GIFT_DROP_PCT', WINTER_PLAY.gifts.dropPct, 0, 100),
     giftYetiCount: Math.floor(num(env, 'GIFT_YETI_COUNT', WINTER_PLAY.gifts.yetiCount, 0, 20)),
     giftRarePct: num(env, 'GIFT_RARE_PCT', WINTER_PLAY.gifts.rarePct, 0, 100),
+    // rare weapons (docs/RARITY.md §4)
+    rareStarPct: num(env, 'RARE_STAR_PCT', RARITY_DEFAULTS.starPct, 0, RARE_PCT_MAX),
+    rareMoonPct: num(env, 'RARE_MOON_PCT', RARITY_DEFAULTS.moonPct, 0, RARE_PCT_MAX),
+    rareSunPct: num(env, 'RARE_SUN_PCT', RARITY_DEFAULTS.sunPct, 0, RARE_PCT_MAX),
+    rareMidMinLevel: Math.floor(num(env, 'RARE_MID_MIN_LEVEL', RARITY_DEFAULTS.midMinLevel, 0, 300)),
+    rareAnnounceFrom: Math.floor(num(env, 'RARE_ANNOUNCE_FROM', RARITY_DEFAULTS.announceFrom, 0, 3)),
+    rareTopMinLevel: Math.floor(num(env, 'RARE_TOP_MIN_LEVEL', RARITY_DEFAULTS.topMinLevel, 0, 300)),
     // Siege of Jangan, layer 3 (docs/SIEGE.md §11.2)
     wallNaturalPctPer10Min: optNum(env, 'WALL_NATURAL_PCT', 0, 10),
     wallGoldPerPct: optNum(env, 'WALL_GOLD_PER_PCT', 100, 100_000),

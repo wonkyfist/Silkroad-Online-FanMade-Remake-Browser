@@ -17,6 +17,7 @@
     "gm": "pnpm --filter @sro/server gm",
     "verify-install": "tsx apps/server/src/cli/verify-install.ts",
     "changelog": "tsx apps/server/src/cli/changelog-md.ts",
+    "charbench": "tsx apps/server/src/cli/charbench.ts",
     "deploy": "tsx deploy/run.ts deploy.sh",
     "deploy:gm": "tsx deploy/run.ts gm.sh"
   },

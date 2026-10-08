@@ -1,0 +1,36 @@
+{
+ "part": "chinaman_fighter_body",
+ "meshy": "work\\remaster\\meshy\\chinaman_fighter_body\\multiview\\base_color.png",
+ "local": "work\\texpipe\\master\\prim\\mtrl\\char\\china\\man\\chinaman_fighter_body\\albedo.png",
+ "local_source": "tp-master",
+ "size": [
+  4096,
+  4096
+ ],
+ "retail_size": [
+  512,
+  256
+ ],
+ "u_min": 0.45,
+ "feather_texels": 1.5,
+ "gates": {
+  "face_psnr_vs_retail": {
+   "result": 31.72,
+   "local": 34.14,
+   "meshy": 17.58
+  },
+  "outside_face_changed_px": 0,
+  "outside_face_px": 13805421,
+  "body_detail_lap": {
+   "meshy": 0.925,
+   "local": 0.765,
+   "result": 0.925
+  },
+  "body_psnr_result_vs_meshy": 138.13,
+  "seam_ring_mean_abs_rgb_meshy_vs_local": 26.47,
+  "face_px": 2972183,
+  "full_weight_px": 2613025,
+  "feather_px": 12,
+  "pass": true
+ }
+}

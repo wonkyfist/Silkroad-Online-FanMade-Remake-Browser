@@ -23,7 +23,7 @@ const CODE = 'MOB_CH_TIGERWOMAN'
 export const MOCK_TIGER_ID = 990_001
 const RUN = 9
 const IDLE_MS = 20_000
-const HP = 47_898
+const HP = 59_872
 
 export const MOCK_KIT: PilotKitView[] = [
   { id: 'claw', slot: 1, clip: '', rangeM: 2.8, cooldownMs: 3000, target: 'entity' },
@@ -98,7 +98,7 @@ function openCall(ctx: MockContext, sec: number): string {
   const s = stateOf(ctx)
   if (s.turn || (s.event && s.event.phase !== 'ended')) return 'An event runs already (mock).'
   s.volunteers.clear()
-  s.event = { id: s.nextEvent++, mob: CODE, name: nameOf(ctx), phase: 'call', callEndsAt: ctx.now() + sec * 1000, volunteers: 0, minLevel: 20 }
+  s.event = { id: s.nextEvent++, mob: CODE, name: nameOf(ctx), phase: 'call', callEndsAt: ctx.now() + sec * 1000, volunteers: 0, minLevel: 25 }
   broadcastEvent(ctx, s)
   return `Call open (mock): the draw in ${sec} s.`
 }
@@ -126,7 +126,7 @@ function start(ctx: MockContext, conn: MockConn, hunt: boolean): string {
   if (!self) return 'Not in the world.'
   const now = ctx.now()
   const p = self.state.pos
-  const state: EntityState = { id: MOCK_TIGER_ID, kind: 'mob', name: nameOf(ctx), model: CODE, level: 20, pos: [p[0] + 7, p[1], p[2] + 7], yaw: 0, hp: HP, maxHp: HP, piloted: true }
+  const state: EntityState = { id: MOCK_TIGER_ID, kind: 'mob', name: nameOf(ctx), model: CODE, level: 25, pos: [p[0] + 7, p[1], p[2] + 7], yaw: 0, hp: HP, maxHp: HP, piloted: true }
   const event = hunt ? s.nextEvent++ : 0
   const huntEndsAt = hunt ? now + 15 * 60_000 : 0
   const turn: Turn = { conn, event, state, move: null, ready: {}, charges: { pack: 2 }, steering: 'player', lastInput: now, warned: false, stalkUntil: 0, downs: 0, startedAt: now, huntEndsAt }
@@ -207,6 +207,9 @@ function act(ctx: MockContext, conn: MockConn, turn: Turn, msg: Extract<ClientMe
     const x = t ? t.state.pos[0] : (msg.x ?? pos[0])
     const z = t ? t.state.pos[2] : (msg.z ?? pos[2])
     walk(ctx, turn, x, z, 24)
+    // As the server's leap: the action is the flight plus a 400 ms tail (pilot/kit.ts).
+    const mv = turn.move as MoveState | null
+    if (mv) cast.actionMs = Math.round((Math.hypot(mv.to[0] - mv.from[0], mv.to[2] - mv.from[2]) / 24) * 1000) + 400
   } else ctx.broadcast({ t: 'stop', id: MOCK_TIGER_ID, pos, yaw: turn.state.yaw })
   if (k.id === 'stalk') {
     turn.stalkUntil = now + 20_000

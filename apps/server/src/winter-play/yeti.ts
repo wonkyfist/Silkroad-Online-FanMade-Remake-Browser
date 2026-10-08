@@ -1,8 +1,9 @@
-import { GOLD_ITEM_CODES, WINTER_CODES, WINTER_PLAY, WINTER_WORLD, YETI_KIT, YETI_LAIRS, inCone, yawTowards, yetiNest, type MobDef, type NestDef, type ServerMessage, type Vec3, type YetiSkill } from '@sro/shared'
+import { CLIMB_TOP_DEGREE, GOLD_ITEM_CODES, WINTER_CODES, WINTER_PLAY, WINTER_WORLD, YETI_KIT, YETI_LAIRS, inCone, yawTowards, yetiNest, type MobDef, type NestDef, type ServerMessage, type Vec3, type YetiSkill } from '@sro/shared'
 import type { UniqueRow } from '../db.ts'
 import { rollSkillHit } from '../formulas.ts'
 import { goldCode, type Gameplay, type RolledDrop } from '../gameplay.ts'
 import type { GmResult } from '../gm.ts'
+import { gearPool, rollUniqueDrops } from '../uniques.ts'
 import type { GameplayModule, KillOwner } from '../modules.ts'
 import type { NavPoint } from '../nav.ts'
 import type { Mob, Player } from '../world.ts'
@@ -413,6 +414,9 @@ export class YetiService implements GameplayModule {
     add('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02', 2, 0.8)
     add(rng() < 0.5 ? 'ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A' : 'ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A', 1, 0.6)
     add(WINTER_CODES.tea, 5)
+    // docs/CLIMB.md §4.4 (D53): a level-25 boss drops the cap tier: half the kills one degree-4 piece (grade C 40, B 60)
+    const pool = gearPool(this.g.data.items.values(), { degree: CLIMB_TOP_DEGREE, maxReqLevel: 'levelCap', gradeWeights: [40, 60] }, this.g.config.levelCap)
+    out.push(...rollUniqueDrops({ groups: [{ chance: 0.5, pool, gradeWeights: [40, 60] }] }, rng, known, { drop: this.g.config.dropRate ?? 1 }))
     return out
   }
 

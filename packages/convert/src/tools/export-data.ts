@@ -40,6 +40,7 @@ import { defaultPortDataDir, loadPortData } from '../data/port-source.ts'
 import { textdataReader } from '../data/textdata-source.ts'
 import { buildZones, checkZones, coastAreaNamer, serializeZones, ZONES_FILE_NAME } from '../data/zones.ts'
 import { parseCoastConfig } from '../world/coast/config.ts'
+import { configDrowns } from '../world/coast/drown.ts'
 import { loadConfig, openArchive, REPO_ROOT } from '../node-io.ts'
 import { encodePng } from '../png.ts'
 
@@ -80,7 +81,10 @@ function writeZones(): void {
   // the coast's area names for the regions the client has none for (data/zones.ts coastAreaNamer)
   const coastFile = join(REPO_ROOT, 'content', 'coast', 'coast.json')
   const play = manifest.stream?.playable
-  const coastArea = manifest.coast && play && existsSync(coastFile) ? coastAreaNamer(parseCoastConfig(readFileSync(coastFile, 'utf8')), play) : undefined
+  const coastCfg = manifest.coast && existsSync(coastFile) ? parseCoastConfig(readFileSync(coastFile, 'utf8')) : null
+  const coastArea = coastCfg && play ? coastAreaNamer(coastCfg, play) : undefined
+  // the drowned area (coast.json drown): open sea, no names
+  const drowned = coastCfg?.drown ? (x: number, z: number) => configDrowns(coastCfg, x, z) : undefined
   const townsFile = join(outDir, 'towns.json')
   const towns = existsSync(townsFile)
     ? (JSON.parse(readFileSync(townsFile, 'utf8')) as { entries?: Array<{ code: string; regions?: number[] }> }).entries ?? []
@@ -93,6 +97,7 @@ function writeZones(): void {
     refregion: loadTextdataTable('refregion.txt', read).rows.map(r => r.cells),
     towns,
     ...(coastArea ? { coastArea } : {}),
+    ...(drowned ? { drowned } : {}),
   })
   const problems = checkZones(zones)
   if (problems.length) throw new Error(`zones self-check failed:\n  ${problems.slice(0, 20).join('\n  ')}`)

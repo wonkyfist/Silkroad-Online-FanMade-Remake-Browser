@@ -1,0 +1,71 @@
+{
+ "species": "grave_tree",
+ "archetype": "conifer_layered",
+ "kind": "tree",
+ "seed": 45,
+ "target": {
+  "h": 45.45,
+  "w": 29.92
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 3560,
+   "byMaterial": {
+    "bark": 1560,
+    "leaf": 2000
+   },
+   "cards": 500,
+   "frontNormalY": 1.0,
+   "vertices": 5299,
+   "heightM": 45.45,
+   "widthM": 29.92,
+   "crownCentre": [
+    -0.77,
+    -0.89,
+    25.85
+   ],
+   "crownRadius": 15.64,
+   "bytes": 518840
+  },
+  "1": {
+   "triangles": 940,
+   "byMaterial": {
+    "bark": 460,
+    "leaf": 480
+   },
+   "cards": 120,
+   "frontNormalY": 1.0,
+   "vertices": 1346,
+   "heightM": 45.44,
+   "widthM": 29.382,
+   "crownCentre": [
+    -0.77,
+    -0.89,
+    25.85
+   ],
+   "crownRadius": 15.64,
+   "bytes": 313360
+  },
+  "2": {
+   "triangles": 420,
+   "byMaterial": {
+    "bark": 340,
+    "leaf": 80
+   },
+   "cards": 20,
+   "frontNormalY": 1.0,
+   "vertices": 466,
+   "heightM": 45.44,
+   "widthM": 29.813,
+   "crownCentre": [
+    -0.77,
+    -0.89,
+    25.85
+   ],
+   "crownRadius": 15.64,
+   "bytes": 267992
+  }
+ }
+}

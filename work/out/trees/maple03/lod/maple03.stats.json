@@ -1,0 +1,71 @@
+{
+ "species": "maple03",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 11,
+ "target": {
+  "h": 16.68,
+  "w": 17.54
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 1928,
+   "byMaterial": {
+    "bark": 928,
+    "leaf": 1000
+   },
+   "cards": 250,
+   "frontNormalY": 1.0,
+   "vertices": 2732,
+   "heightM": 16.68,
+   "widthM": 17.54,
+   "crownCentre": [
+    0.64,
+    0.8,
+    9.11
+   ],
+   "crownRadius": 6.15,
+   "bytes": 360804
+  },
+  "1": {
+   "triangles": 604,
+   "byMaterial": {
+    "bark": 156,
+    "leaf": 448
+   },
+   "cards": 112,
+   "frontNormalY": 1.0,
+   "vertices": 1016,
+   "heightM": 16.685,
+   "widthM": 17.54,
+   "crownCentre": [
+    0.64,
+    0.8,
+    9.11
+   ],
+   "crownRadius": 6.15,
+   "bytes": 270468
+  },
+  "2": {
+   "triangles": 214,
+   "byMaterial": {
+    "bark": 118,
+    "leaf": 96
+   },
+   "cards": 24,
+   "frontNormalY": 1.0,
+   "vertices": 288,
+   "heightM": 15.97,
+   "widthM": 17.54,
+   "crownCentre": [
+    0.64,
+    0.8,
+    9.11
+   ],
+   "crownRadius": 6.15,
+   "bytes": 233176
+  }
+ }
+}

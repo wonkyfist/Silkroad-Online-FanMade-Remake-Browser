@@ -1,0 +1,100 @@
+N1a: 16.76 m, 1 nav piece(s), 50 tiles, probe walks
+N1b: 16.77 m, 1 nav piece(s), 45 tiles, probe walks
+N1c: 16.76 m, 1 nav piece(s), 50 tiles, probe walks
+N2a: 15.98 m, 1 nav piece(s), 47 tiles, probe walks
+N2b: 15.99 m, 1 nav piece(s), 62 tiles, probe walks
+N2c: 15.98 m, 1 nav piece(s), 66 tiles, probe walks
+N3a: 15.99 m, 1 nav piece(s), 80 tiles, probe walks
+N3b: 15.99 m, 1 nav piece(s), 82 tiles, probe walks
+N3c: 15.99 m, 1 nav piece(s), 74 tiles, probe walks
+N4a: 15.99 m, 1 nav piece(s), 76 tiles, probe walks
+N4b: 15.98 m, 1 nav piece(s), 64 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N4c: 15.99 m, 1 nav piece(s), 57 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N5a: 15.99 m, 1 nav piece(s), 49 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N5b: 15.98 m, 1 nav piece(s), 42 tiles, probe walks (offset -6 m, stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N5c: 15.99 m, 1 nav piece(s), 35 tiles, probe walks (offset 3 m, stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N6a: 17.98 m, 1 nav piece(s), 30 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N6b: 17.99 m, 1 nav piece(s), 30 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N6c: 17.98 m, 1 nav piece(s), 40 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N7a: 15.99 m, 1 nav piece(s), 49 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N7b: 15.98 m, 1 nav piece(s), 80 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N7c: 15.99 m, 1 nav piece(s), 52 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N8a: 15.99 m, 1 nav piece(s), 75 tiles, probe walks (stops 1.09 m inside at (cj_pal_dam_center_wall.bms))
+N8b: 15.98 m, 1 nav piece(s), 65 tiles, probe walks
+N8c: 15.99 m, 1 nav piece(s), 67 tiles, probe walks
+N9a: 15.99 m, 1 nav piece(s), 60 tiles, probe walks
+N9b: 15.98 m, 1 nav piece(s), 63 tiles, probe walks
+N9c: 15.99 m, 1 nav piece(s), 45 tiles, probe walks
+N10a: 16.65 m, 1 nav piece(s), 43 tiles, probe walks
+N10b: 16.65 m, 1 nav piece(s), 36 tiles, probe walks
+N10c: 16.65 m, 1 nav piece(s), 37 tiles, probe walks
+S1a: 14.46 m, 1 nav piece(s), 31 tiles, probe walks
+S1b: 14.47 m, 1 nav piece(s), 32 tiles, probe walks
+S1c: 14.46 m, 1 nav piece(s), 39 tiles, probe walks
+S2a: 15.07 m, 1 nav piece(s), 45 tiles, probe walks
+S2b: 15.06 m, 1 nav piece(s), 40 tiles, probe walks
+S2c: 15.07 m, 1 nav piece(s), 45 tiles, probe walks
+S3a: 15.07 m, 1 nav piece(s), 33 tiles, probe walks
+S3b: 15.06 m, 1 nav piece(s), 36 tiles, probe walks
+S3c: 15.07 m, 1 nav piece(s), 36 tiles, probe walks
+S4a: 16.95 m, 1 nav piece(s), 36 tiles, probe walks
+S4b: 16.95 m, 1 nav piece(s), 40 tiles, probe walks
+S4c: 16.95 m, 1 nav piece(s), 36 tiles, probe walks
+S5a: 14.24 m, 1 nav piece(s), 34 tiles, probe walks
+S5b: 14.25 m, 1 nav piece(s), 40 tiles, probe walks
+S5c: 14.24 m, 1 nav piece(s), 34 tiles, probe walks
+S6a: 16.32 m, 1 nav piece(s), 43 tiles, probe walks
+S6b: 16.32 m, 1 nav piece(s), 43 tiles, probe walks
+S6c: 16.32 m, 1 nav piece(s), 45 tiles, probe walks
+S7a: 16.95 m, 1 nav piece(s), 49 tiles, probe walks
+S7b: 16.95 m, 1 nav piece(s), 45 tiles, probe walks
+S7c: 16.95 m, 1 nav piece(s), 50 tiles, probe walks (stops 3.13 m inside at (cj_monstad_door02_01.bms))
+S8a: 16.95 m, 1 nav piece(s), 43 tiles, probe walks (stops 3.63 m inside at (cj_monstad_door02_01.bms))
+S8b: 16.95 m, 1 nav piece(s), 40 tiles, probe walks
+S8c: 16.95 m, 1 nav piece(s), 36 tiles, probe walks
+S9a: 17.01 m, 1 nav piece(s), 40 tiles, probe walks
+S9b: 17 m, 1 nav piece(s), 31 tiles, probe walks
+S9c: 17.01 m, 1 nav piece(s), 19 tiles, probe walks
+W1a: 14.38 m, 1 nav piece(s), 49 tiles, probe walks
+W1b: 14.39 m, 1 nav piece(s), 40 tiles, probe walks (stops 6.89 m inside at (cj_mili_mainste01.bms))
+W1c: 14.38 m, 1 nav piece(s), 39 tiles, probe walks (stops 6.92 m inside at (cj_mili_mainste01.bms))
+W2a: 13.18 m, 1 nav piece(s), 40 tiles, probe walks (stops 6.95 m inside at (cj_mili_mainste01.bms))
+W2b: 13.19 m, 1 nav piece(s), 35 tiles, probe walks
+W2c: 13.18 m, 1 nav piece(s), 33 tiles, probe walks
+W3a: 13.18 m, 1 nav piece(s), 32 tiles, probe walks
+W3b: 13.19 m, 1 nav piece(s), 28 tiles, probe walks (stops 0.19 m inside at (w_cd_mc_tent01.bms))
+W3c: 13.18 m, 1 nav piece(s), 32 tiles, probe walks (offset 6 m, stops 0.4 m inside at (w_cd_mc_tent01.bms))
+W4a: 14.21 m, 1 nav piece(s), 33 tiles, probe walks (stops 7.97 m inside at (cj_mili_weapstair01.bms))
+W4b: 14.21 m, 1 nav piece(s), 30 tiles, probe walks (stops 7.97 m inside at (cj_mili_weapstair01.bms))
+W4c: 14.21 m, 1 nav piece(s), 27 tiles, probe walks
+W5a: 18.23 m, 1 nav piece(s), 23 tiles, probe walks
+W5b: 18.24 m, 1 nav piece(s), 40 tiles, probe walks
+W5c: 18.23 m, 1 nav piece(s), 40 tiles, probe walks (stops 3.22 m inside at (cj_pub03_floor.bms))
+W6a: 16.95 m, 1 nav piece(s), 36 tiles, probe walks (stops 3.22 m inside at (cj_pub03_floor.bms))
+W6b: 16.95 m, 1 nav piece(s), 40 tiles, probe walks
+W6c: 16.95 m, 1 nav piece(s), 37 tiles, probe walks
+W7a: 17.57 m, 1 nav piece(s), 50 tiles, probe walks (stops 4.28 m inside at (cj_pub01_wall01.bms))
+W7b: 17.56 m, 1 nav piece(s), 50 tiles, probe walks
+W7c: 17.57 m, 1 nav piece(s), 47 tiles, probe walks
+E1a: 15.17 m, 1 nav piece(s), 35 tiles, probe walks
+E1b: 15.16 m, 1 nav piece(s), 36 tiles, probe walks
+E1c: 15.17 m, 1 nav piece(s), 32 tiles, probe walks
+E2a: 13.18 m, 1 nav piece(s), 32 tiles, probe walks
+E2b: 13.19 m, 1 nav piece(s), 34 tiles, probe walks
+E2c: 13.18 m, 1 nav piece(s), 35 tiles, probe walks
+E3a: 15.07 m, 1 nav piece(s), 38 tiles, probe walks
+E3b: 15.06 m, 1 nav piece(s), 32 tiles, probe walks
+E3c: 15.07 m, 1 nav piece(s), 44 tiles, probe walks
+E4a: 14.44 m, 1 nav piece(s), 38 tiles, probe walks
+E4b: 14.44 m, 1 nav piece(s), 24 tiles, probe walks
+E4c: 14.44 m, 1 nav piece(s), 26 tiles, probe walks
+E5a: 16.12 m, 1 nav piece(s), 26 tiles, probe walks (stops 9.9 m inside at (cj_rich1_longwall.bms))
+E5b: 16.13 m, 1 nav piece(s), 28 tiles, probe walks (stops 9.9 m inside at (cj_rich1_longwall.bms))
+E5c: 16.12 m, 1 nav piece(s), 36 tiles, probe walks (stops 9.9 m inside at (cj_rich1_longwall.bms))
+E6a: 16.95 m, 1 nav piece(s), 40 tiles, probe walks (stops 9.9 m inside at (cj_rich1_longwall.bms))
+E6b: 16.95 m, 1 nav piece(s), 36 tiles, probe walks
+E6c: 16.95 m, 1 nav piece(s), 40 tiles, probe walks
+E7a: 16.78 m, 1 nav piece(s), 36 tiles, probe walks
+E7b: 16.79 m, 1 nav piece(s), 36 tiles, probe walks
+E7c: 16.78 m, 1 nav piece(s), 38 tiles, probe walks
+retail equality: 9476 crossings every 2 m, 0 differ

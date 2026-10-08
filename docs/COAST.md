@@ -267,7 +267,8 @@ folded in below. The ones that shaped decisions:
    both study parts agree. In phase 2 it goes west and north-west, following the user's choice of Option A or B (C2).
 3. **Option A** *(refresh 2026-09-29: chosen by the user)*: a land bridge of real retail terrain west to Donwhang,
    blocked for now by the bounds and a scenery gate. Option B makes Jangan an island. Switching is one data table plus
-   a converter re-run (§4).
+   a converter re-run (§4). *(2026-10-06: the user asked for Jangan alone in the open sea, on the maps and in the
+   world: the Western China side and the land bridge are drowned, §4.1.)*
 4. **The playable area does not move** (`manifest.bounds` stays X 156–174 × Z 90–102). Every playable height stays
    retail except, at +5 m, one strip: the flat 0 m ground outside Jangan's south wall becomes **Jangan South Beach**
    (S1), the one walkable beach. No nest, NPC, road or placement lies in or near it **[confirmed: `all-nests.json`
@@ -1061,6 +1062,75 @@ seam rule), and each is its own reviewed commit of `content/coast/height/` **[pr
 
 **Recommendation: Option A** **[projected]**. It follows the user's wording, keeps Donwhang open without undoing any
 coast, costs almost nothing visible today, and remains one data table: switching later is a converter re-run.
+
+### 4.1 Jangan island: the drowned area (2026-10-06)
+
+The user: "delete the Donwhang map from the Map, including the map player sees … only the Jangan region … pure
+surrounded by water, the ocean". The world map showed the Western China desert across the strait (x 150–163,
+z 96–105: Western China Ferry, Main Road, Ruins, Entrance-Western China Donwhang, Earth Ghost Canyon, Okmungwan Field,
+and Donwhang town's regions 153 × 102–103) and Option A's land bridge running off the map's west edge, all of it retail
+terrain in the export (x 155–162 inside the play bounds, unreachable on foot) or the corridor's look-only land.
+
+**What changed.** `content/coast/coast.json` `drown` (`packages/convert/src/world/coast/drown.ts`, after the pass and
+the authored layers, before the banks, the paint and the sea masks):
+
+- `regions`: whole regions under the sea (a vertex drowns when every domain region sharing it does, so a kept
+  neighbour stays bit for bit): X ≤ 162 × Z 100–105, X ≤ 161 × Z 99, X ≤ 158 × Z 98, X ≤ 155 × Z 97, X ≤ 154 × Z 96;
+- `soft`: the strait's nameless border regions (159–161 × 98, 156–157 × 97, 162 × 99), where Jangan's own shore runs:
+  their water, their ground below the sea level and the cut-off desert bits and the islet drown, Jangan's land stays;
+- `areas`: the corridor's south flank (X 145–154.8 × Z 95–96) and the west of 155 × 96 (to X 155.68);
+- a dry island the cut leaves (under `islandMaxKm2` 0.5) drowns with it (7 slivers);
+- the ground: from Jangan's shore down at `rampDeg` 24° to the sea level, a strip of beach, then at 6° to a floor
+  2 m deep at the shore and 45 m (`depthM`) from 450 m out (`shelfM`), smoothed; next to kept water its bed carries
+  on over 60 m. Classes from the new height; out of play, no retail water, no land fade.
+
+Downstream it is open sea like the rest of the ring: the coast field's ocean, C9 drops every placement standing in it
+(853 in all with the coast's own, the desert's buildings, ruins and trees; the World Editor's two dunhuang rocks on the
+S1 beach still find their template among the converted placements, `WorldPassContext.retail`), the source treats a
+drowned region as ring (its retail water blocks go, the knee-deep nav rule closes the deep sea), the minimap tiles are
+our render (the sea's teal runs on from the kept strait water, `LINE_STRETCH`), drowned sea is emitted as synthetic
+regions down to 40 m so the tiles reach the open-sea tone before the tile-less sea, `zones.json` gives drowned regions
+no name, area, continent or town (and the coast sections whose line lies there, N1, N2, A-S and A-N, name nothing), no
+manifest place is made there, and `content/places.json` drops `western-china-ferry`. The corridor and its sections stay
+in the file; everything they shape is drowned. Option A's §4 notes and §5.5's "link to Donwhang later" now need a re-run
+with `drown` trimmed.
+
+**Numbers** (convert-region, 2026-10-10, with the open water): 122 drowned regions, 81 synthetic regions (was 107), 388
+regions in all, 6,148 placements (was 7,171), the world map X 152–176 × Z 86–105 (1,600 × 1,280), 65 terrain tiles (was
+108), 29 tree species (was 35: reeds and the five Dunhuang families stood only on the drowned side; the tree swap
+appends a species only for placed models), `work/out/world/jangan-fields` 390 MB (was 451), out-opt 335 MB (was 373).
+
+**The Climb (decided 2026-10-10: keep Jangan alone).** The Climb's top bands sat on the drowned side. They moved onto
+the island's own heights (docs/CLIMB.md D52): B7 the Ferry Heights, B8 the Sea Cliffs, by region places inside the Tiger
+Mountains' zones; the far bank's 124 nests are in `content/nests.override.json`'s `remove` list.
+
+**The old strait and the bay (2026-10-10).** The in-bounds retail water at the sea level north-west of the island (the
+strait's kept part along the ferry landing, and Jangan Bay) kept its retail plane at first: on the maps it showed as
+flat teal region squares next to the deep sea, in 3D as river water meeting the ocean at block lines. `drown.openWater`
+(continuous rectangles) makes it open sea in whole 32 m blocks (`masks.opened`): out of play, its blocks removed
+(the ocean draws it), C9 drops only the plants whose ground is below the sea level there (the piers and the rocks in
+the water stay). The bed of the open water and
+of the drowned sea inside those rectangles is smoothed (90 m) away from the shore (80 m), so the lake bed's holes and the
+pass's shelf meet in one basin; the bay mouth's sand bar and the hooked tip of the Western Strait beach are drowned
+(two `areas`). The minimap's teal now falls off from the **real shore** everywhere: every sea vertex out of play
+takes its distance to the nearest dry ground as `s`, never the distance to the bounds line. The checks exempt the open
+water's shore from the beach rule and its bed from the river-mouth keep (`masks.openBed`).
+
+**Regenerate** (after a change to `drown` or the coast):
+
+```sh
+pnpm sro convert-region --preset jangan-fields
+pnpm sro siege-walls nav --world jangan-fields --no-opt   # the export's siege/ files (keep siege/models)
+pnpm tsx packages/convert/src/tools/export-data.ts --zones-only
+pnpm tsx packages/convert/src/tools/optimize-out.ts run --files @<changed-files.txt> --precompress
+```
+
+`convert-region` writes over the export folder and leaves files of regions it no longer emits: move the old folder
+aside first (keep its `siege/models` for the next step), and convert **in place**, never with `--out` into another
+folder: the tree swap reads the built species from `<out>/../../trees` (`work/out/trees`), so an export written elsewhere
+silently stays retail (no `#species` models). The `--files` list is every file
+of `world/jangan-fields/` that changed or went (a removed one is removed from out-opt too) plus `data/zones.json`;
+`run --only world/jangan-fields/` would rebuild `slim.json` without the actors' animation packs.
 
 ---
 
@@ -2487,6 +2557,9 @@ whole `NvmFile` (§5.4).
   `stitchWorldMap(rect, tile, px)` is unchanged; today's `stream.worldMap` covers x 155–175 × z 89–103 at 64 px per
   region (1,344 × 960) **[confirmed: code, manifest]**. With the domain and A's corridor it grows to x 150–177 ×
   z 87–105 (1,792 × 1,216 px) **[projected arithmetic]**.
+- *(2026-10-06, §4.1)* The world map covers the island, not the domain: every region with dry ground grown by one
+  region of sea, inside the domain (`coast/drown.ts` `islandRect`): X 152–176 × Z 86–105, 1,600 × 1,280 px. The
+  drowned area is open sea on it like the rest; the client's window zooms out to the whole image and never pans past it.
 
 ---
 

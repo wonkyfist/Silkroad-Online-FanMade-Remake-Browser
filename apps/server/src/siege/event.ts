@@ -1080,7 +1080,7 @@ export class SiegeService implements GameplayModule {
     let h = this.honors.get(characterId)
     if (h === undefined) {
       try {
-        h = (this.g.store.db.prepare('SELECT code FROM pilot_honors WHERE character_id = ? ORDER BY at DESC LIMIT 1').get(characterId) as { code: string } | undefined)?.code ?? null
+        h = (this.g.store.db.prepare('SELECT code FROM pilot_honors WHERE character_id = ? ORDER BY (code IS (SELECT title FROM characters WHERE id = pilot_honors.character_id)) DESC, at DESC LIMIT 1').get(characterId) as { code: string } | undefined)?.code ?? null
       } catch {
         h = null
       }

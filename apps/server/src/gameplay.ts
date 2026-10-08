@@ -2,6 +2,7 @@ import {
   EQUIP_SLOTS,
   GOLD_ITEM_CODES,
   clockAt,
+  levelDiffExpMul,
   nightness,
   sunDirection,
   ITEM_EXPIRE_MS,
@@ -30,7 +31,12 @@ import {
 } from '@sro/shared'
 import { mobAggressive, retaliate, thinkMob, type AiHost } from './ai.ts'
 import { Alchemy } from './alchemy.ts'
+import { Rarity } from './rarity.ts'
 import { Berserk } from './berserk.ts'
+import { DeathPenalty } from './climb/penalty.ts'
+import { MonsterRoles } from './climb/roles.ts'
+import { ClimbRewards } from './climb/rewards.ts'
+import { ClimbPlaces } from './climb/places.ts'
 import type { ServerConfig } from './config.ts'
 import type { WorldSetup } from './content.ts'
 import type { CharacterRow, Store } from './db.ts'
@@ -84,6 +90,8 @@ import { WallLooters } from './siege/looters.ts'
 import { SiegeService } from './siege/event.ts'
 import { ThunderKegs } from './siege/keg.ts'
 import { LawService } from './siege/law.ts'
+import { HunterService } from './siege/hunters.ts'
+import { JailService } from './siege/jail.ts'
 import { MovementService } from './movement.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
@@ -292,6 +300,8 @@ export class Gameplay implements AiHost {
   readonly durability: Durability
   readonly repairs: Repairs
   readonly alchemy: Alchemy
+  /** Rare weapons (docs/RARITY.md §4): the seal roll of weapon drops and the server-wide notice. */
+  readonly rarity: Rarity
   readonly berserk: Berserk
   readonly trade: TradeService
   readonly stalls: StallService
@@ -331,6 +341,12 @@ export class Gameplay implements AiHost {
   readonly kegs: ThunderKegs
   readonly law: LawService
   /**
+   * Siege of Jangan layer 6 (docs/SIEGE.md §8.2-§8.6; siege/hunters.ts, jail.ts): Captain Yun's Hunters (licence, duty,
+   * the only PvP: Hunter against Wanted, capture and bounty, pings, the Net) and the Garrison Stockade (sentences).
+   */
+  readonly hunters: HunterService
+  readonly jail: JailService
+  /**
    * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
    * falls as snow. Other modules read `winter.state(now)`.
    */
@@ -352,6 +368,13 @@ export class Gameplay implements AiHost {
    * after `uniques` when UNIQUES=on (inert until a unique of this world has a `pilot` block); null otherwise.
    */
   readonly pilot: Pilot | null
+  /** The Climb (docs/CLIMB.md §20 L3, L4): monster roles and the death penalty. */
+  readonly roles: MonsterRoles
+  readonly penalty: DeathPenalty
+  /** The Climb's rewards (docs/CLIMB.md §20 L7): titles, set bonuses, Arts (inert with CLIMB off). */
+  readonly climbRewards: ClimbRewards
+  /** The high country's notices (docs/CLIMB.md §2.7, L2). */
+  readonly climbPlaces: ClimbPlaces
   /** Every module, in registration order (enter-world order, hook order). */
   readonly modules: readonly GameplayModule[]
   /** Request type -> the module that answers it (built from `handles`; a duplicate throws). */
@@ -386,6 +409,7 @@ export class Gameplay implements AiHost {
     this.durability = new Durability(this)
     this.repairs = new Repairs(this)
     this.alchemy = new Alchemy(this)
+    this.rarity = new Rarity(this)
     this.berserk = new Berserk(this)
     this.trade = new TradeService(this)
     this.stalls = new StallService(this)
@@ -410,6 +434,12 @@ export class Gameplay implements AiHost {
     this.siege = new SiegeService(this, this.walls)
     this.kegs = new ThunderKegs(this, this.walls)
     this.law = new LawService(this)
+    this.hunters = new HunterService(this)
+    this.jail = new JailService(this)
+    this.roles = new MonsterRoles(this)
+    this.penalty = new DeathPenalty(this)
+    this.climbRewards = new ClimbRewards(this)
+    this.climbPlaces = new ClimbPlaces(this)
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
     this.mobSkills.summonPolicy = (m) => this.uniques?.summonPolicy(m) ?? null
     if (!this.world.decorators.includes(dropTag)) this.world.decorators.push(dropTag)
@@ -440,6 +470,9 @@ export class Gameplay implements AiHost {
       // docs/SIEGE.md §7, §8: the players' Thunder Kegs and the law (Wanted), after the siege (treason, kegDefuse)
       this.kegs,
       this.law,
+      // docs/SIEGE.md §8.2-§8.5: the Hunters and the jail, after the law (warrants, capture)
+      this.hunters,
+      this.jail,
       this.movement,
       // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
       this.winterPlay,
@@ -448,6 +481,11 @@ export class Gameplay implements AiHost {
       ...(this.uniques ? [this.uniques] : []),
       // Play the Boss (docs/PLAY_THE_BOSS.md §3.1): after uniques
       ...(this.pilot ? [this.pilot] : []),
+      // The Climb (docs/CLIMB.md §2.3, §6): monster roles after every module that drives monsters; the penalty last
+      this.roles,
+      this.penalty,
+      this.climbRewards,
+      this.climbPlaces,
     ]
     this.routes = buildRoutes(this.modules, CORE_REQUESTS)
     this.world.onTick = (now) => this.tick(now)
@@ -578,6 +616,11 @@ export class Gameplay implements AiHost {
 
   halt(m: Mob, yaw?: number): void {
     this.world.halt(m, this.now, yaw)
+  }
+
+  /** AiHost.aggro: the Climb's pack link on sight (climb/roles.ts). */
+  aggro(m: Mob, target: Player): void {
+    this.roles.aggro(m, target, this.now)
   }
 
   swing(m: Mob, target: Player): void {
@@ -780,7 +823,7 @@ export class Gameplay implements AiHost {
   refresh(p: Player): boolean {
     // Skill mods (passives, buffs; docs/SKILLS.md §10.1) are the last step of the derived stats.
     const mods = this.skills.modsFor(p)
-    const maxHp = maxHpFor(p.progress.level, p.progress.str) + mods.maxHp
+    const maxHp = Math.round((maxHpFor(p.progress.level, p.progress.str) + mods.maxHp) * (1 + mods.maxHpPct / 100))
     const maxMp = maxMpFor(p.progress.level, p.progress.int) + mods.maxMp
     const changed = maxHp !== p.maxHp || maxMp !== p.maxMp
     p.level = p.progress.level
@@ -908,7 +951,15 @@ export class Gameplay implements AiHost {
     if (refused) return answer(refused)
     const e = this.world.entity(targetId)
     if (!e || !p.known.has(targetId)) return answer(fail('not_found'))
-    if (e.kind !== 'mob') return answer(fail('invalid_target', e.kind === 'player' ? 'no PvP' : undefined))
+    if (e.kind === 'player') {
+      // Siege of Jangan layer 6 (docs/SIEGE.md §8.3): the only PvP, an on-duty Hunter and a Wanted player, anywhere
+      // but the stockade (the safe area included); everyone else keeps today's "no PvP".
+      const why = this.hunters.refusal(p, e, this.now)
+      if (why) return answer(why)
+      p.action = { kind: 'attack', target: e.id, chaseAt: 0, chaseTo: null }
+      return answer(true)
+    }
+    if (e.kind !== 'mob') return answer(fail('invalid_target'))
     if (e.ai === 'dead') return answer(fail('target_dead'))
     const [x, , z] = this.world.positionAt(p, this.now)
     if (this.data.inSafeArea(this.config.world, x, z)) return answer(fail('safe_zone', 'no fighting in town'))
@@ -1113,14 +1164,23 @@ export class Gameplay implements AiHost {
     let dealt = 0
     // Wave 8 (BZ): a berserk player's direct hits carry CombatHit.hwan (the client's HWAN spark and sounds).
     const hwan = !extra.dot && this.hwanHits(a)
+    // Siege of Jangan layer 6 (docs/SIEGE.md §5.2, §8.4): player-on-player hits × pvpMul; a Wanted brought down by a
+    // Hunter is subdued at 1 HP (then caught), never killed.
+    const pvp = a.kind === 'player' && t.kind === 'player' && a !== t
+    let subdue = false
     for (const h of rolled.slice(0, MAX_COMBAT_HITS)) {
       let damage = Math.max(0, h.damage)
+      if (pvp) damage = this.hunters.pvpDamage(damage)
       if (damage > 0 && t.kind === 'player') damage = this.skills.absorb(t, damage, now)
       damage = Math.min(damage, Math.ceil(t.hp))
-      t.hp = Math.max(0, t.hp - damage)
+      if (pvp && damage > 0 && damage >= t.hp && this.hunters.subdues(a, t as Player)) {
+        damage = Math.max(0, Math.ceil(t.hp) - 1)
+        subdue = true
+      }
+      t.hp = Math.max(subdue ? 1 : 0, t.hp - damage)
       dealt += damage
       hits.push(hwan ? { ...h, damage, hp: Math.round(t.hp), hwan: true } : { ...h, damage, hp: Math.round(t.hp) })
-      if (t.hp <= 0) break
+      if (t.hp <= 0 || subdue) break
     }
     if (hits.length === 0) return { dealt: 0, killed: false, hits }
     a.lastCombatAt = now
@@ -1137,10 +1197,16 @@ export class Gameplay implements AiHost {
     this.storm.afterHits(a, t, dealt, now)
     if (t.kind === 'mob') {
       // An invisible GM is not a target (AiHost.target): the mob keeps its credit but does not turn on it.
+      // The Climb's roles (docs/CLIMB.md §2.3): a pack links and a coward may run (before retaliate: it sees the idle mob).
+      if (a.kind === 'player' && !a.invisible) this.roles.hit(t, a, dealt, now)
       if (a.kind === 'player') retaliate(t, a.id, dealt, !a.invisible)
       if (killed) this.mobDied(t, now, true)
     } else {
       if (dealt > 0) t.send({ t: 'statsDelta', stats: { hp: Math.round(t.hp) } })
+      // The Climb's combat linger (docs/CLIMB.md §6.1, F6): the last monster damage.
+      if (dealt > 0 && a.kind === 'mob') t.lastMobHitAt = now
+      if (pvp) this.hunters.onPvpHit(a, t, dealt, now)
+      if (subdue && a.kind === 'player') this.hunters.subdue(a, t, now)
       if (killed) this.playerDied(t, now, a)
     }
     return { dealt, killed, hits }
@@ -1211,9 +1277,12 @@ export class Gameplay implements AiHost {
     // EXP_RATE / SP_RATE (docs/BALANCE.md §7): every share of a kill, solo or party; quest rewards are not rated.
     const expRate = this.config.expRate ?? 1
     const spRate = this.config.spRate ?? 1
+    // The Climb (docs/CLIMB.md §2.3, D4): each share by the receiver's level against the monster's (CLIMB=off: none).
+    const climb = this.config.climb === true
     for (const [id, gain] of shares) {
       const p = this.world.players.get(id)
-      if (p) this.reward(p, Math.round(gain.exp * expRate), Math.round(gain.spExp * spRate), m.id)
+      const lv = p && climb ? levelDiffExpMul(p.progress.level, m.def.level) : 1
+      if (p) this.reward(p, Math.round(gain.exp * expRate * lv), Math.round(gain.spExp * spRate * lv), m.id)
     }
     // Wave 11 (docs/UNIQUES.md §3.4): a module may replace a mob's whole loot (a unique's own table, plus levels and
     // elixirs included); null keeps the normal table and the authored elixir drop.
@@ -1224,7 +1293,8 @@ export class Gameplay implements AiHost {
     // Storms (docs/WEATHER.md §12.4): a charged monster drops more, and its gear may come +1.
     const bonus = this.storm.lootBonus(m)
     const drops: RolledDrop[] = unique ?? this.storm.plusLoot(m, [
-      ...rollDrops(this.data.drops.get(m.def.code), this.rng, (c) => this.data.items.has(c), { gold: (this.config.goldRate ?? 1) * bonus.gold, drop: (this.config.dropRate ?? 1) * bonus.drop }),
+      // docs/RARITY.md §4: an ordinary weapon of the table may come as a Seal of Star / Moon / Sun.
+      ...this.rarity.roll(rollDrops(this.data.drops.get(m.def.code), this.rng, (c) => this.data.items.has(c), { gold: (this.config.goldRate ?? 1) * bonus.gold, drop: (this.config.dropRate ?? 1) * bonus.drop }), m.def.level),
       ...this.alchemy.extraDrops(m),
       // docs/WINTER.md §13.5: a holiday gift box in the season
       ...this.winterPlay.gifts.extraDrops(m),
@@ -1237,10 +1307,16 @@ export class Gameplay implements AiHost {
       const r = unique ? 2.5 + this.rng() * 1.5 : drops.length === 1 ? 0.5 : 1 + this.rng() * 0.5
       const to = lootOwners.next()
       this.spawnGroundItem(drop.code, drop.count, drop.plus ?? 0, this.dropPoint(corpse, a, r), to.player, now, null, to.party, from)
+      this.rarity.dropped(drop.code, to.player)
     })
     m.damage.clear()
     // Quest kill credit: the quest engine's mobDied hook consumes it (decision 40); wave 11: the loot-owner group too.
     this.hook('mobDied', m, now, credit, owner)
+    // The Climb (docs/CLIMB.md §8.1): quest objectives name retail monsters, so a derived `MOB_CL_*` kill also counts as
+    // its base for the quest engine (kill and collect objectives only; a derived monster is never an encounter). Until
+    // the quest engine matches by `base` itself (CLIMB §20 L5), this is that match.
+    const base = m.def.base ? this.data.mob(m.def.base) : undefined
+    if (base && !m.encounter) this.quests.mobDied({ ...m, def: base }, now, credit)
   }
 
   /**
@@ -1368,15 +1444,20 @@ export class Gameplay implements AiHost {
     // A running skill action (or a stun) holds the attack and pickup walks until it ends (skills/engine.ts).
     if ((a?.kind === 'attack' || a?.kind === 'pickup') && (this.skills.busy(p, now) || this.skills.held(p, now))) return
     if (a?.kind === 'attack') {
-      const t = this.world.mobs.get(a.target)
-      if (!t || t.ai === 'dead' || !p.known.has(t.id)) {
+      // a player target: the Hunter / Wanted fight (docs/SIEGE.md §8.3), re-checked every swing (duty, the jail, the stockade)
+      const t: Mob | Player | undefined = this.world.mobs.get(a.target) ?? this.world.players.get(a.target)
+      const pvpWhy = t?.kind === 'player' ? this.hunters.refusal(p, t, now) : null
+      if (!t || (t.kind === 'player' ? t.dead || pvpWhy !== null : t.ai === 'dead') || !p.known.has(t.id)) {
+        // a target that was just caught (jailed, being subdued) ends the fight quietly
+        const caught = t?.kind === 'player' && (this.jail.jailedNow(t) || this.hunters.isSubdued(t))
+        if (pvpWhy?.message && pvpWhy.reason !== 'target_dead' && !caught) p.send({ t: 'chat', channel: 'system', text: pvpWhy.message === 'no PvP' ? 'You can no longer fight that player.' : pvpWhy.message })
         p.action = null
       } else {
         const reach = p.combat.range + p.radius + t.radius
         if (this.approach(p, t, reach, a, now)) {
           const pp = this.world.positionAt(p, now)
           const tp = this.world.positionAt(t, now)
-          if (this.data.inSafeArea(this.config.world, pp[0], pp[2])) {
+          if (t.kind === 'mob' && this.data.inSafeArea(this.config.world, pp[0], pp[2])) {
             // No fighting from inside a town (mobs cannot hit back there): the attack ends.
             p.action = null
             p.send({ t: 'chat', channel: 'system', text: 'You cannot fight inside a town.' })

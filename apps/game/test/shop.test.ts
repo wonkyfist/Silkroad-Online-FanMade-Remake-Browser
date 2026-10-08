@@ -55,17 +55,19 @@ const DEFS = new Map<string, ItemDef>([
 
 describe('shop tabs (visibleTabs)', () => {
   it('shows only the tabs of the player gender, hides goods above the cap and drops emptied tabs', () => {
-    const male = visibleTabs(ARMOR, 'male', DEFAULT_LEVEL_CAP, c => DEFS.get(c))
+    // a cap-20 server (the default before the Climb; DEFAULT_LEVEL_CAP is 25 now)
+    const male = visibleTabs(ARMOR, 'male', 20, c => DEFS.get(c))
     expect(male.map(t => [t.name, t.items, t.index])).toEqual([
       ['Armor', ['M_CA_1'], 0],
       ['Protector', ['M_LIGHT_1'], 1],
     ])
-    const female = visibleTabs(ARMOR, 'female', DEFAULT_LEVEL_CAP, c => DEFS.get(c))
+    const female = visibleTabs(ARMOR, 'female', 20, c => DEFS.get(c))
     // Garment only held a level-21 chest: the tab disappears.
     expect(female.map(t => t.name)).toEqual(['Armor'])
     expect(female[0]!.reqGender).toBe('female')
     // Raising the cap brings them back with no data change.
     expect(visibleTabs(ARMOR, 'female', 21, c => DEFS.get(c)).map(t => t.items)).toEqual([['W_CA_1', 'W_BA_3'], ['W_BA_3']])
+    expect(visibleTabs(ARMOR, 'female', DEFAULT_LEVEL_CAP, c => DEFS.get(c)).map(t => t.items)).toEqual([['W_CA_1', 'W_BA_3'], ['W_BA_3']])
     expect(hasGenderTabs(ARMOR)).toBe(true)
   })
 
@@ -84,17 +86,19 @@ describe('shop tabs (visibleTabs)', () => {
   })
 
   const real = existsSync(join(DATA_DIR, 'shops.json')) && existsSync(join(DATA_DIR, 'items.json'))
-  it.skipIf(!real)('on the real export: Mrs Jang shows Armor / Protector / Garment for a man, without the level-21 chests', () => {
+  it.skipIf(!real)('on the real export: Mrs Jang shows Armor / Protector / Garment for a man; the level-21 chests from cap 21 (the default 25)', () => {
     const shops = contentEntries<ShopDef>(JSON.parse(readFileSync(join(DATA_DIR, 'shops.json'), 'utf8')), 'shops')
     const items = new Map(contentEntries<ItemDef>(JSON.parse(readFileSync(join(DATA_DIR, 'items.json'), 'utf8')), 'items').map(d => [d.code, d]))
     const armor = shops.find(s => s.id === 'STORE_CH_ARMOR')!
-    const male = visibleTabs(armor, 'male', DEFAULT_LEVEL_CAP, c => items.get(c))
+    const male = visibleTabs(armor, 'male', 20, c => items.get(c))
     expect(male).toHaveLength(3)
     expect(male.every(t => t.reqGender === 'male')).toBe(true)
     const goods = male.flatMap(t => t.items)
     expect(goods.every(c => /^ITEM_CH_M_/.test(c))).toBe(true)
     expect(goods.some(c => /_03_BA_A$/.test(c))).toBe(false)
     expect(goods.some(c => /_03_CA_A$/.test(c))).toBe(true)
+    // the Climb (docs/CLIMB.md §4.1): at the default cap 25 the shop's grade-A chests (level 21) are on sale
+    expect(visibleTabs(armor, 'male', DEFAULT_LEVEL_CAP, c => items.get(c)).flatMap(t => t.items).some(c => /_03_BA_A$/.test(c))).toBe(true)
     const female = visibleTabs(armor, 'female', DEFAULT_LEVEL_CAP, c => items.get(c)).flatMap(t => t.items)
     expect(female.every(c => /^ITEM_CH_W_/.test(c))).toBe(true)
   })

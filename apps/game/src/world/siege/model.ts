@@ -110,13 +110,16 @@ export interface KegState {
   z: number
   fuseEndsAt: number
   defuse: { by: number; endsAt: number } | null
+  /** Layer 6: the keg is ours or a friend's (the server refuses our defuse): no Defuse prompt. */
+  mine?: boolean
 }
 
-/** The keg nearest to (x, z) within `range` m, or null. */
+/** The keg nearest to (x, z) within `range` m that we may defuse (not `mine`), or null. */
 export function kegInReach(kegs: Iterable<KegState>, x: number, z: number, range: number): KegState | null {
   let best: KegState | null = null
   let bd = range
   for (const k of kegs) {
+    if (k.mine) continue
     const d = Math.hypot(k.x - x, k.z - z)
     if (d <= bd) {
       bd = d

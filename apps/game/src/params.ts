@@ -16,6 +16,10 @@ export interface Params {
   kit: boolean
   /** ?fxlab=1 (mock only): the FX lab, `window.__sroFxLab` (docs/EFFECTS.md §2.5 H2, apps/game/src/debug/fx-lab.ts). */
   fxlab: boolean
+  /** ?charbench=1: the character bench, `window.__sroCharBench` (docs/CHARACTERS.md §9, apps/game/src/debug/charbench.ts). */
+  charbench: boolean
+  /** ?rarelab=1: the rare-weapon lab, `window.__sroRareLab` (docs/RARITY.md §9, apps/game/src/debug/rarity-lab.ts). */
+  rarelab: boolean
 }
 
 export function readParams(search = location.search): Params {
@@ -34,5 +38,7 @@ export function readParams(search = location.search): Params {
     gm: mock && on('gm'),
     kit: on('kit'),
     fxlab: mock && on('fxlab'),
+    charbench: on('charbench'),
+    rarelab: on('rarelab'),
   }
 }

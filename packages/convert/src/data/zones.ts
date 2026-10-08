@@ -12,6 +12,9 @@
  *   beach row). So the character list, the HUD and the minimap read 'Jangan South Beach' there, not the town name or
  *   the nearest retail zone. Other nameless regions stay '' (the client and the server take the nearest named
  *   neighbour).
+ * - drowned regions (content/coast/coast.json `drown`, ../world/coast/drown.ts: the Western China side and the land
+ *   bridge toward Donwhang, open sea now): no name, area, continent or town, so no map, minimap or HUD shows them; the
+ *   coast sections whose line lies in them name nothing either.
  *
  * The file is a ContentFile-shaped wrapper with kind 'zones' (the towns.json pattern: not part of CONTENT_FILES).
  * Pure over its inputs; tools/export-data.ts does the I/O.
@@ -20,6 +23,7 @@ import { CONTENT_SCHEMA_VERSION, ZONES_FILE, type ZoneDef } from '../../../share
 import { checkZoneDef } from '../../../shared/src/content-check.ts'
 import type { CoastConfig } from '../world/coast/config.ts'
 import type { RegionRect } from '../world/coast/lattice.ts'
+import { configDrowns } from '../world/coast/drown.ts'
 import { controlPoints } from '../world/coast/sections.ts'
 
 export const ZONES_FILE_NAME = ZONES_FILE
@@ -39,6 +43,8 @@ export interface ZonesInput {
   towns?: ReadonlyArray<{ code: string; regions?: readonly number[] }>
   /** The coast's area name of a nameless region (`coastAreaNamer`), or null. */
   coastArea?: (rx: number, rz: number, synthetic: boolean) => string | null
+  /** Whether the coast drowned the region (`configDrowns`): it keeps no name. */
+  drowned?: (rx: number, rz: number) => boolean
 }
 
 /** textzonename.txt tab field of the English name when the header does not say (0-based). */
@@ -72,6 +78,7 @@ export function buildZones(input: ZonesInput): ZoneRecord[] {
   for (const t of input.towns ?? []) for (const id of t.regions ?? []) if (!townOf.has(id)) townOf.set(id, t.code)
   return input.regions.map(({ x, z, synthetic }) => {
     const region = (z << 8) | x
+    if (input.drowned?.(x, z)) return { region, rx: x, rz: z, name: '', area: null, continent: null }
     const r = ref.get(region)
     const area = r?.[4]?.trim() ?? ''
     const continent = r?.[3]?.trim() ?? ''
@@ -95,7 +102,8 @@ export function buildZones(input: ZonesInput): ZoneRecord[] {
  */
 export function coastAreaNamer(cfg: CoastConfig, play: RegionRect): (rx: number, rz: number, synthetic: boolean) => string | null {
   const area = new Map(cfg.sections.filter(s => s.area && s.phase <= cfg.phase).map(s => [s.code, s.area!]))
-  const points = controlPoints(cfg, play).filter(p => area.has(p.code))
+  // a section whose line point lies in the drowned area names nothing (its coast is open sea)
+  const points = controlPoints(cfg, play).filter(p => area.has(p.code) && !configDrowns(cfg, Math.floor(p.x), Math.floor(p.z)))
   const inPlay = (rx: number, rz: number) => rx >= play.x0 && rx <= play.x1 && rz >= play.z0 && rz <= play.z1
   const corr = cfg.corridor
   return (rx, rz) => {

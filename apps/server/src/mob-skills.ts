@@ -75,6 +75,8 @@ export interface SummonPolicy {
   maxAlive?: number
   /** Summon groups of other variants are skipped (e.g. ['normal']: no champion, giant or elite adds). */
   variants?: readonly MobVariant[]
+  /** The Climb (docs/CLIMB.md §2.6): a row's summoned code → the code spawned instead (Tiger Girl's Guard). */
+  mobs?: Readonly<Record<string, string>>
 }
 
 /** A mob's rows, from its MobDef.skills (MobDef.attacks as a fallback) through the skill book. */
@@ -517,7 +519,8 @@ export class MobSkills implements GameplayModule {
     const target = m.target === null ? undefined : this.g.target(m.target)
     const out: number[] = []
     for (const grp of row.summon ?? []) {
-      const def = this.g.data.mob(grp.mob)
+      const mapped = policy?.mobs?.[grp.mob]
+      const def = (mapped ? this.g.data.mob(mapped) : undefined) ?? this.g.data.mob(grp.mob)
       if (!def) continue
       const variant: MobVariant = def.rarity === 'unique' ? 'unique' : (SUMMON_VARIANT[grp.rarity] ?? 'normal')
       if (policy?.variants && !policy.variants.includes(variant)) continue

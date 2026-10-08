@@ -2,7 +2,9 @@
  * World feature of lane FLD-C, fields integration and the world map (docs/FIELDS.md; WAVE_PLAN §4.12). Only that lane
  * edits this file. It wires:
  * - the world map window (world/map/worldmap.ts): key M (hud.keys), Esc closes it, `hud.openWorldMap` for the
- *   minimap's map button (decision 22); zone labels, hunting clusters and NPC markers are built the first time it opens;
+ *   minimap's map button (decision 22); zone labels, hunting clusters and NPC markers are built the first time it opens,
+ *   leaving out what stands in the open sea (the coast field's sea mask: the drowned Western China side's nests,
+ *   docs/COAST.md §4.1);
  * - the zone table for UX-B's area label (world/map/zones.ts zoneAt), loaded at once;
  * - region streaming: `world.setFocus` on worldEnter and on a warp of the own character, so the streamer re-centres at
  *   once instead of on the next frame; and the streaming stats line under UX-A's performance line (Options → Show FPS).
@@ -54,6 +56,9 @@ export const mapFeature: WorldFeatureFactory = ctx => {
   let levelCap = DEFAULT_LEVEL_CAP
   let hunting: HuntCluster[] = []
   let huntingStarted = false
+  let nests: HuntNest[] | null = null
+  /** Whether `hunting` was built with the coast field (the sea filter); rebuilt once when the field arrives later. */
+  let huntingSea = false
   let markers: MapMarker[] | null = null
   let wired = false
 
@@ -66,15 +71,24 @@ export const mapFeature: WorldFeatureFactory = ctx => {
     return { x: v.pos.x, z: v.pos.z, yaw: v.yaw, level: hud.stats?.level ?? v.state.level ?? 1 }
   }
 
+  /** The coast's open sea at glTF (x, z) (false without a coast field). */
+  const inSea = (x: number, z: number) => ctx.world()?.world.coast?.seaAt(x, z) ?? false
+
+  const buildHunting = (transform: MapTransform) => {
+    if (!nests) return
+    const mobs = app.catalog.content.mobs
+    huntingSea = !!ctx.world()?.world.coast
+    hunting = huntingClusters(nests.filter(n => !inSea(n.x, n.z)), code => mobs.get(code), { bounds: transform.bounds, maxLevel: levelCap + NEST_LEVEL_MARGIN })
+  }
+
   const loadHunting = (transform: MapTransform) => {
     if (huntingStarted) return
     huntingStarted = true
-    const mobs = app.catalog.content.mobs
     void fetch(NESTS_URL, { cache: 'no-cache' })
       .then(async res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const nests = contentEntries<NestDef>(await res.json(), 'nests') as HuntNest[]
-        hunting = huntingClusters(nests, code => mobs.get(code), { bounds: transform.bounds, maxLevel: levelCap + NEST_LEVEL_MARGIN })
+        nests = contentEntries<NestDef>(await res.json(), 'nests') as HuntNest[]
+        buildHunting(transform)
         win?.draw()
       })
       .catch(err => console.warn('[map] nests.json unavailable; no hunting labels', err))
@@ -85,6 +99,7 @@ export const mapFeature: WorldFeatureFactory = ctx => {
     const out: MapMarker[] = []
     for (const n of app.catalog.content.npcs.values()) {
       if (!Number.isFinite(n.x) || !Number.isFinite(n.z) || n.x < b.minX || n.x > b.maxX || n.z < b.minZ || n.z > b.maxZ) continue
+      if (inSea(n.x, n.z)) continue
       out.push({ x: n.x, z: n.z, name: n.name ?? n.code, kind: markerKind(n) })
     }
     return out
@@ -112,7 +127,10 @@ export const mapFeature: WorldFeatureFactory = ctx => {
       fill: mapFill(manifest),
       self,
       zones: zoneIndex,
-      hunting: () => hunting,
+      hunting: () => {
+        if (nests && !huntingSea && ctx.world()?.world.coast) buildHunting(transform)
+        return hunting
+      },
       markers: () => markers ?? [],
     })
     loadHunting(transform)

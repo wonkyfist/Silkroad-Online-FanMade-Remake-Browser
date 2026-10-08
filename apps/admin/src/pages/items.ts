@@ -27,7 +27,8 @@ export function itemsPage(root: HTMLElement): void {
       { label: 'Code', render: (r) => h('span', { class: 'mono dim small' }, r.code) },
       { label: 'Category', render: (r) => `${r.category}${r.slot ? ` · ${r.slot}` : ''}` },
       { label: 'Degree', render: (r) => String(r.degree), class: 'num' },
-      { label: 'Req. level', render: (r) => String(r.reqLevel), class: 'num' },
+      // the Climb's re-spacing (docs/CLIMB.md §4.1.2): the client's level beside the one the game uses
+      { label: 'Req. level', render: (r) => (r.retailReqLevel != null ? [String(r.reqLevel), h('span', { class: 'dim small' }, ` (retail ${r.retailReqLevel})`)] : String(r.reqLevel)), class: 'num' },
       { label: 'Price', render: (r) => fmtNum(r.price), class: 'num' },
     ],
   })

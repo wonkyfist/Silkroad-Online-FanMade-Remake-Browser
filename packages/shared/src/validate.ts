@@ -7,11 +7,13 @@
  * so an additive protocol change does not break an older client.
  */
 
+import { CLIMB_ART_TREES } from './climb-rewards.ts'
 import {
   ACTION_FAIL_REASONS,
   APPEARANCE_STEPS,
   BUYBACK_SLOTS,
   CAST_END_REASONS,
+  DEATH_PENALTY_OUTCOMES,
   CHARACTER_NAME,
   CHAT_CHANNELS,
   CHAT_SEND_CHANNELS,
@@ -131,9 +133,12 @@ import { STORM_EFFECT_IDS, STORM_LIMITS, STORM_PHASES, type StormEffect } from '
 import { MONTH_DAY_RE, WINTER_LIMITS } from './winter.ts'
 import { WARMTH_LEVELS, WARMTH_SOURCES, WINTER_PLAY_LIMITS, YETI_SKILLS, type WarmthState, type WinterBoard, type WinterPlayState, type WinterServerMessage } from './winter-play.ts'
 import { TORNADO_LIMITS } from './tornado.ts'
+import { RARITY_TIERS } from './rarity.ts'
+import { parseLook, type CharLook } from './look.ts'
 import { WALL_FX_KINDS, WALL_LIMITS, WALL_SEGMENT_ID, WALL_STAGES, type WallRepairTerms, type WallSegView, type WallServerMessage } from './siege.ts'
 import { MAX_DONATE_BLOCKS } from './siege-repair.ts'
 import { LAW_LIMITS, LAW_NOTICE_EVENTS, type LawServerMessage, type WantedView } from './siege-law.ts'
+import { CAPTURE_RULES, HUNTER_LIMITS, SENTENCE_CLOCKS, type HunterServerMessage, type HunterView, type JailView } from './siege-hunter.ts'
 import {
   SIEGE_APPROACHES,
   SIEGE_CONTRIB_KINDS,
@@ -182,6 +187,7 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   nameCheck: ['t', 'name'],
   charCreate: ['t', 'name', 'model', 'weapon'],
   charDelete: ['t', 'id'],
+  charLook: ['t', 'id'],
   enterWorld: ['t', 'id'],
   moveTo: ['t', 'x', 'z'],
   chat: ['t', 'text'],
@@ -238,6 +244,8 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   alchemyReinforce: ['t', 'item', 'elixir'],
   alchemyCancel: ['t'],
   berserk: ['t'],
+  climbArt: ['t', 'tree', 'tier', 'art'],
+  climbTitle: ['t', 'code'],
   tradeRequest: ['t', 'target'],
   tradeRespond: ['t', 'from', 'accept'],
   tradeOffer: ['t', 'bag'],
@@ -283,11 +291,17 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   kegDefuse: ['t', 'id'],
   // Siege of Jangan, layer 5 (docs/SIEGE.md §10.1)
   kegCraft: ['t', 'npc'],
+  // Siege of Jangan, layer 6 (docs/SIEGE.md §10.1)
+  hunterLicence: ['t', 'npc'],
+  hunterDuty: ['t', 'on'],
+  hunterNet: ['t', 'target'],
+  jailChore: ['t'],
 }
 
 /** Keys a client message may omit. */
 const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]>> = {
-  charCreate: ['height', 'volume', 'outfit'],
+  charCreate: ['height', 'volume', 'outfit', 'look'],
+  charLook: ['look'],
   chat: ['to', 'channel'],
   useSkill: ['target'],
   itemEquip: ['slot'],
@@ -449,10 +463,26 @@ function clientMessage(v: unknown): ClientMessage {
       if (v.height !== undefined) created.height = int(v, 'height', 0, APPEARANCE_STEPS - 1)
       if (v.volume !== undefined) created.volume = int(v, 'volume', 0, APPEARANCE_STEPS - 1)
       if (v.outfit !== undefined) created.outfit = oneOf(v, 'outfit', STARTER_OUTFITS)
+      if (v.look !== undefined) {
+        // the body is checked against the model by the server (look.ts parseLook with the model's body)
+        const r = parseLook(v.look)
+        if (!r.ok) fail(r.error)
+        created.look = r.look
+      }
       return created
     }
     case 'charDelete':
       return { t: 'charDelete', id: int(v, 'id', 1, Number.MAX_SAFE_INTEGER) }
+    case 'charLook': {
+      // the body is checked against the character's model by the server
+      const m: Extract<ClientMessage, { t: 'charLook' }> = { t: 'charLook', id: int(v, 'id', 1, Number.MAX_SAFE_INTEGER) }
+      if (v.look !== undefined) {
+        const r = parseLook(v.look)
+        if (!r.ok) fail(r.error)
+        m.look = r.look
+      }
+      return m
+    }
     case 'enterWorld':
       return { t: 'enterWorld', id: int(v, 'id', 1, Number.MAX_SAFE_INTEGER) }
     case 'moveTo':
@@ -624,6 +654,15 @@ function clientMessage(v: unknown): ClientMessage {
     // ---- Siege of Jangan, layer 5 (docs/SIEGE.md §10.1) ----
     case 'kegCraft':
       return { t: 'kegCraft', npc: npcId(v) }
+    // ---- Siege of Jangan, layer 6 (docs/SIEGE.md §10.1) ----
+    case 'hunterLicence':
+      return { t: 'hunterLicence', npc: npcId(v) }
+    case 'hunterDuty':
+      return { t: 'hunterDuty', on: bool(v, 'on') }
+    case 'hunterNet':
+      return { t: 'hunterNet', target: int(v, 'target', 1, MAX_ID) }
+    case 'jailChore':
+      return { t: 'jailChore' }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -673,6 +712,14 @@ function clientMessage(v: unknown): ClientMessage {
       return { t: 'alchemyCancel' }
     case 'berserk':
       return { t: 'berserk' }
+    // ---- the Climb (docs/CLIMB.md §5.1, §7.3) ----
+    case 'climbArt':
+      return { t: 'climbArt', tree: oneOf(v, 'tree', CLIMB_ART_TREES), tier: int(v, 'tier', 1, 100), art: str(v, 'art', 32, 1) }
+    case 'climbTitle': {
+      const code = str(v, 'code', 32)
+      if (code !== '' && !PILOT_HONOR.test(code)) fail('code must be a title code')
+      return { t: 'climbTitle', code }
+    }
     // ---- wave 8: trade (docs/SYSTEMS_SOCIAL.md §3.4) ----
     case 'tradeRequest':
       return { t: 'tradeRequest', target: int(v, 'target', 0, MAX_ID) }
@@ -927,7 +974,16 @@ function character(v: unknown): CharacterSummary {
     ...(o.volume !== undefined ? { volume: int(o, 'volume', 0, APPEARANCE_STEPS - 1) } : {}),
     ...(o.equip !== undefined ? { equip: equipCodes(o.equip) } : {}),
     ...(o.equipPlus !== undefined ? { equipPlus: equipPlus(o.equipPlus) } : {}),
+    ...lookField(o.look),
+    ...(o.customise === true ? { customise: true } : {}),
   }
+}
+
+/** A look from the server: kept when it parses, else left out (a newer look version draws the default). */
+function lookField(v: unknown): { look?: CharLook } {
+  if (v === undefined) return {}
+  const r = parseLook(v)
+  return r.ok ? { look: r.look } : {}
 }
 
 function moveState(v: unknown): MoveState {
@@ -964,6 +1020,7 @@ function entity(v: unknown): EntityState {
   if (o.equipPlus !== undefined) e.equipPlus = equipPlus(o.equipPlus)
   if (o.height !== undefined) e.height = int(o, 'height', 0, APPEARANCE_STEPS - 1)
   if (o.volume !== undefined) e.volume = int(o, 'volume', 0, APPEARANCE_STEPS - 1)
+  if (o.look !== undefined) Object.assign(e, lookField(o.look))
   if (o.effects !== undefined) e.effects = boundedList(o, 'effects', MAX_EFFECTS_PER_ENTITY, effectState)
   if (o.gm !== undefined && bool(o, 'gm')) e.gm = true
   if (o.npc !== undefined) e.npc = str(o, 'npc', 128, 1)
@@ -988,6 +1045,9 @@ function entity(v: unknown): EntityState {
   if (o.siege !== undefined) e.siege = oneOf(o, 'siege', SIEGE_ROLES)
   // Siege of Jangan, layer 5 (docs/SIEGE.md §10.2)
   if (o.wanted !== undefined) e.wanted = int(o, 'wanted', 1, LAW_LIMITS.bounty)
+  // Siege of Jangan, layer 6 (docs/SIEGE.md §10.2)
+  if (o.hunter !== undefined) e.hunter = int(o, 'hunter', 0, HUNTER_LIMITS.rank)
+  if (o.jailed !== undefined && bool(o, 'jailed')) e.jailed = true
   return e
 }
 
@@ -1584,6 +1644,8 @@ function serverMessage(v: unknown): ServerMessage {
       return { t: 'charCreated', character: character(o.character) }
     case 'charDeleted':
       return { t: 'charDeleted', id: int(o, 'id', 1, Number.MAX_SAFE_INTEGER) }
+    case 'charLookSet':
+      return { t: 'charLookSet', character: character(o.character) }
     case 'worldEnter': {
       const m: ServerMessage = { t: 'worldEnter', self: entity(o.self), world: worldInfo(o.world), entities: list(o, 'entities', entity) }
       if (o.role !== undefined) m.role = oneOf<Role>(o, 'role', ROLES)
@@ -1644,6 +1706,9 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.charged !== undefined) m.charged = bool(o, 'charged')
       // Siege of Jangan layer 5: the bounty, 0 = no longer Wanted
       if (o.wanted !== undefined) m.wanted = int(o, 'wanted', 0, LAW_LIMITS.bounty)
+      // layer 6: the Hunter's rank on duty (-1 = off duty), jailed or released
+      if (o.hunter !== undefined) m.hunter = int(o, 'hunter', -1, HUNTER_LIMITS.rank)
+      if (o.jailed !== undefined) m.jailed = bool(o, 'jailed')
       return m
     }
     case 'role':
@@ -1677,6 +1742,8 @@ function serverMessage(v: unknown): ServerMessage {
     }
     case 'levelUp':
       return { t: 'levelUp', id: int(o, 'id', 0, MAX_ID), level: int(o, 'level', 0, BIG) }
+    case 'deathPenalty':
+      return { t: 'deathPenalty', outcome: oneOf(o, 'outcome', DEATH_PENALTY_OUTCOMES), exp: int(o, 'exp', 0, BIG), pct: int(o, 'pct', 0, 100), graceMs: int(o, 'graceMs', 0, 24 * 3_600_000) }
     case 'inventory':
       return { t: 'inventory', inventory: inventory(o.inventory) }
     case 'inventoryUpdate': {
@@ -1687,7 +1754,7 @@ function serverMessage(v: unknown): ServerMessage {
       return m
     }
     case 'appearance':
-      return { t: 'appearance', id: int(o, 'id', 0, MAX_ID), equip: equipCodes(o.equip), ...(o.plus !== undefined ? { plus: equipPlus(o.plus) } : {}) }
+      return { t: 'appearance', id: int(o, 'id', 0, MAX_ID), equip: equipCodes(o.equip), ...(o.plus !== undefined ? { plus: equipPlus(o.plus) } : {}), ...lookField(o.look) }
     // ---- wave 3 ----
     case 'skills': {
       const hotbar = boundedList(o, 'hotbar', HOTBAR_SLOTS, hotbarEntry)
@@ -1946,6 +2013,9 @@ function serverMessage(v: unknown): ServerMessage {
       if (o.at !== undefined) m.at = num(o, 'at', 0, BIG)
       return m
     }
+    case 'rareNotice':
+      // docs/RARITY.md §4.3
+      return { t: 'rareNotice', by: str(o, 'by', 64, 1), item: str(o, 'item', 128, 1), name: str(o, 'name', 64, 1), tier: oneOf(o, 'tier', RARITY_TIERS) }
     // winter gameplay (docs/WINTER.md §13)
     case 'warmth':
     case 'winterPlay':
@@ -1982,6 +2052,10 @@ function serverMessage(v: unknown): ServerMessage {
     case 'lawNotice':
     case 'lawState':
       return lawMessage(o)
+    // Siege of Jangan, Hunters and the jail (docs/SIEGE.md §10.2)
+    case 'wantedPing':
+    case 'lawCapture':
+      return hunterMessage(o)
     default:
       fail('unknown message type')
   }
@@ -2097,6 +2171,7 @@ function siegeMessage(o: Record<string, unknown>): SiegeServerMessage {
         x: num(o, 'x', -c, c), y: num(o, 'y', -c, c), z: num(o, 'z', -c, c), fuseEndsAt: num(o, 'fuseEndsAt', 0, BIG),
       }
       if (o.sapper !== undefined && bool(o, 'sapper')) m.sapper = true
+      if (o.mine !== undefined && bool(o, 'mine')) m.mine = true
       if (o.defuse !== undefined) {
         const d = rec(o.defuse, 'defuse')
         m.defuse = { by: int(d, 'by', 0, MAX_ID), endsAt: num(d, 'endsAt', 0, BIG) }
@@ -2126,6 +2201,8 @@ function lawMessage(o: Record<string, unknown>): LawServerMessage {
   if (o.t === 'lawState') {
     const m: Extract<LawServerMessage, { t: 'lawState' }> = { t: 'lawState', offences: int(o, 'offences', 0, LAW_LIMITS.offences) }
     if (o.wanted !== undefined) m.wanted = wantedView(o.wanted)
+    if (o.hunter !== undefined) m.hunter = hunterView(o.hunter)
+    if (o.jail !== undefined) m.jail = jailView(o.jail)
     return m
   }
   const m: Extract<LawServerMessage, { t: 'lawNotice' }> = { t: 'lawNotice', event: oneOf(o, 'event', LAW_NOTICE_EVENTS) }
@@ -2136,6 +2213,58 @@ function lawMessage(o: Record<string, unknown>): LawServerMessage {
   if (o.accomplices !== undefined) m.accomplices = boundedList(o, 'accomplices', LAW_LIMITS.accomplices, (x) => str({ n: x }, 'n', 64, 1))
   return m
 }
+
+// ---- Siege of Jangan, Hunters and the jail (docs/SIEGE.md §10.2; siege-hunter.ts) --------------------------------------
+
+function hunterView(v: unknown): HunterView {
+  const o = rec(v, 'hunter')
+  const h: HunterView = {
+    licensed: bool(o, 'licensed'),
+    onDuty: bool(o, 'onDuty'),
+    rank: int(o, 'rank', 0, HUNTER_LIMITS.rank),
+    captures: int(o, 'captures', 0, HUNTER_LIMITS.captures),
+  }
+  if (o.revokedUntil !== undefined) h.revokedUntil = num(o, 'revokedUntil', 0, BIG)
+  if (o.lockUntil !== undefined) h.lockUntil = num(o, 'lockUntil', 0, BIG)
+  if (o.netAt !== undefined) h.netAt = num(o, 'netAt', 0, BIG)
+  return h
+}
+
+function jailView(v: unknown): JailView {
+  const o = rec(v, 'jail')
+  const L = HUNTER_LIMITS
+  const j: JailView = {
+    leftMs: int(o, 'leftMs', 0, L.sentenceMs),
+    sentenceMs: int(o, 'sentenceMs', 0, L.sentenceMs),
+    offence: int(o, 'offence', 0, LAW_LIMITS.offences),
+    chores: int(o, 'chores', 0, L.chores),
+    choresLeft: int(o, 'choresLeft', 0, L.chores),
+    clock: oneOf(o, 'clock', SENTENCE_CLOCKS),
+  }
+  if (o.choreEndsAt !== undefined) j.choreEndsAt = num(o, 'choreEndsAt', 0, BIG)
+  return j
+}
+
+function hunterMessage(o: Record<string, unknown>): HunterServerMessage {
+  const c = MAX_COORD
+  if (o.t === 'wantedPing') {
+    return { t: 'wantedPing', id: int(o, 'id', 1, MAX_ID), name: str(o, 'name', 64, 1), x: num(o, 'x', -c, c), z: num(o, 'z', -c, c), r: num(o, 'r', 0, HUNTER_LIMITS.pingR), at: num(o, 'at', 0, BIG) }
+  }
+  const m: Extract<HunterServerMessage, { t: 'lawCapture' }> = {
+    t: 'lawCapture',
+    name: str(o, 'name', 64, 1),
+    bounty: int(o, 'bounty', 0, LAW_LIMITS.bounty),
+    gold: int(o, 'gold', 0, LAW_LIMITS.bounty),
+    sentenceMs: int(o, 'sentenceMs', 0, HUNTER_LIMITS.sentenceMs),
+  }
+  if (o.prisoner !== undefined && bool(o, 'prisoner')) m.prisoner = true
+  if (o.pair !== undefined && bool(o, 'pair')) m.pair = true
+  if (o.rule !== undefined) m.rule = oneOf(o, 'rule', CAPTURE_RULES)
+  if (o.uncounted !== undefined && bool(o, 'uncounted')) m.uncounted = true
+  if (o.captors !== undefined) m.captors = boundedList(o, 'captors', HUNTER_LIMITS.captors, (x) => str({ n: x }, 'n', 64, 1))
+  return m
+}
+
 
 // ---- winter gameplay (docs/WINTER.md §13) ------------------------------------------------------------------------
 

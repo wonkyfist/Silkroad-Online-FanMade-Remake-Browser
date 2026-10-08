@@ -1,0 +1,71 @@
+{
+ "species": "pine10",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 23,
+ "target": {
+  "h": 46.25,
+  "w": 36.31
+ },
+ "normalUp": 0.6,
+ "normalRule": "dim",
+ "lods": {
+  "0": {
+   "triangles": 3204,
+   "byMaterial": {
+    "bark": 1528,
+    "leaf": 1676
+   },
+   "cards": 419,
+   "frontNormalY": 0.811,
+   "vertices": 4564,
+   "heightM": 46.25,
+   "widthM": 36.31,
+   "crownCentre": [
+    3.24,
+    2.12,
+    25.5
+   ],
+   "crownRadius": 14.19,
+   "bytes": 401564
+  },
+  "1": {
+   "triangles": 980,
+   "byMaterial": {
+    "bark": 228,
+    "leaf": 752
+   },
+   "cards": 188,
+   "frontNormalY": 0.803,
+   "vertices": 1688,
+   "heightM": 46.247,
+   "widthM": 36.31,
+   "crownCentre": [
+    3.24,
+    2.12,
+    25.5
+   ],
+   "crownRadius": 14.19,
+   "bytes": 250156
+  },
+  "2": {
+   "triangles": 358,
+   "byMaterial": {
+    "bark": 166,
+    "leaf": 192
+   },
+   "cards": 48,
+   "frontNormalY": 0.793,
+   "vertices": 528,
+   "heightM": 46.24,
+   "widthM": 36.31,
+   "crownCentre": [
+    3.24,
+    2.12,
+    25.5
+   ],
+   "crownRadius": 14.19,
+   "bytes": 190724
+  }
+ }
+}

@@ -13,6 +13,7 @@ import { fileRegion, fileToWorld, portToFile, REGION_UNITS, regionXZ, worldFrame
 import type { NestRecord } from '../src/data/nests.ts'
 import { defaultPortDataDir, loadPortData, type PortData } from '../src/data/port-source.ts'
 import { textdataReader } from '../src/data/textdata-source.ts'
+import { MAX_SKILL_MASTERY_LEVEL } from '../src/data/skills.ts'
 import { loadConfig, openArchive, REPO_ROOT } from '../src/node-io.ts'
 
 const hasConfig = existsSync(join(REPO_ROOT, 'sro.config.json'))
@@ -123,7 +124,7 @@ describe.skipIf(!hasPort)('content export (vSRO 1.188 client + port server data)
     const codes = new Set(items.map(i => i.code))
     for (const c of ['ITEM_CH_SWORD_01_A_DEF', 'ITEM_CH_M_HEAVY_03_FA_C', 'ITEM_CH_W_CLOTHES_01_HA_A', 'ITEM_CH_NECKLACE_03_C', 'ITEM_ETC_HP_POTION_01', 'ITEM_ETC_SCROLL_RETURN_01', 'ITEM_ETC_GOLD_01']) expect(codes.has(c), c).toBe(true)
     for (const i of items) {
-      expect(i.degree, i.code).toBeLessThanOrEqual(3)
+      expect(i.degree, i.code).toBeLessThanOrEqual(4)
       if (i.category === 'weapon') expect(i.basicAttack, i.code).toMatch(/^SKILL_CH_(SWORD|SPEAR|BOW)_BASE_01$/)
     }
     expect(items.find(i => i.code === 'ITEM_CH_SWORD_01_A')).toMatchObject({ name: 'Copper Sword', price: 890, stats: { physAttack: [15.5, 17], durability: [62, 76] } })
@@ -142,13 +143,16 @@ describe.skipIf(!hasPort)('content export (vSRO 1.188 client + port server data)
     expect(out.report.drops.goldCheck.differ).toEqual([])
   })
 
-  it('exports the seven Chinese masteries with real skill rows up to mastery level 20', () => {
+  it('exports the seven Chinese masteries with real skill rows up to mastery level 25 (the Climb cap, MAX_SKILL_MASTERY_LEVEL)', () => {
     const skills = entries<SkillDef>(CONTENT_FILES.skills)
     const masteries = entries<{ code: string; skills: string[]; weapons: string[] }>(CONTENT_FILES.masteries)
     expect(masteries.map(m => m.code)).toEqual(['BICHEON', 'HEUKSAL', 'PACHEON', 'COLD', 'LIGHTNING', 'FIRE', 'FORCE'])
     expect(masteries[0]!.weapons).toEqual(['sword', 'blade'])
     for (const m of masteries) expect(m.skills.length, m.code).toBeGreaterThan(10)
-    for (const s of skills) expect(s.masteryLevel, s.code).toBeLessThanOrEqual(20)
+    // docs/CLIMB.md §5.2: masteries to 25 (was 20); the rows of masteries 21-25 are exported, nothing past them
+    expect(MAX_SKILL_MASTERY_LEVEL).toBe(25)
+    for (const s of skills) expect(s.masteryLevel, s.code).toBeLessThanOrEqual(MAX_SKILL_MASTERY_LEVEL)
+    for (let m = 21; m <= 25; m++) expect(skills.some(s => !s.mob && s.masteryLevel === m), `mastery ${m}`).toBe(true)
     expect(skills.find(s => s.code === 'SKILL_CH_SWORD_SMASH_A_01')).toMatchObject({ name: 'Strike Smash', mastery: 'BICHEON', masteryLevel: 5, sp: 2, mp: 19, castMs: 411, actionMs: 1022, cooldownMs: 3000, category: 'melee', animation: { shot: 'SKILL_1' }, damage: { physPct: 143, flat: [15, 18], hits: 1 } })
     expect(skills.find(s => s.code === 'SKILL_CH_SWORD_BASE_01')).toMatchObject({ basicAttack: true, cooldownMs: 1200, damage: { physPct: 60, hits: 2 } })
     expect(skills.find(s => s.code === 'SKILL_CH_SWORD_CHAIN_A_1S_01')?.chainNext).toBe('SKILL_CH_SWORD_CHAIN_A_2S_01')

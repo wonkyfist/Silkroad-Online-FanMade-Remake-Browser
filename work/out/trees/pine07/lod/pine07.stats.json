@@ -1,0 +1,71 @@
+{
+ "species": "pine07",
+ "archetype": "conifer_layered",
+ "kind": "tree",
+ "seed": 11,
+ "target": {
+  "h": 48.56,
+  "w": 42.71
+ },
+ "normalUp": 0.4,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 4472,
+   "byMaterial": {
+    "bark": 1944,
+    "leaf": 2528
+   },
+   "cards": 632,
+   "frontNormalY": 0.4,
+   "vertices": 6679,
+   "heightM": 48.56,
+   "widthM": 42.71,
+   "crownCentre": [
+    2.09,
+    -0.66,
+    30.05
+   ],
+   "crownRadius": 18.57,
+   "bytes": 506992
+  },
+  "1": {
+   "triangles": 1192,
+   "byMaterial": {
+    "bark": 568,
+    "leaf": 624
+   },
+   "cards": 156,
+   "frontNormalY": 0.413,
+   "vertices": 1730,
+   "heightM": 48.56,
+   "widthM": 40.922,
+   "crownCentre": [
+    2.09,
+    -0.66,
+    30.05
+   ],
+   "crownRadius": 18.57,
+   "bytes": 249744
+  },
+  "2": {
+   "triangles": 516,
+   "byMaterial": {
+    "bark": 412,
+    "leaf": 104
+   },
+   "cards": 26,
+   "frontNormalY": 0.55,
+   "vertices": 586,
+   "heightM": 48.56,
+   "widthM": 42.243,
+   "crownCentre": [
+    2.09,
+    -0.66,
+    30.05
+   ],
+   "crownRadius": 18.57,
+   "bytes": 190764
+  }
+ }
+}

@@ -55,6 +55,8 @@ export interface AiHost {
    * Absent = the mob's own.
    */
   storm?: AiStorm
+  /** Optional (the Climb's monster roles, docs/CLIMB.md §2.3; climb/roles.ts): an idle mob acquired `target` on sight. */
+  aggro?(m: Mob, target: Player): void
 }
 
 /** The storm module's view of one mob (storm/service.ts): each returns the value the AI uses now. */
@@ -196,6 +198,7 @@ export function thinkMob(m: Mob, host: AiHost): void {
         m.ai = 'chase'
         m.target = best.id
         m.nextThinkAt = 0
+        host.aggro?.(m, best)
       }
     }
     if (m.ai === 'idle') {

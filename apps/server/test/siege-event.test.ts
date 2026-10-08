@@ -60,14 +60,14 @@ const MIN = 60_000
 
 describe('scaling (§6.4)', () => {
   const a = SIEGE_EVENT_DEFAULTS.army
-  it('the table: s, wave 1 raiders and sappers per approach, the Warlord within 1 %', () => {
+  it('the table: s, wave 1 raiders and sappers per approach, the Warlord within 1 % (96,000 x s^0.9 since the Climb, §2.6)', () => {
     const rows: [number, number, number, number, number][] = [
-      [1, 1, 12, 2, 60_000],
-      [5, 1, 12, 2, 60_000],
-      [10, 1.74, 21, 3, 98_600],
-      [20, 3.03, 36, 6, 162_400],
-      [30, 4.19, 50, 8, 218_600],
-      [80, 4.19, 50, 8, 218_600],
+      [1, 1, 12, 2, 96_000],
+      [5, 1, 12, 2, 96_000],
+      [10, 1.74, 21, 3, 157_760],
+      [20, 3.03, 36, 6, 259_840],
+      [30, 4.19, 50, 8, 349_760],
+      [80, 4.19, 50, 8, 349_760],
     ]
     for (const [n, s, raiders, sappers, hp] of rows) {
       const sc = siegeScale(n, a)
@@ -111,7 +111,7 @@ describe('settings (§11.2)', () => {
     expect(SIEGE_EVENT_DEFAULTS.enabled).toBe(false)
     expect(SIEGE_EVENT_DEFAULTS.schedule.slots).toEqual([{ weekday: 0, time: '20:00' }])
     expect(SIEGE_EVENT_DEFAULTS.timing).toMatchObject({ warningMin: 10, waveGapMin: 8, durationMin: 35, minPlayers: 5, approaches: 2, earlyPct: 80, tigerWaitMin: 30 })
-    expect(SIEGE_EVENT_DEFAULTS.army).toMatchObject({ raiderIp: 40, ramIp: 300, sapperIp: 5000, warlordIp: 600, warlordHp: 60_000, scaleDiv: 5, scaleCap: 6, scaleExp: 0.8, expMul: 0.5 })
+    expect(SIEGE_EVENT_DEFAULTS.army).toMatchObject({ raiderIp: 40, ramIp: 300, sapperIp: 5000, warlordIp: 600, warlordHp: 96_000, scaleDiv: 5, scaleCap: 6, scaleExp: 0.8, expMul: 0.5 })
     expect(SIEGE_EVENT_DEFAULTS.bell.hp).toBe(30_000)
   })
   it('the checker: unknown keys, out of bounds, bad slots, a bad zone', () => {

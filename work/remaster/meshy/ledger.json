@@ -1,0 +1,725 @@
+{
+  "version": 1,
+  "attempts": [
+    {
+      "key": "chinaman_adventurer_body/multiview",
+      "part": "chinaman_adventurer_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:35:07.464Z",
+      "updatedAt": "2026-09-28T22:36:49.859Z",
+      "taskId": "01a0ea28-5832-71d4-807e-617e7107bb1c",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:36:48.247Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 878
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 780
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_heavy_01_ba/multiview",
+      "part": "ch_m_heavy_01_ba",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:37:36.289Z",
+      "updatedAt": "2026-09-28T22:39:18.622Z",
+      "taskId": "01a0ea2a-9d81-74ee-9ad6-19045eac7fbe",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:39:17.058Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 304
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 304
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_sword_01/multiview",
+      "part": "ch_sword_01",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:39:18.644Z",
+      "updatedAt": "2026-09-28T22:41:00.348Z",
+      "taskId": "01a0ea2c-2c76-74fb-919c-2c0719b216e1",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:40:58.650Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 84
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 84
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_heavy_01_ba/prompt",
+      "part": "ch_m_heavy_01_ba",
+      "variant": "prompt",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:41:01.022Z",
+      "updatedAt": "2026-09-28T22:42:43.250Z",
+      "taskId": "01a0ea2d-bd6b-7354-ba9e-cbfc0f398e2f",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:42:41.227Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 304
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 304
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinaman_adventurer_hair/multiview",
+      "part": "chinaman_adventurer_hair",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:43:13.922Z",
+      "updatedAt": "2026-09-28T22:44:57.050Z",
+      "taskId": "01a0ea2f-c45f-773d-ab2d-80b4758b0f67",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:44:55.571Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 109
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 109
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_heavy_01_la/multiview",
+      "part": "ch_m_heavy_01_la",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:44:57.069Z",
+      "updatedAt": "2026-09-28T22:46:38.722Z",
+      "taskId": "01a0ea31-566b-7705-bd37-8e9a51423143",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:46:37.402Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 295
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 295
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_heavy_01_fa/multiview",
+      "part": "ch_m_heavy_01_fa",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-28T22:46:38.741Z",
+      "updatedAt": "2026-09-28T22:48:19.885Z",
+      "taskId": "01a0ea32-e3b1-7668-bc41-f997c39078d7",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-28T22:48:18.770Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 142
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 142
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_clothes_01_ba/multiview",
+      "part": "ch_m_clothes_01_ba",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T15:58:31.055Z",
+      "updatedAt": "2026-09-29T16:00:14.088Z",
+      "taskId": "01a0ede3-9c26-70c5-9312-f4be5dbcbad5",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:00:12.716Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 208
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 206
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_clothes_01_la/multiview",
+      "part": "ch_m_clothes_01_la",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:00:14.115Z",
+      "updatedAt": "2026-09-29T16:01:55.902Z",
+      "taskId": "01a0ede5-2d72-77da-a1ad-2a8476b08b02",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:01:54.410Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 230
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 230
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_w_clothes_01_ba/multiview",
+      "part": "ch_w_clothes_01_ba",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:01:55.926Z",
+      "updatedAt": "2026-09-29T16:03:37.896Z",
+      "taskId": "01a0ede6-bb24-714d-8164-2986a3bbff24",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:03:35.990Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 2,
+          "vertices": 288
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 283
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_m_light_01_ba/multiview",
+      "part": "ch_m_light_01_ba",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:03:37.935Z",
+      "updatedAt": "2026-09-29T16:05:51.007Z",
+      "taskId": "01a0ede8-49b8-75de-971b-6d078a7256f3",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:05:48.975Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 172
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 172
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_w_light_01_ba/multiview",
+      "part": "ch_w_light_01_ba",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:05:51.035Z",
+      "updatedAt": "2026-09-29T16:07:33.437Z",
+      "taskId": "01a0edea-518d-708f-a55f-696c123d6a88",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:07:31.799Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 151
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 151
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "ch_w_light_01_la/multiview",
+      "part": "ch_w_light_01_la",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:07:33.467Z",
+      "updatedAt": "2026-09-29T16:09:16.242Z",
+      "taskId": "01a0edeb-e1ae-758b-ad12-7fd1bd15221d",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:09:14.428Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 1,
+          "vertices": 138
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 138
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinaman_bogy_body/multiview",
+      "part": "chinaman_bogy_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:09:16.270Z",
+      "updatedAt": "2026-09-29T16:10:57.870Z",
+      "taskId": "01a0eded-7338-707a-99ce-530a2f2eca9d",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:10:56.349Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 885
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 790
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinaman_fighter_body/multiview",
+      "part": "chinaman_fighter_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:10:57.903Z",
+      "updatedAt": "2026-09-29T16:13:09.877Z",
+      "taskId": "01a0edef-0038-7011-bddc-578d7f771417",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:13:08.460Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 896
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 798
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinawoman_adventurer_body/multiview",
+      "part": "chinawoman_adventurer_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:13:09.907Z",
+      "updatedAt": "2026-09-29T16:14:51.810Z",
+      "taskId": "01a0edf1-03da-77bb-a8f3-1f3019f7fea0",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:14:50.277Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 968
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 892
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinawoman_assassin_body/multiview",
+      "part": "chinawoman_assassin_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:14:51.836Z",
+      "updatedAt": "2026-09-29T16:16:33.768Z",
+      "taskId": "01a0edf2-9209-71e8-827f-46dad031a4d7",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:16:32.304Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 962
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 886
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    },
+    {
+      "key": "chinawoman_bogy_body/multiview",
+      "part": "chinawoman_bogy_body",
+      "variant": "multiview",
+      "status": "SUCCEEDED",
+      "aiModel": "meshy-7",
+      "resolution": "4k",
+      "createdAt": "2026-09-29T16:16:33.798Z",
+      "updatedAt": "2026-09-29T16:18:15.675Z",
+      "taskId": "01a0edf4-2051-70fb-9370-52448f17368e",
+      "progress": 100,
+      "consumedCredits": 10,
+      "finishedAt": "2026-09-29T16:18:14.119Z",
+      "files": [
+        "model.glb",
+        "base_color.png",
+        "metallic.png",
+        "roughness.png",
+        "normal.png"
+      ],
+      "downloaded": true,
+      "uvCheck": {
+        "verdict": "matched",
+        "uploaded": {
+          "primitives": 8,
+          "vertices": 968
+        },
+        "returned": {
+          "primitives": 1,
+          "vertices": 892
+        },
+        "unmatched": 0,
+        "uncovered": 0,
+        "maxDelta": 0,
+        "tolerance": 0.0001,
+        "notes": [
+          "vertex order or count differs, but every vertex keeps its uploaded UV"
+        ]
+      }
+    }
+  ]
+}

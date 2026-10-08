@@ -1,0 +1,50 @@
+{
+ "species": "grave_grass",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 65,
+ "target": {
+  "h": 4.28,
+  "w": 8.29
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 64,
+   "byMaterial": {
+    "leaf": 64
+   },
+   "cards": 16,
+   "frontNormalY": 1.0,
+   "vertices": 128,
+   "heightM": 4.28,
+   "widthM": 8.29,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.51
+   ],
+   "crownRadius": 1.0,
+   "bytes": 60596
+  },
+  "1": {
+   "triangles": 24,
+   "byMaterial": {
+    "leaf": 24
+   },
+   "cards": 6,
+   "frontNormalY": 1.0,
+   "vertices": 48,
+   "heightM": 4.28,
+   "widthM": 8.29,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.51
+   ],
+   "crownRadius": 1.0,
+   "bytes": 56504
+  }
+ }
+}

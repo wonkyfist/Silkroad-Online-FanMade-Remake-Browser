@@ -13,6 +13,9 @@
  *   seam where a changed region meets an unchanged one); undefined outside the coast domain (the caller reads retail);
  * - `navEdit(x, z)`: what ./navgen.ts needs to rewrite the region's navmesh consistently with its terrain.
  *
+ * A drowned region (./drown.ts) takes the ring's rules wherever it lies (its water blocks in the sea go, the nav's ring
+ * rule, objects on moved ground dropped) and is never look-only.
+ *
  * A vertex the coast leaves alone (within 0.1 mm) keeps its retail file units bit for bit, so the frozen playable set,
  * the tomb keep and the land edges are byte-identical in every copy.
  */
@@ -23,6 +26,7 @@ import {
 import { BANK_FILL_M } from './banks.ts'
 import type { EmittedRegion } from './census.ts'
 import type { CoastConfig } from './config.ts'
+import { drownedRegions } from './drown.ts'
 import type { SeaMasks } from './field.ts'
 import { CELLS_PER_REGION, latticeIndex } from './lattice.ts'
 import { NAV_KNEE_DEEP_M, type NavRegionEdit } from './navgen.ts'
@@ -69,10 +73,13 @@ export class CoastSource {
   private readonly syn: Set<number>
   private readonly overlays = new Map<number, Overlay | null>()
   private readonly envBlocks: Array<{ x: number; z: number; env: number }> = []
+  /** Drowned regions (./drown.ts): open sea, so the ring's rules apply to them wherever they lie. */
+  private readonly drowned: Set<number>
 
   constructor(private readonly o: CoastSourceOptions) {
     this.synthetic = o.emitted.map(e => ({ x: e.x, z: e.z })).sort((a, b) => a.z - b.z || a.x - b.x)
     this.syn = new Set(this.synthetic.map(r => regionKey(r.x, r.z)))
+    this.drowned = drownedRegions(o.result)
     for (const { x, z } of o.exportRegions) {
       const reg = o.retail.regions.get(regionKey(x, z))
       if (!reg) continue
@@ -91,7 +98,7 @@ export class CoastSource {
    */
   isLookOnly(x: number, z: number): boolean {
     const c = this.o.cfg.corridor
-    if (!c || !this.syn.has(regionKey(x, z)) || !this.o.retail.regions.has(regionKey(x, z))) return false
+    if (!c || !this.syn.has(regionKey(x, z)) || !this.o.retail.regions.has(regionKey(x, z)) || this.drowned.has(regionKey(x, z))) return false
     return x + 1 > c.x[0] && x < c.x[1] && z + 1 > c.z[0] && z < c.z[1]
   }
 
@@ -125,7 +132,7 @@ export class CoastSource {
     const ov = this.overlay(x, z, retail)
     const cfg = this.o.cfg
     const p = this.o.result.playable
-    const ring = x < p.x0 || x > p.x1 || z < p.z0 || z > p.z1
+    const ring = x < p.x0 || x > p.x1 || z < p.z0 || z > p.z1 || this.drowned.has(regionKey(x, z))
     const opens = !ring && cfg.openTiles.some(q => q.x[1] >= x && q.x[0] <= x + 1 && q.z[1] >= z && q.z[0] <= z + 1)
     if (!ov?.changed && !opens && !ring) return null
     const moved = ov?.moved ?? null
@@ -206,7 +213,7 @@ export class CoastSource {
       }
     }
     const p = r.playable
-    const ring = x < p.x0 || x > p.x1 || z < p.z0 || z > p.z1
+    const ring = x < p.x0 || x > p.x1 || z < p.z0 || z > p.z1 || this.drowned.has(regionKey(x, z))
     const removedWater = new Set<number>()
     if (ring) {
       for (const b of retail.mapm.blocks) {
@@ -216,6 +223,21 @@ export class CoastSource {
           for (let vx = 0; vx < MAPM_BLOCK_VERTICES; vx++) {
             const g = (b.bz * MAPM_BLOCK_TILES + vz) * G + b.bx * MAPM_BLOCK_TILES + vx
             if (sea[g] || moved[g]) {
+              hit = true
+              break
+            }
+          }
+        }
+        if (hit) removedWater.add(b.index)
+      }
+    } else if (r.masks.opened) {
+      // the opened water (./drown.ts drown.openWater): its blocks go, the ocean draws them
+      for (const b of retail.mapm.blocks) {
+        if (b.waterType === MAPM_WATER_NONE) continue
+        let hit = false
+        for (let vz = 0; vz < MAPM_BLOCK_VERTICES && !hit; vz++) {
+          for (let vx = 0; vx < MAPM_BLOCK_VERTICES; vx++) {
+            if (r.masks.opened[this.k(x, z, b.bx * MAPM_BLOCK_TILES + vx, b.bz * MAPM_BLOCK_TILES + vz)]) {
               hit = true
               break
             }

@@ -20,7 +20,10 @@ import { isGoldCode } from './gameplay.ts'
 import { describeSetLevel, setLevel as applySetLevel } from './progression.ts'
 import { SKILL_USAGE, runSkillCommand } from './skills/gm-skill.ts'
 import { PLUS_USAGE } from './alchemy.ts'
+import { CLIMB_USAGE, climbGm } from './climb.ts'
+import { RARITY_USAGE } from './rarity.ts'
 import { HWAN_USAGE } from './berserk.ts'
+import { PENALTY_USAGE } from './climb/penalty.ts'
 import { DUR_USAGE } from './durability.ts'
 import { MOBSKILL_USAGE } from './mob-skills.ts'
 import { HORSE_USAGE } from './mounts.ts'
@@ -471,6 +474,20 @@ export const COMMANDS: Record<string, Command> = {
   hwan: { usage: HWAN_USAGE, about: 'Set your Berserk points (5 = a full gauge).', world: true, run: ({ ctx, args, self }) => ctx.gameplay.berserk.gm(self!, args) },
   dur: { usage: DUR_USAGE, about: 'Set the durability of your worn items (0 = broken).', world: true, run: ({ ctx, args, self }) => ctx.gameplay.durability.gm(self!, args) },
   plus: { usage: PLUS_USAGE, about: 'Set the enhancement (+N) of an item of yours.', world: true, run: ({ ctx, args, self }) => ctx.gameplay.alchemy.gm(self!, args) },
+  // docs/RARITY.md §6
+  climb: {
+    usage: CLIMB_USAGE,
+    about: 'The Climb (docs/CLIMB.md): the level cap, the EXP curve and the re-levelled monsters; a derived monster against its base; the level-difference EXP of a kill.',
+    run: ({ ctx, args }) => climbGm({ data: ctx.gameplay.data, config: ctx.config, nests: () => ctx.gameplay.spawner.nests.filter((n) => n.mob.code.startsWith('MOB_CL_')).length }, args),
+  },
+  // docs/CLIMB.md §6, §10.4: the death penalty of a player (grace, last loss), a test roll on yourself, the grace window
+  penalty: {
+    usage: PENALTY_USAGE,
+    about: 'The Climb death penalty: a player grace and last loss; test a roll on yourself; set or clear the grace.',
+    world: true,
+    run: ({ ctx, args, self }) => ctx.gameplay.penalty.gm(self!, args, (name) => findOnline(ctx, name)?.player),
+  },
+  rarity: { usage: RARITY_USAGE, about: 'Rare weapons: the drop rates, or a Seal of Star / Moon / Sun of your weapon (or a code) into your bag or at your feet.', world: true, run: ({ ctx, args, self }) => ctx.gameplay.rarity.gm(self!, args) },
   mobskill: { usage: MOBSKILL_USAGE, about: 'Make a monster use one of its skills now.', world: true, run: ({ ctx, args, self }) => ctx.gameplay.mobSkills.gm(self!, args) },
   guilds: { usage: GUILDS_USAGE, about: 'Guilds: list, info, rename, disband one, or expel a member.', run: runGuildsCommand },
   // GM content editors (docs/QUESTS.md §5.2, §5.3; lane ED-S): saved to DATA_DIR/content, applied live.
@@ -543,10 +560,11 @@ export const COMMANDS: Record<string, Command> = {
     about: 'The Siege of Jangan: status, start one now (warning minutes), stop it (no rewards), send a wave now, bring out the Bandit Warlord, show the lanes.',
     run: ({ ctx, args, self }) => ctx.gameplay.siege.gm(self, args, Date.now()),
   },
-  // Siege of Jangan layer 5 (docs/SIEGE.md §8, §12): warrants, the offence record, Thunder Kegs; body in siege/law.ts.
+  // Siege of Jangan layers 5-6 (docs/SIEGE.md §8, §12): warrants, the offence record, Thunder Kegs, the jail, Hunters;
+  // body in siege/law.ts (jail.ts, hunters.ts).
   law: {
     usage: LAW_USAGE,
-    about: "The law: open warrants and recent keg hits, a character's offence record, issue or close a warrant, make one lapse (online minutes left), pardon, forgive offences, capture (pays the bounty), clear the keg cooldown, burning kegs.",
+    about: "The law: open warrants and recent keg hits, a character's offence record, issue or close a warrant, make one lapse (online minutes left), pardon, forgive offences, capture (pays the bounty and jails), clear the keg cooldown, burning kegs; jail for minutes (or list the jailed), release; a Hunter's licence, revoke, duty on/off.",
     run: ({ ctx, args, self }) => ctx.gameplay.law.gm(self, args, Date.now()),
   },
   // Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5): repair queues, builders, looters; body in siege/repair.ts.

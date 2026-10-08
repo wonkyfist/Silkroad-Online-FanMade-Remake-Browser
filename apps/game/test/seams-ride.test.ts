@@ -27,6 +27,7 @@ import {
 } from '@babylonjs/core'
 import type { EntityState, ServerMessage } from '@sro/shared'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { setTownLifeOff } from '../src/settings.ts'
 
 const rideMock = vi.hoisted(() => ({ load: null as null | ((rider: unknown) => unknown) }))
 vi.mock('../src/world/ride-mob.ts', () => ({
@@ -46,6 +47,9 @@ import { addTownPick, runTownClick, runTownHover, townPickCount } from '../src/w
 import { townFeature } from '../src/world/features/town.ts'
 import { WorldGraphics, characterMeshes, worldTown } from '../src/world/graphics.ts'
 import { loadRide } from '../src/world/ride-mob.ts'
+
+// Town life is switched off in the game (settings.ts TOWN_LIFE_OFF); these tests cover the system itself.
+setTownLifeOff(false)
 
 // ---- a DOM stub for EntityView's label (the game tests run in node) --------------------------------------------------
 

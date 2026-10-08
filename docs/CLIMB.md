@@ -1,4 +1,150 @@
-# The Climb (wave 14): levels 1–20 redesigned
+# The Climb (wave 14): levels 1–25 redesigned
+
+> **Status (2026-10-09): L0 (no quests) + L1 built** (§20). Built: `LEVEL_CAP` / `DEFAULT_LEVEL_CAP` 25 (`MOB_LEVEL_MAX`
+> 30, pilot `minLevel` 25 / `downMinLevel` 20); the cap-25 curve `content/climb/levels.json` (§3.2a, 1,555,570 EXP;
+> masterySp stays the export's); the 39 derived rows (§2.2 + B5's two extras + the Guard) with the area remap, the
+> fallback rule and per-nest overrides; the level-difference EXP (D4); the six 03_BA_C chests at 25; Tiger Girl at 25
+> (`level`, 0.10 / 1.3 / 0.2, fury × 3, her White Tigers summon the Guard, Moon 3 % and Sun 1 %); the Ice Yeti at 25
+> (48,000 HP); the siege Warlord 96,000 × s^0.9, attack × 1.15; masteries to 25 (the converter's
+> `MAX_SKILL_MASTERY_LEVEL` 25, skills re-exported); `TYPICAL_SP_BY_LEVEL` to 25; migration 21 (`curve_version`) and
+> the one-time move of saved characters (§9.3a); the B4 passive border (D32); the x-155 and Hyeongcheon nests removed; *(2026-10-10)* the high country (D52): B7/B8 on
+> the island's heights by `CLIMB_PLACES`, the drowned far bank's 124 nests removed;
+> GM `climb`; `CLIMB` and `RARE_TOP_MIN_LEVEL` in the admin settings. **Where it lives:** `packages/shared/src/climb.ts`
+> (roster, bands, remap, rules: shared by the server and the client, which derives the same `MOB_CL_*` defs), the
+> server's `apps/server/src/climb.ts` (startup layering, conversion, GM), `content/nests.override.json` (§2.2 rule 3's
+> nest overrides and the emptied nests). **Departures from the spec:** the roster and the bands are code data in the
+> shared package, not `content/climb/{roster,bands}.json` (the client cannot read `content/` and must derive the same
+> monsters), and the item squeeze is `CLIMB_ITEM_LEVELS` there too; per-nest overrides are `mob` patches in
+> `nests.override.json`, not `bands.json`; derived monsters keep their base's retail drop items with the row's gold
+> (§4.4's 2 % band drops are a later layer); the far bank no longer exists (D52: its nests are removed, B7/B8 live on the island); the siege army at the defenders' median level, Tiger Girl's 8 m aggro (D50), the
+> Incense and the Rebirth Art's 100 % refund (§6.2, §5.1), quests (L5–L6) and Incense / Pioneer (L8) are not built; Sagong and Ha-yeon (quest NPCs) are not
+> added. **Rare weapons reconciled** (docs/RARITY.md): a normal monster's degree-3 Moon or Sun roll comes as a Seal of
+> Star below `RARE_TOP_MIN_LEVEL` (25), so Moon and Sun of the cap tier come from the Sea Cliffs' level-25 monsters
+> and the level-25 bosses only; degrees 1–2 keep RARITY's rates. **Quests:** the questline is untouched; until the
+> quest engine matches by `base` (L5), `Gameplay.mobDied` also credits a derived kill as its retail base.
+
+> **L3 roles and L4 the death penalty are built (2026-10-12).** The user: "death penalty: losing 1–20 % of your EXP
+> bar from level 15, with a 30-minute grace from level 21"; "monster roles: packs, healers, archers, runners".
+> **Penalty** (`apps/server/src/climb/penalty.ts`, the math in `packages/shared/src/climb.ts` `CLIMB_PENALTY`): a monster
+> or boss death from level 15 below the cap takes a random 1–20 % of the bar (never a de-level, an empty bar loses
+> nothing and starts no grace); never for PvP (Hunters, Wanted), the siege army, Play the Boss (her and her summons),
+> lightning / the tornado or GM kills; grace 10 min, **30 min from level 21** (D51), never restarted by a free death;
+> a Soul Rebirth on the corpse refunds 50 % and every refund of one death is capped at its loss (F5, `refund`,
+> `onTaken` / `onRefunded` for NEMESIS); the **10 s combat linger** (F6, `connection.ts`: the body stays, a relog is
+> refused meanwhile, a death then is penalised and saved). State is runtime per character (a relog keeps the grace, a
+> restart clears it): **no migration** (§10.1). Client: the death box shows the loss and counts the grace down
+> (`deathPenalty` message), a system line, a toast on a refund. Admin: "The Climb: death penalty and monster roles"
+> (on/off, min/max %, from level, both graces, the linger). GM `penalty` (status, `test <pct>`, `grace`, `clear`).
+> Not built: the Incense (§6.2), the Rebirth Art's 100 %, the party line. **Roles** (`apps/server/src/climb/roles.ts`,
+> `CLIMB_ROLE_RULES`, the roster's `roles` / `callN`; admin `CLIMB_ROLES`): packs (2 idle nest-mates within 12 m join
+> 0.5–2 s after a hit or a sighting; joiners never link on), ranged and healers step 6 m back from melee within 4 m once
+> per 6 s, healers heal the most hurt ally within 15 m under 70 % for 12 % after a 1.4 s cast (ATTACK1 clip; a stun
+> cancels it, `castEnd interrupted`), cowards ("runners") run 5 s at 60 % under 25 % HP, then shout and call `callN`
+> idle nest-mates within 30 m (HELP clip). Only monsters in a fight are visited; nest-mates come from the spawner. Tick
+> cost (`climb-roles.test.ts`, 100 players fighting in a 1,500-monster field, 400 ticks): mean 1.27–1.30 ms off vs
+> 1.30–1.37 ms on, worstTickMs 4.2–4.3 vs 4.3–4.6 ms. Elite camps (§2.3's fifth row) belong to L2.
+
+> **L2 the mini-bosses and the high country, and L7 the rewards, are built (2026-10-13).** The user: "Mini-bosses: the
+> seven of them, including Hyeongcheon the Canyon Lord at his Sea Cliffs lair"; "'The high country'"; "Rewards: titles,
+> set bonuses and skill Arts". **Mini-bosses** (§2.5): `CLIMB_BOSSES` in `packages/shared/src/climb.ts` (derived like the
+> roster by the model's `derive()`, D53's MB7 × 2.0 and MB8 × 2.5 HP: Mo-Dun 45,504, Hyeongcheon 54,675 / 236–282; drawn
+> at `size` 1.35 champion, 2 giant, 1.4 the Canyon Lord, rarity unique) and seven `content/uniques.json` entries: an
+> authored `spot` each (the quest locations of MB1–MB5, Mo-Dun's (−1680, 516), the lair marker (−2227, 1211); no nest
+> row, camp ids 900,000 + n), `adds` instead of summon rows (1.5 s after the band, once per fight, gone on a reset or
+> with the boss), §2.5's respawns, no enrage or fury, the **server-wide** appear/defeat notices like Tiger Girl's (the
+> user's call; §2.5's 300 m area scope is not built). Loot (§4.4, D53, D54): one gear piece of the band's degree (+0–2;
+> degree 4 from Mo-Dun, C/B for the Lord), elixir 20 % (Lord 30 %), the degree's Lucky Powder 20 %, Seal of Star 1.5 %
+> (+ Moon 0.4 %, Sun 0.1 % for the level-25 Lord only); no Incense (not built). MB1 and MB3 are cowards (L3). The look:
+> the ice-look plugin per mesh (`apps/game/src/world/features/climb.ts`, CLIMB_BOSS_LOOKS), the unique name plate.
+> CLIMB=off leaves the seven out (logged). GM `unique spawn|kill|timer <name>` and `tp canyon-lord-lair` work on them.
+> **The high country** (§2.7): `apps/server/src/climb/places.ts`: walking into the Ferry Heights (B7 place + Jangan
+> Ferry) or the Sea Cliffs shows "You enter the … (levels a–b)." and, below the band's first level, "… are no place for
+> the green, traveller.", once per visit. **Rewards** (`packages/shared/src/climb-rewards.ts`, `apps/server/src/climb/rewards.ts`,
+> migration **22**: `characters.title`, `characters.arts`, `char_achievements`; every live character granted Pioneer):
+> titles go into the events' `pilot_honors` (one seam; the worn `characters.title` first, else the newest; shown as
+> EntityState.honor under the name), Pioneer, Climber (25), Deathless (25 with no penalised death counted), seven
+> "…-Breaker" (each boss × 10), Tiger Queen's Bane (Tiger Girl); `climbTitle` wears one (a click on the title in the
+> equipment panel cycles). Sets (§4.2): one mod provider (new stat `maxHpPct`); tooltips show "Iron set (4/6): +3 % max
+> HP". Arts (§5.1): the 24, `climbArt` (first pick free, a change 10,000 × the tier index), applied to the row at plan time
+> and to chain segments (`applyClimbArts`), Executioner at each hit, Iron Lung / Ward / Demon Soul as stat mods, Rebirth
+> refunds the whole penalty; **Flowing Steel, Steady Aim and Pinning Shot are shown but not in effect** (no row number
+> carries them). The skill window shows the tree's Arts above its skill lines. Not built: the Bounty Board, Mentor,
+> Incense, achievements of the unbuilt siblings, a title list window, the bosses' map icons.
+
+> **L8 the bot soak, part 1 (2026-10-14): the climb re-simulated on the shipped build (b8d5879).** `work/tmp/climb25/`
+> with `SHIPPED=1` (every roster row and mini-boss from `packages/shared/src/climb.ts`, Tiger Girl's `uniques.json`
+> tuning with her fury × 3 at 10 min and enrage, the Yeti from `winter-play.ts`, `levelDiffExpMul`, the grace by
+> `climbGraceMs`: 30 min from 21), `REWARDS=1` (L7's set bonuses and six Arts in the fight engine), `GEAR=d4late`,
+> the shipped curve (`FIXED_CURVE=1`) and the high country's **real spots** (`places-l8.ts` over the shipped nests:
+> the Ferry Heights hold 19–23, **the Sea Cliffs only 24s and 25s**; run 4's "Ruins" mix of 23s no longer exists).
+> 400 friends a profile, seed 1188; console in `work/tmp/climb25/l8/out-l8-*.txt`. No live-server bot run (skipped:
+> the model reads the shipped files directly).
+>
+> | Shipped build, after the B8 fix | p10 | Median | p90 | To 20 / 20 → 25 | Deaths | Stuck at 300 h |
+> |---|---|---|---|---|---|---|
+> | Mix (target 53–58 h) | 46.9 h | **49.9 h** | 52.3 h | 23.5 / 26.3 h | 1.4 | 0 / 400 |
+> | Solo only | 52.7 | **55.3** | 61.1 | 24.7 / 31.6 | 4.3 | 0 (novice median 54.6 h) |
+> | Mostly grouped | 44.4 | **47.1** | 51.3 | 22.9 / 24.9 | 0.5 | 0 |
+> | Solo only, no degree 4 ever (worst case) | 55.9 | 61.6 | 68.2 | 24.7 / 37.1 | 7.8 | 0 (with the 10-min grace: 0, novice p90 74 h vs 70 h) |
+>
+> | Boss at 25 (degree 4 late, Arts and sets) | Party of 4, average | Party of 4, novice | Duo, average | Solo, good |
+> |---|---|---|---|---|
+> | Tiger Girl 0.18 × 1.4 (107,770 HP) | 100 % / 8.4 min | 100 % / 10.0 min, 0.44 deaths | 0 % (the fury) | 0 % |
+> | Hyeongcheon (MB8, 54,675 HP) | 100 % / 8.1 min | — | 0 % | 0 % |
+> | Mo-Dun (MB7, 23, 45,504 HP) | 100 % / 4.6 min | — | 100 % / 9.8 min | 0 % |
+> | Ice Yeti (78,000 HP; her kit is not in the model) | 100 % / 4.8 min | 100 % / 5.7 min | 100 % / 9.8 min | — |
+>
+> - **Fixed: the Sea Cliffs were a dead band** (D55). With D53's × 1.6 HP / × 1.2 attack on the 24/25 rows, the cliffs
+>   paid an average solo player at 24–25 in degree 4 **9–14k EXP/h at 1.9–3.3 deaths/h** (novice 4.7–5.4 deaths/h, a duo
+>   1–2 deaths/h) against 31–33k and no deaths on the Ferry Heights' level-23 Hyungno, so every bot levelled 24 → 25 on
+>   23s; with no degree 4, **116 of 400 solo-only friends were stuck at 300 h even with the 30-min grace**. Now × 1.3 /
+>   × 1.1 (Shaman 2,155 → 1,751 HP, 200–240 → 183–220; Powder Ghost 1,840 → 1,495, 323–370 → 296–339; Earth Ghost
+>   1,998 → 1,623, 217–259 → 199–237; Canyon Taoist 1,733 → 1,408, 277–317 → 254–291): average solo 19–21k at 0.7–1.4
+>   deaths/h, novice 2.4–2.9, a duo 30–35k with none (§2.4's spread); nobody is stuck in any profile.
+> - **D51 tested**: run 4's 104 stuck novices do not reproduce on the shipped build (degree spacing, degree 4, the
+>   rewards, the fixed B8); the 30-min grace changes the solo-only medians by < 1 h (worst case: novice 66.5 → 63.9 h).
+> - **Time to 25 is 49.9 h, under the 53–58 h target** (D53 already measured 53.1 h; the rewards take ≈ 1.5 h, the real
+>   spots ≈ 1.5 h). Not changed: the curve is live data (characters keep bars). If the user wants the target, the smallest
+>   change is `levels.json` 20–24 × 1.15 (≈ + 3.5 h, a new `curve_version`).
+> - **EXP/h by band** (mix): 30–37k from 11 to 24 with no sharp drop; 29.5k at 14–15 (B4 → B5) is the only dip (−15 %).
+>   At 19 the novice's own spot (the Chakji Workers' calls) costs 1.9 deaths/h, so novices hunt the big cats (17–18).
+
+> **Degree 4 is the top gear (2026-10-11, D53).** The user: "I meant to add degree 4 as the top gear" (still cap 25).
+> Built: the export has degree 4 (306 rows: 153 `_A/_B/_C`, 153 seals; models, textures and icons converted), every
+> degree is re-spaced inside the cap (§4.1.2: D1 1–8, D2 8–15, D3 15–21, **D4 21–25**; replaces §4.1.1's squeeze), the
+> derived monsters from level 21 drop degree 4 (§4.4; the 21–23 rows half and half with their 03_C), Tiger Girl's pools are degree 4, the Ice Yeti drops a degree-4
+> piece half the time, the 4th Lucky Powder is exported (retail sells it), and the Moon/Sun rule of
+> `RARE_TOP_MIN_LEVEL` moved from degree 3 to the cap tier (degree 4; degree 3 seals roll at RARITY's rates). Retunes
+> (§4.1.2's table): Tiger Girl `hpMul` 0.10 → **0.18**, `attackMul` 1.3 → **1.4**; the Ice Yeti 48,000 → **78,000** HP
+> (`YETI_HP_MUL` 2.6), attack 172–218 → **189–240**; the four B8 rows at 24–25 × 1.6 HP, × 1.2 attack; MB7 Mo-Dun HP
+> × 2.0 and MB8 Hyeongcheon × 2.5 (spec numbers: L2 is not built). The siege Warlord is unchanged (not in the model).
+
+> **The high country (2026-10-10).** The map task made Jangan an island in the open sea (docs/COAST.md §4.1): the
+> Western China side across the strait, where B7 "the Far Bank" and B8 "the Ruins and the Canyon Mouth" lived, is
+> under the sea, and the user chose to keep Jangan alone. B7 and B8 keep their levels, roster and factors and move
+> onto the island's own north-west and west heights: **B7 the Ferry Heights 19–23** (Jangan Ferry, the ferry landing,
+> and the ridge above it, North-Tiger Mt.'s north-west, regions 156–159 × 94–95) and **B8 the Sea Cliffs 22–25**
+> (the island's west rim over the open sea, South- and North-Tiger Mt.'s west, regions 156–158 × 90–93). Both are on
+> the town's walkable component: **no ferry, no second home component, no landing** (§2.7 is rewritten as "the high
+> country"). The far bank's 124 nests are removed in `content/nests.override.json`; the Tiger Mountain nests of the
+> two places take the Western China roster through a per-place remap (`CLIMB_PLACES` in
+> `packages/shared/src/climb.ts`). Mo-Dun's war camp is on the Ferry Heights, Hyeongcheon's lair on the Sea Cliffs'
+> south-west crest. Every "far bank", "Ruins", "Canyon Mouth", "ferry crossing" or "Donwhang road" below is history;
+> the current design is §0.2, §2.1, §2.5 and §2.7 as marked *(2026-10-10)*, and D52.
+
+> **Rebased to 25 (2026-10-08).** The user: "I want to increase the level cap to 25. Bring all degree 3 gears into
+> the level 25 cap. Also I wanna start the 'Climb' phase but make sure its level 25 its end focus now, tiger girl will
+> change to level 25 difficulty. ... Re-create all quests from level 1-25." In parallel the world map is cut to the
+> **Jangan region surrounded by ocean** (Donwhang removed). This spec was written for a cap of 20 (approved, not
+> built) and is rebased **in place**: the changed passages carry *(Cap 25 …)* notes or new rows, and the numbers they
+> replace stay beside them as cap-20 history. The new parts: §0.2 (the rebase in one screen), the bands and roster
+> with a new top band B8 (§2.1, §2.2), Hyeongcheon as MB8 and the mini-bosses re-placed (§2.5), Tiger Girl at 25
+> (§2.6), the cap-25 curve (§3.2a, §3.3a), degree 3 inside the cap (§4.1, §4.1.1), SP to 25 (§5.2), the penalty to
+> 24 (§6.1), the cap's goals (§7), the questline moved to **docs/QUESTS_CLIMB.md** (§8), live characters (§9.3a),
+> decisions D35–D50 (§14) and an ordered **build plan** (§20). Numbers come from **`work/tmp/climb25/`** (a copy of
+> the cap-20 model generalised to any cap; run 4, seed 1188). Two facts changed under the design: **nothing of wave
+> 14 is built** and **wave 13 (hot springs, dishes, fishing, swimming) is not built either** [confirmed: no such code
+> in `apps/server/src` on 2026-10-08], so the cap-25 curve is calibrated **without** the Rested pool and the dishes.
 
 The user's words, verbatim:
 
@@ -147,6 +293,29 @@ Fn)* where it lands:
 | (h) migration of the 3 live accounts | §9 |
 | Prototype: bots with real skills, time per level solo/group, deaths/h, gold/h, charts | §13, `work/tmp/climb/out/` |
 
+### 0.2 The rebase to 25 in one screen (2026-10-08)
+
+1. **Bands inside the Jangan region** (§2.1): B1–B4 unchanged; **B5 the Tiger Mountains 14–19**; **B6 the Tomb 16–25**
+   (wings 16–18, 19–21, 22–25); **B7 the Ferry Heights 19–23** at retail levels (Chakji Worker 19 … Hyungno Soldier
+   23); **B8 the Sea Cliffs 22–25** (Hyungno Shaman 24, Powder Ghost 24, Earth Ghost 25, Canyon Taoist 25).
+   *(2026-10-10: both on the island's own heights, D52; were the Far Bank and the Ruins and the Canyon Mouth across
+   the strait, which is open sea now.)*
+2. **The curve** (§3.2a): 1 → 25 = **1,555,570 EXP at ×1**; the mix friend's median is **57.3 h** (p10 53.2, p90
+   68.6): **≈ 26 h to 20 and ≈ 33 h from 20 to 25**; mostly grouped 53.2 h; a solo novice can hit a wall at 23–24
+   (§3.3a), answered by a 30-min grace from 21 (D51). Calibrated without the unbuilt wave 13. Rates ×1.
+3. **Degree 3 inside the cap** (§4.1.1): 306 rows; only the six grade-C chests move (26 → 25). New tier **T7 = 03_C at
+   21–25**; the Seals (Star, Moon, Sun) are T8, Moon and Sun only from level-25 bosses. D1/D2 unchanged.
+4. **Tiger Girl at level 25** (§2.6): level 25, `hpMul` 0.10 (59,872 HP), `attackMul` 1.3 (235–282), fury × 3 at
+   10 min, guards re-derived at 24, `expMul` 0.2: a party of four in ≈ 8 min, never a duo. The Ice Yeti, the siege
+   Warlord and army, the Qilin and the Tomb are rebased with her.
+5. **Mini-bosses** (§2.5): MB5 → 19, MB7 → 23 (war camp on the Ferry Heights), new **MB8 Hyeongcheon, the Canyon
+   Lord** at 25 for a party of four, his lair on the Sea Cliffs' south-west crest.
+6. **Skills and SP** (§5.2): masteries to 25 (734 SP each from 0), the skill export to mastery 25, ≈ 3,575 SP from
+   kills and quests at 25 against ≈ 4,000–4,200 of demand. No fourth Art tier.
+7. **Death penalty** 15–24 (§6.1); **post-cap** at 25 (§7); **quests** all replaced by docs/QUESTS_CLIMB.md (§8);
+   **live characters** (§9.3a): level 20s start the 20 → 21 bar at 0 %; nothing is lost.
+8. **Build plan** (§20): nine layers, ≈ 31 agent-days, the data-only layer first (cap, Tiger Girl, half the quests).
+
 ---
 
 ## 1. Today [confirmed unless tagged]
@@ -241,9 +410,10 @@ Tiger 18 (novice 0.49/h); damage per fight is 2–25 % of HP below 14 (`climb-sk
 | **B2** | Lake, Swamp and the Old Graves | 5–10 | Lake Forest, Swamp area, Chinese Tomb (south-east) | 370–870 m | The first healers (Water Ghost) and casters (tombstones) |
 | **B3** | Yeoha's Forest | 9–13 | Yeoha's Forest, the Robbers' Camp, the forest edge of the Grassland | 700–900 m | Packs that heal, robbers that run and shout, archers |
 | **B4** | The Tomb Approach | 12–15 | Enterance of Qin-Shi Tomb | 680 m | The graveyard of the dungeon: aggressive stone packs, keepers that heal them; the Gate Warden at the doors |
-| **B5** | The Tiger Mountains | 14–18 | North- and South-Tiger Mt., Bandit's Mountain Stronghold | 1.1–1.6 km | Tigers in pairs, bandits that shout, archers on the walls; Tiger Girl's 11 camps |
-| **B6** | The Qin-Shi Tomb | 15–20 | the instance behind the Tomb doors | 680 m (door) | The group dungeon: TOMB_DUNGEON.md owns it; this spec gives its EXP and loot budget (§3.5, §4.4) |
-| **B7** | The Far Bank | 17–20 | Jangan Ferry, Western China Ferry, Main Road, Ruins | 1.4–1.9 km | The cap's fields: Western China's monsters brought down to 17–20, opened by the ferry (§2.7) |
+| **B5** | The Tiger Mountains | 14–19 | North- and South-Tiger Mt., Bandit's Mountain Stronghold | 1.1–1.6 km | Tigers in pairs, bandits that shout, archers on the walls; Tiger Girl's 11 camps. *(Cap 25: was 14–18; the big cats back at their retail 17/18.)* |
+| **B6** | The Qin-Shi Tomb | 16–25 | the instance behind the Tomb doors | 680 m (door) | The group dungeon: TOMB_DUNGEON.md owns it; this spec gives its EXP and loot budget (§3.5, §4.4). *(Cap 25: was 15–20; wing budget 16–18, 19–21, 22–25.)* |
+| **B7** | The Ferry Heights *(2026-10-10; was the Far Bank)* | 19–23 | Jangan Ferry (the landing, 156–161 × 96–97) and the ridge above it: North-Tiger Mt.'s north-west, regions 156–159 × 94–95, 50–145 m over the old strait | 1.5–2.0 km | Western China's monsters **at their retail levels** (Chakji Worker 19, Chakji 20, Ghost Bug 21, Devil Bug 22, Hyungno Ghost Soldier 23) on the island's north-west heights, walkable from town; Mo-Dun's war camp on the ridge top (159.25, 94.31). *(Cap 25: was 17–20 and included the Ruins; 2026-10-10: the far bank across the strait is open sea.)* |
+| **B8** | The Sea Cliffs *(2026-10-10; was the Ruins and the Canyon Mouth)* | 22–25 | the island's west rim over the open sea: South-Tiger Mt.'s and North-Tiger Mt.'s west, regions 156–158 × 90–93, 60–155 m | 2.2–2.6 km | **New at cap 25**: the Hyungno dead with their shamans and powder ghosts, then the earth spirits brought from 27–30 down to 24–25, haunting the cliffs west of the Bandit's Mountain Stronghold; Hyeongcheon, the Canyon Lord, on the south-west crest (156.40, 90.69), 120 m over the sea |
 
 - **Why these lines:** levels follow distance from town on the real map (the town sits in B1; B2 rings it at
   370–870 m; B3 and B4 are 700 m west and north-east; B5 and B7 are past 1.1 km), every band keeps its retail
@@ -256,7 +426,28 @@ Tiger 18 (novice 0.49/h); damage per fight is 2–25 % of HP below 14 (`climb-sk
   `bands.json`, so a level-3 player at the Hill of Ye sees a level-13 pack before it sees them. Reason: today those
   nests are level 8–9; at 12–15 with links, an aggressive edge would kill every newcomer who strays.
 - **Earth Ghost Canyon and the Donwhang entrance stay closed** (levels 27–30, partly outside the bounds): their
-  models are free for TOMB_DUNGEON's interior and NEMESIS [decision].
+  models are free for TOMB_DUNGEON's interior and NEMESIS [decision]. *(Cap 25: replaced. The **play bounds start at
+  region x 156** (`jangan-fields` manifest `bounds.minX` −2304 m = 12 regions west of the origin region 168
+  [confirmed: manifest]), so the canyon's nests at x 155 are outside and those at x 156 are inside, on the far bank's
+  walkable component: Earth Ghost 42, Meek Gun Powder 28, Earth Taoist 10 and Hyungno Ghost 9 monsters [confirmed:
+  `nests.json` × `zones.json`, 2026-10-08]. Those x-156 nests become B8's **Canyon Mouth**; the x-155 nests stay
+  empty. With the map showing only the Jangan region surrounded by ocean (the parallel map task), nothing west of
+  x 156 exists for players, and no quest or band points there [decision: use the land inside the bounds, never the
+  removed Donwhang side]. The area name "Entrance-Western China Donwhang" is shown as **"the old Donwhang road"**.)*
+- **The high country** *(2026-10-10, D52)* [decision]: with the Western China side under the sea, the top bands take the
+  island's farthest heights from town, past B5 on the same mountains: the walk goes town → the Tiger Mountains (B5,
+  14–19) → north-west to the ferry and its ridge (B7) or west over the Stronghold to the sea cliffs (B8). They are
+  **places**, region rectangles inside the Tiger Mountains' zones (`CLIMB_PLACES`: the band of a nest is its place's
+  first, its area's otherwise), because the client's zone names cannot be renamed; the HUD still reads North- or
+  South-Tiger Mt. there, and the GM places read `ferry-heights`, `sea-cliffs` and `canyon-lord-lair`. Each
+  place maps the Tiger Mountain bases it holds onto the Western China rows (B7: Young Tiger and Bandit Subordinate →
+  Chakji Worker 19, Tiger and Yeoha → Chakji 20, Black Tiger → Ghost Bug 21, White Tiger → Devil Bug 22, Bandit and
+  archers → Hyungno Ghost Soldier 23; B8: Bandit Subordinate, Young Tiger and Yeoha → Hyungno Shaman 24, archers →
+  Powder Ghost 24, Bandit, Tiger and Black Tiger → Earth Ghost 25, White Tiger → Canyon Taoist 25), so a familiar
+  mountain spot holds the new monsters on the same paths. The ferry landing (Jangan Ferry) maps its Tigers and
+  Bandits the same way. B7 holds 47 nests, B8 62 [confirmed: `nests.json` × the places, 2026-10-10]; Tiger
+  Girl's five camps there stay hers. Both places are open terrain in the town's walkable component at 64–99 % of
+  their 8 m grid [confirmed: a nav survey over `nav.bin`, 2026-10-10].
 - **The coast**: S1 stays a safe hangout (fishing, swimming); the springs' sanctuary polygon stays spawn-free
   (HOT_SPRINGS §5.7) [decision].
 
@@ -301,16 +492,27 @@ Every monster becomes a **derived** monster: a new code (`MOB_CL_*`) on a retail
 | B5 | MOB_CL_TIGER_14 | Tiger 14 | Tiger | 14 | pack | 509 | 1.5 s | 329 |
 | B5 | MOB_CL_BOWMAN_15 | Bandit Bowman 15 | Bandit Bowman | 15 | ranged (13–15 m) | 514 | 2.5 s | 353 |
 | B5 | MOB_CL_BANDIT_16 | Bandit 16 | Bandit | 16 | coward (calls 1) | 755 | 1.5 s | 376 |
-| B5 | MOB_CL_BLACKTIGER_16 | Black Tiger 17 | Black Tiger | 16 | pack | 660 | 1.5 s | 376 |
-| B5 | MOB_CL_WHITETIGER_17 | White Tiger 18 | White Tiger | 17 | pack | 717 | 1.5 s | 400 |
-| B5 | MOB_CL_ARCHER_17 | Bandit Archer 12 | Stronghold Archer | 17 | ranged | 641 | 2.5 s | 400 |
-| B7 | MOB_CL_CHAKJIWORKER_17 | Chakji Worker 19 | Chakji Worker | 17 | coward (calls 1–2) | 757 | 2.0 s | 400 |
-| B7 | MOB_CL_CHAKJI_18 | Chakji 20 | Chakji | 18 | pack | 823 | 2.0 s | 423 |
-| B7 | MOB_CL_GHOSTBUG_18 | Ghost Bug 21 | Ghost Bug | 18 | pack | 796 | 1.5 s | 423 |
-| B7 | MOB_CL_DEVILBUG_19 | Devil Bug 22 | Devil Bug | 19 | pack | 866 | 1.5 s | 447 |
-| B7 | MOB_CL_POWDER_19 | Meek Gun Powder 27 | Powder Ghost | 19 | ranged caster (13 m) | 701 | 3.5 s | 447 |
-| B7 | MOB_CL_HYUNGNO_19 | Hyungno Ghost Soldier 23 | Hyungno Ghost Soldier | 19 | pack | 842 | 2.0 s | 447 |
-| B7 | MOB_CL_HYUNGNOSHAMAN_20 | Hyungno Ghost 24 | Hyungno Shaman | 20 | healer | 916 | 2.0 s | 470 |
+| B5 | MOB_CL_BLACKTIGER_17 | Black Tiger 17 | Black Tiger | **17** (cap 20: 16) | pack | 749 | 1.5 s | 400 |
+| B5 | MOB_CL_WHITETIGER_18 | White Tiger 18 | White Tiger | **18** (cap 20: 17) | pack | 809 | 1.5 s | 423 |
+| B5 | MOB_CL_ARCHER_18 | Bandit Archer 12 | Stronghold Archer | **18** (cap 20: 17) | ranged | 724 | 2.5 s | 423 |
+| B7 | MOB_CL_CHAKJIWORKER_19 | Chakji Worker 19 | Chakji Worker | **19** (cap 20: 17) | coward (calls 1–2) | 958 | 2.0 s | 447 |
+| B7 | MOB_CL_CHAKJI_20 | Chakji 20 | Chakji | **20** (cap 20: 18) | pack | 1,031 | 2.0 s | 470 |
+| B7 | MOB_CL_GHOSTBUG_21 | Ghost Bug 21 | Ghost Bug | **21** (cap 20: 18) | pack | 1,106 | 1.5 s | 494 |
+| B7 | MOB_CL_DEVILBUG_22 | Devil Bug 22 | Devil Bug | **22** (cap 20: 19) | pack | 1,184 | 1.5 s | 517 |
+| B7 | MOB_CL_HYUNGNO_23 | Hyungno Ghost Soldier 23 | Hyungno Ghost Soldier | **23** (cap 20: 19) | pack | 1,264 | 2.0 s | 541 |
+| B8 | MOB_CL_HYUNGNOSHAMAN_24 | Hyungno Ghost 24 | Hyungno Shaman | **24** (cap 20: 20) | healer | 1,347 | 2.0 s | 564 |
+| B8 | MOB_CL_POWDER_24 | Meek Gun Powder 27 | Powder Ghost | **24** (cap 20: 19) | ranged caster (13 m) | 1,150 | 3.5 s | 564 |
+| B8 | MOB_CL_EARTHGHOST_25 | Earth Ghost 27 | Earth Ghost | **25** (new) | pack | 1,249 | 2.0 s | 588 |
+| B8 | MOB_CL_TAOIST_25 | Earth Taoist 30 | Canyon Taoist | **25** (new) | ranged (13 m), healer | 1,083 | 2.5 s | 588 |
+| (summon) | MOB_CL_TIGERGUARD_24 | White Tiger 18 | Tiger Girl's Guard | 24 (new) | pack | 1,489 | 1.5 s | 564 |
+
+*(Cap 25, 2026-10-08)* The rows above B5's Black Tiger are unchanged. B5's top and B7 go back to their **retail
+levels** (the cap no longer forces them down), B8 is new, and the HP column of the changed rows is from
+`work/tmp/climb25/design25.ts` through the same `derive()` (band attack factors B5 1.05, **B7 0.95, B8 0.92**: run 1's
+1.05/1.08 killed average players 2.4–3.9 times an hour at 21–24, `out-run1.txt`; run 3's 0.95/1.0 left 26 % of
+solo-only friends and the mix's p90 at 77 h, `out-run3.keep.txt`). Every level 1–25 has a field
+monster [confirmed: the table]. The roster is 39 rows (36 at cap 20, the two B5 extras of rule 2 included, + Earth Ghost,
+Canyon Taoist and Tiger Girl's Guard; Bandit Subordinate 15 and Young Tiger 14 stay).
 
 - **Every level 1–20 has a field monster**, and 13–19 have two or more [confirmed: the table]. (B1 attack rows of
   Mangyang and Big-Eyed Ghost corrected to the multiplied values: `roster.ts`; *fact-check F11*.)
@@ -346,6 +548,14 @@ Every monster becomes a **derived** monster: a new code (`MOB_CL_*`) on a retail
      Powder Ghost 19 comes from the Donwhang entrance's 21 Meek Gun Powder if they lie inside the play bounds, else
      from one in five Ruins Hyungno nests. The Donwhang entrance's 9 Hyungno Ghosts 24 become Hyungno Shaman 20; its
      Earth Ghosts and Taoists stay empty (above `MOB_LEVEL_MAX`).
+     *(Cap 25: the x-156 canyon nests (§2.1) map Earth Ghost → Earth Ghost 25, Meek Gun Powder → Powder Ghost 24,
+     Earth Taoist → Canyon Taoist 25, Hyungno Ghost → Hyungno Shaman 24; the Ruins keep one in five Hyungno nests as
+     Powder Ghost 24 so the Ruins spot has its caster; every x-155 nest and the two Hyeongcheon 30 nests at the
+     Qin-Shi entrance stay empty (a level-30 pair in the 12–15 band would kill newcomers; Hyeongcheon's model becomes
+     MB8). With `LEVEL_CAP` 25, `MOB_LEVEL_MAX` = 30 would spawn those retail rows, so the empty-list is explicit in
+     `bands.json`, not left to the level filter.)* *(2026-10-10, D52: replaced. The far bank, the canyon and the
+     Ruins are open sea; their 124 nests are in `nests.override.json`'s `remove` list with the x-155 and Hyeongcheon
+     ones. B7/B8's rows live in the places' remaps (§2.1), Powder Ghost 24 among them: no per-nest override is needed.)*
   4. **NEMESIS stores retail codes** (NEMESIS §7 "the CLIMB migration table"): the remap is (area, retail code) →
      derived code, plus overrides by nest id, so NEMESIS maps a stored nemesis through its nest, not by code alone.
 - **Champions** stay at 10 % per nest (retail) and giants at `GIANT_PCT` 1 % [confirmed: BALANCE §9; nests.json
@@ -419,6 +629,30 @@ monster at `hp`× and `atk`× of its band's normal, with HP-band adds (the exist
 | Duo, its level, average | 100 / 0.9 | 100 / 1.0 | 100 / 2.0 | 100 / 3.1 | 100 / 5.4 / 0 / 30 | 100 / 6.9 / 0 / 36 |
 | Party of 4, its level | 100 / 0.5 | 100 / 0.4 | 100 / 0.6 | 100 / 1.2 | 100 / 2.3 / 0 / 18 | 100 / 3.2 / 0 / 21 |
 
+**Cap 25 (2026-10-08)** [decision; fights projected: `work/tmp/climb25/bosses25.ts`, `tg25.ts`, 200 fights per row,
+`out-run4.txt` §4 and §5, run 4]: MB1–MB4 are unchanged. MB5 moves up one level with its band, MB7 moves to the Ruins' level,
+and **MB8 is new**, the climb's last mini-boss, on the retail **Hyeongcheon** model (`MOB_WC_HYEONGCHEON`, level 30,
+two nests at the Qin-Shi entrance that are emptied, §2.2), re-levelled to 25 at the Canyon Mouth.
+
+| Id | Name | Lv | HP | Attack | EXP | Adds | Where | Respawn |
+|---|---|---|---|---|---|---|---|---|
+| MB5 | Heukpung, the Black Wind | **19** (was 18) | 17,340 | 128–154 | 8,046 | 2 Stronghold Archers 18 at 80 %, 2 Bandits 16 at 50 % | the Stronghold's hall | 40–60 min |
+| MB7 | Mo-Dun, the Hyungno Warlord | **23** (was 20) | 22,752 | 172–205 | 10,820 | 1 Hyungno Shaman 24 at 70 %, 2 Soldiers 23 at 40 % | the war camp on the Ferry Heights' top (159.25, 94.31; glTF −1680, 516) *(2026-10-10; was the Ruins)* | 45–75 min |
+| **MB8** | **Hyeongcheon, the Canyon Lord** | **25** | 21,870 | 236–282 | 12,936 | 2 Earth Ghosts 25 at 70 %, 1 Canyon Taoist 25 (healer) at 40 % | his lair on the Sea Cliffs' south-west crest (156.40, 90.69; glTF −2227, 1211; GM `tp canyon-lord-lair`) *(2026-10-10; was the Canyon Mouth)* | 60–90 min |
+
+| Fight (win % / median time / deaths per fight / potions) | MB5 | MB7 | MB8 |
+|---|---|---|---|
+| Solo, its level, average | **0** | **0** | **0** |
+| Solo, its level, good | **0** | 1 / 14.8 min / 0 / 42 | **0** |
+| Duo, its level, average | 100 / 7.8 min / 0 / 43 | 100 / 10.7 / 0 / 34 | **0** |
+| Party of 4, its level, average | 100 / 3.5 / 0 / 25 | 100 / 4.6 / 0 / 24 | 100 / **9.0** / 0 / 34 |
+
+- **The split at 25**: MB5 a duo, MB7 a duo or more, **MB8 a party of four** (its first try, `hp` 20 × and attack
+  1.1 ×, took a party 11.7 min with 0.43 deaths and 53 potions; it is set to 16 × and 0.95 ×) [decision: the climb's
+  last mini-boss is a party test one notch below Tiger Girl]. MB8's rewards: one T7 item (+0–2), Incense 25 %, an
+  elixir 30 %, Seal of Star 5 %, **Seal of Moon 3 %**.
+- **Seven mini-bosses** at 25 (MB1–MB5, MB7, MB8; there is still no MB6, the Tomb's bosses being TOMB_DUNGEON's).
+
 - **The curve of the bosses matches the user's split**: MB1–MB4 are solo content at their level (MB4 costs a solo
   player ≈ 33 potions, ≈ 13,000 gold: worth a friend), MB5 needs a good player or a duo, MB7 a duo or more, and Tiger
   Girl a party of 3–4 (BALANCE §8.1) [confirmed: the table; BALANCE §8.1].
@@ -443,6 +677,51 @@ monster at `hp`× and `atk`× of its band's normal, with HP-band adds (the exist
 
 ### 2.6 Tiger Girl: the capstone [decision]
 
+**Cap 25: Tiger Girl at level-25 difficulty** (the user: "tiger girl will change to level 25 difficulty")
+[decision; fights projected: `work/tmp/climb25/tg25.ts` and `climb25.ts` §5, 100 fights per row, players in the
+model's tier gear (T6 at 20, T7 at 25), 1,200 s cap, her summons as below; fury and enrage are not in the model]:
+
+| Tuning (`content/uniques.json`) | Her level | HP | Attack | Solo good | Duo average | Party of 4 average | Party of 4 novice |
+|---|---|---|---|---|---|---|---|
+| Live today: `hpMul` 0.08, attack × 1, vs level 20 | 20 | 47,898 | 181–217 | 0 % | 100 % / 11.7 min / 0.67 deaths | 100 % / **5.4 min** | 100 % / 6.4 min |
+| BALANCE U-BAL 0.16, vs level 20 | 20 | 95,795 | 181–217 | 0 % | 0 % | 100 % / 11.6 min / 0.81 deaths | 100 % / 14.2 min / 1.0 |
+| Unchanged U-BAL vs level 25 | 20 | 95,795 | 181–217 | 0 % | 0 % | 100 % / 13.9 min | 100 % / 16.3 min |
+| **Chosen: level 25, `hpMul` 0.10, `attackMul` 1.3** | **25** | **59,872** | **235–282** | **0 %** | **13 % / 18 min** | **100 % / 8.2 min** | **100 % / 9.6 min** |
+| level 25, 0.12 × 1.15 | 25 | 71,846 | 208–250 | 0 % | 0 % | 100 % / 10.1 min | 100 % / 11.8 min |
+| level 25, 0.16 × 1.2 | 25 | 95,795 | 217–260 | 0 % | 0 % | 100 % / 13.7 min / 0.25 | 100 % / 16.9 min / 1.0 |
+
+- **The chosen tuning**: her **level becomes 25** (a `level` field on the unique entry, so her defence, hit and parry
+  follow the standard curve's shift; [decision: one new optional field, `UniqueDef.level`]), `hpMul` **0.10** (59,872
+  HP, × 1.25 today's), `attackMul` **1.3** (235–282), **fury × 3 after 10 min** (BALANCE U-BAL's, was × 2), enrage
+  unchanged (20 %, × 1.25). Reason: a party of four level-25s of average skill finishes in ≈ 8 min and a novice party
+  in ≈ 10, just inside the fury; a duo needs 18 min, so the fury at 10 makes her a **party-only** fight; she hits 30 %
+  harder than today, so a careless tank dies. That is today's experience moved to 25, not a longer HP sponge (the
+  0.16 rows take 14–17 min and run into the fury).
+- **Her summons** become **Tiger Girl's Guard** (`MOB_CL_TIGERGUARD_24`, White Tiger re-derived at 24, 1,489 HP), 2 per
+  wave at 80 / 60 / 40 %, at most 4 alive (the existing `summons` block; the remap of §2.2 maps her retail summon rows
+  to the guard) [decision: level-17 tigers would be free kills for level-25s].
+- **Her EXP**: retail 451,200 would pay each of a party of four ≈ 125,000, three quarters of a level-22 bar. **`expMul`
+  0.2** (90,240 pool) pays ≈ 25,000 each: ≈ 10 % of the level-24 bar, §3.5's budget [decision].
+- **Play the Boss** follows: the steered body's base HP becomes 59,872 × (N / 4)^0.9 (the layer-5 scaling, same
+  exponent), its kit rows scale with `attackMul`; pilot eligibility `minLevel` **25** (the boss is level 25) and the
+  hunters' `downMinLevel` **20** (was 15) [decision: a down by a level-15 means nothing against a level-25 boss].
+- **Loot**: the degree-3 pool now reaches 25 (`maxReqLevel: 'levelCap'` already reads the cap [confirmed:
+  `uniques.json`]), so 03_C drops from her; Seal of Star 20 %, **Moon 3 %, Sun 1 %** (§4.1).
+- **Where she lives** is unchanged (11 camps on the Tiger Mountains, a level-14–19 band): she is aggressive and now a
+  level-25 boss walking among level-15s. Her camps are on the mountain tops away from the band's nests, and her
+  announcement already warns the server; **her aggro radius drops to 8 m while no player ≥ 20 is within 60 m**
+  [decision: a newcomer stumbling into her should be able to back away; 0.2 day in `uniques.ts`].
+
+**The other bosses at 25** [decision; the standard curve's 20 → 25 factors are HP × 1.60 and attack × 1.15, run 4 §8]:
+
+| Boss | Today | At cap 25 | Where it is set |
+|---|---|---|---|
+| Ice Yeti (WINTER §13.4) | level 20, 30,000 HP, attack 150–190, EXP 120,000 | **level 25, 48,000 HP (`YETI_HP_MUL` 1.6), attack 172–218, EXP pool 90,000** (≈ 10 % of the L24 bar each in a party of 4) | `packages/shared/src/winter-play.ts` defaults + the admin knob |
+| Siege Warlord (SIEGE §6.4) | 60,000 × s^0.9 HP, Bandit base | **96,000 × s^0.9**, attack × 1.15; raiders, archers and sappers spawn as derived rows at the **defenders' median level, clamped 16–24** (§2.2's `deriveMobs`), so a siege of level-24s is not a farm of level-16 bandits | `content/siege/jangan.json` settings, the siege roster |
+| Storm Qilin (STORM_QILIN, not built) | level 20, pool a quarter of the L19 bar | **level 25**, pool a quarter of the **L24 bar (58,500)** | its spec, when built |
+| The Tomb's wings (TOMB_DUNGEON, not built) | 15–16, 17–18, 19–20 | **16–18, 19–21, 22–25**; last boss Seal of Moon 5 %, Sun 2 % | its spec |
+| Nemeses (NEMESIS, not built) | ranks over the cap-20 roster | ranks over the cap-25 roster (they derive from the kind that killed) | its spec |
+
 - **Level 20, the world boss of the Tiger Mountains**, unchanged in kind (UNIQUES): 11 camps, 3–6 h respawn, the
   world-wide announcement.
 - **Tuning**: `content/uniques.json` still reads `hpMul` 0.08 and fury ×2 [confirmed: read]; BALANCE §8.1 recommended
@@ -459,34 +738,25 @@ monster at `hp`× and `atk`× of its band's normal, with HP-band adds (the exist
 - **Loot** gains the Seal of Star roll the wave-11 table already has (20 %) and the W17-B legendary's first hook
   (§4.5).
 
-### 2.7 Opening the far bank [decision]
+### 2.7 The high country [decision] *(2026-10-10; was "Opening the far bank")*
 
-- **The ferry**: the two retail ticket sellers, **Doji** (−1307.8, −176.1) and **Chau** (−1887.0, 31.3), get a
-  "Cross the river (200 gold)" dialog line that warps the player to a landing on the far bank (a server `warp` with
-  the normal teleport rules) [confirmed: their positions in npcs.json]. **Both stand on the town's bank** (walkable
-  component 0, the same as the town) *(fact-check F2)* [confirmed: `fc-nav.ts`], so the way back needs a seller on the
-  far bank: **a far-bank ferryman**, an authored NPC row on Doji's model at the landing, with "Cross back (200
-  gold)" [decision: no retail NPC stands in component 1]. **Open to every level, with a warning line below 17**
-  ("The far bank is no place for the green, traveller."); JG_X07 "The Ferryman's Fee" (§8) makes the crossing free
-  [decision: swimmers can cross anyway (below), so a level gate on the ferry only adds friction].
-- **The landings** [confirmed: `fc-nav.ts`, a 4 m grid search for the nearest component-1 point]: 235 m south of Chau
-  at (−1923, −201) and 325 m from Doji at (−1540, −404); CL-S picks the final points (open ground, no nest within
-  40 m).
-- **The nav**: the server's placement and spawn rule accepts **two home components**, the town's (0) and the far
-  bank's (1) (`nav.ts` `setHome` becomes a list, the far bank found from a landing point in
-  `content/climb/bands.json`) [decision: the smallest change; the walker already walks any component]. Component 1
-  also holds Earth Ghost Canyon and the Donwhang entrance (§1.1): their nests stay empty by `MOB_LEVEL_MAX` or the
-  remap (§2.2), but the land is walkable once the far bank is home.
-- **Deaths on the far bank** return the player to town, so each costs a crossing (200 gold, or a swim) on top of the
-  walk; the model's death walks are straight lines and miss this [projected: ≈ 1–2 deaths there per climb, a few
-  hundred gold].
-- **Swimming** (wave 13): SWIMMING keeps swimmers off shores outside the town's component and names `openShore` as
-  the wave-14 hook [confirmed: WAVE_PLAN9 §0.2 F8]. With the far bank re-levelled, the far bank's shore rows are
-  opened: **a player can swim across**, which is a fine adventure at 17–20 and harmless below (the far bank's
-  monsters are 17–20 and aggressive; a level-8 swimmer will die and learn) [decision].
-- **The component ids are known (0 and 1); the final landing points and the `openShore` rows are CL-S's** (a nav
-  query on the real `nav.bin`, §17). The far bank's frame time is **[unknown]**: nobody has walked or measured it
-  (CL-S runs the GPU-lock fps check there, §11).
+The far bank, its ferry, its landings and its second home component are gone with the Western China side (the sea
+covers it, docs/COAST.md §4.1). What this section planned and what replaces it:
+
+- **No ferry crossing.** Doji and Chau stay retail NPCs on the ferry landing (their "[Teleport]" role has no
+  destinations and NPC teleporting is not built); the "Cross the river" dialog, Boatman Sagong's far-bank landing and
+  `nav.ts` `setHome` as a list are not needed. The ferry landing itself is B7's lower half.
+- **The way up.** From town the Ferry Heights are 1.5–2.0 km by the north-west road through Yeoha's Forest and
+  North-Tiger Mt.; the Sea Cliffs are 2.2–2.6 km west past the Bandit's Mountain Stronghold. Deaths return players to
+  town as anywhere else (no crossing cost: the model's straight-line death walks now hold).
+- **The warning line** moves from the ferry to the places' edges: entering a place below its band's first level
+  shows the area line "The Ferry Heights are no place for the green, traveller." (below 19) or "The Sea Cliffs are
+  no place for the green, traveller." (below 22) once per visit [decision; L2's area notices carry it].
+- **Swimming** (wave 13): nothing to open; the strait is open sea now.
+- **Nav and frame time**: both places are in component 0 (no new component); their frame time is the Tiger
+  Mountains' (measured with the fields), so CL-S's far-bank GPU check is dropped.
+- **L2's scope** (§20) becomes **"the high country and the bosses"**: the area notices and the mini-bosses
+  (MB1–MB8) with Mo-Dun's camp and Hyeongcheon's lair at the points of §2.5; no ferry work.
 
 ---
 
@@ -571,6 +841,77 @@ monster at `hp`× and `atk`× of its band's normal, with HP-band adds (the exist
   8.2 h target because its at-level spot, the Ruins, is the deadliest of the climb).
 - **Skill is worth about 10 %** in a whole climb (good 37.6 vs novice 41.8 h, mix), and more solo.
 
+### 3.2a The cap-25 `levels` table [decision; the numbers projected: `work/tmp/climb25/climb25.ts`, run 4, seed 1188, `out-run4.txt`]
+
+Made as §3.1 says, with four changes: **24 levels**; target hours geometric at **1.17** a level (1.255 at cap 20, which
+would have made 20 → 25 alone 86 h) normalised to **58 h**; quest share **20 % at 21–24**; **no Rested pool and no
+dishes** (wave 13 is not built: D36). The calibration (5 rounds of 200 friends) moved the scale by < 2 %.
+
+| Lv | Retail (×1) | Cap-20 design | **Cap 25 (×1)** | Quest EXP (share) | Target h | Model h (mix) | Cumulative h |
+|---|---|---|---|---|---|---|---|
+| 1 | 118 | 796 | **1,780** | 890 (50 %) | 0.23 | 0.3 | 0.3 |
+| 2 | 470 | 1,400 | **2,700** | 1,350 | 0.27 | 0.3 | 0.6 |
+| 3 | 1,058 | 2,340 | **3,960** | 1,980 | 0.32 | 0.3 | 0.9 |
+| 4 | 1,880 | 3,750 | **5,610** | 2,805 | 0.37 | 0.3 | 1.2 |
+| 5 | 2,938 | 5,790 | **7,720** | 3,860 | 0.44 | 0.4 | 1.6 |
+| 6 | 5,640 | 8,630 | **10,300** | 3,605 (35 %) | 0.51 | 0.6 | 2.2 |
+| 7 | 9,048 | 12,500 | **13,500** | 4,725 | 0.60 | 0.6 | 2.8 |
+| 8 | 13,160 | 17,500 | **17,200** | 6,020 | 0.70 | 0.7 | 3.5 |
+| 9 | 17,978 | 24,000 | **21,400** | 7,490 | 0.82 | 0.9 | 4.4 |
+| 10 | 23,500 | 32,300 | **26,200** | 9,170 | 0.96 | 1.0 | 5.4 |
+| 11 | 34,898 | 42,800 | **31,600** | 9,480 (30 %) | 1.12 | 1.2 | 6.6 |
+| 12 | 47,940 | 55,900 | **37,600** | 11,280 | 1.31 | 1.4 | 8.0 |
+| 13 | 62,628 | 72,400 | **44,200** | 13,260 | 1.53 | 1.5 | 9.5 |
+| 14 | 78,960 | 93,300 | **51,500** | 15,450 | 1.79 | 1.8 | 11.3 |
+| 15 | 96,938 | 120,000 | **59,600** | 17,880 | 2.10 | 2.2 | 13.5 |
+| 16 | 127,840 | 155,000 | **68,700** | 17,175 (25 %) | 2.46 | 2.7 | 16.2 |
+| 17 | 161,798 | 201,000 | **79,000** | 19,750 | 2.87 | 3.0 | 19.2 |
+| 18 | 198,810 | 264,000 | **91,000** | 22,750 | 3.36 | 3.1 | 22.3 |
+| 19 | 238,878 | 351,000 | **105,000** | 26,250 | 3.93 | 3.8 | 26.1 |
+| 20 | 282,000 | — | **122,000** | 30,500 | 4.60 | 4.4 | 30.5 |
+| 21 | 351,231 | — | **142,000** | 28,400 (20 %) | 5.39 | 4.7 | 35.2 |
+| 22 | 427,755 | — | **168,000** | 33,600 | 6.30 | 6.1 | 41.3 |
+| 23 | 512,196 | — | **201,000** | 40,200 | 7.37 | 7.0 | 48.3 |
+| 24 | 605,232 | — | **244,000** | 48,800 | 8.63 | 11.2 | 59.5 |
+| **1 → 25** | **3,302,894** | (1 → 20: 1,464,406) | **1,555,570** | **376,670 (24.2 %)** | 58 | 59.5 | |
+
+- **"Model h" is the Monte Carlo mean** per level (it sums to 59.5 h; the median friend takes 57.3 h, §3.3a). Level 24
+  runs over its target (11.2 vs 8.6 h) because its own spot, the Ruins, is the deadliest of the climb: the last level
+  is the hardest, as at cap 20 [projected].
+- **The new table is shorter than the cap-20 design below 20** (1 → 20 = 678,570 vs 1,464,406): the long, hard part of
+  the climb moved to 20 → 25, which is 877,000 EXP and **≈ 33 h**. Against retail ×1 it is 0.4–0.9 × from level 11
+  up: the level's own monsters are worth hunting (the level rule) and the rates are ×1, not ×3.
+- **Level 1 is 1,780 EXP** (the cubic smoothing lifts the first levels; ≈ 18 min with the first quests): the tutorial
+  still lasts until the first pack.
+- `masterySp` stays retail (§5.2).
+
+### 3.3a Time to 25 by play style [projected: Monte Carlo, 400 friends per profile, run 4]
+
+| Profile | p10 | **Median** | p90 | Novice / average / good (median) | To 20 (mean) | 20 → 25 (mean) | Deaths | EXP lost to the penalty |
+|---|---|---|---|---|---|---|---|---|
+| **Mix** (the design target) | 53.2 h | **57.3 h** | 68.6 h | 68.1 / 57.3 / 53.2 | 26.0 h | 33.3 h | 5.5 | 92,995 |
+| Mostly grouped (80 % from 6) | 50.3 | **53.2** | 59.9 | 59.5 / 53.2 / 50.3 | 24.9 | 29.2 | 1.7 | 23,441 |
+| Mix, always the safest spot | 52.0 | 55.2 | 70.2 | 69.2 / 55.2 / 52.0 | 25.6 | 32.3 | 4.2 | 68,697 |
+| Mix without the death penalty | | 54.8 | | | | | | |
+| **Solo only** | 60.1 | 69.5 | **did not finish** | **novice: 104 of 400 stuck at 300 h** / 69.7 / 60.1 | 28.5 | 37.1 (finishers) | 112 | 1.31 M |
+
+- **Why 58 h** [decision, D35]: the cap-20 design's 40 h to 20 was approved; stretching its per-level growth to 25 gives
+  ≈ 126 h, which nobody asked for, and keeping 40 h to 25 would make 1 → 20 a 15-hour sprint again (BALANCE's boredom).
+  58 h puts 20 → 25 at **33 h, more than half the climb** ("level 25 its end focus") and keeps 1 → 20 at 26 h, longer
+  than today's 15 h at ×3. For a group of friends playing 8–10 h a week that is **six to seven weeks** to the cap.
+  Alternatives the same model gives by changing `TARGET_H`: 50 h (20 → 25 ≈ 29 h) or 65 h (≈ 37 h); the shape stays.
+- **The death penalty costs 2.5 h** of the median climb (57.3 vs 54.8 h) and 5.5 deaths [projected].
+- **Groups are faster and much safer** (53.2 h, 1.7 deaths). **A pure-solo novice does not reach 25 in the model**: at
+  23–24 the losses (1–20 % of a 200,000–244,000 bar per penalised death) outrun the gains for 26 % of solo-only friends;
+  the same novice in the mix profile finishes in 68 h. The user's design ("the Tomb and the big bosses need a group";
+  20–25 is the end focus) accepts that 21–25 is group-leaning, but a wall is not the intent, so **the penalty's grace
+  becomes 30 minutes from level 21** [decision, D51; untested in the model: the first check of the L8 soak is
+  `climb25.ts` with that grace] and QUESTS_CLIMB gives 1 Ancestor's Incense at CQ_29 and CQ_37 besides CQ_26's two.
+- **Gold** [projected: run 4 §6]: solo hunting nets −2k to −18k an hour at 16–24 (X-Large potions at 600 from 21) and
+  ≈ −306k over the whole climb; the new quest line pays **≈ 575,000 gold** (QUESTS_CLIMB §5), so a solo average player
+  ends ≈ +270k before selling drops, enough for the three grade-A shop sets (147,740) and alchemy. Band gold factors
+  rose to B5 3.0, B7 3.4, B8 3.6 for it (D38).
+
 ### 3.4 Rates [decision]
 
 - **EXP_RATE = SP_RATE = GOLD_RATE = DROP_RATE = 1** on the live server from the wave-14 deploy (one line each in the
@@ -615,9 +956,10 @@ Prices are the heavy set (blade + 6 armour pieces + 3 accessories) at the shop p
 | **T2 Long Copper** | 5–7 | 1 / C | 5–10 | drops in B1/B2, MB1, quests | Long Copper Blade 26–30 | 14,850 |
 | **T3 Infantry / Bronze** | 8–11 | 2 / A, B | 8–13; 10–15 | A: shop. B: drops B2/B3, MB2, quests JG_014, JG_016 | Infantry 35–39.5; Lancer 41–47 | 23,000; 33,750 |
 | **T4 Cavalry** | 12–15 | 2 / C | 13–18 | drops B3/B4, elite camps, MB3, quest JG_019 | Cavalry Hand Blade 50.5–58.5 | 66,750 |
-| **T5 Tribal Iron / Scale** | 16–17 | 3 / A | 16–21 (chest 21) | shop; drops B5, MB4, quest JG_022 | Mhong tribe Cutting Blade 62–71.5 | 120,250 |
-| **T6 Kang Iron** | 18–20 | 3 / B | 18–23 (wearable pieces ≤ 20) | drops B5/B7, the Tomb, MB5, MB7, quest JG_025 | Kang tribe Cutting Blade 70–81 | 172,500 |
-| **T7 Seal of Star** | 16–20, the post-cap hunt | 3 / A, B `_RARE` | 16–21 (126 of 144 wearable at ≤ 20) | Tiger Girl 20 %, the Tomb's last boss, MB4–MB7 3–5 %, elite camps 0.5 % | Cutting Blade (SoS) 83.5–96 (A), **108.5–125 (B)** | n/a (not sold) |
+| **T5 Tribal Iron / Scale** | 16–19 | 3 / A | 16–21 | shop; drops B5, MB4, quests CQ_28–CQ_30 | Mhong tribe Cutting Blade 62–71.5 | 120,250 |
+| **T6 Kang Iron** | 18–22 | 3 / B | 18–23 | drops B5/B7, the Tomb, MB5, quest CQ_34 | Kang tribe Cutting Blade 70–81 | 172,500 |
+| **T7 Hun Iron / Wi Scale** *(new at cap 25)* | 21–25 | 3 / C | 21–25 (retail 21–26; the six 26 rows squeezed to 25, §4.1.1) | drops B7/B8, the Tomb's late wings, MB7, MB8, quest CQ_43 | Hun tribe Cutting Blade 83.5–96 | 277,250 (not sold) |
+| **T8 Seals** *(was T7)* | 16–25, the post-cap hunt | 3 / A, B, C `_RARE` (Seal of Star, Moon, Sun) | 16–21 (all 153 wearable at 25) | Star: quest CQ_46 (a weapon), MB4–MB8 3–5 %, Tiger Girl 20 %, elite camps 0.5 %. Moon: MB8 and Tiger Girl 3 %, the Tomb's last boss 5 %. Sun: Tiger Girl 1 %, the Tomb's last boss 2 % | Cutting Blade Star 83.5–96, **Moon 108.5–125, Sun 138–159** | n/a (not sold) |
 
 - **Shops sell grade A only** (today's rule, kept): the shop is the floor of each tier and B/C are the reason to hunt
   [confirmed: shops sell 10/10 of each grade-A set, 0 of B/C].
@@ -630,6 +972,110 @@ Prices are the heavy set (blade + 6 armour pieces + 3 accessories) at the shop p
 - **+N by alchemy** (wave 8) stacks on any tier; elixirs come from the mini-bosses, elite camps, the Tomb and Tiger Girl.
 - **The tiers hit the curve**: a player in tier gear is the model's player (`lib.ts` `gearAt` picks the best row
   whose required level is ≤ the character's), so every number of §2–§3 assumes the tier is owned on time.
+- *(Cap 25.)* The bullet above on 03_B ("only 3 pieces wearable at ≤ 20") is cap-20 history: at 25 every 03_A and
+  03_B piece is wearable, and 03_C arrives piece by piece from 21 (AA, ring, weapon, shield) to 25 (LA, BA,
+  necklace). `work/tmp/climb25/lib.ts` adds 03_C to `gearAt` and reads required levels through `req25`.
+- *(Cap 25.)* **The Seals' power** [confirmed: items.json]: Star = 03_C's attack, Moon ≈ 1.3 × 03_C, Sun ≈ 1.65 × 03_C,
+  and all of them need only the grade-A level (16–21). A Sun weapon at 16 would break every number of §2–§3, so Sun is
+  a cap-level chase with ≤ 2 % sources at level-25 bosses only, and Moon ≤ 5 % [decision: the Seals are the post-cap
+  hunt, not a climbing tool]. The rarity lane being built in parallel (the `_A/_B/_C` rare variants) owns their look
+  and name colour; this spec owns only where they drop.
+
+#### 4.1.2 Degree 4 the top gear, four degrees inside the cap (D53, 2026-10-11) [confirmed: `work/tmp/d4/levels.ts` over the export; projected: `work/tmp/climb25/climb25.ts` and `bosses25.ts`, seed 1188, the shipped curve]
+
+**Levels** [decision: every degree's retail span, first grade-A piece → grade-C chest, maps linearly onto its Climb
+span, rounded (`CLIMB_DEGREE_LEVELS`, `climbDegreeLevel`); order inside a degree kept; a seal sits at its letter's grade
+level of the family (Star A, Moon B, Sun C; retail gave all three the A level). Reason: four degrees in 25 levels with
+the retail grade order and no level past the cap]. `applyClimbItemLevels` keeps the client's level in `retailReqLevel`
+(admin items list, GM `climb gear [code]`). 823 rows move.
+
+| Degree | Span (retail → Climb) | Weapon / shield / bracer / ring A·B·C | Chest A·B·C | Seals (Star·Moon·Sun) |
+|---|---|---|---|---|
+| D1 | 1–10 → **1–8** | 1·3·4 | 1·6·8 | weapons 1·3·4 |
+| D2 | 8–18 → **8–15** | 8·9·12 | 12·13·15 | weapons 8·9·12 |
+| D3 | 16–26 → **15–21** (mid-tier) | 15·16·18 | 18·19·21 | = grade A·B·C of the slot |
+| **D4** | 24–34 → **21–25** (the cap tier) | **21·22·23** | **23·24·25** | = grade A·B·C of the slot |
+
+**Tiers** (`CLIMB_TIERS`): T1 D1 A/B 1–6, T2 D1 C 4–8, T3 D2 A/B 8–13, T4 D2 C 12–15, T5 D3 A 15–18, T6 D3 B 16–19,
+T7 D3 C 18–21, **T8 D4 A 21–23, T9 D4 B 22–24, T10 D4 C 23–25 (the top normal tier)**, T11 the Seals.
+
+**Where D4 comes from** [decision]: never sold (retail Jangan sells D1–D3 grade A only [confirmed: shops.json]);
+the derived monsters of level ≥ 21 drop, for every degree-3 piece their base drops, that piece or its degree-4 grade-A
+twin half and half (`climbDropCode`: Ghost Bug 21, Devil Bug 22, Hyungno 23 → D3 C / D4 A, so 03_C keeps its source;
+Shaman 24 → D4 A; Earth Ghost 25 → D4 B and Canyon Taoist 25
+→ D4 C by their bases' retail tables; Chakji 19–20 keep D3); Tiger Girl's four pools (3 pieces, C 60 / B 40; Star 20 %,
+Moon 3 %, Sun 1 %); the Ice Yeti 50 % one piece (C 40 / B 60). Alchemy +1…+7 works (elixirs by kind; the 4th powder).
+
+**The model** (fixed curve = `content/climb/levels.json`, mix friend, median; "D4 late" = D4 A/B worn one level after
+its requirement, no C: the realistic drop-only player):
+
+| Gear | Bands 24–25 | Mix median | To 20 | 20 → 25 | Deaths | Tiger Girl (old 0.10 × 1.3), party of 4 |
+|---|---|---|---|---|---|---|
+| Run 4 baseline (D3 squeezed) | — | 58.4 h | 25.9 | 33.3 | 5.0 | 8.1 min, duo 16 % |
+| Spaced, no D4 | — | 54.4 h | 24.2 | 31.4 | 2.9 | 8.1 min |
+| D4 owned on time | — | 47.9 h | 24.0 | 24.9 | 1.1 | **3.7 min, a solo good player wins** |
+| D4 late | — | 49.8 h | 24.2 | 26.6 | 1.1 | 4.6 min, duo wins |
+| **D4 late (chosen)** | **× 1.6 HP, × 1.2 attack** | **53.1 h** | 24.0 | 28.4 | 1.8 | — |
+| Spaced, no D4 | × 1.6 / × 1.2 | 55.1 h | 24.0 | 33.7 | 4.3 | — |
+
+The cap fights became trivial, so the bosses are retuned for the D4-late party [decision]: **Tiger Girl 0.18 × 1.4**
+(107,770 HP, 253–304): party of 4 8.8 min (novice 10.5), duo 4 % at 19.7 min, solo 0 %; with full D4 7.0 min; a D3-only
+party 17.2 min into the fury. **Ice Yeti 78,000 HP, 189–240** (her kit is not in the model): party of 4 5.0 min as
+before (full D4 4.0, D3-only 8.1). **MB7 × 2.0, MB8 × 2.5 HP** (MB8: party of 4 8.6 min, duo 0 %). Scaling the 21–23
+bands as well walled D3-only players at 23 (every mix friend stuck), so only the level-24/25 rows are raised. The climb
+is ≈ 5 h shorter than D35's 58 h (gear arrives earlier at every level); the curve is not changed [decision: live
+characters keep their bars; 53–55 h is inside D35's 50–65 h alternatives]. Solo-only novices without degree 4 still hit
+run 4's wall at 24 (112 of 400 at 300 h, 83 before; none with D4 late; D51's grace is the answer there).
+
+#### 4.1.3 Seals: power order and rates (D54, 2026-10-11) [decision; confirmed: `apps/server/test/climb-d4.test.ts`]
+
+The user: "a degree 3 should never be stronger than a 4th degree rare weapon. Stronger than regular weapons yes, just
+not rare weapons", and "drop rate regardless of who or where ... very very low, like in the 1%–2%".
+
+- **Power order** (`applyClimbSealCaps`, run by `applyClimbItemLevels` on the server and in both client catalogs, so
+  tooltips match): in each of the 51 seal families (5 weapons, the shield, 42 armour pieces, 3 accessories), every
+  degree-3 seal number (each stat endpoint, the raw attack rolls, the per-plus increments) ends at most **0.97 × the
+  degree-4 Seal of Star's** (the weakest degree-4 seal). Star keeps its value, Moon and Sun are pressed linearly between
+  Star and the cap, so Star < Moon < Sun stays. Blade: Star 83.5–96, Moon 108.5–125 → **101.3–116.3**, Sun 138–159 →
+  **122.2–140.2**, under the D4 Star's 126–144.5; still above D4 grade A (98–112.5). 111 seal rows move.
+- **Degree-3 Moon and Sun** come only from monsters of level **21+** (`RARE_MID_MIN_LEVEL`, admin, default 21; below,
+  the roll is a Star); degree-4 Moon and Sun stay at 25+ (`RARE_TOP_MIN_LEVEL`).
+- **Rates**: of every gear drop, **Star 1.5 %, Moon 0.4 %, Sun 0.1 %** (2 % in all), the admin's ceiling 2 % per knob
+  (`RARE_PCT_MAX`). Tiger Girl's seal groups follow (3 rolls, one per gear drop, at 1.5 / 0.4 / 0.1 %; were 20 / 3 / 1 %
+  a kill); the Ice Yeti and the siege drop no seals.
+
+#### 4.1.1 Degree 3 inside the cap *(superseded by §4.1.2, D53)* (the user: "Bring all degree 3 gears into the level 25 cap") [confirmed: `work/tmp/climb25/d3.ts` over `work/out/data/items.json`, 2026-10-08; decision on the new levels]
+
+`items.json` holds **306 degree-3 rows**: 153 regular (`_A`, `_B`, `_C`) and 153 Seals (`_A_RARE`, `_B_RARE`,
+`_C_RARE`); retail required levels run 16–26. **Only six rows are above 25**: the grade-C chest of each armour class
+(`ITEM_CH_{M,W}_{HEAVY,LIGHT,CLOTHES}_03_BA_C`, retail 26). They become **25**; every other row keeps its retail level
+[decision: the retail spacing already gives one or more new pieces at every level 16–25; a uniform squeeze would only
+blur grades the players know]. The same levels hold for the six armour classes (M/W × heavy/light/clothes), so one
+row per slot below covers 6 codes.
+
+| Slot | Codes (each × grade) | A (retail → new) | B | C | `_A_RARE` / `_B_RARE` / `_C_RARE` | Rows |
+|---|---|---|---|---|---|---|
+| Weapons | `ITEM_CH_{SWORD,BLADE,SPEAR,TBLADE,BOW}_03_*` | 16 → 16 | 18 → 18 | 21 → 21 | 16 / 16 / 16 | 30 |
+| Shield | `ITEM_CH_SHIELD_03_*` | 16 | 18 | 21 | 16 / 16 / 16 | 6 |
+| Hand (bracer) | `ITEM_CH_{M,W}_{HEAVY,LIGHT,CLOTHES}_03_AA_*` | 16 | 18 | 21 | 16 | 36 |
+| Shoulder | `…_03_SA_*` | 17 | 19 | 22 | 17 | 36 |
+| Foot | `…_03_FA_*` | 18 | 20 | 23 | 18 | 36 |
+| Head (casque / crown) | `…_03_HA_*`, `…_03_CA_*` | 19 | 21 | 24 | 19 | 72 |
+| Legs | `…_03_LA_*` | 20 | 22 | 25 | 20 | 36 |
+| Chest | `…_03_BA_*` | 21 | 23 | **26 → 25** | 21 | 36 |
+| Ring | `ITEM_CH_RING_03_*` | 16 | 18 | 21 | 16 | 6 |
+| Earring | `ITEM_CH_EARRING_03_*` | 18 | 20 | 23 | 18 | 6 |
+| Necklace | `ITEM_CH_NECKLACE_03_*` | 20 | 22 | 25 | 20 | 6 |
+| | | | | | | **306** |
+
+- **How**: a `reqLevel` override list in `content/climb/items.json` (6 rows), applied by the content loader the way
+  `npcs.override.json` patches NPCs; the converter's export stays retail [decision: no retail data edited, one place
+  to change].
+- **Degrees 1 and 2 are not re-spaced** [decision: D1 1–10 and D2 8–18 already cover the bands that did not move
+  (B1–B4 and B5's lower half); stretching them would delay T5 at 16, where the Tiger Mountains start]. The tiers
+  table above is the result: T1–T4 unchanged, T5 16–19, T6 18–22, T7 21–25.
+- **Shops** still sell grade A only (T5's 03_A is the last shop tier); 03_B and 03_C come from drops, quests and
+  bosses (§4.4).
 
 ### 4.2 Set bonuses (cheap) [decision]
 
@@ -752,6 +1198,20 @@ new clip, no new effect (the existing effect plays).
 - **The early game is not starved**: Strike Smash still arrives at 5–6 (9 SP), the first Art at 10 with 167 SP owned.
 - `progression.ts` `TYPICAL_SP_BY_LEVEL` (GM setlevel's grant) is re-generated from the new curve (§10.3).
 
+**Cap 25: skills and SP to 25** [projected: `climb25.ts` §7, run 4; decision on the rules]:
+
+- **Masteries cap at the character level, 25** (the retail rule, kept). The mastery cost of levels 21–25 is retail's
+  `masterySp` (62, 71, 80, 89, 98): **one mastery 0 → 25 costs 734 SP** (0 → 20: 334) [confirmed: levels.json].
+- **Skill rows of masteries 21–25 must be exported**: the converter stops at `MAX_SKILL_MASTERY_LEVEL = 20`
+  (`packages/convert/src/data/skills.ts`) [confirmed: read]; it becomes 25 and the skills export is re-run (L1, §20).
+  The model keeps the mastery-20 kit (it buys the masteries, not the new rows), so its 21–25 numbers are a little
+  pessimistic [projected].
+- **Supply**: SP from kill and quest EXP ≈ 3,575 at 25 (SP-EXP = kill EXP, quests EXP / 600); **demand**: §5.2's
+  2,950 at 20 + two masteries 20 → 25 (800) + the new rows of 21–25 (≈ 150–250 a line [unknown until the export]) ≈
+  4,000–4,200. SP stays a choice at the cap; SP-EXP at 25 keeps flowing from every kill (≈ 70 SP an hour).
+- **No fourth Art tier** [decision: the 21–25 retail rows are the reward for those masteries; a tier at 25 would be a
+  new balance pass for 24 Arts]. The Art at mastery 20 stays the last choice.
+
 ---
 
 ## 6. The death penalty (e) — rule #13
@@ -760,7 +1220,7 @@ new clip, no new effect (the existing effect plays).
 
 | Part | Rule |
 |---|---|
-| **Who** | A player of **level 15–19**. At level 20 there is no bar to take from (EXP is not kept at the cap); nothing is taken [decision] |
+| **Who** | A player of **level 15–24** *(cap 25; was 15–19)*. At the cap (25) there is no bar to take from (EXP is not kept at the cap); nothing is taken [decision] |
 | **What kills** | A **monster or boss**: field monsters, champions, giants, elites, mini-bosses, uniques, **nemeses**, the **storm Qilin**, the Tomb's monsters and bosses; damage over time from a monster counts as the monster's |
 | **What never counts** | Duels and the arena (none exist yet; the rule names them so they never will), a GM kill (`gmKill`), a death inside a sanctuary (the springs; none possible today), a server-side rescue |
 | **How much** | `pct` = a random whole number **1–20** (server RNG); `loss = min(exp, floor(pct / 100 × expToNext(level)))`: **never below the bar's start, never a de-level** |
@@ -818,6 +1278,11 @@ new clip, no new effect (the existing effect plays).
 - **Interactions**: a nemesis kill counts (NEMESIS's "revenge becomes personal"; that doc may offer a refund on
   avenging, a hook below); the Qilin counts; the Tomb counts (TOMB_DUNGEON decides wipes and lockouts).
 
+- *(Cap 25, run 4.)* The mix friend dies **5.5 times** to 25 and loses **92,995 EXP** (2.5 h: 57.3 vs 54.8 h). An
+  average death at 24 costs 10.5 % of 244,000 ≈ **25,600 EXP ≈ 55 min** of hunting; the worst roll (20 %, 48,800) ≈
+  **1 h 45 min** [projected: the mix friend's ≈ 27,000 EXP/h at 24]. The sting is the same size as at cap 20 because
+  the cap-25 bars at 20–24 are smaller than the cap-20 design's 19. From 21 the grace is 30 min (D51, §3.3a).
+
 ### 6.5 Hooks for the siblings [decision]
 
 - `penalty.apply(p, killer, now)` returns `{ pct, loss, protectedBy: 'incense' | 'grace' | null }` and emits
@@ -831,6 +1296,15 @@ new clip, no new effect (the existing effect plays).
 ---
 
 ## 7. At the cap (f)
+
+*(Cap 25 [decision]: "the cap" below means **25**. The goals keep their shape: the hunt for T7 (03_C, the last pieces
+need 24–25) and T8 (Seals of Star, Moon, Sun: §4.1); bosses on a rotation, now **Tiger Girl at 25**, seven
+mini-bosses with **MB8 Hyeongcheon** as the party one, the Ice Yeti in winter, the weekly siege; **mentoring** applies to
+a level-25 member (weight 0 and the damage-share floor of D23, unchanged); §7.2's board becomes **"The Bounty Board"
+at 20–25** (QUESTS_CLIMB CQ_R3: MB5, MB7 or MB8 drawn daily, plus a B8 elite camp); titles add **"Climber"** at 25
+(was 20), "Canyon-Breaker" (MB8 ×10), "Tiger Queen's Bane" (Tiger Girl at 25) and "Stormrunner" (QUESTS_CLIMB
+CQ_41). A level-20 character of today is no longer at the cap: its goal is the high country, the Ferry Heights and the Sea
+Cliffs (2026-10-10).)*
 
 ### 7.1 Goals [decision]
 
@@ -887,6 +1361,14 @@ EXP (a mentor tanking and the friend killing pays the friend ≈ 100 %) [decisio
 ---
 
 ## 8. The questline (g) [decision]
+
+> **Cap 25 (2026-10-08): this section is superseded by docs/QUESTS_CLIMB.md.** The user asked to "re-create all quests
+> from level 1-25": every quest of "The Tiger's Shadow" and the 13 planned JG_X quests below are replaced by **"The
+> Storm Anchors"**: 31 main and 17 side quests and 4 dailies (CQ_01–CQ_48, CQ_R1–R4), with TOMB_DUNGEON's JG_T01 kept
+> at 16. Quest shares are **50 / 35 / 30 / 25 / 20 %** by band (1–5, 6–10, 11–15, 16–20, 21–24): 376,671 EXP of
+> budget quests (24.2 % of the cap-25 curve), ≈ 22.9 % of the EXP a friend earns [projected: run 4]; event-gated and seasonal quests pay a % of the
+> level outside the budget. §8.1's mechanics stay: objectives match derived kills by base, SP = EXP / 600. The rest of
+> §8 is cap-20 history.
 
 ### 8.1 What changes in `content/quests/jangan.json`
 
@@ -972,6 +1454,25 @@ in progress, the Rested pool (clamped at login, HOT_SPRINGS §5.1), mounts, guil
   it). Whatever they are, the rule above keeps them; a level-20 character is unaffected except for the penalty-free
   cap, the Arts it can now buy, and mentoring.
 - A **database backup** precedes the deploy (one migration; WAVE_PLAN9's rule) [decision].
+
+### 9.3a Cap 25: what changes for live characters [decision]
+
+- **`LEVEL_CAP` 20 → 25** (config, `DEFAULT_LEVEL_CAP` in `protocol.ts` and the mini PC's env if set there): a
+  character at 20 starts gaining EXP again from **0 % of the 20 → 21 bar** (124,000 EXP at ×1). Its old cap overflow
+  went to SP-EXP (the cap rule) and stays SP [confirmed: `QUEST_CAP_EXP_TO_SPEXP` 1, QUESTS §1.7]. No back-pay
+  [decision: the overflow was already paid as SP].
+- **Below 20**, §9.2's bar-fraction rule on the cap-25 table (§3.2). The cap-25 bars are shorter than the cap-20 design
+  below 20 (the long part of the climb moved to 20–25), so nobody loses a level and nobody gains one.
+- **Mastery cap** follows the character level (25); the skill rows of masteries 21–25 arrive with the converter change
+  of §5.2. **SP is untouched.**
+- **Quests**: QUESTS_CLIMB §8 (old in-progress quests settled in gold; new main quests below the character's level
+  marked done without rewards).
+- **Gear**: nothing changes on worn items; the six grade-C chests read 25 from the override (§4.1.1).
+- **Penalty**: a character at 20–24 now has a bar, so the penalty applies to it (§6.1); it receives the 2 Incense of
+  §9.2 like any 15+ character.
+- **Tiger Girl** is re-tuned to 25 at the deploy (§2.6); a live Tiger Girl at the restart respawns with the new numbers.
+- **The What's new window** gets one entry with three images (the level-25 bar, the Ferry Heights and the Sea Cliffs, the
+  new quest log), as every feature does.
 
 ### 9.4 The rates at deploy
 
@@ -1175,6 +1676,33 @@ Reproduce: `pnpm tsx work/tmp/climb/climb.ts` (≈ 40 s on this machine; the dra
 | D33 | Mini-bosses need four uniques-module additions (area notices, an adds table, authored camp nests, a look field), owned by CL-SV | The module today notifies everyone and summons only from retail rows (fact-check F9) |
 | D34 | The curve stays at 1,464,406 although charging the springs' trip moves the mix to 41.6 h | 39.9–41.6 h brackets "about 40"; the trip's real cost is unknown until play (fact-check F7) |
 
+**Cap 25 (2026-10-08).** D1, D5, D6, D8, D11, D12, D18, D22, D25 and D34 are superseded where the rows below say so;
+the rest stand at 25.
+
+| # | Decision | Why |
+|---|---|---|
+| D35 | **Cap 25**; the median real play to 25 is **≈ 58 h** for the mix friend (≈ 27 h to 20, ≈ 31 h from 20 to 25) | 25 is "the end focus": the last five levels are about half the climb; 58 h is the cap-20 design's 40 h stretched by the five new levels at the same per-level growth, without the unbuilt wave 13 (§3.3a) |
+| D36 | Calibrate **without** the hot springs and the dishes (wave 13 is not built) | The curve must hold on the game that ships; wave 13 later shortens it by ≈ 15–20 % and its `capFrac` can then be lowered |
+| D37 | Bands **B5 14–19, B6 16–25, B7 19–23, B8 22–25**; the far bank at retail levels; the Canyon Mouth at region x 156 only *(2026-10-10: the places move, D52)* | Inside the Jangan region and the play bounds; retail levels where the cap no longer forces them down |
+| D38 | Band attack B7 0.95, B8 0.92; band gold B5 3.0, B7 3.4, B8 3.6 | Runs 1–3: the far bank's retail-level monsters killed average players 2–4 times an hour, and solo hunting at 16–24 lost up to 24k gold an hour |
+| D39 | Quest share 20 % at 21–24 | One step down from 25 % at 16–20: the cap is earned in the field |
+| D40 | Degree 3 inside the cap: the six 03_BA_C chests 26 → 25, everything else retail; D1/D2 not re-spaced | "Bring all degree 3 gears into the level 25 cap" with the smallest change; retail spacing already fills 16–25 |
+| D41 | Tiers: T5 03_A 16–19, T6 03_B 18–22, **T7 03_C 21–25**, T8 the Seals; Moon ≤ 5 %, Sun ≤ 2 % at level-25 bosses | The Seals need only the grade-A level; a Sun weapon early would break the curve |
+| D42 | **Tiger Girl at 25**: `level` 25, `hpMul` 0.10, `attackMul` 1.3, fury × 3 at 10 min, the guard summons at 24, `expMul` 0.2 | A party of four in ≈ 8 min, novices ≈ 10, a duo runs into the fury; her EXP stays within 10 % of a bar each |
+| D43 | MB5 → 19, MB7 → 23, **MB8 Hyeongcheon at 25** (hp 16 ×, attack 0.95 ×) at the Canyon Mouth *(2026-10-10: on the Sea Cliffs, Mo-Dun on the Ferry Heights, D52)*; the two Hyeongcheon nests and the x-155 nests emptied | One mini-boss per band still; a party fight one notch under Tiger Girl |
+| D44 | Ice Yeti to 25 (48,000 HP, EXP pool 90,000), the siege Warlord × 1.6 HP and the siege army at the defenders' median level (16–24), the Qilin and the Tomb rebased in their specs | "The other bosses" at level-25 difficulty, by the standard curve's 20 → 25 factors |
+| D45 | Masteries to 25; the skills export to mastery 25; no fourth Art tier | Retail's rule; the new rows are the reward |
+| D46 | The death penalty from 15 to 24 | The rule's own definition ("after level 15") at a cap of 25 |
+| D47 | All quests replaced by docs/QUESTS_CLIMB.md (31 main, 17 side, 4 dailies); event-gated quests pay a % of the level outside the budget | The user's "re-create all quests"; a week without a storm or a siege never slows the climb |
+| D48 | Live characters: level 20s start the 20 → 21 bar at 0 %; lower levels by bar fraction; old in-progress quests settled in gold; main quests below one's level marked done | Nothing lost; nobody faces 25 low quests |
+| D49 | Build in layers, data first (§20) | The data-only layer gives the cap, Tiger Girl and half the quests in a day and a half |
+| D50 | Tiger Girl's aggro radius 8 m while no player ≥ 20 is within 60 m | A level-25 boss walks in a 14–19 band |
+| D51 | The death penalty's grace is 30 min (not 10) from level 21 | The model's pure-solo novice cannot outrun 1–20 % losses of a 200,000-EXP bar at 23–24 (104 of 400 stuck); the user's 1–20 % rule stays untouched |
+| D52 | **The high country** (2026-10-10): B7 = Jangan Ferry + the Ferry Heights (156–159 × 94–95), B8 = the Sea Cliffs (156–158 × 90–93), places inside the Tiger Mountains' zones with per-place remaps onto the Western China roster; the far bank's 124 nests removed; no ferry, no second home component; Mo-Dun's camp on the Ferry Heights, Hyeongcheon's lair on the Sea Cliffs' south-west crest | The user keeps Jangan alone in the sea (docs/COAST.md §4.1); the island's farthest heights continue B5's mountains, keep the bands' levels and roster, and cost no nav or ferry engine |
+| D53 | **Degree 4 the top gear** (2026-10-11): export D4 (306 rows); every degree spaced linearly inside the cap (D1 1–8, D2 8–15, D3 15–21, D4 21–25, seals at their letter's grade level); D4 from the level ≥ 21 derived monsters, Tiger Girl and the Ice Yeti, never sold; Moon/Sun rule on the cap tier; Tiger Girl 0.18 × 1.4, Yeti 78,000 HP, B8 24–25 × 1.6 / × 1.2, MB7 × 2.0, MB8 × 2.5 | The user's "degree 4 as the top gear"; a linear map keeps every degree's grade order in the 25 levels; the model showed the cap fights trivial in D4 (§4.1.2) |
+| D54 | **Seals** (2026-10-11): every degree-3 seal ≤ 0.97 × its family's degree-4 Star on every power number (Moon and Sun pressed between Star and the cap); degree-3 Moon/Sun from level 21; seal rates Star 1.5 / Moon 0.4 / Sun 0.1 % of every gear drop, bosses included, admin ceiling 2 % each | The user's power order and "1%–2%" rule; pressing keeps each degree's Star < Moon < Sun |
+| D55 | **The Sea Cliffs retuned** (L8, 2026-10-14): the B8 rows at 24–25 × 1.3 HP and × 1.1 attack (D53 had × 1.6 / × 1.2) | D53 was tuned on the far bank's Ruins mix (23s with the 24s); on the island the Sea Cliffs hold only 24s and 25s, and × 1.6 / × 1.2 made them a dead band (an average player in degree 4 died 2–3 times an hour there, a duo 1–2); × 1.3 / × 1.1 is §2.4's spread |
+
 ## 15. Needs from the user
 
 Nothing blocks the start; no download, no Meshy.
@@ -1184,6 +1712,8 @@ Nothing blocks the start; no download, no Meshy.
 | U1 | Look at `climb-bands-map.png` and `climb-hours.png` (2 min) | before the build | build as designed |
 | U2 | The OK to set the live rates to ×1 and to deploy with one migration (a DB backup first) | at deploy | no deploy without it |
 | U3 | **One evening of play at 14–17 with a friend** after the build (the Tomb Approach, the Tiger Mountains, one mini-boss): does it feel hard in a good way? | after the build | the model's numbers stand |
+| U5 | *(Cap 25)* Read `Silkroad Online/climb25/QUEST_LIST.md` and strike any quest you do not want (5 min) | before L0 | all 48 quests stay |
+| U6 | *(Cap 25)* The 58-hour target to 25 (≈ 26 h to 20) and the 30-min grace from 21 | before L1 | as designed |
 | U4 | Confirm the death penalty's additions: the **10-minute grace**, the **Incense** (bound, at most 5), and the **10 s combat linger** that stops a closed tab from dodging it | after reading §6 | all on |
 
 ## 16. Open questions (each with the default used meanwhile)
@@ -1268,6 +1798,34 @@ loss.
 | Gold too tight at 17–19 | Quest gold and band factors are content; Large potion price is the last lever |
 | The siblings' numbers (Tomb EXP, nemesis, Qilin) break the 40 h | The budgets of §3.5; WAVE_PLAN10 re-runs `climb.ts` with their tables |
 
+## 20. Build plan at cap 25 (ordered layers for helpers) [decision; sizes in agent-days, projected]
+
+Nothing of wave 14 is built [confirmed 2026-10-08: no `climb`, penalty, roles, Tomb, nemesis or Qilin code in
+`apps/server/src`; the built neighbours are storms, lightning, the tornado, winter play, the siege with Hunters, Play
+the Boss, alchemy, Berserk, horses, parties, guilds, stalls and trade]. §17's lanes still describe *what* each piece is;
+this section says *in which order* to hand them out at cap 25. Each layer is playable on its own and ends with the
+existing test suite green; a layer never edits a file another layer of the same step edits.
+
+| Layer | What | Kind | Files (owner) | Size | Playable result |
+|---|---|---|---|---|---|
+| **L0 Data and config** | `LEVEL_CAP` 25; Tiger Girl's new tuning in `content/uniques.json` (§2.6, fields that exist: `hpMul`, `attackMul`, `fury`, `summons`); the Ice Yeti's `YETI_HP_MUL` admin knob; the siege's Warlord HP setting (§2.6); `nests.override.json` removes the x-155 canyon nests and the two Hyeongcheon 30 nests; `npcs.override.json` adds Boatman Sagong and Scholar Ha-yeon; the **quest file rewritten** with the ≈ 22 quests that need no new engine (QUESTS_CLIMB §3 "Data only"), on retail codes for now | **data only** | `content/` only | 1.5 | the cap is 25, Tiger Girl is a level-25 fight, the new questline's data-only half is live (rewards on the cap-25 budget) |
+| **L1 Climb core** | the cap-25 `levels` table loader (`content/climb/levels.json`, §3.2); the item `reqLevel` override (6 rows, §4.1.1); S-DERIVE + S-REMAP with B7/B8 and the summons remap (§2.2, Tiger Girl's Guard); the level-difference EXP (S-EXP); the converter's `MAX_SKILL_MASTERY_LEVEL` 20 → 25 and a skills re-export (§5.2); `TYPICAL_SP_BY_LEVEL` regenerated | small engine + data | `packages/shared/src/climb.ts`, `spawner.ts`, `gameplay.ts`, `packages/convert/src/data/skills.ts`, `content/climb/*` (CL-P, CL-SV part, CL-D) | 3 | levels 1–25 on the new curve and roster; masteries to 25 |
+| **L2 The high country and the bosses** *(2026-10-10; was "the far bank")* | the places' area notices and warning lines (§2.7); the uniques additions (area notices, adds table, authored camps, look) and MB1–MB8, Mo-Dun's camp on the Ferry Heights and Hyeongcheon's lair on the Sea Cliffs (CL-SV, CL-D); no ferry, no second home component | engine | `uniques.ts`, `content.ts`, `content/uniques.json` | 2.5 | the high country's notices; seven mini-bosses |
+| **L3 Roles** | pack, ranged, healer (with `healInterrupted`), coward (CL-R) | engine | `apps/server/src/climb/roles.ts`, `ai.ts` hook | 2 | the difficulty of §2.4 |
+| **L4 The death penalty** | 15–24, grace, Incense, refunds, combat linger (CL-K) | engine | `climb/penalty.ts`, `connection.ts` | 1.5 | rule #13 |
+| **L5 Quest engine** | QUESTS_CLIMB E1 (events + ≈ 20 emits), E2 (conditions), E3 (snares), E10 (charged drops), E12 (ambush), E13 (quest migration); the rest of the quest file | engine + data | `packages/shared/src/quests.ts`, `apps/server/src/quests/*`, one-line emits in the modules | 4.6 | all quests but the set pieces |
+| **L6 Quest set pieces** | E4 scorch moss, E5 player rods, E9 practice kegs, E11 bell toll (2.2); E6 quest outlaw (1.5); E7 tail (1.5); E8 spirit walk (3) | engine | lightning, siege, pilot, quests | 8.2 | CQ_12, 24, 27, 28, 31, 32, 33 as designed (each has a data fallback until then) |
+| **L7 Arts, sets, titles, client** | CL-A, CL-U, CL-G (§17.2) | engine + client | as §17.2 | 5 | the cap's goals and the UI |
+| **L8 Migration and deploy** | §9 + §9.3a + QUESTS_CLIMB §8 in one migration; the bot soak at 19–24 (§17.3) re-running `work/tmp/climb25/climb25.ts` on the shipped files; the What's new entry; deploy **only with the user's OK** and the rates line (§9.4) | engine + ops | `db.ts`, soak | 2 | live |
+| | | | | **≈ 31** | |
+
+- **Order and parallelism** (max two helpers at once, the user's rule): L0 alone first (one helper, a day and a half);
+  then L1 ∥ L5's shared half (E1, E2 in `quests.ts`); then L2 ∥ L3; then L4 ∥ L6's small pieces; then L6's big pieces
+  (E8 with E7); L7 ∥ L8's soak. The siblings (TOMB_DUNGEON, NEMESIS, STORM_QILIN) are separate waves; their quests
+  (JG_T01, CQ_36, CQ_44, CQ_48) switch on when they land.
+- **Cut order** (from the top, never the layers L0–L4): L6's E8, E7, E6 (each quest keeps its data fallback), L7's sets
+  and titles, L2's MB1/MB2. §18's never-cut list stands, with "the cap-25 curve and the D3 override" added.
+
 ## Appendix: scratch files (`work/tmp/climb/`)
 
 `lib.ts`, `session.ts`, `design.ts`, `climb.ts`, `validate.ts`, `tune.ts`, `roster.ts`, `survey.ts`,
@@ -1275,3 +1833,11 @@ loss.
 `out-run1.txt` … `out-run5.txt`; the fact-check's `fc-powerlevel.ts`, `fc-nav.ts`, `fc-nav2.ts`, `fc-remap.ts`,
 `fc-survey.ts`, `fc-climb.ts`, `fc-borders.ts`, `fc-data.ts`, `out-verify.txt`, `out-fc-trip-fixed.txt`,
 `out-fc-trip-recal.txt`, `out/fc-climb.json`. No file outside `work/tmp/climb/` and this doc was written.
+
+**Cap 25 scratch (`work/tmp/climb25/`, 2026-10-08):** `lib.ts` and `session.ts` (copies of the cap-20 model with 03_C
+gear, the `req25` squeeze, X-Large potions and SP past 20), `design25.ts` (bands, roster, spots, bosses, targets),
+`climb25.ts` (the whole run; `TARGET_H`, `WAVE13=1`, `SEED`), `bosses25.ts` and `tg25.ts` (boss fights and the Tiger
+Girl grid alone; `GRID`, `MB`, `MB8`), `rows.ts` (the derived rows), `d3.ts` (the degree-3 census), `table.ts` (§3.2a),
+`quests25.ts` (QUESTS_CLIMB §5's rewards), `out-run1.txt` (first tune), `out-run3.keep.txt` (run 3), `out-run4.txt`
+(the numbers of this rebase), `out-rows.txt`, `out-table.txt`, `out-quests.txt`,
+`out/climb25-58.json`. Reproduce: `pnpm tsx work/tmp/climb25/climb25.ts` (≈ 25 min on this PC).

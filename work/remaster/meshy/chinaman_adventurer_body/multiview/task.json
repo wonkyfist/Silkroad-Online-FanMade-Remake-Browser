@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea28-5832-71d4-807e-617e7107bb1c",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea28-5832-71d4-807e-617e7107bb1c.png?Expires=1790894193&Signature=ZGJ3WtvDcL2tZAUvhiZ2-RV9fh0ZK2FUNy8w8ADXD~7kQsuGU6SpL9quj65sIXJKoTMTMkoimD6FIXvM77N1wfyf-9yygBNwQx~28WDqU7MHnY1CrMtg0oOGcBRwyAIG5kx55sd9d9HQgxo2bfuIc~fVoBuLDMswkgVTt0R92G9bMFJ4VAckJg6mMpGVOo7nJLLPHr1YN1sV2TgNRo9j1kgG8REPiSmlPX4zHDPBrK9iXXi4wQe-sg~nUoQA6WAAxDGASUrGHhMBCKiICUzuCzy5NMyOcM4ENVJ03L1~Oby8bslzeZEpBEanP~XIMNkG1xFF0xNLe2PgE-tzpH-e1g__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea28-5832-71d4-807e-617e7107bb1c.png?Expires=1790894193&Signature=MX8toXLpcJLyfYQG4es7xzZOnljWulzK-pWxCl~TMCoDi6vUn-CXDHrK5kFiT1ZC8HBNol3s4j~01pWCN2bn4cyTgD~PAsLSWE-pmjFM7Q1MnnznriXO32TIIZmYBkAGmJ9~4ecebdkypvRvCCGWIW9KnV6age5iuKkmfiudg87jkhjkPMmOUXRqfjt50BrURLTJOcg2ApAvS-WPE8rZAafMfBrz3hQME8k6C5vteCqoStPKjdM0MeBanwQfMyD9RBzD1Vs7dQZQHJ9wEMlQvbTv45Y9vaib-bu04CQ7V0g5IldkIo2tR8xxau5nWMyYyTePgfTQtLrCJeMUHkgpjg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea28-5832-71d4-807e-617e7107bb1c.png?Expires=1790894193&Signature=cCo5VV368kGftFHuoL~mbdzipkuIKqJ0~3qyEUu1x-iAsLrlx4-U9DHRxqRr20GAaabVyGKnO-Ee3Tic3q-07wBZuHCbQxRE-F3COhq9GVXppegOAZRZ5o0Aa9PFcO9f4ZYNP76lkLrvWZMnRnLQkBgGYYXhg8~iZ37z0NREsgNftTvBC9sdeQfJXaBa0Pc7WD0g3NFAiw0O2v~PPmL-L2vDk84Q7KO6ugUYNDC1qz5Cy~ZmiZXyQG4hnbF9nyuNOA5HH74EO3bFWvQjFZ3hZjBx1zDv21jpBAFuDsJ1f8eg3jEAppxDHZb0fdq9lSONzVz5lRx9Mweq4OWzfMmNUQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea28-5832-71d4-807e-617e7107bb1c.png?Expires=1790894193&Signature=ImrgjLcKVGo2Qmb-O~7rtZa3mycO7PLWxy03E2gANE04-PEbwK2UqjMmOae5HlwFgr80ZQQmNFhuNAJAxLKKOfL-P3QKWOvHnSsG78skviDx30fWX4PjoM9dPMNXTsYL5ZlK2RheME0VX9~dxIqf8pstJYzkEVeR0ZBjudZfibWROi0kEGkLagypRzl4xnReUd4ZofvS1~LCQ0jTUOCJXCGUgr85pJZPTOPqX7HKGD~aYOzSjuFYUWohLsNBLa8uEOv8wJNcafzFipx1DXU30myL2GmswFWaVJn6NrHh3XiD8ZKjgUJpsBDFVVc3Jrih-mCLhTEnTP-y75zK25bz2w__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790634909757,
+  "progress": 100,
+  "started_at": 1790634909775,
+  "finished_at": 1790634993744,
+  "expires_at": 1790894193744,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea28-5832-71d4-807e-617e7107bb1c/output/model.glb?Expires=1790894193&Signature=ZI5C5TYdMRrFZzsSfn8G1LiDqcY03D5ai-4VhzJNJIdK9fy8AndSgJYcE9LS86TTNZuaTKMfqNbV2BcavP7af-alDmsC0nthPo6qcgA0S8lMMZpRtjDMkhemQjsQs7b7FRUC-N3lHw~IfDlQfGLrHMfM7FOiu5USU5gzHUHWHJXTqh24W536k2JEKa4aEEzXA9hfpbYywW5BCJDlU3GMgBN6EuWBoRWXkgRIJ2YwkbGKF1eumZIBzNyTY9Ng49H3SaJjiwzrW48L3hkdzCIEyKSjGkEk9TF2gx7~UUMi9eW1LmJNf8LZviPYlK3BU5rTea~2CZHkaAQhIl~kyfOpsQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_body\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_body\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_body\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_body\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\chinaman_adventurer_body\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and placement of every feature. A lean, muscular East Asian man with warm light-tan skin; dark brown hair painted on the scalp; an ornate black-and-gold band with spiral scroll engraving over the right eye and brow; grey-green eyes and a thin tear-like scar under the eye. Small yellow talisman paper strips with red brush marks painted on the chest, forearms and shins, kept as abstract red brush strokes. Dark olive-green loincloth shorts with a gold cloud-scroll pattern and gold trim. Target: realistic skin with pores, subtle subsurface warmth, natural muscle definition and veins, detailed hands and feet with nails and creases, fine woven fabric with gold thread embroidery on the shorts. No text, no logos, no added clothing or armour."
+  }
+}

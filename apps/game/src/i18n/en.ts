@@ -36,13 +36,17 @@ import { enMovement } from './en-movement.ts'
 import { enUnique } from './en-unique.ts'
 import { enQol } from './en-qol.ts'
 import { enPilot } from './en-pilot.ts'
+import { enCreator } from './en-creator.ts'
 import { enGpu } from './en-gpu.ts'
 import { enStorm } from './en-storm.ts'
 import { enSiege } from './en-siege.ts'
 import { enSiegeRepair } from './en-siege-repair.ts'
 import { enSiegeLaw } from './en-siege-law.ts'
+import { enSiegeHunter } from './en-siege-hunter.ts'
 import { enNews } from './en-news.ts'
 import { enWinterPlay } from './en-winter-play.ts'
+import { enClimb } from './en-climb.ts'
+import { enRarity } from './en-rarity.ts'
 
 export const en = {
   // ---- per-lane string files (each lane edits only its own) ------------------------------------
@@ -78,6 +82,7 @@ export const en = {
   ...enSiege,
   ...enSiegeRepair,
   ...enSiegeLaw,
+  ...enSiegeHunter,
   // Wave 10 (docs/WAVE_PLAN6.md D15): the jump's toasts (MV-C).
   ...enMovement,
   // Wave 11 (docs/WAVE_PLAN7.md D8): the unique-monster announcements (U-H).
@@ -86,12 +91,17 @@ export const en = {
   ...enQol,
   // Play the Boss (docs/PLAY_THE_BOSS.md §4.6).
   ...enPilot,
+  // The character creator (docs/CHARACTERS.md §16.10).
+  ...enCreator,
   // A lost graphics device (gpu-loss.ts).
   ...enGpu,
   // The "What's new" window (docs/CHANGELOG_WINDOW.md).
   ...enNews,
   // The winter gameplay layer (docs/WINTER.md §13).
   ...enWinterPlay,
+  ...enClimb,
+  // Rare weapons (docs/RARITY.md).
+  ...enRarity,
 
   // ---- boot / app shell ----------------------------------------------------------------------
   'boot.loading': 'Loading...',
@@ -318,6 +328,11 @@ export const en = {
   'hud.death.body': 'Return to town to be revived there with full HP and MP.',
   'hud.death.respawn': 'Return to town',
   'hud.death.waiting': 'Returning...',
+  'hud.death.lost': 'You lost {pct} % of your experience ({exp} EXP).',
+  'hud.death.spared': 'Your ancestors spare you: no experience lost.',
+  'hud.death.refund': '{exp} EXP of your lost experience was restored.',
+  'hud.death.empty': 'Your experience bar was empty: nothing was lost.',
+  'hud.death.grace': 'Grace {time}: another death before then costs nothing.',
   'hud.loot.gold': '{gold} gold obtained',
   'hud.loot.item': '{name} obtained',
   'hud.loot.items': '{name} x{count} obtained',

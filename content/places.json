@@ -3,10 +3,10 @@
   "kind": "places",
   "world": "jangan",
   "notes": [
-    "The GM teleport places (docs/PLAYTEST.md §7 \"Teleport places\"), merged after the world manifest places (the textzonename.txt areas and beach-south): a place here replaces a manifest place of the same name (western-china-ferry) and takes over the names in its aliases (beach-south). The town spawn (jangan, spawn) comes from towns.json and is not listed here.",
+    "The GM teleport places (docs/PLAYTEST.md §7 \"Teleport places\"), merged after the world manifest places (the textzonename.txt areas and beach-south): a place here replaces a manifest place of the same name and takes over the names in its aliases (beach-south). The town spawn (jangan, spawn) comes from towns.json and is not listed here.",
     "Every wave that adds somewhere worth visiting adds it here (docs/BACKLOG.md). A row: { name (kebab-case, at most 32 characters), group (town | fields | coast | bosses | other), x, y (the height hint: tp stands on the open surface nearest it), z (glTF metres), aliases? }. At start the server checks each row by the tp rule (open ground in the town spawn's walkable component within 10 m, inside the world bounds) and logs and skips a row that fails.",
     "Rows with a snap are computed on the real export by the places tool (pnpm --filter @sro/server places [--write]; apps/server/src/cli/places.ts). near: the nearest open point to a hand-picked spot. area: inside a zones.json area by the GM where name, 16 m inside the world bounds, dry (not under a retail water plane); with shore, its lowest open point at least aboveSeaM over the sea level (the beach, not the cliff behind it), else the nearest open point to its mean centre. nest: the nearest open point to a nest centre. Open = standing by the placement rule, an open terrain cell, 1.5 m of standing ground around. Rows without a snap are hand-authored; the tool only checks them.",
-    "Coast: the in-bounds coast a player can stand on. Tiger Beach, Tiger Cape, Tomb Ridge Beach, River Mouth, South-East Cape, Jangan Bay, Spur Cove, Canyon Beach, Western China Beach and Northern Road Beach lie wholly in the sea ring outside the walkable bounds of jangan-fields, so they have no place. east-shelf-beach and western-strait are the in-bounds strip the HUD names after them: a cliff and a ridge over the water. Earth Ghost Canyon, Okmungwan Field and the Western China areas across the river are not in the town's walkable component (no ferry yet).",
+    "Coast: the in-bounds coast a player can stand on. Tiger Beach, Tiger Cape, Tomb Ridge Beach, River Mouth, South-East Cape, Jangan Bay and Canyon Beach lie wholly in the sea ring outside the walkable bounds of jangan-fields, so they have no place. east-shelf-beach and western-strait are the in-bounds strip the HUD names after them: a cliff and a ridge over the water. The Western China side across the strait and the land bridge toward Donwhang are open sea now (content/coast/coast.json drown, docs/COAST.md §4.1), so no place lies there.",
     "north-gate: Jangan's outer wall has no north opening; the north gate is the palace's big gate at the north end of the plaza avenue, where Soldier Choiyoung [Teleport] stands guard. Bosses: tiger-camp-1 .. 11 are Tiger Girl's eleven camps (nests.json uniqueGroup) in nest id order."
   ],
   "places": [
@@ -116,6 +116,17 @@
       "source": "snapped from -145, -190.5: 0.0 m"
     },
     {
+      "name": "stockade",
+      "group": "town",
+      "x": -150,
+      "z": -290,
+      "y": 0,
+      "aliases": [
+        "jail"
+      ],
+      "source": "docs/SIEGE.md §8.5: the Garrison Stockade, outside its gate (Warden Bae)"
+    },
+    {
       "name": "market",
       "group": "town",
       "x": 160,
@@ -176,15 +187,28 @@
       "source": "snapped from 214.5, -231.5: 0.0 m"
     },
     {
-      "name": "western-china-ferry",
+      "name": "ferry-heights",
       "group": "fields",
-      "x": -1419.8,
-      "z": -344.3,
-      "snap": {
-        "area": "Western China Ferry"
-      },
-      "y": 10.54,
-      "source": "area 'Western China Ferry' (10 regions): the nearest open point in it to its mean centre, 354.0 m away"
+      "x": -1900,
+      "z": 450,
+      "y": 56.75,
+      "source": "the Climb B7 (docs/CLIMB.md §2.1, 2026-10-10): the ridge above the ferry landing, North-Tiger Mt.'s north-west (158.1, 94.7)"
+    },
+    {
+      "name": "sea-cliffs",
+      "group": "fields",
+      "x": -2050,
+      "z": 1000,
+      "y": 66.79,
+      "source": "the Climb B8 (docs/CLIMB.md §2.1): the island's west rim over the open sea (157.3, 91.8)"
+    },
+    {
+      "name": "canyon-lord-lair",
+      "group": "other",
+      "x": -2227,
+      "z": 1211,
+      "y": 120.4,
+      "source": "the Climb MB8 Hyeongcheon, the Canyon Lord (docs/CLIMB.md §2.5): the south-west crest of the Sea Cliffs (156.4, 90.7), 120 m over the sea"
     },
     {
       "name": "jangan-south-beach",

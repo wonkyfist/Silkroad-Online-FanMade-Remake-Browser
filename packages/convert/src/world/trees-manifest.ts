@@ -172,7 +172,11 @@ export function createTreeSwapPass(opts: TreeSwapOptions): TreeSwapPass | null {
     return null
   }
   return async (ctx: WorldPassContext): Promise<TreeSwapStep> => {
-    const plan = planTreeSwap(ctx.models, swaps, species, built, s => ctx.warnings.push(s))
+    // only models a placement uses: a family whose every placement an earlier pass dropped (the coast's drowned area held
+    // the export's only reeds) appends no species
+    const placed = new Set(ctx.placements.flatMap(p => p.models))
+    for (const m of ctx.models) if (placed.has(m.index) && m.staticVariant !== undefined && m.staticVariant !== null) placed.add(m.staticVariant)
+    const plan = planTreeSwap(ctx.models.filter(m => placed.has(m.index)), swaps, species, built, s => ctx.warnings.push(s))
     const models: TreeSwapStep['species'] = []
     for (const id of plan.species) models.push(await exportSpecies(id, join(treesDir, id), ctx.outDir))
     if (plan.species.length) ctx.log(`tree swap: ${plan.species.join(', ')} from ${treesDir}`)

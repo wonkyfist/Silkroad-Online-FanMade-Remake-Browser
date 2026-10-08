@@ -1,4 +1,4 @@
-import { MAX_GOLD, MONTH_DAY_RE, STORM_TABLE, WALL_DEFAULTS, WINTER_DEFAULTS, WINTER_PLAY, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
+import { CLIMB_PENALTY, DEFAULT_LEVEL_CAP, MAX_GOLD, MONTH_DAY_RE, RARE_PCT_MAX, RARITY_DEFAULTS, STORM_TABLE, WALL_DEFAULTS, WINTER_DEFAULTS, WINTER_PLAY, hostTimeZone, parseMonthDay, validTimeZone, type AdminSettingDef, type AdminSettingState, type AdminSettingValue } from '@sro/shared'
 import { MOB_SKILL_DAMAGE_MODES, W8_DEFAULTS, type ServerConfig } from '../config.ts'
 import type { GameContext } from '../game.ts'
 import type { AdminStore } from './store.ts'
@@ -45,9 +45,11 @@ const dayCheck = (v: string): string | null => (parseMonthDay(v) === null ? 'mus
 
 const ACCESS = 'Access'
 const RATES = 'Progression and rates'
+const CLIMB_G = 'The Climb: death penalty and monster roles'
 const WORLD = 'World and monsters'
 const COMBAT = 'Combat and items'
 const SOCIAL = 'Guilds and stalls'
+const RARE = 'Rare weapons'
 const STORMS = 'Weather and storms'
 const WINTER = 'Winter season'
 const WINTER_GAME = 'Winter gameplay'
@@ -64,9 +66,19 @@ export const SETTINGS: readonly SettingSpec[] = [
   int('registerPerHour', 'REGISTER_LIMIT', 'Registrations per IP per hour', ACCESS, 1, 100000, 10, 'restart'),
 
   {
-    ...int('levelCap', 'LEVEL_CAP', 'Level cap', RATES, 1, 300, 20, 'live', 'EXP, shops, quests and setlevel follow at once; players see the new cap after re-entering the world; unique gear pools and the default monster level limit at the next restart.'),
+    ...int('levelCap', 'LEVEL_CAP', 'Level cap', RATES, 1, 300, DEFAULT_LEVEL_CAP, 'live', 'EXP, shops, quests and setlevel follow at once; players see the new cap after re-entering the world; unique gear pools and the default monster level limit at the next restart. The EXP per level is content/climb/levels.json (the Climb curve, levels 1-25).'),
     onLive: forgetAllShopGoods,
   },
+  bool('climb', 'CLIMB', 'The Climb (re-levelled monsters, cap-25 EXP curve, level rule)', RATES, true, 'restart', 'docs/CLIMB.md: the monsters of every band at their new levels, the EXP curve of content/climb/levels.json, and a kill 2+ levels below you paying less (−15 % a level). Off: retail monsters and curve. Saved characters were moved to the curve once at the first start with it on; turning it off later does not move them back.'),
+  bool('climbRoles', 'CLIMB_ROLES', 'Monster roles (packs, archers, healers, runners)', CLIMB_G, true, 'live', 'docs/CLIMB.md §2.3: the re-levelled monsters call nest-mates (packs), keep their distance from melee (archers, healers), heal hurt allies (healers; a stun cancels the cast) and run for help at low HP (runners). Needs The Climb on.'),
+  bool('deathPenalty', 'DEATH_PENALTY', 'Death penalty (EXP lost to monster deaths)', CLIMB_G, true, 'live', 'docs/CLIMB.md §6: a death to a monster or boss takes a random share of the EXP bar (never a level). Never for PvP (Hunters, Wanted), siege monsters, Play the Boss, lightning or GM kills. Needs The Climb on.'),
+  int('penaltyFromLevel', 'PENALTY_FROM_LEVEL', 'Death penalty from level', CLIMB_G, 1, 300, CLIMB_PENALTY.fromLevel, 'live', 'Nothing is taken at the level cap (no bar is kept there).'),
+  int('penaltyMinPct', 'PENALTY_MIN_PCT', 'Death penalty: least EXP lost (% of the bar)', CLIMB_G, 0, 100, CLIMB_PENALTY.minPct, 'live'),
+  int('penaltyMaxPct', 'PENALTY_MAX_PCT', 'Death penalty: most EXP lost (% of the bar)', CLIMB_G, 0, 100, CLIMB_PENALTY.maxPct, 'live', 'Never more than the EXP in the bar: a death never takes a level.'),
+  num('penaltyGraceMin', 'PENALTY_GRACE_MIN', 'Death penalty grace (minutes)', CLIMB_G, 0, 1440, CLIMB_PENALTY.graceMin, 'live', 'A death within this long of a death that took EXP costs nothing (the grace never restarts on a free death).'),
+  int('penaltyGraceHighFrom', 'PENALTY_GRACE_HIGH_FROM', 'Longer grace from level', CLIMB_G, 1, 300, CLIMB_PENALTY.graceHighFrom, 'live', 'D51: the bars of 21-24 are big, so the grace is longer there.'),
+  num('penaltyGraceHighMin', 'PENALTY_GRACE_HIGH_MIN', 'Longer grace (minutes)', CLIMB_G, 0, 1440, CLIMB_PENALTY.graceHighMin, 'live'),
+  num('penaltyLingerS', 'PENALTY_LINGER_S', 'Combat logout linger (seconds)', CLIMB_G, 0, 60, CLIMB_PENALTY.lingerS, 'live', 'A player at penalty levels who leaves (closes the tab, loses the connection) within this long of monster damage stays in the world this long, still a target. 0 = off.'),
   num('expRate', 'EXP_RATE', 'EXP rate', RATES, 0, 1000, 1, 'live', 'Kill EXP x this. Quest EXP is not rated.'),
   num('spRate', 'SP_RATE', 'SP rate', RATES, 0, 1000, 1, 'live', 'Kill SP-EXP x this. Keep it equal to the EXP rate for the usual SP curve.'),
   num('goldRate', 'GOLD_RATE', 'Gold drop rate', RATES, 0, 1000, 1, 'live', 'Dropped gold x this.'),
@@ -82,7 +94,7 @@ export const SETTINGS: readonly SettingSpec[] = [
   },
   num('giantPct', 'GIANT_PCT', 'Giant chance (%)', WORLD, 0, 100, 1, 'live'),
   bool('spawnMobs', 'SPAWN_MOBS', 'Nest monsters', WORLD, true, 'restart'),
-  int('mobLevelMax', 'MOB_LEVEL_MAX', 'Highest monster level spawned (0 = all)', WORLD, 0, 1000, 25, 'restart'),
+  int('mobLevelMax', 'MOB_LEVEL_MAX', 'Highest monster level spawned (0 = all)', WORLD, 0, 1000, DEFAULT_LEVEL_CAP + 5, 'restart'),
   num('nestCountScale', 'NEST_COUNT_SCALE', 'Monsters per nest (scale)', WORLD, 0.1, 1, 1, 'restart'),
   bool('uniques', 'UNIQUES', 'Unique monsters as world bosses', WORLD, true, 'restart'),
   num('moveSpeed', 'MOVE_SPEED', 'Run speed (m/s)', WORLD, 0.1, 100, 5.5, 'restart'),
@@ -107,6 +119,14 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('storageFee', 'STORAGE_FEE', 'Storage fee multiplier (0 = free)', COMBAT, 0, 1000, 1, 'live'),
   bool('skillAmmo', 'SKILL_AMMO', 'Bow skills use arrows', COMBAT, false, 'live', undefined, true),
   int('cosCombatLockMs', 'COS_COMBAT_LOCK_MS', 'Horse lockout after combat (ms)', COMBAT, 0, 600000, W8.cosCombatLockMs, 'live'),
+
+  // docs/RARITY.md §4: an ordinary weapon drop may come as a Seal of Star / Moon / Sun (one roll, the rarest first)
+  num('rareStarPct', 'RARE_STAR_PCT', 'Seal of Star chance (% of weapon drops)', RARE, 0, RARE_PCT_MAX, RARITY_DEFAULTS.starPct, 'live', 'Each ordinary weapon a monster drops comes as its Seal of Star weapon this often (docs/RARITY.md §4.2: Star 1.5, Moon 0.4, Sun 0.1 = 2 % in all; at most 2 each). Uniques keep their own loot, at the same rates.'),
+  num('rareMoonPct', 'RARE_MOON_PCT', 'Seal of Moon chance (% of weapon drops)', RARE, 0, RARE_PCT_MAX, RARITY_DEFAULTS.moonPct, 'live'),
+  num('rareSunPct', 'RARE_SUN_PCT', 'Seal of Sun chance (% of weapon drops)', RARE, 0, RARE_PCT_MAX, RARITY_DEFAULTS.sunPct, 'live'),
+  int('rareTopMinLevel', 'RARE_TOP_MIN_LEVEL', 'Cap-tier (degree-4) Moon and Sun only from monster level (0 = any)', RARE, 0, 300, RARITY_DEFAULTS.topMinLevel, 'live', 'docs/CLIMB.md §4.1, D53: below this level a Moon or Sun roll on a weapon of the cap tier (degree 4) comes as a Seal of Star; lower degrees keep the normal rates. 25 = only the level-25 monsters of the Sea Cliffs and the level-25 bosses.'),
+  int('rareMidMinLevel', 'RARE_MID_MIN_LEVEL', 'Degree-3 Moon and Sun only from monster level (0 = any)', RARE, 0, 300, RARITY_DEFAULTS.midMinLevel, 'live', 'docs/CLIMB.md D54: below this level a Moon or Sun roll on a degree-3 weapon comes as a Seal of Star.'),
+  int('rareAnnounceFrom', 'RARE_ANNOUNCE_FROM', 'Announce rare drops from (1 Star, 2 Moon, 3 Sun, 0 off)', RARE, 0, 3, RARITY_DEFAULTS.announceFrom, 'live', 'Every player in the world sees who found it.'),
 
   int('guildCreateLevel', 'GUILD_CREATE_LEVEL', 'Guild creation level', SOCIAL, 1, 300, W8.guildCreateLevel, 'live', 'Shown in the client after re-entering the world.'),
   int('guildCreateGold', 'GUILD_CREATE_GOLD', 'Guild creation cost (gold)', SOCIAL, 0, MAX_GOLD, W8.guildCreateGold, 'live', 'Shown in the client after re-entering the world.'),
@@ -142,7 +162,7 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('snowballSlowPct', 'SNOWBALL_SLOW_PCT', 'Snowball slow (%)', WINTER_GAME, 0, 90, WINTER_PLAY.snowball.slowPct, 'live', 'A hit player runs this much slower for 1.5 s. Snowballs never hurt players.'),
   num('snowSpiritScale', 'SNOW_SPIRIT_SCALE', 'Snow spirits per field (scale)', WINTER_GAME, 0, 3, WINTER_PLAY.spirits.countScale, 'live', '7 fields of 4-5 spirits at 1. 0 = no snow spirits.'),
   num('yetiRespawnMin', 'YETI_RESPAWN_MIN', 'Ice Yeti respawn (minutes)', WINTER_GAME, 5, 1440, WINTER_PLAY.yeti.respawnMin, 'live', 'Rolled within 25 % either way after a kill. A timer already running keeps its time.'),
-  num('yetiHpMul', 'YETI_HP_MUL', 'Ice Yeti HP multiplier', WINTER_GAME, 0.05, 10, WINTER_PLAY.yeti.hpMul, 'live', '30,000 HP at 1. Applies to her next spawn.'),
+  num('yetiHpMul', 'YETI_HP_MUL', 'Ice Yeti HP multiplier', WINTER_GAME, 0.05, 10, WINTER_PLAY.yeti.hpMul, 'live', '30,000 HP at 1 (the default 2.6 = 78,000, her level-25 numbers against degree-4 gear: docs/CLIMB.md §2.6, D53). Applies to her next spawn.'),
   num('giftDropPct', 'GIFT_DROP_PCT', 'Gift box chance per kill (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.dropPct, 'live', 'Any monster killed during the season.'),
   int('giftYetiCount', 'GIFT_YETI_COUNT', 'Gift boxes from the Ice Yeti', WINTER_GAME, 0, 20, WINTER_PLAY.gifts.yetiCount, 'live'),
   num('giftRarePct', 'GIFT_RARE_PCT', 'Rare gift reward chance (%)', WINTER_GAME, 0, 100, WINTER_PLAY.gifts.rarePct, 'live', 'Per box, on top of its two rewards: an elixir, Lucky Powders or a pile of gold.'),

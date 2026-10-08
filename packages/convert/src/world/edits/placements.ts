@@ -9,7 +9,8 @@
  *   warnings and those edits are skipped: the converter never aborts on content (Publish validates first).
  * - An add names its model by source path; the placement is built from the export's first placement of that source
  *   (objId, models, compound, flags, group: what object.ifo gave it), so a planted carrier is the same object as a
- *   retail one. A source no placement uses cannot be added this wave (the editor converts nothing, D45).
+ *   retail one; when an earlier pass dropped every placement of the source, the converted one from before the passes
+ *   (WorldPassContext.retail). A source no placement uses cannot be added this wave (the editor converts nothing, D45).
  * - **Objects on edited ground** (§4.1, "keep objects on the ground", default on): a placement the edits leave in
  *   place, standing where the ground moved, follows the ground's change under its origin (its exported clearance
  *   kept) when it is vegetation or has no collision navmesh; anything else with a footprint (buildings, walls, bridges)
@@ -71,9 +72,10 @@ export function createEditsPass(opts: EditsPassOptions): WorldEditsPass {
 export function editsPassResult(ctx: WorldPassContext, opts: EditsPassOptions): EditsPassOutcome {
   const file = opts.layers.placements ?? { move: [], drop: [], add: [] }
   const exported = new Set(ctx.regions.map(r => r.id))
-  // the first placement of each source (file order): an add's template
+  // the first placement of each source (file order): an add's template; then the converted ones from before the passes,
+  // for a source an earlier pass dropped everywhere (the coast's drowned area held the export's only dunhuang rocks)
   const template = new Map<string, WorldPlacement>()
-  for (const p of ctx.placements) {
+  for (const p of [...ctx.placements, ...(ctx.retail ?? [])]) {
     const k = p.source.toLowerCase()
     if (!template.has(k)) template.set(k, p)
   }

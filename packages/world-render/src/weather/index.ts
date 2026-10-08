@@ -114,6 +114,11 @@ export interface WeatherHost {
   readonly render?: { readonly post: object | null }
   /** W10-S: the coast's ocean (World.ocean; null or absent: none), a shelter candidate like the water. */
   readonly ocean?: { meshes(): readonly AbstractMesh[] } | null
+  /**
+   * PLAZA-RAIN: the foliage (World.foliage): its band texture (T12-W) lets the shelter map collapse the tree tiers the
+   * world does not show, as the tree groups' own vertex stage does (absent or no band: every tier is drawn).
+   */
+  readonly foliage?: { readonly shared?: { readonly band: BaseTexture | null } | null } | null
   addCommitStep(name: string, run: (region: RegionData) => void, after: CommitStepAfter, debounceMs?: number): () => void
 }
 
@@ -264,7 +269,7 @@ export class WorldWeather implements WetnessSource {
     const scene = this.scene
     // Shelter first: the defines and the rain depend on it.
     if (p.shelter && !this.shelterMap) {
-      const sh = new WeatherShelter(scene, () => this.shelterCandidates())
+      const sh = new WeatherShelter(scene, () => this.shelterCandidates(), { treeBand: () => host.foliage?.shared?.band ?? null })
       sh.onRendered = () => this.placeShelter()
       this.shelterMap = sh
       this.shelter = sh

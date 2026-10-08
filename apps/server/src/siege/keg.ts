@@ -133,6 +133,9 @@ export interface PlayerKeg extends GroundKeg {
   associates: Associates
   /** When it was planted (the blast, not the plant, decides treason). */
   plantedAt: number
+  /** Layer 6 (docs/SIEGE.md §8.6): characters within law.lookoutM during the plant or the fuse, and those who tried to defuse. */
+  lookouts: Set<number>
+  tried: Set<number>
 }
 
 interface PlantCast {
@@ -143,6 +146,8 @@ interface PlantCast {
   hp: number
   castMs: number
   endsAt: number
+  /** Characters near the plant (lookouts). */
+  seen: Set<number>
 }
 
 export class ThunderKegs implements GameplayModule {
@@ -196,11 +201,14 @@ export class ThunderKegs implements GameplayModule {
 
   /** Why `p` may not have or plant a keg at all (level, played time, the law's own bars), or null. */
   private personRefusal(p: Player): Fail | null {
+    // layer 6: the jail and Hunter duty first (their own message)
+    const law = this.g.law.kegRefusal(p)
+    if (law) return law
     const s = this.settings
     if (p.level < s.minLevel) return fail('requirements', `Thunder Kegs are for characters of level ${s.minLevel} and up.`)
     const played = this.g.store.characterById(p.characterId)?.played_ms ?? 0
     if (played < s.minPlayHours * 3_600_000) return fail('requirements', `You need ${s.minPlayHours} hours of play on this character before you may handle a Thunder Keg.`)
-    return this.g.law.kegRefusal(p)
+    return null
   }
 
   /** The account's plant cooldown left (ms; 0 = free). */
@@ -281,7 +289,7 @@ export class ThunderKegs implements GameplayModule {
     this.g.world.halt(p, now)
     const [x, , z] = this.g.world.positionAt(p, now)
     const castMs = Math.max(1000, Math.round(this.settings.plantSec * 1000))
-    this.casts.set(p.id, { seg: r.seg, bag, startX: x, startZ: z, hp: p.hp, castMs, endsAt: now + castMs })
+    this.casts.set(p.id, { seg: r.seg, bag, startX: x, startZ: z, hp: p.hp, castMs, endsAt: now + castMs, seen: new Set() })
     this.g.world.broadcastAbout(p, { t: 'itemCast', id: p.id, item: def.code, castMs })
     this.plantNotice(r.seg, now)
   }
@@ -333,11 +341,13 @@ export class ThunderKegs implements GameplayModule {
       planter: { characterId: p.characterId, accountId: acc, name: p.name },
       associates: this.g.law.associates(p),
       plantedAt: now,
+      lookouts: new Set(c.seen),
+      tried: new Set(),
     }
     this.kegs.set(k.id, k)
     end('done')
     this.g.afterInventory(p, draft)
-    this.broadcast(kegMessage(k, false))
+    this.sendKeg(k)
     this.g.config.log(`kegs: ${p.name} planted a Thunder Keg at ${r.seg} (keg ${k.id})`)
   }
 
@@ -349,20 +359,30 @@ export class ThunderKegs implements GameplayModule {
     const q = this.g.world.positionAt(p, now)
     if (Math.hypot(q[0] - k.at[0], q[2] - k.at[2]) > KEG_DEFUSE_M) return answer(fail('too_far', 'Get closer to the keg to defuse it.'))
     if (this.g.law.isAssociate(k.associates, p)) return answer(fail('not_usable', 'You cannot defuse a keg you or your friends planted.'))
+    // trying to defuse clears a bystander of being a lookout (docs/SIEGE.md §8.6)
+    k.tried.add(p.characterId)
+    k.lookouts.delete(p.characterId)
     if (k.defuse && k.defuse.player !== p.id) return answer(fail('busy', 'Someone is defusing it already.'))
     beginDefuse(this.g, p, k, this.settings.defuseSec, now)
-    this.broadcast(kegMessage(k, false))
+    this.sendKeg(k)
     answer(true)
   }
 
   // ---- the tick ----------------------------------------------------------------------------------------------------------
 
+  /** Characters within law.lookoutM of (x, z), but the planter. */
+  private bystanders(x: number, z: number, planter: number, now: number): number[] {
+    const r = this.g.siege.settings.law.lookoutM
+    return r > 0 ? this.g.world.playersNear(x, z, r, now).filter((q) => q.characterId !== planter && !q.dead).map((q) => q.characterId) : []
+  }
+
   tick(now: number): void {
     for (const k of [...this.kegs.values()]) {
+      for (const c of this.bystanders(k.at[0], k.at[2], k.planter.characterId, now)) if (!k.tried.has(c)) k.lookouts.add(c)
       const d = defuseStep(this.g, k, now)
       if (d?.state === 'broken') {
         k.defuse = null
-        this.broadcast(kegMessage(k, false))
+        this.sendKeg(k)
       } else if (d?.state === 'done') {
         this.kegs.delete(k.id)
         this.broadcast({ t: 'kegEnd', id: k.id, how: 'defused' })
@@ -379,6 +399,8 @@ export class ThunderKegs implements GameplayModule {
   }
 
   blast(k: PlayerKeg, now: number): void {
+    // the lookouts: near the keg while it was planted or burned, never tried to defuse it (no bounty on the planter)
+    for (const c of k.lookouts) if (!k.tried.has(c)) this.g.law.contact(k.planter.characterId, c, 'lookout', now)
     this.broadcast({ t: 'kegEnd', id: k.id, how: 'blast' })
     const ip = Math.round((this.settings.damagePct / 100) * this.walls.settings.maxIp)
     const c = this.walls.change(k.seg, -ip, 'keg', now, { characterId: k.planter.characterId, at: k.at, fx: 'chip', data: { keg: k.id, by: k.planter.name } })
@@ -386,6 +408,17 @@ export class ThunderKegs implements GameplayModule {
     const opened = c !== null && !wallOpen(c.stageBefore) && wallOpen(c.stage)
     this.g.config.log(`kegs: ${k.planter.name}'s Thunder Keg blew at ${k.seg}${opened ? ' and breached it' : ''}`)
     this.g.law.kegBlast(k.planter, k.seg, now, opened)
+  }
+
+  /** The keg message for `q`: `mine` when it is theirs or a friend's (they may not defuse it; the prompt stays away). */
+  private kegFor(k: PlayerKeg, q: Player): Extract<ServerMessage, { t: 'keg' }> {
+    const msg = kegMessage(k, false)
+    if (this.g.law.isAssociate(k.associates, q)) msg.mine = true
+    return msg
+  }
+
+  private sendKeg(k: PlayerKeg): void {
+    for (const q of this.g.world.players.values()) q.send(this.kegFor(k, q))
   }
 
   private broadcast(msg: ServerMessage): void {
@@ -399,7 +432,7 @@ export class ThunderKegs implements GameplayModule {
   // ---- hooks ---------------------------------------------------------------------------------------------------------------
 
   enter(p: Player): void {
-    for (const k of this.kegs.values()) p.send(kegMessage(k, false))
+    for (const k of this.kegs.values()) p.send(this.kegFor(k, p))
   }
 
   tickPlayer(p: Player, now: number): void {
@@ -410,6 +443,7 @@ export class ThunderKegs implements GameplayModule {
     const hurt = p.hp < c.hp
     c.hp = p.hp
     if (moved || hurt || p.action !== null || this.g.itemUses.skillBusy(p, now)) return this.cancel(p, 'interrupted')
+    for (const ch of this.bystanders(x, z, p.characterId, now)) c.seen.add(ch)
     if (now >= c.endsAt) this.complete(p, c, now)
   }
 

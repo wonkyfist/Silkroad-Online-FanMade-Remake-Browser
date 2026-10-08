@@ -101,9 +101,10 @@ export type SiegeServerMessage =
   | { t: 'siegeReward'; reward: SiegeRewardView }
   /**
    * A keg at the foot of the wall (a sapper's; layer 5 adds the players'), to every world player: a burning fuse until
-   * `fuseEndsAt`. `defuse`: a defender is defusing it (who, until when).
+   * `fuseEndsAt`. `defuse`: a defender is defusing it (who, until when). `mine` (layer 6, per recipient): the keg is the
+   * recipient's own or a friend's (the planter's associates), so the server refuses their defuse and the prompt stays away.
    */
-  | { t: 'keg'; id: number; seg: string; x: number; y: number; z: number; fuseEndsAt: number; sapper?: true; defuse?: { by: number; endsAt: number } }
+  | { t: 'keg'; id: number; seg: string; x: number; y: number; z: number; fuseEndsAt: number; sapper?: true; defuse?: { by: number; endsAt: number }; mine?: true }
   /** The keg is gone: it blew, was defused, or the siege ended. */
   | { t: 'kegEnd'; id: number; how: 'blast' | 'defused' | 'cancelled' }
 
@@ -144,6 +145,8 @@ export interface SiegeMobSpec {
   rarity: MobDef['rarity']
   /** Multiplies the base's HP (the Warlord's own HP comes from the settings at spawn). */
   hpMul: number
+  /** Multiplies the base's attack (the Climb, docs/CLIMB.md §2.6: the Warlord × 1.15 at cap 25); absent = 1. */
+  atkMul?: number
   speedMul: number
   /** % of the base model's size. */
   scale: number
@@ -156,8 +159,10 @@ export const SIEGE_MOBS: readonly SiegeMobSpec[] = [
   { code: SIEGE_EVENT_CODES.ram, base: 'MOB_CH_STONEGHOST', name: 'Stone Ram', rarity: 'normal', hpMul: 1.5, speedMul: 1, scale: 100 },
   // the Bandit Warlord: not a world unique (no timer), only the siege spawns him; 220 % so he towers over
   // his army (the client paints him in dark red armour with a banner, world/siege/warlord.ts)
-  { code: SIEGE_EVENT_CODES.warlord, base: 'MOB_CH_BANDIT', name: 'Bandit Warlord', rarity: 'unique', hpMul: 1, speedMul: 1, scale: 220 },
+  { code: SIEGE_EVENT_CODES.warlord, base: 'MOB_CH_BANDIT', name: 'Bandit Warlord', rarity: 'unique', hpMul: 1, atkMul: 1.15, speedMul: 1, scale: 220 },
 ]
+
+const scaleRange = (r: readonly [number, number], k: number): [number, number] => [Math.round(r[0] * k), Math.round(r[1] * k)]
 
 /** The MobDef of a siege monster: the base's model and skills with the spec's changes. */
 export function deriveSiegeMob(spec: SiegeMobSpec, base: MobDef | undefined): MobDef {
@@ -171,8 +176,8 @@ export function deriveSiegeMob(spec: SiegeMobSpec, base: MobDef | undefined): Mo
     level: b?.level ?? 16,
     hp: Math.max(1, Math.round((b?.hp ?? 700) * spec.hpMul)),
     mp: 0,
-    physAttack: b ? [...b.physAttack] : [100, 120],
-    magAttack: b ? [...b.magAttack] : [0, 0],
+    physAttack: b ? scaleRange(b.physAttack, spec.atkMul ?? 1) : [100, 120],
+    magAttack: b ? scaleRange(b.magAttack, spec.atkMul ?? 1) : [0, 0],
     physDefence: b?.physDefence ?? 40,
     magDefence: b?.magDefence ?? 40,
     physAbsorb: b?.physAbsorb ?? 5,
@@ -393,6 +398,61 @@ export interface SiegeEventSettings {
     forgiveDays: number
     /** Kegs during a siege: bounty and sentence × this. */
     treasonMul: number
+    // ---- layer 6 (docs/SIEGE.md §8.4, §8.5, §11.2) ----
+    /** The jail's clock: 'real' (offline counts) or 'online' (only time in the world). */
+    sentenceClock: 'real' | 'online'
+    /** Chores take off at most this % of a sentence; one chore takes `choreSec` and `choreMin` off. */
+    choresCapPct: number
+    choreSec: number
+    choreMin: number
+    /** A released prisoner is no Hunter target (and no accomplice of older kegs) for this long (min). */
+    pardonMin: number
+    /** The same Hunter account catching the same Wanted account again within this many days gets no gold. */
+    pairCooldownDays: number
+    /** The bounty goes to Hunters who dealt ≥ captureMinPct % of the Wanted's max HP in the last captureWindowSec. */
+    captureWindowSec: number
+    captureMinPct: number
+    /** A Wanted who logs out within this many seconds of a Hunter's hit is caught on the spot. */
+    combatLogoutSec: number
+    /** The subdued pose before the warp to the stockade (s). */
+    subdueSec: number
+    // ---- anti-collusion (the user's rules, docs/SIEGE.md §8.6) ----
+    /** A Hunter whose account traded, partied, used a stall with or watched the keg of the Wanted's account within this many days claims nothing. */
+    contactDays: number
+    /** Players this close to a keg while it is planted or burns, who never try to defuse it, are lookouts (m). */
+    lookoutM: number
+    /** A bounty never exceeds this % of the Thunder Keg's price (keg.gold). */
+    bountyKegPct: number
+    /** Each earlier capture of the same Wanted account within pairCooldownDays takes this % off the bounty (stacking)... */
+    repeatPct: number
+    /** ...and from this many earlier captures on, nothing is paid. */
+    repeatMax: number
+  }
+  /** Layer 6 (docs/SIEGE.md §8.2, §8.3, §11.2): the Hunters. */
+  hunter: {
+    /** The licence at Captain Yun: level, gold, clean days (no offence on the account). */
+    minLevel: number
+    licenceGold: number
+    cleanDays: number
+    /** A Hunter who breaks a wall loses the licence for this many days. */
+    revokeDays: number
+    /** Off duty is refused this long after the last PvP hit (min). */
+    offDutyLockMin: number
+    /** Pings to on-duty Hunters: every pingSec, a circle of pingR m whose centre lies within pingOffsetM of the Wanted. */
+    pingSec: number
+    pingR: number
+    pingOffsetM: number
+    /** On-duty Hunters see the Wanted on the minimap within this range (m). */
+    senseM: number
+    /** Damage between players × this. */
+    pvpMul: number
+    /** The Hunter's Net: price, reach (m), the snare (s), the cooldown (s). */
+    netGold: number
+    netRangeM: number
+    netSec: number
+    netCooldownSec: number
+    /** Bounty gold one Hunter account may earn in 24 h. */
+    dailyBountyCap: number
   }
 }
 
@@ -408,7 +468,8 @@ export const SIEGE_EVENT_DEFAULTS: Readonly<SiegeEventSettings> = Object.freeze(
     ramEverySec: 3,
     sapperIp: 5000,
     warlordIp: 600,
-    warlordHp: 60_000,
+    // the Climb (docs/CLIMB.md §2.6, D44): 60,000 × 1.6, the standard curve's 20 → 25 HP factor
+    warlordHp: 96_000,
     scaleDiv: 5,
     scaleCap: 6,
     scaleExp: 0.8,
@@ -423,7 +484,46 @@ export const SIEGE_EVENT_DEFAULTS: Readonly<SiegeEventSettings> = Object.freeze(
   bell: { hp: 30_000, repairPct: 0.5, zoneM: 60 },
   rewards: { goldPerPoint: 50, goldCap: 30_000, pointsPerSeal: 50, sealCap: 10, lossShare: 0.25, titleTop: 3, titlePoints: 300, minPoints: 20 },
   keg: { damagePct: 60, plantSec: 5, fuseSec: 15, defuseSec: 3, cooldownMin: 30, minLevel: 18, minPlayHours: 10, gold: 50_000, saltpeter: 3, carry: 2, faceM: 10, noticeMin: 2 },
-  law: { bountyBase: 20_000, bountyCapMul: 4, wantedOnlineHours: 2, accompliceWindowMin: 10, forgiveDays: 30, treasonMul: 2 },
+  law: {
+    bountyBase: 20_000,
+    bountyCapMul: 4,
+    wantedOnlineHours: 2,
+    accompliceWindowMin: 10,
+    forgiveDays: 30,
+    treasonMul: 2,
+    sentenceClock: 'real',
+    choresCapPct: 25,
+    choreSec: 10,
+    choreMin: 1,
+    pardonMin: 10,
+    pairCooldownDays: 7,
+    captureWindowSec: 90,
+    captureMinPct: 10,
+    combatLogoutSec: 30,
+    subdueSec: 3,
+    contactDays: 7,
+    lookoutM: 30,
+    bountyKegPct: 80,
+    repeatPct: 50,
+    repeatMax: 3,
+  },
+  hunter: {
+    minLevel: 15,
+    licenceGold: 10_000,
+    cleanDays: 30,
+    revokeDays: 30,
+    offDutyLockMin: 2,
+    pingSec: 60,
+    pingR: 80,
+    pingOffsetM: 50,
+    senseM: 120,
+    pvpMul: 0.5,
+    netGold: 8000,
+    netRangeM: 12,
+    netSec: 2,
+    netCooldownSec: 60,
+    dailyBountyCap: 60_000,
+  },
 }) as SiegeEventSettings
 
 export type SiegeEventPatch = {
@@ -494,10 +594,44 @@ export const SIEGE_EVENT_BOUNDS: Readonly<Record<string, readonly [number, numbe
   'law.accompliceWindowMin': [0, 120],
   'law.forgiveDays': [1, 365],
   'law.treasonMul': [1, 5],
+  'law.choresCapPct': [0, 100],
+  'law.choreSec': [1, 120],
+  'law.choreMin': [0, 60],
+  'law.pardonMin': [0, 240],
+  'law.pairCooldownDays': [0, 90],
+  'law.captureWindowSec': [10, 600],
+  'law.captureMinPct': [0, 100],
+  'law.combatLogoutSec': [0, 600],
+  'law.subdueSec': [0, 30],
+  'law.contactDays': [0, 90],
+  'law.lookoutM': [0, 200],
+  'law.bountyKegPct': [1, 100],
+  'law.repeatPct': [0, 100],
+  'law.repeatMax': [1, 20],
+  'hunter.minLevel': [1, 200],
+  'hunter.licenceGold': [0, 10_000_000],
+  'hunter.cleanDays': [0, 365],
+  'hunter.revokeDays': [0, 365],
+  'hunter.offDutyLockMin': [0, 60],
+  'hunter.pingSec': [5, 600],
+  'hunter.pingR': [10, 500],
+  'hunter.pingOffsetM': [0, 400],
+  'hunter.senseM': [0, 500],
+  'hunter.pvpMul': [0.05, 2],
+  'hunter.netGold': [0, 10_000_000],
+  'hunter.netRangeM': [2, 40],
+  'hunter.netSec': [0, 10],
+  'hunter.netCooldownSec': [0, 600],
+  'hunter.dailyBountyCap': [0, 100_000_000],
 }
 
-/** Every editable path: 'enabled', 'schedule.slots', 'schedule.tz' and the numbers. */
-export const SIEGE_SETTING_PATHS: readonly string[] = ['enabled', 'schedule.slots', 'schedule.tz', ...Object.keys(SIEGE_EVENT_BOUNDS)]
+/** Settings that are a choice among strings ('group.field' -> the choices; layer 6's jail clock). */
+export const SIEGE_EVENT_CHOICES: Readonly<Record<string, readonly string[]>> = {
+  'law.sentenceClock': ['real', 'online'],
+}
+
+/** Every editable path: 'enabled', 'schedule.slots', 'schedule.tz', the numbers and the choices. */
+export const SIEGE_SETTING_PATHS: readonly string[] = ['enabled', 'schedule.slots', 'schedule.tz', ...Object.keys(SIEGE_EVENT_BOUNDS), ...Object.keys(SIEGE_EVENT_CHOICES)]
 
 export interface SiegeSettingsIssue {
   path: string
@@ -541,6 +675,11 @@ export function checkSiegeEventSettings(v: unknown): SiegeSettingsIssue[] {
             out.push({ path: `${path}[${i}]`, message: 'a slot is {weekday 0-6, time HH:MM}' })
           }
         })
+        continue
+      }
+      const choices = SIEGE_EVENT_CHOICES[path]
+      if (choices) {
+        if (typeof x !== 'string' || !choices.includes(x)) out.push({ path, message: `expected one of ${choices.join(', ')}` })
         continue
       }
       const b = SIEGE_EVENT_BOUNDS[path]

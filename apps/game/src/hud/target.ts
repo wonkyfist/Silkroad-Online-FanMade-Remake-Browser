@@ -32,6 +32,8 @@ export interface TargetInfo {
   band?: LevelBand
   /** Mobs: champion, giant, titan, elite, unique show their tw_icon_* ('normal' and 'party' show none). */
   variant?: MobVariant
+  /** Players in the Hunter / Wanted fight (docs/SIEGE.md §8.3: Wanted, or a Hunter on duty): the enemy window with HP. */
+  hostile?: boolean
 }
 
 /**
@@ -60,8 +62,8 @@ export type TargetVariant = 'enemy' | 'special' | 'player'
 const SPECIAL: ReadonlySet<MobVariant> = new Set(['champion', 'giant', 'titan', 'elite', 'unique'])
 
 /** Which 2009 window a target uses (pure, for tests). */
-export function targetVariant(tgt: Pick<TargetInfo, 'kind' | 'variant'>): TargetVariant {
-  if (tgt.kind !== 'mob') return 'player'
+export function targetVariant(tgt: Pick<TargetInfo, 'kind' | 'variant' | 'hostile'>): TargetVariant {
+  if (tgt.kind !== 'mob') return tgt.kind === 'player' && tgt.hostile ? 'enemy' : 'player'
   return tgt.variant && SPECIAL.has(tgt.variant) ? 'special' : 'enemy'
 }
 

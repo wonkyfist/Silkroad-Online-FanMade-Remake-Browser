@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "drops",
-  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "generatedAt": "2026-10-07T00:19:58.014Z",
   "sources": [
     "port:drops.json",
     "port:itemmap-tam.json",
@@ -11100,6 +11100,15 @@
           ]
         },
         {
+          "chance": 0.000311169,
+          "entries": [
+            {
+              "item": "ITEM_CH_RING_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
           "chance": 0.0002415,
           "entries": [
             {
@@ -11131,6 +11140,312 @@
           "entries": [
             {
               "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_BLADE_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_BOW_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_TBLADE_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_SHIELD_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_SPEAR_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222264,
+          "entries": [
+            {
+              "item": "ITEM_CH_SWORD_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_FA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_FA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_BA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_BA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_AA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_AA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_LA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_LA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_SA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_SA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_FA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_FA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_BA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_BA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_AA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_AA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_LA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_LA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_SA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_SA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_FA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_FA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_BA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_BA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_AA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_AA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_LA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_LA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000222251,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_SA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_SA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000177811,
+          "entries": [
+            {
+              "item": "ITEM_CH_EARRING_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000177811,
+          "entries": [
+            {
+              "item": "ITEM_CH_NECKLACE_04_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000044452,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_HA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_HA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000044452,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_HA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_HA_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000044452,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_HA_A",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_HA_A",
               "weight": 1
             }
           ]
@@ -11216,6 +11531,15 @@
           ]
         },
         {
+          "chance": 0.000286953,
+          "entries": [
+            {
+              "item": "ITEM_CH_RING_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
           "chance": 0.00024775,
           "entries": [
             {
@@ -11247,6 +11571,312 @@
           "entries": [
             {
               "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_BLADE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_BOW_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_TBLADE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SHIELD_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SPEAR_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SWORD_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163973,
+          "entries": [
+            {
+              "item": "ITEM_CH_EARRING_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163973,
+          "entries": [
+            {
+              "item": "ITEM_CH_NECKLACE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_HA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_HA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_HA_B",
               "weight": 1
             }
           ]
@@ -11332,6 +11962,15 @@
           ]
         },
         {
+          "chance": 0.000286953,
+          "entries": [
+            {
+              "item": "ITEM_CH_RING_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
           "chance": 0.00024775,
           "entries": [
             {
@@ -11363,6 +12002,312 @@
           "entries": [
             {
               "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_BLADE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_BOW_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_TBLADE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SHIELD_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SPEAR_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204966,
+          "entries": [
+            {
+              "item": "ITEM_CH_SWORD_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_FA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_FA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_BA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_BA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_AA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_AA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_LA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_LA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000204956,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_SA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_SA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163973,
+          "entries": [
+            {
+              "item": "ITEM_CH_EARRING_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163973,
+          "entries": [
+            {
+              "item": "ITEM_CH_NECKLACE_04_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_HA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_HA_B",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000040993,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_HA_B",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_HA_B",
               "weight": 1
             }
           ]
@@ -11482,6 +12427,321 @@
               "weight": 1
             }
           ]
+        },
+        {
+          "chance": 0.000228446,
+          "entries": [
+            {
+              "item": "ITEM_CH_RING_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_BLADE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_BOW_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_TBLADE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SHIELD_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SPEAR_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SWORD_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000130541,
+          "entries": [
+            {
+              "item": "ITEM_CH_EARRING_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000130541,
+          "entries": [
+            {
+              "item": "ITEM_CH_NECKLACE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_HA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_HA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_HA_C",
+              "weight": 1
+            }
+          ]
         }
       ],
       "provenance": "vsro-server-db via third-party port",
@@ -11595,6 +12855,321 @@
           "entries": [
             {
               "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000228446,
+          "entries": [
+            {
+              "item": "ITEM_CH_RING_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_BLADE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_BOW_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_TBLADE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SHIELD_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SPEAR_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163176,
+          "entries": [
+            {
+              "item": "ITEM_CH_SWORD_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_FA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_FA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_BA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_BA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_AA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_AA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_LA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_LA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000163169,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_SA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_SA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000130541,
+          "entries": [
+            {
+              "item": "ITEM_CH_EARRING_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000130541,
+          "entries": [
+            {
+              "item": "ITEM_CH_NECKLACE_04_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_CLOTHES_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_CLOTHES_04_HA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_HEAVY_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_HEAVY_04_HA_C",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "chance": 0.000032635,
+          "entries": [
+            {
+              "item": "ITEM_CH_M_LIGHT_04_HA_C",
+              "weight": 1
+            },
+            {
+              "item": "ITEM_CH_W_LIGHT_04_HA_C",
               "weight": 1
             }
           ]

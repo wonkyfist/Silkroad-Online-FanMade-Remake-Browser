@@ -154,87 +154,7 @@
     "night": true
    }
   ],
-  "27": [
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/oas_hot_etc_b.efp",
-    "bone": null,
-    "position": [
-     3.92155,
-     17.00014,
-     -7.22424
-    ],
-    "birthMs": 0,
-    "night": false
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/cj_pal_lamp_orange02_b.efp",
-    "bone": null,
-    "position": [
-     3.58063,
-     0.36359,
-     -2.72689
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/oas_hot_etc_b.efp",
-    "bone": null,
-    "position": [
-     3.21541,
-     17.00014,
-     -7.77125
-    ],
-    "birthMs": 0,
-    "night": false
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/frame2.efp",
-    "bone": null,
-    "position": [
-     14.37084,
-     0.0204,
-     -3.91387
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/cj_pal_lamp_orange02_b.efp",
-    "bone": null,
-    "position": [
-     14.35309,
-     0.64556,
-     -3.74017
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/frame.efp",
-    "bone": null,
-    "position": [
-     3.58063,
-     -0.11846,
-     -3.91387
-    ],
-    "birthMs": 0,
-    "night": true
-   }
-  ],
-  "29": [
+  "24": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -262,102 +182,7 @@
     "night": true
    }
   ],
-  "64": [
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/light.efp",
-    "bone": null,
-    "position": [
-     -5.19259,
-     4.45566,
-     8.07687
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/light.efp",
-    "bone": null,
-    "position": [
-     -4.85257,
-     14.83652,
-     5.11384
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/cj_pal_lamp_blue.efp",
-    "bone": null,
-    "position": [
-     -5.37172,
-     1.81885,
-     9.90618
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/light.efp",
-    "bone": null,
-    "position": [
-     4.43565,
-     14.83652,
-     5.10009
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/light.efp",
-    "bone": null,
-    "position": [
-     4.67865,
-     4.45566,
-     8.06672
-    ],
-    "birthMs": 0,
-    "night": true
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/cj_pal_lamp_blue.efp",
-    "bone": null,
-    "position": [
-     4.88252,
-     1.81885,
-     9.90618
-    ],
-    "birthMs": 0,
-    "night": true
-   }
-  ],
-  "66": [
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/cj_pal_lamp_orange.efp",
-    "bone": null,
-    "position": [
-     -0.06361,
-     9.33977,
-     3.67755
-    ],
-    "birthMs": 0,
-    "night": true
-   }
-  ],
-  "67": [
+  "59": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -385,7 +210,7 @@
     "night": false
    }
   ],
-  "68": [
+  "60": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -413,7 +238,7 @@
     "night": true
    }
   ],
-  "69": [
+  "61": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -428,7 +253,7 @@
     "night": true
    }
   ],
-  "71": [
+  "63": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -456,7 +281,7 @@
     "night": true
    }
   ],
-  "72": [
+  "64": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -484,7 +309,7 @@
     "night": true
    }
   ],
-  "79": [
+  "71": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -512,7 +337,7 @@
     "night": true
    }
   ],
-  "80": [
+  "72": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -527,7 +352,7 @@
     "night": true
    }
   ],
-  "81": [
+  "73": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -542,7 +367,7 @@
     "night": true
    }
   ],
-  "83": [
+  "75": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -557,7 +382,7 @@
     "night": true
    }
   ],
-  "88": [
+  "80": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -572,7 +397,7 @@
     "night": true
    }
   ],
-  "127": [
+  "119": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -587,48 +412,7 @@
     "night": true
    }
   ],
-  "141": [
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/w_cd_potal_blue.efp",
-    "bone": null,
-    "position": [
-     -0.77071,
-     2.82138,
-     -0.10128
-    ],
-    "birthMs": 0,
-    "night": false
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/w_cd_potal_blue_g.efp",
-    "bone": null,
-    "position": [
-     0,
-     2.81249,
-     -0.09868
-    ],
-    "birthMs": 0,
-    "night": false
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/w_cd_potal_blue_g.efp",
-    "bone": null,
-    "position": [
-     -0.69682,
-     9.0951,
-     0
-    ],
-    "birthMs": 0,
-    "night": false
-   }
-  ],
-  "167": [
+  "152": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -643,7 +427,7 @@
     "night": false
    }
   ],
-  "173": [
+  "158": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -658,7 +442,7 @@
     "night": true
    }
   ],
-  "175": [
+  "160": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -673,7 +457,7 @@
     "night": false
    }
   ],
-  "183": [
+  "168": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -701,7 +485,7 @@
     "night": true
    }
   ],
-  "194": [
+  "179": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -729,7 +513,7 @@
     "night": false
    }
   ],
-  "198": [
+  "183": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -757,7 +541,7 @@
     "night": false
    }
   ],
-  "213": [
+  "198": [
    {
     "set": "townLamp",
     "kind": "ambient",
@@ -772,7 +556,7 @@
     "night": true
    }
   ],
-  "215": [
+  "200": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -800,7 +584,7 @@
     "night": true
    }
   ],
-  "223": [
+  "208": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -828,7 +612,7 @@
     "night": false
    }
   ],
-  "227": [
+  "212": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -856,7 +640,7 @@
     "night": false
    }
   ],
-  "232": [
+  "217": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -910,7 +694,7 @@
     "night": false
    }
   ],
-  "263": [
+  "248": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -925,7 +709,7 @@
     "night": true
    }
   ],
-  "367": [
+  "347": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -979,7 +763,7 @@
     "night": false
    }
   ],
-  "374": [
+  "354": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1124,7 +908,7 @@
     "night": true
    }
   ],
-  "375": [
+  "355": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1347,7 +1131,7 @@
     "night": false
    }
   ],
-  "406": [
+  "382": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1362,7 +1146,7 @@
     "night": false
    }
   ],
-  "408": [
+  "384": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1377,7 +1161,7 @@
     "night": false
    }
   ],
-  "409": [
+  "385": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1392,7 +1176,7 @@
     "night": false
    }
   ],
-  "410": [
+  "386": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1407,35 +1191,7 @@
     "night": false
    }
   ],
-  "415": [
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/frame2.efp",
-    "bone": null,
-    "position": [
-     14.325,
-     2.14967,
-     15.11443
-    ],
-    "birthMs": 0,
-    "night": false
-   },
-   {
-    "set": "ambient",
-    "kind": "ambient",
-    "efp": "map/frame2.efp",
-    "bone": null,
-    "position": [
-     -17.95012,
-     2.14704,
-     15.11899
-    ],
-    "birthMs": 0,
-    "night": false
-   }
-  ],
-  "431": [
+  "401": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1463,7 +1219,7 @@
     "night": false
    }
   ],
-  "456": [
+  "425": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1517,7 +1273,7 @@
     "night": true
    }
   ],
-  "476": [
+  "445": [
    {
     "set": "ambient",
     "kind": "ambient",
@@ -1545,7 +1301,7 @@
     "night": false
    }
   ],
-  "477": [
+  "446": [
    {
     "set": "ambient",
     "kind": "ambient",

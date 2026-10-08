@@ -11,7 +11,7 @@
  * item onto this window, or right click it in the bag while the shop is open (the feature routes that through
  * `hud.routeBagAction`). Buy back: right click or drag a re-buy slot.
  */
-import { BUYBACK_SLOTS, type BuybackEntry, type ItemStack, type ShopDef } from '@sro/shared'
+import { BUYBACK_SLOTS, DEFAULT_LEVEL_CAP, type BuybackEntry, type ItemStack, type ShopDef } from '@sro/shared'
 import { t, type StringKey } from '../i18n/index.ts'
 import type { Art } from '../ui/art.ts'
 import { el } from '../ui/dom.ts'
@@ -90,7 +90,7 @@ export class ShopWindow extends NpcWindow {
   private page = 0
   private selected = -1
   private gender: Gender = 'male'
-  private cap = 20
+  private cap = DEFAULT_LEVEL_CAP
   private services: readonly string[] = []
   private buybackEntries: BuybackEntry[] = []
   /** true while the feature hides the window (not the player closing it). */

@@ -523,7 +523,8 @@ describe('the Ice Yeti (docs/WINTER.md §13.4)', () => {
     const m = yeti(h)!
     expect(m).not.toBeNull()
     expect(m.variant).toBe('unique')
-    expect(m.maxHp).toBe(30_000)
+    expect(m.maxHp).toBe(78_000) // 30,000 x YETI_HP_MUL 2.6 (CLIMB §2.6, D53: level 25 against degree 4)
+    expect(m.level).toBe(25)
     const nf = h.of(far.inbox, 'uniqueNotice').at(-1)!
     expect(nf).toMatchObject({ event: 'appeared', mob: WINTER_CODES.yeti, name: 'Ice Yeti' })
     expect(nf.roar).toBeUndefined()

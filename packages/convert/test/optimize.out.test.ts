@@ -33,7 +33,8 @@ describe.skipIf(!HAS)('work/out-opt', () => {
   })
 
   it('actor mesh glbs are small and every sidecar points at existing packs', () => {
-    const actors = walkFiles(OPT).filter(f => /^(char|mob|npc)\//.test(f) && f.endsWith('.glb') && !f.includes('/_anims/'))
+    // char/pilot/ and char/licensed/ are the new characters (docs/CHARACTERS.md §15–16), not retail actors: own budgets.
+    const actors = walkFiles(OPT).filter(f => /^(char|mob|npc)\//.test(f) && f.endsWith('.glb') && !f.includes('/_anims/') && !f.startsWith('char/pilot/') && !f.startsWith('char/licensed/'))
     expect(actors.length).toBeGreaterThan(0)
     for (const rel of actors) {
       if (rel.startsWith('char/')) expect(statSync(join(OPT, rel)).size, rel).toBeLessThan(1.5 * MB)

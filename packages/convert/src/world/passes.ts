@@ -55,6 +55,9 @@ export interface WorldPassContext {
   tiles: readonly TileTexture[]
   models: readonly WorldModel[]
   placements: readonly WorldPlacement[]
+  /** The converted placements before any pass: the world edits' add templates fall back to them, so a source whose
+   *  every placement an earlier pass dropped (the coast's drowned area) can still be planted. */
+  retail?: readonly WorldPlacement[]
   warnings: string[]
   log: (line: string) => void
 }
@@ -264,7 +267,7 @@ export async function runWorldPasses(input: WorldPassInput, passes: WorldPasses)
   const log = input.log ?? (() => {})
   const { warnings } = input
   const ctx = (placements: readonly WorldPlacement[], models: readonly WorldModel[], tiles: readonly TileTexture[]): WorldPassContext =>
-    ({ outDir: input.outDir, origin: input.origin, regions: input.regions, tiles, models, placements, warnings, log })
+    ({ outDir: input.outDir, origin: input.origin, regions: input.regions, tiles, models, placements, retail: input.placements, warnings, log })
   const uids = new UidRegistry()
   uids.input(input.placements)
 

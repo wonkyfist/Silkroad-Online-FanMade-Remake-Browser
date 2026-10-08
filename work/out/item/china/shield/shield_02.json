@@ -112,8 +112,8 @@
         64,
         128
       ],
-      "alphaMode": "BLEND",
-      "alphaReason": "BMT alpha flag; texture alpha mostly partial (70.8% partial, 29.2% zero)",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "weapon/shield: texture alpha is a specular/env mask (70.8% partial, 29.2% zero)",
       "doubleSided": true,
       "diffuse": [
         0.5882353186607361,

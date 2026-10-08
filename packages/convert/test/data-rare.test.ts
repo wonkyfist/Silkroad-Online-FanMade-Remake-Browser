@@ -1,7 +1,8 @@
 /**
  * W11-CV (docs/WAVE_PLAN7.md §4.5 optional, docs/UNIQUES.md §3.4): the degree-3 Seal of Star rows (`_RARE`) join
  * items.json for the unique's drop, and stay out of every normal mob's drop table.
- * - only degree 3 seals are exported (degree 1, 2 and 4+ seals are not);
+ * - degree-3 and degree-4 seals of every kind are exported (degree 4: the Climb's cap tier, docs/CLIMB.md §4.1.2); weapon
+ *   seals of every exported degree too (docs/RARITY.md §2), other degree-1/2 seals and degree 5+ rows are not;
  * - buildDrops skips `_RARE` codes (counted as `rare`) unless asked for them, then divides by the rare rate;
  * - the real client (skips without sro.config.json and the port data): items.json has degree-3 seals for every weapon
  *   kind, and no drop table names one.
@@ -14,7 +15,7 @@ import { CONTENT_FILES, contentEntries, type DropTable, type ItemDef } from '../
 import { loadClientSources } from '../src/data/client-source.ts'
 import { buildContent } from '../src/data/content.ts'
 import { buildDrops } from '../src/data/drops.ts'
-import { isExportedItem, RARE_ITEM_DEGREE } from '../src/data/items.ts'
+import { isExportedItem, MAX_ITEM_DEGREE, RARE_ITEM_DEGREES } from '../src/data/items.ts'
 import { defaultPortDataDir, loadPortData } from '../src/data/port-source.ts'
 import { textdataReader } from '../src/data/textdata-source.ts'
 import { loadConfig, openArchive, REPO_ROOT } from '../src/node-io.ts'
@@ -30,16 +31,23 @@ function itemCells(code: string, typeId: [number, number, number, number], extra
 }
 
 describe('Seal of Star rows', () => {
-  it('exports the degree-3 seals only', () => {
-    expect(RARE_ITEM_DEGREE).toBe(3)
+  it('exports the degree-3 and degree-4 seals and the weapon seals of every degree', () => {
+    expect(RARE_ITEM_DEGREES).toEqual([3, 4])
+    expect(MAX_ITEM_DEGREE).toBe(4)
     // col 61 is ItemClass: 3 classes per degree
     const item = (code: string, degree: number) => itemDataRow(row(itemCells(code, [3, 1, 6, 2], { 61: String(degree * 3) })))
     expect(isExportedItem(item('ITEM_CH_SWORD_03_A_RARE', 3))).toBe(true)
-    expect(isExportedItem(item('ITEM_CH_SWORD_01_A_RARE', 1))).toBe(false)
-    expect(isExportedItem(item('ITEM_CH_SWORD_02_C_RARE', 2))).toBe(false)
-    expect(isExportedItem(item('ITEM_CH_SWORD_04_A_RARE', 4))).toBe(false)
+    expect(isExportedItem(item('ITEM_CH_SWORD_01_A_RARE', 1))).toBe(true)
+    expect(isExportedItem(item('ITEM_CH_SWORD_02_C_RARE', 2))).toBe(true)
+    const ring = (degree: number) => itemDataRow(row(itemCells('ITEM_CH_RING_01_A_RARE', [3, 1, 7, 3], { 61: String(degree * 3) })))
+    expect(isExportedItem(ring(1))).toBe(false)
+    expect(isExportedItem(item('ITEM_CH_SWORD_04_A_RARE', 4))).toBe(true)
+    expect(isExportedItem(item('ITEM_CH_SWORD_05_A_RARE', 5))).toBe(false)
     const armour = itemDataRow(row(itemCells('ITEM_CH_M_HEAVY_03_BA_B_RARE', [3, 1, 3, 3], { 61: '8' })))
     expect(isExportedItem(armour)).toBe(true)
+    const armour4 = itemDataRow(row(itemCells('ITEM_CH_M_HEAVY_04_BA_C_RARE', [3, 1, 3, 3], { 61: '12' })))
+    expect(isExportedItem(armour4)).toBe(true)
+    expect(isExportedItem(armour4, 3)).toBe(false)
     // the ordinary rows are unchanged
     expect(isExportedItem(item('ITEM_CH_SWORD_03_A', 3))).toBe(true)
   })
@@ -63,6 +71,8 @@ describe('Seal of Star rows', () => {
   })
 })
 
+const codes0 = (items: readonly ItemDef[]): Set<string> => new Set(items.map(i => i.code))
+
 const hasConfig = existsSync(join(REPO_ROOT, 'sro.config.json'))
 const portDir = hasConfig ? (process.env.SRO_PORT_DATA ?? defaultPortDataDir(loadConfig().clientDir)) : ''
 const hasPort = hasConfig && existsSync(join(portDir, 'spawns.json'))
@@ -81,8 +91,14 @@ describe.skipIf(!hasPort)('the real export (vSRO 1.188 + port data)', () => {
     const items = contentEntries<ItemDef>(out.files[CONTENT_FILES.items])
     const seals = items.filter(i => /_RARE$/.test(i.code))
     expect(seals.length).toBeGreaterThan(100)
-    for (const kind of ['SWORD', 'BLADE', 'SPEAR', 'TBLADE', 'BOW', 'SHIELD']) expect(seals.some(i => i.code.startsWith(`ITEM_CH_${kind}_03_`)), kind).toBe(true)
-    expect(seals.every(i => /_03_/.test(i.code))).toBe(true)
+    for (const kind of ['SWORD', 'BLADE', 'SPEAR', 'TBLADE', 'BOW', 'SHIELD']) {
+      for (const d of ['03', '04']) expect(seals.some(i => i.code.startsWith(`ITEM_CH_${kind}_${d}_`)), `${kind} ${d}`).toBe(true)
+    }
+    // docs/RARITY.md §2: the weapon seals of degrees 1-4 (Star, Moon, Sun of each family); other seals degrees 3-4 only
+    expect(seals.every(i => /_0[34]_/.test(i.code) || i.category === 'weapon')).toBe(true)
+    for (const kind of ['SWORD', 'BLADE', 'SPEAR', 'TBLADE', 'BOW']) {
+      for (const d of ['01', '02', '03', '04']) for (const seal of 'ABC') expect(codes0(items).has(`ITEM_CH_${kind}_${d}_${seal}_RARE`), `${kind} ${d} ${seal}`).toBe(true)
+    }
     // each seal has its ordinary row
     const codes = new Set(items.map(i => i.code))
     for (const s of seals) expect(codes.has(s.code.replace(/_RARE$/, '')), s.code).toBe(true)

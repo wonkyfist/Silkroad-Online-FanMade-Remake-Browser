@@ -4,7 +4,7 @@
  * whatever it does not have yet, so ?mock=1 always has monsters and items. Environment-neutral apart from
  * fetchContentTables (which takes the fetch function).
  */
-import { CONTENT_FILES, contentEntries, type ContentKind, type DropTable, type ItemDef, type LevelDef, type MasteryDef, type MobDef, type NpcDef, type ShopDef, type SkillDef } from '@sro/shared'
+import { CONTENT_FILES, applyClimbItemLevels, contentEntries, deriveClimbMobs, type ContentKind, type DropTable, type ItemDef, type LevelDef, type MasteryDef, type MobDef, type NpcDef, type ShopDef, type SkillDef } from '@sro/shared'
 import { BUILTIN_DROPS, BUILTIN_ITEMS, BUILTIN_MOBS, BUILTIN_NPCS, BUILTIN_SHOPS, builtinLevels } from './builtin.ts'
 
 export interface ContentTables {
@@ -86,6 +86,11 @@ export function mergeTables(base: ContentTables, files: Partial<Record<ContentKi
   const levels: LevelDef[] = []
   read<LevelDef>('levels', r => typeof r.level === 'number' && typeof r.exp === 'number', r => void (levels[r.level - 1] = r))
   if (levels.length && levels.every(Boolean)) out.levels = levels
+  // The Climb (docs/CLIMB.md §2.2, §4.1.1): the server's derived MOB_CL_* monsters (their base's model, clips and skills
+  // with the new level and numbers) and every degree's required levels inside the cap (§4.1.2), from the same shared
+  // tables as the server.
+  for (const d of deriveClimbMobs(out.mobs)) out.mobs.set(d.code, d)
+  applyClimbItemLevels(out.items)
   return out
 }
 

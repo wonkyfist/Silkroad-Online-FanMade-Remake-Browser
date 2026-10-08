@@ -20,6 +20,61 @@
       "staleToLocal": []
     }
   },
+  "dummies": {
+    "Bone01": [
+      0,
+      0,
+      0
+    ],
+    "Bone05": [
+      -0.01277,
+      -0.00259,
+      0
+    ],
+    "Bone06": [
+      -0.29676,
+      0.15841,
+      0
+    ],
+    "Bone03": [
+      0.01615,
+      -0.00186,
+      0
+    ],
+    "Bone04": [
+      0.27947,
+      0.15793,
+      0
+    ]
+  },
+  "particles": [
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "system/item_equip_shoulder_yellow.efp",
+      "bone": "Bone04",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    },
+    {
+      "set": "ambient",
+      "kind": "ambient",
+      "efp": "system/item_equip_shoulder_yellow.efp",
+      "bone": "Bone06",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "birthMs": 0,
+      "night": false
+    }
+  ],
   "attachBone": "Bip01 Neck1",
   "attachable": {
     "kind": 1,

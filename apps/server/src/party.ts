@@ -204,7 +204,7 @@ export class PartyManager implements GameplayModule {
     e.send({ t: 'partyInvited', inviter: p.id, name: p.name, level: p.level, exp: inv.exp, items: inv.items, expiresInMs: PARTY_INVITE_MS })
   }
 
-  private respond(p: Player, inviterId: number, accept: boolean, answer: Answer, _now: number): void {
+  private respond(p: Player, inviterId: number, accept: boolean, answer: Answer, now: number): void {
     const inv = this.invites.get(p.characterId)
     if (!inv) return answer(fail('no_invite'))
     const from = this.online(inv.from)
@@ -230,6 +230,8 @@ export class PartyManager implements GameplayModule {
       this.join(party, from)
     }
     this.join(party, p)
+    // Siege of Jangan layer 6 (docs/SIEGE.md §8.6): partying together is a recent contact (no bounties on each other)
+    for (const m of party.members) if (m.characterId !== p.characterId) this.g.law.contact(p.characterId, m.characterId, 'party', now)
     this.broadcast(party, this.event('joined', p.name))
     this.sendState(party)
     this.g.config.log(`party ${party.id}: ${p.name} joined (${party.members.map((m) => m.name).join(', ')})`)

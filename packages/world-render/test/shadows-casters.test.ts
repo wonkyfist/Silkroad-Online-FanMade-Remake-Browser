@@ -52,9 +52,9 @@ const proxy = (s: Scene, region: number, at: [number, number, number], radius: n
 
 describe('csmSettings (RENDER §4.3)', () => {
   it('Medium 1024 × 2 to 60 m, High 2048 × 3 to 150 m, Ultra 2048 × 4 to 250 m, with their lambda, blend and PCF', () => {
-    expect(csmSettings(RENDER_PRESETS.medium.shadows!)).toEqual({ mapSize: 1024, cascades: 2, maxZ: 60, lambda: 0.7, blend: 0.1, filter: 'low' })
-    expect(csmSettings(RENDER_PRESETS.high.shadows!)).toEqual({ mapSize: 2048, cascades: 3, maxZ: 150, lambda: 0.8, blend: 0.08, filter: 'medium' })
-    expect(csmSettings(RENDER_PRESETS.ultra.shadows!)).toEqual({ mapSize: 2048, cascades: 4, maxZ: 250, lambda: 0.85, blend: 0.05, filter: 'high' })
+    expect(csmSettings(RENDER_PRESETS.medium.shadows!)).toEqual({ mapSize: 1024, cascades: 2, maxZ: 60, lambda: 0.7, blend: 0.1, filter: 'low', soft: 0 })
+    expect(csmSettings(RENDER_PRESETS.high.shadows!)).toEqual({ mapSize: 2048, cascades: 3, maxZ: 150, lambda: 0.8, blend: 0.08, filter: 'medium', soft: 0 })
+    expect(csmSettings(RENDER_PRESETS.ultra.shadows!)).toEqual({ mapSize: 2048, cascades: 4, maxZ: 250, lambda: 0.85, blend: 0.05, filter: 'high', soft: 0 })
   })
 })
 

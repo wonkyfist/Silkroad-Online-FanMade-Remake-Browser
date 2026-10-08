@@ -28,8 +28,10 @@ export interface NoticeOptions {
   kind?: NoticeKind
   /** The head's title; default `notice.title`. */
   title?: string
-  /** A substring of the text drawn in the unique pink (the unique's name). */
+  /** A substring of the text drawn in the unique pink (the unique's name), or in `color`. */
   name?: string
+  /** The title's and the name's colour instead of the unique pink (docs/RARITY.md §4.3: a seal's tier colour). */
+  color?: string
   /** Time on screen; default by length (GM) or UNIQUE_NOTICE_MS (unique). */
   ms?: number
   /** Called once when the banner appears (the unique's cue plays with the banner, not when it is queued). */
@@ -77,7 +79,7 @@ export class NoticeBanner {
     if (!item) return
     const unique = item.kind === 'unique'
     const title = el('span', 'notice-title', item.title ?? t('notice.title'))
-    if (unique) title.style.color = UNIQUE_PINK
+    if (unique || item.color) title.style.color = item.color ?? UNIQUE_PINK
     const head = el('div', 'notice-head', title, item.from ? el('span', 'notice-from', t('notice.from', { from: item.from })) : null)
     const node = el('div', unique ? 'notice-banner unique' : 'notice-banner', head, textNode(item))
     node.setAttribute('role', 'alert')
@@ -133,6 +135,6 @@ function textNode(item: Item): HTMLElement {
   const at = item.name ? item.text.indexOf(item.name) : -1
   if (!item.name || at < 0) return el('div', 'notice-text', item.text)
   const name = el('span', 'notice-name', item.name)
-  name.style.color = UNIQUE_PINK
+  name.style.color = item.color ?? UNIQUE_PINK
   return el('div', 'notice-text', item.text.slice(0, at), name, item.text.slice(at + item.name.length))
 }

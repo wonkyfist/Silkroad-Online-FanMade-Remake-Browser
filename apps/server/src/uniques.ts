@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
+  relevelMob,
   UNIQUES_FILE,
   checkUniquesFile,
   mulberry32,
@@ -60,6 +61,10 @@ import type { Mob, Player } from './world.ts'
  *   any table. The quest encounter's Tiger Girl and a GM `spawn` of her code are plain mobs: not tracked, normal loot.
  * - **Corpse:** `Mob.corpseMs` = `corpseSec` (8 s), so her death clip plays to the ground.
  * - **GM:** `/unique list | spawn | kill | despawn | timer | quiet` (gm.ts row; audited like every GM command).
+ * - **The Climb's mini-bosses** (docs/CLIMB.md §2.5, L2): a `spot` is the boss's one authored camp (no nest row; the
+ *   Spawner never sees it); `adds` replace the summon rows (`n` of `mob` 1.5 s after the HP band, once per fight; they
+ *   leave with the boss and on a leash reset); an enrage or fury of x 1 does nothing and says nothing. A `MOB_CL_*`
+ *   unique this world lacks (CLIMB=off) is left out at start (logged), never a start failure.
  */
 
 /** The GM usage line (gm.ts COMMANDS.unique). */
@@ -77,6 +82,13 @@ const MINUTE_MS = 60_000
 const GEAR_CATEGORIES: ReadonlySet<string> = new Set(['weapon', 'shield', 'armor', 'accessory'])
 /** `<family>_<grade>[_RARE]`; the creation defaults (`_DEF`) never match. */
 const GRADE_RE = /^(.+)_([A-Z])(_RARE)?$/
+/** §2.5: adds join this long after the boss's HP band. */
+export const UNIQUE_ADD_DELAY_MS = 1500
+/** Synthetic camp ids of the `spot` uniques (never a nests.json or authored id). */
+export const UNIQUE_SPOT_CAMP_BASE = 900_000
+
+/** The letter of a seal row (docs/RARITY.md §1: A = Star, B = Moon, C = Sun). */
+const SEAL_LETTER = { star: 'A', moon: 'B', sun: 'C' } as const
 
 /** A gear family (one item in its grades), the wearable grades only, highest grade first. */
 export interface GearFamily {
@@ -109,8 +121,8 @@ export function gearPool(items: Iterable<ItemDef>, pool: UniqueGearPool, levelCa
     const m = GRADE_RE.exec(it.code)
     if (!m || Boolean(m[3]) !== Boolean(pool.rare)) continue
     // H11-NL-1: on a `_RARE` row the letter is the seal, not a grade (A = Star, B = Moon, C = Sun; items.json gives all
-    // three the A grade's level). The rare pool is the Seal of Star rows only.
-    if (pool.rare && m[2] !== 'A') continue
+    // three the A grade's level). The rare pool is one seal's rows: Star unless `seal` says (the Climb: Moon, Sun).
+    if (pool.rare && m[2] !== SEAL_LETTER[pool.seal ?? 'star']) continue
     const list = families.get(m[1]) ?? []
     list.push(it)
     families.set(m[1], list)
@@ -204,6 +216,20 @@ interface Tracked {
   event: boolean
   /** Play the Boss (§2.2): a call holds her spawn timer: no roll before this (ms; 0 = no hold). */
   holdUntil: number
+  /** §2.5: the `adds` entries fired this fight, and the waves waiting for their 1.5 s. */
+  addsFired: Set<number>
+  addsDue: { at: number; i: number }[]
+}
+
+/** The camp of a `spot` unique (docs/CLIMB.md §2.5): one authored point with the boss's own tactics. */
+export function spotCamp(def: UniqueDef, id: number, world: string): NestDef {
+  const sp = def.spot!
+  const r = sp.radiusM ?? 6
+  return {
+    id, mob: def.mob, x: sp.x, z: sp.z, ...(sp.y !== undefined ? { y: sp.y } : {}), radius: r, spawnRadius: r, count: 1, respawnSec: [0, 0],
+    tactics: { id: 0, aggressive: true, sightRange: sp.sightM ?? 12, leashRange: sp.leashM ?? 40 },
+    world, provenance: 'authored', source: { file: UNIQUES_FILE, zone: '', x: sp.x, z: sp.z }, uniqueGroup: def.mob,
+  }
 }
 
 /**
@@ -236,6 +262,8 @@ export class Uniques implements GameplayModule {
   /** Player entity ids whose GM typed `/unique quiet on` (this session only; dropped when the player leaves). */
   private readonly quiet = new Set<number>()
   private upsert: ((row: UniqueRow) => void) | null = null
+  /** The synthetic camp id of each `spot` unique (file order). */
+  private readonly spotIds = new Map<UniqueDef, number>()
   /** Play the Boss: `/unique pilot ...` (pilot/gm.ts, set by the pilot module); null = not available. */
   pilotGm: ((self: Player | null, args: string[], now: number) => GmResult) | null = null
   /** Play the Boss, layer 5 (§3.7): her crowd factor s while a hunt scales her (null = not scaled). */
@@ -273,15 +301,34 @@ export class Uniques implements GameplayModule {
   /** start() on an already parsed file (tests). */
   configure(json: unknown, now: number): string {
     const { data, config } = this.g
+    // the Climb's mini-bosses (docs/CLIMB.md §2.5) exist only with CLIMB=on: without their derived code they are left out
+    const off: string[] = []
+    if (json && typeof json === 'object' && Array.isArray((json as UniquesFile).uniques)) {
+      const f = json as UniquesFile
+      const keep = f.uniques.filter((u) => {
+        const climbOnly = typeof u?.mob === 'string' && u.mob.startsWith('MOB_CL_') && !data.mob(u.mob)
+        if (climbOnly) off.push(u.mob)
+        return !climbOnly
+      })
+      if (off.length) {
+        // their drop tables go with them (a world without the Climb need not hold the Climb's items)
+        const used = new Set(keep.map((u) => u.drops))
+        const tables = Object.fromEntries(Object.entries(f.dropTables ?? {}).filter(([id]) => used.has(id) || !f.uniques.some((u) => u.drops === id)))
+        json = { ...f, uniques: keep, dropTables: tables }
+      }
+    }
     const problems = checkUniquesFile(json, { mob: (c) => data.mob(c) !== undefined, nest: (id) => data.nests.some((n) => n.id === id), item: (c) => data.items.has(c) })
     if (problems.length) throw new Error(`${UNIQUES_FILE}: ${problems.slice(0, 5).join('; ')}${problems.length > 5 ? ` (+${problems.length - 5} more)` : ''}`)
     const file = json as UniquesFile
     this.prepare()
     this.list = []
+    this.spotIds.clear()
     const lines: string[] = []
-    for (const def of file.uniques) {
+    for (const [i, def] of file.uniques.entries()) {
+      if (def.spot) this.spotIds.set(def, UNIQUE_SPOT_CAMP_BASE + i)
       if (def.world !== config.world) continue
-      const mob = data.mob(def.mob)!
+      // the Climb (docs/CLIMB.md §2.6): a unique with a level of her own fights at it (defences, hit and parry follow)
+      const mob = def.level ? relevelMob(data.mob(def.mob)!, def.level) : data.mob(def.mob)!
       if (config.mobLevelMax > 0 && mob.level > config.mobLevelMax) {
         lines.push(`${mob.name ?? mob.code} off (level ${mob.level} > MOB_LEVEL_MAX ${config.mobLevelMax})`)
         continue
@@ -291,11 +338,12 @@ export class Uniques implements GameplayModule {
       for (const [i, grp] of table.groups.entries()) {
         if (grp.pool && grp.pool.length === 0) config.log(`uniques: ${def.drops}.groups[${i}]: no item of its gear pool is in items.json and wearable at level ${config.levelCap}; the group drops nothing`)
       }
-      const u: Tracked = { def, mob, table, row: this.loadRow(def.mob), id: null, fightAt: null, enraged: false, furious: false, stuck: false, gmDue: null, event: false, holdUntil: 0 }
+      const u: Tracked = { def, mob, table, row: this.loadRow(def.mob), id: null, fightAt: null, enraged: false, furious: false, stuck: false, gmDue: null, event: false, holdUntil: 0, addsFired: new Set(), addsDue: [] }
       lines.push(this.restart(u, now))
       this.list.push(u)
     }
-    return `uniques: ${lines.length ? lines.join('; ') : `none on world ${config.world}`}`
+    const climbOff = off.length ? `; ${off.length} Climb mini-bosses off (no derived monsters: CLIMB=off)` : ''
+    return `uniques: ${lines.length ? lines.join('; ') : `none on world ${config.world}`}${climbOff}`
   }
 
   /** The restart rules (§3.2) on a loaded (or fresh) row; saves it. Returns the log fragment. */
@@ -359,6 +407,7 @@ export class Uniques implements GameplayModule {
   /** Every nest of the unique on this world (disabled ones included): the GM spawn's tactics template. */
   private allCamps(def: UniqueDef): NestDef[] {
     const world = this.g.config.world
+    if (def.spot) return [spotCamp(def, this.spotIds.get(def) ?? UNIQUE_SPOT_CAMP_BASE, world)]
     const ids = def.camps === 'uniqueGroup' ? null : new Set(def.camps)
     return this.g.data.nests.filter((n) => n.world === world && (ids ? ids.has(n.id) : n.uniqueGroup !== undefined && n.uniqueGroup !== '' && n.mob === def.mob))
   }
@@ -421,6 +470,8 @@ export class Uniques implements GameplayModule {
     u.id = m.id
     u.fightAt = null
     u.enraged = u.furious = u.stuck = false
+    u.addsFired.clear()
+    u.addsDue = []
     u.row.phase = 'alive'
     u.row.due_at = 0
     u.row.camp = camp.id
@@ -445,6 +496,8 @@ export class Uniques implements GameplayModule {
     u.id = null
     u.fightAt = null
     u.enraged = u.furious = u.event = false
+    u.addsFired.clear()
+    u.addsDue = []
     u.row.phase = 'waiting'
     u.row.due_at = now + this.minutes(u.def.respawnMin)
     if (owner) {
@@ -487,13 +540,14 @@ export class Uniques implements GameplayModule {
     // A wall clock stepped back mid-fight: the clock restarts from now (never a negative fight time).
     if (u.fightAt !== null && u.fightAt > now) u.fightAt = now
     if (u.fightAt === null && inLeash > 0) u.fightAt = now
-    if (!u.enraged && m.hp <= (m.maxHp * u.def.enrage.hpPct) / 100) {
+    if (!u.enraged && u.def.enrage.damageMul !== 1 && m.hp <= (m.maxHp * u.def.enrage.hpPct) / 100) {
       u.enraged = true
       this.applyMul(u, m)
       this.areaLine(m, now, `${m.name} is enraged!`)
     }
+    if (u.def.adds) this.adds(u, m, now)
     // Play the Boss: the survival timer replaces the fury during the event.
-    if (!u.furious && !u.event && u.fightAt !== null && now - u.fightAt >= u.def.fury.afterSec * 1000) {
+    if (!u.furious && !u.event && u.def.fury.damageMul !== 1 && u.fightAt !== null && now - u.fightAt >= u.def.fury.afterSec * 1000) {
       u.furious = true
       this.applyMul(u, m)
       this.areaLine(m, now, `${m.name} grows furious!`)
@@ -514,8 +568,50 @@ export class Uniques implements GameplayModule {
     const adds = this.g.mobSkills.dismissSummons(m)
     u.fightAt = null
     u.enraged = u.furious = false
+    u.addsFired.clear()
+    u.addsDue = []
     this.applyMul(u, m)
     this.g.config.log(`uniques: ${m.name} reset (leash)${adds ? `; ${adds} adds left` : ''}`)
+  }
+
+  /** §2.5: an HP band of `adds` fires once per fight; its wave joins UNIQUE_ADD_DELAY_MS later around the boss. */
+  private adds(u: Tracked, m: Mob, now: number): void {
+    const list = u.def.adds ?? []
+    const pct = (100 * m.hp) / Math.max(1, m.maxHp)
+    for (const [i, a] of list.entries()) {
+      if (u.addsFired.has(i) || pct > a.atPct) continue
+      u.addsFired.add(i)
+      u.addsDue.push({ at: now + UNIQUE_ADD_DELAY_MS, i })
+    }
+    if (u.addsDue.length === 0) return
+    const due = u.addsDue.filter((d) => d.at <= now)
+    if (due.length === 0) return
+    u.addsDue = u.addsDue.filter((d) => d.at > now)
+    const w = this.g.world
+    const at = w.livePoint(m, now)
+    const target = m.target === null ? undefined : this.g.target(m.target)
+    for (const d of due) {
+      const a = list[d.i]!
+      const def = this.g.data.mob(a.mob)
+      if (!def) continue
+      const ids: number[] = []
+      for (let k = 0; k < a.n; k++) {
+        const ang = this.rng() * Math.PI * 2
+        const r = 2 + this.rng() * 2.5
+        const [x, z] = w.clamp(at.x + Math.sin(ang) * r, at.z + Math.cos(ang) * r)
+        const wk = this.g.nav.kind === 'mesh' ? this.g.nav.walk(at, x, z) : null
+        const p = wk && Number.isFinite(wk.end.y) ? wk.end : { x, y: at.y, z, surface: at.surface }
+        const add = this.g.createMob(def, 'normal', p.x, p.z, p.y, null, now, p.surface)
+        if (target) {
+          add.ai = 'chase'
+          add.target = target.id
+          add.nextThinkAt = 0
+        }
+        ids.push(add.id)
+      }
+      this.g.mobSkills.adopt(m, ids)
+      if (ids.length) this.areaLine(m, now, `${m.name} calls for help!`)
+    }
   }
 
   private applyMul(u: Tracked, m: Mob): void {
@@ -572,9 +668,11 @@ export class Uniques implements GameplayModule {
     const u = this.tracked(m)
     if (!u) return null
     const s = u.def.summons
+    // §2.5: a boss with its own adds never casts its base's summon rows
+    if (u.def.adds) return { on: false, perWave: 0, maxAlive: 0, variants: s.variants }
     const f = this.pilotScale?.(m) ?? null
     const w = f !== null && f > 1 ? pilotScaledSummons(s, f) : s
-    return { on: s.on, perWave: w.perWave, maxAlive: w.maxAlive, variants: s.variants }
+    return { on: s.on, perWave: w.perWave, maxAlive: w.maxAlive, variants: s.variants, ...(s.mobs ? { mobs: s.mobs } : {}) }
   }
 
   /** The player leaves the world: a quiet flag ends with the session. */

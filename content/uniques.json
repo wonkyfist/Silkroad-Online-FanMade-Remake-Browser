@@ -9,10 +9,11 @@
       "respawnMin": [180, 360],
       "firstSpawnMin": [10, 30],
       "restartSpawnMin": [1, 2],
-      "tuning": { "hpMul": 0.08, "attackMul": 1.0, "expMul": 1.0 },
-      "summons": { "on": true, "perWave": 2, "maxAlive": 4, "variants": ["normal"] },
+      "level": 25,
+      "tuning": { "hpMul": 0.18, "attackMul": 1.4, "expMul": 0.2 },
+      "summons": { "on": true, "perWave": 2, "maxAlive": 4, "variants": ["normal"], "mobs": { "MOB_CH_WHITETIGER": "MOB_CL_TIGERGUARD_24", "MOB_CH_WHITETIGER_CLON": "MOB_CL_TIGERGUARD_24" } },
       "enrage": { "hpPct": 20, "damageMul": 1.25 },
-      "fury": { "afterSec": 600, "damageMul": 2.0 },
+      "fury": { "afterSec": 600, "damageMul": 3.0 },
       "corpseSec": 8,
       "announce": { "appear": true, "defeat": true, "roarRadiusM": 120 },
       "drops": "UNIQUE_TIGERWOMAN",
@@ -26,20 +27,139 @@
             "hit": { "row": "MSKILL_CH_TIGERWOMAN_ATTACK02", "mul": 0.6, "radiusM": 3, "status": "knockdown" } },
           { "id": "roar", "slot": 5, "kind": "fear", "radiusM": 8, "pushM": 5, "lockMs": 1500, "cooldownMs": 20000, "clip": "FIND" },
           { "id": "pack", "slot": 6, "kind": "pack", "mob": "MOB_CH_WHITETIGER", "count": 2, "charges": 2, "cooldownMs": 30000, "clip": "HELP" },
-          { "id": "stalk", "slot": 7, "kind": "stalk", "revealM": 8, "maxMs": 20000, "speedMul": 0.4, "cooldownMs": 25000, "cover": "anywhere" }
+          { "id": "stalk", "slot": 7, "kind": "stalk", "revealM": 8, "maxMs": 20000, "speedMul": 0.3, "cooldownMs": 25000, "cover": "anywhere" }
         ],
         "defaults": {
           "enabled": false,
           "schedule": { "slots": [{ "weekday": 6, "time": "21:00" }], "tz": "" },
           "call": { "minutes": 10, "acceptSec": 30, "maxDraws": 5 },
-          "eligibility": { "minLevel": 20, "minPlayHours": 10, "cooldownDays": 14, "recentEvents": 3, "firstTimerWeight": 3 },
-          "win": { "surviveMin": 15, "downsTarget": 15, "downMinLevel": 15, "downMinDamage": 200 },
+          "eligibility": { "minLevel": 25, "minPlayHours": 10, "cooldownDays": 14, "recentEvents": 3, "firstTimerWeight": 3 },
+          "win": { "surviveMin": 15, "downsTarget": 15, "downMinLevel": 20, "downMinDamage": 200 },
           "hunt": { "radiusM": 350, "pingSec": 60, "pingRadiusM": 60, "idleSec": 20, "speedMul": 1, "senseM": 60 },
           "scaling": { "on": true, "baseHunters": 4, "exponent": 0.9, "capHunters": 40, "windowSec": 60, "minDamage": 200 },
           "rewards": { "baseGold": 5000, "perDownGold": 500, "perMinuteGold": 300, "winGold": 10000, "title": "tiger_spirit", "cosmetic": null },
           "guards": { "associateDamagePct": 25, "earlyDeathMin": 3, "tauntCooldownSec": 4 }
         }
       }
+    },
+    {
+      "mob": "MOB_CL_OLDSCAR_6",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": 417, "z": -379 },
+      "respawnMin": [20, 30],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_WEASEL_5", "n": 2, "atPct": 50 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB1"
+    },
+    {
+      "mob": "MOB_CL_MAGISTRATE_10",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": -370, "z": -400 },
+      "respawnMin": [25, 40],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_WATERGHOST_7", "n": 2, "atPct": 70 }, { "mob": "MOB_CL_WGSLAVE_6", "n": 2, "atPct": 35 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB2"
+    },
+    {
+      "mob": "MOB_CL_GWANGMU_14",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": -723, "z": -88 },
+      "respawnMin": [30, 45],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_ARCHER_12", "n": 2, "atPct": 75 }, { "mob": "MOB_CL_BANDITSUB_11", "n": 2, "atPct": 40 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB3"
+    },
+    {
+      "mob": "MOB_CL_GATEWARDEN_16",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": 614, "z": -626 },
+      "respawnMin": [30, 45],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_KEEPER_14", "n": 2, "atPct": 60 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB4"
+    },
+    {
+      "mob": "MOB_CL_HEUKPUNG_19",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": -1325, "z": 907 },
+      "respawnMin": [40, 60],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_ARCHER_18", "n": 2, "atPct": 80 }, { "mob": "MOB_CL_BANDIT_16", "n": 2, "atPct": 50 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB5"
+    },
+    {
+      "mob": "MOB_CL_MODUN_23",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": -1680, "z": 516 },
+      "respawnMin": [45, 75],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_HYUNGNOSHAMAN_24", "n": 1, "atPct": 70 }, { "mob": "MOB_CL_HYUNGNO_23", "n": 2, "atPct": 40 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB7"
+    },
+    {
+      "mob": "MOB_CL_HYEONGCHEON_25",
+      "world": "jangan",
+      "camps": "uniqueGroup",
+      "spot": { "x": -2227, "z": 1211, "y": 120.4 },
+      "respawnMin": [60, 90],
+      "firstSpawnMin": [5, 20],
+      "restartSpawnMin": [1, 3],
+      "tuning": { "hpMul": 1, "attackMul": 1, "expMul": 1 },
+      "summons": { "on": false, "perWave": 0, "maxAlive": 0, "variants": ["normal"] },
+      "adds": [{ "mob": "MOB_CL_EARTHGHOST_25", "n": 2, "atPct": 70 }, { "mob": "MOB_CL_TAOIST_25", "n": 1, "atPct": 40 }],
+      "enrage": { "hpPct": 0, "damageMul": 1 },
+      "fury": { "afterSec": 0, "damageMul": 1 },
+      "corpseSec": 6,
+      "announce": { "appear": true, "defeat": true, "roarRadiusM": 60 },
+      "drops": "CLIMB_MB8"
     }
   ],
   "dropTables": {
@@ -49,7 +169,7 @@
         {
           "chance": 1,
           "rolls": 3,
-          "pool": { "degree": 3, "maxReqLevel": "levelCap", "gradeWeights": [60, 40] },
+          "pool": { "degree": 4, "maxReqLevel": "levelCap", "gradeWeights": [60, 40] },
           "plus": [
             { "plus": 0, "weight": 55 },
             { "plus": 1, "weight": 25 },
@@ -80,9 +200,169 @@
           "entries": [{ "item": "ITEM_ETC_MP_POTION_04", "weight": 1, "count": [10, 10] }]
         },
         {
-          "chance": 0.2,
-          "pool": { "degree": 3, "maxReqLevel": "levelCap", "gradeWeights": [60, 40], "rare": true }
+          "chance": 0.015,
+          "rolls": 3,
+          "pool": { "degree": 4, "maxReqLevel": "levelCap", "gradeWeights": [60, 40], "rare": true }
+        },
+        {
+          "chance": 0.004,
+          "rolls": 3,
+          "pool": { "degree": 4, "maxReqLevel": "levelCap", "rare": true, "seal": "moon" }
+        },
+        {
+          "chance": 0.001,
+          "rolls": 3,
+          "pool": { "degree": 4, "maxReqLevel": "levelCap", "rare": true, "seal": "sun" }
         }
+      ]
+    },
+    "CLIMB_MB1": {
+      "gold": { "chance": 1, "piles": 2, "amount": [184, 384] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 1, "maxReqLevel": 8, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_01", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 1, "maxReqLevel": 8, "rare": true } }
+      ]
+    },
+    "CLIMB_MB2": {
+      "gold": { "chance": 1, "piles": 2, "amount": [240, 504] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 2, "maxReqLevel": 12, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 2, "maxReqLevel": 12, "rare": true } }
+      ]
+    },
+    "CLIMB_MB3": {
+      "gold": { "chance": 1, "piles": 2, "amount": [296, 620] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 2, "maxReqLevel": 15, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_02", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 2, "maxReqLevel": 15, "rare": true } }
+      ]
+    },
+    "CLIMB_MB4": {
+      "gold": { "chance": 1, "piles": 2, "amount": [324, 680] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 3, "maxReqLevel": 18, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 3, "maxReqLevel": 18, "rare": true } }
+      ]
+    },
+    "CLIMB_MB5": {
+      "gold": { "chance": 1, "piles": 2, "amount": [364, 768] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 3, "maxReqLevel": 21, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_03", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 3, "maxReqLevel": 21, "rare": true } }
+      ]
+    },
+    "CLIMB_MB7": {
+      "gold": { "chance": 1, "piles": 2, "amount": [420, 888] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 4, "maxReqLevel": 23, "gradeWeights": [40, 30, 30] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.2,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 4, "maxReqLevel": 23, "rare": true } }
+      ]
+    },
+    "CLIMB_MB8": {
+      "gold": { "chance": 1, "piles": 2, "amount": [448, 948] },
+      "groups": [
+        {
+          "chance": 1,
+          "pool": { "degree": 4, "maxReqLevel": "levelCap", "gradeWeights": [60, 40] },
+          "plus": [{ "plus": 0, "weight": 60 }, { "plus": 1, "weight": 30 }, { "plus": 2, "weight": 10 }]
+        },
+        {
+          "chance": 0.3,
+          "entries": [
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ARMOR_A", "weight": 40 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_SHIELD_A", "weight": 10 },
+            { "item": "ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_ACCESSARY_A", "weight": 10 }
+          ]
+        },
+        { "chance": 0.2, "entries": [{ "item": "ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04", "weight": 1 }] },
+        { "chance": 0.015, "pool": { "degree": 4, "maxReqLevel": "levelCap", "rare": true } },
+        { "chance": 0.004, "pool": { "degree": 4, "maxReqLevel": "levelCap", "rare": true, "seal": "moon" } },
+        { "chance": 0.001, "pool": { "degree": 4, "maxReqLevel": "levelCap", "rare": true, "seal": "sun" } }
       ]
     }
   }

@@ -240,13 +240,14 @@ describe('the fragment merge (mergeRows), the house style and the optional cover
 const OUT = defaultOutDir()
 const W = join(OUT, 'world', 'jangan-fields', 'manifest.json')
 describe.skipIf(!existsSync(W))('B3 on the export', () => {
-  it('108 tiles: the 20 used B1 / B-coast sets + the 88 of B3; 63 heroes with the overrides', async () => {
+  it('65 tiles: the 19 used B1 / B-coast sets + the 46 B3 sets the island paints; 54 heroes with the overrides', async () => {
     const inv = await buildInventory({ outDir: OUT, decodeAlpha: false })
     const tiles = inv.entries.filter(e => e.group === 'tile')
-    expect(tiles).toHaveLength(108)
-    for (const k of b3.keys) expect(tiles.some(t => t.key === k), k).toBe(true)
+    // Jangan an island (docs/COAST.md §4.1): 108 -> 65; 42 of the 88 B3 sets painted only the drowned Western China side
+    expect(tiles).toHaveLength(65)
+    expect(b3.keys.filter(k => tiles.some(t => t.key === k))).toHaveLength(46)
     applyOverrides(tiles, loadOverrides())
-    expect(tiles.filter(t => t.hero)).toHaveLength(63)
+    expect(tiles.filter(t => t.hero)).toHaveLength(54)
   })
 
   const INDEX = join(OUT, 'pbr', 'index.json')

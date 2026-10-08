@@ -19,6 +19,7 @@ import { registerAdminEvent, registerAdminRouteGroup, type AdminGroupRequest, ty
 import { zoneOf } from '../pilot/lottery.ts'
 import type { SiegeEventRow } from './event-store.ts'
 import { SIEGE_SETTINGS_CODE, type SiegeService } from './event.ts'
+import { routeAdminLaw } from './law-admin.ts'
 
 /**
  * Siege of Jangan in the admin panel (docs/SIEGE.md §11.3, §11.4): the route group `siege` (`/api/admin/siege/*`) and
@@ -27,7 +28,8 @@ import { SIEGE_SETTINGS_CODE, type SiegeService } from './event.ts'
  * one trail. Every write calls the same service functions as `/siege` and `/wall`.
  *
  * GET '' (walls, the siege now, the schedule, the settings, the lanes), PUT settings, POST settings/reset, POST start |
- * stop, POST wall ({seg, pct} or {seg: 'all', repair: true}), GET events, GET events/:id (timeline, contributors).
+ * stop, POST wall ({seg, pct} or {seg: 'all', repair: true}), GET events, GET events/:id (timeline, contributors);
+ * layer 6: GET law, POST law/pardon | jail | release | time | hunter | forgive (law-admin.ts).
  */
 
 const PREFIX = '/api/admin/siege'
@@ -154,6 +156,8 @@ export async function routeAdminSiege(ctx: GameContext, req: AdminGroupRequest):
   const b = bodyOf(req)
 
   if (req.method === 'GET' && sub === '') return json(200, siegeView(ctx, s, now))
+  // layer 6: the Law tab (law-admin.ts)
+  if (sub === 'law' || sub.startsWith('law/')) return routeAdminLaw(ctx, req, sub, b, audit)
 
   if (req.method === 'PUT' && sub === 'settings') {
     const r = saveSiegeSettings(s, b.baseRev, b.patch, req.actor.accountId, now)

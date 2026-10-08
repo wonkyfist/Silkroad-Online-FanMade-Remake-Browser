@@ -211,7 +211,7 @@ describe.skipIf(!FIELDS || !JANGAN)('WORLD_EXPORT=jangan-fields on the real expo
     expect(nests).toBeGreaterThanOrEqual(679)
     expect(monsters).toBeGreaterThan(5500)
     expect(s.ctx.world.mobs.size).toBeGreaterThan(5500)
-    // the placement rule refuses the Western China nests across the river: one line, not one per nest
+    // the placement rule refuses the nests of the drowned Western China side (open sea now): one line, not one per nest
     const unplaced = logs.filter((l) => l.startsWith('nests not spawned:'))
     expect(unplaced).toHaveLength(1)
     const u = /(\d+) unreachable on foot from town \((\d+) monsters; regions (\d+)-(\d+) x (\d+)-(\d+)/.exec(unplaced[0])
@@ -222,9 +222,9 @@ describe.skipIf(!FIELDS || !JANGAN)('WORLD_EXPORT=jangan-fields on the real expo
     expect(mobs).toBeGreaterThan(0)
     expect([x0, x1, z0, z1].every((v, i) => (i < 2 ? v >= 155 && v <= 175 : v >= 89 && v <= 103))).toBe(true)
     expect(logs.some((l) => /listening on .*\(world jangan from export jangan-fields/.test(l))).toBe(true)
-    // zones.json lists every region of the export: the 307 retail ones and, since P-DATA's re-export, the coast's 107
-    // synthetic ones (named by their coast section)
-    expect(logs.some((l) => /^content zones\.json: (307|414) regions/.test(l))).toBe(true)
+    // zones.json lists every region of the export: the 307 retail ones and, since P-DATA's re-export, the coast's
+    // synthetic ones (named by their coast section): 107, then about 75 with the Western China side drowned (COAST §4.1)
+    expect(logs.some((l) => /^content zones\.json: (307|3[6-9]\d|414) regions/.test(l))).toBe(true)
     // every spawned monster stands on the town's walkable mesh
     let checked = 0
     for (const mob of s.ctx.world.mobs.values()) {

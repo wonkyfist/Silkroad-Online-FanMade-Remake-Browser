@@ -72,6 +72,8 @@ export interface WorldRenderOptions {
 }
 
 export class WorldRender {
+  /** MSAA x4 in place of the High/Ultra TAA, which smears moving things without reprojection (RenderPost.setTemporalOverride). */
+  static msaaForMotion = true
   /** The material path of this world: 'classic' (Low) or 'pbr' (Medium+). World.setRenderMode switches it. */
   mode: RenderPath
   quality: Readonly<RenderQuality>
@@ -152,7 +154,13 @@ export class WorldRender {
       l.setWeather(this.weather)
       this.lighting = l
     }
-    if (!this.post) this.post = new RenderPost(this)
+    if (!this.post) {
+      const post = new RenderPost(this)
+      this.post = post
+      // The user (2026-10-09): moving characters, monsters and weapons looked blurry. TAA without reprojection (D30)
+      // smears anything that moves; the townsfolk used to swap it for MSAA x4 and they are gone, so the world asks for it.
+      if (WorldRender.msaaForMotion) post.setTemporalOverride('motion', 'msaa4')
+    }
     if (withShadows && !this.shadows && this.lighting instanceof WorldLighting) {
       const s = new WorldShadows(this.scene, this.lighting.celestial, host, { quality: this.quality })
       for (const m of this.characters) s.addCharacter(m)

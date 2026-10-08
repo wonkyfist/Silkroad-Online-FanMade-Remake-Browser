@@ -196,7 +196,7 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
   const putKeg = (m: Extract<ServerMessage, { t: 'keg' }>) => {
     let k = kegs.get(m.id)
     if (!k) {
-      k = { id: m.id, seg: m.seg, x: m.x, y: m.y, z: m.z, fuseEndsAt: m.fuseEndsAt, defuse: m.defuse ?? null, prop: null, sparks: null }
+      k = { id: m.id, seg: m.seg, x: m.x, y: m.y, z: m.z, fuseEndsAt: m.fuseEndsAt, defuse: m.defuse ?? null, mine: m.mine === true, prop: null, sparks: null }
       kegs.set(m.id, k)
       try {
         const prop = buildKeg(ctx.scene, `siegeKeg${m.id}`, path())
@@ -211,6 +211,7 @@ export function siegeFeature(ctx: WorldFeatureContext): WorldFeature {
     } else {
       k.fuseEndsAt = m.fuseEndsAt
       k.defuse = m.defuse ?? null
+      k.mine = m.mine === true
     }
   }
   const dropKeg = (id: number, how: 'blast' | 'defused' | 'cancelled') => {

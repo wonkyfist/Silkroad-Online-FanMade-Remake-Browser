@@ -9,6 +9,7 @@ import { DirectionalLight, HemisphericLight, Mesh, NullEngine, PBRMaterial, Poin
 import { QUALITY_PRESETS, RENDER_PRESETS, SKY_PRESETS, CLEAR_FRAME, WEATHER_PRESETS } from '@sro/world-render'
 import { WEATHER_PARAMS, type ServerMessage, type WeatherSync } from '@sro/shared'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { setTownLifeOff } from '../src/settings.ts'
 import { MODERN_ONLY_ROWS, optionRows, pageRows, presetLabel, rebuildQuestion, registerOptionRow, type OptionsHost } from '../src/hud/options.ts'
 import { perfText } from '../src/hud/perf-overlay.ts'
 import { RENDER_ROLLOUT } from '../src/rollout.ts'
@@ -32,6 +33,9 @@ import type { WorldFeatureContext } from '../src/world/features.ts'
 import { weatherFeature } from '../src/world/features/weather.ts'
 import { HitLights, setHitLightCluster } from '../src/world/fx/hit-light.ts'
 import { PBR_CHARACTER_LIGHTS, WorldGraphics } from '../src/world/graphics.ts'
+
+// Town life is switched off in the game (settings.ts TOWN_LIFE_OFF); these tests cover the system itself.
+setTownLifeOff(false)
 
 /** A settings blob saved before wave 9 on Medium (v: 1, no wave-9 keys). */
 const OLD_MEDIUM = {
@@ -234,7 +238,7 @@ describe('Options rows for the new look', () => {
     expect(ids(off, 'preview', 'interface')).not.toContain('ui.clock')
     const on = normalizeSettings({ ...OLD_MEDIUM, graphics: { ...OLD_MEDIUM.graphics, modern: true, recommended: { preset: 'high', resolution: 1, weather: 'auto', why: 'discrete' } } })
     expect(ids(on, 'preview')).toEqual([
-      'graphics.modern', 'graphics.recommended', 'graphics.preset', 'graphics.resolution', 'graphics.sight', 'graphics.scatter', 'graphics.wildlife', 'graphics.townLife', 'graphics.trees', 'graphics.textures', 'graphics.sky',
+      'graphics.modern', 'graphics.recommended', 'graphics.preset', 'graphics.resolution', 'graphics.sight', 'graphics.scatter', 'graphics.wildlife', 'graphics.townLife', 'graphics.trees', 'graphics.hairCloth', 'graphics.bodyPhysics', 'graphics.textures', 'graphics.sky',
       'graphics.advanced', 'graphics.advanced.shadows', 'graphics.advanced.reflections', 'graphics.advanced.aa', 'graphics.advanced.toneMap',
       'graphics.bloom', 'graphics.advanced.batching', 'graphics.advanced.lightShafts', 'fullscreen', 'engine',
     ])

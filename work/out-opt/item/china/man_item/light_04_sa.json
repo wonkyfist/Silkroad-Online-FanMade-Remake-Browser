@@ -1,0 +1,115 @@
+{
+  "source": "res/item/china/man_item/light_04_sa.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "light_04_sa",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 4,
+    "attachPointName": "_sa",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "light_04_sa"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "light_04_sa",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\light_04.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\light_04_sa.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        128,
+        128
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "light_04_sa",
+      "bms": "prim\\mesh\\item\\china\\man_item\\light_04_sa.bms",
+      "material": "light_04_sa",
+      "vertices": 58,
+      "triangles": 76,
+      "skinned": false,
+      "bones": [
+        "Bip01 L UpperArm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 58,
+    "triangles": 76,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.1416257619857788,
+    "boundsMin": [
+      0.166523277759552,
+      1.4312498569488525,
+      -0.09448563307523727
+    ],
+    "boundsMax": [
+      0.3646959364414215,
+      1.5728756189346313,
+      0.036130186170339584
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -13,6 +13,7 @@ import {
 import { AdminApiError, get, post, put } from '../api.ts'
 import { attempt, badge, button, card, clear, confirmDialog, emptyState, errorText, fmtAgo, fmtDuration, fmtNum, fmtTime, formDialog, h, kv, stackTable, tabs, toast } from '../ui.ts'
 import { EVENT_PAGES } from './events.ts'
+import { lawTab } from './siege-law.ts'
 
 /**
  * Siege of Jangan (docs/SIEGE.md §11.4), the Events page's sub-page for the `siege` route group. On top, the walls (a
@@ -20,7 +21,8 @@ import { EVENT_PAGES } from './events.ts'
  * all) and what runs now (phase, countdown, approaches, defenders, the Town Bell's and the Warlord's HP) with Start and
  * Stop. Under them the tabs: the weekly schedule (off by default; the server's time zone), the numbers of §11.2 (each
  * with its default, its bounds, a reset and the server's 422 messages inline; saves carry the rev), and the event log
- * with each siege's timeline and contributors. The Law tab comes with layers 5–6.
+ * with each siege's timeline and contributors, and the Law tab (layer 6, siege-law.ts: warrants, the Stockade, records,
+ * Hunters).
  */
 
 const OUTCOME_KIND: Record<string, 'ok' | 'bad' | 'dim' | 'info' | 'gold'> = { won: 'gold', lost_bell: 'bad', lost_time: 'bad', cancelled: 'dim', restart: 'dim', skipped: 'dim' }
@@ -32,6 +34,8 @@ interface FieldDef {
   label: string
   step?: number
   hint?: string
+  /** A choice among strings (SIEGE_EVENT_CHOICES), shown as a select. */
+  choices?: { value: string; label: string }[]
 }
 
 const GROUPS: { title: string; about: string; fields: FieldDef[] }[] = [
@@ -136,6 +140,54 @@ const GROUPS: { title: string; about: string; fields: FieldDef[] }[] = [
       { path: 'law.accompliceWindowMin', label: 'Accomplices: kegs within (min)' },
       { path: 'law.forgiveDays', label: 'One offence forgiven per (clean days)' },
       { path: 'law.treasonMul', label: 'Treason (during a siege) ×', step: 0.5 },
+    ],
+  },
+  {
+    title: 'Capture and the Stockade',
+    about: 'Who shares the bounty, the 7-day pair rule, the jail clock (real time counts offline; online counts only time in the world), chores and the pardon after release. Sentences are 2 / 4 / 8 / 16 / 24 h by offence.',
+    fields: [
+      { path: 'law.sentenceClock', label: 'The jail clock', choices: [{ value: 'real', label: 'Real time (offline counts)' }, { value: 'online', label: 'Online time only' }] },
+      { path: 'law.captureWindowSec', label: 'Bounty: damage in the last (s)' },
+      { path: 'law.captureMinPct', label: 'Bounty: at least (% of max HP)' },
+      { path: 'law.pairCooldownDays', label: 'Same Hunter and Wanted: no gold for (days)' },
+      { path: 'law.combatLogoutSec', label: 'Logout after a Hunter hit = capture within (s)' },
+      { path: 'law.subdueSec', label: 'Subdued before the Stockade (s)' },
+      { path: 'law.choreSec', label: 'A chore takes (s)' },
+      { path: 'law.choreMin', label: 'A chore takes off (min)' },
+      { path: 'law.choresCapPct', label: 'Chores take off at most (% of the sentence)' },
+      { path: 'law.pardonMin', label: 'Pardon after release (min)' },
+    ],
+  },
+  {
+    title: 'Anti-collusion',
+    about: 'Stops friends farming bounties and Hunter ranks. Recent contacts (trade, stall sale, party) and lookouts at the keg claim nothing; the same Hunter and Wanted accounts within the pair window get nothing, no capture; a Wanted caught again pays less; a bounty never beats the keg price; a Hunter account earns at most the daily cap. Withheld rewards are listed in the Law tab.',
+    fields: [
+      { path: 'law.contactDays', label: 'Contacts count for (days)' },
+      { path: 'law.lookoutM', label: 'Lookouts: within (m) of a keg' },
+      { path: 'law.bountyKegPct', label: 'A bounty at most (% of the keg price)' },
+      { path: 'law.repeatPct', label: 'Each earlier capture this week takes off (%)' },
+      { path: 'law.repeatMax', label: 'Nothing paid from (captures this week)' },
+      { path: 'hunter.dailyBountyCap', label: 'Bounty per Hunter account per 24 h (gold)' },
+    ],
+  },
+  {
+    title: 'Hunters',
+    about: 'Captain Yun by the west gate: the licence, duty, pings to Hunters on duty, PvP damage between Hunters and the Wanted, the Hunter’s Net.',
+    fields: [
+      { path: 'hunter.minLevel', label: 'Licence: level at least' },
+      { path: 'hunter.licenceGold', label: 'Licence price (gold)' },
+      { path: 'hunter.cleanDays', label: 'Licence: no offence for (days)' },
+      { path: 'hunter.revokeDays', label: 'A Hunter who breaks a wall loses it for (days)' },
+      { path: 'hunter.offDutyLockMin', label: 'On duty after a PvP hit for (min)' },
+      { path: 'hunter.pingSec', label: 'A ping every (s)' },
+      { path: 'hunter.pingR', label: 'Ping circle (m)' },
+      { path: 'hunter.pingOffsetM', label: 'Ping centre off the Wanted by up to (m)' },
+      { path: 'hunter.senseM', label: 'Wanted on the minimap within (m)' },
+      { path: 'hunter.pvpMul', label: 'PvP damage ×', step: 0.05 },
+      { path: 'hunter.netGold', label: 'Hunter’s Net price (gold)', hint: 'the shop price at the next restart' },
+      { path: 'hunter.netRangeM', label: 'Net reach (m)' },
+      { path: 'hunter.netSec', label: 'Net snare (s)', step: 0.5 },
+      { path: 'hunter.netCooldownSec', label: 'Net cooldown (s)' },
     ],
   },
 ]
@@ -342,21 +394,30 @@ function scheduleTab(root: HTMLElement, v: AdminSiegeView, saved: (v: AdminSiege
 
 function numbersTab(root: HTMLElement, v: AdminSiegeView, saved: (v: AdminSiegeView) => void): void {
   const { effective, defaults, patch = {}, rev, bounds } = v.settings
-  const reads = new Map<string, () => number>()
+  const reads = new Map<string, () => number | string>()
   const errors = new Map<string, HTMLElement>()
   const reload = async () => saved(await get<AdminSiegeView>('siege'))
   const field = (f: FieldDef) => {
     const cur = valueAt(effective, f.path) as number
     const def = valueAt(defaults, f.path) as number
     const b = bounds[f.path]
-    const inp = h('input', { class: 'input num-input', type: 'number', value: String(cur), min: b?.[0], max: b?.[1], step: f.step ?? 1, 'aria-label': f.label })
-    reads.set(f.path, () => (inp.value.trim() === '' ? Number.NaN : Number(inp.value)))
+    let inp: HTMLInputElement | HTMLSelectElement
+    if (f.choices) {
+      const sel = h('select', { class: 'input', 'aria-label': f.label }, f.choices.map((c) => h('option', { value: c.value }, c.label)))
+      sel.value = String(cur)
+      inp = sel
+      reads.set(f.path, () => sel.value)
+    } else {
+      const num = h('input', { class: 'input num-input', type: 'number', value: String(cur), min: b?.[0], max: b?.[1], step: f.step ?? 1, 'aria-label': f.label })
+      inp = num
+      reads.set(f.path, () => (num.value.trim() === '' ? Number.NaN : Number(num.value)))
+    }
     const err = h('div', { class: 'field-error', hidden: true })
     errors.set(f.path, err)
     const changed = inPatch(patch, f.path)
     const reset = changed
       ? button('Reset', async () => {
-          if (await attempt(() => post('siege/settings/reset', { baseRev: rev, paths: [f.path] }), `${f.label}: back to ${fmtNum(def)}.`)) await reload()
+          if (await attempt(() => post('siege/settings/reset', { baseRev: rev, paths: [f.path] }), `${f.label}: back to ${typeof def === 'number' ? fmtNum(def) : String(def)}.`)) await reload()
         }, 'small')
       : null
     return h(
@@ -364,7 +425,7 @@ function numbersTab(root: HTMLElement, v: AdminSiegeView, saved: (v: AdminSiegeV
       { class: 'setting' },
       h('div', { class: 'setting-head' }, h('label', { class: 'setting-label' }, f.label), changed ? badge('changed', 'gold') : null),
       h('div', { class: 'setting-control' }, inp, reset),
-      h('div', { class: 'setting-meta dim small' }, `default ${fmtNum(def)}${b ? ` · ${fmtNum(b[0])}–${fmtNum(b[1])}` : ''}`),
+      h('div', { class: 'setting-meta dim small' }, `default ${typeof def === 'number' ? fmtNum(def) : (f.choices?.find((c) => c.value === String(def))?.label ?? String(def))}${b ? ` · ${fmtNum(b[0])}–${fmtNum(b[1])}` : ''}`),
       f.hint ? h('div', { class: 'setting-note dim small' }, f.hint) : null,
       err,
     )
@@ -376,10 +437,10 @@ function numbersTab(root: HTMLElement, v: AdminSiegeView, saved: (v: AdminSiegeV
       e.hidden = true
       e.textContent = ''
     }
-    const delta: Record<string, Record<string, number>> = {}
+    const delta: Record<string, Record<string, number | string>> = {}
     for (const [path, read] of reads) {
       const val = read()
-      if (Number.isNaN(val)) {
+      if (typeof val === 'number' && Number.isNaN(val)) {
         const e = errors.get(path)!
         e.textContent = 'Enter a number.'
         e.hidden = false
@@ -550,6 +611,7 @@ export function siegePage(root: HTMLElement, _event: AdminEventInfo): () => void
           { id: 'schedule', label: 'Schedule', render: (r) => ((tab = 'schedule'), scheduleTab(r, v, saved)) },
           { id: 'numbers', label: 'Numbers', render: (r) => ((tab = 'numbers'), numbersTab(r, v, saved)) },
           { id: 'log', label: 'Sieges', render: (r) => ((tab = 'log'), logTab(r)) },
+          { id: 'law', label: 'Law', render: (r) => ((tab = 'law'), lawTab(r)) },
         ],
         tab,
       ),

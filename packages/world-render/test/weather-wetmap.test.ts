@@ -2,7 +2,8 @@
  * The per-region wet map (docs/WEATHER.md §6.2, docs/WAVE_PLAN3.md D22): a bowl holds a puddle at its centre, a slope
  * and a water tile hold none, the vertex normal round-trips through G/A and the black fallback reads as "no wet map";
  * on the real jangan-fields export (skipped without work/out-opt) the coverage matches the prototype's measurement
- * (2.5 % of vertices ≥ 0.5, 25.7 % ≥ 0.2) and a region builds in about a millisecond.
+ * (2.5 % of vertices ≥ 0.5, 25.7 % ≥ 0.2; about 1 % and 9 % since Jangan is an island) and a region builds in about a
+ * millisecond.
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -89,7 +90,7 @@ const REPO = fileURLToPath(new URL('../../../', import.meta.url))
 const FIELDS = join(REPO, 'work', 'out-opt', 'world', 'jangan-fields')
 
 describe.skipIf(!existsSync(join(FIELDS, 'manifest.json')))('buildWetMap on the real jangan-fields export', () => {
-  it('coverage matches the prototype (≈ 2.5 % ≥ 0.5, ≈ 26 % ≥ 0.2) and a region builds in a few ms', () => {
+  it('coverage is in the measured range (≈ 1 % ≥ 0.5, ≈ 9 % ≥ 0.2 on the island) and a region builds in a few ms', () => {
     const m = JSON.parse(readFileSync(join(FIELDS, 'manifest.json'), 'utf8')) as WorldManifest
     const surfaceOf = surfaceLookup(m.tiles as { id: number; typeName?: string | null; file?: string; source?: string }[])
     let cells = 0, p50 = 0, p20 = 0, total = 0, count = 0
@@ -107,9 +108,11 @@ describe.skipIf(!existsSync(join(FIELDS, 'manifest.json')))('buildWetMap on the 
     }
     expect(count).toBeGreaterThan(100)
     const s50 = p50 / cells, s20 = p20 / cells
-    expect(s50).toBeGreaterThan(0.01)
+    // Jangan an island (docs/COAST.md §4.1): the Western China flats held most of the puddles and are sea bed now (no wet
+    // map there): 18 % -> 8.8 % of all vertices >= 0.2, 2.0 % -> 1.0 % >= 0.5; the island's own regions are unchanged
+    expect(s50).toBeGreaterThan(0.005)
     expect(s50).toBeLessThan(0.05)
-    expect(s20).toBeGreaterThan(0.15)
+    expect(s20).toBeGreaterThan(0.06)
     expect(s20).toBeLessThan(0.35)
     // The prototype measured 0.66–1.1 ms with a 5 × 5 loop; the summed-area table is cheaper. Loose on a loaded PC.
     expect(total / count).toBeLessThan(5)

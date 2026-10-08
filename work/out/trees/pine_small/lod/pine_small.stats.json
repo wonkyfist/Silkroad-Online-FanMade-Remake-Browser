@@ -1,0 +1,71 @@
+{
+ "species": "pine_small",
+ "archetype": "conifer_cone",
+ "kind": "tree",
+ "seed": 25,
+ "target": {
+  "h": 7.1,
+  "w": 7.95
+ },
+ "normalUp": 0.0,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 2352,
+   "byMaterial": {
+    "bark": 1064,
+    "leaf": 1288
+   },
+   "cards": 322,
+   "frontNormalY": 0.023,
+   "vertices": 3449,
+   "heightM": 7.1,
+   "widthM": 7.95,
+   "crownCentre": [
+    0.4,
+    0.03,
+    3.67
+   ],
+   "crownRadius": 4.45,
+   "bytes": 385384
+  },
+  "1": {
+   "triangles": 646,
+   "byMaterial": {
+    "bark": 334,
+    "leaf": 312
+   },
+   "cards": 78,
+   "frontNormalY": 0.027,
+   "vertices": 898,
+   "heightM": 7.1,
+   "widthM": 7.887,
+   "crownCentre": [
+    0.4,
+    0.03,
+    3.67
+   ],
+   "crownRadius": 4.45,
+   "bytes": 252676
+  },
+  "2": {
+   "triangles": 308,
+   "byMaterial": {
+    "bark": 256,
+    "leaf": 52
+   },
+   "cards": 13,
+   "frontNormalY": 0.051,
+   "vertices": 326,
+   "heightM": 7.1,
+   "widthM": 7.95,
+   "crownCentre": [
+    0.4,
+    0.03,
+    3.67
+   ],
+   "crownRadius": 4.45,
+   "bytes": 223188
+  }
+ }
+}

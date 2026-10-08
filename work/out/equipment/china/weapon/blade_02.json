@@ -20,6 +20,23 @@
       "staleToLocal": []
     }
   },
+  "dummies": {
+    "Bone01": [
+      0.00027,
+      0,
+      -0.00058
+    ],
+    "ai_start": [
+      0.00018,
+      -0.01201,
+      0.08137
+    ],
+    "ai_end": [
+      0.05601,
+      -0.01201,
+      0.71826
+    ]
+  },
   "attachBone": "Bip01 R HandMid",
   "attachable": {
     "kind": 1,
@@ -141,22 +158,5 @@
     "skeleton": null,
     "joints": [],
     "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
-  },
-  "dummies": {
-    "Bone01": [
-      0.00027,
-      0,
-      -0.00058
-    ],
-    "ai_start": [
-      0.00018,
-      -0.01201,
-      0.08137
-    ],
-    "ai_end": [
-      0.05601,
-      -0.01201,
-      0.71826
-    ]
   }
 }

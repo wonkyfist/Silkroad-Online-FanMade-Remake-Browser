@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea31-566b-7705-bd37-8e9a51423143",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea31-566b-7705-bd37-8e9a51423143.png?Expires=1790894776&Signature=kb-Cu~H779yOckttg481i37bMKdlqKUH-tSn0IU-txpsCA47I9XN3UR6MSFXRK3XtI5RbSO0AzABJMAnBKY916lblh1THZICNygpwlwMTSVqEFKno58xO~bBlxYZnNw2g3riAyn8ktgDCJ4g-OH0WbwShKaRiyVSC~4DzypA8yD9zMWd0sWSsVfACynBSd9jaRuo05wgxKbiBxkg66L1hlmClKS1sN87BpUCOk--WGXYiKa6U~oBjOWMpZinxscrHO3Pl92UA2pW0AuR12g5P1GyvOGlYGFNwuQkaNSeFmqVpclyr~BnDoykigXgt5L0FAYQ8s7G5G0fSu1z0dR1JQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea31-566b-7705-bd37-8e9a51423143.png?Expires=1790894776&Signature=hwAoBfRnsgGvkRNN3wNA-njHTTAHNwmUtJnLRZikOdY5LykC2e8KhC0f0nG-3zke6WaWbZ~yJyhpj~2jhzR6CkCFKind7guddZ2AOxVCjyo-BvbOzY1elvanzSCX4bARi1GGRpD7e3G0CyAD5YMQGgeiVDDHx7MPajM76vDDeLSXPvfz8jRmzFEBnqCj6o6x5QJpgo0U-DYwtJ0eaT5e22~z4kxH10kc2H7h-9~jFbm31e9g7gOfMHU9EQ4TK90cYPvrFGzXkRGKge5i1qljNm9mbdMVqM5b6Uj6l1nHhpgQEtqZISKafwxtDA~ajZ5Q8lhms6lpyDRMSuB5HerCHw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea31-566b-7705-bd37-8e9a51423143.png?Expires=1790894776&Signature=Ngb8PZN4ReZj6Qu-AXz70GVyS9KvbxkwU~uUaBsR~qgAgisLNrxlEOtnqRWWUUVW7IXQKVFwxyyBGgthRJWWKvG7qvU7~eohrgiUcagimPE1M47UMRJyk~bAP2uWlXO9ZIMZCnSiAaAetoQYjINgKNeNpaKWhH9wrjjHpDcEtX5ahi0cGLq55Qnn1BKC6pNa-bi-mwEA1VehhT7ic5bUNhuiBxRqYS~p3LD0P3ihBHmKrIXsUMew9GcN5xataCh-7oBTjNznDXNcgf5nUajwfz-vKLkJ9wKHLYUnGDsOoZT4zZYNomunivC~U0kHYGJqfZKONLQIxz5BqJS1VOtqfA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea31-566b-7705-bd37-8e9a51423143.png?Expires=1790894776&Signature=hDnwk3cDiERi6wurEqGzPAHnnF5-sARGpDBMk5bxjg5SWzOy4O~ATCccaIcKhK7lYhh1qSmGDEEd0XQFBC~yumjmXyc4VSjeFtEE49xZ5bjJr2teckKvyobNPYuGcTkV6fA0IMlXYBqCfUJmQCaQsNI~kJ9KVhQjodoct-xjnxI9MkbXxfbiYXuavY3-H9gbZnHuQ-nQbPKqqGveZkUBF71DsHykicuit7gj5R6paWIOMnFKr94lNVmBOzzLN3x9ZMIgcDaqNntS0CrGTjD-LfUbH0v0eXHVeOKbnaZuMK816ptKtV2C2SrYQbfs6OGV4MPmLfw~6B8HzB-i3N9Qag__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790635498848,
+  "progress": 100,
+  "started_at": 1790635498854,
+  "finished_at": 1790635576461,
+  "expires_at": 1790894776461,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea31-566b-7705-bd37-8e9a51423143/output/model.glb?Expires=1790894776&Signature=m0DPXNv4XPbqW7gUGuN9fNnO5HYoxcYHTGy5bcjif5z6-C0nF9WlCp8F-fTUAsX~KYjml2p3RkWVMwVuQx-p7gzdRqakobBIhbK8fJDdj5E6mOkh8GmOOjp8oPz-1dtaFZGP42tkfExfnD8R9Oa2yqmfwgnr0lmHpATqf-mDCsofP7hTL-oTvOGaYE-l32vAbXhRgc9isbrG~hKJt3Twq0s3PjoIP3Ic7UStVcVubuzg-cB164z0C4v9X9MiaWpNHxo4ALNkLEV1yYf1yakVbCnYeRfDxkdC0VqE8fe~4OhMlSlqwjeQRNM1s8GPUfxKHg76zEHpBTzERuxVIeWXdg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_la\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_la\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_la\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_la\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_la\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and pattern placement. Armoured trousers of a Chinese heavy soldier. Waist: a layered belt of deep crimson cloth with thin gold trim over a dark teal-green silk sash, fastened at the front by a round bronze medallion with a crossed knot emblem. Front: a curved bronze apron plate with engraved swirl pattern and a grey riveted metal rim. Back: a moss-green silk flap with faint gold embroidery. Thighs: long rust-brown lamellar tassets of small riveted plates, edged with dark iron strips. Cream-ivory linen trousers underneath, gathered into dark teal-green cuffs at the ankles. Target: realistic aged copper and leather lamellar with rivets and wear, engraved bronze, silk with soft sheen, woven linen with folds and stitching. No text, no logos."
+  }
+}

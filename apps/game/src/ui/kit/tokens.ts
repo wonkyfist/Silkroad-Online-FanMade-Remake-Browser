@@ -201,6 +201,14 @@ ${typeCss()}
 .kit-slot-sign.text { width: auto; height: auto; font: 9px/10px var(--font-title); color: var(--c-level); text-shadow: var(--t-outline); }
 .kit-slot-sign.magic.text { color: var(--c-magic); }
 .kit-slot-sign[hidden], .kit-slot-dur[hidden] { display: none; }
+/* docs/RARITY.md §5.6: a seal's frame in its tier's colour and a shine that sweeps the icon (compositor-only). */
+.kit-slot-rare { position: absolute; left: 2px; top: 2px; width: 32px; height: 32px; overflow: hidden; pointer-events: none; box-shadow: inset 0 0 0 1px var(--rare-c), inset 0 0 8px var(--rare-g); }
+.kit-slot-rare[hidden] { display: none; }
+.kit-slot-rare::after { content: ''; position: absolute; top: -8px; bottom: -8px; left: -24px; width: 14px; transform: translateX(0) rotate(18deg); background: linear-gradient(90deg, transparent, var(--rare-s), transparent); animation: kit-rare-shine var(--rare-t) ease-in-out infinite; }
+@keyframes kit-rare-shine { 0% { transform: translateX(0) rotate(18deg); } 45%, 100% { transform: translateX(80px) rotate(18deg); } }
+.kit-slot-rare.star { --rare-c: #b98cff; --rare-g: rgba(170, 120, 255, 0.75); --rare-s: rgba(236, 224, 255, 0.75); --rare-t: 3.4s; }
+.kit-slot-rare.moon { --rare-c: #6ff0cf; --rare-g: rgba(90, 235, 200, 0.75); --rare-s: rgba(220, 255, 246, 0.75); --rare-t: 2.8s; }
+.kit-slot-rare.sun { --rare-c: #ffb02e; --rare-g: rgba(255, 150, 30, 0.85); --rare-s: rgba(255, 244, 200, 0.9); --rare-t: 2.2s; }
 .kit-slot-dur { position: absolute; left: 2px; top: 2px; width: 32px; height: 32px; background: no-repeat 0 0 / 100% 100%; pointer-events: none; }
 .kit-slot-dur.broken { box-shadow: inset 0 0 0 2px var(--c-bad); }
 .kit-slot-dur.low { box-shadow: inset 0 0 0 2px var(--c-warn); }
@@ -223,6 +231,14 @@ ${typeCss()}
 .kit-tooltip-content { position: relative; display: flex; flex-direction: column; gap: 1px; font: 12px/15px var(--font-body); color: var(--c-text); text-shadow: var(--t-shadow); }
 .kit-tt-title { font: 12px/15px var(--font-title); color: var(--c-text); text-shadow: var(--t-outline); }
 .kit-tt-title.plus { color: var(--c-level); }
+/* docs/RARITY.md §5.6: a seal's name in its tier's colour, and the seal banner under it. */
+.kit-tt-title.rarity.star { color: #b98cff; text-shadow: var(--t-outline), 0 0 6px rgba(170, 120, 255, 0.7); }
+.kit-tt-title.rarity.moon { color: #6ff0cf; text-shadow: var(--t-outline), 0 0 6px rgba(90, 235, 200, 0.7); }
+.kit-tt-title.rarity.sun { color: #ffb02e; text-shadow: var(--t-outline), 0 0 7px rgba(255, 150, 30, 0.8); }
+.kit-tt-rarity { margin: 2px -2px 1px; padding: 1px 6px; font: 11px/15px var(--font-title); text-align: center; letter-spacing: 0.08em; color: var(--rare-fg); text-shadow: var(--t-outline); background: linear-gradient(90deg, transparent, var(--rare-bg) 18%, var(--rare-bg) 82%, transparent); border-top: 1px solid var(--rare-ln); border-bottom: 1px solid var(--rare-ln); border-image: linear-gradient(90deg, transparent, var(--rare-ln), transparent) 1; }
+.kit-tt-rarity.star { --rare-fg: #ece0ff; --rare-bg: rgba(130, 80, 255, 0.38); --rare-ln: #b98cff; }
+.kit-tt-rarity.moon { --rare-fg: #dcfff6; --rare-bg: rgba(40, 190, 160, 0.38); --rare-ln: #6ff0cf; }
+.kit-tt-rarity.sun { --rare-fg: #fff2c8; --rare-bg: rgba(230, 120, 10, 0.45); --rare-ln: #ffb02e; }
 .kit-tt-type, .kit-tt-req { color: var(--c-label); }
 .kit-tt-stat { color: var(--c-text); }
 .kit-tt-stat.struck { color: #8d8577; text-decoration: line-through; }

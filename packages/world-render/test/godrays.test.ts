@@ -148,7 +148,9 @@ describe('planShafts / planPost', () => {
   })
 
   it("'shafts' sits after TAA and before the default pipeline in every combination; Classic plans none", () => {
-    expect(POST_STAGE_ORDER.indexOf('shafts')).toBe(POST_STAGE_ORDER.indexOf('default') - 1)
+    // Only the eye adaptation (docs/LIGHTING.md §2) sits between the shafts and the default pipeline.
+    expect(POST_STAGE_ORDER.indexOf('shafts')).toBe(POST_STAGE_ORDER.indexOf('default') - 2)
+    expect(POST_STAGE_ORDER.indexOf('adapt')).toBe(POST_STAGE_ORDER.indexOf('default') - 1)
     expect(POST_STAGE_ORDER.indexOf('shafts')).toBeGreaterThan(POST_STAGE_ORDER.indexOf('taa'))
     const bools = [false, true]
     for (const level of LIGHT_SHAFT_LEVELS) for (const taa of bools) for (const ssao of bools) for (const small of bools) {
@@ -285,7 +287,7 @@ describe('RenderPost with the shafts (NullEngine)', () => {
     const { camera, render } = setup('medium')
     const post = installRenderPost(render)
     render.attachCamera(camera)
-    expect(post.stages).toEqual(['shafts', 'default'])
+    expect(post.stages).toEqual(['shafts', 'adapt', 'default'])
     const n = names(camera as never)
     expect(n.slice(0, 3)).toEqual(['sroShaftsMarch', 'sroShaftsResolve', 'sroShaftsComposite'])
     expect(n.length).toBeGreaterThan(3)
@@ -356,7 +358,7 @@ describe('RenderPost with the shafts (NullEngine)', () => {
     render.attachCamera(camera)
     const shafts = post.shafts!
     expect(warmupHooksState(scene)).toBe(shafts.isReady() ? 'ready' : 'compiling')
-    render.setQuality(withLightShafts(RENDER_PRESETS.medium, 'off'))
+    render.setQuality({ ...withLightShafts(RENDER_PRESETS.medium, 'off'), eyeAdaptation: false })
     expect(post.shafts).toBeNull()
     expect(names(camera as never).some(n => n.startsWith('sroShafts'))).toBe(false)
     expect(warmupHooksState(scene)).toBe('ready')

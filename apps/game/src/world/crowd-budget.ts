@@ -22,6 +22,9 @@
  *   one mesh (three/models.ts setMergeParts): the same pixels in fewer draws, so at any distance. At most MERGES_PER_PLAN
  *   new merges per plan (each copies a few thousand vertices); one stays merged until fewer than half of ANIM_FROM
  *   others are near.
+ * - **Outfit merge** (P0, docs/CHARACTERS.md §3.3; world/char-lod.ts, with the animation LOD on and ANIM_FROM or more
+ *   others near): an other character beyond OUTFIT_FROM_M draws its body, hair and armour as one mesh with one atlas
+ *   material (three/models.ts setOutfitMerge); at most OUTFITS_PER_PLAN new ones per plan.
  * - **Nothing visible changes within CLOSE_M** but the shadow (no pop at close range: the rate floors start beyond it).
  *
  * The plan is recomputed every PLAN_MS (the casters, the rates); the blobs follow their owners every frame. Low (no new
@@ -30,6 +33,8 @@
 import type { AbstractMesh } from '@babylonjs/core'
 import type { ShadowQuality } from '@sro/world-render'
 import type { CharacterActor, CrowdOffscreen } from '../three/models.ts'
+import { CHAR_LOD, CROWD_PER_PLAN, CROWD_STEP_HZ, OUTFITS_PER_PLAN, closeSet, licensedLodFor, wantsOutfit, type CloseEntry } from './char-lod.ts'
+import { PERF } from './perf.ts'
 
 /** A preset's shadow rule (crowdPresetFor). */
 export interface CrowdShadowRule {
@@ -92,6 +97,14 @@ export interface CrowdEntry {
   wasCasting: boolean
   /** Its parts were merged at the last plan (the merge's hysteresis). */
   wasMerged?: boolean
+  /** It was far at the last plan (the outfit merge's and the clip snap's hysteresis). */
+  wasFar?: boolean
+  /** P1a: it was in the close set at the last plan (world/char-lod.ts closeSet's hysteresis). */
+  wasClose?: boolean
+  /** P1a: it was in the crowd tier at the last plan (the crowd tier's hysteresis on the crowd size). */
+  wasCrowd?: boolean
+  /** §16.8: the licensed LOD it showed at the last plan (the LOD's hysteresis). */
+  wasLicensedLod?: number
 }
 
 /** What the plan decided for one character. */
@@ -106,15 +119,39 @@ export interface CrowdDecision {
   offscreen: CrowdOffscreen
   /** Its alike parts draw merged (three/models.ts setMergeParts). */
   merge: boolean
+  /** P0: its body, hair and armour draw as one outfit mesh (three/models.ts setOutfitMerge). */
+  outfit: boolean
+  /** P0: a far character in a crowd (beyond OUTFIT_FROM_M, not kept): the outfit merge and the clip snap apply. */
+  far: boolean
+  /** P1a: in the close set (world/char-lod.ts closeSet): drawn exactly as without the crowd rules but the shadow. */
+  close: boolean
+  /** P1a: drawn by the crowd tier (three/crowd-tier.ts): no shadow of its own (a blob), its clips stepped at CROWD_STEP_HZ. */
+  crowd: boolean
+  /** §16.8: the licensed body's LOD (char-lod.ts licensedLodFor; 0 for a retail body, which has none). */
+  licensedLod: number
 }
 
-export const FULL: Readonly<CrowdDecision> = { cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false }
+export const FULL: Readonly<CrowdDecision> = { cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false, outfit: false, far: false, close: false, crowd: false, licensedLod: 0 }
+
+const closeScratch: boolean[] = []
+
+/**
+ * P1a: decision `o` for a character the crowd tier took (pure): its clips step at CROWD_STEP_HZ, it casts nothing (the
+ * batch is no caster) and gets a blob where the preset has sun shadows (`shadows`) within NEAR_M.
+ */
+export function crowdJoined(o: CrowdDecision, d: number, shadows: boolean): void {
+  o.animMs = Math.max(o.animMs, 1000 / CROWD_STEP_HZ)
+  o.cascades = 0
+  o.blob = shadows && d <= NEAR_M
+  if (o.offscreen === 'normal') o.offscreen = d > NEAR_M ? 'freeze' : 'slow'
+}
 
 /**
  * The plan for `entries` (pure; `out[i]` for `entries[i]`). `shadows` null: no shadow budget; `anim` false: no rate
- * floors (the animation LOD is off: Low).
+ * floors (the animation LOD is off: Low); `outfit` false: no outfit merge (CHAR_LOD.outfit off); `tier` true: the
+ * crowd tier (CHAR_LOD.crowd) for everyone in a crowd outside the close set.
  */
-export function planCrowd(entries: readonly CrowdEntry[], shadows: CrowdShadowRule | null, anim: boolean, out: CrowdDecision[] = []): CrowdDecision[] {
+export function planCrowd(entries: readonly CrowdEntry[], shadows: CrowdShadowRule | null, anim: boolean, out: CrowdDecision[] = [], outfit = true, tier = false): CrowdDecision[] {
   out.length = entries.length
   let near = 0
   for (const e of entries) if (!e.keep && e.d <= NEAR_M) near++
@@ -134,13 +171,23 @@ export function planCrowd(entries: readonly CrowdEntry[], shadows: CrowdShadowRu
       }
     }
   }
+  // §16.8: the licensed LOD by distance alone where the animation rules are off (Low, a small crowd: refined below)
+  for (let i = 0; i < entries.length; i++) out[i]!.licensedLod = licensedLodFor(entries[i]!.d, entries[i]!, entries[i]!.wasLicensedLod)
   if (anim) {
+    const close = closeSet(entries as readonly CloseEntry[], closeScratch)
     for (let i = 0; i < entries.length; i++) {
       const e = entries[i]!
       if (e.keep) continue
       const o = out[i]!
       if (near >= ANIM_FROM) o.animMs = crowdAnimMs(e.d)
       o.merge = near >= ANIM_FROM || (!!e.wasMerged && near * 2 >= ANIM_FROM)
+      o.far = (near >= ANIM_FROM || (!!e.wasFar && near * 2 >= ANIM_FROM)) && (wantsOutfit(e.d, !!e.wasFar) || CHAR_LOD.outfitNear)
+      o.outfit = outfit && o.far
+      o.close = !!close[i]
+      // P1a: the crowd tier outside the close set (with the merge's hysteresis on the crowd size); what it changes
+      // (crowdJoined) applies once the actor is in (the tier cannot take every actor)
+      o.crowd = tier && !o.close && (near >= ANIM_FROM || (!!e.wasCrowd && near * 2 >= ANIM_FROM))
+      o.licensedLod = licensedLodFor(e.d, o, e.wasLicensedLod)
       // Off screen and casting nothing: no shadow of it reaches the view, whatever the count; beyond NEAR_M not even its
       // clip sounds are heard (the sound polls entities within 40 m).
       if (o.cascades === 0) o.offscreen = e.d > NEAR_M ? 'freeze' : 'slow'
@@ -222,6 +269,8 @@ export class CrowdBudget {
   shadowsEnabled = true
   animEnabled = true
   mergeEnabled = true
+  /** LAB: the crowd tier (P1a) on its own (CHAR_LOD.crowd is the switch the bench turns). */
+  tierEnabled = true
   private readonly tracked = new Map<CrowdView, Tracked>()
   private next = -Infinity
   private blobSet: CrowdBlobs | null = null
@@ -261,7 +310,7 @@ export class CrowdBudget {
     for (const r of t.roots) this.tell(t, r, Infinity)
     // No re-read of the roots: the view is going (a re-read would hand it to the budget again).
     t.rescan = null
-    this.applyAnim(t, FULL, false)
+    this.applyAnim(t, { ...FULL }, false, 0, false)
   }
 
   /** The decision for a view (tests, the LAB). */
@@ -275,21 +324,27 @@ export class CrowdBudget {
   }
 
   /** The views that cast into every cascade, cast into fewer, cast nothing, and the blobs drawn (LAB, tests). */
-  stats(): { tracked: number; full: number; limited: number; none: number; blobs: number; floored: number; merged: number } {
+  stats(): { tracked: number; full: number; limited: number; none: number; blobs: number; floored: number; merged: number; outfits: number; close: number; crowd: number } {
     let full = 0
     let limited = 0
     let none = 0
     let floored = 0
     let merged = 0
+    let outfits = 0
+    let close = 0
+    let crowd = 0
     for (const t of this.tracked.values()) {
+      if (t.decision.close) close++
+      if (t.view.actor?.inCrowd) crowd++
       const c = t.decision.cascades
       if (c === Infinity) full++
       else if (c > 0) limited++
       else none++
       if (t.decision.animMs > 0) floored++
       if (t.view.actor?.mergedParts) merged++
+      if (t.view.actor?.outfitMerged) outfits++
     }
-    return { tracked: this.tracked.size, full, limited, none, blobs: this.blobCount, floored, merged }
+    return { tracked: this.tracked.size, full, limited, none, blobs: this.blobCount, floored, merged, outfits, close, crowd }
   }
 
   private blobCount = 0
@@ -328,18 +383,21 @@ export class CrowdBudget {
       if (t.view.isDisposed) continue
       const p = t.view.root.getAbsolutePosition()
       const d = eye ? Math.hypot(p.x - eye.x, p.y - eye.y, p.z - eye.z) : 0
-      entries.push({ d, keep: this.keep(t.view), wasCasting: t.decision.cascades === Infinity, wasMerged: !!t.view.actor?.mergedParts })
+      entries.push({ d, keep: this.keep(t.view), wasCasting: t.decision.cascades === Infinity, wasMerged: !!t.view.actor?.mergedParts, wasFar: t.decision.far, wasClose: t.decision.close, wasCrowd: !!t.view.actor?.inCrowd, wasLicensedLod: t.view.actor?.licensedLod ?? 0 })
       order.push(t)
     }
-    this.decisions = planCrowd(entries, rule, anim, this.decisions)
+    this.decisions = planCrowd(entries, rule, anim, this.decisions, CHAR_LOD.outfit, CHAR_LOD.crowdTier && this.tierEnabled)
     let merges = MERGES_PER_PLAN
+    this.outfitsLeft = OUTFITS_PER_PLAN
+    this.crowdLeft = CROWD_PER_PLAN
     for (let i = 0; i < order.length; i++) {
       const t = order[i]!
       const d = this.decisions[i]!
       if (!this.mergeEnabled) d.merge = false
       t.decision = d
+      // the actors first: a character the crowd tier took casts nothing (crowdJoined changes `d`)
+      if (this.applyAnim(t, d, merges > 0, entries[i]!.d, !!rule)) merges--
       for (const r of t.roots) this.tell(t, r, d.cascades)
-      if (this.applyAnim(t, d, merges > 0)) merges--
     }
   }
 
@@ -351,8 +409,11 @@ export class CrowdBudget {
     this.o.renderer.setCharacterCascades?.(root, cascades)
   }
 
+  private outfitsLeft = 0
+  private crowdLeft = 0
+
   /** The actors' rate floor and part merge; true when it built a merge (`mayMerge` false: only drops one). */
-  private applyAnim(t: Tracked, d: Readonly<CrowdDecision>, mayMerge: boolean): boolean {
+  private applyAnim(t: Tracked, d: CrowdDecision, mayMerge: boolean, dist: number, shadows: boolean): boolean {
     let built = false
     let changed = false
     // A ridden mob: its ride leads the LOD (the rider copies it), so the ride takes the floor; the rider too, harmless.
@@ -360,8 +421,33 @@ export class CrowdBudget {
       // A view without a full actor (a lane test's fake) is left as it is.
       const a = x as Partial<CharacterActor> | null
       if (!a || a.isDisposed || typeof a.setCrowdLod !== 'function' || typeof a.setMergeParts !== 'function') continue
+      a.snapClips = CHAR_LOD.snap && (d.far || d.crowd)
+      // §16.8: the licensed body's LOD first (the crowd tier and the merges take the parts shown)
+      if (typeof a.setLicensedLod === 'function' && a.setLicensedLod(d.licensedLod)) changed = true
+      // P1a: the crowd tier (its own allowance per plan; leaving is always allowed). A character the tier cannot take
+      // (a rider, a faded GM, parts on a skeleton of their own) goes on as P0 draws it.
+      if (typeof a.setCrowd === 'function' && (!d.crowd || this.crowdLeft > 0 || a.inCrowd)) {
+        const v = a.mergeVersion
+        if (a.setCrowd(d.crowd)) this.crowdLeft--
+        if (a.mergeVersion !== v) changed = true
+        if (a.inCrowd) {
+          crowdJoined(d, dist, shadows)
+          a.setCrowdLod(d.animMs, d.offscreen)
+          continue
+        }
+      }
       a.setCrowdLod(d.animMs, d.offscreen)
-      if (!!a.mergedParts === d.merge || (d.merge && !mayMerge)) continue
+      // P0: the outfit merge (its own allowance per plan; dropping one is always allowed)
+      if (typeof a.setOutfitMerge === 'function' && (!d.outfit || this.outfitsLeft > 0 || a.outfitMerged)) {
+        const v = a.mergeVersion
+        if (a.setOutfitMerge(d.outfit)) this.outfitsLeft--
+        if (a.mergeVersion !== v) changed = true
+        if (a.outfitMerged) continue
+      }
+      // a merge still on whose meshes a licensed LOD switch, a re-dress or the crowd took (they drop it and leave it on):
+      // made again (the LOD1 pieces and body slices are ≈ 19 meshes a body unmerged, §16.9's wardrobe export)
+      const lost = PERF.mergeRedo && d.merge && !!a.mergedParts && a.mergeInfo === null
+      if ((!!a.mergedParts === d.merge && !lost) || (d.merge && !mayMerge)) continue
       const v = a.mergeVersion
       if (a.setMergeParts(d.merge)) built = true
       if (a.mergeVersion !== v) changed = true

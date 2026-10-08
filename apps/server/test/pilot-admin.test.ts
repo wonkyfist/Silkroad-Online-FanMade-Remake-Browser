@@ -44,7 +44,7 @@ describe('settings (§6.1, §6.2)', () => {
     const s = setup()
     const v = (await s.call<AdminBossView>('GET', '')).body
     expect(v.settings).toMatchObject({ rev: 0, patch: {}, bounds: PILOT_BOUNDS, levelCap: s.h.config.levelCap })
-    expect(v.settings.defaults.win).toEqual({ surviveMin: 15, downsTarget: 15, downMinLevel: 15, downMinDamage: 200 })
+    expect(v.settings.defaults.win).toEqual({ surviveMin: 15, downsTarget: 15, downMinLevel: 20, downMinDamage: 200 })
     expect(v.settings.effective).toEqual(v.settings.defaults)
     expect(v.features).toEqual(expect.arrayContaining(['pick', 'stop', 'call', 'schedule', 'settings', 'blocks', 'eligibility', 'scaling']))
   })
@@ -141,7 +141,7 @@ describe('the routes (§6.3)', () => {
     expect((await s.call('POST', '/pick', { character: 'Alpha' })).status).toBe(409)
     s.req(s.pc.p, { t: 'pilotAnswer', event: st.body.event.id, accept: true })
     const hunt = (await s.call<AdminBossView>('GET', '')).body.current!
-    expect(hunt).toMatchObject({ phase: 'hunt', pilotName: 'Pixi', steering: 'player', maxHp: 47_898, scaleHunters: 0 })
+    expect(hunt).toMatchObject({ phase: 'hunt', pilotName: 'Pixi', steering: 'player', maxHp: 107_770, scaleHunters: 0 })
     expect((await s.call('POST', '/stop', { reason: 'test' })).status).toBe(200)
     expect((await s.call('POST', '/stop', {})).status).toBe(409)
     // The trail: every write is in gm_audit (command pilot).
@@ -194,7 +194,7 @@ describe('the routes (§6.3)', () => {
   it('eligibility: the reasons for a name, online or not; the weight; unknown 404', async () => {
     const s = setup({ eligibility: { minPlayHours: 10 } })
     const e = await s.call<PilotEligibilityView>('GET', '/eligibility', undefined, 'character=Pixi')
-    expect(e.body).toMatchObject({ character: 'Pixi', online: true, level: 20, eligible: false, why: 'playtime', playedHours: 0, lastTurnAt: null, blockedUntil: null, weight: 3 })
+    expect(e.body).toMatchObject({ character: 'Pixi', online: true, level: 25, eligible: false, why: 'playtime', playedHours: 0, lastTurnAt: null, blockedUntil: null, weight: 3 })
     s.h.store.db.prepare('UPDATE characters SET played_ms = ? WHERE id = ?').run(12 * 3_600_000, s.pc.p.characterId)
     expect((await s.call<PilotEligibilityView>('GET', '/eligibility', undefined, 'character=pixi')).body).toMatchObject({ eligible: true, playedHours: 12 })
     expect((await s.call('GET', '/eligibility', undefined, 'character=Nobody')).status).toBe(404)
@@ -242,8 +242,8 @@ describe('migration 14 (§5.4: settings, volunteers, blocks)', () => {
       v13.close()
       const store = openStore(root)
       try {
-        expect(SCHEMA_VERSION).toBe(19)
-        expect(store.schemaVersion).toBe(19)
+        expect(SCHEMA_VERSION).toBe(24)
+        expect(store.schemaVersion).toBe(24)
         expect(cols(store.db, 'pilot_settings')).toEqual([['code', 0, 1], ['json', 1, 0], ['rev', 1, 0], ['updated_at', 1, 0], ['updated_by', 0, 0]])
         expect(cols(store.db, 'pilot_volunteers')).toEqual([['event_id', 1, 1], ['account_id', 1, 2], ['character_id', 1, 0], ['at', 1, 0], ['draw', 0, 0]])
         expect(cols(store.db, 'pilot_blocks')).toEqual([['account_id', 0, 1], ['until', 1, 0], ['reason', 1, 0], ['by_account', 0, 0], ['at', 1, 0]])

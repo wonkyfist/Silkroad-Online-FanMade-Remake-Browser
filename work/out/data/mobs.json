@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "mobs",
-  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "generatedAt": "2026-10-07T00:19:58.014Z",
   "sources": [
     "client:characterdata.txt",
     "client:skilldata.txt",
@@ -91,6 +91,7 @@
           }
         }
       ],
+      "championAggressive": true,
       "variants": [
         "normal",
         "champion",
@@ -105,6 +106,7 @@
         "physAttack": "client: MSKILL_CH_MANGNYANG_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 55 nests (0 = aggressive)",
         "model": "client: AssocFileObj128 (col 52)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_mangyang.combat.championTacticsId 1 (champion tactics attack on sight)",
         "variants": "vsro-server-db via third-party port: mobs.json mob_mangyang.variants",
         "championModel": "client: res/mob/china/mangnyang_champ.bsr (the _champ sibling of the model)"
       }
@@ -173,6 +175,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -187,6 +190,7 @@
         "physAttack": "client: MSKILL_CH_BIGEYEGHOST_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 37 nests (0 = aggressive)",
         "model": "client: MOB_CH_BIGEYEGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost_clon.variants",
         "championModel": "client: res/mob/china/bigeyeghost_champ.bsr (the _champ sibling of the model)"
       }
@@ -255,6 +259,7 @@
           }
         }
       ],
+      "championAggressive": true,
       "variants": [
         "normal",
         "champion",
@@ -269,6 +274,7 @@
         "physAttack": "client: MSKILL_CH_BIGEYEGHOST_ATTACK02 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 37 nests (0 = aggressive)",
         "model": "client: AssocFileObj128 (col 52)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost.combat.championTacticsId 3 (champion tactics attack on sight)",
         "variants": "vsro-server-db via third-party port: mobs.json mob_bigeyeghost.variants",
         "championModel": "client: res/mob/china/bigeyeghost_champ.bsr (the _champ sibling of the model)"
       }
@@ -337,6 +343,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -351,6 +358,7 @@
         "physAttack": "client: MSKILL_CH_GYO_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 41 nests (0 = aggressive)",
         "model": "client: MOB_CH_GYO model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_gyo_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_gyo_clon.variants",
         "championModel": "client: res/mob/china/gyo_champ.bsr (the _champ sibling of the model)"
       }
@@ -419,6 +427,7 @@
           }
         }
       ],
+      "championAggressive": true,
       "variants": [
         "normal",
         "champion",
@@ -433,6 +442,7 @@
         "physAttack": "client: MSKILL_CH_GYO_ATTACK02 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 30 nests (0 = aggressive)",
         "model": "client: AssocFileObj128 (col 52)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_gyo.combat.championTacticsId 6 (champion tactics attack on sight)",
         "variants": "vsro-server-db via third-party port: mobs.json mob_gyo.variants",
         "championModel": "client: res/mob/china/gyo_champ.bsr (the _champ sibling of the model)"
       }
@@ -518,6 +528,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -532,6 +543,7 @@
         "physAttack": "client: MSKILL_CH_WATERGHOST_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 20 nests (0 = aggressive)",
         "model": "client: MOB_CH_WATERGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_waterghost_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_waterghost_clon.variants",
         "championModel": "client: res/mob/china/waterghost_champ.bsr (the _champ sibling of the model)"
       }
@@ -617,6 +629,7 @@
           }
         }
       ],
+      "championAggressive": true,
       "variants": [
         "normal",
         "champion",
@@ -631,6 +644,7 @@
         "physAttack": "client: MSKILL_CH_WATERGHOST_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 31 nests (0 = aggressive)",
         "model": "client: AssocFileObj128 (col 52)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_waterghost.combat.championTacticsId 9 (champion tactics attack on sight)",
         "variants": "vsro-server-db via third-party port: mobs.json mob_waterghost.variants",
         "championModel": "client: res/mob/china/waterghost_champ.bsr (the _champ sibling of the model)"
       }
@@ -781,6 +795,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -790,6 +805,7 @@
         "magAttack": "client: MSKILL_CH_TOMBSTONE_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 35 nests (0 = aggressive)",
         "model": "client: MOB_CH_TOMBSTONE model (col 4 base code; no _clon sibling in Data.pk2)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_tombstone_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_tombstone_clon.variants"
       }
     },
@@ -1032,6 +1048,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -1046,6 +1063,7 @@
         "physAttack": "client: MSKILL_CH_YEOHA_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 28 nests (0 = aggressive)",
         "model": "client: MOB_CH_YEOHA model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_yeoha_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_yeoha_clon.variants",
         "championModel": "client: res/mob/china/yeoha_champ.bsr (the _champ sibling of the model)"
       }
@@ -1230,6 +1248,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -1244,6 +1263,7 @@
         "physAttack": "client: MSKILL_CH_BANDIT_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 23 nests (0 = aggressive)",
         "model": "client: MOB_CH_BANDIT model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_bandit_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_bandit_clon.variants",
         "championModel": "client: res/mob/china/bandit_champ.bsr (the _champ sibling of the model)"
       }
@@ -1394,6 +1414,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -1408,6 +1429,7 @@
         "physAttack": "client: MSKILL_CH_TIGER_CLON_ATTACK02 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 29 nests (0 = aggressive)",
         "model": "client: MOB_CH_TIGER model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_tiger_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_tiger_clon.variants",
         "championModel": "client: res/mob/china/tiger_champ.bsr (the _champ sibling of the model)"
       }
@@ -1592,6 +1614,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -1606,6 +1629,7 @@
         "physAttack": "client: MSKILL_CH_BANDITARCHER_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 11 nests (0 = aggressive)",
         "model": "client: MOB_CH_BANDITARCHER model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_banditarcher_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_banditarcher_clon.variants",
         "championModel": "client: res/mob/china/banditarcher_champ.bsr (the _champ sibling of the model)"
       }
@@ -1988,6 +2012,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -2002,6 +2027,7 @@
         "physAttack": "client: MSKILL_CH_CHAKJI_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 22 nests (0 = aggressive)",
         "model": "client: MOB_CH_CHAKJI model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_chakji_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_chakji_clon.variants",
         "championModel": "client: res/mob/china/chakji_champ.bsr (the _champ sibling of the model)"
       }
@@ -2314,6 +2340,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -2328,6 +2355,7 @@
         "physAttack": "client: MSKILL_WC_GHOSTBUG_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 20 nests (0 = aggressive)",
         "model": "client: AssocFileObj128 (col 52)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_ghostbug links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_ghostbug.variants",
         "championModel": "client: res/mob/wchina/ghostbug_champ.bsr (the _champ sibling of the model)"
       }
@@ -2605,6 +2633,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -2614,6 +2643,7 @@
         "physAttack": "client: MSKILL_WC_HYUNGNO_CLON_ATTACK02 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 33 nests (0 = aggressive)",
         "model": "client: MOB_WC_HYUNGNO model (col 4 base code; no _clon sibling in Data.pk2)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_hyungno_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_hyungno_clon.variants"
       }
     },
@@ -2780,6 +2810,7 @@
           }
         }
       ],
+      "championAggressive": false,
       "variants": [
         "normal",
         "champion",
@@ -2794,6 +2825,7 @@
         "magAttack": "client: MSKILL_WC_GUNPOWDERGHOST_CLON_ATTACK01 'att' flat min/max",
         "aggressive": "port: tactics aggressTypeRaw 1 on all 17 nests (0 = aggressive)",
         "model": "client: MOB_WC_GUNPOWDERGHOST model + _clon sibling (col 4 base code, col 93 = 1)",
+        "championAggressive": "vsro-server-db via third-party port: mobs.json mob_gunpowderghost_clon links no champion tactics",
         "variants": "vsro-server-db via third-party port: mobs.json mob_gunpowderghost_clon.variants",
         "championModel": "client: res/mob/wchina/gunpowderghost_champ.bsr (the _champ sibling of the model)"
       }

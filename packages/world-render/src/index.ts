@@ -185,7 +185,10 @@ export {
   CELESTIAL_LIGHT_NAME,
   CELESTIAL_RENDER_PRIORITY,
   FLASH_FULL_EXPOSURE,
+  GROUND_BOUNCE,
   LIGHT_CALIBRATIONS,
+  addGroundSH,
+  groundBounceRadiance,
   SkyEnvironment,
   WORLD_SKY_CUBE_DECODE,
   WorldLighting,
@@ -195,6 +198,10 @@ export {
   skyStateSH,
 } from './render/lighting.ts'
 export type { LightBalance, LightCalibration, LightRegime, SkyCubeDecode, SkyEnvironmentOptions, SkyRadianceSource, WorldLightingOptions } from './render/lighting.ts'
+export { ADAPT, EyeAdaptation, METER_H, METER_W, adaptKey, adaptStep, adaptTargetEV, nightLift, storminess } from './render/adaptation.ts'
+export type { AdaptState, AdaptTuning } from './render/adaptation.ts'
+export { LIGHT_LOOK, applyLightLook } from './render/look.ts'
+export type { LightLookSwitch } from './render/look.ts'
 export { CHARACTER_CASTER_M, SHADOW_PROXY_LAYER, ShadowProxies, WorldShadows, csmSettings, selectCasters } from './render/shadows.ts'
 export { EnabledMeshCandidates } from './render/active-meshes.ts'
 export { CHARACTER_BLOB_CAP, CharacterBlobs } from './render/character-blobs.ts'

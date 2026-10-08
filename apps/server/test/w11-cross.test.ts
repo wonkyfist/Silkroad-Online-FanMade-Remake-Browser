@@ -42,7 +42,8 @@ describe('a unique camp is never in the town\'s range (WAVE_PLAN7 D20)', () => {
   it.skipIf(!existsSync(nestsFile))('every camp is ≥ 1 km from every town node, with her leash and the crowd\'s range to spare', () => {
     const nests = contentEntries<NestDef>(JSON.parse(readFileSync(nestsFile, 'utf8')))
     let checked = 0
-    for (const u of uniques.uniques) {
+    // the world bosses only: the Climb's mini-bosses (an authored `spot`, docs/CLIMB.md §2.5) are band bosses near their band
+    for (const u of uniques.uniques.filter((x) => !x.spot)) {
       const camps = u.camps === 'uniqueGroup' ? nests.filter((n) => n.uniqueGroup && n.world === u.world && n.mob === u.mob) : nests.filter((n) => (u.camps as number[]).includes(n.id))
       expect(camps.length, u.mob).toBeGreaterThan(0)
       for (const c of camps) {

@@ -94,16 +94,16 @@ describe('planPost: preset → pipeline list, in order', () => {
 
   it('matches the §5.1 rows per preset', () => {
     const med = planPost('pbr', RENDER_PRESETS.medium, GPU)
-    expect(med.stages).toEqual(['shafts', 'default'])
+    expect(med.stages).toEqual(['shafts', 'adapt', 'default'])
     expect(med.shafts).toMatchObject({ level: 'low', mode: 'hybrid', ratio: 0.25 })
     expect([med.fxaa, med.msaa, med.sharpen, med.bloom, med.toneMap, med.lutGrade, med.prepass]).toEqual([true, 1, false, 0, 'neutral', true, false])
     const high = planPost('pbr', RENDER_PRESETS.high, GPU)
-    expect(high.stages).toEqual(['ssao', 'taa', 'shafts', 'default']) // §6.20 cut 4: no SSR on High
+    expect(high.stages).toEqual(['ssao', 'taa', 'shafts', 'adapt', 'default']) // §6.20 cut 4: no SSR on High
     expect(high.shafts).toMatchObject({ level: 'high', mode: 'march', ratio: 0.5 })
     expect(high.ssao).toEqual({ ratio: 0.5, samples: 8 })
     expect([high.ssr, high.aa, high.sharpen, high.fxaa, high.msaa]).toEqual(['off', 'taa', true, false, 1])
     const ultra = planPost('pbr', RENDER_PRESETS.ultra, GPU)
-    expect(ultra.stages).toEqual(['ssao', 'ssr', 'taa', 'shafts', 'default'])
+    expect(ultra.stages).toEqual(['ssao', 'ssr', 'taa', 'shafts', 'adapt', 'default'])
     expect(ultra.ssao).toEqual({ ratio: 1, samples: 16 })
     expect(ultra.ssr).toBe('always')
   })
@@ -124,15 +124,15 @@ describe('planPost: preset → pipeline list, in order', () => {
   it(`drops the prepass below ${MIN_PREPASS_VARYINGS} inter-stage variables: no SSAO/SSR, reprojected TAA → MSAA ×4`, () => {
     for (const p of ['high', 'ultra'] as const) {
       const plan = planPost('pbr', RENDER_PRESETS[p], GPU16, { taaReprojection: true })
-      expect(plan.stages).toEqual(['shafts', 'default'])
+      expect(plan.stages).toEqual(['shafts', 'adapt', 'default'])
       expect([plan.prepass, plan.aa, plan.msaa, plan.sharpen, plan.taaReprojection]).toEqual([false, 'msaa', 4, false, false])
       expect(plan.dropped.length).toBe(p === 'ultra' ? 3 : 2) // High has no SSR to drop (§6.20 cut 4)
       // Projection-jitter TAA (the default) needs no prepass and stays.
       const plain = planPost('pbr', RENDER_PRESETS[p], GPU16)
-      expect(plain.stages).toEqual(['taa', 'shafts', 'default'])
+      expect(plain.stages).toEqual(['taa', 'shafts', 'adapt', 'default'])
       expect([plain.prepass, plain.aa, plain.taaReprojection]).toEqual([false, 'taa', false])
     }
-    expect(planPost('pbr', RENDER_PRESETS.medium, GPU16).stages).toEqual(['shafts', 'default'])
+    expect(planPost('pbr', RENDER_PRESETS.medium, GPU16).stages).toEqual(['shafts', 'adapt', 'default'])
   })
 
   it('TAA reprojection (D30) is opt-in and then counts as a prepass stage', () => {
@@ -144,13 +144,13 @@ describe('planPost: preset → pipeline list, in order', () => {
 
   it('uses FSR1 first for render scale < 1, only without prepass stages', () => {
     const med = planPost('pbr', RENDER_PRESETS.medium, GPU, { renderScale: 0.75 })
-    expect(med.stages).toEqual(['fsr', 'shafts', 'default'])
+    expect(med.stages).toEqual(['fsr', 'shafts', 'adapt', 'default'])
     expect(med.fsrScale).toBeCloseTo(1 / 0.75, 9)
     const high = planPost('pbr', RENDER_PRESETS.high, GPU, { renderScale: 0.75 })
     expect(high.stages).not.toContain('fsr')
-    expect(planPost('pbr', { ...RENDER_PRESETS.high, ssao: null, ssr: 'off' }, GPU, { renderScale: 0.75 }).stages).toEqual(['fsr', 'taa', 'shafts', 'default'])
+    expect(planPost('pbr', { ...RENDER_PRESETS.high, ssao: null, ssr: 'off' }, GPU, { renderScale: 0.75 }).stages).toEqual(['fsr', 'taa', 'shafts', 'adapt', 'default'])
     expect(high.dropped.some(d => d.startsWith('fsr'))).toBe(true)
-    expect(planPost('pbr', RENDER_PRESETS.medium, GPU, { renderScale: 1 }).stages).toEqual(['shafts', 'default'])
+    expect(planPost('pbr', RENDER_PRESETS.medium, GPU, { renderScale: 1 }).stages).toEqual(['shafts', 'adapt', 'default'])
   })
 
   it('tone map: KHR PBR Neutral by default, ACES as "filmic"', () => {
@@ -198,7 +198,7 @@ describe('RenderPost on a scene (NullEngine)', () => {
     const { scene, camera, render } = setup('pbr', 'medium')
     const post = installRenderPost(render)
     render.attachCamera(camera)
-    expect(post.stages).toEqual(['shafts', 'default'])
+    expect(post.stages).toEqual(['shafts', 'adapt', 'default'])
     const dp = post.pipeline!
     expect(dp.fxaaEnabled).toBe(true)
     expect(dp.bloomEnabled).toBe(false)
@@ -406,7 +406,7 @@ describe('bloom (Options → Bloom: off by default, subtle, strong)', () => {
 
     render.setQuality(withBloom(RENDER_PRESETS.medium, 'subtle'))
     const dp = post.pipeline!
-    expect(post.stages).toEqual(['shafts', 'default'])
+    expect(post.stages).toEqual(['shafts', 'adapt', 'default'])
     expect([dp.bloomEnabled, dp.bloomScale, dp.bloomWeight]).toEqual([true, 0.5, BLOOM_LOOKS.subtle.bloomWeight])
     expect(dp.bloomThreshold).toBeCloseTo(bloomCutoff(BLOOM_LOOKS.subtle.bloomThreshold!, 10), 12)
     // The exposure moves (dusk): the threshold follows, same pipeline.
@@ -421,6 +421,6 @@ describe('bloom (Options → Bloom: off by default, subtle, strong)', () => {
 
     render.setQuality(RENDER_PRESETS.medium)
     expect(post.pipeline!.bloomEnabled).toBe(false)
-    expect(post.stages).toEqual(['shafts', 'default'])
+    expect(post.stages).toEqual(['shafts', 'adapt', 'default'])
   })
 })

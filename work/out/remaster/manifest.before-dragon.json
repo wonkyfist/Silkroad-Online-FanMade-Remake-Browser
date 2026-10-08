@@ -1,0 +1,103 @@
+{
+ "format": "sro-remaster",
+ "version": 1,
+ "$note": "LIVE (the players load it; D35: wins over the sro-pbr set for the same glb image). The 12 Meshy sets the user approved on 2026-09-29 (work/tmp/w9-user-decisions.md, \"Meshy review picks\"): Meshy multiview albedo (bodies: the local face pasted back) + local L3 maps, promoted from staging.json (kept as the review record) to sets/<part>/.",
+ "textures": {
+  "equipment/china/man_item/clothes_01_ba#clothes_01_ba": {
+   "albedo": "sets/ch_m_clothes_01_ba/albedo.webp",
+   "normal": "sets/ch_m_clothes_01_ba/normal.webp",
+   "metallic": "sets/ch_m_clothes_01_ba/metallic.webp",
+   "roughness": "sets/ch_m_clothes_01_ba/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/clothes_01_ba#clothes_01_ba": {
+   "albedo": "sets/ch_w_clothes_01_ba/albedo.webp",
+   "normal": "sets/ch_w_clothes_01_ba/normal.webp",
+   "metallic": "sets/ch_w_clothes_01_ba/metallic.webp",
+   "roughness": "sets/ch_w_clothes_01_ba/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/light_01_ba#light_01_ba": {
+   "albedo": "sets/ch_m_light_01_ba/albedo.webp",
+   "normal": "sets/ch_m_light_01_ba/normal.webp",
+   "metallic": "sets/ch_m_light_01_ba/metallic.webp",
+   "roughness": "sets/ch_m_light_01_ba/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/light_01_ba#light_01_ba": {
+   "albedo": "sets/ch_w_light_01_ba/albedo.webp",
+   "normal": "sets/ch_w_light_01_ba/normal.webp",
+   "metallic": "sets/ch_w_light_01_ba/metallic.webp",
+   "roughness": "sets/ch_w_light_01_ba/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/clothes_01_la#clothes_01_la": {
+   "albedo": "sets/ch_m_clothes_01_la/albedo.webp",
+   "normal": "sets/ch_m_clothes_01_la/normal.webp",
+   "metallic": "sets/ch_m_clothes_01_la/metallic.webp",
+   "roughness": "sets/ch_m_clothes_01_la/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/woman_item/light_01_la#light_01_la": {
+   "albedo": "sets/ch_w_light_01_la/albedo.webp",
+   "normal": "sets/ch_w_light_01_la/normal.webp",
+   "metallic": "sets/ch_w_light_01_la/metallic.webp",
+   "roughness": "sets/ch_w_light_01_la/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_adventurer#chinaman_adventurer_body": {
+   "albedo": "sets/chinaman_adventurer_body/albedo.webp",
+   "normal": "sets/chinaman_adventurer_body/normal.webp",
+   "metallic": "sets/chinaman_adventurer_body/metallic.webp",
+   "roughness": "sets/chinaman_adventurer_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_bogy#chinaman_bogy_body": {
+   "albedo": "sets/chinaman_bogy_body/albedo.webp",
+   "normal": "sets/chinaman_bogy_body/normal.webp",
+   "metallic": "sets/chinaman_bogy_body/metallic.webp",
+   "roughness": "sets/chinaman_bogy_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_fighter#chinaman_fighter_body": {
+   "albedo": "sets/chinaman_fighter_body/albedo.webp",
+   "normal": "sets/chinaman_fighter_body/normal.webp",
+   "metallic": "sets/chinaman_fighter_body/metallic.webp",
+   "roughness": "sets/chinaman_fighter_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_adventurer#chinawoman_adventurer_body": {
+   "albedo": "sets/chinawoman_adventurer_body/albedo.webp",
+   "normal": "sets/chinawoman_adventurer_body/normal.webp",
+   "metallic": "sets/chinawoman_adventurer_body/metallic.webp",
+   "roughness": "sets/chinawoman_adventurer_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_assassin#chinawoman_assassin_body": {
+   "albedo": "sets/chinawoman_assassin_body/albedo.webp",
+   "normal": "sets/chinawoman_assassin_body/normal.webp",
+   "metallic": "sets/chinawoman_assassin_body/metallic.webp",
+   "roughness": "sets/chinawoman_assassin_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinawoman_bogy#chinawoman_bogy_body": {
+   "albedo": "sets/chinawoman_bogy_body/albedo.webp",
+   "normal": "sets/chinawoman_bogy_body/normal.webp",
+   "metallic": "sets/chinawoman_bogy_body/metallic.webp",
+   "roughness": "sets/chinawoman_bogy_body/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  }
+ }
+}

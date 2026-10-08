@@ -32,6 +32,8 @@ export interface ScreenParams {
   servers: undefined
   charselect: { select?: number } | undefined
   charcreate: undefined
+  /** The character creator (docs/CHARACTERS.md §16.10): a new character, or the one-time re-customise of `character`. */
+  creator: { character?: CharacterSummary } | undefined
   world: { character: CharacterSummary }
 }
 

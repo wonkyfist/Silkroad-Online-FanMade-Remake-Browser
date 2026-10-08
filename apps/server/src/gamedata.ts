@@ -12,6 +12,7 @@ import {
   checkNestDef,
   checkZoneDef,
   contentEntries,
+  rarityOf,
   type ContentKind,
   type DropTable,
   type EquipSlot,
@@ -359,7 +360,8 @@ export class GameData {
    */
   starterWeapon(family: StarterWeapon): ItemDef | null {
     const candidates = [...this.items.values()].filter(
-      (i) => i.category === 'weapon' && i.weaponType === family && i.reqLevel <= 1 && i.race !== 'europe',
+      // docs/RARITY.md: a seal (`_RARE`, level 1 at degree 1) is never a starter weapon.
+      (i) => i.category === 'weapon' && i.weaponType === family && i.reqLevel <= 1 && i.race !== 'europe' && rarityOf(i.code) === null,
     )
     return pickDefault(candidates)
   }

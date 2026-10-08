@@ -8,6 +8,7 @@
  */
 import type { CombatHit, ServerMessage, SkillDef } from '@sro/shared'
 import type { SkillCatalog } from '../content/skills.ts'
+import { pilotMoveOf, pounceClipRate } from './tiger-moves.ts'
 
 export type CastMessage = Extract<ServerMessage, { t: 'cast' }>
 export type CastEndMessage = Extract<ServerMessage, { t: 'castEnd' }>
@@ -27,6 +28,8 @@ export interface PhasePlan {
   type: string
   ms: number
   loop: boolean
+  /** Clip playback rate (1 = as authored; Tiger Girl's Pounce plays faster so its strike meets the landing). */
+  speed?: number
 }
 
 /** What the ActionPlayer needs of an entity (EntityView + CharacterActor in the game, a fake in tests). */
@@ -179,7 +182,7 @@ export class ActionPlayer {
     }
     if (prev && !prev.ended) this.finish(prev, 'replaced', port)
     const aniGroup = def?.aniGroup
-    const plans = planPhases(msg, def, type => port?.clip(aniGroup, type) ?? null)
+    const plans = shapePilotPlans(msg, planPhases(msg, def, type => port?.clip(aniGroup, type) ?? null), type => port?.clip(aniGroup, type) ?? null)
     const a: SkillAction = {
       caster: msg.id,
       instances: [msg.instance],
@@ -391,6 +394,25 @@ export function mobSkillDef(g: FxGroupFacts): SkillDef {
     aniGroup: g.aniGroup ?? 'DEFAULT',
     hitCues: hitCuesOf(g),
   } as SkillDef
+}
+
+/** The server's leap: `actionMs` is the flight plus this tail (apps/server/src/pilot/kit.ts leap()). */
+export const LEAP_TAIL_MS = 400
+
+/**
+ * Tiger Girl's kit moves (world/tiger-moves.ts): the Roar plays its FIND clip whole (the cast's 1.2 s action would cut
+ * it before the jaws close); the Pounce's clip runs at the rate that puts its strike on the touchdown.
+ */
+export function shapePilotPlans(msg: Pick<CastMessage, 'skill' | 'actionMs'>, plans: PhasePlan[], clip: (type: string) => ClipFacts | null): PhasePlan[] {
+  const move = pilotMoveOf(msg.skill)
+  if (!move) return plans
+  return plans.map(p => {
+    if (p.phase !== 'SHOT') return p
+    const facts = clip(p.type)
+    if (move === 'roar') return { ...p, ms: Math.max(p.ms, facts?.durationMs ?? 0) }
+    const rate = pounceClipRate(facts?.hits[0] ?? 0, Math.max(0, msg.actionMs - LEAP_TAIL_MS) / 1000)
+    return rate === 1 ? p : { ...p, speed: rate }
+  })
 }
 
 /**

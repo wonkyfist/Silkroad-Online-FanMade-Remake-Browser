@@ -251,9 +251,9 @@ describe('PbrSurfaces (the render part)', () => {
     part.setQuality(RENDER_PRESETS.high)
     part.update(null, { ...SKY, keyLight: { ...SKY.keyLight, dir: new Vector3(-1, 1, 0).normalize() } })
     expect([part.shared.bakedK, part.shared.night, part.shared.wet, part.shared.puddles]).toEqual([0.35, 0.25, true, true])
-    // Medium: wet, but no object puddles (RENDER §9.3: High+).
+    // Medium: wet, and object puddles too since PLAZA-RAIN (the weather level has puddles, as the terrain).
     part.setQuality(RENDER_PRESETS.medium)
-    expect([part.shared.wet, part.shared.puddles]).toEqual([true, false])
+    expect([part.shared.wet, part.shared.puddles]).toEqual([true, true])
     // TX-R: Medium loads the retail-size remaster (RenderQuality.textures absent = 'auto').
     expect(part.policy()).toEqual({ tier: 'remaster', albedoCap: 'retail', tier2x: false, mapCap: 'retail', maps: 'hero', ktx2: false, remasterCap: 1024 })
     part.setQuality({ ...RENDER_PRESETS.medium, textures: 'retail' })

@@ -55,10 +55,23 @@ import {
 import { fireTrail } from './fx/berserk-look.ts'
 import { arrowModel, BASIC_ARROW, FxModels, type FxModelInstance, type FxModelLoader } from './fx/fx-model.ts'
 import { HitLights } from './fx/hit-light.ts'
+import { PERF } from './perf.ts'
 import { trailStyle, WeaponTrail, type TrailStyle } from './fx/trail.ts'
+import { RARITY_LOOKS } from '../three/weapon-rarity.ts'
+import { rarityFxOf } from './rarity/fx.ts'
+import type { RarityTier } from '@sro/shared'
 import type { FxCharacterInfo, FxLabEntry, FxLight, FxModelRef, FxTrail } from './fx/types.ts'
 
 export { bodyPoint, parseOffset } from './fx/anchors.ts'
+
+/** How long a basic attack's seal swing samples the blade (s; the ribbon then lingers by its kind and tier). */
+export const RARE_SWING_S = 0.75
+
+/** A seal weapon's swing trail (docs/RARITY.md §5.4): the row's texture in the tier's colour and blend, longer. */
+export function rarityTrail(style: TrailStyle, tier: RarityTier): TrailStyle {
+  const L = RARITY_LOOKS[tier]
+  return { ...style, lengthMs: Math.round(style.lengthMs * L.trailLength), color: [L.trail[0], L.trail[1], L.trail[2], L.trailAlpha], blend: L.trailBlend }
+}
 
 export interface FxStage {
   phase: string
@@ -440,7 +453,15 @@ export interface SkillFxOptions {
   modelLoader?: FxModelLoader
   /** Hit lights (default on; tests may turn them off). */
   lights?: boolean
+  /**
+   * Perf audit (docs/PERF_AUDIT.md): pooled batch meshes per kind of effect batch (FxLibrary.poolLimit; 0 = none, the
+   * default, so an ended effect leaves no mesh behind). The world passes FX_BATCH_POOL.
+   */
+  batchPool?: number
 }
+
+/** The world's batch pool per (material, kind, geometry): a 50-fighter crowd keeps ≈ 100 hidden meshes at most. */
+export const FX_BATCH_POOL = 8
 
 export interface SkillFxStats {
   /** Instances playing (effects, models, streaks). */
@@ -517,6 +538,7 @@ export class SkillFx {
   constructor(private readonly scene: Scene, private readonly now: () => number = () => performance.now(), opts: SkillFxOptions = {}) {
     this.lib = opts.library ?? new FxLibrary(scene, OUT)
     this.ownsLib = !opts.library
+    this.batchPool = Math.max(0, opts.batchPool ?? 0)
     this.models = new FxModels(scene, opts.modelLoader)
     this.hitLights = opts.lights === false ? null : new HitLights(scene, now)
   }
@@ -629,10 +651,13 @@ export class SkillFx {
    * replaces the row's trail; rows without a trail (bows, forces) draw none.
    */
   swing(view: EntityView, group: string, until?: number): void {
-    if (this.disposed || !this.trailsOn || view.isDisposed || view.dead) return
+    if (this.disposed || view.isDisposed || view.dead) return
+    // a seal weapon's own swing (docs/RARITY.md §5.4): its ribbon, sweep or thrust, whatever the trail settings
+    if (view.actor?.weaponRarity) rarityFxOf(this.scene)?.swing(view.actor, until === undefined ? RARE_SWING_S : Math.max(0.15, (until - this.now()) / 1000))
+    if (!this.trailsOn) return
     const base = this.skills.get(group)
     if (!trailStyle(base?.trail)) return
-    const style = this.trailOf(view.id, base!)
+    const style = this.trailOf(view.id, base!, view.actor?.weaponRarity ?? null)
     if (!style) return
     const tip = view.actor?.weaponDummy('ai_end')
     if (!tip || !view.actor?.weaponDummy('ai_start')) {
@@ -664,12 +689,16 @@ export class SkillFx {
     this.lab({ t: now, kind: 'trail', name: group, key: style.texture ?? undefined, entity: view.id })
   }
 
-  /** The trail style `view` swings with for `skill`: its carried priority group's, else the row's. */
-  private trailOf(id: number, skill: FxSkill): TrailStyle | null {
+  /**
+   * The trail style `view` swings with for `skill`: its carried priority group's, else the row's; a seal weapon
+   * (docs/RARITY.md §5.4) colours the row's trail in its tier (an imbue or Berserk still wins).
+   */
+  private trailOf(id: number, skill: FxSkill, rarity: RarityTier | null = null): TrailStyle | null {
     const top = this.carriedTop(id, g => !!trailStyle(g.trail))
     const style = trailStyle((top ?? skill).trail)
     // The Berserk makeover (docs/EFFECTS.md §3.9): the HWAN trail burns fire-orange and lasts longer.
-    return style && top?.group === HWAN_GROUP ? fireTrail(style) : style
+    if (style && top?.group === HWAN_GROUP) return fireTrail(style)
+    return style && !top && rarity ? rarityTrail(style, rarity) : style
   }
 
   /** The highest-priority group `id` carries (that passes `ok`). */
@@ -982,8 +1011,13 @@ export class SkillFx {
     this.swings.get(owner)?.trail.disarm(this.now())
   }
 
+  /** FxLibrary.poolLimit while PERF.fxPool is on (SkillFxOptions.batchPool). */
+  private readonly batchPool: number
+
   update(dt: number): void {
     const now = this.now()
+    this.lib.poolLimit = PERF.fxPool ? this.batchPool : 0
+    FxLibrary.skipEmptyUploads = PERF.fxSkipEmpty
     if (this.pending.length) {
       const due = this.pending.filter(p => p.at <= now)
       if (due.length) {
@@ -1283,6 +1317,8 @@ export class SkillFx {
       }, track)
     }
     if (!drawn && (o.streak || o.model)) track(this.add(new ArrowStreak(this.scene, at), { owner: o.caster.id, loop: false, until }))
+    // a seal bow's arrow flies as a shooting star, a moon-bolt or a sunfire comet (docs/RARITY.md §5.4)
+    if (o.caster.actor?.weaponRarity) rarityFxOf(this.scene)?.arrow(o.caster.actor, at, () => f.arrivedAt !== null)
     this.flights.push(f)
     return f
   }

@@ -113,7 +113,7 @@ export const WET_REFLECT_MAX = 0.6
 export const RAIN_CELLS_M: readonly [number, number] = [0.34, 0.25]
 /**
  * The film covers every flat, open, wet floor of a world object (not only the puddle classes: the plaza's paving is
- * the `default`-class `cj_jang_gate07`), at this share of full strength for classes without a puddle weight; the
+ * `cj_jang_gate07`, stone since PLAZA-RAIN: classes.ts BUILTIN_CLASS_OVERRIDES), at this share of full strength for classes without a puddle weight; the
  * puddle classes (stone, soil) take the whole film. Characters (never baked) and the classes below never get it.
  */
 export const RAIN_OBJECT_FILM_MIN = 0.75
@@ -122,6 +122,22 @@ export const RAIN_OBJECT_GAIN = 2
 /** The ring lines' albedo contrast (1 ± this × the ring height), as the terrain's RING_CONTRAST. */
 export const RAIN_OBJECT_CONTRAST = 0.85
 export const RAIN_OBJECT_FADE_M: readonly [number, number] = [22, 45]
+/**
+ * PLAZA-RAIN: the object puddle mask (SRO_PUDDLES) also fills the paving's low spots: on a batched floor (SRO_TABLE)
+ * the slot's ambient-occlusion plane (the NRAO's A: dark in the joints and the worn hollows) raises the noise mask by
+ * (1 − ao) × this, so water stands in the joints first and spreads into blotches as the puddle level rises.
+ */
+export const PUDDLE_JOINT_GAIN = 0.55
+/**
+ * The object puddle mask in TS (tests; the shader's SRO_PUDDLES): `noise` 0..1 (sroNoise), `ao` 1 without an AO plane,
+ * `level` the weather's puddle level 0..1. Before the puddle class weight, flatness and shelter.
+ */
+export function objectPuddle(noise: number, ao: number, level: number): number {
+  const p = 1 - Math.min(1, Math.max(0, level)) * 0.45
+  const mask = 0.35 + noise * 0.3 + (1 - ao) * PUDDLE_JOINT_GAIN
+  const t = Math.min(1, Math.max(0, (mask - (p - 0.05)) / 0.1))
+  return t * t * (3 - 2 * t)
+}
 /** RENDER §3.3: lanterns glow at night. */
 export const LAMP_EMISSIVE = 1.5
 /**
@@ -378,7 +394,8 @@ fn sroTexel(k: i32, slot: i32) -> vec4f {
   let sroP = 1.0 - uniforms.sroWeather.z * 0.45;
   let sroMask = 0.35 + sroNoise(fragmentInputs.vPositionW.xz * 0.15) * 0.3;
 #ifdef SRO_TABLE
-  sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMask) * sroFlat * sroTSurf.w * sroShel;
+  let sroMaskT = sroMask + (1.0 - sroTAo) * ${PUDDLE_JOINT_GAIN.toFixed(2)};
+  sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMaskT) * sroFlat * sroTSurf.w * sroShel;
 #else
   sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMask) * sroFlat * uniforms.sroSurf.w * sroShel;
 #endif
@@ -705,7 +722,8 @@ float sroGradK(vec2 s, vec2 d1, vec2 d2) {
   float sroP = 1.0 - sroWeather.z * 0.45;
   float sroMask = 0.35 + sroNoise(vPositionW.xz * 0.15) * 0.3;
 #ifdef SRO_TABLE
-  sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMask) * sroFlat * sroTSurf.w * sroShel;
+  float sroMaskT = sroMask + (1.0 - sroTAo) * ${PUDDLE_JOINT_GAIN.toFixed(2)};
+  sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMaskT) * sroFlat * sroTSurf.w * sroShel;
 #else
   sroPuddle = smoothstep(sroP - 0.05, sroP + 0.05, sroMask) * sroFlat * sroSurf.w * sroShel;
 #endif
@@ -1496,8 +1514,9 @@ export class PbrSurfaces implements RenderPart {
     const ws = this.weatherSource
     const pbr = this.mode === 'pbr'
     const wet = pbr && !!ws?.preset.wet
-    // RENDER §9.3: flat object floors get puddles on High+.
-    const puddles = wet && !!ws?.preset.puddles && (this.tier === 'high' || this.tier === 'ultra')
+    // RENDER §9.3: flat object floors of the puddle classes get puddles. PLAZA-RAIN: on every PBR tier whose weather
+    // level has puddles (Medium+), as the terrain does, so the town's paving pools like the fields.
+    const puddles = wet && !!ws?.preset.puddles
     // RAIN-P: the rain film and rings on every PBR tier whose weather level has ripples (Medium+).
     const rings = wet && (ws?.preset.rippleSize ?? 0) > 0
     const shelter = wet ? ws?.shelter ?? null : null

@@ -1,0 +1,71 @@
+{
+ "species": "dh_twig",
+ "archetype": "deadwood",
+ "kind": "tree",
+ "seed": 83,
+ "target": {
+  "h": 33.88,
+  "w": 10.33
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 1280,
+   "byMaterial": {
+    "bark": 1072,
+    "leaf": 208
+   },
+   "cards": 52,
+   "frontNormalY": 1.0,
+   "vertices": 1253,
+   "heightM": 33.88,
+   "widthM": 10.33,
+   "crownCentre": [
+    -0.06,
+    -0.33,
+    19.5
+   ],
+   "crownRadius": 11.13,
+   "bytes": 233004
+  },
+  "1": {
+   "triangles": 314,
+   "byMaterial": {
+    "bark": 210,
+    "leaf": 104
+   },
+   "cards": 26,
+   "frontNormalY": 1.0,
+   "vertices": 376,
+   "heightM": 33.87,
+   "widthM": 10.203,
+   "crownCentre": [
+    -0.06,
+    -0.33,
+    19.5
+   ],
+   "crownRadius": 11.13,
+   "bytes": 185100
+  },
+  "2": {
+   "triangles": 210,
+   "byMaterial": {
+    "bark": 154,
+    "leaf": 56
+   },
+   "cards": 14,
+   "frontNormalY": 1.0,
+   "vertices": 244,
+   "heightM": 33.861,
+   "widthM": 10.33,
+   "crownCentre": [
+    -0.06,
+    -0.33,
+    19.5
+   ],
+   "crownRadius": 11.13,
+   "bytes": 178132
+  }
+ }
+}

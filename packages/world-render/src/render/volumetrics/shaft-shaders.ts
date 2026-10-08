@@ -46,12 +46,17 @@ export const SHAFT_MARCH_UNIFORMS: readonly string[] = [
   'sroLightMat0', 'sroLightMat1', 'sroLightMat2', 'sroLightMat3',
 ]
 export const SHAFT_RESOLVE_UNIFORMS: readonly string[] = ['sroInvViewProj', 'sroPrevViewProj', 'sroEye', 'sroFwd', 'sroResolve', 'sroSun', 'sroRadial', 'sroShape']
-export const SHAFT_COMPOSITE_UNIFORMS: readonly string[] = ['sroInvViewProj', 'sroEye', 'sroFwd', 'sroCam', 'sroSunDir', 'sroShaftColor', 'sroPhase']
+/** Point lights the composite's lantern glow takes at most (docs/LIGHTING.md §3). */
+export const SHAFT_GLOW_LIGHTS = 6
+export const SHAFT_COMPOSITE_UNIFORMS: readonly string[] = [
+  'sroInvViewProj', 'sroEye', 'sroFwd', 'sroCam', 'sroSunDir', 'sroShaftColor', 'sroPhase', 'sroGlow',
+  ...Array.from({ length: SHAFT_GLOW_LIGHTS }, (_, i) => [`sroGlowP${i}`, `sroGlowC${i}`]).flat(),
+]
 
 /** Samplers per pass besides Babylon's `textureSampler` (the pass's input). */
 export const SHAFT_MARCH_SAMPLERS: readonly string[] = ['sroDepth', 'sroShadowMap']
 export const SHAFT_RESOLVE_SAMPLERS: readonly string[] = ['sroHistory']
-export const SHAFT_COMPOSITE_SAMPLERS: readonly string[] = ['sroScene', 'sroDepth']
+export const SHAFT_COMPOSITE_SAMPLERS: readonly string[] = ['sroScene', 'sroDepth', 'sroAdaptTex']
 
 /** The cascades the march reads at most (Ultra's CSM). */
 export const SHAFT_MAX_CASCADES = 4
@@ -576,6 +581,7 @@ var textureSampler: texture_2d<f32>;
 var sroSceneSampler: sampler;
 var sroScene: texture_2d<f32>;
 var sroDepth: texture_2d<f32>;
+var sroAdaptTex: texture_2d<f32>;
 uniform sroInvViewProj: mat4x4f;
 uniform sroEye: vec4f;
 uniform sroFwd: vec4f;
@@ -583,6 +589,35 @@ uniform sroCam: vec4f;
 uniform sroSunDir: vec4f;
 uniform sroShaftColor: vec4f;
 uniform sroPhase: vec4f;
+uniform sroGlow: vec4f;
+uniform sroGlowP0: vec4f;
+uniform sroGlowC0: vec4f;
+uniform sroGlowP1: vec4f;
+uniform sroGlowC1: vec4f;
+uniform sroGlowP2: vec4f;
+uniform sroGlowC2: vec4f;
+uniform sroGlowP3: vec4f;
+uniform sroGlowC3: vec4f;
+uniform sroGlowP4: vec4f;
+uniform sroGlowC4: vec4f;
+uniform sroGlowP5: vec4f;
+uniform sroGlowC5: vec4f;
+
+// The lantern glow (docs/LIGHTING.md §3): single scattering of a point light along the view ray up to the surface,
+// closed form (∫ dt / (h² + (t − tc)²)), windowed by the light's range. No occlusion.
+fn sroGlowOne(eye: vec3f, dir: vec3f, tmax: f32, p: vec4f, c: vec3f) -> vec3f {
+  let rel = p.xyz - eye;
+  let tc = dot(rel, dir);
+  let h2 = max(dot(rel, rel) - tc * tc, 0.04);
+  let r = p.w;
+  if (h2 >= r * r) { return vec3f(0.0); }
+  let h = sqrt(h2);
+  let t0 = max(0.0, tc - r);
+  let t1 = min(tmax, tc + r);
+  if (t1 <= t0) { return vec3f(0.0); }
+  let w = 1.0 - h2 / (r * r);
+  return c * ((atan((t1 - tc) / h) - atan((t0 - tc) / h)) / h) * w * w * w;
+}
 
 fn sroTap(tc: vec2f, lsize: vec2f) -> vec4f {
   return textureLoad(textureSampler, vec2i(clamp(tc, vec2f(0.0), lsize - vec2f(1.0))), 0);
@@ -593,9 +628,10 @@ fn sroTap(tc: vec2f, lsize: vec2f) -> vec4f {
 @fragment
 fn main(input: FragmentInputs) -> FragmentOutputs {
   let uv = fragmentInputs.vUV;
+  let ae = exp2(clamp(textureLoad(sroAdaptTex, vec2i(0, 0), 0).r, -4.0, 4.0));
   let base0 = textureSampleLevel(sroScene, sroSceneSampler, uv, 0.0);
-  fragmentOutputs.color = base0;
-  if (uniforms.sroCam.w < 0.5) {
+  fragmentOutputs.color = vec4f(base0.rgb * ae, base0.a);
+  if (uniforms.sroCam.w < 0.5 && uniforms.sroGlow.x < 0.5) {
     return fragmentOutputs;
   }
   let dsize = vec2f(textureDimensions(sroDepth, 0));
@@ -641,7 +677,17 @@ fn main(input: FragmentInputs) -> FragmentOutputs {
 #ifdef ${R}
   amount += sa.y * uniforms.sroCam.z;
 #endif
-  fragmentOutputs.color = vec4f(base0.rgb + uniforms.sroShaftColor.rgb * max(amount, 0.0), base0.a);
+  amount = select(0.0, max(amount, 0.0), uniforms.sroCam.w > 0.5);
+  let tmax = select(length(toP), 300.0, d >= 1.0);
+  let eyeG = uniforms.sroEye.xyz;
+  var glow = vec3f(0.0);
+  if (uniforms.sroGlow.x > 0.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP0, uniforms.sroGlowC0.rgb); }
+  if (uniforms.sroGlow.x > 1.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP1, uniforms.sroGlowC1.rgb); }
+  if (uniforms.sroGlow.x > 2.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP2, uniforms.sroGlowC2.rgb); }
+  if (uniforms.sroGlow.x > 3.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP3, uniforms.sroGlowC3.rgb); }
+  if (uniforms.sroGlow.x > 4.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP4, uniforms.sroGlowC4.rgb); }
+  if (uniforms.sroGlow.x > 5.5) { glow += sroGlowOne(eyeG, dir, tmax, uniforms.sroGlowP5, uniforms.sroGlowC5.rgb); }
+  fragmentOutputs.color = vec4f((base0.rgb + uniforms.sroShaftColor.rgb * amount + glow * uniforms.sroGlow.y) * ae, base0.a);
 }
 `
 
@@ -651,6 +697,7 @@ varying vec2 vUV;
 uniform highp sampler2D textureSampler;
 uniform sampler2D sroScene;
 uniform highp sampler2D sroDepth;
+uniform highp sampler2D sroAdaptTex;
 uniform mat4 sroInvViewProj;
 uniform vec4 sroEye;
 uniform vec4 sroFwd;
@@ -658,6 +705,33 @@ uniform vec4 sroCam;
 uniform vec4 sroSunDir;
 uniform vec4 sroShaftColor;
 uniform vec4 sroPhase;
+uniform vec4 sroGlow;
+uniform vec4 sroGlowP0;
+uniform vec4 sroGlowC0;
+uniform vec4 sroGlowP1;
+uniform vec4 sroGlowC1;
+uniform vec4 sroGlowP2;
+uniform vec4 sroGlowC2;
+uniform vec4 sroGlowP3;
+uniform vec4 sroGlowC3;
+uniform vec4 sroGlowP4;
+uniform vec4 sroGlowC4;
+uniform vec4 sroGlowP5;
+uniform vec4 sroGlowC5;
+
+vec3 sroGlowOne(vec3 eye, vec3 dir, float tmax, vec4 p, vec3 c) {
+  vec3 rel = p.xyz - eye;
+  float tc = dot(rel, dir);
+  float h2 = max(dot(rel, rel) - tc * tc, 0.04);
+  float r = p.w;
+  if (h2 >= r * r) return vec3(0.0);
+  float h = sqrt(h2);
+  float t0 = max(0.0, tc - r);
+  float t1 = min(tmax, tc + r);
+  if (t1 <= t0) return vec3(0.0);
+  float w = 1.0 - h2 / (r * r);
+  return c * ((atan((t1 - tc) / h) - atan((t0 - tc) / h)) / h) * w * w * w;
+}
 
 vec4 sroTap(vec2 tc, vec2 lsize) {
   return texelFetch(textureSampler, ivec2(clamp(tc, vec2(0.0), lsize - vec2(1.0))), 0);
@@ -667,9 +741,10 @@ vec4 sroTap(vec2 tc, vec2 lsize) {
 
 void main(void) {
   vec2 uv = vUV;
+  float ae = exp2(clamp(texelFetch(sroAdaptTex, ivec2(0), 0).r, -4.0, 4.0));
   vec4 base0 = textureLod(sroScene, uv, 0.0);
-  gl_FragColor = base0;
-  if (sroCam.w < 0.5) return;
+  gl_FragColor = vec4(base0.rgb * ae, base0.a);
+  if (sroCam.w < 0.5 && sroGlow.x < 0.5) return;
   vec2 dsize = vec2(textureSize(sroDepth, 0));
   float d = texelFetch(sroDepth, ivec2(clamp(floor(uv * dsize), vec2(0.0), dsize - vec2(1.0))), 0).r;
   float zc = d;
@@ -713,7 +788,16 @@ void main(void) {
 #ifdef ${R}
   amount += sa.y * sroCam.z;
 #endif
-  gl_FragColor = vec4(base0.rgb + sroShaftColor.rgb * max(amount, 0.0), base0.a);
+  amount = sroCam.w > 0.5 ? max(amount, 0.0) : 0.0;
+  float tmax = d >= 1.0 ? 300.0 : length(toP);
+  vec3 glow = vec3(0.0);
+  if (sroGlow.x > 0.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP0, sroGlowC0.rgb);
+  if (sroGlow.x > 1.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP1, sroGlowC1.rgb);
+  if (sroGlow.x > 2.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP2, sroGlowC2.rgb);
+  if (sroGlow.x > 3.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP3, sroGlowC3.rgb);
+  if (sroGlow.x > 4.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP4, sroGlowC4.rgb);
+  if (sroGlow.x > 5.5) glow += sroGlowOne(sroEye.xyz, dir, tmax, sroGlowP5, sroGlowC5.rgb);
+  gl_FragColor = vec4((base0.rgb + sroShaftColor.rgb * amount + glow * sroGlow.y) * ae, base0.a);
 }
 `
 

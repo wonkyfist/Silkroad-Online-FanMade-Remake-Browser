@@ -126,6 +126,13 @@ export interface CoastMasks {
   waterSurface: Uint8Array
   /** Retail water at the sea level (a water block within 0.5 m of SL over the ground): ./banks.ts seeds from it. */
   waterLow: Uint8Array
+  /** Under the sea after the pass (./drown.ts, coast.json drown); absent when nothing drowns. */
+  drowned?: Uint8Array
+  /** In-bounds retail sea-level water made open sea (./drown.ts, coast.json drown.openWater); absent when none. */
+  opened?: Uint8Array
+  /** The open water's smoothed bed (./drown.ts: drown.openWater's sea out of play): the river-mouth keep and the beach
+   *  rule are over there (./checks.ts). */
+  openBed?: Uint8Array
 }
 
 export interface CoastStats {

@@ -31,11 +31,14 @@ function charCells(code: string, id: number, typeId: [number, number, number, nu
 }
 
 describe('items', () => {
-  it('selects Chinese equipment up to degree 3 and the listed consumables', () => {
+  it('selects Chinese equipment up to degree 4 (the cap tier of CLIMB §4.1.2) and the listed consumables', () => {
     const sword = itemDataRow(row(itemCells('ITEM_CH_SWORD_01_A', [3, 1, 6, 2])))
     expect(isExportedItem(sword)).toBe(true)
-    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SWORD_04_A', [3, 1, 6, 2], { 61: '10' }))))).toBe(false)
-    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SWORD_01_A_RARE', [3, 1, 6, 2]))))).toBe(false)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SWORD_04_A', [3, 1, 6, 2], { 61: '10' }))))).toBe(true)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SWORD_05_A', [3, 1, 6, 2], { 61: '13' }))))).toBe(false)
+    // docs/RARITY.md §2: weapon seals at every degree (a degree-1 Seal of Star sword is in)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SWORD_01_A_RARE', [3, 1, 6, 2]))))).toBe(true)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_SHIELD_01_A_RARE', [3, 1, 4, 1]))))).toBe(false)
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_EU_SWORD_01_A', [3, 1, 6, 7], { 14: '1' }))))).toBe(false)
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_W_HEAVY_02_BA_B', [3, 1, 3, 3], { 61: '5' }))))).toBe(true)
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_ETC_HP_POTION_01', [3, 3, 1, 1], { 14: '3' }))))).toBe(true)

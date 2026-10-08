@@ -387,7 +387,7 @@ describe('Options rows (W1)', () => {
     const ids = (tab: keyof typeof rows, optional?: ReadonlySet<string>) => visibleRows(rows[tab], optional).map(r => r.id)
     // Wave 9 (GAME): the preview toggle and its hint, the sky style and the Advanced rows (their `when` is pageRows').
     expect(ids('graphics')).toEqual([
-      'graphics.modern', 'graphics.recommended', 'graphics.preset', 'graphics.resolution', 'graphics.sight', 'graphics.scatter', 'graphics.wildlife', 'graphics.townLife', 'graphics.trees', 'graphics.textures', 'graphics.sky',
+      'graphics.modern', 'graphics.recommended', 'graphics.preset', 'graphics.resolution', 'graphics.sight', 'graphics.scatter', 'graphics.wildlife', 'graphics.townLife', 'graphics.trees', 'graphics.hairCloth', 'graphics.bodyPhysics', 'graphics.textures', 'graphics.sky',
       'graphics.classicLook', 'graphics.advanced', 'graphics.advanced.shadows', 'graphics.advanced.reflections', 'graphics.advanced.aa', 'graphics.advanced.toneMap',
       'graphics.bloom', 'graphics.advanced.batching', 'graphics.advanced.lightShafts', 'fullscreen', 'engine',
     ])

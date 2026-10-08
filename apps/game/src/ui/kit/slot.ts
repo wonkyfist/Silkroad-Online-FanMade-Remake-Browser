@@ -5,7 +5,7 @@
  * and the broken / low-durability overlay. Stack counts use the `item_number_{0-9}` digits when exported.
  * No logic here: slots only show what they are given.
  */
-import type { ItemStack } from '@sro/shared'
+import type { ItemStack, RarityTier } from '@sro/shared'
 import { cooldownNow } from '../../hud/cooldowns.ts'
 import type { Art } from '../art.ts'
 import { el } from '../dom.ts'
@@ -27,6 +27,8 @@ export interface SlotSigns {
   plus?: number
   magic?: boolean
   rare?: boolean
+  /** A seal's tier (docs/RARITY.md §5.6): the tier's frame and the shine sweeping the icon. */
+  rarity?: RarityTier | null
   durability?: Durability
 }
 
@@ -75,6 +77,8 @@ export class Slot {
   private readonly count: HTMLElement
   private readonly sign: HTMLElement
   private readonly dur: HTMLElement
+  /** The seal frame and shine (docs/RARITY.md §5.6). */
+  private readonly rare: HTMLElement
   private cd: HTMLElement | null = null
   stack: ItemStack | null = null
   private signs: SlotSigns = {}
@@ -84,10 +88,12 @@ export class Slot {
     this.icon = el('div', 'kit-slot-icon')
     this.sign = el('div', 'kit-slot-sign')
     this.dur = el('div', 'kit-slot-dur')
+    this.rare = el('div', 'kit-slot-rare')
     this.count = el('div', 'kit-slot-count')
     this.sign.hidden = true
     this.dur.hidden = true
-    this.root.append(this.icon, this.dur, this.sign, this.count)
+    this.rare.hidden = true
+    this.root.append(this.icon, this.rare, this.dur, this.sign, this.count)
     if (art.has(CONTROLS.itemSelect)) this.root.style.setProperty('--select', art.cssUrl(CONTROLS.itemSelect))
     if (art.has(CONTROLS.redTile)) this.root.style.setProperty('--blocked', art.cssUrl(CONTROLS.redTile))
     if (art.has(CONTROLS.disable)) this.root.style.setProperty('--disable', art.cssUrl(CONTROLS.disable))
@@ -155,6 +161,9 @@ export class Slot {
     this.dur.className = `kit-slot-dur ${d ?? ''}`.trim()
     this.dur.style.backgroundImage = dKey && this.art.has(dKey) ? this.art.cssUrl(dKey) : ''
     this.root.classList.toggle('broken', d === 'broken')
+    const tier = s.rarity ?? null
+    this.rare.hidden = !tier
+    this.rare.className = `kit-slot-rare ${tier ?? ''}`.trim()
   }
 
   get currentSigns(): SlotSigns {

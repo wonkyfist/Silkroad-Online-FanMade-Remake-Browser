@@ -5,8 +5,10 @@
  * mean of its regions), the town icon, NPC markers (shop / teleport / storage), hunting labels ("Tiger Lv 14",
  * coloured by level band) and the player arrow (10 Hz while open).
  *
- * Mouse: wheel zooms 0.5x to 4x about the cursor, left-drag pans, right-click centres on the player again (the view
- * follows the player until it is dragged). Hover shows the zone name and region coordinates. No click-to-travel.
+ * Mouse: wheel zooms about the cursor, from the whole image (or 0.5x, whichever is further out) to 4x; left-drag pans,
+ * right-click centres on the player again (the view follows the player until it is dragged). The view stays on the
+ * image: with a coast the image is the island and a region of sea round it (docs/COAST.md §11), so the map never pans
+ * off into empty sea. Hover shows the zone name and region coordinates. No click-to-travel.
  */
 import { minimapFill } from '@sro/world-render'
 import { t } from '../../i18n/index.ts'
@@ -110,7 +112,22 @@ export class MapTransform {
 export const MIN_ZOOM = 0.5
 export const MAX_ZOOM = 4
 
-export const clampZoom = (z: number): number => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z))
+export const clampZoom = (z: number, min = MIN_ZOOM): number => Math.min(MAX_ZOOM, Math.max(min, z))
+
+/** The furthest zoom out: the whole image in a view of viewW x viewH canvas pixels, or MIN_ZOOM if that is further. */
+export function minZoomFor(width: number, height: number, viewW: number, viewH: number): number {
+  if (!(width > 0 && height > 0)) return MIN_ZOOM
+  return Math.min(MIN_ZOOM, viewW / width, viewH / height)
+}
+
+/**
+ * A view centre (map pixels) kept on the image: the view (`half` map pixels either side) never shows past the image's
+ * edge, and an image smaller than the view is centred.
+ */
+export function clampCentre(v: number, size: number, half: number): number {
+  if (size <= 2 * half) return size / 2
+  return Math.min(size - half, Math.max(half, v))
+}
 
 /**
  * The median colour of an image's outermost open-sea pixels ('#rrggbb'), or null if it cannot be read or has none.
@@ -371,7 +388,8 @@ export class WorldMapWindow extends Window {
   }
 
   private zoomAt(cx: number, cy: number, factor: number): void {
-    const z = clampZoom(this.zoom * factor)
+    const g = this.src.transform.geo
+    const z = clampZoom(this.zoom * factor, minZoomFor(g.width, g.height, CANVAS_W, CANVAS_H))
     if (z === this.zoom) return
     // Keep the map pixel under the cursor where it is.
     const mx = this.vx + (cx - CANVAS_W / 2) / this.zoom
@@ -391,8 +409,8 @@ export class WorldMapWindow extends Window {
 
   private clampView(): void {
     const g = this.src.transform.geo
-    this.vx = Math.min(g.width, Math.max(0, this.vx))
-    this.vy = Math.min(g.height, Math.max(0, this.vy))
+    this.vx = clampCentre(this.vx, g.width, CANVAS_W / 2 / this.zoom)
+    this.vy = clampCentre(this.vy, g.height, CANVAS_H / 2 / this.zoom)
   }
 
   private loadImage(): void {

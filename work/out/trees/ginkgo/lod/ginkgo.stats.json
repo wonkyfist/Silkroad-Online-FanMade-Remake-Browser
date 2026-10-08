@@ -1,0 +1,71 @@
+{
+ "species": "ginkgo",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 33,
+ "target": {
+  "h": 21.94,
+  "w": 26.32
+ },
+ "normalUp": 0.62,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 3380,
+   "byMaterial": {
+    "bark": 1576,
+    "leaf": 1804
+   },
+   "cards": 451,
+   "frontNormalY": 0.829,
+   "vertices": 4865,
+   "heightM": 21.94,
+   "widthM": 26.32,
+   "crownCentre": [
+    0.14,
+    -1.23,
+    11.28
+   ],
+   "crownRadius": 9.46,
+   "bytes": 599536
+  },
+  "1": {
+   "triangles": 1018,
+   "byMaterial": {
+    "bark": 210,
+    "leaf": 808
+   },
+   "cards": 202,
+   "frontNormalY": 0.827,
+   "vertices": 1784,
+   "heightM": 21.94,
+   "widthM": 26.32,
+   "crownCentre": [
+    0.14,
+    -1.23,
+    11.28
+   ],
+   "crownRadius": 9.46,
+   "bytes": 437464
+  },
+  "2": {
+   "triangles": 322,
+   "byMaterial": {
+    "bark": 154,
+    "leaf": 168
+   },
+   "cards": 42,
+   "frontNormalY": 0.82,
+   "vertices": 468,
+   "heightM": 21.935,
+   "widthM": 26.32,
+   "crownCentre": [
+    0.14,
+    -1.23,
+    11.28
+   ],
+   "crownRadius": 9.46,
+   "bytes": 370108
+  }
+ }
+}

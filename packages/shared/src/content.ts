@@ -14,7 +14,7 @@
  *    Column numbers are 0-based textdata columns; characterdata columns after 60 follow the vSRO _RefObjChar
  *    column order (Db2Media/RSBot) and must be checked against real rows by the exporter.
  *  - Files may carry more keys than listed (additive changes); readers ignore unknown keys.
- *  - Data exists for all levels; the server gates content by its level cap (LEVEL_CAP, default 20).
+ *  - Data exists for all levels; the server gates content by its level cap (LEVEL_CAP, default 25: docs/CLIMB.md).
  */
 
 import type { SkillStatusKind, StarterWeapon } from './protocol.ts'
@@ -180,6 +180,11 @@ export interface MobDef {
    * export older than wave 11). The client draws the two as one composite actor.
    */
   ride?: MobRide
+  /**
+   * The Climb (docs/CLIMB.md §2.2): the retail code a derived `MOB_CL_*` monster is built on (its model, skills and
+   * drop items). Absent on retail rows. Quest kill objectives that name the retail code count a kill of the derived one.
+   */
+  base?: string
   /** Fields whose source is not the one documented above, e.g. { physAttack: 'formula: level table' }. */
   fieldSources?: Record<string, string>
 }
@@ -399,6 +404,8 @@ export interface ItemDef {
   degree: number
   /** client: the ReqLevel whose ReqLevelType is the character level (cols 32-39); 0 = none. */
   reqLevel: number
+  /** The Climb (docs/CLIMB.md §4.1.2): the client's reqLevel when the gear re-spacing moved it (absent = unmoved). */
+  retailReqLevel?: number
   /** client: ReqGender (col 58). */
   reqGender: 'male' | 'female' | 'any'
   /** client: Country (col 14): 0 china, 1 europe, 3 any. */
@@ -819,10 +826,19 @@ export interface UniqueDef {
   firstSpawnMin: Range
   /** Spawn after a restart while alive, or a restart that finds the due time passed, minutes after the boot. */
   restartSpawnMin: Range
+  /**
+   * The Climb (docs/CLIMB.md §2.6): her level, when not the base's (Tiger Girl 25). Defences, hit, parry and absorb follow
+   * the standard curve's shift (climb.ts relevelMob); HP, attack and EXP stay the `tuning` multipliers' job.
+   */
+  level?: number
   /** Multipliers on the `unique` variant's stats (createMob's MobTuning path). */
   tuning: { hpMul: number; attackMul: number; expMul: number }
-  /** The rows' own SUMMON bands (aiChance 80 / 60 / 40); each wave clipped to `perWave`, `maxAlive`, `variants`. */
-  summons: { on: boolean; perWave: number; maxAlive: number; variants: MobVariant[] }
+  /**
+   * The rows' own SUMMON bands (aiChance 80 / 60 / 40); each wave clipped to `perWave`, `maxAlive`, `variants`.
+   * `mobs` (the Climb, §2.6): a summon row's retail code → the code summoned instead (her White Tigers → her Guard);
+   * Play the Boss's Call the Pack follows it too. A code this world lacks (CLIMB=off) summons the row's own monster.
+   */
+  summons: { on: boolean; perWave: number; maxAlive: number; variants: MobVariant[]; mobs?: Record<string, string> }
   /** At or below `hpPct` % HP, outgoing damage × `damageMul`, once per life. */
   enrage: { hpPct: number; damageMul: number }
   /** `afterSec` after the fight started (first damage since the last reset), outgoing damage × `damageMul`. */
@@ -835,6 +851,31 @@ export interface UniqueDef {
   drops: string
   /** Play the Boss (docs/PLAY_THE_BOSS.md §5.5): a player may steer her; her kit and the default numbers. */
   pilot?: PilotDef
+  /**
+   * The Climb's mini-bosses (docs/CLIMB.md §2.5): one authored camp at this point (glTF metres, `y` a height hint),
+   * used instead of `camps`: roam and spawn within `radiusM` (6), sight `sightM` (12), leash `leashM` (40) from it.
+   */
+  spot?: UniqueSpot
+  /**
+   * §2.5: the boss's adds, used instead of the base's summon rows: `n` of `mob` join 1.5 s after its HP first falls to
+   * `atPct` %, once per fight (re-armed by a leash reset); they leave with it. A code this world lacks is skipped.
+   */
+  adds?: UniqueAdd[]
+}
+
+export interface UniqueSpot {
+  x: number
+  z: number
+  y?: number
+  radiusM?: number
+  sightM?: number
+  leashM?: number
+}
+
+export interface UniqueAdd {
+  mob: string
+  n: number
+  atPct: number
 }
 
 /** A unique's loot (docs/UNIQUES.md §3.4). Every group is rolled `rolls` times (default 1), each with `chance`. */
@@ -861,13 +902,16 @@ export interface UniqueDropGroup {
 /**
  * A gear pool rule: equipment of `degree` (weapons, shields, armour of both sexes, accessories) whose `reqLevel` is at
  * most `maxReqLevel` ('levelCap' = the server's LEVEL_CAP). `gradeWeights` weight the wearable grades from the highest
- * down (e.g. [60, 40]); `rare` picks the `_RARE` (Seal of Star) rows instead of the normal ones.
+ * down (e.g. [60, 40]); `rare` picks the `_RARE` seal rows instead of the normal ones: Seal of Star, or the tier
+ * `seal` names (the Climb, docs/CLIMB.md §4.1: Moon and Sun only from level-25 bosses).
  */
 export interface UniqueGearPool {
   degree: number
   maxReqLevel: 'levelCap' | number
   gradeWeights?: number[]
   rare?: boolean
+  /** With `rare`: which seal (default 'star'). A seal row takes its family's A-grade level. */
+  seal?: 'star' | 'moon' | 'sun'
 }
 
 // ---- towns ----------------------------------------------------------------------------------------

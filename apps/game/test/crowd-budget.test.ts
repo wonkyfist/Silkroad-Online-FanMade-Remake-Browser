@@ -80,7 +80,7 @@ describe('planCrowd (pure)', () => {
     ]
     for (const rule of [medium, high]) {
       const out = planCrowd(entries, rule, true)
-      for (const i of [0, 1, entries.length - 1]) expect(out[i]).toEqual({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false })
+      for (const i of [0, 1, entries.length - 1]) expect(out[i]).toEqual({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false, outfit: false, far: false, close: false, crowd: false, licensedLod: 0 })
       // The keep ones do not take places: still N others cast.
       expect(out.filter((o, i) => !entries[i]!.keep && o.cascades === Infinity)).toHaveLength(rule.casters)
     }
@@ -137,7 +137,7 @@ describe('planCrowd (pure)', () => {
 
   it('no shadow rule and no animation LOD: everyone as without the budget (the Low guard)', () => {
     const out = planCrowd(others(Array.from({ length: 40 }, (_, i) => 2 + i)), crowdShadowRule(RENDER_PRESETS.low.shadows), false)
-    for (const o of out) expect(o).toEqual({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false })
+    for (const o of out) expect(o).toMatchObject({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false, outfit: false, far: false, close: false, crowd: false })
   })
 })
 
@@ -188,12 +188,14 @@ describe('CrowdBudget (runtime, NullEngine)', () => {
       const fake = {
         isDisposed: false,
         mergedParts: false,
+        mergeInfo: null as object | null,
         mergeVersion: 0,
         setCrowdLod: (ms: number, off: CrowdOffscreen) => lods.set(actor, { ms, off }),
         setMergeParts: (on: boolean) => {
           const built = on && !fake.mergedParts
           if (on !== fake.mergedParts) fake.mergeVersion++
           fake.mergedParts = on
+          fake.mergeInfo = on ? {} : null
           merges.push([name, on])
           return built
         },
@@ -221,7 +223,7 @@ describe('CrowdBudget (runtime, NullEngine)', () => {
     for (const k of [own, mate, tgt]) {
       expect(told.has(k.mesh)).toBe(false)
       expect(lods.get(k.actor) ?? { ms: 0, off: 'normal' }).toEqual({ ms: 0, off: 'normal' })
-      expect(budget.decisionOf(k.v)).toEqual({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false })
+      expect(budget.decisionOf(k.v)).toEqual({ cascades: Infinity, blob: false, animMs: 0, offscreen: 'normal', merge: false, outfit: false, far: false, close: false, crowd: false, licensedLod: 0 })
     }
     const full = crowd.filter(c => !told.has(c.mesh))
     expect(full).toHaveLength(CROWD_SHADOWS.medium.casters + 1) // the nearest N and the target
@@ -291,6 +293,23 @@ describe('CrowdBudget (runtime, NullEngine)', () => {
     for (const c of crowd.slice(2)) budget.untrack(c.v)
     step()
     expect((crowd[1]!.actor as unknown as { mergedParts: boolean }).mergedParts).toBe(false)
+  })
+
+  it('a merge still on whose meshes a LOD switch or re-dress dropped is made again by the next plan', () => {
+    const { merges, view, step } = setup()
+    const crowd = Array.from({ length: 12 }, (_, i) => view(`p${i}`, 3 + i * 2))
+    for (let k = 0; k < 6; k++) step()
+    const p3 = crowd[3]!.actor as unknown as { mergedParts: boolean; mergeInfo: object | null }
+    expect(p3.mergeInfo).not.toBeNull()
+    const before = merges.filter(([n, on]) => n === 'p3' && on).length
+    // setLicensedLod / setLicensedOutfit drop the merged meshes and leave the merge on
+    p3.mergeInfo = null
+    step()
+    expect(merges.filter(([n, on]) => n === 'p3' && on).length).toBe(before + 1)
+    expect(p3.mergeInfo).not.toBeNull()
+    // nothing lost: no new merge
+    step()
+    expect(merges.filter(([n, on]) => n === 'p3' && on).length).toBe(before + 1)
   })
 
   it('a view that goes while merged leaves the budget for good (no re-read hands it back)', () => {

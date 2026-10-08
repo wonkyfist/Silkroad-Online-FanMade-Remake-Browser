@@ -166,7 +166,7 @@ const TOWN: TownDef = { code: 'TOWN', name: 'Town', world: 'jangan', spawn: { x:
 
 function harness(opts: { nests?: ReturnType<typeof nest>[] } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'sro-storm-'))
-  const config = { ...testConfig(root), rng: seeded(5), uniques: false }
+  const config = { ...testConfig(root), weather: 'auto' as const, stormsPerDay: undefined, rng: seeded(5), uniques: false }
   const store = openStore(config.dataDir)
   const bounds = { minX: -500, minZ: -500, maxX: 500, maxZ: 500 }
   const nav = new FlatNav(bounds)

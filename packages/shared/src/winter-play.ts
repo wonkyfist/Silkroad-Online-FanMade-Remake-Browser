@@ -80,7 +80,8 @@ export const WINTER_PLAY = {
     /** Respawn after a kill, minutes (rolled ± respawnSpread). */
     respawnMin: 120,
     respawnSpread: 0.25,
-    hpMul: 1,
+    /** × the spec's 30,000 HP (the Climb: 2.6 = 78,000 at level 25 against the cap tier, docs/CLIMB.md D53; YETI_HP_MUL). */
+    hpMul: 2.6,
     corpseSec: 8,
     /** A kit move is considered this often during a fight (ms). */
     kitEveryMs: 2500,
@@ -281,8 +282,10 @@ export const WINTER_MOBS: readonly WinterMobSpec[] = [
   { code: WINTER_CODES.sprite, base: 'MOB_CH_WATERGHOST_CLON', name: 'Snow Sprite', rarity: 'normal', level: 5, hp: 140, physAttack: [30, 36], physDefence: 10, magDefence: 18, hitRate: 33, parryRate: 33, scale: 115, radius: 0.6, walkSpeed: 1.4, runSpeed: 5.5, attackRange: 0.6, attackIntervalMs: 1600, aggressive: false, exp: 110 },
   // a Water Ghost turned to ice and drifting snow: it comes for you
   { code: WINTER_CODES.spirit, base: 'MOB_CH_WATERGHOST', name: 'Snow Spirit', rarity: 'normal', level: 9, hp: 230, physAttack: [58, 66], physDefence: 18, magDefence: 34, hitRate: 42, parryRate: 42, scale: 110, radius: 0.6, walkSpeed: 1.5, runSpeed: 5.5, attackRange: 1.6, attackIntervalMs: 2000, aggressive: true, exp: 220 },
-  // a Big-Eyed Ghost (the hulking ape) grown huge under white fur: the world boss of the snowy mountains
-  { code: WINTER_CODES.yeti, base: 'MOB_CH_BIGEYEGHOST', name: 'Ice Yeti', rarity: 'unique', level: 20, hp: 30_000, physAttack: [150, 190], physDefence: 45, magDefence: 55, hitRate: 65, parryRate: 40, scale: 330, radius: 2.6, walkSpeed: 1.6, runSpeed: 6.5, attackRange: 2.5, attackIntervalMs: 2800, aggressive: true, exp: 120_000 },
+  // a Big-Eyed Ghost (the hulking ape) grown huge under white fur: the world boss of the snowy mountains. The Climb
+  // (docs/CLIMB.md §2.6, D44): level 25 (was 20), attack × 1.15 and defences, hit and parry by the standard curve's 20 → 25
+  // shift; her HP is 30,000 × YETI_HP_MUL (2.6 = 78,000; attack 189-240: CLIMB D53, degree 4 at the cap); the EXP pool 90,000 (≈ 10 % of the level-24 bar each in a 4-party)
+  { code: WINTER_CODES.yeti, base: 'MOB_CH_BIGEYEGHOST', name: 'Ice Yeti', rarity: 'unique', level: 25, hp: 30_000, physAttack: [189, 240], physDefence: 70, magDefence: 101, hitRate: 75, parryRate: 50, scale: 330, radius: 2.6, walkSpeed: 1.6, runSpeed: 6.5, attackRange: 2.5, attackIntervalMs: 2800, aggressive: true, exp: 90_000 },
 ]
 
 /** The MobDef of a winter monster: the base's model and skills (when the export has it) with the spec's numbers. */

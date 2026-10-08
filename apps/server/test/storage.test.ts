@@ -508,7 +508,7 @@ describe('migration v5 -> v6', () => {
 
     const store = openStore(root)
     try {
-      expect(store.db.pragma('user_version', { simple: true })).toBe(19)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(24)
       expect(store.characterById(1)).toMatchObject({ name: 'Mu', gold: 777 })
       expect(store.db.prepare('SELECT code FROM char_hotbar WHERE character_id = 1').get()).toEqual({ code: POTION })
       const tables = openStorageStore(store)

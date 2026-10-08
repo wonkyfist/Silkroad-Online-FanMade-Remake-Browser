@@ -599,7 +599,7 @@ describe('the mock pilot (?mock=1&gm=1)', () => {
     expect(r.results.at(-1)).toMatchObject({ re: 'pilotVolunteer', ok: false, reason: 'no_event' })
     r.handle({ t: 'chat', text: '/unique pilot call 30' })
     const call = r.out.find(o => o.m.t === 'huntEvent')!.m as Extract<ServerMessage, { t: 'huntEvent' }>
-    expect(call.event).toMatchObject({ phase: 'call', volunteers: 0, minLevel: 20, you: { volunteered: false, eligible: true } })
+    expect(call.event).toMatchObject({ phase: 'call', volunteers: 0, minLevel: 25, you: { volunteered: false, eligible: true } })
     r.handle({ t: 'pilotVolunteer', on: true })
     expect(r.results.at(-1)).toMatchObject({ re: 'pilotVolunteer', ok: true })
     expect((r.out.filter(o => o.m.t === 'huntEvent').at(-1)!.m as Extract<ServerMessage, { t: 'huntEvent' }>).event).toMatchObject({ volunteers: 1, you: { volunteered: true } })

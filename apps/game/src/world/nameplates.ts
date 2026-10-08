@@ -6,6 +6,7 @@
  * Beyond 25 m a mob shows only its name. `layoutPlates` is the pure part (tested without a DOM).
  */
 import type { EntityView } from './entities.ts'
+import { PERF } from './perf.ts'
 
 export const NUDGE_PX = 14
 export const MAX_NUDGES = 3
@@ -90,9 +91,29 @@ export function layoutPlates(items: readonly PlateInput[]): PlateOutput[] {
   return out
 }
 
-/** The anchor EntityView.updateLabel placed the label at: `translate(Xpx, Ypx) translate(-50%, -100%)`. */
-export function labelAnchor(label: { style: { transform: string } }): { x: number; y: number } | null {
-  const m = /translate\(([-\d.e]+)px,\s*([-\d.e]+)px\)/.exec(label.style.transform)
+/** Per label: the anchor EntityView.updateLabel last placed it at (setLabelAnchor). */
+const anchors = new WeakMap<object, { x: number; y: number }>()
+
+/** EntityView.updateLabel: `label` now sits at (x, y) px, the numbers of its `translate(Xpx, Ypx)`. */
+export function setLabelAnchor(label: object, x: number, y: number): void {
+  const a = anchors.get(label)
+  if (a) {
+    a.x = x
+    a.y = y
+  } else anchors.set(label, { x, y })
+}
+
+/**
+ * The anchor EntityView.updateLabel placed the label at: `translate(Xpx, Ypx) translate(-50%, -100%)`. Perf audit
+ * (docs/PERF_AUDIT.md, PERF.plateAnchor): the numbers setLabelAnchor kept, read only; reading `style.transform`
+ * back and parsing it cost ≈ 0.3 ms a frame with 90 labels. A label nobody anchored that way is parsed as before.
+ */
+export function labelAnchor(label: { style: { transform: string } }): { readonly x: number; readonly y: number } | null {
+  if (PERF.plateAnchor) {
+    const a = anchors.get(label)
+    if (a) return a
+  }
+  const m =/translate\(([-\d.e]+)px,\s*([-\d.e]+)px\)/.exec(label.style.transform)
   return m ? { x: Number(m[1]), y: Number(m[2]) } : null
 }
 

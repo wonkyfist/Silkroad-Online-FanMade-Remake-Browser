@@ -86,7 +86,7 @@ export class PilotStore {
       log: db.prepare<[number, number, string, string]>('INSERT INTO pilot_log (event_id, at, kind, data) VALUES (?, ?, ?, ?)'),
       logOf: db.prepare<[number], PilotLogRow>('SELECT * FROM pilot_log WHERE event_id = ? ORDER BY id'),
       honor: db.prepare<[number, string, number]>('INSERT OR IGNORE INTO pilot_honors (character_id, code, at) VALUES (?, ?, ?)'),
-      honors: db.prepare<[number], { code: string; at: number }>('SELECT code, at FROM pilot_honors WHERE character_id = ? ORDER BY at DESC'),
+      honors: db.prepare<[number], { code: string; at: number }>(/* the worn title (characters.title, the Climb: docs/CLIMB.md §7.3) first, then the newest */ 'SELECT code, at FROM pilot_honors WHERE character_id = ? ORDER BY (code IS (SELECT title FROM characters WHERE id = pilot_honors.character_id)) DESC, at DESC'),
       // layer 4
       settings: db.prepare<[string], PilotSettingsRow>('SELECT * FROM pilot_settings WHERE code = ?'),
       putSettings: db.prepare<[string, string, number, number, number | null]>(

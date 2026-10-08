@@ -16,7 +16,7 @@
  * calling the setters as well is harmless.
  * Server authority: the windows only send intents (via `send`) and redraw from the server's updates.
  */
-import { CHARACTER_RULES, type ActionFailReason, type ClientMessage, type EquipSlot, type GameplayRequest, type Inventory, type PlayerStats, type ServerMessage } from '@sro/shared'
+import { CHARACTER_RULES, EQUIP_SLOTS, type ActionFailReason, type ClientMessage, type EquipSlot, type GameplayRequest, type Inventory, type PlayerStats, type ServerMessage } from '@sro/shared'
 import type { App } from '../app.ts'
 import { placedItem } from '../audio/cues.ts'
 import { gameAudio } from '../audio/index.ts'
@@ -306,7 +306,8 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
     },
     hover(view: SlotView, ev: PointerEvent | null) {
       if (!ev || drag.dragging) return tooltip.hide()
-      if (view.stack) tooltip.show(items.tooltip(view.stack, { player: stats, equipped: view.ref.kind === 'equip', model }), ev.clientX, ev.clientY)
+      const worn = EQUIP_SLOTS.map((sl) => inv.equipped(sl)?.code).filter((c): c is string => !!c)
+      if (view.stack) tooltip.show(items.tooltip(view.stack, { player: stats, equipped: view.ref.kind === 'equip', model, worn }), ev.clientX, ev.clientY)
       else if (view.ref.kind === 'equip') tooltip.show([{ text: t('equip.empty', { slot: t(`equip.${view.ref.slot}` as StringKey) }), cls: 'desc' }], ev.clientX, ev.clientY)
       else tooltip.hide()
     },
@@ -314,6 +315,8 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
 
   const invWin = new InventoryWindow(art, windows, items, inv, slotEvents)
   const charWin = new CharacterWindow(art, windows, items, inv, slotEvents, (stat, points) => sendIntent(intent.statUp(stat, points)))
+  // The Climb (docs/CLIMB.md §7.3): a click on the title under the name wears the next one held.
+  charWin.equipment.onTitle = (code) => sendIntent({ t: 'climbTitle', code })
   invWin.onClose = charWin.onClose = () => tooltip.hide()
   // The Main window (C/I/S/P/Q tabs): the equipment panel sits on the Inventory tab beside the bag.
   const mainWin = mainWindowFor(art, windows)
@@ -410,6 +413,11 @@ export function createHud(app: App, session: Session, send: (msg: ClientMessage)
         break
       case 'stats':
         setPlayer(msg.stats)
+        break
+      case 'deathPenalty':
+        // The Climb (docs/CLIMB.md §6.1, §6.3): the death box shows the loss and the grace; a refund is a toast
+        if (msg.outcome === 'refund') toast(t('hud.death.refund', { exp: formatNumber(msg.exp) }), 'loot')
+        else death.setPenalty(msg.outcome, msg.exp, msg.pct, msg.graceMs, formatNumber)
         break
       case 'statsDelta':
         applyStatsDelta(msg.stats)

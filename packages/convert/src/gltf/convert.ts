@@ -459,6 +459,11 @@ function buildSkinAttributes(bms: BmsMesh, jointIndexByName: Map<string, number>
   return { joints, weights, fallbackVertices }
 }
 
+/** A weapon or shield resource (`item\<race>\weapon|shield\...`): its texture alpha is a mask, never coverage. */
+export function isWeaponPath(path: string): boolean {
+  return /(^|[\\/])item[\\/][^\\/]+[\\/](weapon|shield)[\\/]/i.test(path)
+}
+
 interface AlphaDecision {
   mode: 'OPAQUE' | 'MASK' | 'BLEND'
   reason: string
@@ -468,7 +473,7 @@ interface AlphaDecision {
  * BMT has a single alpha bit (0x200) and no test/blend distinction, so the texture decides: alpha-tested
  * cut-outs (hair, fur) are mostly 0 or 255, true translucency is mostly in between.
  */
-function decideAlpha(material: BmtMaterial, rgba: Uint8Array | null): AlphaDecision {
+function decideAlpha(material: BmtMaterial, rgba: Uint8Array | null, weapon = false): AlphaDecision {
   if (!(material.flags & BMT_FLAG.alpha)) {
     return { mode: 'OPAQUE', reason: 'no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask' }
   }
@@ -484,6 +489,10 @@ function decideAlpha(material: BmtMaterial, rgba: Uint8Array | null): AlphaDecis
   const pct = (x: number) => ((x / total) * 100).toFixed(1)
   if (zero + partial === 0) return { mode: 'OPAQUE', reason: 'BMT alpha flag but the texture is fully opaque' }
   if (partial > 2 * zero) {
+    // A weapon's or shield's partial alpha is its specular/env mask (sword1_2_3, spear_1_5, tblade_1_5, bow_1_5,
+    // Shield_04: 79-94 % partial), not coverage: drawn as coverage the blade went see-through in the middle
+    // (docs/RARITY.md §5.8). They stay opaque; the mask stays in the texture's alpha.
+    if (weapon) return { mode: 'OPAQUE', reason: `weapon/shield: texture alpha is a specular/env mask (${pct(partial)}% partial, ${pct(zero)}% zero)` }
     return { mode: 'BLEND', reason: `BMT alpha flag; texture alpha mostly partial (${pct(partial)}% partial, ${pct(zero)}% zero)` }
   }
   return { mode: 'MASK', reason: `BMT alpha flag; texture alpha mostly binary (${pct(zero)}% zero, ${pct(partial)}% partial)` }
@@ -703,7 +712,7 @@ export function convertResource(bsrPath: string, options: ConvertOptions): Conve
     const scroll = materialScroll(scrolls, bmt!.materials.indexOf(src), warnings)
     const texPath = src.diffuseMap.path ? resolveBmtTexturePath(materialSet!.path, src.diffuseMap) : ''
     const tex = texPath ? loadTexture(texPath) : null
-    const alpha = decideAlpha(src, tex?.rgba ?? null)
+    const alpha = decideAlpha(src, tex?.rgba ?? null, isWeaponPath(bsrPath))
     const doubleSided = (src.flags & BMT_FLAG.twoSided) !== 0
     material.setAlphaMode(alpha.mode).setDoubleSided(doubleSided)
     if (alpha.mode === 'MASK') material.setAlphaCutoff(alphaCutoff)

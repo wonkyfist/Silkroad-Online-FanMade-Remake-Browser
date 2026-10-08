@@ -1,0 +1,50 @@
+{
+ "species": "lily_pads",
+ "archetype": "water_plant",
+ "kind": "plant",
+ "seed": 73,
+ "target": {
+  "h": 0.27,
+  "w": 6.46
+ },
+ "normalUp": 1.0,
+ "normalRule": "up",
+ "lods": {
+  "0": {
+   "triangles": 32,
+   "byMaterial": {
+    "leaf": 32
+   },
+   "cards": 8,
+   "frontNormalY": 1.0,
+   "vertices": 64,
+   "heightM": 0.27,
+   "widthM": 6.46,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.03
+   ],
+   "crownRadius": 1.0,
+   "bytes": 174700
+  },
+  "1": {
+   "triangles": 16,
+   "byMaterial": {
+    "leaf": 16
+   },
+   "cards": 4,
+   "frontNormalY": 1.0,
+   "vertices": 32,
+   "heightM": 0.27,
+   "widthM": 6.46,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.03
+   ],
+   "crownRadius": 1.0,
+   "bytes": 173068
+  }
+ }
+}

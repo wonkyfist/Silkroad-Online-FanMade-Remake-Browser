@@ -6,7 +6,8 @@
  *
  * Passing guards:
  * - no flooding: away from the waterline the ocean never draws over dry ground more than 1 m below the sea level
- *   (the town at -3.26 m, the moat, the ruins basin, the east bound at z 99-101, 170,102);
+ *   (the town at -3.26 m, the moat, the ruins basin, the east bound at z 99-101, 170,102); the drowned Western China
+ *   side and the old strait and bay (coast.json drown, its openWater) are sea by design;
  * - S1 (170.5, 90.6) is in the town's nav component with every region outside the bounds closed (G1).
  *
  * Findings (failing):
@@ -40,6 +41,11 @@ const hasExport = existsSync(join(OUT, 'manifest.json')) && existsSync(join(OUT,
 const RX = (x: number) => 168 + x / 192
 const RZ = (z: number) => 97 - z / 192
 
+interface Rect {
+  x: [number, number]
+  z: [number, number]
+}
+
 interface Ground {
   h: number
   water: { heightM: number } | null
@@ -51,6 +57,7 @@ describe.skipIf(!hasExport)('H-CST on the shipped jangan-fields export', () => {
   let SL: number
   let patches: Array<{ x: [number, number]; z: [number, number] }>
   let corridor: { x: [number, number]; z: [number, number] } | null
+  let drown: { regions: Rect[]; soft?: Rect[]; areas: Rect[]; openWater?: Rect[] } | null = null
   const regions = new Map<string, { r: WorldManifest['regions'][number]; t: TerrainBin }>()
   const s: FieldSample = { sea: 0, distanceM: 0, elevationM: 0, join: 0 }
 
@@ -78,6 +85,15 @@ describe.skipIf(!hasExport)('H-CST on the shipped jangan-fields export', () => {
     const g = ground(mx ?? x, mz ?? z)
     return !!g && !g.water && g.h < SL - 0.5
   }
+  // the drowned area (coast.json drown, docs/COAST.md §4.1): the Western China side and the land bridge are open sea now,
+  // inside the bounds too
+  const inRect = (r: Rect, x: number, z: number) => x >= r.x[0] && x <= r.x[1] && z >= r.z[0] && z <= r.z[1]
+  const inDrowned = (x: number, z: number) => !!drown && ([...drown.regions, ...(drown.soft ?? [])].some(r => inRect(r, Math.floor(RX(x)), Math.floor(RZ(z)))) ||
+    [...drown.areas, ...(drown.openWater ?? [])].some(a => inRect(a, RX(x), RZ(z))))
+  // the old strait's and the bay's open water (drown.openWater): opened in whole 32 m blocks, and its smoothed bed joins the
+  // sea a block further (the bay's south pocket at 165.7, 99.18, sea 2 m deep), so two blocks past
+  const BLOCK = 2 / 60
+  const inOpenWater = (x: number, z: number) => !!drown && (drown.openWater ?? []).some(a => inRect({ x: [a.x[0] - BLOCK, a.x[1] + BLOCK], z: [a.z[0] - BLOCK, a.z[1] + BLOCK] }, RX(x), RZ(z)))
   const oceanAt = (x: number, z: number) => drawsWater(field.sample(x, z, s))
 
   beforeAll(async () => {
@@ -89,9 +105,11 @@ describe.skipIf(!hasExport)('H-CST on the shipped jangan-fields export', () => {
     const cfg = JSON.parse(readFileSync(COAST, 'utf8')) as {
       allowHeightPatches: Array<{ name: string; x: [number, number]; z: [number, number] }>
       corridor: { x: [number, number]; z: [number, number] } | null
+      drown?: { regions: Rect[]; soft?: Rect[]; areas: Rect[]; openWater?: Rect[] }
     }
     patches = cfg.allowHeightPatches
     corridor = cfg.corridor
+    drown = cfg.drown ?? null
   }, 120_000)
 
   /**
@@ -131,8 +149,10 @@ describe.skipIf(!hasExport)('H-CST on the shipped jangan-fields export', () => {
         const g = ground(x, z)
         if (!g || g.h >= SL - 1 || (g.water && g.water.heightM > g.h)) continue
         if (!oceanAt(x, z)) continue
+        // open sea by design: its bed is below the sea level right up to the shore
+        if (inOpenWater(x, z)) continue
         // The sea itself (and S1's in-bounds sea); the swash band only right at the waterline (the filtering).
-        if (s.sea >= 0.5 && (!inBounds(x, z) || inPatch(x, z))) continue
+        if (s.sea >= 0.5 && (!inBounds(x, z) || inPatch(x, z) || inDrowned(x, z))) continue
         if (s.sea < 0.5 && s.distanceM > -4) continue
         floods.push(`${RX(x).toFixed(2)},${RZ(z).toFixed(2)} ground ${g.h.toFixed(1)}`)
       }

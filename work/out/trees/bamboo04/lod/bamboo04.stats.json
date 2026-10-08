@@ -1,0 +1,71 @@
+{
+ "species": "bamboo04",
+ "archetype": "bamboo",
+ "kind": "tree",
+ "seed": 35,
+ "target": {
+  "h": 49.44,
+  "w": 41.08
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 1872,
+   "byMaterial": {
+    "bark": 1440,
+    "leaf": 432
+   },
+   "cards": 108,
+   "frontNormalY": 1.0,
+   "vertices": 1836,
+   "heightM": 49.44,
+   "widthM": 41.08,
+   "crownCentre": [
+    -1.5,
+    0.67,
+    24.31
+   ],
+   "crownRadius": 25.31,
+   "bytes": 273536
+  },
+  "1": {
+   "triangles": 648,
+   "byMaterial": {
+    "bark": 432,
+    "leaf": 216
+   },
+   "cards": 54,
+   "frontNormalY": 1.0,
+   "vertices": 792,
+   "heightM": 49.092,
+   "widthM": 41.08,
+   "crownCentre": [
+    -1.5,
+    0.67,
+    24.31
+   ],
+   "crownRadius": 25.31,
+   "bytes": 216064
+  },
+  "2": {
+   "triangles": 360,
+   "byMaterial": {
+    "bark": 216,
+    "leaf": 144
+   },
+   "cards": 36,
+   "frontNormalY": 1.0,
+   "vertices": 504,
+   "heightM": 48.647,
+   "widthM": 41.08,
+   "crownCentre": [
+    -1.5,
+    0.67,
+    24.31
+   ],
+   "crownRadius": 25.31,
+   "bytes": 200508
+  }
+ }
+}

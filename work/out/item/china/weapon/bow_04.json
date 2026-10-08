@@ -1,0 +1,139 @@
+{
+  "source": "res/item/china/weapon/bow_04.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "bow_04",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\item\\china\\weapon\\bow_01.bsk",
+    "joints": [],
+    "bindCheck": {
+      "maxIdentityError": 0,
+      "maxHierarchyError": 0,
+      "staleToLocal": []
+    }
+  },
+  "dummies": {
+    "Bone01": [
+      0,
+      0,
+      0
+    ],
+    "Bone02": [
+      0.21454,
+      0,
+      0
+    ]
+  },
+  "attachBone": "Bip01 L Hand",
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 6,
+    "attachPointName": "LEFT_HAND",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 7,
+        "slotName": "LEFT_HAND",
+        "mesh": "bow_04"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "bow_1_5",
+      "bmt": "prim\\mtrl\\item\\china\\weapon\\bow_1_5.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\weapon\\bow_1_5.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "weapon/shield: texture alpha is a specular/env mask (79.1% partial, 9.4% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "bow_04",
+      "bms": "prim\\mesh\\item\\china\\weapon\\bow_04.bms",
+      "material": "bow_1_5",
+      "vertices": 94,
+      "triangles": 120,
+      "skinned": false,
+      "bones": [
+        "Bone01"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 94,
+    "triangles": 120,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.05986756086349487,
+    "boundsMin": [
+      -0.26843416690826416,
+      -0.040650010108947754,
+      -0.6662681698799133
+    ],
+    "boundsMax": [
+      0.23552151024341583,
+      0.01921755075454712,
+      0.6662680506706238
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "issues": [
+      "NODE_EMPTY"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+ "species": "weed_tall",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 51,
+ "target": {
+  "h": 7.96,
+  "w": 15.43
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 104,
+   "byMaterial": {
+    "leaf": 104
+   },
+   "cards": 26,
+   "frontNormalY": 1.0,
+   "vertices": 208,
+   "heightM": 7.96,
+   "widthM": 15.43,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.96
+   ],
+   "crownRadius": 1.0,
+   "bytes": 66352
+  },
+  "1": {
+   "triangles": 36,
+   "byMaterial": {
+    "leaf": 36
+   },
+   "cards": 9,
+   "frontNormalY": 1.0,
+   "vertices": 72,
+   "heightM": 7.96,
+   "widthM": 15.43,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.96
+   ],
+   "crownRadius": 1.0,
+   "bytes": 59404
+  }
+ }
+}

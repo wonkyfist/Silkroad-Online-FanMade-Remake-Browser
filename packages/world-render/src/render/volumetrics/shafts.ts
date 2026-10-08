@@ -44,8 +44,10 @@
  *   stack; time and weather only move uniforms (H9A hitch rules). Lane GODRAYS.
  */
 import {
+  ClusteredLightContainer,
   Constants,
   Matrix,
+  PointLight,
   PostProcess,
   RawTexture,
   RenderTargetTexture,
@@ -67,7 +69,7 @@ import { addWarmupHook } from '../../warmup-hooks.ts'
 import type { SkyState } from '../../sky/types.ts'
 import { lightShaftLevel, type LightShaftLevel, type RenderQuality } from '../quality.ts'
 import type { RenderWeather } from '../weather.ts'
-import { SHAFT_MARCH_DEFINE, SHAFT_MAX_CASCADES, SHAFT_RADIAL_DEFINE, SHAFT_SHADERS, type ShaftShaderSource } from './shaft-shaders.ts'
+import { SHAFT_GLOW_LIGHTS, SHAFT_MARCH_DEFINE, SHAFT_MAX_CASCADES, SHAFT_RADIAL_DEFINE, SHAFT_SHADERS, type ShaftShaderSource } from './shaft-shaders.ts'
 
 /**
  * 'march': the shadow-map march only (the CSM holds the trees: High, Ultra); 'hybrid': the march plus the radial walk
@@ -124,8 +126,8 @@ export function planShafts(q: Readonly<RenderQuality>, o: ShaftPlanOptions = {})
 
 /** The look's constants (tuned on the Jangan road, the Yeoha forest, the gate and the plaza; see the module comment). */
 export const SHAFT_TUNING: Readonly<ShaftTuning> = {
-  /** The added light per unit lit in-scatter, as a multiple of single scattering. */
-  gain: 4,
+  /** The added light per unit lit in-scatter, as a multiple of single scattering (pass 2: 4 → 4.5, all day). */
+  gain: 4.5,
   /** In-scatter coefficient of clear air (1/m), before mist and humidity. */
   sigma: 0.005,
   /** The share of the scene fog's density that scatters into the shafts (only the part of the fog within reach). */
@@ -135,8 +137,8 @@ export const SHAFT_TUNING: Readonly<ShaftTuning> = {
   mistSigma: 1,
   humidGain: 0.15,
   humidSigma: 0.6,
-  /** The factor at a high sun (≥ 60°), against 1 at ≤ 10°. */
-  noon: 0.35,
+  /** The factor at a high sun (≥ 60°), against 1 at ≤ 10° (pass 2: 0.35 → 0.85: beams all day, not only at dawn). */
+  noon: 0.85,
   /** The moon's shafts at night (the key light is the moon). */
   moon: 0.5,
   /** Henyey–Greenstein anisotropy and its share of the phase (the rest isotropic). */
@@ -154,7 +156,7 @@ export const SHAFT_TUNING: Readonly<ShaftTuning> = {
    * in front of a shaded wall: the same everywhere, nothing; a beam: what it has more than the air beside it), and
    * the radial walk drops by 1 − open · (its open share)^openPower; the dapple boost where half the air is lit.
    */
-  open: 0.9,
+  open: 0.8,
   openPower: 2,
   dapple: 0.8,
   /** Mist and the humid air after rain glow as a whole: the baseline drops by these shares at full. */
@@ -162,7 +164,12 @@ export const SHAFT_TUNING: Readonly<ShaftTuning> = {
   humidOpen: 0.15,
   /** The shafts' colour leans this far towards the sky's haze colour. */
   hazeTint: 0.3,
+  /** The lantern glow's in-scatter: σ × this (the night air round a lamp reads a little hazier than the beams). */
+  glow: 0.8,
 }
+
+/** The tuning before lighting pass 2 (the A/B's "before": LIGHT_LOOK.atmosphere off): dawn and dusk only. */
+export const SHAFT_TUNING_V1: Readonly<ShaftTuning> = { ...SHAFT_TUNING, gain: 4, noon: 0.35, open: 0.9 }
 
 export interface ShaftTuning {
   gain: number
@@ -187,6 +194,7 @@ export interface ShaftTuning {
   mistOpen: number
   humidOpen: number
   hazeTint: number
+  glow: number
 }
 
 export interface ShaftLookInput {
@@ -220,6 +228,8 @@ export interface ShaftLook {
   open: number
   openPower: number
   dapple: number
+  /** The lantern glow's σ multiple (SHAFT_TUNING.glow). */
+  glow: number
   /** The factors, for the overlay and the tests: sun height, weather, mist, after-rain humidity. */
   factors: { sun: number; weather: number; mist: number; humidity: number }
 }
@@ -260,7 +270,7 @@ export function shaftLook(i: Readonly<ShaftLookInput>, t: Readonly<ShaftTuning> 
   const on = Math.max(color[0], color[1], color[2]) > 1e-7 && sigma > 0
   return { on, sigma, color, g: t.g, phaseMix: t.phaseMix, phaseCap: t.phaseCap,
     radial: { gain: t.radialGain, radius: t.radialRadius, decay: t.radialDecay, near: t.radialNear },
-    open: t.open * clamp01(1 - t.mistOpen * mist - t.humidOpen * humidity), openPower: t.openPower, dapple: t.dapple, factors: { sun, weather, mist, humidity } }
+    open: t.open * clamp01(1 - t.mistOpen * mist - t.humidOpen * humidity), openPower: t.openPower, dapple: t.dapple, glow: t.glow, factors: { sun, weather, mist, humidity } }
 }
 
 // ---- the passes ------------------------------------------------------------------------------------------------------
@@ -277,6 +287,8 @@ export interface LightShaftsOptions {
   shadows: () => ShaftShadowSource | null
   /** MSAA samples of the march pass's input: set where it is the camera's first post-process (the scene target). */
   samples?: number
+  /** The eye adaptation the composite applies (docs/LIGHTING.md §2; null: none). */
+  adapt?: () => { bindApply(e: Effect, name: string): void } | null
 }
 
 /** Babylon 9.28 PostProcess internals the depth hookup reads. */
@@ -346,6 +358,7 @@ export class LightShafts {
   private historyValid = false
   private frame = 0
   private dummyDepth: RawTexture | null = null
+  private dummyZero: RawTexture | null = null
   private dummyShadow: RenderTargetTexture | null = null
   private depthTarget: RenderTargetWrapper | null = null
   /** WebGPU MSAA: this frame's R32F copy of the scene depth (resolveDepthCopy). */
@@ -354,6 +367,9 @@ export class LightShafts {
   private readonly observers: Array<() => void> = []
   private readonly sizeHooked = new WeakSet<PostProcess>()
   private disposed = false
+  private readonly glow: GlowLight[] = Array.from({ length: SHAFT_GLOW_LIGHTS }, () => ({ x: 0, y: 0, z: 0, range: 0, r: 0, g: 0, b: 0, score: 0 }))
+  /** The lantern glow (LIGHT_LOOK-style A/B; on by default). */
+  glowOn = true
 
   constructor(readonly scene: Scene, readonly camera: Camera, readonly plan: ShaftPlan, private readonly opts: LightShaftsOptions) {
     registerShaders()
@@ -538,6 +554,15 @@ export class LightShafts {
     return false
   }
 
+  /** A 1 × 1 zero (no eye adaptation: 2^0). */
+  private zeroDummy(): RawTexture {
+    if (!this.dummyZero) {
+      this.dummyZero = RawTexture.CreateRGBATexture(new Float32Array(4), 1, 1, this.scene, false, false, Texture.NEAREST_SAMPLINGMODE, Constants.TEXTURETYPE_FLOAT)
+      this.dummyZero.name = 'sroShaftsNoAdapt'
+    }
+    return this.dummyZero
+  }
+
   private depthDummy(): RawTexture {
     if (!this.dummyDepth) {
       this.dummyDepth = RawTexture.CreateRGBATexture(new Float32Array([1, 1, 1, 1]), 1, 1, this.scene, false, false, Texture.NEAREST_SAMPLINGMODE, Constants.TEXTURETYPE_FLOAT)
@@ -693,6 +718,9 @@ export class LightShafts {
     const look = this.look
     const eye = this.viewState()
     e.setTextureFromPostProcess('sroScene', this.march)
+    const adapt = this.opts.adapt?.() ?? null
+    if (adapt) adapt.bindApply(e, 'sroAdaptTex')
+    else e.setTexture('sroAdaptTex', this.zeroDummy())
     this.bindDepth(e)
     const live = !!look?.on && this.depthBound
     e.setMatrix('sroInvViewProj', this.invVP)
@@ -703,6 +731,19 @@ export class LightShafts {
     const c = look?.color ?? [0, 0, 0]
     e.setFloat4('sroShaftColor', c[0], c[1], c[2], 0)
     e.setFloat4('sroPhase', look?.g ?? 0, look?.phaseMix ?? 0, look?.phaseCap ?? 1, 0)
+    this.bindGlow(e, eye)
+  }
+
+  /** Lantern glow (docs/LIGHTING.md §3): the strongest lit point lights near the eye, as the composite's uniforms. */
+  private bindGlow(e: Effect, eye: Vector3): void {
+    const n = this.depthBound && this.glowOn ? pickGlowLights(this.scene, eye, this.glow) : 0
+    const k = ((this.look?.sigma ?? SHAFT_TUNING.sigma) * (this.look?.glow ?? SHAFT_TUNING.glow)) / (4 * Math.PI)
+    e.setFloat4('sroGlow', n, k, 0, 0)
+    for (let i = 0; i < SHAFT_GLOW_LIGHTS; i++) {
+      const g = this.glow[i]!
+      e.setFloat4(`sroGlowP${i}`, g.x, g.y, g.z, g.range)
+      e.setFloat4(`sroGlowC${i}`, g.r, g.g, g.b, 0)
+    }
   }
 
   private endFrame(): void {
@@ -724,6 +765,8 @@ export class LightShafts {
     this.pong?.dispose()
     this.ping = this.pong = this.read = this.write = null
     this.dummyDepth?.dispose()
+    this.dummyZero?.dispose()
+    this.dummyZero = null
     this.dummyShadow?.dispose()
     this.dummyDepth = null
     this.dummyShadow = null
@@ -732,6 +775,59 @@ export class LightShafts {
     this.depthCopy?.dispose()
     this.depthCopy = null
   }
+}
+
+/** One lantern-glow light (world position, range, scene-linear colour × intensity, its pick score). */
+export interface GlowLight { x: number; y: number; z: number; range: number; r: number; g: number; b: number; score: number }
+
+/**
+ * The lights that glow in the air: the night lamps and fires (night-lights.ts 'nl:') and the town's lanterns
+ * (town/props.ts). Hit flashes and spell lights do not (a white fog ball on every hit).
+ */
+export const GLOW_SOURCE = /^(nl:|town:lantern)/
+
+/** Lights farther than this from the eye never glow (m). */
+export const GLOW_MAX_M = 80
+
+/**
+ * Fills `out` with the lit point lights that matter most to the eye (intensity / (d² + range²), within GLOW_MAX_M):
+ * the scene's PointLights and those of its clustered containers (the night lights, the hit flashes). Returns the count.
+ */
+export function pickGlowLights(scene: Scene, eye: { x: number; y: number; z: number }, out: GlowLight[]): number {
+  let n = 0
+  const consider = (l: PointLight) => {
+    if (!(l.intensity > 0) || !(l.range > 0.5) || !GLOW_SOURCE.test(l.name) || !l.isEnabled()) return
+    const p = l.getAbsolutePosition()
+    const dx = p.x - eye.x
+    const dy = p.y - eye.y
+    const dz = p.z - eye.z
+    const d2 = dx * dx + dy * dy + dz * dz
+    if (d2 > GLOW_MAX_M * GLOW_MAX_M) return
+    const range = Math.min(l.range, 30)
+    const score = l.intensity / (d2 + range * range)
+    let i: number
+    if (n < out.length) i = n++
+    else if (out[n - 1]!.score >= score) return
+    else i = n - 1
+    while (i > 0 && out[i - 1]!.score < score) {
+      Object.assign(out[i]!, out[i - 1]!)
+      i--
+    }
+    const g = out[i]!
+    g.x = p.x
+    g.y = p.y
+    g.z = p.z
+    g.range = range
+    g.r = l.diffuse.r * l.intensity
+    g.g = l.diffuse.g * l.intensity
+    g.b = l.diffuse.b * l.intensity
+    g.score = score
+  }
+  for (const l of scene.lights) {
+    if (l instanceof PointLight) consider(l)
+    else if (l instanceof ClusteredLightContainer) for (const c of l.lights) if (c instanceof PointLight) consider(c)
+  }
+  return n
 }
 
 /** For the perf overlay and the lab: what the shafts drew from last frame. */

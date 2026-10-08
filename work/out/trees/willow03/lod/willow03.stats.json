@@ -1,0 +1,74 @@
+{
+ "species": "willow03",
+ "archetype": "weeping",
+ "kind": "tree",
+ "seed": 11,
+ "target": {
+  "h": 81.04,
+  "w": 97.32
+ },
+ "normalUp": 0.3,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 1858,
+   "byMaterial": {
+    "bark": 898,
+    "leaf": 40,
+    "strand": 920
+   },
+   "cards": 240,
+   "frontNormalY": 0.396,
+   "vertices": 2647,
+   "heightM": 81.04,
+   "widthM": 97.32,
+   "crownCentre": [
+    1.93,
+    -1.28,
+    44.67
+   ],
+   "crownRadius": 49.64,
+   "bytes": 464284
+  },
+  "1": {
+   "triangles": 520,
+   "byMaterial": {
+    "bark": 192,
+    "leaf": 40,
+    "strand": 288
+   },
+   "cards": 82,
+   "frontNormalY": 0.393,
+   "vertices": 805,
+   "heightM": 80.986,
+   "widthM": 96.064,
+   "crownCentre": [
+    1.93,
+    -1.28,
+    44.67
+   ],
+   "crownRadius": 49.64,
+   "bytes": 367824
+  },
+  "2": {
+   "triangles": 244,
+   "byMaterial": {
+    "bark": 120,
+    "leaf": 20,
+    "strand": 104
+   },
+   "cards": 31,
+   "frontNormalY": 0.389,
+   "vertices": 350,
+   "heightM": 81.316,
+   "widthM": 96.544,
+   "crownCentre": [
+    1.93,
+    -1.28,
+    44.67
+   ],
+   "crownRadius": 49.64,
+   "bytes": 344312
+  }
+ }
+}

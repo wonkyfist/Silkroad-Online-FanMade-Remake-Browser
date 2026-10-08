@@ -1,0 +1,10159 @@
+{
+ "createdAt": "2026-10-03T04:40:09.301Z",
+ "selection": {
+  "keys": 124,
+  "kept": [
+   "prim/mtrl/nature/common/tree/new-maple/tre_pine08_02.ddj",
+   "prim/mtrl/nature/common/tree/new-maple/tre_pine08_03.ddj",
+   "prim/mtrl/nature/common/tree/new-maple/tre_tree09_01.ddj",
+   "prim/mtrl/nature/common/tree/tre_bam04_01 .ddj",
+   "prim/mtrl/nature/common/tree/tre_bam04_02 .ddj",
+   "prim/mtrl/nature/common/tree/tre_bam04_03 .ddj",
+   "prim/mtrl/nature/common/tree/tre_bank_leaf.ddj",
+   "prim/mtrl/nature/common/tree/tre_bank_leaf02.ddj",
+   "prim/mtrl/nature/common/tree/tre_bank_pilla.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine07_01.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine07_02.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine08_01.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine08_02.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine08_03.ddj",
+   "prim/mtrl/nature/common/tree/tre_pine08_04.ddj",
+   "prim/mtrl/nature/common/tree/tre_tree02_01.ddj",
+   "prim/mtrl/nature/common/tree/tre_tree02_02.ddj",
+   "prim/mtrl/nature/common/tree/tre_tree02_03.ddj",
+   "prim/mtrl/nature/common/tree/tre_willow03_leaf01.ddj",
+   "prim/mtrl/nature/common/tree/tre_willow03_leaf02.ddj",
+   "prim/mtrl/nature/common/tree/tre_willow03_will01.ddj"
+  ],
+  "skipped": [
+   {
+    "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_cup.ddj",
+    "why": "a unique town tree's non-tree part"
+   },
+   {
+    "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_rope.ddj",
+    "why": "a unique town tree's non-tree part"
+   },
+   {
+    "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_side.ddj",
+    "why": "a unique town tree's non-tree part"
+   },
+   {
+    "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_stone.ddj",
+    "why": "a unique town tree's non-tree part"
+   },
+   {
+    "key": "prim/mtrl/bldg/china/greenfield/cj_inn_breakewal.ddj",
+    "why": "a unique town tree's non-tree part"
+   },
+   {
+    "key": "prim/mtrl/nature/common/grass/grs_g03_1.ddj",
+    "why": "only the hidden retail tufts use it"
+   },
+   {
+    "key": "prim/mtrl/nature/common/grass/grs_g03.ddj",
+    "why": "only the hidden retail tufts use it"
+   },
+   {
+    "key": "prim/mtrl/nature/common/grass/grs-weed.ddj",
+    "why": "only the hidden retail tufts use it"
+   },
+   {
+    "key": "prim/mtrl/nature/common/grass/grs-weed02.ddj",
+    "why": "only the hidden retail tufts use it"
+   },
+   {
+    "key": "prim/mtrl/nature/china/dunhuang/tree/나무01.ddj",
+    "why": "its embedded image does not decode (Input file contains unsupported image format)"
+   },
+   {
+    "key": "prim/mtrl/nature/china/dunhuang/tree/나무02.ddj",
+    "why": "its embedded image does not decode (Input file contains unsupported image format)"
+   }
+  ]
+ },
+ "sprites": [
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_btree.ddj",
+   "models": [
+    "cj_bridgetree"
+   ],
+   "placements": 3,
+   "size": [
+    64,
+    512
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0147,
+     "sat": 0.0038,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0119,
+     "sat": 0.0038,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_stree.ddj",
+   "models": [
+    "cj_bridgetree"
+   ],
+   "placements": 3,
+   "size": [
+    64,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0076,
+     "sat": -0.0115,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0078,
+     "sat": -0.0146,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_treea.ddj",
+   "models": [
+    "cj_bridgetree"
+   ],
+   "placements": 3,
+   "size": [
+    64,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0003,
+     "sat": -0.0018,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0002,
+     "sat": -0.0026,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_treef.ddj",
+   "models": [
+    "cj_bridgetree"
+   ],
+   "placements": 3,
+   "size": [
+    256,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.002,
+     "sat": -0.0039,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0016,
+     "sat": -0.0049,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_01.ddj",
+   "models": [
+    "cj_inn_oldtree"
+   ],
+   "placements": 1,
+   "size": [
+    256,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0125,
+     "sat": 0.0122,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0101,
+     "sat": 0.0141,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_bran.ddj",
+   "models": [
+    "cj_inn_oldtree",
+    "cj_oldtree02"
+   ],
+   "placements": 2,
+   "size": [
+    256,
+    256
+   ],
+   "class": "default",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0078,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0052,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree.ddj",
+   "models": [
+    "cj_inn_oldtree",
+    "cj_oldtree02"
+   ],
+   "placements": 2,
+   "size": [
+    256,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0055,
+     "sat": 0.0003,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0046,
+     "sat": 0.0012,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/reed/w_cd_reeds.ddj",
+   "models": [
+    "fw_cd_reeds_l"
+   ],
+   "placements": 255,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0017,
+     "sat": -0.0025,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0013,
+     "sat": -0.0038,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_gra_01.ddj",
+   "models": [
+    "w_cd_gra_01",
+    "w_cd_gra_02",
+    "w_cd_gra_03",
+    "w_cd_gra_s01"
+   ],
+   "placements": 141,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0007,
+     "sat": -0.0192,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0003,
+     "sat": -0.0139,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_01.ddj",
+   "models": [
+    "w_cd_hotree01",
+    "w_cd_hotree02"
+   ],
+   "placements": 7,
+   "size": [
+    128,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0026,
+     "sat": -0.0019,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0041,
+     "sat": -0.0051,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_02.ddj",
+   "models": [
+    "w_cd_hotree01",
+    "w_cd_hotree02"
+   ],
+   "placements": 7,
+   "size": [
+    128,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.001,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0011,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_03.ddj",
+   "models": [
+    "w_cd_hotree01",
+    "w_cd_hotree02",
+    "w_cd_hotree03_1",
+    "w_cd_tree03big"
+   ],
+   "placements": 25,
+   "size": [
+    128,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0056,
+     "sat": -0.0083,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.006,
+     "sat": -0.0121,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_04.ddj",
+   "models": [
+    "w_cd_hotree03_1",
+    "w_cd_tree03big"
+   ],
+   "placements": 18,
+   "size": [
+    128,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0097,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0142,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_05.ddj",
+   "models": [
+    "w_cd_hotree03_1",
+    "w_cd_tree03big"
+   ],
+   "placements": 18,
+   "size": [
+    128,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0014,
+     "sat": -0.0014,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0006,
+     "sat": -0.0025,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al01.ddj",
+   "models": [
+    "w_cd_hotree01",
+    "w_cd_hotree02"
+   ],
+   "placements": 7,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0049,
+     "sat": -0.0066,
+     "coverage": 0.0001
+    },
+    "2x": {
+     "luma": 0.0052,
+     "sat": -0.0104,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al02.ddj",
+   "models": [
+    "w_cd_hotree01",
+    "w_cd_hotree02",
+    "w_cd_hotree03_1",
+    "w_cd_tree03big"
+   ],
+   "placements": 25,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0183,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": 0.0185,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_leaf01.ddj",
+   "models": [
+    "w_cd_hotree03_1",
+    "w_cd_tree03big"
+   ],
+   "placements": 18,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0083,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0059,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_lea_01.ddj",
+   "models": [
+    "w_cd_gra_01",
+    "w_cd_gra_02",
+    "w_cd_gra_03",
+    "w_cd_gra_s01"
+   ],
+   "placements": 141,
+   "size": [
+    128,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0024,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0036,
+     "sat": 0,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_01.ddj",
+   "models": [
+    "w_cd_tree02",
+    "w_cd_tree03",
+    "w_cd_tree05"
+   ],
+   "placements": 58,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0009,
+     "sat": -0.0141,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0004,
+     "sat": -0.0102,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_02.ddj",
+   "models": [
+    "w_cd_tree02",
+    "w_cd_tree03"
+   ],
+   "placements": 46,
+   "size": [
+    128,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0039,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0012,
+     "sat": -0.0088,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_03.ddj",
+   "models": [
+    "w_cd_tree02",
+    "w_cd_tree03",
+    "w_cd_tree05"
+   ],
+   "placements": 58,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0069,
+     "sat": -0.0136,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0032,
+     "sat": -0.0104,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_01.ddj",
+   "models": [
+    "w_cd_gra_01",
+    "w_cd_gra_02",
+    "w_cd_gra_03",
+    "w_cd_gra_s01"
+   ],
+   "placements": 141,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0014,
+     "sat": -0.0013,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0031,
+     "sat": -0.0085,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_02.ddj",
+   "models": [
+    "w_cd_tree05"
+   ],
+   "placements": 12,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.003,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0004,
+     "sat": -0.0145,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_01.ddj",
+   "models": [
+    "w_cd_brhwood01_01",
+    "w_cd_brhwood02_01"
+   ],
+   "placements": 4,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0016,
+     "sat": -0.0062,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0002,
+     "sat": -0.0068,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_02.ddj",
+   "models": [
+    "w_cd_brhwood01_01"
+   ],
+   "placements": 1,
+   "size": [
+    256,
+    256
+   ],
+   "class": "wood",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0075,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.001,
+     "sat": -0.0039,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_03.ddj",
+   "models": [
+    "w_cd_brhwood01_01",
+    "w_cd_brhwood02_01"
+   ],
+   "placements": 4,
+   "size": [
+    256,
+    256
+   ],
+   "class": "wood",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0005,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0005,
+     "sat": 0.0021,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_gra_01.ddj",
+   "models": [
+    "w_cd_twig01_tree01",
+    "w_cd_twig02_tree01"
+   ],
+   "placements": 76,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0007,
+     "sat": -0.0192,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0003,
+     "sat": -0.0139,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig01_tree03.ddj",
+   "models": [
+    "w_cd_twig01_tree01"
+   ],
+   "placements": 13,
+   "size": [
+    128,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0003,
+     "sat": -0.0033,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0038,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig02_tree03.ddj",
+   "models": [
+    "w_cd_twig02_tree01"
+   ],
+   "placements": 63,
+   "size": [
+    128,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.003,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0004,
+     "sat": -0.0145,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_wood_01.ddj",
+   "models": [
+    "w_cd_twig01_tree01",
+    "w_cd_twig02_tree01"
+   ],
+   "placements": 76,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0014,
+     "sat": -0.0013,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0031,
+     "sat": -0.0085,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_01.ddj",
+   "models": [
+    "w_cd_brhwood03_01",
+    "w_cd_brhwood04_01",
+    "w_cd_brhwood05_01",
+    "w_cd_brhwood06_01"
+   ],
+   "placements": 8,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0016,
+     "sat": -0.0062,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0002,
+     "sat": -0.0068,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_02.ddj",
+   "models": [
+    "w_cd_brhwood03_01",
+    "w_cd_brhwood04_01",
+    "w_cd_brhwood05_01",
+    "w_cd_brhwood06_01"
+   ],
+   "placements": 8,
+   "size": [
+    256,
+    256
+   ],
+   "class": "wood",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0081,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0019,
+     "sat": -0.0039,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_03.ddj",
+   "models": [
+    "w_cd_brhwood03_01",
+    "w_cd_brhwood04_01",
+    "w_cd_brhwood05_01",
+    "w_cd_brhwood06_01"
+   ],
+   "placements": 8,
+   "size": [
+    256,
+    256
+   ],
+   "class": "wood",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0005,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0005,
+     "sat": 0.0021,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_deadtree_01.ddj",
+   "models": [
+    "w_cd_deadtree_01",
+    "w_cd_deadtree_02"
+   ],
+   "placements": 3,
+   "size": [
+    256,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": 0.0061,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0.0081,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_stump01.ddj",
+   "models": [
+    "w_cd_stumpp03",
+    "w_cd_stumpp05"
+   ],
+   "placements": 4,
+   "size": [
+    256,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": 0.0037,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0005,
+     "sat": 0.0019,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/cj_ricestraw.ddj",
+   "models": [
+    "cj_ricestraw"
+   ],
+   "placements": 59,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0135,
+     "sat": 0.0029,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0121,
+     "sat": 0.0071,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/flw_g01_w.ddj",
+   "models": [
+    "flw_g01_wha",
+    "flw_s01_w_ani"
+   ],
+   "placements": 64,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0006,
+     "sat": 0,
+     "coverage": -0.0001
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": 0.015,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/flw_g01_y.ddj",
+   "models": [
+    "flw_g01_yall",
+    "flw_s01_y_ani"
+   ],
+   "placements": 141,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0083,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0.0001,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/grs_flower05.ddj",
+   "models": [
+    "grs_flower05"
+   ],
+   "placements": 60,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0004,
+     "sat": 0.003,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0023,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/grs_weed07.ddj",
+   "models": [
+    "grs_flower_01",
+    "grs_flower_02",
+    "grs_flower_03",
+    "grs_flower_03_1"
+   ],
+   "placements": 216,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0011,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0006,
+     "sat": -0.0003,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/c_pondflower.ddj",
+   "models": [
+    "c_pondflower"
+   ],
+   "placements": 44,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0042,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0.0043,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_barley_01.ddj",
+   "models": [
+    "cj_barley_02"
+   ],
+   "placements": 227,
+   "size": [
+    512,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0011,
+     "sat": 0.0004,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0002,
+     "sat": -0.0003,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_graveyard_grass01.ddj",
+   "models": [
+    "cj_graveyard_grass01"
+   ],
+   "placements": 97,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0007,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0012,
+     "sat": 0,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_graveyard_grass03.ddj",
+   "models": [
+    "cj_graveyard_grass03"
+   ],
+   "placements": 6,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0004,
+     "sat": -0.012,
+     "coverage": 0.0001
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.014,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_flower05.ddj",
+   "models": [
+    "grs_weed09_2"
+   ],
+   "placements": 348,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0003,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0003,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_water.ddj",
+   "models": [
+    "grs_water_big"
+   ],
+   "placements": 65,
+   "size": [
+    256,
+    256
+   ],
+   "class": "water",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0002,
+     "coverage": 0.0001
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": 0.0031,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed04.ddj",
+   "models": [
+    "grs_weed04"
+   ],
+   "placements": 149,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.007,
+     "coverage": -0.0002
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0098,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed06_01.ddj",
+   "models": [
+    "grs_weed06_1"
+   ],
+   "placements": 217,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0007,
+     "sat": -0.0013,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0003,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed06.ddj",
+   "models": [
+    "grs_weed06",
+    "grs_weed07"
+   ],
+   "placements": 655,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0019,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0009,
+     "sat": 0.0003,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed07.ddj",
+   "models": [
+    "grs_weed09",
+    "grs_weed09_1",
+    "grs_weed10"
+   ],
+   "placements": 812,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0043,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0023,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_dead_tre01.ddj",
+   "models": [
+    "tre_dead_tre01"
+   ],
+   "placements": 16,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0002,
+     "sat": -0.0196,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.017,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_gagi01.ddj",
+   "models": [
+    "tre_gagi01"
+   ],
+   "placements": 7,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0181,
+     "sat": 0.0371,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0177,
+     "sat": 0.0359,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple_pin.ddj",
+   "models": [
+    "tre_maple01",
+    "tre_maple02",
+    "tre_maple03",
+    "tre_maple03_big"
+   ],
+   "placements": 88,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0009,
+     "sat": 0.0179,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.001,
+     "sat": -0.0002,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_green.ddj",
+   "models": [
+    "tre_maple01",
+    "tre_maple03"
+   ],
+   "placements": 40,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0047,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0045,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_green2.ddj",
+   "models": [
+    "tre_maple03_big"
+   ],
+   "placements": 28,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.009,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0095,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_middle.ddj",
+   "models": [
+    "tre_maple02"
+   ],
+   "placements": 20,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0033,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0.002,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine01_leaf.ddj",
+   "models": [
+    "tre_pine01"
+   ],
+   "placements": 5,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0031,
+     "sat": 0.0281,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0065,
+     "sat": 0.03,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine01_pin.ddj",
+   "models": [
+    "tre_pine01"
+   ],
+   "placements": 5,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0141,
+     "sat": -0.0132,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.013,
+     "sat": -0.0104,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine02_leaf.ddj",
+   "models": [
+    "tre_pine02"
+   ],
+   "placements": 3,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0146,
+     "sat": 0.0033,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0157,
+     "sat": 0.0214,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine03.ddj",
+   "models": [
+    "tre_pine03"
+   ],
+   "placements": 23,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0012,
+     "sat": -0.0001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0005,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine04.ddj",
+   "models": [
+    "tre_pine04"
+   ],
+   "placements": 11,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0004,
+     "sat": -0.0001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0002,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_tree_bran.ddj",
+   "models": [
+    "tre_smalltree01",
+    "tre_tree01",
+    "tre_tree01_big"
+   ],
+   "placements": 100,
+   "size": [
+    64,
+    512
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0029,
+     "sat": -0.0027,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0003,
+     "sat": 0.0141,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_tree01.ddj",
+   "models": [
+    "tre_smalltree01",
+    "tre_tree01",
+    "tre_tree01_big"
+   ],
+   "placements": 100,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.002,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0016,
+     "sat": 0,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_willow01_brn.ddj",
+   "models": [
+    "tre_willow01"
+   ],
+   "placements": 1,
+   "size": [
+    64,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0087,
+     "sat": -0.0108,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.008,
+     "sat": 0.001,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_willow01_leaf1.ddj",
+   "models": [
+    "tre_willow01"
+   ],
+   "placements": 1,
+   "size": [
+    128,
+    512
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": -0.0054,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0051,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_01.ddj",
+   "models": [
+    "c_hhm_tree_01"
+   ],
+   "placements": 38,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0002,
+     "sat": -0.0076,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0071,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_03.ddj",
+   "models": [
+    "c_hhm_tree_01"
+   ],
+   "placements": 38,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0002,
+     "sat": -0.0044,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0114,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_04.ddj",
+   "models": [
+    "c_hhm_tree_01"
+   ],
+   "placements": 38,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0006,
+     "sat": 0.0146,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0014,
+     "sat": 0.0079,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_01.ddj",
+   "models": [
+    "c_swamp_tree05",
+    "c_swamp_tree_07_01",
+    "c_swamp_tree_08",
+    "swamp_tree01"
+   ],
+   "placements": 24,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0005,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0018,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_03.ddj",
+   "models": [
+    "c_swamp_tree_07_01",
+    "c_swamp_tree_08",
+    "swamp_tree01"
+   ],
+   "placements": 12,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0012,
+     "sat": -0.0001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0014,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_04.ddj",
+   "models": [
+    "c_swamp_tree05",
+    "c_swamp_tree_07_01",
+    "c_swamp_tree_08",
+    "swamp_tree01"
+   ],
+   "placements": 24,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0044,
+     "sat": 0.0004,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0049,
+     "sat": -0.0036,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_05.ddj",
+   "models": [
+    "c_swamp_tree05",
+    "c_swamp_tree_07_01",
+    "c_swamp_tree_08",
+    "swamp_tree01"
+   ],
+   "placements": 24,
+   "size": [
+    128,
+    128
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0012,
+     "sat": 0,
+     "coverage": -0.0001
+    },
+    "2x": {
+     "luma": -0.0018,
+     "sat": -0.0001,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_06_01.ddj",
+   "models": [
+    "c_swamp_tree06"
+   ],
+   "placements": 40,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.009,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0005,
+     "sat": 0.0017,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_06_02.ddj",
+   "models": [
+    "c_swamp_tree06"
+   ],
+   "placements": 40,
+   "size": [
+    32,
+    128
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 8,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.006,
+     "sat": 0.0063,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0049,
+     "sat": 0.0081,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_01.ddj",
+   "models": [
+    "c_swamp_tree02",
+    "c_swamp_tree03",
+    "c_swamp_tree04"
+   ],
+   "placements": 35,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0143,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": 0.0011,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_02.ddj",
+   "models": [
+    "c_swamp_tree02",
+    "c_swamp_tree03",
+    "c_swamp_tree04"
+   ],
+   "placements": 35,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": 0.0053,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0001,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_03.ddj",
+   "models": [
+    "c_swamp_tree02",
+    "c_swamp_tree03",
+    "c_swamp_tree04"
+   ],
+   "placements": 35,
+   "size": [
+    128,
+    256
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0003,
+     "sat": 0.0165,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0024,
+     "sat": 0.0188,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree01.ddj",
+   "models": [
+    "cj_graveyard_tree01",
+    "cj_graveyard_tree02"
+   ],
+   "placements": 44,
+   "size": [
+    64,
+    512
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0115,
+     "sat": 0.0016,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0113,
+     "sat": -0.0095,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree02.ddj",
+   "models": [
+    "cj_graveyard_tree01",
+    "cj_graveyard_tree02"
+   ],
+   "placements": 44,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0002,
+     "sat": -0.0008,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0016,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree05.ddj",
+   "models": [
+    "cj_graveyard_tree03",
+    "cj_graveyard_tree04",
+    "cj_graveyard_tree05"
+   ],
+   "placements": 21,
+   "size": [
+    128,
+    512
+   ],
+   "class": "default",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0061,
+     "sat": 0.0016,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0078,
+     "sat": -0.0005,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree06.ddj",
+   "models": [
+    "cj_graveyard_tree03",
+    "cj_graveyard_tree04",
+    "cj_graveyard_tree05"
+   ],
+   "placements": 21,
+   "size": [
+    512,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0017,
+     "sat": 0.0006,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/leaf04.ddj",
+   "models": [
+    "tre_bank01_big"
+   ],
+   "placements": 18,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": -0.0077,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0073,
+     "coverage": -0.0002
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree03_01.ddj",
+   "models": [
+    "tre_tree03"
+   ],
+   "placements": 25,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0006,
+     "sat": -0.0004,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree04_01.ddj",
+   "models": [
+    "tre_tree04"
+   ],
+   "placements": 5,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0003,
+     "sat": -0.002,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0003,
+     "sat": -0.0027,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree05_01.ddj",
+   "models": [
+    "tre_tree05"
+   ],
+   "placements": 26,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0019,
+     "sat": 0.0117,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0002,
+     "sat": 0.013,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree06_01.ddj",
+   "models": [
+    "tre_tree06"
+   ],
+   "placements": 13,
+   "size": [
+    512,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0117,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0012,
+     "sat": -0.0124,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree06_02.ddj",
+   "models": [
+    "tre_tree06",
+    "tre_tree07"
+   ],
+   "placements": 17,
+   "size": [
+    128,
+    512
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0044,
+     "sat": -0.0104,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0095,
+     "sat": 0.0083,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree07_01.ddj",
+   "models": [
+    "tre_tree07"
+   ],
+   "placements": 4,
+   "size": [
+    512,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0039,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.001,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree08_01.ddj",
+   "models": [
+    "tre_tree08"
+   ],
+   "placements": 20,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": -0.0184,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0125,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_01.ddj",
+   "models": [
+    "tre_dry01"
+   ],
+   "placements": 13,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0116,
+     "sat": -0.0008,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0088,
+     "sat": 0.0004,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_02.ddj",
+   "models": [
+    "tre_dry01"
+   ],
+   "placements": 13,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.001,
+     "sat": 0.0007,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0004,
+     "sat": 0.0002,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_03.ddj",
+   "models": [
+    "tre_dry01"
+   ],
+   "placements": 13,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0132,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0006,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_04.ddj",
+   "models": [
+    "tre_dry01"
+   ],
+   "placements": 13,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0065,
+     "sat": -0.0189,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0057,
+     "sat": -0.0179,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_leaf.ddj",
+   "models": [
+    "tre_dry01"
+   ],
+   "placements": 13,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0025,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry02_1.ddj",
+   "models": [
+    "tre_dry02_1"
+   ],
+   "placements": 8,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.001,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0029,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry02.ddj",
+   "models": [
+    "tre_dry02",
+    "tre_dry02_small"
+   ],
+   "placements": 77,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0002,
+     "sat": -0.0063,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0069,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry03.ddj",
+   "models": [
+    "tre_dry03"
+   ],
+   "placements": 18,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0002,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0199,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry04.ddj",
+   "models": [
+    "tre_dry04"
+   ],
+   "placements": 33,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0046,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0047,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_frie_body.ddj",
+   "models": [
+    "tre_frie01"
+   ],
+   "placements": 24,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0126,
+     "sat": -0.0138,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0104,
+     "sat": -0.0177,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_frie_leaf.ddj",
+   "models": [
+    "tre_frie01"
+   ],
+   "placements": 24,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0002,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_01.ddj",
+   "models": [
+    "tre_leaf02"
+   ],
+   "placements": 4,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": -0.0194,
+     "coverage": 0.0002
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0171,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_02.ddj",
+   "models": [
+    "tre_leaf02"
+   ],
+   "placements": 4,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0011,
+     "sat": 0,
+     "coverage": 0.0002
+    },
+    "2x": {
+     "luma": -0.001,
+     "sat": 0,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_03.ddj",
+   "models": [
+    "tre_leaf02"
+   ],
+   "placements": 4,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.002,
+     "coverage": -0.0001
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0037,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood00.ddj",
+   "models": [
+    "tre_pine06"
+   ],
+   "placements": 2,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0022,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.001,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood01.ddj",
+   "models": [
+    "tre_leaf02"
+   ],
+   "placements": 4,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0009,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood02.ddj",
+   "models": [
+    "tre_leaf02"
+   ],
+   "placements": 4,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0008,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_leaf_01_1.ddj",
+   "models": [
+    "tre_leaf01"
+   ],
+   "placements": 17,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0003,
+     "sat": 0.0014,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0025,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_leaf_01.ddj",
+   "models": [
+    "tre_leaf01"
+   ],
+   "placements": 17,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0005,
+     "sat": -0.0162,
+     "coverage": 0.0003
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0153,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple_leaf_red.ddj",
+   "models": [
+    "tre_maple04_big01_brn"
+   ],
+   "placements": 1,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": 0.0055,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": 0.0054,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple_pin.ddj",
+   "models": [
+    "tre_maple03_big01",
+    "tre_maple04_big01_brn"
+   ],
+   "placements": 3,
+   "size": [
+    128,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0012,
+     "sat": 0.0169,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0011,
+     "sat": -0.0001,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple01_leaf_green.ddj",
+   "models": [
+    "tre_maple03_big01"
+   ],
+   "placements": 2,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0047,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0045,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_01.ddj",
+   "models": [
+    "tre_pine05"
+   ],
+   "placements": 18,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0001,
+     "sat": -0.0077,
+     "coverage": -0.0001
+    },
+    "2x": {
+     "luma": 0.0001,
+     "sat": -0.0114,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_02.ddj",
+   "models": [
+    "tre_pine05"
+   ],
+   "placements": 18,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0084,
+     "sat": -0.0169,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0063,
+     "sat": -0.0105,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_03.ddj",
+   "models": [
+    "tre_pine05"
+   ],
+   "placements": 18,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0112,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0057,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_01.ddj",
+   "models": [
+    "tre_pine06"
+   ],
+   "placements": 2,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0011,
+     "sat": 0,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0012,
+     "sat": 0,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_02.ddj",
+   "models": [
+    "tre_pine06"
+   ],
+   "placements": 2,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0005,
+     "sat": -0.0155,
+     "coverage": -0.0002
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0195,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_03.ddj",
+   "models": [
+    "tre_pine06"
+   ],
+   "placements": 2,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0003,
+     "sat": -0.0114,
+     "coverage": 0.0003
+    },
+    "2x": {
+     "luma": 0,
+     "sat": -0.0121,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine10_01.ddj",
+   "models": [
+    "tre_pine10"
+   ],
+   "placements": 73,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0001,
+     "sat": -0.0098,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0002,
+     "sat": -0.0042,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine10_02.ddj",
+   "models": [
+    "tre_pine10"
+   ],
+   "placements": 73,
+   "size": [
+    64,
+    128
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": -0.0078,
+     "sat": 0.0247,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0052,
+     "sat": 0.0211,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_leaf01.ddj",
+   "models": [
+    "tre_willow02"
+   ],
+   "placements": 11,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": -0.0061,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0001,
+     "sat": -0.0071,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_leaf02.ddj",
+   "models": [
+    "tre_willow02"
+   ],
+   "placements": 11,
+   "size": [
+    128,
+    512
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0017,
+     "sat": -0.0076,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0017,
+     "sat": -0.005,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_will01.ddj",
+   "models": [
+    "tre_willow02"
+   ],
+   "placements": 11,
+   "size": [
+    64,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 16,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0057,
+     "sat": -0.036,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0041,
+     "sat": -0.0269,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_wood_01.ddj",
+   "models": [
+    "tre_leaf01"
+   ],
+   "placements": 17,
+   "size": [
+    128,
+    256
+   ],
+   "class": "wood",
+   "alpha": "none",
+   "pad": 32,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0.0153,
+     "sat": -0.0201,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": 0.0102,
+     "sat": -0.0116,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  },
+  {
+   "key": "prim/mtrl/nature/oasis/tarim/oas_tarim_dvweed.ddj",
+   "models": [
+    "oas_tarim_dvweed_02"
+   ],
+   "placements": 7,
+   "size": [
+    256,
+    256
+   ],
+   "class": "foliage",
+   "alpha": "cutout",
+   "pad": 0,
+   "backend": "realesrgan-ncnn-vulkan",
+   "drift": {
+    "1x": {
+     "luma": 0,
+     "sat": 0.0021,
+     "coverage": 0
+    },
+    "2x": {
+     "luma": -0.0014,
+     "sat": 0.0011,
+     "coverage": 0
+    }
+   },
+   "miss": null
+  }
+ ],
+ "species": [
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bamboo04_leaf.ddj",
+   "species": "bamboo04"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_barley_leaf.ddj",
+   "species": "barley"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree03.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree04.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree05.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree08.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree06.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree06.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree07.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree07.ddj",
+   "species": "bigleaf"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad01_leaf.ddj",
+   "species": "broad01"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf01.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf01.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf02.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf02.ddj",
+   "species": "broad02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark.ddj",
+   "species": "deadwood_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark_dunhuang.ddj",
+   "species": "deadwood_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark.ddj",
+   "species": "deadwood_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf.ddj",
+   "species": "deadwood_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark_dunhuang.ddj",
+   "species": "deadwood_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf_dunhuang.ddj",
+   "species": "deadwood_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf.ddj",
+   "species": "dh_brush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf_bare.ddj",
+   "species": "dh_brush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf.ddj",
+   "species": "dh_hotree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf_bare.ddj",
+   "species": "dh_hotree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_poplar_leaf.ddj",
+   "species": "dh_poplar"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf.ddj",
+   "species": "dh_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf_tree05.ddj",
+   "species": "dh_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf.ddj",
+   "species": "dh_twig"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf_twig01.ddj",
+   "species": "dh_twig"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf.ddj",
+   "species": "flower_bush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom.ddj",
+   "species": "flower_bush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf_flower05.ddj",
+   "species": "flower_bush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom_flower05.ddj",
+   "species": "flower_bush"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_head.ddj",
+   "species": "flower_w"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_rosette.ddj",
+   "species": "flower_w"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_stem.ddj",
+   "species": "flower_w"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_head.ddj",
+   "species": "flower_y"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_rosette.ddj",
+   "species": "flower_y"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_stem.ddj",
+   "species": "flower_y"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01big.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_blossom.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark_blossom.ddj",
+   "species": "ginkgo"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf.ddj",
+   "species": "grave_grass"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf_grass03.ddj",
+   "species": "grave_grass"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark.ddj",
+   "species": "grave_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf.ddj",
+   "species": "grave_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf_grave05.ddj",
+   "species": "grave_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark_grave05.ddj",
+   "species": "grave_tree"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf.ddj",
+   "species": "maple03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_green2.ddj",
+   "species": "maple03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_middle.ddj",
+   "species": "maple03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_red.ddj",
+   "species": "maple03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine09.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine05.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine05.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine06.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine06.ddj",
+   "species": "pine08"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine10_leaf.ddj",
+   "species": "pine10"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf.ddj",
+   "species": "pine_small"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine04.ddj",
+   "species": "pine_small"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine01.ddj",
+   "species": "pine_small"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine02.ddj",
+   "species": "pine_small"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_reeds_leaf.ddj",
+   "species": "reeds"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ricestraw_leaf.ddj",
+   "species": "ricestraw"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf.ddj",
+   "species": "shrub02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry02_1.ddj",
+   "species": "shrub02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry03.ddj",
+   "species": "shrub02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry04.ddj",
+   "species": "shrub02"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark.ddj",
+   "species": "swamp_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf.ddj",
+   "species": "swamp_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf_swamp.ddj",
+   "species": "swamp_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark_swamp.ddj",
+   "species": "swamp_a"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark.ddj",
+   "species": "swamp_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf.ddj",
+   "species": "swamp_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf_swamp02.ddj",
+   "species": "swamp_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark_swamp02.ddj",
+   "species": "swamp_b"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed04_leaf.ddj",
+   "species": "weed04"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf.ddj",
+   "species": "weed10"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf_tarim.ddj",
+   "species": "weed10"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf.ddj",
+   "species": "weed_mid"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf_weed06_1.ddj",
+   "species": "weed_mid"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf.ddj",
+   "species": "weed_tall"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf_weed09_2.ddj",
+   "species": "weed_tall"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow02.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow02.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow02.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow01.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow01.ddj",
+   "species": "willow03"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow01.ddj",
+   "species": "willow03"
+  }
+ ],
+ "encoded": [
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_btree.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      64,
+      512
+     ],
+     "bytes": 13262,
+     "luma": -0.0133,
+     "sat": 0.0393,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      128,
+      1024
+     ],
+     "bytes": 46462,
+     "luma": -0.0107,
+     "sat": 0.0275,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_stree.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 6694,
+     "luma": -0.006,
+     "sat": 0.0122,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 22382,
+     "luma": -0.0066,
+     "sat": 0.0012,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_treea.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 5742,
+     "luma": 0.0024,
+     "sat": 0.0332,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 15602,
+     "luma": 0.0014,
+     "sat": 0.015,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_bridge_treef.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25350,
+     "luma": 0.0027,
+     "sat": 0.0217,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 73646,
+     "luma": 0.0024,
+     "sat": 0.0042,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 28582,
+     "luma": -0.0117,
+     "sat": 0.035,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 100986,
+     "luma": -0.009,
+     "sat": 0.023,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree_bran.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7870,
+     "luma": 0.0016,
+     "sat": 0.0341,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17086,
+     "luma": 0.0011,
+     "sat": 0.0174,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/bldg/china/greenfield/cj_inn_oldtree.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 33374,
+     "luma": 0.0062,
+     "sat": 0.029,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 118872,
+     "luma": 0.0055,
+     "sat": 0.0142,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/reed/w_cd_reeds.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 11104,
+     "luma": 0.0022,
+     "sat": -0.0006,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 23580,
+     "luma": 0.0014,
+     "sat": -0.0013,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_gra_01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 5938,
+     "luma": 0.0025,
+     "sat": 0.0401,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17484,
+     "luma": 0.0017,
+     "sat": 0.0174,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8720,
+     "luma": 0.0039,
+     "sat": 0.0179,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 26692,
+     "luma": 0.005,
+     "sat": 0.0087,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_02.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 9438,
+     "luma": 0.002,
+     "sat": 0.0377,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 31710,
+     "luma": 0.0021,
+     "sat": 0.024,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_03.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7870,
+     "luma": 0.0065,
+     "sat": -0.0042,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 24336,
+     "luma": 0.0071,
+     "sat": -0.0082,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_04.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8426,
+     "luma": 0.0007,
+     "sat": 0.0039,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 30020,
+     "luma": 0.0009,
+     "sat": -0.0049,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_05.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7272,
+     "luma": 0,
+     "sat": 0.0002,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22904,
+     "luma": 0.0006,
+     "sat": -0.0006,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7512,
+     "luma": 0.006,
+     "sat": -0.0095,
+     "coverage": 0.0001
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 18716,
+     "luma": 0.0062,
+     "sat": -0.0078,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_al02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9076,
+     "luma": 0.0008,
+     "sat": 0.0393,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 20924,
+     "luma": 0.0011,
+     "sat": 0.024,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_hotree_leaf01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16158,
+     "luma": 0.0009,
+     "sat": 0.0099,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37922,
+     "luma": 0.0007,
+     "sat": 0.001,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_lea_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9952,
+     "luma": -0.0008,
+     "sat": 0.0648,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 29012,
+     "luma": -0.0019,
+     "sat": 0.0383,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.5%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 5850,
+     "luma": 0.0021,
+     "sat": 0.034,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17576,
+     "luma": 0.0016,
+     "sat": 0.0143,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 11296,
+     "luma": 0.0054,
+     "sat": 0.0573,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 32614,
+     "luma": 0.0026,
+     "sat": 0.0121,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 5.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_tree02_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 20094,
+     "luma": 0.0079,
+     "sat": 0.0662,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 76836,
+     "luma": 0.0041,
+     "sat": 0.0313,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.6%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 20116,
+     "luma": -0.0005,
+     "sat": 0.0801,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 76544,
+     "luma": 0.0039,
+     "sat": 0.0323,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 8.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree/w_cd_wood_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9580,
+     "luma": 0.0047,
+     "sat": 0.0601,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 24926,
+     "luma": 0.0011,
+     "sat": 0.0069,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13794,
+     "luma": -0.0009,
+     "sat": 0.0126,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 49468,
+     "luma": 0.0007,
+     "sat": 0.0003,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16056,
+     "luma": 0.0009,
+     "sat": 0.0074,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 38266,
+     "luma": 0.0021,
+     "sat": 0.0051,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_brhwood01_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9648,
+     "luma": 0.0013,
+     "sat": 0.019,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 22388,
+     "luma": 0.0004,
+     "sat": 0.0118,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_gra_01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 5938,
+     "luma": 0.0025,
+     "sat": 0.0401,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17484,
+     "luma": 0.0017,
+     "sat": 0.0174,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig01_tree03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 6236,
+     "luma": 0.0014,
+     "sat": 0.0737,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 15416,
+     "luma": 0.0006,
+     "sat": 0.0342,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 7.4%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_twig02_tree03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9580,
+     "luma": 0.0047,
+     "sat": 0.0601,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 24926,
+     "luma": 0.0011,
+     "sat": 0.0069,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree2/w_cd_wood_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 20116,
+     "luma": -0.0005,
+     "sat": 0.0801,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 76544,
+     "luma": 0.0039,
+     "sat": 0.0323,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 8.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13794,
+     "luma": -0.0009,
+     "sat": 0.0126,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 49468,
+     "luma": 0.0007,
+     "sat": 0.0003,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15956,
+     "luma": 0.0009,
+     "sat": 0.0073,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37990,
+     "luma": 0.0031,
+     "sat": 0.0046,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_brhwood01_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9648,
+     "luma": 0.0013,
+     "sat": 0.019,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 22388,
+     "luma": 0.0004,
+     "sat": 0.0118,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_deadtree_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 21946,
+     "luma": 0.0006,
+     "sat": 0.0254,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 71368,
+     "luma": 0.001,
+     "sat": 0.0149,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/china/dunhuang/tree3/w_cd_stump01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25712,
+     "luma": 0.001,
+     "sat": 0.019,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 85298,
+     "luma": 0.0014,
+     "sat": 0.0102,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/cj_ricestraw.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 16794,
+     "luma": -0.0123,
+     "sat": 0.0113,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 58080,
+     "luma": -0.0111,
+     "sat": 0.009,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/flw_g01_w.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 10334,
+     "luma": 0.0018,
+     "sat": 0.03,
+     "coverage": -0.0001
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 27760,
+     "luma": 0.001,
+     "sat": 0.0406,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/flw_g01_y.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 8252,
+     "luma": 0.0014,
+     "sat": 0.0249,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 19414,
+     "luma": 0.0009,
+     "sat": 0.013,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/grs_flower05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7236,
+     "luma": 0.0007,
+     "sat": 0.0097,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 16636,
+     "luma": 0.001,
+     "sat": 0.0019,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/flower/grs_weed07.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7456,
+     "luma": 0.001,
+     "sat": 0.0213,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17636,
+     "luma": 0.0014,
+     "sat": 0.0135,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/c_pondflower.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 2190,
+     "luma": 0.0006,
+     "sat": -0.0006,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 5194,
+     "luma": 0.001,
+     "sat": 0.002,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_barley_01.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      512,
+      256
+     ],
+     "bytes": 23070,
+     "luma": 0.0023,
+     "sat": 0.0067,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      1024,
+      512
+     ],
+     "bytes": 52386,
+     "luma": 0.0012,
+     "sat": 0.0027,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_graveyard_grass01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7634,
+     "luma": 0.0013,
+     "sat": 0.0313,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17318,
+     "luma": -0.0002,
+     "sat": 0.0195,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/cj_graveyard_grass03.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 2946,
+     "luma": 0.0017,
+     "sat": 0.0261,
+     "coverage": 0.0001
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7772,
+     "luma": 0.0012,
+     "sat": 0.0014,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_flower05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7546,
+     "luma": 0.0009,
+     "sat": 0.0105,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17482,
+     "luma": 0.0006,
+     "sat": 0.0064,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_water.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 19466,
+     "luma": 0.0011,
+     "sat": 0.0272,
+     "coverage": 0.0001
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 47488,
+     "luma": 0.0012,
+     "sat": 0.0148,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17028,
+     "luma": 0.0029,
+     "sat": 0.0048,
+     "coverage": -0.0002
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 47068,
+     "luma": 0.0021,
+     "sat": -0.0007,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed06_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 10220,
+     "luma": -0.0001,
+     "sat": 0.0028,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 22060,
+     "luma": 0.0003,
+     "sat": 0.002,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed06.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 10078,
+     "luma": 0.0006,
+     "sat": -0.0005,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 21638,
+     "luma": 0.0015,
+     "sat": 0.0025,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/grass/grs_weed07.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7474,
+     "luma": 0.0015,
+     "sat": 0.0124,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17276,
+     "luma": 0.001,
+     "sat": 0.0062,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_dead_tre01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22158,
+     "luma": 0.0008,
+     "sat": 0.0061,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 77238,
+     "luma": 0.0012,
+     "sat": -0.0029,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_gagi01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 3822,
+     "luma": -0.0178,
+     "sat": 0.0652,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 12424,
+     "luma": -0.0172,
+     "sat": 0.0492,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 6.5%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple_pin.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8886,
+     "luma": 0.0002,
+     "sat": 0.1558,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23446,
+     "luma": 0.0003,
+     "sat": 0.0266,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 15.6%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_green.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16876,
+     "luma": 0.0017,
+     "sat": 0.0034,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 39136,
+     "luma": 0.0009,
+     "sat": -0.0013,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_green2.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15590,
+     "luma": 0.0017,
+     "sat": 0.0031,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 36576,
+     "luma": 0.0013,
+     "sat": -0.0036,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_maple01_leaf_middle.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17518,
+     "luma": 0.0009,
+     "sat": 0.0133,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 42988,
+     "luma": 0.0011,
+     "sat": 0.0053,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine01_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 26898,
+     "luma": -0.0021,
+     "sat": 0.0751,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 79280,
+     "luma": -0.0053,
+     "sat": 0.0597,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 7.5%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine01_pin.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8000,
+     "luma": 0.0151,
+     "sat": 0.0171,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25214,
+     "luma": 0.0142,
+     "sat": 0.0027,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine02_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 26000,
+     "luma": -0.0126,
+     "sat": 0.0499,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 75066,
+     "luma": -0.0144,
+     "sat": 0.0532,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 512: saturation 5.3%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23974,
+     "luma": 0.0034,
+     "sat": 0.0393,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 66308,
+     "luma": 0.0017,
+     "sat": 0.0261,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_pine04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25578,
+     "luma": 0.002,
+     "sat": 0.0463,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 70474,
+     "luma": 0.0013,
+     "sat": 0.0296,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_tree_bran.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      64,
+      512
+     ],
+     "bytes": 17558,
+     "luma": 0.0037,
+     "sat": 0.1124,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      128,
+      1024
+     ],
+     "bytes": 58398,
+     "luma": 0.0012,
+     "sat": 0.0628,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 512: saturation 11.2%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_tree01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 21610,
+     "luma": 0.0007,
+     "sat": 0.024,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 59896,
+     "luma": -0.0002,
+     "sat": 0.0141,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_willow01_brn.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 9972,
+     "luma": -0.0084,
+     "sat": 0.0708,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 36280,
+     "luma": -0.0072,
+     "sat": 0.0278,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 7.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tre_willow01_leaf1.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 22904,
+     "luma": 0.0011,
+     "sat": 0.0049,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 51330,
+     "luma": 0.0009,
+     "sat": -0.0015,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16116,
+     "luma": 0.0019,
+     "sat": 0.0278,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40852,
+     "luma": 0.0012,
+     "sat": 0.0082,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 12610,
+     "luma": 0.0018,
+     "sat": 0.0297,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 37048,
+     "luma": 0.0012,
+     "sat": 0.0023,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_hhm_tree_04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 14372,
+     "luma": 0.0018,
+     "sat": 0.0508,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 42476,
+     "luma": 0.0027,
+     "sat": 0.0196,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 5.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16286,
+     "luma": 0.0011,
+     "sat": 0.0385,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40054,
+     "luma": 0.0016,
+     "sat": 0.0146,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13534,
+     "luma": -0.0001,
+     "sat": 0.0376,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 41854,
+     "luma": -0.0002,
+     "sat": 0.0148,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 15250,
+     "luma": 0.0055,
+     "sat": 0.0477,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 48966,
+     "luma": 0.0059,
+     "sat": 0.0101,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_05.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 3624,
+     "luma": 0.0019,
+     "sat": 0.0422,
+     "coverage": -0.0001
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 7976,
+     "luma": -0.0005,
+     "sat": 0.0204,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_06_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16222,
+     "luma": 0.0023,
+     "sat": 0.0568,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 42750,
+     "luma": 0.0012,
+     "sat": 0.0275,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 5.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree_06_02.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      32,
+      128
+     ],
+     "bytes": 1204,
+     "luma": -0.0056,
+     "sat": 0.0256,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 3928,
+     "luma": -0.0033,
+     "sat": 0.0283,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14632,
+     "luma": 0.0012,
+     "sat": 0.0631,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 35578,
+     "luma": 0.0014,
+     "sat": 0.0278,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.3%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 12648,
+     "luma": 0.0012,
+     "sat": 0.0485,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 29398,
+     "luma": 0.0014,
+     "sat": 0.0205,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/c_swamp_tree02_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 16510,
+     "luma": 0.0011,
+     "sat": 0.1068,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 58996,
+     "luma": -0.0009,
+     "sat": 0.062,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 10.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree01.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      64,
+      512
+     ],
+     "bytes": 14694,
+     "luma": -0.0109,
+     "sat": 0.0369,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      128,
+      1024
+     ],
+     "bytes": 46598,
+     "luma": -0.0101,
+     "sat": 0.0144,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 12058,
+     "luma": 0.0019,
+     "sat": 0.0107,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 26666,
+     "luma": 0.0018,
+     "sat": 0.0088,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree05.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 32990,
+     "luma": -0.0057,
+     "sat": 0.0277,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 120632,
+     "luma": -0.0071,
+     "sat": 0.0108,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/cj_graveyard_tree06.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      512,
+      256
+     ],
+     "bytes": 30836,
+     "luma": 0.0009,
+     "sat": 0.0214,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      1024,
+      512
+     ],
+     "bytes": 91126,
+     "luma": 0.0029,
+     "sat": 0.0116,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/leaf04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16942,
+     "luma": 0.001,
+     "sat": 0.006,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40660,
+     "luma": 0.0009,
+     "sat": -0.0003,
+     "coverage": -0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree03_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20904,
+     "luma": 0.0015,
+     "sat": 0.0042,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 53142,
+     "luma": 0.0014,
+     "sat": 0.0017,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree04_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20778,
+     "luma": 0.0053,
+     "sat": -0.018,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 54548,
+     "luma": 0.0031,
+     "sat": -0.0107,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree05_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17214,
+     "luma": 0.0177,
+     "sat": 0.0006,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40000,
+     "luma": 0.0064,
+     "sat": 0.0042,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree06_01.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      512,
+      256
+     ],
+     "bytes": 32322,
+     "luma": 0.0017,
+     "sat": 0.0046,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      1024,
+      512
+     ],
+     "bytes": 95240,
+     "luma": 0.0001,
+     "sat": -0.0034,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree06_02.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 30956,
+     "luma": -0.0036,
+     "sat": 0.0361,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 115790,
+     "luma": -0.0082,
+     "sat": 0.0347,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree07_01.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      512,
+      256
+     ],
+     "bytes": 26890,
+     "luma": 0.0011,
+     "sat": 0.0006,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      1024,
+      512
+     ],
+     "bytes": 64586,
+     "luma": 0.001,
+     "sat": 0.0005,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/new-maple/tre_tree08_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 13950,
+     "luma": 0.0005,
+     "sat": 0.02,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 31786,
+     "luma": 0.0012,
+     "sat": 0.0007,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_01.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7826,
+     "luma": -0.0102,
+     "sat": 0.0515,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25946,
+     "luma": -0.0075,
+     "sat": 0.0264,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 5.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_02.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 6032,
+     "luma": 0.0025,
+     "sat": 0.0302,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20860,
+     "luma": 0.0017,
+     "sat": 0.0125,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_03.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8158,
+     "luma": 0.0011,
+     "sat": 0.0351,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 29762,
+     "luma": 0.0019,
+     "sat": 0.0301,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13582,
+     "luma": -0.0058,
+     "sat": 0.0253,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 46916,
+     "luma": -0.0047,
+     "sat": 0.0041,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9658,
+     "luma": 0.0015,
+     "sat": 0.0247,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 24958,
+     "luma": 0.0011,
+     "sat": 0.0073,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry02_1.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22894,
+     "luma": 0.0007,
+     "sat": 0.0221,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 66762,
+     "luma": 0.0009,
+     "sat": 0.0063,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20886,
+     "luma": 0.0029,
+     "sat": 0.0308,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 58056,
+     "luma": 0.0026,
+     "sat": 0.0133,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23652,
+     "luma": 0.0014,
+     "sat": 0.0438,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 70278,
+     "luma": 0.0011,
+     "sat": -0.0018,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_dry04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 18142,
+     "luma": 0.0022,
+     "sat": 0.0233,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 48568,
+     "luma": 0.002,
+     "sat": 0.0088,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_frie_body.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7890,
+     "luma": 0.0136,
+     "sat": 0.0304,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25292,
+     "luma": 0.0113,
+     "sat": 0.0015,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_frie_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17748,
+     "luma": 0.0007,
+     "sat": -0.0446,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 42006,
+     "luma": 0.0006,
+     "sat": -0.0101,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23748,
+     "luma": 0.0012,
+     "sat": -0.0017,
+     "coverage": 0.0002
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 59484,
+     "luma": 0.0011,
+     "sat": -0.0108,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22390,
+     "luma": 0.0006,
+     "sat": 0.0095,
+     "coverage": 0.0002
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 56338,
+     "luma": 0,
+     "sat": 0.0043,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15746,
+     "luma": 0.0015,
+     "sat": 0.0132,
+     "coverage": -0.0001
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37376,
+     "luma": 0.0013,
+     "sat": 0.0037,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood00.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 18260,
+     "luma": -0.0009,
+     "sat": 0.0813,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 69158,
+     "luma": 0.0003,
+     "sat": 0.0523,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 8.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 18878,
+     "luma": 0.0031,
+     "sat": 0.1168,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 71236,
+     "luma": 0.0016,
+     "sat": 0.072,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 11.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_lea02_wood02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 19546,
+     "luma": 0.0048,
+     "sat": 0.1221,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 72572,
+     "luma": 0.005,
+     "sat": 0.0814,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 12.2%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_leaf_01_1.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14686,
+     "luma": 0.0017,
+     "sat": 0.0231,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 34992,
+     "luma": 0.0012,
+     "sat": 0.0111,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_leaf_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22796,
+     "luma": 0.0021,
+     "sat": 0.005,
+     "coverage": 0.0003
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 55708,
+     "luma": 0.001,
+     "sat": -0.0073,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple_leaf_red.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16120,
+     "luma": 0.001,
+     "sat": 0.011,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37432,
+     "luma": 0.0007,
+     "sat": 0.0084,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple_pin.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 8870,
+     "luma": 0.0003,
+     "sat": 0.1576,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23044,
+     "luma": 0.0001,
+     "sat": 0.0284,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 15.8%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_maple01_leaf_green.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16876,
+     "luma": 0.0017,
+     "sat": 0.0034,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 39136,
+     "luma": 0.0009,
+     "sat": -0.0013,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 26818,
+     "luma": 0.001,
+     "sat": 0.0481,
+     "coverage": -0.0001
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 89958,
+     "luma": 0.0015,
+     "sat": 0.0221,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 14404,
+     "luma": 0.0092,
+     "sat": 0.0269,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 45044,
+     "luma": 0.0077,
+     "sat": 0.0079,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine05_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 12502,
+     "luma": 0.001,
+     "sat": 0.0212,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 41222,
+     "luma": 0.0013,
+     "sat": 0.0089,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 19232,
+     "luma": 0,
+     "sat": 0.0983,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 73826,
+     "luma": -0.0001,
+     "sat": 0.0551,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 9.8%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23994,
+     "luma": 0.0021,
+     "sat": 0.0161,
+     "coverage": -0.0002
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 68280,
+     "luma": 0.001,
+     "sat": -0.0013,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine06_03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 21886,
+     "luma": 0.0021,
+     "sat": 0.0125,
+     "coverage": 0.0003
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 60934,
+     "luma": 0.0011,
+     "sat": 0.0014,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine10_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14510,
+     "luma": 0.0011,
+     "sat": 0.0159,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 35088,
+     "luma": 0.001,
+     "sat": 0.009,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_pine10_02.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      64,
+      128
+     ],
+     "bytes": 3568,
+     "luma": -0.0072,
+     "sat": 0.0467,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 11758,
+     "luma": -0.0042,
+     "sat": 0.0286,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_leaf01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16042,
+     "luma": 0.0017,
+     "sat": 0.0109,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37240,
+     "luma": 0.0009,
+     "sat": 0.0017,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_leaf02.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 15148,
+     "luma": 0.0032,
+     "sat": 0.0074,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 32288,
+     "luma": 0.0025,
+     "sat": -0.0006,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_willow02_will01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 9528,
+     "luma": 0.0055,
+     "sat": 0.0914,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 31882,
+     "luma": 0.0052,
+     "sat": 0.0091,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 9.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_wood_01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 16758,
+     "luma": 0.0162,
+     "sat": 0.0794,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 62938,
+     "luma": 0.0113,
+     "sat": 0.0425,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 7.9%"
+  },
+  {
+   "key": "prim/mtrl/nature/oasis/tarim/oas_tarim_dvweed.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 6992,
+     "luma": 0.0009,
+     "sat": 0.0179,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 17116,
+     "luma": -0.0007,
+     "sat": 0.0086,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bamboo04_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14670,
+     "luma": 0.001,
+     "sat": 0.0154,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 33940,
+     "luma": 0.0023,
+     "sat": 0.0104,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_barley_leaf.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      512,
+      133
+     ],
+     "bytes": 10108,
+     "luma": 0.001,
+     "sat": 0.0066,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      1024,
+      266
+     ],
+     "bytes": 22226,
+     "luma": -0.0009,
+     "sat": 0.0047,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13628,
+     "luma": 0.0011,
+     "sat": 0.0287,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 46660,
+     "luma": 0.001,
+     "sat": 0.0111,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 11804,
+     "luma": 0.001,
+     "sat": 0.0307,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 26222,
+     "luma": 0.0011,
+     "sat": 0.0163,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20904,
+     "luma": 0.002,
+     "sat": 0.0046,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 53142,
+     "luma": 0.002,
+     "sat": 0.0021,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20778,
+     "luma": 0.0051,
+     "sat": -0.0161,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 54548,
+     "luma": 0.0029,
+     "sat": -0.0088,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17214,
+     "luma": 0.0158,
+     "sat": -0.011,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40000,
+     "luma": 0.0045,
+     "sat": -0.0074,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree08.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 13950,
+     "luma": 0.0005,
+     "sat": 0.0392,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 31786,
+     "luma": 0.0012,
+     "sat": 0.0195,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree06.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17420,
+     "luma": 0.0019,
+     "sat": 0.0167,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 49478,
+     "luma": 0.0009,
+     "sat": 0.0083,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree06.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 15768,
+     "luma": 0.001,
+     "sat": 0.0437,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 60838,
+     "luma": -0.0036,
+     "sat": 0.0541,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 512: saturation 5.4%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_leaf_tree07.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14704,
+     "luma": 0.0008,
+     "sat": 0.0042,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 34184,
+     "luma": 0.001,
+     "sat": 0.0046,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_bigleaf_bark_tree07.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 15768,
+     "luma": 0.001,
+     "sat": 0.0437,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 60838,
+     "luma": -0.0036,
+     "sat": 0.0541,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 512: saturation 5.4%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad01_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 18358,
+     "luma": 0.0024,
+     "sat": 0.023,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 49476,
+     "luma": 0.0023,
+     "sat": 0.0139,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 12184,
+     "luma": 0.0013,
+     "sat": 0.0274,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 39870,
+     "luma": 0.0014,
+     "sat": 0.01,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 11270,
+     "luma": 0.0011,
+     "sat": 0.0346,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 25536,
+     "luma": 0.0041,
+     "sat": 0.0009,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14686,
+     "luma": 0.0014,
+     "sat": 0.0217,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 34992,
+     "luma": 0.0009,
+     "sat": 0.0097,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 16758,
+     "luma": 0.0009,
+     "sat": 0.1016,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 62938,
+     "luma": -0.0039,
+     "sat": 0.0638,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 10.2%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_leaf_leaf02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15746,
+     "luma": 0.0013,
+     "sat": 0.0153,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37376,
+     "luma": 0.0012,
+     "sat": 0.0058,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_broad02_bark_leaf02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 18878,
+     "luma": 0.0031,
+     "sat": 0.1168,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 71236,
+     "luma": 0.0015,
+     "sat": 0.072,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 11.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 7826,
+     "luma": 0.0014,
+     "sat": 0.0523,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 25946,
+     "luma": 0.0041,
+     "sat": 0.0272,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 5.2%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_a_bark_dunhuang.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      128,
+      128
+     ],
+     "bytes": 6008,
+     "luma": 0.0007,
+     "sat": 0.0253,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22090,
+     "luma": 0.0008,
+     "sat": 0.0216,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      115
+     ],
+     "bytes": 11250,
+     "luma": 0.0015,
+     "sat": 0.0261,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      230
+     ],
+     "bytes": 41664,
+     "luma": 0.0023,
+     "sat": 0.0166,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9658,
+     "luma": 0.0015,
+     "sat": 0.0248,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 24958,
+     "luma": 0.0011,
+     "sat": 0.0074,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_bark_dunhuang.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      115
+     ],
+     "bytes": 11614,
+     "luma": 0.0008,
+     "sat": 0.0104,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      230
+     ],
+     "bytes": 38974,
+     "luma": -0.0003,
+     "sat": 0.004,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_deadwood_b_leaf_dunhuang.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9658,
+     "luma": 0.0015,
+     "sat": 0.0248,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 24958,
+     "luma": 0.0011,
+     "sat": 0.0074,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15956,
+     "luma": 0.0009,
+     "sat": 0.0155,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37990,
+     "luma": 0.0031,
+     "sat": 0.0128,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_brush_leaf_bare.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9648,
+     "luma": 0.0013,
+     "sat": 0.0184,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 22388,
+     "luma": 0.0004,
+     "sat": 0.0113,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16878,
+     "luma": 0.0008,
+     "sat": 0.0176,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 39654,
+     "luma": 0.0005,
+     "sat": 0.0088,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_hotree_leaf_bare.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 9546,
+     "luma": 0.0004,
+     "sat": 0.0207,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 21854,
+     "luma": 0.0012,
+     "sat": 0.0062,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_poplar_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9166,
+     "luma": 0.0018,
+     "sat": 0.0607,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 26834,
+     "luma": 0.0007,
+     "sat": 0.0396,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 11296,
+     "luma": 0.0016,
+     "sat": 0.0573,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 32614,
+     "luma": -0.0013,
+     "sat": 0.0121,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 5.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_tree_leaf_tree05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9580,
+     "luma": 0.0017,
+     "sat": 0.06,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 24926,
+     "luma": -0.0019,
+     "sat": 0.0069,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 9580,
+     "luma": 0.0017,
+     "sat": 0.06,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 24926,
+     "luma": -0.0019,
+     "sat": 0.0069,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_dh_twig_leaf_twig01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 6236,
+     "luma": 0.0011,
+     "sat": 0.0773,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 15416,
+     "luma": 0.0003,
+     "sat": 0.0376,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 7.7%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5422,
+     "luma": 0.0025,
+     "sat": 0.0205,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 13362,
+     "luma": 0.0043,
+     "sat": 0.0096,
+     "coverage": -0.0003
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom.ddj",
+   "tiers": {
+    "41": {
+     "size": [
+      41,
+      41
+     ],
+     "bytes": 548,
+     "luma": -0.0002,
+     "sat": 0.036,
+     "coverage": 0
+    },
+    "82": {
+     "size": [
+      82,
+      82
+     ],
+     "bytes": 998,
+     "luma": -0.0103,
+     "sat": 0.0144,
+     "coverage": 0.0019
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_leaf_flower05.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5342,
+     "luma": 0.0016,
+     "sat": 0.0063,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 12168,
+     "luma": 0.0013,
+     "sat": -0.0027,
+     "coverage": -0.0004
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_bush_bloom_flower05.ddj",
+   "tiers": {
+    "41": {
+     "size": [
+      41,
+      41
+     ],
+     "bytes": 540,
+     "luma": -0.0002,
+     "sat": 0.0286,
+     "coverage": 0
+    },
+    "82": {
+     "size": [
+      82,
+      82
+     ],
+     "bytes": 968,
+     "luma": -0.0048,
+     "sat": 0.013,
+     "coverage": 0.0021
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_head.ddj",
+   "tiers": {
+    "116": {
+     "size": [
+      113,
+      116
+     ],
+     "bytes": 6172,
+     "luma": 0.001,
+     "sat": 0.0023,
+     "coverage": 0
+    },
+    "230": {
+     "size": [
+      225,
+      230
+     ],
+     "bytes": 16966,
+     "luma": -0.0032,
+     "sat": 0.0407,
+     "coverage": 0.0077
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_rosette.ddj",
+   "tiers": {
+    "117": {
+     "size": [
+      105,
+      117
+     ],
+     "bytes": 4220,
+     "luma": 0.0016,
+     "sat": 0.059,
+     "coverage": 0
+    },
+    "234": {
+     "size": [
+      208,
+      234
+     ],
+     "bytes": 16216,
+     "luma": 0.0139,
+     "sat": 0.0452,
+     "coverage": -0.0028
+    },
+    "236": {
+     "size": [
+      210,
+      236
+     ],
+     "bytes": 10578,
+     "luma": 0.0103,
+     "sat": 0.0434,
+     "coverage": -0.0029
+    }
+   },
+   "miss": null,
+   "satNote": "tier 117: saturation 5.9%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_w_stem.ddj",
+   "tiers": {
+    "110": {
+     "size": [
+      82,
+      110
+     ],
+     "bytes": 924,
+     "luma": -0.0018,
+     "sat": 0.0013,
+     "coverage": 0
+    },
+    "220": {
+     "size": [
+      163,
+      220
+     ],
+     "bytes": 1750,
+     "luma": 0.0135,
+     "sat": -0.0116,
+     "coverage": -0.0003
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_head.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      123,
+      128
+     ],
+     "bytes": 3412,
+     "luma": 0.0011,
+     "sat": -0.0018,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      246,
+      256
+     ],
+     "bytes": 7838,
+     "luma": 0.0002,
+     "sat": -0.001,
+     "coverage": -0.0007
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_rosette.ddj",
+   "tiers": {
+    "115": {
+     "size": [
+      110,
+      115
+     ],
+     "bytes": 4374,
+     "luma": 0.0022,
+     "sat": 0.0516,
+     "coverage": 0
+    },
+    "230": {
+     "size": [
+      220,
+      230
+     ],
+     "bytes": 10536,
+     "luma": 0.0062,
+     "sat": 0.0131,
+     "coverage": 0.0016
+    }
+   },
+   "miss": null,
+   "satNote": "tier 115: saturation 5.2%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_flower_y_stem.ddj",
+   "tiers": {
+    "110": {
+     "size": [
+      82,
+      110
+     ],
+     "bytes": 924,
+     "luma": -0.0018,
+     "sat": 0.0013,
+     "coverage": 0
+    },
+    "220": {
+     "size": [
+      163,
+      220
+     ],
+     "bytes": 1750,
+     "luma": 0.0135,
+     "sat": -0.0116,
+     "coverage": -0.0003
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 32190,
+     "luma": 0.0009,
+     "sat": 0.0462,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 113196,
+     "luma": 0.0008,
+     "sat": 0.009,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16938,
+     "luma": 0.0006,
+     "sat": 0.0189,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40274,
+     "luma": 0.0005,
+     "sat": 0.0046,
+     "coverage": -0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 18244,
+     "luma": 0.0006,
+     "sat": 0.0313,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 43076,
+     "luma": 0.0006,
+     "sat": 0.0158,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_bank01big.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16942,
+     "luma": 0.0011,
+     "sat": 0.0138,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40660,
+     "luma": 0.001,
+     "sat": 0.0075,
+     "coverage": -0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_leaf_blossom.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17748,
+     "luma": 0.0006,
+     "sat": -0.0446,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 42006,
+     "luma": 0.0004,
+     "sat": -0.01,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ginkgo_bark_blossom.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17548,
+     "luma": 0.0011,
+     "sat": 0.0148,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 51544,
+     "luma": -0.001,
+     "sat": 0.0092,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5914,
+     "luma": 0.0029,
+     "sat": 0.039,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 13430,
+     "luma": 0.0043,
+     "sat": 0.0196,
+     "coverage": 0.0006
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_grass_leaf_grass03.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 7770,
+     "luma": 0.0002,
+     "sat": 0.0223,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 20004,
+     "luma": -0.0031,
+     "sat": 0.0062,
+     "coverage": 0.0005
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      64,
+      512
+     ],
+     "bytes": 14694,
+     "luma": 0.0006,
+     "sat": 0.0353,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      128,
+      1024
+     ],
+     "bytes": 46598,
+     "luma": 0.0015,
+     "sat": 0.0128,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14052,
+     "luma": 0.0013,
+     "sat": 0.0067,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 31188,
+     "luma": 0.001,
+     "sat": 0.0053,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_leaf_grave05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 19074,
+     "luma": 0.0009,
+     "sat": 0.0235,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 53454,
+     "luma": 0.0037,
+     "sat": 0.013,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_grave_tree_bark_grave05.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      64,
+      512
+     ],
+     "bytes": 15424,
+     "luma": 0.0009,
+     "sat": 0.0228,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      128,
+      1024
+     ],
+     "bytes": 59742,
+     "luma": -0.0007,
+     "sat": 0.0207,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16876,
+     "luma": 0.0017,
+     "sat": 0.0081,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 39136,
+     "luma": 0.0008,
+     "sat": 0.0034,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_green2.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15590,
+     "luma": 0.0017,
+     "sat": 0.0121,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 36576,
+     "luma": 0.0012,
+     "sat": 0.0054,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_middle.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17518,
+     "luma": 0.0009,
+     "sat": 0.0099,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 42988,
+     "luma": 0.0011,
+     "sat": 0.002,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_maple03_leaf_red.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16120,
+     "luma": 0.0011,
+     "sat": 0.0055,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37432,
+     "luma": 0.0008,
+     "sat": 0.0029,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 13690,
+     "luma": 0.0013,
+     "sat": 0.0285,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 46532,
+     "luma": 0.0013,
+     "sat": 0.0119,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15086,
+     "luma": 0.0022,
+     "sat": 0.0266,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 35832,
+     "luma": 0.0017,
+     "sat": 0.0097,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine09.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 14772,
+     "luma": 0.0025,
+     "sat": 0.012,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 33026,
+     "luma": 0.0018,
+     "sat": 0.0047,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 26818,
+     "luma": 0.0009,
+     "sat": 0.0562,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 89958,
+     "luma": 0.0014,
+     "sat": 0.03,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 5.6%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine05.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 14404,
+     "luma": 0.0009,
+     "sat": 0.0445,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 45044,
+     "luma": -0.0007,
+     "sat": 0.0252,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_leaf_pine06.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23994,
+     "luma": 0.0016,
+     "sat": 0.0322,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 68280,
+     "luma": 0.0005,
+     "sat": 0.0145,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine08_bark_pine06.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 18260,
+     "luma": 0.0013,
+     "sat": 0.0813,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 69158,
+     "luma": 0.0025,
+     "sat": 0.0523,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 8.1%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine10_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15818,
+     "luma": 0.0014,
+     "sat": 0.0258,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37174,
+     "luma": 0.0009,
+     "sat": 0.0181,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      223
+     ],
+     "bytes": 20998,
+     "luma": 0.0025,
+     "sat": 0.0285,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      445
+     ],
+     "bytes": 58232,
+     "luma": -0.0051,
+     "sat": 0.0189,
+     "coverage": -0.0014
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      223
+     ],
+     "bytes": 22386,
+     "luma": 0.0022,
+     "sat": 0.0366,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      445
+     ],
+     "bytes": 62726,
+     "luma": -0.0046,
+     "sat": 0.0237,
+     "coverage": -0.0014
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      223
+     ],
+     "bytes": 38542,
+     "luma": 0,
+     "sat": 0.0271,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      445
+     ],
+     "bytes": 100990,
+     "luma": -0.007,
+     "sat": 0.0249,
+     "coverage": 0.0026
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_pine_small_leaf_pine02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      223
+     ],
+     "bytes": 38114,
+     "luma": -0.0002,
+     "sat": 0.0262,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      445
+     ],
+     "bytes": 100034,
+     "luma": -0.0057,
+     "sat": 0.0577,
+     "coverage": -0.0042
+    }
+   },
+   "miss": null,
+   "satNote": "tier 512: saturation 5.8%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_reeds_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 11552,
+     "luma": 0.0002,
+     "sat": 0.0012,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 24988,
+     "luma": -0.0002,
+     "sat": 0.0009,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_ricestraw_leaf.ddj",
+   "tiers": {
+    "154": {
+     "size": [
+      128,
+      154
+     ],
+     "bytes": 10466,
+     "luma": 0.0015,
+     "sat": 0.0079,
+     "coverage": 0
+    },
+    "307": {
+     "size": [
+      256,
+      307
+     ],
+     "bytes": 32420,
+     "luma": 0.0079,
+     "sat": -0.0038,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 20886,
+     "luma": 0.0026,
+     "sat": 0.0374,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 58056,
+     "luma": 0.0023,
+     "sat": 0.0198,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry02_1.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 22894,
+     "luma": 0.0007,
+     "sat": 0.0231,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 66762,
+     "luma": 0.0009,
+     "sat": 0.0074,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry03.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 23652,
+     "luma": 0.0016,
+     "sat": 0.0438,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 70278,
+     "luma": 0.0013,
+     "sat": -0.0018,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_shrub02_leaf_dry04.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 18142,
+     "luma": 0.0021,
+     "sat": 0.028,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 48568,
+     "luma": 0.0019,
+     "sat": 0.0134,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 14372,
+     "luma": 0.0012,
+     "sat": 0.0356,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 42476,
+     "luma": 0.0021,
+     "sat": 0.0049,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16116,
+     "luma": 0.0018,
+     "sat": 0.0356,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40852,
+     "luma": 0.001,
+     "sat": 0.016,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_leaf_swamp.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16286,
+     "luma": 0.0017,
+     "sat": 0.0385,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 40054,
+     "luma": 0.0021,
+     "sat": 0.0146,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_a_bark_swamp.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 15250,
+     "luma": 0.0011,
+     "sat": 0.0473,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 48966,
+     "luma": 0.0015,
+     "sat": 0.0097,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      32,
+      128
+     ],
+     "bytes": 1204,
+     "luma": 0.0004,
+     "sat": 0.0192,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 3928,
+     "luma": 0.0027,
+     "sat": 0.0218,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 17516,
+     "luma": 0.0015,
+     "sat": 0.0661,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 46618,
+     "luma": 0.0011,
+     "sat": 0.0379,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 6.6%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_leaf_swamp02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15812,
+     "luma": 0.0004,
+     "sat": 0.0488,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 39518,
+     "luma": 0.0013,
+     "sat": 0.0106,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_swamp_b_bark_swamp02.ddj",
+   "tiers": {
+    "128": {
+     "size": [
+      32,
+      128
+     ],
+     "bytes": 2066,
+     "luma": 0.0024,
+     "sat": 0.0604,
+     "coverage": 0
+    },
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 7672,
+     "luma": -0.0011,
+     "sat": 0.0632,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 128: saturation 6.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed04_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      180,
+      256
+     ],
+     "bytes": 15978,
+     "luma": 0.0027,
+     "sat": 0.0126,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      358,
+      512
+     ],
+     "bytes": 43142,
+     "luma": 0.0028,
+     "sat": 0.0076,
+     "coverage": 0.0013
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5934,
+     "luma": 0.0017,
+     "sat": 0.0176,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 13458,
+     "luma": 0.0021,
+     "sat": 0.0075,
+     "coverage": -0.0003
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed10_leaf_tarim.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 13536,
+     "luma": 0.0019,
+     "sat": 0.0164,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 35240,
+     "luma": -0.0077,
+     "sat": 0.0066,
+     "coverage": 0.0012
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 5948,
+     "luma": 0.0001,
+     "sat": 0.0034,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 12758,
+     "luma": 0.0004,
+     "sat": 0.0062,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_mid_leaf_weed06_1.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      128,
+      256
+     ],
+     "bytes": 6146,
+     "luma": 0.0008,
+     "sat": 0.0053,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      256,
+      512
+     ],
+     "bytes": 12732,
+     "luma": 0.0007,
+     "sat": 0.0059,
+     "coverage": 0.0002
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5934,
+     "luma": 0.0017,
+     "sat": 0.0176,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 13458,
+     "luma": 0.0021,
+     "sat": 0.0075,
+     "coverage": -0.0003
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_weed_tall_leaf_weed09_2.ddj",
+   "tiers": {
+    "169": {
+     "size": [
+      169,
+      128
+     ],
+     "bytes": 5720,
+     "luma": 0.0006,
+     "sat": 0.0079,
+     "coverage": 0
+    },
+    "338": {
+     "size": [
+      338,
+      256
+     ],
+     "bytes": 13318,
+     "luma": 0.0013,
+     "sat": 0.0032,
+     "coverage": -0.0004
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 6862,
+     "luma": 0.0016,
+     "sat": 0.0476,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 23028,
+     "luma": 0.0013,
+     "sat": 0.0079,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 15176,
+     "luma": 0.0026,
+     "sat": 0.0188,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 35384,
+     "luma": 0.0014,
+     "sat": 0.0068,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 14678,
+     "luma": 0.0013,
+     "sat": 0.0202,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 30962,
+     "luma": 0.0007,
+     "sat": 0.0075,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 9492,
+     "luma": 0.0004,
+     "sat": 0.1258,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 31958,
+     "luma": 0.0007,
+     "sat": 0.0442,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 12.6%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow02.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 16042,
+     "luma": 0.0017,
+     "sat": 0.0171,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 37240,
+     "luma": 0.0009,
+     "sat": 0.0078,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow02.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 15442,
+     "luma": 0.0012,
+     "sat": 0.0155,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 32478,
+     "luma": 0.0007,
+     "sat": 0.0065,
+     "coverage": -0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_bark_willow01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      64,
+      256
+     ],
+     "bytes": 9832,
+     "luma": 0.0006,
+     "sat": 0.0801,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 35094,
+     "luma": 0.0007,
+     "sat": 0.0311,
+     "coverage": 0
+    }
+   },
+   "miss": null,
+   "satNote": "tier 256: saturation 8.0%"
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_leaf_willow01.ddj",
+   "tiers": {
+    "256": {
+     "size": [
+      256,
+      256
+     ],
+     "bytes": 29158,
+     "luma": -0.0004,
+     "sat": 0.0003,
+     "coverage": 0
+    },
+    "512": {
+     "size": [
+      512,
+      512
+     ],
+     "bytes": 73858,
+     "luma": -0.0034,
+     "sat": -0.0013,
+     "coverage": -0.0091
+    }
+   },
+   "miss": null,
+   "satNote": null
+  },
+  {
+   "key": "prim/mtrl/nature/common/tree/tre_w12_willow03_strand_willow01.ddj",
+   "tiers": {
+    "512": {
+     "size": [
+      128,
+      512
+     ],
+     "bytes": 22904,
+     "luma": 0.0012,
+     "sat": 0.0103,
+     "coverage": 0
+    },
+    "1024": {
+     "size": [
+      256,
+      1024
+     ],
+     "bytes": 51330,
+     "luma": 0.001,
+     "sat": 0.0039,
+     "coverage": 0.0001
+    }
+   },
+   "miss": null,
+   "satNote": null
+  }
+ ],
+ "ok": true
+}

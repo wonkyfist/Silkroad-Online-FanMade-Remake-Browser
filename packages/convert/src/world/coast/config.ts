@@ -191,6 +191,33 @@ export interface CoastConfig {
   /** GM tp places (region units). */
   places: Array<{ name: string; x: number; z: number }>
   ocean: { mapColor: string; fieldMetresPerTexel: number }
+  /** Land that goes under the sea after the pass (./drown.ts): Jangan stays an island, with no other region in view. */
+  drown?: CoastDrown
+}
+
+/**
+ * The drowned area (docs/COAST.md §4.1, ./drown.ts). `regions` are whole regions (inclusive rectangles, region units): a
+ * vertex drowns when every region sharing it does, so a kept neighbour stays bit for bit. `areas` are continuous
+ * rectangles (region coordinates, inclusive) for land that crosses a region line. In `soft` regions only the water and
+ * the land of small islands drown. A dry island the drowned area cuts off (smaller than islandMaxKm2) drowns too.
+ */
+export interface CoastDrown {
+  regions: Rect[]
+  areas: Rect[]
+  /** Whole regions where only water and small cut-off land drown; a big landmass keeps its ground there. */
+  soft?: Rect[]
+  /**
+   * Continuous rectangles where the in-bounds retail water at the sea level (the old strait, Jangan Bay) becomes open
+   * sea (./drown.ts `opened`): its blocks go, the ocean draws it, the map shades it like the sea; the bed stays retail.
+   */
+  openWater?: Rect[]
+  islandMaxKm2: number
+  /** Sea depth (m below the sea level) at the shore and far out, and the distance (m) over which it reaches the far one. */
+  depthM: Range
+  shelfM: number
+  /** The slope (degrees) from kept land down to the sea floor; at least rampMinM (m) wide. */
+  rampDeg: number
+  rampMinM: number
 }
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
@@ -343,6 +370,27 @@ export function validateCoastConfig(m: unknown): string[] {
   }
   const o = m.ocean
   if (!isObj(o) || typeof o.mapColor !== 'string' || !isNum(o.fieldMetresPerTexel)) err('ocean', 'expected {mapColor, fieldMetresPerTexel}')
+  const d = m.drown
+  if (d !== undefined) {
+    if (!isObj(d)) err('drown', 'expected an object')
+    else {
+      if (d.openWater !== undefined && (!Array.isArray(d.openWater) || !d.openWater.every(isRect))) err('drown.openWater', 'expected an array of rectangles')
+      for (const key of ['regions', 'areas'] as const) {
+        if (!Array.isArray(d[key]) || !(d[key] as unknown[]).every(isRect)) err(`drown.${key}`, 'expected an array of rectangles')
+      }
+      for (const key of ['regions', 'soft'] as const) {
+        const list = d[key]
+        if (key === 'soft' && list === undefined) continue
+        if (!Array.isArray(list) || !list.every((r: unknown) => isRect(r) && [...r.x, ...r.z].every(Number.isInteger))) {
+          err(`drown.${key}`, 'expected whole regions (integer rectangles)')
+        }
+      }
+      if (!isNum(d.islandMaxKm2) || d.islandMaxKm2 < 0) err('drown.islandMaxKm2', 'expected a number >= 0')
+      if (!isRange(d.depthM) || d.depthM[0] <= 0) err('drown.depthM', 'expected [shore, far] depths > 0')
+      for (const k of ['shelfM', 'rampDeg', 'rampMinM']) if (!isNum(d[k]) || (d[k] as number) <= 0) err(`drown.${k}`, 'expected a positive number')
+      if (isNum(d.rampDeg) && d.rampDeg >= 90) err('drown.rampDeg', 'expected less than 90')
+    }
+  }
   return errors
 }
 

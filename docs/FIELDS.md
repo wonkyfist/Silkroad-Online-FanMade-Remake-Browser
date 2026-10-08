@@ -700,6 +700,12 @@ When the world streams:
 - the export's minimap tiles, each down-sampled with a 4×4 box filter to **64 px per region**, north-up;
 - 21 × 15 regions gives 1344 × 960 px, about 300 KB as WebP **[likely]**;
 - the geometry is described in `manifest.stream.worldMap`.
+- *(2026-10-06, Jangan island)* With the coast, the image is the island's rectangle grown by one region of sea
+  (`coast/drown.ts` `islandRect`): X 152–176 × Z 86–105, 1,600 × 1,280 px (2.4 MB PNG, 0.3 MB WebP). The Western China
+  side and the land bridge toward Donwhang are drowned (docs/COAST.md §4.1), so the map shows Jangan, its fields and its
+  coast in open sea, and no other region's land, names or places. The window zooms out until the whole image fits and
+  never pans past the image's edge (`minZoomFor`, `clampCentre` in `apps/game/src/world/map/worldmap.ts`); hunting
+  labels and NPC dots that stand in the open sea (the coast field) are left out.
 
 The client also ships a painted world map: `Media/interface/worldmap/map/map_world_<x>x<z>.ddj`, 128² DXT1, and `city_jangan.ddj`, 64² A8R8G8B8 **[confirmed]**. Its tiling rule is **[unknown]**:
 

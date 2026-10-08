@@ -1,6 +1,6 @@
 /**
- * Equipment export: Chinese armour (garment/protector/armour, degrees 1-3, both genders, plus the creation
- * defaults), shields and weapons (degrees 1-3) -> glb + sidecar under work/out/equipment/ (served at
+ * Equipment export: Chinese armour (garment/protector/armour, degrees 1-4, both genders, plus the creation
+ * defaults), shields and weapons (degrees 1-4) -> glb + sidecar under work/out/equipment/ (served at
  * /out/equipment/), and work/out/equipment/equipment.json for the game client and the model viewer.
  *
  *   pnpm tsx packages/convert/src/tools/export-equipment.ts [--out <outRoot>] [--no-index]

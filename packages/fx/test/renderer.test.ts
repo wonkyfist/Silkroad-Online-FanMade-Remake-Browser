@@ -137,3 +137,81 @@ describe('FxInstance on NullEngine', () => {
     lib.dispose()
   })
 })
+
+describe('FxLibrary batch pool (perf audit, docs/PERF_AUDIT.md)', () => {
+  const setup = () => {
+    const lib = new FxLibrary(scene, '/out/')
+    lib.addProgram(synthetic)
+    lib.addMesh('fx/mesh/tri.glb', { positions: new Float32Array([0, 0, 0, 0.1, 0, 0, 0, 0.1, 0]), uvs: new Float32Array(6), indices: new Uint32Array([0, 1, 2]) })
+    return lib
+  }
+  const fxMeshes = () => scene.meshes.filter(m => m.name.startsWith('fx:test/smoke.efp'))
+  const play = (fx: FxInstance, frames = 20) => {
+    for (let f = 0; f < frames; f++) fx.update(1 / 60)
+  }
+
+  it('reuses an ended instance’s batch meshes, hidden, instead of new ones', () => {
+    const lib = setup()
+    lib.poolLimit = 4
+    const a = new FxInstance(lib, synthetic, { position: [0, 1, 0] })
+    play(a)
+    const first = fxMeshes()
+    expect(first).toHaveLength(3)
+    a.dispose()
+    expect(lib.pooled).toBe(3)
+    expect(fxMeshes().every(m => !m.isVisible && !m.isDisposed())).toBe(true)
+    const b = new FxInstance(lib, synthetic, { position: [2, 1, 0] })
+    expect(lib.pooled).toBe(0)
+    play(b)
+    expect(fxMeshes()).toHaveLength(3)
+    expect(new Set(fxMeshes())).toEqual(new Set(first))
+    expect(b.stats.drawn).toBeGreaterThan(0)
+    b.dispose()
+    lib.dispose()
+    expect(fxMeshes()).toHaveLength(0)
+  })
+
+  it('without a pool (the default) an ended instance leaves no mesh; a full pool disposes the rest', () => {
+    const lib = setup()
+    const a = new FxInstance(lib, synthetic, { position: [0, 1, 0] })
+    play(a, 2)
+    a.dispose()
+    expect(fxMeshes()).toHaveLength(0)
+    lib.poolLimit = 1
+    const b = new FxInstance(lib, synthetic, { position: [0, 1, 0] })
+    const c = new FxInstance(lib, synthetic, { position: [0, 1, 0] })
+    b.dispose()
+    c.dispose()
+    // one per (material, kind, geometry) key: the plate, the mesh and the pipe batch
+    expect(lib.pooled).toBe(3)
+    expect(fxMeshes()).toHaveLength(3)
+    lib.dispose()
+  })
+
+  it('an empty batch uploads once, then nothing until it draws again', () => {
+    const lib = setup()
+    const fx = new FxInstance(lib, synthetic, { position: [0, 1, 0] })
+    play(fx, 30)
+    const mesh = fxMeshes().find(m => m.name.includes('#1')) as Mesh
+    let uploads = 0
+    const orig = mesh.updateVerticesData.bind(mesh)
+    mesh.updateVerticesData = ((...a: Parameters<Mesh['updateVerticesData']>) => {
+      uploads++
+      return orig(...a)
+    }) as Mesh['updateVerticesData']
+    fx.stop()
+    // the plates die out; once a frame drew nothing, later empty frames upload nothing
+    play(fx, 200)
+    expect(fx.stats.drawn).toBe(0)
+    const after = uploads
+    play(fx, 10)
+    expect(uploads).toBe(after)
+    expect(mesh.isVisible).toBe(false)
+    FxLibrary.skipEmptyUploads = false
+    play(fx, 2)
+    expect(uploads).toBe(after + 6)
+    FxLibrary.skipEmptyUploads = true
+    fx.dispose()
+    lib.dispose()
+  })
+})

@@ -29,10 +29,13 @@ import { movementFeature } from './features/movement.ts'
 import { npcFeature } from './features/npc.ts'
 import { partyFeature } from './features/party.ts'
 import { pilotFeature } from './features/pilot.ts'
+import { tigerMovesFeature } from './features/tiger-moves.ts'
 import { postureFeature } from './features/posture.ts'
 import { questsFeature } from './features/quests.ts'
 import { skillsFeature } from './features/skills.ts'
 import { skyClockFeature } from './features/sky-clock.ts'
+import { selfKeyFeature } from './features/self-key.ts'
+import { selfEnvFeature } from './features/self-env.ts'
 import { soundFeature } from './features/sound.ts'
 import { soundZonesFeature } from './features/sound-zones.ts'
 import { stallFeature } from './features/stall.ts'
@@ -51,6 +54,9 @@ import { siegeRepairFeature } from './features/siege-repair.ts'
 import { siegeFeature } from './features/siege.ts'
 import { lawFeature } from './features/law.ts'
 import { newsFeature } from './features/news.ts'
+import { rarityFeature } from './features/rarity.ts'
+import { climbFeature } from './features/climb.ts'
+import { clothWearFeature } from './features/cloth-wear.ts'
 
 export type CombatMessage = Extract<ServerMessage, { t: 'combat' }>
 
@@ -169,6 +175,8 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   autoPotionFeature, // world/features/auto-potion.ts
   // Play the Boss (docs/PLAY_THE_BOSS.md §4.1): after the skills feature (its 1-7 win over the hotbar while piloting).
   pilotFeature, // world/features/pilot.ts
+  // Tiger Girl's Pounce leap, Roar shockwave and Stalk prowl (after the skills feature: it reads the cast it played).
+  tigerMovesFeature, // world/features/tiger-moves.ts
   // Wave 9 (docs/WAVE_PLAN3.md §4.3; W9A-S writes these lines):
   skyClockFeature, // world/features/sky-clock.ts (GAME)
   weatherFeature, // world/features/weather.ts (WX-C)
@@ -192,6 +200,16 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   lawFeature, // world/features/law.ts
   // The "What's new" window (docs/CHANGELOG_WINDOW.md): unseen update notes once per login, the Esc menu entry and J.
   newsFeature, // world/features/news.ts
+  // Rare weapons (docs/RARITY.md §4.3, §5.5): the rare-drop notice and the seal chimes.
+  rarityFeature, // world/features/rarity.ts
+  // The Climb (docs/CLIMB.md §2.5, §11): the mini-bosses' look, the titles and the Arts' state.
+  climbFeature, // world/features/climb.ts
+  // Dirt and blood on the licensed bodies' clothes (docs/CHARACTERS.md §16.9): combat, travel, rest, repair.
+  clothWearFeature, // world/features/cloth-wear.ts
+  // The own character's key light (docs/CHARACTERS.md §16.1).
+  selfKeyFeature, // world/features/self-key.ts
+  // The own licensed character's environment light (docs/CHARACTERS.md §16.4).
+  selfEnvFeature, // world/features/self-env.ts
   // Wave 10 step 2 (COAST §12.6, CST-A): after the sound feature, so the coast ambience wins on the coast; the jump stays last.
   coastFeature, // world/features/coast.ts (CST-A)
   // Wave 11 (docs/TOWN_LIFE.md §6, TL-S): after the sound and coast features (the area is set), before the town feature.

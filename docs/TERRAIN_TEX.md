@@ -5,6 +5,9 @@
 > spec where they differ: cut 5 ("B3c keeps retail tiles") is removed (D38: every tile upscaled, never cut), TT-B owns
 > `overrides.json` and merges the trees' fragment (D7), and LAB-12 measured the Medium shading (Dropbox
 > `wave12/budgets.md`).
+> **Island (2026-10-10, docs/COAST.md §4.1):** the export paints 65 of the 108 tiles (46 of the 88 B3 sets), 54 hero;
+> the other 43 painted only the drowned Western China side. Their sets stay in `work/out/pbr`; the editor's palette
+> lists the 65.
 
 The user (2026-10-01): "Just make sure also the textures for dirt, grass, sand, etc all terrain textures are
 upscaled." This spec covers every terrain tile of the `jangan-fields` export:

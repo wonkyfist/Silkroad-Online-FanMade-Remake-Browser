@@ -3,6 +3,7 @@ import type { AddressInfo } from 'node:net'
 import { dirname, join } from 'node:path'
 import {
   ACCOUNT_NAME,
+  CLIMB_CURVE_VERSION,
   CLOSE_CODE,
   NEWS_ID,
   NEWS_IMAGE_NAME,
@@ -35,6 +36,7 @@ import { GM_API_PREFIX, handleGmApi } from './editors/quest-api.ts'
 import { Gameplay } from './gameplay.ts'
 import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
+import { applyClimbContent, convertClimbCharacters, remapClimbNests } from './climb.ts'
 import { NewsStore } from './news.ts'
 import { originAllowed } from './origin.ts'
 import { acceptedEncodings, serveFile } from './static.ts'
@@ -197,8 +199,9 @@ function loadNav(config: ServerConfig, bounds: WorldSetup['bounds']): NavProvide
 
 /**
  * One startup line for the nests the placement rule refused ('outside the world': no open ground near them in the
- * town spawn's walkable component). Inside the world bounds they are unreachable on foot from town (e.g. the
- * Western China fields across the river on jangan-fields, docs/FIELDS.md §4.2); the rest lie beyond the export.
+ * town spawn's walkable component). Inside the world bounds they are unreachable on foot from town (the Western
+ * China side's, before it went under the sea and content/nests.override.json removed them; docs/COAST.md §4.1); the
+ * rest lie beyond the export.
  */
 export function unplacedNestsLine(gameplay: Gameplay, data: GameData, setup: WorldSetup): string | null {
   const byId = new Map(data.nests.map((n) => [n.id, n]))
@@ -228,9 +231,21 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   const settings = SettingsState.load(config, adminStore)
   const data = GameData.load(config.outDir)
   for (const line of data.summary()) config.log(line)
+  // The Climb (docs/CLIMB.md §20 L1): derived monsters, the degree-3 squeeze and the cap-25 curve join the export first,
+  // so the repo overrides' `mob` patches can name derived codes; the area remap follows them (climb.ts).
+  const climb = config.climb ? applyClimbContent(data, config.contentDir, config.log) : null
   // GM content overrides (DATA_DIR/content/{nests,npcs}.override.json) over the export, before anything is placed (lane ED-S).
   // Repo overrides (CONTENT_DIR/{nests,npcs}.override.json) first: they are part of the content the GM files layer over.
   layerRepoOverrides(data, config.contentDir, config.world, config.log)
+  if (climb) {
+    remapClimbNests(data, config.log)
+    // Saved characters move to the cap-25 curve once (docs/CLIMB.md §9.3a; migration 21), and new ones start on it.
+    if (climb.levels > 0) {
+      convertClimbCharacters(store.db, (l) => climb.oldNeed[l - 1] ?? 0, (l) => data.levels[l - 1]?.exp ?? 0, config.log)
+      store.setNewCharacterCurve(CLIMB_CURVE_VERSION)
+    }
+  }
+  config.log(`level cap ${config.levelCap}${climb ? ' (the Climb on)' : config.climb === false ? ' (the Climb off: CLIMB=off)' : ''}`)
   layerContentOverrides(data, config.dataDir, config.world, config.log)
   // Admin item and drop overrides (DATA_DIR/content/{items,drops}.override.json; docs/ADMIN.md §5).
   layerAdminContent(data, config.dataDir, config.outDir, config.log)
@@ -690,6 +705,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
           c.send({ t: 'chat', channel: 'system', text: 'The server is shutting down.' })
           c.close(CLOSE_CODE.shutdown, 'server shutting down')
         }
+        // docs/CLIMB.md §6.1 (F6): bodies lingering in a fight leave now (saved and removed)
+        gameplay.penalty.flush()
         ctx.persist([...world.players.values()])
         // docs/SIEGE.md §5.3: the walls' unsaved integrity
         gameplay.walls.flush()

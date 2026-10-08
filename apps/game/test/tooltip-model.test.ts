@@ -109,7 +109,8 @@ describe('M11: the item tooltip in the retail layout (docs/UI.md §4.8)', () => 
     expect(tooltipSections([], [])).toEqual([])
     expect(isRareCode('ITEM_CH_SWORD_01_A_RARE')).toBe(true)
     expect(isRareCode('ITEM_CH_SWORD_01_A')).toBe(false)
-    expect(new ItemCatalog([{ ...SWORD, code: 'ITEM_CH_SWORD_01_A_RARE' }]).tooltip({ code: 'ITEM_CH_SWORD_01_A_RARE', count: 1 })[0]?.cls).toBe('title-plus')
+    // docs/RARITY.md §5.6: a seal's title takes its tier's colour (Seal of Star: _A_RARE)
+    expect(new ItemCatalog([{ ...SWORD, code: 'ITEM_CH_SWORD_01_A_RARE' }]).tooltip({ code: 'ITEM_CH_SWORD_01_A_RARE', count: 1 })[0]?.cls).toBe('title-star')
   })
 })
 

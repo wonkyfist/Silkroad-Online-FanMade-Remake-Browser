@@ -9,7 +9,8 @@
  * skill points (#FFD953) and the mastery total (#97E0FF).
  * The page only sends intents and redraws from `skills` / `skillsUpdate` / `stats`.
  */
-import { CHARACTER_RULES, MASTERY_CODES, type MasteryCode, type MasteryDef, type PlayerStats } from '@sro/shared'
+import { CHARACTER_RULES, CLIMB_ARTS, CLIMB_ART_RESPEC_GOLD, CLIMB_ART_TIERS, MASTERY_CODES, climbArtKey, climbTreeLevel, type ClientMessage, type ClimbArtTree, type MasteryCode, type MasteryDef, type PlayerStats } from '@sro/shared'
+import { climbState } from './climb-state.ts'
 import type { SkillCatalog, SkillLine, SkillState } from '../content/skills.ts'
 import { t } from '../i18n/index.ts'
 import type { Art } from '../ui/art.ts'
@@ -61,7 +62,7 @@ export interface SkillWindowDeps {
   tooltip: Tooltip
   hotbar: Hotbar
   stats: () => PlayerStats | null
-  send: (msg: ReturnType<typeof intent.skillLearn> | ReturnType<typeof intent.masteryUp>) => void
+  send: (msg: ClientMessage | null) => void
 }
 
 function initials(name: string): string {
@@ -101,10 +102,12 @@ export class SkillWindow extends MainPage {
   /** Listeners of the elements one render builds (cleared by the next render). */
   private readonly rl = new Listeners()
   private readonly offCooldown: () => void
+  private readonly offClimb: () => void
 
   constructor(private readonly d: SkillWindowDeps) {
     super(d.art, d.parent, { id: 'skills', tab: 'skill', title: t('skills.win.title') })
     ensureSkillStyles()
+    this.offClimb = climbState.subscribe(() => this.render())
     const art = d.art
     const catTab = (tab: Tab, x: number) => {
       const label = t(tab === 'weapon' ? 'skills.win.weapon' : 'skills.win.force')
@@ -210,6 +213,7 @@ export class SkillWindow extends MainPage {
 
   override dispose(): void {
     this.offCooldown()
+    this.offClimb()
     this.rl.clear()
     this.hideTip()
     this.list.dispose()
@@ -258,11 +262,55 @@ export class SkillWindow extends MainPage {
       this.list.view.replaceChildren(el('div', 'skl-empty', t('skills.win.noSkills')))
       return
     }
-    this.list.view.replaceChildren(el('div', 'skl-grid', ...lines.map(line => this.lineEl(line, mLevel, sp))))
+    const arts = this.artsEl(m.code as MasteryCode)
+    this.list.view.replaceChildren(...(arts ? [arts] : []), el('div', 'skl-grid', ...lines.map(line => this.lineEl(line, mLevel, sp))))
     for (const [group, sweep] of this.sweeps) {
       const cd = this.d.cooldowns.get(skillCooldownKey(group))
       sweep.set(cd?.readyAt ?? 0, cd?.totalMs ?? 0)
     }
+  }
+
+  /**
+   * The Climb's Arts row (docs/CLIMB.md §5.1, §11): the tree of this mastery (a weapon mastery, or the force tree on
+   * any force page), three tiers of two cards; the picked card is lit, a tier above the mastery is greyed, a click
+   * picks (the first pick is free, a change costs gold at once). null without the Climb (no `climb` message yet).
+   */
+  private artsEl(code: MasteryCode): HTMLElement | null {
+    const v = climbState.get()
+    if (!climbState.known) return null
+    const tree: ClimbArtTree = code === 'BICHEON' || code === 'HEUKSAL' || code === 'PACHEON' ? code : 'FORCE'
+    const level = climbTreeLevel(tree, this.d.state.masteries)
+    const box = el('div', 'skl-arts')
+    box.style.cssText = 'display:grid;grid-template-columns:44px 1fr 1fr;gap:3px 4px;margin:2px 4px 8px;font-size:11px'
+    for (const tier of CLIMB_ART_TIERS) {
+      const open = level >= tier
+      const lab = el('div', 'skl-arts-tier', t('climb.arts.tier', { tier }))
+      lab.style.cssText = `align-self:center;color:${open ? '#97e0ff' : '#777'}`
+      box.append(lab)
+      const picked = v.arts[climbArtKey(tree, tier)]
+      for (const a of CLIMB_ARTS.filter((x) => x.tree === tree && x.tier === tier)) {
+        const on = picked === a.id
+        const card = el('button', `skl-art${on ? ' on' : ''}`, a.name + (a.later ? ' *' : ''))
+        card.type = 'button'
+        card.disabled = !open
+        card.style.cssText = `text-align:left;padding:2px 5px;border:1px solid ${on ? '#ffd953' : '#4a5560'};background:${on ? 'rgba(255,217,83,.18)' : 'rgba(0,0,0,.35)'};color:${open ? (on ? '#ffd953' : '#ddd') : '#666'};cursor:${open && !on ? 'pointer' : 'default'};font:inherit`
+        const cost = picked && !on ? CLIMB_ART_RESPEC_GOLD * (CLIMB_ART_TIERS.indexOf(tier) + 1) : 0
+        this.hoverTip(card, () => [
+          { text: a.name, cls: 'title' },
+          { text: a.text, cls: 'desc' },
+          ...(open ? [] : [{ text: t('climb.arts.locked', { tier }), cls: 'bad' as const }]),
+          ...(on ? [{ text: t('climb.arts.picked'), cls: 'stat' as const }] : cost ? [{ text: t('climb.arts.respec', { gold: formatNumber(cost) }), cls: 'req' as const }] : open ? [{ text: t('climb.arts.free'), cls: 'hint' as const }] : []),
+        ])
+        this.rl.on(card, 'click', () => {
+          if (open && !on) this.d.send({ t: 'climbArt', tree, tier, art: a.id })
+        })
+        box.append(card)
+      }
+    }
+    const head = el('div', 'skl-arts-head', t('climb.arts.title'))
+    head.style.cssText = 'margin:4px 6px 0;color:#ffd953;font-size:11px'
+    const wrap = el('div', 'skl-arts-wrap', head, box)
+    return wrap
   }
 
   private lineEl(line: SkillLine, masteryLevel: number, sp: number): HTMLElement {

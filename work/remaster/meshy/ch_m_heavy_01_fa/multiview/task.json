@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea32-e3b1-7668-bc41-f997c39078d7",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea32-e3b1-7668-bc41-f997c39078d7.png?Expires=1790894893&Signature=kMCu440Iz2awpkGVymNiNQvTY94mlcqhawX3u14SgWRvkliReGQBIHwlrpFoAFdzd~fs27HivZIr5qKOj6BrPNvNt~fPg6mmy0IhWmsI8uK445xWkMam1WFXMv0FC-L4yoWbFXkILVyi8nwBDiO6pnmL~xVX~aBfclRFR3wH8nAh35nsyVvdGRnJ3LrTrHmj7EeWhoinbIok7BmOUrUTkidAQPN4iEcJ0U7M8yNfcZq3edLmwzDIceaTnzqGILlAaoVGB9zi4ZQXBVBvpiZvm2-jSeY2owRdiQaesKAxozvEvPsg4Vkhz7J-U1w7gP4LND~wjS1~uIdNkh-HATAnsA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea32-e3b1-7668-bc41-f997c39078d7.png?Expires=1790894893&Signature=G8ksZMdAaxOwXt3~mSlbzyRzvw-Mvs7DClTNEMnTZzotAvegmep~hV41jXqHY01egGjYq85s1PH79HnlNacz7rupTk6g4LM65gBGSaXPHT~Fl6-93mNfH6DT4leDw9hwIDNWtG-liQp7vZX5gvILFR~BOGWNgHOly8RmSCclr3IMtUhrv3n0A2BLJ6gNUvWoJvT4VXc61~7GJ-Vz1zx0FdkrE5208h-1EUuHIk6DcMWDNY2D94uazvEVUr~wGjv7X5VKbBgUjBh2KeCr9iaW6LCkckYDsDXbXwq0WvmkAPt-ALUA1gJ48fny1EorRi~DdEmma9yC0bBn2QVY1mgTYw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea32-e3b1-7668-bc41-f997c39078d7.png?Expires=1790894893&Signature=eN-XshwYmhXDa7Mhe2bHHk~tygk~9TuW7Rh6miHKBMoyeQ6TioSnBeyr55w9U8TM5LlZio7lIKg0i-GtxF7tZa~GhjMNhQyDBj1TfizOlvlK9TYKVldi8sAA~Y9bx2TlM8sIWHBhZ11q5xRyu6kOHY9rDFLqgNYmWpp4UAC2bJl0p3PXNmGeSyRiZ9q367ZC5GW8tz-xseDhJmFlOS3DfyWPq32zvGWTUguKbfC7JTOemB0tJIKdnu3W737SoX0ZoNgfzU93ZhingAATYJy8Tru6nWRPWylJPcSSThVH84sVOOnjQ5Grg5VtQlO7gobvABkq4EIlHxEoh~QViv6A~w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea32-e3b1-7668-bc41-f997c39078d7.png?Expires=1790894893&Signature=gbdd3Xpplu7P7LHnBGwZJeCjqnNhm1EfN7QNYUD6LXktinUgTgD2Bd8tp75xLePjxx6FauHrYgzoDvlh-iXZRmdAgZx0zVAD8yb8dmyh725LTCMNyjvH1U-vA3dRrhiMbuC5PxrIkOgZ8LP4T9xZ68te4CtLqTFYP6btpC~9A0rV8AvyEIZHChGb0dkBetzViYhsIabKctKNa5x3oprJs5z6exnsZE4kvEQ5rG8Pb~nNx~Bi6eZ9qs9ZZD19q5tg6vmq4snhXoo2k0-PPWL9Z1xnh31v1Q7rWlA3pD16iZB5NhBZ4rMoU9Y~O1~kMQzyhRdgGKO3aiy4geXpTPuoaA__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790635600403,
+  "progress": 100,
+  "started_at": 1790635600409,
+  "finished_at": 1790635693632,
+  "expires_at": 1790894893632,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea32-e3b1-7668-bc41-f997c39078d7/output/model.glb?Expires=1790894893&Signature=IZylcBxCf8cPvZ20PaEIfRf2f1PF5XWqgAaF8n0qe3Ujp7TFELrHCOVpBJigZFnhnenJJgids-oLnU6p6BStePdhqRjgi9C12DKPPW9mG60wspuPxezJWW~vWtSuiYFOz0aLNpw~b-y2wYa5B8QvF6buvNe0zflY3dJ2KDeYhAjGRzj5kBK1Wh-Y8xLzmuoTn~9MAqNgE-BLXYhwtc2wOElPQ~-byLTjQnJsKUX8I1Qr3O1B9Jrk9Np8U7nLuyaT2hgYLVtJ9QlwdTEMFnh6sodXEacmCM~G5fWsNGipXb3UJYnhpNBhQ3uOZbBEyqTm8AzWpGOc3rn2dDUq0Bo29g__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_fa\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_fa\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_fa\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_fa\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_fa\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and pattern placement. Knee-high heavy soldier boots. Front shin guard: a rust-brown copper and leather plate divided into panels with rows of round silver rivets, framed at the top and bottom by a band of worn grey steel. Back and sides: cream-grey linen leg wrappings wound in horizontal layers. Low shoe: dark bottle-green leather upper with a thin gold edge line and a small gold scroll curl at the toe, pale cream sole and padded cream ankle. Target: realistic aged copper plate with patina and scratches, brushed iron trim, coarse wrapped linen with visible weave, slight fraying and dust, dark green leather with creases and stitched welts. No text, no logos."
+  }
+}

@@ -1,8 +1,8 @@
 # Siege of Jangan: destructible walls, wall-breakers jailed by Hunters
 
 **Status (2026-10-06): layers 0 and 1 built** (the cut, walls that break and walk through); layers 2 (looks and sound)
-and 3 (repair), 4 (the siege event) and 5 (player kegs and Wanted) built, see their status notes below; layer 6 is
-spec only. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
+and 3 (repair), 4 (the siege event), 5 (player kegs and Wanted) and 6 (Hunters and the jail) built, see their status
+notes below. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
 (`<world>/siege/models/cj_<side>_cut.glb`, one glb per side with a node per piece; `siege/walls-nav.bin`), never in
 `content/` (retail meshes are never committed); `nav.bin` / `nav-objects.bin` keep the retail wall instances and the
 server and client switch them off at load (re-runnable without re-exporting the nav); the Blender script is
@@ -13,6 +13,53 @@ underpass stays inside the gatehouse piece); layer 1 shows cracks as a dark over
 (layer 2 brings the real crack textures, collapse and mounds). Written at HEAD `fdfcb04`. Builds on the storm series
 (docs/WEATHER.md §2.7 `LightningService.onStrike`, §13 `TornadoService.onTornado`) and borrows the event, settings and
 admin patterns of docs/PLAY_THE_BOSS.md.
+
+**Layer 6 status (2026-10-06): built** (Hunters and the jail; every layer of this spec is now built). Server
+`apps/server/src/siege/{hunters,jail,hunter-store,law-admin}.ts` (GameplayModules `hunters` and `jail`, after `law`);
+shared rules, content and protocol `packages/shared/src/siege-hunter.ts` (settings: new `law` fields and the `hunter`
+group in siege-event.ts); client `apps/game/src/world/features/law.ts` (extended), `hud/law-hud.ts` (Hunter panel,
+Stockade panel, Yun's and Bae's windows), `world/siege/stockade.ts`, `i18n/en-siege-hunter.ts`; admin
+`apps/admin/src/pages/siege-law.ts` (the Law tab) and two Numbers cards; migration **20** (`law_contacts`, `law_flags`:
+anti-collusion, below). Built as written (all §16.2 defaults), with these deviations:
+- **Captain Yun** (`NPC_SIEGE_CAPTAIN_YUN`, Hunter Associate Gwakwi's model) at (−145, −207); his `hunter` service
+  (licence, duty) and a shop selling the Hunter's Net (8,000 gold; **no Siege Seal price**: the shop system takes gold
+  only). **Warden Bae** (`NPC_SIEGE_WARDEN_BAE`, a gate soldier's model) at (−146, −293.5), `warden` service.
+- **PvP paths**: basic attacks, single-target attack/debuff skills (chains too) and DoTs; an area skill never hits a
+  player (the rule "areas only hit whom pvpAllowed allows" holds trivially). `pvpDamage` is `hunter.pvpMul` on every
+  player-on-player hit in `Gameplay.dealHits`. A Hunter killed by a Wanted dies normally (there is no death penalty
+  in the game). The target window shows the enemy frame (HP) and the hostile ring for a Wanted or on-duty Hunter.
+- **The Net** is the `hunterNet {target}` request (a HUD button on the selected Wanted), snaring with the `stun` status
+  for `netSec` (the game has no root status). **Pings**: blue circles on the minimap for a minute; on-duty Hunters see
+  the Wanted within `senseM` as red dots (client side).
+- **Ranks** are 0 ("Recruit") below the first capture, then 1-5 at 1/3/10/25/60. `EntityState.hunter` = the rank while on
+  duty; `entityUpdate.hunter` −1 = off duty; `EntityState.jailed` / `entityUpdate.jailed`.
+- **The Stockade** has **no world-export props and no collision** (no re-export): the client places retail props at run
+  time (`w_earthgst_sfence` stake fences round the rectangle with a 3 m gate, two `w_cd_mc_bari` barricades, a
+  `w_cd_mc_tent`, a table, benches, a pile of scaled-down field rocks). The server clamps prisoners' moves inside and
+  puts anyone found outside back in the cell; visitors may walk in. The ground there carries trees and bushes of the
+  tree/grass layers (a World Editor clean-up is left to the user). `stockade` place (alias `jail`) in places.json.
+- **Jail**: a prisoner enters the world in the cell (connection.ts asks `jail.entryPoint`), moves are clamped
+  (`jail.clampMove`); allowed: stop, bag moves and equip, food and potions (and pills), hotbar, buffs off, NPC talk,
+  sit, emote, party, chores; everything else answers `jailed` (jumps included). Chores: `jailChore` within 4 m of the
+  pile, a 10 s channel broken by moving, shown as the panel's progress bar (no animation). Pardon after release: in
+  memory (a restart in those 10 min drops it).
+- **GM** `law jail <name> <minutes> [reason]` (and `law jail` lists the prisoners), `law release <name>`,
+  `law hunter <name> [licence|revoke|restore|duty on|off]`; `law capture` now jails and credits the captor.
+- **Admin** routes under the `siege` group: GET `law`, POST `law/pardon|jail|release|time|hunter|forgive`
+  (`{character}` = a name or an id; `time` adds or takes minutes).
+- **Anti-collusion (the user's rules, beyond §8.6; settings in `law` / `hunter`)**: (1) a Hunter whose account traded or
+  bought from a stall of the Wanted's account (social_log), partied with it (law_contacts, written at a party join), or
+  was a **lookout** (within `law.lookoutM` 30 m of the keg while it was planted or burned, without trying to defuse it)
+  within `law.contactDays` (7) gets no bounty and no capture credit; (2) the **pair rule** now withholds the capture
+  credit too (no capture count, no rank; the spec's "still counts" is dropped); (3) a bounty is capped at
+  `law.bountyKegPct` (80 %) of the keg's price (40,000 by default) and a Hunter account earns at most
+  `hunter.dailyBountyCap` (60,000) of bounties per 24 h; (4) each earlier capture of the same Wanted account within
+  the pair window takes `law.repeatPct` (50 %) off, and from `law.repeatMax` (3) earlier captures nothing is paid and
+  nobody gets credit; (5) every capture closes all warrants and jails, rewarded or not, and the jailed are untouchable;
+  (6) every withheld reward is a `law_flags` row, listed in the admin Law tab as "Suspected collusion" with a revoke
+  button. There is no friend list in the game, so "friends" means the recorded contacts above.
+- Tests: `apps/server/test/siege-hunter.test.ts` (and additions to `siege-law.test.ts`), `apps/game/test/hunter-hud.test.ts`.
+  Screenshots: `siege-preview/layer6-*.png`.
 
 **Layer 5 status (2026-10-06): built** (player kegs and Wanted). Server `apps/server/src/siege/{keg,law,law-store}.ts`
 (GameplayModules `kegs` and `law`, after `siege`); shared rules, content and protocol `packages/shared/src/siege-law.ts`
@@ -51,7 +98,7 @@ admin patterns of docs/PLAY_THE_BOSS.md.
   kegs` (the spec's `law jail/release/hunter` come with layer 6; the admin Law tab too).
 - Tests: `apps/server/test/siege-law.test.ts`, `packages/shared/test/siege-law.test.ts`, `apps/game/test/law-hud.test.ts`.
   Screenshots: `siege-preview/layer5-*.png`. Not done: the planter still sees the siege HUD's Defuse prompt over the own
-  keg (the server refuses it).
+  keg (the server refuses it); fixed in layer 6 (`keg.mine`, per recipient: the planter and the associates).
 
 **Layer 4 status (2026-10-06): built** (the siege event). Server `apps/server/src/siege/{event,army,lanes,event-store,
 event-admin}.ts` (GameplayModule `siege`, after `wallLooters`); shared rules, content and protocol
@@ -652,7 +699,8 @@ warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Hunt
 
 | Abuse | Guard |
 |---|---|
-| alt breaks, friend hunts (bounty farm) | associates (party, guild, same account, same IP) cannot claim; 7-day pair rule; a keg (50,000 + materials) costs more than the bounty it creates |
+| alt breaks, friend hunts (bounty farm) | associates (party, guild, same account, same IP) cannot claim; 7-day pair rule (layer 6: no gold **and no capture credit**); a keg (50,000 + materials) costs more than the bounty it creates (layer 6: bounties capped at `law.bountyKegPct` 80 % of the keg price) |
+| friends farm bounties, ranks or titles (layer 6, the user's rules) | accounts that traded, used each other's stall or partied within `law.contactDays` (7), and lookouts at the keg (within `law.lookoutM` 30 m, never tried to defuse), get no bounty and no capture; a Wanted account caught again within 7 days pays `law.repeatPct` (50 %) less per earlier capture and nothing (no credit) from `law.repeatMax` (3); at most `hunter.dailyBountyCap` (60,000) of bounty per Hunter account per 24 h; a capture always closes every warrant and jails (only the reward is withheld); every withheld reward is flagged in the admin Law tab ("Suspected collusion") |
 | alts rotating offences | offences per account; keg needs level 18 + 10 h played; character-bound kegs; 30 min per-account plant cooldown |
 | griefing Hunters | Hunters can only hit the Wanted; off-duty lock after PvP; licence revocable; no PvP EXP loss |
 | hiding in town | the safe area does not protect the Wanted from Hunters |

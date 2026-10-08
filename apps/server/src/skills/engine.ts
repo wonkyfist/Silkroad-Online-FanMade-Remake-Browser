@@ -12,6 +12,8 @@ import {
   type SkillDef,
   type SkillStatus,
   type SkillStatusKind,
+  applyClimbArts,
+  climbArtsHitMul,
 } from '@sro/shared'
 import { BASIC_ATTACK, imbueDamage, mobCombatStats, reductionMul, rollSkillHit, type CombatStats } from '../formulas.ts'
 import type { Gameplay } from '../gameplay.ts'
@@ -217,8 +219,9 @@ export class SkillEngine implements GameplayModule {
     const group = groupOf(head)
     const have = s.save.skills.get(group) ?? 0
     if (have < head.skillLevel) return fail('not_learned')
-    // The client may send any learned level: the highest learned one runs.
-    const row = this.book.row(group, have) ?? head
+    // The client may send any learned level: the highest learned one runs. The Climb's Arts (docs/CLIMB.md §5.1,
+    // S-ARTS) change the row's numbers for this caster (a copy; climb/rewards.ts).
+    const row = this.artRow(p, this.book.row(group, have) ?? head)
     if (row.kind === 'passive') return fail('not_usable', 'Passive skills work on their own.')
     if (p.dead) return fail('dead')
     // Wave 8: a broken weapon refuses the rows that need one (durability.ts).
@@ -234,7 +237,8 @@ export class SkillEngine implements GameplayModule {
     if (hp > 0 && p.hp <= hp) return fail('requirements', 'Not enough HP.')
     const t = this.resolveTarget(p, row, targetId, now)
     if (!t.ok) return t
-    if (this.hostile(row)) {
+    // the Hunter / Wanted fight is allowed in a safe area (docs/SIEGE.md §8.3); everything else is not
+    if (this.hostile(row) && t.value.kind !== 'player') {
       const [x, , z] = this.g.world.positionAt(p, now)
       if (this.g.data.inSafeArea(this.g.config.world, x, z)) return fail('safe_zone', 'no fighting in town')
     }
@@ -308,7 +312,12 @@ export class SkillEngine implements GameplayModule {
       if (targetId === undefined) return fail('invalid_target', 'Select a target first.')
       const e = w.entity(targetId)
       if (!e || !p.known.has(targetId)) return fail('not_found')
-      if (e.kind !== 'mob') return fail('invalid_target', e.kind === 'player' ? 'no PvP' : undefined)
+      if (e.kind === 'player') {
+        // Siege of Jangan layer 6 (docs/SIEGE.md §8.3): a Hunter's / a Wanted's single-target skill on the other side
+        const why = this.g.hunters.refusal(p, e, this.g.now)
+        return why ?? { ok: true, value: e }
+      }
+      if (e.kind !== 'mob') return fail('invalid_target')
       if (e.ai === 'dead') return fail('target_dead')
       if (row.requiresTargetState === 1 && !this.effects.status(e.id, 'knockdown', this.g.now)) return fail('invalid_target', 'The target must be knocked down.')
       return { ok: true, value: e }
@@ -429,7 +438,12 @@ export class SkillEngine implements GameplayModule {
     switch (row.kind) {
       case 'attack':
       case 'debuff':
-        return this.strike(p, row, t as Mob, c.instance, now)
+        if (t.kind === 'player' && t.id !== p.id && !this.g.hunters.allowed(p, t, now)) {
+          this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'target_lost' })
+          s.cast = null
+          return this.afterAction(p, s, null, now)
+        }
+        return this.strike(p, row, t, c.instance, now)
       case 'heal':
         return this.heal(p, row, t as Player, now)
       case 'resurrect':
@@ -449,17 +463,19 @@ export class SkillEngine implements GameplayModule {
     if (c.stopped) return this.afterAction(p, s, null, now)
     const next = this.book.chain(c.row)
     if (next) {
-      const t = this.g.world.mobs.get(c.target)
+      // a chain on a player (the Hunter / Wanted fight) goes on while the fight is allowed
+      const pt = this.g.world.players.get(c.target)
+      const t = this.g.world.mobs.get(c.target) ?? (pt && pt.id !== p.id && !pt.dead && this.g.hunters.allowed(p, pt, now) ? pt : undefined)
       // A segment that broke the weapon ends the chain: the later segments need the weapon too (COMBAT §3.2).
       if (this.gear(p, next) || this.g.durability.refuse(p, next)) {
         this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'interrupted' })
         return this.afterAction(p, s, null, now)
       }
-      if (!t || t.ai === 'dead' || !p.known.has(t.id) || this.g.world.distance(p, t, now) > this.reach(p, next, t) + CHAIN_SLACK_M) {
+      if (!t || (t.kind === 'mob' && t.ai === 'dead') || !p.known.has(t.id) || this.g.world.distance(p, t, now) > this.reach(p, next, t) + CHAIN_SLACK_M) {
         this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'target_lost' })
         return this.afterAction(p, s, null, now)
       }
-      return this.start(p, { row: next, head: c.head, group: groupOf(c.head), target: t, mp: 0, hp: 0 }, now, c)
+      return this.start(p, { row: this.artRow(p, next), head: c.head, group: groupOf(c.head), target: t, mp: 0, hp: 0 }, now, c)
     }
     this.afterAction(p, s, c.resume, now)
   }
@@ -546,7 +562,7 @@ export class SkillEngine implements GameplayModule {
    * critical bonus ('cr'), the down-attack bonus ('da') on a knocked-down target, `mul` (area reduction), then the
    * imbue's component and every status roll.
    */
-  private rollHits(a: Player, t: Mob, row: SkillDef, mul: number, now: number): { hits: CombatHit[]; statuses: (StatusRoll | null)[] } {
+  private rollHits(a: Player, t: Player | Mob, row: SkillDef, mul: number, now: number): { hits: CombatHit[]; statuses: (StatusRoll | null)[] } {
     const d = row.damage
     if (!d) {
       // Debuffs (Cold wave - Arrest): no damage, the statuses ride one empty hit.
@@ -558,7 +574,9 @@ export class SkillEngine implements GameplayModule {
     const down = da !== undefined && this.effects.status(t.id, 'knockdown', now) ? da / 100 : 1
     // Storms (docs/WEATHER.md §12.2): fire force is weaker in the rain, lightning and cold stronger.
     const weather = this.g.storm?.elementMul(row) ?? 1
-    const spec = { pct: magic ? d.magPct : d.physPct, flat: d.flat, magic, critBonus: PARAM(row, 'cr')?.[0] ?? 0, mul: mul * down * weather }
+    // the Climb's Executioner (docs/CLIMB.md §5.1): more damage on a target under 30 % HP
+    const art = this.artHitMul(a, t, row)
+    const spec = { pct: magic ? d.magPct : d.physPct, flat: d.flat, magic, critBonus: PARAM(row, 'cr')?.[0] ?? 0, mul: mul * down * weather * art }
     const hits: CombatHit[] = []
     const statuses: (StatusRoll | null)[] = []
     for (let i = 0; i < Math.min(MAX_COMBAT_HITS, Math.max(1, d.hits)); i++) {
@@ -653,8 +671,9 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** An attack or debuff at release: area targets, hits per target, projectiles held until they land. */
-  private strike(p: Player, row: SkillDef, primary: Mob, instance: number, now: number): void {
-    const area = row.area
+  private strike(p: Player, row: SkillDef, primary: Player | Mob, instance: number, now: number): void {
+    // a player (the Hunter / Wanted fight, docs/SIEGE.md §8.3): the primary only; areas never reach other players
+    const area = primary.kind === 'player' ? undefined : row.area
     const proj = projectileOf(row)
     let targets: Candidate[] = [this.cand(primary, now)]
     if (area) {
@@ -664,7 +683,7 @@ export class SkillEngine implements GameplayModule {
       targets = selectTargets(area, this.xz(p, now), this.cand(primary, now), this.candidates(p, from, range, now), lineLen)
     }
     targets.forEach((c, i) => {
-      const t = this.g.world.mobs.get(c.id)
+      const t = c.id === primary.id ? primary : this.g.world.mobs.get(c.id)
       if (!t) return
       const aoe = i > 0
       const { hits, statuses } = this.rollHits(p, t, row, aoe && area ? reductionMul(area.reductionPct) : 1, now)
@@ -686,7 +705,7 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** Soul Rebirth Art (decision 14): the corpse stands up where it lies with the row's HP/MP share; no warp. */
-  private resurrect(_p: Player, row: SkillDef, t: Player, _now: number): void {
+  private resurrect(caster: Player, row: SkillDef, t: Player, _now: number): void {
     if (!t.dead) return
     const h = row.heal ?? { hp: 0, hpPct: 10, mp: 0, mpPct: 10 }
     t.dead = false
@@ -696,6 +715,9 @@ export class SkillEngine implements GameplayModule {
     this.g.world.broadcastAbout(t, { t: 'entityUpdate', id: t.id, state: 'alive', hp: Math.round(t.hp), maxHp: t.maxHp })
     t.send({ t: 'stats', stats: this.g.stats(t) })
     t.send({ t: 'chat', channel: 'system', text: 'You have been resurrected.' })
+    // The Climb (docs/CLIMB.md §6.3): a resurrection on the corpse refunds part of the death penalty.
+    // the Rebirth Art (§5.1): the whole loss back
+    this.g.penalty?.resurrected(t, this.g.climbRewards?.rebirth(caster) === true)
   }
 
   /** Abnormal states of `e` at or below `level`, worst first. */
@@ -849,6 +871,29 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** Every stat mod on `p` now: passives, buffs, debuffs and statuses, and (wave 8) the registered providers'. */
+  // ---- the Climb's Arts (docs/CLIMB.md §5.1; climb/rewards.ts) ------------------------------------------------
+
+  /** A row as caster `p`'s Arts change it (the row itself when none applies). */
+  private artRow(p: Player, row: SkillDef): SkillDef {
+    const arts = this.g.climbRewards?.arts(p)
+    return arts && arts.length ? applyClimbArts(row, arts) : row
+  }
+
+  private artHitMul(a: Player, t: Player | Mob, row: SkillDef): number {
+    const arts = this.g.climbRewards?.arts(a)
+    return arts && arts.length ? climbArtsHitMul(arts, row, (100 * t.hp) / Math.max(1, t.maxHp)) : 1
+  }
+
+  /** Whether `p` learned any level of skill group `group`. */
+  learned(p: Player, group: string): boolean {
+    return (this.state(p).save.skills.get(group) ?? 0) > 0
+  }
+
+  /** Whether a buff or toggle of skill group `group` is on `p` now. */
+  effectActive(p: Player, group: string): boolean {
+    return this.effects.list(p.id).some((e) => e.group === group)
+  }
+
   modsFor(p: Player): ModTotals {
     return sumMods([...this.passiveMods(p), ...this.activeMods(p.id, this.g.now), ...this.providers.flatMap((f) => f(p))])
   }
@@ -1150,8 +1195,8 @@ export class SkillEngine implements GameplayModule {
 
   private arrive(f: Flight, now: number): void {
     const a = this.g.world.players.get(f.caster)
-    const t = this.g.world.mobs.get(f.target)
-    if (!a || !t || t.ai === 'dead') return
+    const t = this.g.world.mobs.get(f.target) ?? this.g.world.players.get(f.target)
+    if (!a || !t || (t.kind === 'mob' ? t.ai === 'dead' : t.dead || !this.g.hunters.allowed(a, t, now))) return
     this.land(a, t, f.code, f.hits, f.statuses, { instance: f.instance, at: f.at, aoe: f.aoe || undefined }, now)
   }
 

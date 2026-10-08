@@ -24,6 +24,18 @@ export interface WarrantRow {
   captors: string
 }
 
+/** A capture reward withheld by an anti-collusion rule (law_flags, migration 20). */
+export interface FlagRow {
+  id: number
+  at: number
+  wanted_character: number
+  wanted_account: number
+  hunter_character: number
+  hunter_account: number | null
+  rule: string
+  withheld: number
+}
+
 export interface NewWarrant {
   account: number
   character: number
@@ -49,6 +61,7 @@ export class LawStore {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')`,
       ),
       openOf: db.prepare<[number], WarrantRow>(`SELECT ${COLS} FROM warrants WHERE status = 'open' AND character_id = ? ORDER BY id`),
+      byId: db.prepare<[number], WarrantRow>(`SELECT ${COLS} FROM warrants WHERE id = ?`),
       allOpen: db.prepare<[], WarrantRow>(`SELECT ${COLS} FROM warrants WHERE status = 'open' ORDER BY id`),
       recent: db.prepare<[number], WarrantRow>(`SELECT ${COLS} FROM warrants ORDER BY id DESC LIMIT ?`),
       ofCharacter: db.prepare<[number, number], WarrantRow>(`SELECT ${COLS} FROM warrants WHERE character_id = ? ORDER BY id DESC LIMIT ?`),
@@ -63,6 +76,19 @@ export class LawStore {
         `INSERT INTO law_records (account_id, offences, last_plant_at) VALUES (?, 0, ?)
          ON CONFLICT (account_id) DO UPDATE SET last_plant_at = excluded.last_plant_at`,
       ),
+      contact: db.prepare<[number, number, string, number]>(
+        'INSERT INTO law_contacts (a, b, kind, at) VALUES (?, ?, ?, ?) ON CONFLICT (a, b, kind) DO UPDATE SET at = MAX(at, excluded.at)',
+      ),
+      contactOf: db.prepare<[number, number, number], { kind: string }>('SELECT kind FROM law_contacts WHERE a = ? AND b = ? AND at >= ? ORDER BY at DESC LIMIT 1'),
+      socialOf: db.prepare<[number, number, number, number, number], { kind: string }>(
+        `SELECT s.kind FROM social_log s JOIN characters ca ON ca.id = s.a_char JOIN characters cb ON cb.id = s.b_char
+         WHERE s.at >= ? AND ((ca.account_id = ? AND cb.account_id = ?) OR (ca.account_id = ? AND cb.account_id = ?)) ORDER BY s.at DESC LIMIT 1`,
+      ),
+      prune: db.prepare<[number]>('DELETE FROM law_contacts WHERE at < ?'),
+      flag: db.prepare<[number, number, number, number, number | null, string, number, string]>(
+        'INSERT INTO law_flags (at, wanted_character, wanted_account, hunter_character, hunter_account, rule, withheld, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      ),
+      flags: db.prepare<[number], FlagRow>('SELECT id, at, wanted_character, wanted_account, hunter_character, hunter_account, rule, withheld FROM law_flags ORDER BY id DESC LIMIT ?'),
       kegHits: db.prepare<[string, number], { seg: string; at: number; character_id: number }>(
         "SELECT seg, at, character_id FROM wall_log WHERE world = ? AND cause = 'keg' AND character_id IS NOT NULL AND at >= ? ORDER BY id",
       ),
@@ -75,6 +101,10 @@ export class LawStore {
 
   openOf(characterId: number): WarrantRow[] {
     return this.q.openOf.all(characterId)
+  }
+
+  warrant(id: number): WarrantRow | null {
+    return this.q.byId.get(id) ?? null
   }
 
   allOpen(): WarrantRow[] {
@@ -109,6 +139,38 @@ export class LawStore {
 
   setPlant(accountId: number, at: number | null): void {
     this.q.plant.run(accountId, at)
+  }
+
+  // ---- anti-collusion (migration 20) ----
+
+  /** Accounts `a` and `b` met (`party`, `lookout`) at `at`. */
+  touchContact(a: number, b: number, kind: string, at: number): void {
+    if (a === b) return
+    this.q.contact.run(Math.min(a, b), Math.max(a, b), kind, at)
+  }
+
+  /** How accounts `a` and `b` met since `since` (law_contacts, then trades and stall sales in social_log), or null. */
+  contactSince(a: number, b: number, since: number): string | null {
+    if (a === b) return 'account'
+    const c = this.q.contactOf.get(Math.min(a, b), Math.max(a, b), since)
+    if (c) return c.kind
+    try {
+      return this.q.socialOf.get(since, a, b, b, a)?.kind ?? null
+    } catch {
+      return null
+    }
+  }
+
+  pruneContacts(before: number): void {
+    this.q.prune.run(before)
+  }
+
+  flag(f: Omit<FlagRow, 'id'>, data: Record<string, unknown> = {}): void {
+    this.q.flag.run(f.at, f.wanted_character, f.wanted_account, f.hunter_character, f.hunter_account, f.rule, Math.max(0, Math.round(f.withheld)), JSON.stringify(data))
+  }
+
+  flags(limit: number): FlagRow[] {
+    return this.q.flags.all(limit)
   }
 
   /** Keg hits on the walls since `since` (wall_log, cause `keg`). */

@@ -347,6 +347,8 @@ export class BerserkLook {
   private endingNow = false
   private disposed = false
   private extra: BerserkMakeover | null = null
+  /** The actor kept out of the crowd tier (the outline shells need its own parts drawn: docs/CHARACTERS.md §3.5). */
+  private held: CharacterActor | null = null
   /** When the look began (the feature's clock, ms), and whether it began with the activation burst. */
   readonly since: number
   readonly burst: boolean
@@ -406,6 +408,11 @@ export class BerserkLook {
   update(dtMs: number, f: LookFrame): boolean {
     if (this.disposed) return false
     const actor = this.view.actor
+    if (actor !== this.held) {
+      this.held?.holdCrowd?.('berserk', false)
+      this.held = actor && !actor.isDisposed ? actor : null
+      this.held?.holdCrowd?.('berserk', true)
+    }
     this.grow = Math.max(0, Math.min(1, this.grow + ((this.endingNow ? -1 : 1) * dtMs) / HWAN_SCALE_MS))
     if (actor && !actor.isDisposed) actor.root.scaling.setAll(this.view.scale * hwanScale(this.grow))
     if (this.endingNow) {
@@ -481,6 +488,8 @@ export class BerserkLook {
     this.hair?.dispose()
     this.extra?.dispose()
     this.extra = null
+    this.held?.holdCrowd?.('berserk', false)
+    this.held = null
     const actor = this.view.actor
     if (actor && !actor.isDisposed) actor.root.scaling.setAll(this.view.scale)
   }

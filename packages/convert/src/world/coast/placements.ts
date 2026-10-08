@@ -11,7 +11,10 @@
  *   otherwise;
  * - every other model is dropped and listed (for hand placement in content/coast/props.json);
  * - coast.json `placements.drop` drops a placement by hand (P-DATA, wave 10r polish: a tree whose roots hang over the
- *   lowered ring), whatever its ground did.
+ *   lowered ring), whatever its ground did;
+ * - a placement whose origin touches the drowned area (./drown.ts) is dropped, whatever its ground did; the opened water
+ *   (the old strait and the bay, open sea now) drops only the vegetation under the sea level: its bed, piers and rocks are
+ *   retail.
  * Every dropped placement's footprint (model bounds x transform, region units) goes to `dropFootprints`: the minimap
  * draws our render there instead of the retail pixels, which have the object baked in (W10R DD-1, ./minimap.ts).
  * The footprint check lists the placements that stay but whose model footprint (bounds x transform, 9 x 9 samples)
@@ -103,7 +106,7 @@ export function placementEdits(
   // the coast's sea at a lattice vertex: water surface, but not the retail water that keeps its own plane in the bounds
   const m0 = r.masks
   const seaV = new Float64Array(r.h.length)
-  if (m0?.waterSurface) for (let i = 0; i < seaV.length; i++) seaV[i] = m0.waterSurface[i] && !(m0.inPlay[i] && m0.wetR[i]) ? 1 : 0
+  if (m0?.waterSurface) for (let i = 0; i < seaV.length; i++) seaV[i] = m0.waterSurface[i] && !(m0.inPlay[i] && m0.wetR[i]) && !m0.opened?.[i] ? 1 : 0
   const drop = (p: WorldPlacement, model: WorldModel | undefined, moveM: number) => {
     const ref = { region: p.region, uid: p.uid }
     out.edits.drop.push(ref)
@@ -116,6 +119,16 @@ export function placementEdits(
     const model = models[p.models[0] ?? -1]
     if (byHand.has(key(p.region, p.uid))) {
       handDropped.add(key(p.region, p.uid))
+      drop(p, model, m.delta)
+      continue
+    }
+    // the drowned area (./drown.ts): nothing of it stays, whatever its ground did
+    if (m0?.drowned && sampleLattice(r, m0.drowned, at.x, at.z) > 0) {
+      drop(p, model, m.delta)
+      continue
+    }
+    // the opened water keeps its piers and rocks, not a plant whose ground the open sea now covers
+    if (m0?.opened && isVegetation(p.source) && m.now < SL && sampleLattice(r, m0.opened, at.x, at.z) > 0) {
       drop(p, model, m.delta)
       continue
     }

@@ -189,7 +189,7 @@ describe('the no-anti-tile bit (TT-Q)', () => {
   })
 
   const MANIFEST = join(fileURLToPath(new URL('../../..', import.meta.url)), 'work', 'out', 'world', 'jangan-fields', 'manifest.json')
-  it.skipIf(!existsSync(MANIFEST))('the class is unchanged for every tile of jangan-fields; only the 12 c_marble_jang tiles and the 4 named paving tiles carry the bit', () => {
+  it.skipIf(!existsSync(MANIFEST))('the class is unchanged for every tile of jangan-fields; only the 12 c_marble_jang tiles and alex_stone02 carry the bit', () => {
     const tiles = (JSON.parse(readFileSync(MANIFEST, 'utf8')) as { tiles: Array<{ typeName: string | null; file: string; source: string }> }).tiles
     expect(tiles.length).toBeGreaterThan(0)
     const flagged: string[] = []
@@ -199,8 +199,9 @@ describe('the no-anti-tile bit (TT-Q)', () => {
       expect(surfaceFromAlpha(a / 255), t.file).toBe(terrainSurfaceClass(tile))
       if (noAntiTileFromAlpha(a / 255)) flagged.push(t.source)
     }
-    // + the four paving tiles the editor's palette files under "Road and paving" (H-12 TEL-2, NO_ANTI_TILE_STEMS)
-    expect(flagged.length).toBe(16)
+    // + alex_stone02, the one of the four named paving tiles (H-12 TEL-2, NO_ANTI_TILE_STEMS) still exported: ruin_takl_dest_05
+    // and wc_dust_don_14 / _15 only painted the drowned Western China side (docs/COAST.md §4.1): 16 -> 13
+    expect(flagged.length).toBe(13)
     expect(flagged.every(s => /^c_marble_jang_/.test(s) || NO_ANTI_TILE_STEMS.has(s.replace(/\.[a-z0-9]+$/i, '').toLowerCase()))).toBe(true)
   })
 })

@@ -3,7 +3,10 @@
  * boxes): the kit `msgbox2_window_` dialog frame with its title strip, the rebirth picture `messagebox/msgbox_rebirth`
  * and the rebirth button art `msgbox_rebirth_button` (176×24), with live English text. The button runs the caller's
  * respawn (it sends `respawn`); the overlay stays until the caller hides it, when the server has revived the character.
+ * The Climb (docs/CLIMB.md §6.1): a line under the text tells what the death cost (`deathPenalty`) and counts the grace
+ * window down.
  */
+import type { DeathPenaltyOutcome } from '@sro/shared'
 import { t } from '../i18n/index.ts'
 import type { Art } from '../ui/art.ts'
 import { el } from '../ui/dom.ts'
@@ -12,12 +15,15 @@ import { Frame } from '../ui/kit/frame.ts'
 import { FRAMES } from '../ui/kit/skins.ts'
 
 export const DEATH_W = 300
-export const DEATH_H = 190
+export const DEATH_H = 230
 
 export class DeathOverlay {
   readonly root: HTMLElement
   private readonly button: KitButton
   private onRespawn: (() => void) | null = null
+  private readonly penaltyLine: HTMLElement
+  private penalty: { outcome: DeathPenaltyOutcome; exp: number; pct: number; graceEnd: number } | null = null
+  private timer: ReturnType<typeof setInterval> | null = null
 
   constructor(art: Art) {
     const box = new Frame(art, 'dialog', { w: DEATH_W, h: DEATH_H, className: 'hud-death-box hud-block', inset: [0, 0, 0, 0] })
@@ -32,7 +38,8 @@ export class DeathOverlay {
       this.button.setLabel(t('hud.death.waiting'))
       this.onRespawn()
     })
-    box.root.append(title, picture, el('div', 'hud-death-body kit-t-body', t('hud.death.body')), this.button)
+    this.penaltyLine = el('div', 'hud-death-penalty kit-t-body')
+    box.root.append(title, picture, el('div', 'hud-death-body kit-t-body', t('hud.death.body')), this.penaltyLine, this.button)
     this.root = el('div', 'hud-death', box.root)
     this.root.hidden = true
   }
@@ -49,7 +56,39 @@ export class DeathOverlay {
     document.body.classList.add('hud-dead')
   }
 
+  /** The server's deathPenalty for this death (arrives just after the death; kept until hide). */
+  setPenalty(outcome: DeathPenaltyOutcome, exp: number, pct: number, graceMs: number, fmt: (n: number) => string): void {
+    if (outcome === 'refund') return
+    this.penalty = { outcome, exp, pct, graceEnd: Date.now() + graceMs }
+    this.fmt = fmt
+    this.renderPenalty()
+    if (this.timer === null && graceMs > 0) this.timer = setInterval(() => this.renderPenalty(), 1000)
+  }
+
+  private fmt: (n: number) => string = (n) => String(n)
+
+  private renderPenalty(): void {
+    const p = this.penalty
+    if (!p) {
+      this.penaltyLine.textContent = ''
+      return
+    }
+    const left = Math.max(0, p.graceEnd - Date.now())
+    const s = Math.ceil(left / 1000)
+    const grace = left > 0 ? t('hud.death.grace', { time: `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` }) : ''
+    const head = p.outcome === 'lost' ? t('hud.death.lost', { pct: p.pct, exp: this.fmt(p.exp) }) : p.outcome === 'grace' ? t('hud.death.spared') : t('hud.death.empty')
+    this.penaltyLine.textContent = grace ? `${head} ${grace}` : head
+    if (left <= 0 && this.timer !== null) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  }
+
   hide(): void {
+    this.penalty = null
+    if (this.timer !== null) clearInterval(this.timer)
+    this.timer = null
+    this.penaltyLine.textContent = ''
     this.onRespawn = null
     this.root.hidden = true
     document.body.classList.remove('hud-dead')

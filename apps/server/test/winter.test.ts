@@ -239,7 +239,7 @@ describe('the weather in winter (docs/WINTER.md §3)', () => {
 
 function gameplay(over: Partial<ServerConfig> = {}) {
   const root = tmp()
-  const config: ServerConfig = { ...testConfig(root), rng: seeded(5), uniques: false, winterEnabled: true, winterStart: '01-01', winterEnd: '12-31', winterTz: 'UTC', ...over }
+  const config: ServerConfig = { ...testConfig(root), weather: 'auto', stormsPerDay: undefined, rng: seeded(5), uniques: false, winterEnabled: true, winterStart: '01-01', winterEnd: '12-31', winterTz: 'UTC', ...over }
   const store = openStore(config.dataDir)
   cleanups.push(() => store.close())
   const bounds = { minX: -500, minZ: -500, maxX: 500, maxZ: 500 }

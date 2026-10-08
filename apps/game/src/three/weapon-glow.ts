@@ -50,6 +50,7 @@ import {
   type UniformBuffer,
 } from '@babylonjs/core'
 import { sceneExposure } from '@sro/world-render'
+import { isCrowdDrawn } from './crowd-vat.ts'
 
 // ---- the tiers ----------------------------------------------------------------------------------------------------
 
@@ -281,6 +282,11 @@ export interface GlowItemSpec {
   dummies: ReadonlyMap<string, { x: number; y: number; z: number }>
   /** × the tier's intensities (default 1; shields SHIELD_STRENGTH). */
   strength?: number
+  /**
+   * A seal weapon's hue (docs/RARITY.md §5.3): the glow, the band and the +7 glints take these colours (sRGB) instead
+   * of retail's blue, so a +7 Seal of Sun glows gold rather than washing out to white.
+   */
+  tint?: { color: Rgb; shimmer: Rgb }
 }
 
 /** Shields glow at this share of a weapon: their whole face catches the glow and the rim. */
@@ -318,6 +324,9 @@ export interface ItemGlow {
   readonly length: number
   /** Whether the axis came from the sidecar's blade dummies (else the item's box). */
   readonly blade: boolean
+  /** The glint run's aura and core (linear); absent = retail's blue and pale (a seal's hue: GlowItemSpec.tint). */
+  readonly glint?: Color3
+  readonly glintCore?: Color3
 }
 
 /** The glow of one mesh: its item, the blade in the mesh's own space and the mask edges. */
@@ -509,8 +518,9 @@ export class WeaponGlow implements GlowSource {
     const item: ItemGlow = {
       owner,
       tier,
-      color: linear(tier.color),
-      shimmerColor: linear(tier.shimmerColor),
+      color: linear(spec.tint?.color ?? tier.color),
+      shimmerColor: linear(spec.tint?.shimmer ?? tier.shimmerColor),
+      ...(spec.tint ? { glint: linear(spec.tint.color), glintCore: linear(spec.tint.shimmer) } : {}),
       meshes,
       phase: phaseOf(owner.root.uniqueId),
       strength: spec.strength ?? 1,
@@ -564,12 +574,12 @@ export class WeaponGlow implements GlowSource {
 }
 
 /** A stable 0..1 per owner (golden-ratio spread of the node id). */
-function phaseOf(id: number): number {
+export function phaseOf(id: number): number {
   return (id * 0.6180339887) % 1
 }
 
 /** The matrix taking item-root space to `mesh`'s local space (both under the same bone, so it never changes). */
-function itemToMesh(root: TransformNode, mesh: AbstractMesh): Matrix {
+export function itemToMesh(root: TransformNode, mesh: AbstractMesh): Matrix {
   const r = root.computeWorldMatrix(true)
   const w = mesh.computeWorldMatrix(true)
   w.invertToRef(tmpM)
@@ -580,7 +590,7 @@ function itemToMesh(root: TransformNode, mesh: AbstractMesh): Matrix {
  * The blade in item-root space: `ai_start` → `ai_end` when the sidecar has both (swords, blades, spears, glaives),
  * else the longest side of the meshes' box through its centre (bows, shields).
  */
-function bladeSpace(spec: GlowItemSpec, meshes: readonly AbstractMesh[]): { base: Vector3; tip: Vector3; blade: boolean } {
+export function bladeSpace(spec: GlowItemSpec, meshes: readonly AbstractMesh[]): { base: Vector3; tip: Vector3; blade: boolean } {
   const a = spec.dummies.get('ai_start')
   const b = spec.dummies.get('ai_end')
   if (a && b && Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z) > 0.05) return { base: new Vector3(a.x, a.y, a.z), tip: new Vector3(b.x, b.y, b.z), blade: true }
@@ -638,7 +648,8 @@ export function pickGlinting(items: Iterable<ItemGlow>, cap: number, eye: Vector
   for (const it of items) {
     if (it.tier.glints <= 0 || it.owner.isOffscreen) continue
     const m = it.meshes[0]
-    if (!m || m.isDisposed() || !m.isEnabled() || !m.isVisible || m.visibility <= 0.05) continue
+    // a crowd member's weapon is hidden but drawn by the crowd tier (three/crowd-tier.ts), its world matrix following it
+    if (!m || m.isDisposed() || !(m.isEnabled() || isCrowdDrawn(m)) || !m.isVisible || m.visibility <= 0.05) continue
     const self = it.owner.lodFull
     const d = eye ? Vector3.Distance(eye, it.owner.root.getAbsolutePosition()) : 0
     if (!self && d > GLINT_RANGE_M) continue
@@ -749,7 +760,7 @@ export class WeaponGlints {
           if (alpha <= 0.002 || q >= this.capacity) continue
           const s = unit * size * (layer ? 0.55 : 1)
           const spin = (seconds * 0.7 + i * 1.3 + layer) % (2 * Math.PI)
-          const col = layer ? this.pale : this.blue
+          const col = layer ? (it.glintCore ?? this.pale) : (it.glint ?? this.blue)
           this.quad(q++, at, right, up, s, spin, col, alpha * fade)
         }
       }

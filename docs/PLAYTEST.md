@@ -34,7 +34,7 @@ Good morning! Everything below exists and passed its tests overnight.
 2. **M** (or the map button on the minimap) opens the world map: area names, your arrow, NPC dots and hunting labels. The wheel zooms, left-drag pans, right-click re-centres on you, and Esc or M closes it.
 3. The minimap +/- buttons and the wheel zoom it, and the zoom survives a reload. Under the map: the area name and SRO coordinates.
 4. Monster name colours follow level: level-1 Mangyang are yellow; `/spawn MOB_CH_GYO_CLON 3` gives orange names and `/spawn MOB_CH_WATERGHOST 3` red ones. Crowded name tags stack or fade instead of piling up.
-5. `/tp` alone lists the places you can jump to: `jangan`, `spawn`, `grassland`, `hill-of-ye-mt`, `yeohas-forest`, `north-tiger-mt`, `south-tiger-mt`, `bandits-mountain-stronghold`, `lake-forest`, `swamp-area`, `chinese-tomb`, `enterance-of-qin-shi-tomb`, `jangan-ferry`, `western-china-ferry`, plus the town spots, beaches and boss camps of §7 "Teleport places". After `/tp north-tiger-mt`, `/where` names the area, and the land fills in within a second or two.
+5. `/tp` alone lists the places you can jump to: `jangan`, `spawn`, `grassland`, `hill-of-ye-mt`, `yeohas-forest`, `north-tiger-mt`, `south-tiger-mt`, `bandits-mountain-stronghold`, `lake-forest`, `swamp-area`, `chinese-tomb`, `enterance-of-qin-shi-tomb`, `jangan-ferry`, plus the town spots, beaches and boss camps of §7 "Teleport places". After `/tp north-tiger-mt`, `/where` names the area, and the land fills in within a second or two.
 6. Die in the fields (`/spawn MOB_CH_TIGER 3` at level 1 does the job): the camera pulls back, and you respawn at the town gate. Below 25 % HP the screen edges pulse red.
 
 ## 3. Combat and skills
@@ -153,11 +153,11 @@ Things to try:
 | Group | Places |
 |---|---|
 | Town | `jangan` / `spawn` (the gate where you appear), `plaza` (south of the fountain), `storage`, `palace-steps`, `north-gate` (the palace's big gate at the north end of the plaza avenue: the town wall has no north opening), `south-gate`, `east-gate`, `west-gate`, `market`, `smith`, `stable`, `pond` (the temple pond) |
-| Fields | `grassland`, `hill-of-ye-mt`, `yeohas-forest`, `north-tiger-mt`, `south-tiger-mt`, `bandits-mountain-stronghold`, `lake-forest`, `swamp-area`, `chinese-tomb`, `enterance-of-qin-shi-tomb`, `jangan-ferry`, `western-china-ferry` (now on its own area's near bank) |
+| Fields | `grassland`, `hill-of-ye-mt`, `yeohas-forest`, `north-tiger-mt`, `south-tiger-mt`, `bandits-mountain-stronghold`, `lake-forest`, `swamp-area`, `chinese-tomb`, `enterance-of-qin-shi-tomb`, `jangan-ferry` |
 | Coast | `jangan-south-beach` (also `beach-south`), `tomb-east-beach`, `qin-shi-tomb-beach`, `jangan-bay-shore`, `east-shelf-beach` (a cliff 30 m over the sea), `western-strait` (a ridge 108 m over the strait) |
 | Bosses | `tiger-camp-1` … `tiger-camp-11`: Tiger Girl's eleven camps (`/unique` says which one she is at) |
 
-Every place stands on open ground you can walk from town; the server checks each one at start and logs (and leaves out) any that fails. The other coast names (Tiger Beach, Tiger Cape, Tomb Ridge Beach, River Mouth, South-East Cape, Jangan Bay, Spur Cove, Canyon Beach) lie wholly in the sea ring outside the walkable world, and Earth Ghost Canyon, Okmungwan Field and the Western China areas lie across the river, so none of them has a place. The list lives in `content/places.json`; `pnpm --filter @sro/server places` re-checks it on the real export (`--write` re-snaps the computed rows).
+Every place stands on open ground you can walk from town; the server checks each one at start and logs (and leaves out) any that fails. The other coast names (Tiger Beach, Tiger Cape, Tomb Ridge Beach, River Mouth, South-East Cape, Jangan Bay, Spur Cove, Canyon Beach) lie wholly in the sea ring outside the walkable world. Jangan is an island: the Western China side across the strait and the land bridge toward Donwhang are open sea (docs/COAST.md §4.1), so no place lies there.
 
 ## 8. Settings, sound and keys
 
@@ -243,7 +243,7 @@ A second account in a private window (or a friend). Both level 10+ for the guild
 - **Never seen in a browser:** the party frame and invite popup, the quest dialogs and tracker, the GM editor windows, and the skill effects' timing. (Grass rendered fine on WebGPU overnight.)
 - **Performance:** grass cost on the N100 is unmeasured (estimated 4-6 ms on frames that build a chunk). Server memory is about 750 MB on the fields.
 - **Pathing:** attack and talk walks go in a straight line. A monster behind a fence or rock can end the attack; walk around it and click again.
-- **Map:** 91 nests west of the river cannot be reached on foot, so they do not spawn, but the world map still labels them. Level 19 is thin: only 8 of 22 Chakji Worker nests are on this side.
+- **Map:** Jangan is an island since 2026-10-06 (docs/COAST.md §4.1): the world map and the minimap show Jangan, its fields and its coast in open sea, nothing of the Western China side or Donwhang. The 104 nests that were there now lie in the sea; they do not spawn, and the world map leaves them out. Level 19 is thin: only 8 of 22 Chakji Worker nests are on Jangan's side.
 - **Pacing at rates 1:** reaching level 20 takes about 28 hours of grinding without potions. Walking is 53-72 % of quest time, and a new character starts with 0 gold (the first 5 herbs come from JG_001).
 - **Difficulty spots:** the Qin-Shi Tomb (JG_013/014, now lv 9-10) is still a field of aggressive 5-packs; only the entrance pack is asleep (§12, decision 8). Bandits (lv 16, JG_021) and White Tigers (lv 18) take 40-60 % HP per kill. The field Tiger Girl (level-20 unique) roams the level 16-19 grounds.
 - **Other:** Safari is not a target. Some server lines (quest drop counts, party gold share) are English-only. Weak Guard of Ice shows no PD change on starter armour (it adds a percentage).

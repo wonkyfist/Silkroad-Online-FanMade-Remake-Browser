@@ -1,0 +1,71 @@
+{
+ "species": "bigleaf",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 27,
+ "target": {
+  "h": 56.82,
+  "w": 72.02
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 3316,
+   "byMaterial": {
+    "bark": 1528,
+    "leaf": 1788
+   },
+   "cards": 447,
+   "frontNormalY": 1.0,
+   "vertices": 4798,
+   "heightM": 56.82,
+   "widthM": 72.02,
+   "crownCentre": [
+    -0.26,
+    0.38,
+    25.75
+   ],
+   "crownRadius": 18.28,
+   "bytes": 494972
+  },
+  "1": {
+   "triangles": 992,
+   "byMaterial": {
+    "bark": 192,
+    "leaf": 800
+   },
+   "cards": 200,
+   "frontNormalY": 1.0,
+   "vertices": 1752,
+   "heightM": 56.833,
+   "widthM": 72.02,
+   "crownCentre": [
+    -0.26,
+    0.38,
+    25.75
+   ],
+   "crownRadius": 18.28,
+   "bytes": 334808
+  },
+  "2": {
+   "triangles": 334,
+   "byMaterial": {
+    "bark": 142,
+    "leaf": 192
+   },
+   "cards": 48,
+   "frontNormalY": 1.0,
+   "vertices": 504,
+   "heightM": 56.832,
+   "widthM": 72.02,
+   "crownCentre": [
+    -0.26,
+    0.38,
+    25.75
+   ],
+   "crownRadius": 18.28,
+   "bytes": 270936
+  }
+ }
+}

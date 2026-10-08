@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea2c-2c76-74fb-919c-2c0719b216e1",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea2c-2c76-74fb-919c-2c0719b216e1.png?Expires=1790894429&Signature=iRC2VSRC3~S6sX5ziui738KYkOJqfUcT9OO0GA8h23zGTnWo1r7n~v28zcBWNq7jf2NYUyKinxU5EJGXHrv1qzAQRi7lMKAhRVplZ3edBpd3XrJSUOm98Sce87FUtVKpU8ijOJpyXpVQumwPqNchYS3u~xqIKshyiqGk6t1oMGHZ4FxfFk~~3oJimvLO-4g1Ukz36AcDQ6lS5C9dGABU698~7u8m30k~QBwB5GQrMUZ8rb~xnbdJnydcgJWGFlyhBFX8jfIZ0Op3i1JHw8LkbiPjKyZFKZsTNV797ctsOX-NMrteHG581owFMp5l2eBr-er9rOFtfDq4t3RsiPUteA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea2c-2c76-74fb-919c-2c0719b216e1.png?Expires=1790894429&Signature=BXVCrcK9qhpVjlHbiVgYP628qYpyG2xlwuHmFk4~6nQw4ilz7ofx6uhAMfKc5DD9oa43ztAUEnEHESmbLrpU--F6YI9GxwuHBxBHXgI74foBo2n4MgcEyXSVibkG7QidgS4kq-e3s8FeT9-YziuPd-DtIItpzAaZC7qeJ-fETz9pZmyw3ghi5F0gddl6O4OY1jA39SsVkM3tX~z7wGSKLmB2rpIRAeY6xMzokbwfHscCufbYIQyHP2Xd8x9JfNE6nYKKlJawzhWJi5KH-YRuGDfkeW9eyJnzYVN1qLiorqCx8C8LzJ7ROtani1xQb0NH03uYOlrKodC445VJqeel9Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea2c-2c76-74fb-919c-2c0719b216e1.png?Expires=1790894429&Signature=V~y7Tr0sMjylVTEKTuk8UiAi1rplhRxGUgeUX~-27X-mbzBOMct7H45vaVwRM8biRTiL5JbcIgN~oMCxtXU7KH41zb-GsAgaFq7JH98VqDd4AFobOH51dQgta3phfbPDsM27V2kN42P0u1ZX9gow2FVS1nhMckQ3CcQ3ZcWXRolIQlCSaZjai44KuE8TaCYZNptXv0XrrbNguos-U13mmFiFjRtiEuF0k7TMiSOVFloqw4tHThWZRiumh-erZz9BSsJW-0Ol0iFvQ7mpRyToqPlbkBFD65aP5WXUTZQb6DLKcIAVtWT2PPhOF~w1u0U1Ch41PX-c-kbmMSgqcWdrQg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea2c-2c76-74fb-919c-2c0719b216e1.png?Expires=1790894429&Signature=jOGoObCs3dj2~2cKhqLWudIns9HHS0lSHv8Ch0mcrQ9pQ-0mgypZW84-1nFQIOaoyEDqX6Z4NgPw7xjKFmbCaInYSxmN2gNUMgnIUqTzkVBWB3jx9D5mJa5wQwo4biGhW13MskEJgz-9uda90gfUNyiZW8stx0HP3AhXI-29p00RSRiigQ0Yf3WjxDhDDw8OsJu5geWEVyuCmkdqqreVp83wKn6HNQQBsKdLJDdBAxMQ6YlXusjstYpeyeI2VR~dROWUeqRxCo4VW~mWmUM44FHcjM2P3GsiEdTaCaQlN6rrWHOUDY1~U3~S~Ecd3sosb8HZVXrZtjJpJDGCAMkDIA__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790635160138,
+  "progress": 100,
+  "started_at": 1790635160145,
+  "finished_at": 1790635229033,
+  "expires_at": 1790894429033,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea2c-2c76-74fb-919c-2c0719b216e1/output/model.glb?Expires=1790894429&Signature=Ef~XnAyFJOdjZ~mtuodAe6SKwE5iXINeJAbUKVsE9ejXd8ftQTxOGIlU8pNUKLlzcm5Pybr0H1d68TrDsbrXoCOVOZ~abQE0Bh0fdPiTNc9utBhdG7X1mwjhrEbvs89Io~x5ATrijbNEnJRXEPNmiE10FcpkmwmSRnuiZiNGS-hrUoQTLPOn7c0d2-3KDS6yc5AUaCkaMZj-rghhj9pNNUuLFIqZnFuMxaJvt8vDypmN1jKhTK9~XYOFQuHnxNxFVutW7lEHri~1M9o8-i2Gjo~mZkVMehvxS8F6SvQrBjnX5Bsp~VzbcW0zRcLil-su0LlahIi3UxxoAwGnU8m-KA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_sword_01\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_sword_01\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_sword_01\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_sword_01\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_sword_01\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and proportions. A plain Chinese straight double-edged sword (jian), the starter copper sword. Long tapering blade of grey steel with a slightly darker central ridge and lighter edges, unadorned. Small flat guard of polished brass with a thin dark red band above it, a short grip wrapped in dark reddish-brown leather, and a small brass pommel cap. Target: realistic forged steel with fine lengthwise grinding marks, light scratches and subtle edge wear, softly polished brass fittings with slight tarnish in the recesses, tightly wrapped worn leather grip with visible texture. No text, no logos, no engraving or inlay on the blade."
+  }
+}

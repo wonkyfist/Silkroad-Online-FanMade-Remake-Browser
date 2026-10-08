@@ -1,0 +1,6362 @@
+{
+ "prim/snd/bldg/common/structure_destroy.wav": {
+  "size": 202904,
+  "mtimeMs": 1180515605281,
+  "sha1": "440285b0ce8f4032f61fcc21b309e2ed04c698e0",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "bldg/common/structure_destroy.wav",
+  "ms": 4226,
+  "channels": 1
+ },
+ "prim/snd/bldg/common/structure_dmg.wav": {
+  "size": 59420,
+  "mtimeMs": 1180515605281,
+  "sha1": "c7eace0da73f1ca97bda3cfe5cbe281b923ccc95",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "bldg/common/structure_dmg.wav",
+  "ms": 1229,
+  "channels": 1
+ },
+ "prim/snd/common/explode_bomb1.wav": {
+  "size": 108664,
+  "mtimeMs": 1180515605281,
+  "sha1": "80ed8fec6ea5d899c6811392f611ef7a027bcccc",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "common/explode_bomb1.wav",
+  "ms": 2462,
+  "channels": 1
+ },
+ "prim/snd/common/explode_bomb2.wav": {
+  "size": 81484,
+  "mtimeMs": 1180515605281,
+  "sha1": "ad75dc5d7f42309db5520af962d33b906ed9b3a0",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "common/explode_bomb2.wav",
+  "ms": 1845,
+  "channels": 1
+ },
+ "prim/snd/common/stone_bomb.wav": {
+  "size": 77402,
+  "mtimeMs": 1180515605281,
+  "sha1": "7baffad864059ecdc0c0105a12cd58d898571df7",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "common/stone_bomb.wav",
+  "ms": 1716,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing1.wav": {
+  "size": 23042,
+  "mtimeMs": 1173401017765,
+  "sha1": "876c6ee37ce35e25250215610a59b792ef1a2430",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing1.ogg",
+  "ms": 253,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing10.wav": {
+  "size": 15460,
+  "mtimeMs": 1173401017765,
+  "sha1": "ed8dc64584c5bd044fca6b9eba965417d386e190",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing10.ogg",
+  "ms": 348,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing11.wav": {
+  "size": 43986,
+  "mtimeMs": 1173401017765,
+  "sha1": "9dc6b57ee15edeb9926e4a9a4efab02438f96bf9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing11.ogg",
+  "ms": 427,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing4.wav": {
+  "size": 24514,
+  "mtimeMs": 1173401017765,
+  "sha1": "4f3b34bba9d8ff589c754a2a1aa1820143d6c5b8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing4.ogg",
+  "ms": 274,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing5.wav": {
+  "size": 21476,
+  "mtimeMs": 1173401017765,
+  "sha1": "4dc3bb4dc588744be30b4b22499be7bdb7589c6b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing5.ogg",
+  "ms": 242,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing6.wav": {
+  "size": 51108,
+  "mtimeMs": 1173401017765,
+  "sha1": "acdf07d006aa7452f87aa78722da2ef5c5d16f0b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing6.ogg",
+  "ms": 383,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing8.wav": {
+  "size": 15242,
+  "mtimeMs": 1173401017765,
+  "sha1": "fffdf8253e1642187e83f3a1f9d87e19a459a559",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing8.ogg",
+  "ms": 343,
+  "channels": 1
+ },
+ "prim/snd/common/swordswing9.wav": {
+  "size": 14032,
+  "mtimeMs": 1173401017765,
+  "sha1": "298fcb60bf982985fac1378a91426cf205940756",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "common/swordswing9.ogg",
+  "ms": 315,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_cat_stand1.wav": {
+  "size": 30892,
+  "mtimeMs": 1237881286015,
+  "sha1": "7f1d7ee79c6d62195aed656f6ce7760e6bb0a5d5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_cat_stand1.ogg",
+  "ms": 700,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_cow_moan1.wav": {
+  "size": 57444,
+  "mtimeMs": 1132824877312,
+  "sha1": "722dfbda16d53bdb96cc3fc9311229f56ff99f2c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_cow_moan1.ogg",
+  "ms": 1045,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_cow_moan2.wav": {
+  "size": 54028,
+  "mtimeMs": 1132824877406,
+  "sha1": "b9d3a218b4faa8221577e6fcffdf5e278652bda2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_cow_moan2.ogg",
+  "ms": 1044,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_cow_stand.wav": {
+  "size": 84518,
+  "mtimeMs": 1132824877484,
+  "sha1": "e8df36f55abd36899e3f9c73379ce90d8fbc7268",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_cow_stand.ogg",
+  "ms": 1675,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_cow_walk.wav": {
+  "size": 9458,
+  "mtimeMs": 1132824877640,
+  "sha1": "512437dadf2f8db43116ec6f8463d29657da9e54",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_cow_walk.ogg",
+  "ms": 201,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_donkey_moan1.wav": {
+  "size": 32496,
+  "mtimeMs": 1102420367561,
+  "sha1": "aa65923045e5d5958123791718bb491f3817a373",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_donkey_moan1.ogg",
+  "ms": 616,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_donkey_moan2.wav": {
+  "size": 50154,
+  "mtimeMs": 1132824878203,
+  "sha1": "370f1e64d4df5250dfb655f7dc83d95cacf09fbf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_donkey_moan2.ogg",
+  "ms": 1020,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_donkey_stand.wav": {
+  "size": 76640,
+  "mtimeMs": 1102420367748,
+  "sha1": "5c313a711d7816179e784b8507011fe20e0d3aa2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_donkey_stand.ogg",
+  "ms": 1191,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_die.wav": {
+  "size": 96122,
+  "mtimeMs": 1132824878734,
+  "sha1": "2e0e9b1d88f121db952f392190a26d2918d5bc09",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_die.ogg",
+  "ms": 2177,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_moan1.wav": {
+  "size": 60454,
+  "mtimeMs": 1102420367983,
+  "sha1": "6dad71501e0a2e43c6e273bd2a68a99612ce8af8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_moan1.ogg",
+  "ms": 1248,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_moan2.wav": {
+  "size": 44268,
+  "mtimeMs": 1102420368092,
+  "sha1": "b1858f8b7f635a9ec0f09b55ee458f58e4a94f75",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_moan2.ogg",
+  "ms": 951,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_run.wav": {
+  "size": 20000,
+  "mtimeMs": 1173401017765,
+  "sha1": "269897ad9701410dc52ac2c30fd52d80ed0cd31f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_run.ogg",
+  "ms": 320,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_stand.wav": {
+  "size": 44268,
+  "mtimeMs": 1102420368327,
+  "sha1": "35966d94ed1a27e7aa4342436c38089865e97697",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_stand.ogg",
+  "ms": 769,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_horse_thud.wav": {
+  "size": 36236,
+  "mtimeMs": 1132824879203,
+  "sha1": "e07aed38949f067f16ae4102ed65dc4625317994",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_horse_thud.ogg",
+  "ms": 786,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_wolf_01_moan1.wav": {
+  "size": 20012,
+  "mtimeMs": 1173401017765,
+  "sha1": "3e3c336bbaf73579a674cd34e930f37f6f4f6f20",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_wolf_01_moan1.ogg",
+  "ms": 453,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_wolf_01_moan2.wav": {
+  "size": 18920,
+  "mtimeMs": 1173401017765,
+  "sha1": "5fe52e6582f44d61d8fbc129957938bb6b4897c0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_wolf_01_moan2.ogg",
+  "ms": 428,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_wolf_01_shout.wav": {
+  "size": 7254,
+  "mtimeMs": 1173401017765,
+  "sha1": "298d3240f4deb8744cc8110068403d0a3c986e88",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_wolf_01_shout.ogg",
+  "ms": 163,
+  "channels": 1
+ },
+ "prim/snd/cos/cos_wolf_01_stand1.wav": {
+  "size": 50116,
+  "mtimeMs": 1173401017765,
+  "sha1": "6fa560a0078bfabf156c305af27484fae4cb05bf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "cos/cos_wolf_01_stand1.ogg",
+  "ms": 1134,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_at_emo_down.wav": {
+  "size": 15246,
+  "mtimeMs": 1102420368936,
+  "sha1": "52cebd4fe8d227b019d12aea031dc4454010c440",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_at_emo_down.ogg",
+  "ms": 339,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_at_emo_up.wav": {
+  "size": 34862,
+  "mtimeMs": 1102420369358,
+  "sha1": "8ca10e9b6d3f2a1bec3618cab935e0f6f4298960",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_at_emo_up.ogg",
+  "ms": 741,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_bt_emo_down.wav": {
+  "size": 17902,
+  "mtimeMs": 1102420369702,
+  "sha1": "29d22cea301f6a70d67de32360ee170389f03bd1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_bt_emo_down.ogg",
+  "ms": 347,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_bt_emo_up.wav": {
+  "size": 44142,
+  "mtimeMs": 1102420370186,
+  "sha1": "559f387bd1412b0910ffb1aaee3d4490154f2adc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_bt_emo_up.ogg",
+  "ms": 945,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_ct_emo_down.wav": {
+  "size": 21486,
+  "mtimeMs": 1102420370748,
+  "sha1": "0a2c5d6af98c9fb398557f56a594fe1efb4439c3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_ct_emo_down.ogg",
+  "ms": 453,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_ct_emo_up.wav": {
+  "size": 45614,
+  "mtimeMs": 1102420371327,
+  "sha1": "56c531e90c4572ba7b7515b89e37dd253e10d3b8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_ct_emo_up.ogg",
+  "ms": 907,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_et_emo_down.wav": {
+  "size": 25076,
+  "mtimeMs": 1102420371780,
+  "sha1": "77d143e56c4cca1db6bd1aca1188baf5b3304512",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_et_emo_down.ogg",
+  "ms": 533,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcf_et_emo_up.wav": {
+  "size": 29428,
+  "mtimeMs": 1102420372233,
+  "sha1": "089b03b08da28b69c9de7fd9b9abf3eb648c9508",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcf_et_emo_up.ogg",
+  "ms": 665,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_charge.wav": {
+  "size": 42926,
+  "mtimeMs": 1102420372405,
+  "sha1": "a09db598071316dbd569ffcb2ecb748676783473",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_charge.ogg",
+  "ms": 958,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_down.wav": {
+  "size": 19372,
+  "mtimeMs": 1102420372670,
+  "sha1": "a04b58fbc367720804d8ca0009927610db7b3778",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_down.ogg",
+  "ms": 391,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_no.wav": {
+  "size": 27310,
+  "mtimeMs": 1102420372764,
+  "sha1": "3fa93fa766f5ae4a653ec7786f06a6b3419a4bf7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_no.ogg",
+  "ms": 597,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_ok.wav": {
+  "size": 24622,
+  "mtimeMs": 1102420372873,
+  "sha1": "e609b4dccc0888edc73b2e73e90306e091719fe6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_ok.ogg",
+  "ms": 544,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_up.wav": {
+  "size": 19886,
+  "mtimeMs": 1102420372920,
+  "sha1": "4a0cec11376909708802de7ad088bb157c01b43c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_up.ogg",
+  "ms": 447,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_at_emo_ye.wav": {
+  "size": 15854,
+  "mtimeMs": 1102420373061,
+  "sha1": "534385ba50d35c57f1a3badafaf8e55794af5c2d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_at_emo_ye.ogg",
+  "ms": 358,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_bt_emo_down.wav": {
+  "size": 16014,
+  "mtimeMs": 1102420373311,
+  "sha1": "60f942c48daea276c48ad338968980f17c67ae4b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_bt_emo_down.ogg",
+  "ms": 361,
+  "channels": 1
+ },
+ "prim/snd/emoticon/vcm_bt_emo_up.wav": {
+  "size": 10770,
+  "mtimeMs": 1102420373592,
+  "sha1": "8055bf6f02f66e6f087a52aff3ce173515c23247",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "emoticon/vcm_bt_emo_up.ogg",
+  "ms": 242,
+  "channels": 1
+ },
+ "prim/snd/env/bell towel 3.wav": {
+  "size": 448544,
+  "mtimeMs": 1173401017765,
+  "sha1": "f23688158472ef664bb929065312fe78b1846c28",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/bell_towel_3.ogg",
+  "ms": 10131,
+  "channels": 1
+ },
+ "prim/snd/env/day_bird01.wav": {
+  "size": 14686,
+  "mtimeMs": 1102420373889,
+  "sha1": "9551a76ce93edf286825f060052bbe0784a59538",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_bird01.ogg",
+  "ms": 664,
+  "channels": 1
+ },
+ "prim/snd/env/day_bird02.wav": {
+  "size": 121972,
+  "mtimeMs": 1102420374045,
+  "sha1": "478f951c5fa35a309e4e1fbab2f76b225123b53f",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_bird02.ogg",
+  "ms": 2692,
+  "channels": 1
+ },
+ "prim/snd/env/day_bird03.wav": {
+  "size": 100468,
+  "mtimeMs": 1102420374092,
+  "sha1": "fb801b91fdd1109d649be74015541857e4061c9f",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_bird03.ogg",
+  "ms": 2170,
+  "channels": 1
+ },
+ "prim/snd/env/day_bird04.wav": {
+  "size": 447652,
+  "mtimeMs": 1102420374264,
+  "sha1": "8a8fece02cf8f117b6b1d6901ef8a4ce03535b60",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_bird04.ogg",
+  "ms": 9791,
+  "channels": 1
+ },
+ "prim/snd/env/day_bird05.wav": {
+  "size": 131188,
+  "mtimeMs": 1102420374342,
+  "sha1": "184352ec8aaa1daa7773766724468088966829a5",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_bird05.ogg",
+  "ms": 2972,
+  "channels": 1
+ },
+ "prim/snd/env/day_wind.wav": {
+  "size": 265772,
+  "mtimeMs": 1102420374483,
+  "sha1": "c494c7560701785f6d0ece1638f24ef62209ef22",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_wind.ogg",
+  "ms": 6026,
+  "channels": 1
+ },
+ "prim/snd/env/day_wind02.wav": {
+  "size": 405548,
+  "mtimeMs": 1102420374623,
+  "sha1": "f6b65a5b7f8b3ac8d1223b6caf8714a4cf85d284",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/day_wind02.ogg",
+  "ms": 9115,
+  "channels": 1
+ },
+ "prim/snd/env/dd_mainwind.wav": {
+  "size": 87880,
+  "mtimeMs": 1108992983380,
+  "sha1": "fb3fad434be0d5b3e9e8d0949aec5901a5a46ccd",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/dd_mainwind.ogg",
+  "ms": 1990,
+  "channels": 1
+ },
+ "prim/snd/env/dd_wind_01.wav": {
+  "size": 157888,
+  "mtimeMs": 1108992982005,
+  "sha1": "1bb524f4a6fa01c715cf5efb55417dccba85aa17",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/dd_wind_01.ogg",
+  "ms": 3578,
+  "channels": 1
+ },
+ "prim/snd/env/dd_wind_02.wav": {
+  "size": 151814,
+  "mtimeMs": 1108992980427,
+  "sha1": "cf1d88609c8fac8b8e5ec6dee79f17796d386d70",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/dd_wind_02.ogg",
+  "ms": 3440,
+  "channels": 1
+ },
+ "prim/snd/env/donhwang_wind01.wav": {
+  "size": 295808,
+  "mtimeMs": 1102420374780,
+  "sha1": "16a0e332fd207000dc80bab98868dee81da5b693",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/donhwang_wind01.ogg",
+  "ms": 4307,
+  "channels": 1
+ },
+ "prim/snd/env/donhwang_wind02.wav": {
+  "size": 513956,
+  "mtimeMs": 1102420374873,
+  "sha1": "47de5db21008a68f6d7eca7d07cced5ff0a8d3b3",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/donhwang_wind02.ogg",
+  "ms": 5502,
+  "channels": 1
+ },
+ "prim/snd/env/donhwang_wind03.wav": {
+  "size": 1392428,
+  "mtimeMs": 1102420375186,
+  "sha1": "b2485fb672a984f0f2c273d1334c94bc9e31ea45",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/donhwang_wind03.ogg",
+  "ms": 11390,
+  "channels": 1
+ },
+ "prim/snd/env/donhwang_wind04.wav": {
+  "size": 913796,
+  "mtimeMs": 1102420375373,
+  "sha1": "d95ad93d8c76aa7be86ceeee9ea14e010501811f",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/donhwang_wind04.ogg",
+  "ms": 16237,
+  "channels": 1
+ },
+ "prim/snd/env/donhwang_wind05.wav": {
+  "size": 99710,
+  "mtimeMs": 1102420375452,
+  "sha1": "87500936582aafe125547caadd95783efccba101",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/donhwang_wind05.ogg",
+  "ms": 2182,
+  "channels": 1
+ },
+ "prim/snd/env/night_bird01.wav": {
+  "size": 279668,
+  "mtimeMs": 1102420376483,
+  "sha1": "97d94f067535bef3c266854c6c893f3be59cd811",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_bird01.ogg",
+  "ms": 6290,
+  "channels": 1
+ },
+ "prim/snd/env/night_bird02.wav": {
+  "size": 224372,
+  "mtimeMs": 1102420376655,
+  "sha1": "cc826567817f06ab3e42b5159a6e88c849f8bba6",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_bird02.ogg",
+  "ms": 4568,
+  "channels": 1
+ },
+ "prim/snd/env/night_bird03.wav": {
+  "size": 92716,
+  "mtimeMs": 1102420376702,
+  "sha1": "a5b0763f809e91418dd35e40fdba1a47569e5874",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_bird03.ogg",
+  "ms": 1712,
+  "channels": 1
+ },
+ "prim/snd/env/night_bird04.wav": {
+  "size": 91252,
+  "mtimeMs": 1102420376795,
+  "sha1": "41f0b7d852e81e85dca4b048ad32687c10186a89",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_bird04.ogg",
+  "ms": 2046,
+  "channels": 1
+ },
+ "prim/snd/env/night_bird05.wav": {
+  "size": 140404,
+  "mtimeMs": 1102420376858,
+  "sha1": "90c46ee10b477495cd10fdd909f60291e6146830",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_bird05.ogg",
+  "ms": 3036,
+  "channels": 1
+ },
+ "prim/snd/env/night_insect01.wav": {
+  "size": 75380,
+  "mtimeMs": 1102420376952,
+  "sha1": "91205446655c4719fa9149770836b8f14597ebe4",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_insect01.ogg",
+  "ms": 1707,
+  "channels": 1
+ },
+ "prim/snd/env/night_insect02.wav": {
+  "size": 215156,
+  "mtimeMs": 1102420377030,
+  "sha1": "f732d0810a9b0f98c244fa85b8cfbcbfecb1f4ba",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_insect02.ogg",
+  "ms": 4876,
+  "channels": 1
+ },
+ "prim/snd/env/night_insect03.wav": {
+  "size": 352372,
+  "mtimeMs": 1102420377202,
+  "sha1": "d6fe698a6e263bc56f358eefab2a0c02a1f3555f",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_insect03.ogg",
+  "ms": 7981,
+  "channels": 1
+ },
+ "prim/snd/env/night_wind.wav": {
+  "size": 407534,
+  "mtimeMs": 1102420377342,
+  "sha1": "08f7a5b961efd2190c52ff9ef693f42ce5f1175d",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/night_wind.ogg",
+  "ms": 9240,
+  "channels": 1
+ },
+ "prim/snd/env/oceana.wav": {
+  "size": 901164,
+  "mtimeMs": 1313551173265,
+  "sha1": "ba0c5c402645ea49920a22341092f20bd05afce2",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/oceana.ogg",
+  "ms": 10217,
+  "channels": 1
+ },
+ "prim/snd/env/sea_wave1.wav": {
+  "size": 324198,
+  "mtimeMs": 1173401017765,
+  "sha1": "bad4fedd257821e52e15fe9a728348714d727a27",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/sea_wave1.ogg",
+  "ms": 7341,
+  "channels": 1
+ },
+ "prim/snd/env/seabird.wav": {
+  "size": 503246,
+  "mtimeMs": 1173401017765,
+  "sha1": "84476fad51e7425e70542c430013b04a17db198b",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/seabird.ogg",
+  "ms": 11252,
+  "channels": 1
+ },
+ "prim/snd/env/seabird2.wav": {
+  "size": 300350,
+  "mtimeMs": 1173401017765,
+  "sha1": "eed3728bf80fffe69831bc32ebb7c273e2a74200",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "env/seabird2.ogg",
+  "ms": 6784,
+  "channels": 1
+ },
+ "prim/snd/etc/lightning1.wav": {
+  "size": 273014,
+  "mtimeMs": 1107399815296,
+  "sha1": "682d8c93c2782e1b52d33326728ea86c53a580c5",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "etc/lightning1.ogg",
+  "ms": 6097,
+  "channels": 1
+ },
+ "prim/snd/etc/lightning2.wav": {
+  "size": 360054,
+  "mtimeMs": 1107399815875,
+  "sha1": "fbe833b2256b7c673e70da90347fbc2f55c91871",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "etc/lightning2.ogg",
+  "ms": 8058,
+  "channels": 1
+ },
+ "prim/snd/etc/lightning3.wav": {
+  "size": 520308,
+  "mtimeMs": 1107399816171,
+  "sha1": "cf7aa4f92d829d9e57f23f57803e5a30a775b74a",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "etc/lightning3.ogg",
+  "ms": 11624,
+  "channels": 1
+ },
+ "prim/snd/etc/rain1.wav": {
+  "size": 205098,
+  "mtimeMs": 1107399816343,
+  "sha1": "a918502d0dbb54ab4b473fc0722c8d69f6ff49a5",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "etc/rain1.ogg",
+  "ms": 2324,
+  "channels": 2
+ },
+ "prim/snd/mob_god/togui_togui/togui_togui_attack1.wav": {
+  "size": 95068,
+  "mtimeMs": 1313552943625,
+  "sha1": "ae8cd1e419516cf559ff075b50015bd30ea1edaa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "mob_god/togui_togui/togui_togui_attack1.ogg",
+  "ms": 1057,
+  "channels": 1
+ },
+ "prim/snd/mob_god/togui_togui/togui_togui_attack2.wav": {
+  "size": 87518,
+  "mtimeMs": 1313552946250,
+  "sha1": "f3b69031e6c8b3da22571fda78f10759eea9149f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "mob_god/togui_togui/togui_togui_attack2.ogg",
+  "ms": 985,
+  "channels": 1
+ },
+ "prim/snd/mob_god/togui_togui/togui_togui_attack3.wav": {
+  "size": 129728,
+  "mtimeMs": 1313552953000,
+  "sha1": "0041fca00ac0845b465e4c44200ccceb93de8251",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "mob_god/togui_togui/togui_togui_attack3.ogg",
+  "ms": 1419,
+  "channels": 1
+ },
+ "prim/snd/mob_god/togui_togui/togui_togui_attack3_2.wav": {
+  "size": 76404,
+  "mtimeMs": 1313552956015,
+  "sha1": "86f996d55bd41e28a93ffba1407bea7da54b7828",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "mob_god/togui_togui/togui_togui_attack3_2.ogg",
+  "ms": 864,
+  "channels": 1
+ },
+ "prim/snd/mob_god/togui_togui/togui_togui_swish.wav": {
+  "size": 40930,
+  "mtimeMs": 1313552975500,
+  "sha1": "35d4c10a3f456eea1d7eb319a9986ff00b08c61e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "mob_god/togui_togui/togui_togui_swish.ogg",
+  "ms": 461,
+  "channels": 1
+ },
+ "prim/snd/monster/cara_bunwang_shout.wav": {
+  "size": 20814,
+  "mtimeMs": 1173401017765,
+  "sha1": "b5957f50fb618052ecf3c73d0f25b48d5c08e604",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "monster/cara_bunwang_shout.wav",
+  "ms": 465,
+  "channels": 1
+ },
+ "prim/snd/monster/cara_plana_icehit.wav": {
+  "size": 35438,
+  "mtimeMs": 1102420382889,
+  "sha1": "dd1170d9c59108ed59b25dcf87b4a0dca9cab006",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cara_plana_icehit.ogg",
+  "ms": 801,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_die.wav": {
+  "size": 61740,
+  "mtimeMs": 1173401017765,
+  "sha1": "e1f7f88f9bbc6ed90b21c76e905f2758f411e6a0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_die.ogg",
+  "ms": 1399,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_die_a.wav": {
+  "size": 70700,
+  "mtimeMs": 1102420385217,
+  "sha1": "855c4c2b56ee08926c8674cbec2548b84a1c103c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_die_a.ogg",
+  "ms": 1443,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_die_b.wav": {
+  "size": 74668,
+  "mtimeMs": 1102420385405,
+  "sha1": "94cb6481ff6c41ffe0c6b45028fdcccb7c054066",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_die_b.ogg",
+  "ms": 1550,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_moan1.wav": {
+  "size": 16556,
+  "mtimeMs": 1102420385498,
+  "sha1": "e0bc52549448fd48aecca02e74e01475bb3a564a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_moan1.ogg",
+  "ms": 374,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_moan2.wav": {
+  "size": 46508,
+  "mtimeMs": 1102420385561,
+  "sha1": "dc5c9c2a0afdbc72777f8ff4e8daabd956696176",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_moan2.ogg",
+  "ms": 1026,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_shout_a.wav": {
+  "size": 23468,
+  "mtimeMs": 1102420385702,
+  "sha1": "29b5705aa85c8583c57d2f645026c817d31ccec7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_shout_a.ogg",
+  "ms": 477,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_shout_b.wav": {
+  "size": 16460,
+  "mtimeMs": 1102420385748,
+  "sha1": "12d5b3a7fa90c22924b44baff13b294be932f2bd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_shout_b.ogg",
+  "ms": 372,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_shout_c.wav": {
+  "size": 25324,
+  "mtimeMs": 1102420385858,
+  "sha1": "acb88ccb5f4620416898edbc5f8fceb06fb33901",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_shout_c.ogg",
+  "ms": 573,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_shout_d.wav": {
+  "size": 29356,
+  "mtimeMs": 1102420385936,
+  "sha1": "d473ba7559d8f6b0785fb2b4d5a0fcef42741d58",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_shout_d.ogg",
+  "ms": 665,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_stand_a.wav": {
+  "size": 63020,
+  "mtimeMs": 1102420386045,
+  "sha1": "8ae664bb283adcc3276718fad203343f461435b4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_stand_a.ogg",
+  "ms": 1428,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bandit_stand_b.wav": {
+  "size": 47276,
+  "mtimeMs": 1102420386155,
+  "sha1": "fc84767f94419585c05bf909df9f7a3c700632b8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bandit_stand_b.ogg",
+  "ms": 842,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_die.wav": {
+  "size": 57004,
+  "mtimeMs": 1102420386233,
+  "sha1": "ca40c9ea4517b8be507cc52b10cc9a85319e11b3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_die.ogg",
+  "ms": 1292,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_die_a.wav": {
+  "size": 87852,
+  "mtimeMs": 1173401017765,
+  "sha1": "f303a36414f45e4f5092fae4da432ca46662ab6d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_die_a.ogg",
+  "ms": 1618,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_moan1.wav": {
+  "size": 15404,
+  "mtimeMs": 1102420386311,
+  "sha1": "b0975d1e020b26f27bcbf340e2349212178ae169",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_moan1.ogg",
+  "ms": 348,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_moan2.wav": {
+  "size": 46636,
+  "mtimeMs": 1102420386483,
+  "sha1": "ccfa1efce6f42dcc8acbadae4e1eaa351d39451a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_moan2.ogg",
+  "ms": 1057,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_stand_a.wav": {
+  "size": 96300,
+  "mtimeMs": 1102420386545,
+  "sha1": "a82e1e5413dd13f9f40bb70fe25dbfdecdfa3444",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_stand_a.ogg",
+  "ms": 2039,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_stand_b.wav": {
+  "size": 78764,
+  "mtimeMs": 1102420386717,
+  "sha1": "5a6b63f8df6bc9a814483f7e343c4aa4a6ce3366",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_stand_b.ogg",
+  "ms": 1785,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_banditar_thud.wav": {
+  "size": 22080,
+  "mtimeMs": 1102420386795,
+  "sha1": "cd545645bc0df30ba0fc4011f7be328d409c68e8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_banditar_thud.ogg",
+  "ms": 496,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_die_a.wav": {
+  "size": 39908,
+  "mtimeMs": 1102420386905,
+  "sha1": "f51030e5e800ad5dfd4f2825c61867cd2f36ed43",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_die_a.ogg",
+  "ms": 841,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_die_b.wav": {
+  "size": 37848,
+  "mtimeMs": 1102420386983,
+  "sha1": "568dc6338fe831e4dd5bc4af46c7dbbec52933ea",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_die_b.ogg",
+  "ms": 848,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_moan1.wav": {
+  "size": 22030,
+  "mtimeMs": 1102420387108,
+  "sha1": "91a4bd500218df45e058121c103eca60c2045221",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_moan1.ogg",
+  "ms": 471,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_moan2_a.wav": {
+  "size": 26466,
+  "mtimeMs": 1102420387186,
+  "sha1": "b92697507993ed01cb7b4653b42849398329c9ac",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_moan2_a.ogg",
+  "ms": 599,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_moan2_b.wav": {
+  "size": 26574,
+  "mtimeMs": 1102420387295,
+  "sha1": "52602c86a90ea87bc3ff23322e48e29b06cd1845",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_moan2_b.ogg",
+  "ms": 559,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_shout_a.wav": {
+  "size": 24230,
+  "mtimeMs": 1102420387405,
+  "sha1": "793f0288f2a4d3c5de742e3e504ae4b386722364",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_shout_a.ogg",
+  "ms": 533,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_shout_b.wav": {
+  "size": 28322,
+  "mtimeMs": 1102420387530,
+  "sha1": "a86c2ccc515b6e2d90a53c398cf668da52628003",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_shout_b.ogg",
+  "ms": 576,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_thud.wav": {
+  "size": 21516,
+  "mtimeMs": 1102420387623,
+  "sha1": "f8a92c9547196002aadc7b15c5f9a72d8959f842",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_thud.ogg",
+  "ms": 474,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_beye_walk.wav": {
+  "size": 9396,
+  "mtimeMs": 1102420387733,
+  "sha1": "c0a9dc926a2e09a857e0cad4d6d948f80cd2d27e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_beye_walk.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_die.wav": {
+  "size": 152984,
+  "mtimeMs": 1102420387873,
+  "sha1": "99ae663d1b0fba9149f6d90bbe603590f89aa913",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_die.ogg",
+  "ms": 3468,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_find.wav": {
+  "size": 132390,
+  "mtimeMs": 1102420388014,
+  "sha1": "9e6b0f6f238ab7c730ed33ab4ba394a171bd808d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_find.ogg",
+  "ms": 3001,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_moan2.wav": {
+  "size": 122142,
+  "mtimeMs": 1102420388327,
+  "sha1": "10f54c317cc4ea163ca382d25ff11649dcc37524",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_moan2.ogg",
+  "ms": 2725,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_moan3.wav": {
+  "size": 74772,
+  "mtimeMs": 1237881286015,
+  "sha1": "77928118d3fa2e8c07ce5f4031ea35a76603afee",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_moan3.ogg",
+  "ms": 1586,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_shout_a.wav": {
+  "size": 101226,
+  "mtimeMs": 1102420388530,
+  "sha1": "4479bce02a6912abd377516851d419cab464835e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_shout_a.ogg",
+  "ms": 2284,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_shout_b.wav": {
+  "size": 99108,
+  "mtimeMs": 1102420388623,
+  "sha1": "52355d25b33d150f708a1e788b83fc2fb66cb88e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_shout_b.ogg",
+  "ms": 2246,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_stand.wav": {
+  "size": 113342,
+  "mtimeMs": 1102420388717,
+  "sha1": "8822f0778d319244b19e4c0bc3a9fc0fbe2e805c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_stand.ogg",
+  "ms": 2567,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_thud.wav": {
+  "size": 34862,
+  "mtimeMs": 1102420388842,
+  "sha1": "dd67d32040d419369d9e3e13d30c7d33a00d6c34",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_thud.ogg",
+  "ms": 789,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_bluetiger_walk.wav": {
+  "size": 8930,
+  "mtimeMs": 1102420388905,
+  "sha1": "ad66ed21fb0e41b1fc8eba5624b04181f068395d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_bluetiger_walk.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_die_a.wav": {
+  "size": 61828,
+  "mtimeMs": 1102420388998,
+  "sha1": "849eff4e34da67e0917b5b19fafcf6a3c975bee8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_die_a.ogg",
+  "ms": 1098,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_die_b.wav": {
+  "size": 44186,
+  "mtimeMs": 1102420389077,
+  "sha1": "78139e5f5d75db433d9907ccab0d7cf8891b2a21",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_die_b.ogg",
+  "ms": 1001,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_moan1_a.wav": {
+  "size": 21990,
+  "mtimeMs": 1102420389186,
+  "sha1": "26e089926647d32043fb61ca98eec68fe80658fb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_moan1_a.ogg",
+  "ms": 498,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_moan1_b.wav": {
+  "size": 20520,
+  "mtimeMs": 1102420389311,
+  "sha1": "7f695535cd186c7db831782496027a5f8cd0439e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_moan1_b.ogg",
+  "ms": 464,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_moan2_a.wav": {
+  "size": 44076,
+  "mtimeMs": 1102420390373,
+  "sha1": "51c96908bdd870d679027931442052f0c746a1f5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_moan2_a.ogg",
+  "ms": 985,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_moan2_b.wav": {
+  "size": 30878,
+  "mtimeMs": 1102420390483,
+  "sha1": "cdc4de477fe118591c25eec795520891ce1e0bf1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_moan2_b.ogg",
+  "ms": 699,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_shout_a.wav": {
+  "size": 24426,
+  "mtimeMs": 1102420390545,
+  "sha1": "72bd472178e94b43740b2065fd9b75e1e842c41d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_shout_a.ogg",
+  "ms": 536,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_shout_b.wav": {
+  "size": 22036,
+  "mtimeMs": 1102420390639,
+  "sha1": "ca62a7af1914b631f10d71560b56a158b20c5721",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_shout_b.ogg",
+  "ms": 488,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_chakji_thud.wav": {
+  "size": 30762,
+  "mtimeMs": 1102420390702,
+  "sha1": "1d16b0674225a737cd350f389eed7ade45ae2936",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_chakji_thud.ogg",
+  "ms": 652,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_die.wav": {
+  "size": 88486,
+  "mtimeMs": 1102420390764,
+  "sha1": "ad8c76d0695cb95e33851a1b69a50023f7ecca40",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_die.ogg",
+  "ms": 1977,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_moan1_a.wav": {
+  "size": 57238,
+  "mtimeMs": 1102420390842,
+  "sha1": "875dd820ceafc877a496dfe1b9ff04da839bcfc0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_moan1_a.ogg",
+  "ms": 1197,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_moan2_a.wav": {
+  "size": 75242,
+  "mtimeMs": 1102420391061,
+  "sha1": "f3132a6171b6f5e19f94ad20798d7e8c760ccf70",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_moan2_a.ogg",
+  "ms": 1705,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_moan2_b.wav": {
+  "size": 48680,
+  "mtimeMs": 1102420391123,
+  "sha1": "bcae3bb70b61befc980cacbb3fea6f30d425c76e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_moan2_b.ogg",
+  "ms": 1103,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_shout_a.wav": {
+  "size": 41548,
+  "mtimeMs": 1102420391233,
+  "sha1": "593d9f82f9486ce398ad6a003f2ebb4b8977cfd4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_shout_a.ogg",
+  "ms": 941,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_shout_b.wav": {
+  "size": 41946,
+  "mtimeMs": 1102420391295,
+  "sha1": "0fdbee11cca28a547f91a101149d69f78f54d29a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_shout_b.ogg",
+  "ms": 940,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_thud_a.wav": {
+  "size": 53420,
+  "mtimeMs": 1102420391420,
+  "sha1": "e96add73a4ea63182a737e3a51c8c2a386ef82ca",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_thud_a.ogg",
+  "ms": 1210,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_thud_b.wav": {
+  "size": 48680,
+  "mtimeMs": 1102420391514,
+  "sha1": "192f92bd35857db1b6a0f711cb20e9be7825f312",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_thud_b.ogg",
+  "ms": 1103,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gstone_walk.wav": {
+  "size": 8930,
+  "mtimeMs": 1102420391577,
+  "sha1": "ad66ed21fb0e41b1fc8eba5624b04181f068395d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gstone_walk.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_die_a.wav": {
+  "size": 83318,
+  "mtimeMs": 1102420391702,
+  "sha1": "4489f40de00dc969b83777eab6fd5cc7b0a68a3b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_die_a.ogg",
+  "ms": 1887,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_die_b.wav": {
+  "size": 77684,
+  "mtimeMs": 1102420391795,
+  "sha1": "c8d90700f2b4f93741dfd252583b1b81d1fb88c1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_die_b.ogg",
+  "ms": 1695,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_moan1.wav": {
+  "size": 22516,
+  "mtimeMs": 1102420391920,
+  "sha1": "832de5db35eceebd2684b0cad615b60409497072",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_moan1.ogg",
+  "ms": 508,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_moan1_a.wav": {
+  "size": 22120,
+  "mtimeMs": 1173401017765,
+  "sha1": "6e9698884abba903f6655e1e600cb8e34af4c609",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_moan1_a.ogg",
+  "ms": 487,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_moan2.wav": {
+  "size": 24500,
+  "mtimeMs": 1102420391967,
+  "sha1": "94f77ab89adc9be644a6d4f76ae347d1f8be02bd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_moan2.ogg",
+  "ms": 485,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_moan2_a.wav": {
+  "size": 26472,
+  "mtimeMs": 1173401017765,
+  "sha1": "c2358121ff05f04236df29f5f740c0dce897baf5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_moan2_a.ogg",
+  "ms": 592,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_shout_a.wav": {
+  "size": 10100,
+  "mtimeMs": 1102420392030,
+  "sha1": "f240b5f6b5eff0691624f7b3964e7208b1234e8c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_shout_a.ogg",
+  "ms": 226,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_shout_b.wav": {
+  "size": 12916,
+  "mtimeMs": 1102420392123,
+  "sha1": "25b1e3d73f29a63ceeebe27d16abca9d923be4e5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_shout_b.ogg",
+  "ms": 290,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_stand.wav": {
+  "size": 70902,
+  "mtimeMs": 1102420392202,
+  "sha1": "dd5c3ee633b8d58e3854148d5c5746c248d131dd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_stand.ogg",
+  "ms": 1458,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_thud.wav": {
+  "size": 22186,
+  "mtimeMs": 1102420392311,
+  "sha1": "51956b874e8360692e91efe22c084c6ff6a35824",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_thud.ogg",
+  "ms": 502,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_gyo_walk.wav": {
+  "size": 12788,
+  "mtimeMs": 1102420392389,
+  "sha1": "6df847c0d94c5b66bad6af001f9da4017e1882b8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_gyo_walk.ogg",
+  "ms": 235,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_hoking_die.wav": {
+  "size": 152984,
+  "mtimeMs": 1173401017765,
+  "sha1": "99ae663d1b0fba9149f6d90bbe603590f89aa913",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_hoking_die.ogg",
+  "ms": 3468,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_hoking_girlmoan1.wav": {
+  "size": 33310,
+  "mtimeMs": 1173401017765,
+  "sha1": "f832f1bf77d3a9a3a6cae0e3a968ba15d6befa59",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_hoking_girlmoan1.ogg",
+  "ms": 754,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_hoking_girlmoan2.wav": {
+  "size": 23036,
+  "mtimeMs": 1173401017765,
+  "sha1": "68241db346740ed81b5346d90622ca4e4e288ba7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_hoking_girlmoan2.ogg",
+  "ms": 519,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_hoking_thud.wav": {
+  "size": 34862,
+  "mtimeMs": 1173401017765,
+  "sha1": "dd67d32040d419369d9e3e13d30c7d33a00d6c34",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_hoking_thud.ogg",
+  "ms": 789,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_mang_die.wav": {
+  "size": 88358,
+  "mtimeMs": 1102420392545,
+  "sha1": "8b00ea16ee6728d7e84b5a5b932a2289d23ab5a6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_mang_die.ogg",
+  "ms": 1956,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_mang_moan1.wav": {
+  "size": 44398,
+  "mtimeMs": 1102420392608,
+  "sha1": "cd7bfd92cd7be58d61ed741a9211ed62244a8f4a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_mang_moan1.ogg",
+  "ms": 1001,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_mang_shout.wav": {
+  "size": 50368,
+  "mtimeMs": 1102420392780,
+  "sha1": "666f67f4f17557af973f7d08114b942f85bce2a0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_mang_shout.ogg",
+  "ms": 1058,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_mang_walk.wav": {
+  "size": 13452,
+  "mtimeMs": 1102420392842,
+  "sha1": "265d04d53314ac2a87cd9680827b9e5199d18321",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_mang_walk.ogg",
+  "ms": 304,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_die.wav": {
+  "size": 87956,
+  "mtimeMs": 1102420392967,
+  "sha1": "15829aeb74444d6d2e9c0d90cf4ac58fe3f396fa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_die.ogg",
+  "ms": 1819,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_moan1_a.wav": {
+  "size": 43676,
+  "mtimeMs": 1102420393030,
+  "sha1": "968e5bfb7f0794a6eb2f04c36b3f953de59879a4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_moan1_a.ogg",
+  "ms": 989,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_moan1_b.wav": {
+  "size": 43592,
+  "mtimeMs": 1102420393155,
+  "sha1": "d424fa563fa306490948e040ba96810e0fcfb1fb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_moan1_b.ogg",
+  "ms": 941,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_moan2.wav": {
+  "size": 74774,
+  "mtimeMs": 1102420393217,
+  "sha1": "31db7005ceabfa19df788b870d4a98a6c5980347",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_moan2.ogg",
+  "ms": 1586,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_shout_a.wav": {
+  "size": 43882,
+  "mtimeMs": 1102420393358,
+  "sha1": "53d1407b584e41621ff8a9bd757a98f312c5d3b7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_shout_a.ogg",
+  "ms": 981,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tiger_shout_b.wav": {
+  "size": 44200,
+  "mtimeMs": 1102420394373,
+  "sha1": "ef9b6f95cd0620953b549244be9cd8cc8b1b9c26",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tiger_shout_b.ogg",
+  "ms": 1001,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tigerwoman_magic.wav": {
+  "size": 119416,
+  "mtimeMs": 1102420394561,
+  "sha1": "d8df9c08526063714a7b1fa9ed0882695afe0330",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tigerwoman_magic.ogg",
+  "ms": 2705,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_die.wav": {
+  "size": 143224,
+  "mtimeMs": 1102420394811,
+  "sha1": "3287ca6377a5ea7f843dd799544735d9188c09e5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_die.ogg",
+  "ms": 3236,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_force1_hit.wav": {
+  "size": 32496,
+  "mtimeMs": 1102420394936,
+  "sha1": "72dc2abdea6cf37c4aa81faba2f001890993a58e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_force1_hit.ogg",
+  "ms": 734,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_force1_swing.wav": {
+  "size": 48684,
+  "mtimeMs": 1102420395092,
+  "sha1": "11ced3522db876ce3eb646d86c27c79606e9eba3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_force1_swing.ogg",
+  "ms": 1087,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_force2_hit.wav": {
+  "size": 53096,
+  "mtimeMs": 1102420395170,
+  "sha1": "9772d7e767559a6d56e76ec918009ab788bb0117",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_force2_hit.ogg",
+  "ms": 1020,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_force2_swing.wav": {
+  "size": 44268,
+  "mtimeMs": 1102420395248,
+  "sha1": "d192a2fa5f1cfbad538c92d7897f046a1a986f6b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_force2_swing.ogg",
+  "ms": 1001,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_moan1.wav": {
+  "size": 60910,
+  "mtimeMs": 1102420395327,
+  "sha1": "8217b8b2fe76e0cd256d2ad4ae12b447d1e43f59",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_moan1.ogg",
+  "ms": 1367,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_tomb_moan2.wav": {
+  "size": 89822,
+  "mtimeMs": 1102420395452,
+  "sha1": "ad05ef80a0613d9611165a3c117f49df67af9220",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_tomb_moan2.ogg",
+  "ms": 2023,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_die.wav": {
+  "size": 57388,
+  "mtimeMs": 1102420395623,
+  "sha1": "6279fe5f15452311f76f5f43a0c489f3dfe64151",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_die.ogg",
+  "ms": 1151,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_die_a.wav": {
+  "size": 57388,
+  "mtimeMs": 1173401017765,
+  "sha1": "6279fe5f15452311f76f5f43a0c489f3dfe64151",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_die_a.ogg",
+  "ms": 1151,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_gas.wav": {
+  "size": 133480,
+  "mtimeMs": 1102420395748,
+  "sha1": "ea65ee0c62cdd00025fbb41cc60f2b076cdcac15",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_gas.ogg",
+  "ms": 2622,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_moan1_a.wav": {
+  "size": 22092,
+  "mtimeMs": 1102420395873,
+  "sha1": "6120d73e71432b1acb2f18353aa2f717221e3c82",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_moan1_a.ogg",
+  "ms": 500,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_moan1_b.wav": {
+  "size": 17796,
+  "mtimeMs": 1102420395920,
+  "sha1": "e18fa9830f251d961bcb86e12b591614fd246396",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_moan1_b.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_moan2_a.wav": {
+  "size": 13312,
+  "mtimeMs": 1102420395983,
+  "sha1": "37075466e39349473c1ad45400ccff3df2091f26",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_moan2_a.ogg",
+  "ms": 301,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_moan2_b.wav": {
+  "size": 22178,
+  "mtimeMs": 1102420396045,
+  "sha1": "6dca598ff17a40be6ab6a211059c8e1d525b13d1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_moan2_b.ogg",
+  "ms": 502,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_shout_a.wav": {
+  "size": 13470,
+  "mtimeMs": 1102420396170,
+  "sha1": "7dc93592657cda34947e6134693d360c8d4e01ba",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_shout_a.ogg",
+  "ms": 294,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_shout_b.wav": {
+  "size": 13332,
+  "mtimeMs": 1102420396233,
+  "sha1": "234e61f7899c368f6d38813827e3d4fb18b9670d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_shout_b.ogg",
+  "ms": 301,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_shout_c.wav": {
+  "size": 8930,
+  "mtimeMs": 1102420396311,
+  "sha1": "b5a238e5fc0534f7bbcc6750868616822344639e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_shout_c.ogg",
+  "ms": 201,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_shout_d.wav": {
+  "size": 7180,
+  "mtimeMs": 1102420396327,
+  "sha1": "d9672f1fb2996866433606fe5edd2481faff7ed6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_shout_d.ogg",
+  "ms": 162,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_thud.wav": {
+  "size": 21868,
+  "mtimeMs": 1102420396452,
+  "sha1": "10b3ba83268a45a6e1e2c46650040d477f68862d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_thud.ogg",
+  "ms": 495,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_wg_walk.wav": {
+  "size": 8930,
+  "mtimeMs": 1102420396498,
+  "sha1": "c993ac082e79527153f58fa6812055e66e1243cc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_wg_walk.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_yeoha_curse.wav": {
+  "size": 137360,
+  "mtimeMs": 1102420396577,
+  "sha1": "05a1e3fb9cd24b450c6f94ffb4cf61c0466fe636",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_yeoha_curse.ogg",
+  "ms": 3044,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_yeoha_die.wav": {
+  "size": 55288,
+  "mtimeMs": 1102420396655,
+  "sha1": "f00c72a97f2e003218c5996e9cd16e76a9e47ff4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_yeoha_die.ogg",
+  "ms": 1209,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_yeoha_moan1.wav": {
+  "size": 59146,
+  "mtimeMs": 1102420396717,
+  "sha1": "35d9445708812e55e5bf1adbf2fc22fa050d7a96",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_yeoha_moan1.ogg",
+  "ms": 1309,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_yeoha_moan2.wav": {
+  "size": 56012,
+  "mtimeMs": 1102420396780,
+  "sha1": "07511bfe49a9e0dc3481bd458f9725f58f00d8d6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_yeoha_moan2.ogg",
+  "ms": 1267,
+  "channels": 1
+ },
+ "prim/snd/monster/cm_yeoha_shout.wav": {
+  "size": 68130,
+  "mtimeMs": 1102420396842,
+  "sha1": "53a7fccf2cbe290276dc684b3e5b58fbc40b9025",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/cm_yeoha_shout.ogg",
+  "ms": 1472,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_die.wav": {
+  "size": 49234,
+  "mtimeMs": 1102420403280,
+  "sha1": "727ede3df656a3bb7029e60193f286a91a6fd239",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_die.ogg",
+  "ms": 991,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_die_a.wav": {
+  "size": 52902,
+  "mtimeMs": 1173401017765,
+  "sha1": "4948156bfab7bf1a9ff3e692c4626ef78bde176a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_die_a.ogg",
+  "ms": 1199,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_fly.wav": {
+  "size": 165422,
+  "mtimeMs": 1102420403420,
+  "sha1": "27969576ff09ef991379bf3cdef46d44625152ac",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_fly.ogg",
+  "ms": 3750,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_moan1.wav": {
+  "size": 24428,
+  "mtimeMs": 1102420403498,
+  "sha1": "b8f025d77bebefa15edb8852b2f30676966883e1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_moan1.ogg",
+  "ms": 480,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_moan2.wav": {
+  "size": 40910,
+  "mtimeMs": 1102420403577,
+  "sha1": "e87b16ca86167094cdf968a0debb84bdbf6a8817",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_moan2.ogg",
+  "ms": 760,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_shout.wav": {
+  "size": 37778,
+  "mtimeMs": 1102420403623,
+  "sha1": "dbb976b7f5a0a5dd1fcaa851ee34404c0b8c830f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_shout.ogg",
+  "ms": 660,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dbug_thud.wav": {
+  "size": 33324,
+  "mtimeMs": 1102420403717,
+  "sha1": "403eb3314378d95703c3138741bcd373f2fb72ab",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dbug_thud.ogg",
+  "ms": 755,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_die_a.wav": {
+  "size": 86668,
+  "mtimeMs": 1102420403780,
+  "sha1": "38df120373fad28ecf3de2087e364520d5cce5ea",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_die_a.ogg",
+  "ms": 1754,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_die_b.wav": {
+  "size": 81548,
+  "mtimeMs": 1102420403889,
+  "sha1": "0a05eafce9b1de8fe81d0736a650e78a166ec430",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_die_b.ogg",
+  "ms": 1605,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_moan1_a.wav": {
+  "size": 56140,
+  "mtimeMs": 1102420403952,
+  "sha1": "4feb3ffd1fdaef66a23c382569d51cdc34695e65",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_moan1_a.ogg",
+  "ms": 1189,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_moan2_a.wav": {
+  "size": 37964,
+  "mtimeMs": 1102420404061,
+  "sha1": "a8a85cf4d7609a41f6bd912e28605f7b3fa191b9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_moan2_a.ogg",
+  "ms": 858,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_moan2_b.wav": {
+  "size": 68876,
+  "mtimeMs": 1102420404123,
+  "sha1": "e79363325bc2d66a722e252b92b9ce7765d4e3fc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_moan2_b.ogg",
+  "ms": 1475,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_shout_a.wav": {
+  "size": 36428,
+  "mtimeMs": 1102420404264,
+  "sha1": "51c8e31173cd75ed2e981647791fd5110bbf3882",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_shout_a.ogg",
+  "ms": 733,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_devilbug_shout_b.wav": {
+  "size": 41612,
+  "mtimeMs": 1102420404327,
+  "sha1": "fcaac30f13c4394a5b0603886af3f636d2db06da",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_devilbug_shout_b.ogg",
+  "ms": 935,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_dhorse_thud.wav": {
+  "size": 67884,
+  "mtimeMs": 1102420404905,
+  "sha1": "5d5248b1f248eb0d7b7174c0ba225495b39a0bdf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_dhorse_thud.ogg",
+  "ms": 1066,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_die_a.wav": {
+  "size": 61478,
+  "mtimeMs": 1102420405014,
+  "sha1": "48a65b5c6698c8883ad63e26204b6e3bcca71b96",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_die_a.ogg",
+  "ms": 1381,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_die_b.wav": {
+  "size": 55080,
+  "mtimeMs": 1102420405061,
+  "sha1": "5cbe1f1cd8c253e4a567223f932715c9948c96de",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_die_b.ogg",
+  "ms": 1248,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_die_c.wav": {
+  "size": 62616,
+  "mtimeMs": 1102420405217,
+  "sha1": "faf6d97b3b790400f2a1948e20fd79352991e298",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_die_c.ogg",
+  "ms": 1417,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_moan1_a.wav": {
+  "size": 34576,
+  "mtimeMs": 1102420405295,
+  "sha1": "895216a9fb5ceb716000adb7e352a85951a1b718",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_moan1_a.ogg",
+  "ms": 783,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_moan1_b.wav": {
+  "size": 43556,
+  "mtimeMs": 1102420405420,
+  "sha1": "e006df25f09b9a96fab7eafca590279a839ce2c5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_moan1_b.ogg",
+  "ms": 987,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_moan2_a.wav": {
+  "size": 39462,
+  "mtimeMs": 1102420405483,
+  "sha1": "2d068cde9b8a261573930abf942fca268c70fb95",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_moan2_a.ogg",
+  "ms": 894,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_moan2_b.wav": {
+  "size": 38050,
+  "mtimeMs": 1102420405639,
+  "sha1": "ea56a4eade5b8308f522b6775301e52117224e77",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_moan2_b.ogg",
+  "ms": 862,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_shout_a.wav": {
+  "size": 18140,
+  "mtimeMs": 1102420405702,
+  "sha1": "d94e7457b743e13f06fe3d6198b70b95ff7fefe0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_shout_a.ogg",
+  "ms": 410,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_shout_b.wav": {
+  "size": 17644,
+  "mtimeMs": 1102420405827,
+  "sha1": "862585af4dc17d92c3a959873ad6e61057e6447d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_shout_b.ogg",
+  "ms": 399,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_shout_c.wav": {
+  "size": 17192,
+  "mtimeMs": 1102420405936,
+  "sha1": "af497e5324a14dd741e64b0bed88dd09aaa03a29",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_shout_c.ogg",
+  "ms": 389,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eghost_thud.wav": {
+  "size": 15456,
+  "mtimeMs": 1102420406123,
+  "sha1": "6dc21a1aea78a9603300954022c3151fbcba0db4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eghost_thud.ogg",
+  "ms": 349,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_ballhit.wav": {
+  "size": 123928,
+  "mtimeMs": 1102420406358,
+  "sha1": "39119c2a1fb9eafc508b561f3c78dcfdf096256c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_ballhit.ogg",
+  "ms": 2769,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_ballswing.wav": {
+  "size": 96190,
+  "mtimeMs": 1102420406514,
+  "sha1": "a766522be390f99e386d1b4bd7cb3505c3727159",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_ballswing.ogg",
+  "ms": 2180,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_die_a.wav": {
+  "size": 88608,
+  "mtimeMs": 1102420406670,
+  "sha1": "2ccabaede83124773d0065d3b7c6878d3a891f9b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_die_a.ogg",
+  "ms": 1961,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_die_b.wav": {
+  "size": 65062,
+  "mtimeMs": 1102420406780,
+  "sha1": "900eb16aaadda2334a9f8f39cac77bb4beb926da",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_die_b.ogg",
+  "ms": 1474,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_moan1.wav": {
+  "size": 48676,
+  "mtimeMs": 1102420406889,
+  "sha1": "f7f933540f547be2fb61318cfde55314f4957094",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_moan1.ogg",
+  "ms": 1103,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_moan2_a.wav": {
+  "size": 62892,
+  "mtimeMs": 1102420407045,
+  "sha1": "0cd24d82e97218578c5b0f0f1e11d328fdcd85e1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_moan2_a.ogg",
+  "ms": 1425,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_moan2_b.wav": {
+  "size": 66970,
+  "mtimeMs": 1102420407139,
+  "sha1": "63edcd42367c4f5b40e0246bd40821ec4a628de5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_moan2_b.ogg",
+  "ms": 1518,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_shout_a.wav": {
+  "size": 51746,
+  "mtimeMs": 1102420407327,
+  "sha1": "ce04e97f3dda5798ae9b55bbbf056e6f8772eed4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_shout_a.ogg",
+  "ms": 1172,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_shout_b.wav": {
+  "size": 42710,
+  "mtimeMs": 1102420407483,
+  "sha1": "df4e56a4a8a5af31f9354f750832269554669a7c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_shout_b.ogg",
+  "ms": 967,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_shout_c.wav": {
+  "size": 45468,
+  "mtimeMs": 1102420407670,
+  "sha1": "c09a029324f160a7e5c9e9a299257e9b0350642f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_shout_c.ogg",
+  "ms": 1030,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_shout_d.wav": {
+  "size": 56876,
+  "mtimeMs": 1102420407780,
+  "sha1": "8066a655f24024dde6bd71e41d1bc4c7ad652195",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_shout_d.ogg",
+  "ms": 1289,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_thud.wav": {
+  "size": 21804,
+  "mtimeMs": 1102420407858,
+  "sha1": "02c311a8d3f15c433fcd56c45df9871b818f0548",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_thud.ogg",
+  "ms": 493,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_waveshout_a.wav": {
+  "size": 55526,
+  "mtimeMs": 1102420408014,
+  "sha1": "dc688292ba2074bd59c04aa01844be131f98cf6a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_waveshout_a.ogg",
+  "ms": 1258,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_eking_waveswing.wav": {
+  "size": 98900,
+  "mtimeMs": 1102420408498,
+  "sha1": "fa89234fc619601cc8c62ffb755b36119905fa4c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_eking_waveswing.ogg",
+  "ms": 2242,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_boom.wav": {
+  "size": 91354,
+  "mtimeMs": 1102420408623,
+  "sha1": "3b636f4f219234cb62cd7773854750e56e1fef18",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_boom.ogg",
+  "ms": 2070,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_die.wav": {
+  "size": 48298,
+  "mtimeMs": 1102420408655,
+  "sha1": "b8318376e4e2429a5a44364f7bad147df186e29b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_die.ogg",
+  "ms": 1094,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_moan1_a.wav": {
+  "size": 28708,
+  "mtimeMs": 1102420408733,
+  "sha1": "4cd8cd9846b88dd80357c5878bbad0abedef6545",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_moan1_a.ogg",
+  "ms": 650,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_moan1_b.wav": {
+  "size": 45738,
+  "mtimeMs": 1102420408889,
+  "sha1": "17b96ca4f4369562d5b9104f3618f73423efd8cc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_moan1_b.ogg",
+  "ms": 1036,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_moan1_c.wav": {
+  "size": 19510,
+  "mtimeMs": 1102420408952,
+  "sha1": "a92b3f423ba2608b70c4f289bfb79dbf19cf15bd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_moan1_c.ogg",
+  "ms": 441,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_moan2_a.wav": {
+  "size": 29996,
+  "mtimeMs": 1102420409061,
+  "sha1": "866c9e388eda34caf9e574ffa6b0ca4d8c0d2d0a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_moan2_a.ogg",
+  "ms": 679,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_moan2_b.wav": {
+  "size": 44362,
+  "mtimeMs": 1102420409155,
+  "sha1": "5ee57a0923fed9cfd885a2bbad7539aeacaae346",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_moan2_b.ogg",
+  "ms": 1005,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_gg_smokeboom.wav": {
+  "size": 48682,
+  "mtimeMs": 1102420409280,
+  "sha1": "300f646c51f8360e54da6535a09b85c8eb26bedd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_gg_smokeboom.ogg",
+  "ms": 1042,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_die_a.wav": {
+  "size": 114060,
+  "mtimeMs": 1102420409498,
+  "sha1": "a1fe8235cc73d467ea3225bf0bd9ba85cf68fa13",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_die_a.ogg",
+  "ms": 2359,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_die_b.wav": {
+  "size": 88588,
+  "mtimeMs": 1102420409577,
+  "sha1": "23936558c27a4557fc7e5b0f391e645279f510d0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_die_b.ogg",
+  "ms": 2006,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_hit.wav": {
+  "size": 61844,
+  "mtimeMs": 1102420409702,
+  "sha1": "542bec9a6bba87a17a5d91fe178fd3d666efd2ff",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_hit.ogg",
+  "ms": 1399,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_moan1_a.wav": {
+  "size": 49930,
+  "mtimeMs": 1102420409811,
+  "sha1": "33702a3c372b7510b1ee21a411bc99b88c144d92",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_moan1_a.ogg",
+  "ms": 1129,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_moan1_b.wav": {
+  "size": 62860,
+  "mtimeMs": 1102420409905,
+  "sha1": "7be99d22c189c7438c0829c8871d975ab1ded9c5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_moan1_b.ogg",
+  "ms": 1422,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_moan2.wav": {
+  "size": 63500,
+  "mtimeMs": 1102420409952,
+  "sha1": "6c1feb8fd283f3a6f906b2d6ee08b48baca4bf6b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_moan2.ogg",
+  "ms": 1326,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_shout_a.wav": {
+  "size": 61844,
+  "mtimeMs": 1102420410092,
+  "sha1": "3c6e56c2f3300478f682b56751448e5cb0ad8eda",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_shout_a.ogg",
+  "ms": 1302,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_thud.wav": {
+  "size": 70034,
+  "mtimeMs": 1102420410186,
+  "sha1": "a74d1eb94722ca9338f4e42b0a628dc9c6c5ac54",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_thud.ogg",
+  "ms": 1570,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_hchen_walk.wav": {
+  "size": 30186,
+  "mtimeMs": 1102420410295,
+  "sha1": "72f1b3fbfd64996237a6f523faf9fc3ba9ed7be3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_hchen_walk.ogg",
+  "ms": 668,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_die.wav": {
+  "size": 116368,
+  "mtimeMs": 1102420410373,
+  "sha1": "f1614964ac193dea07de10b6e9f917ea6a15243f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_die.ogg",
+  "ms": 2580,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_moan1.wav": {
+  "size": 23668,
+  "mtimeMs": 1102420410498,
+  "sha1": "8a00e5ef63a17105ba82d41d2ea3828a104efb27",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_moan1.ogg",
+  "ms": 517,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_moan2.wav": {
+  "size": 38382,
+  "mtimeMs": 1102420410561,
+  "sha1": "d90fa5c5d4744f7839cef9c111ca318eea77e81a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_moan2.ogg",
+  "ms": 868,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_shout1.wav": {
+  "size": 35438,
+  "mtimeMs": 1102420410702,
+  "sha1": "68a84f22eb311f53b7eabe9d51d52ffeca199a31",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_shout1.ogg",
+  "ms": 801,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_shout2.wav": {
+  "size": 47210,
+  "mtimeMs": 1102420410780,
+  "sha1": "faf8e26e385bb3c6936013b1810d1eef58c162b4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_shout2.ogg",
+  "ms": 982,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_stand.wav": {
+  "size": 228982,
+  "mtimeMs": 1102420410936,
+  "sha1": "29f245fc310951fe69f0fb79cb36c3dac806a1a3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "monster/wcm_jombie_stand.ogg",
+  "ms": 3044,
+  "channels": 1
+ },
+ "prim/snd/monster/wcm_jombie_walk.wav": {
+  "size": 14832,
+  "mtimeMs": 1102420411030,
+  "sha1": "da46f440dcbe139030e439fa8522a754d3869ce6",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "monster/wcm_jombie_walk.wav",
+  "ms": 319,
+  "channels": 1
+ },
+ "prim/snd/player/bataxehit1a.wav": {
+  "size": 24688,
+  "mtimeMs": 1102420411811,
+  "sha1": "e1114c24ae17d95d0ab4e455bf001302ad45498c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxehit1a.ogg",
+  "ms": 548,
+  "channels": 1
+ },
+ "prim/snd/player/bataxehit1n.wav": {
+  "size": 18142,
+  "mtimeMs": 1102420412498,
+  "sha1": "50aaf41625e83551d4cb83b81dc43a67ea8a3eaa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxehit1n.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/player/bataxehit2b.wav": {
+  "size": 27124,
+  "mtimeMs": 1102420412795,
+  "sha1": "bc4b00faa58b8b0011ddb4bc16678e3ccc5e626b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxehit2b.ogg",
+  "ms": 603,
+  "channels": 1
+ },
+ "prim/snd/player/bataxehit2n.wav": {
+  "size": 22330,
+  "mtimeMs": 1102420412967,
+  "sha1": "028b5f7da8fc5ca1e5ef36a4f2afcd1fb4799e94",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxehit2n.ogg",
+  "ms": 495,
+  "channels": 1
+ },
+ "prim/snd/player/bataxeswing1.wav": {
+  "size": 22392,
+  "mtimeMs": 1102420413061,
+  "sha1": "cfa91d46885ff5f76957bd2698fcf9aa40bcc8a8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxeswing1.ogg",
+  "ms": 496,
+  "channels": 1
+ },
+ "prim/snd/player/bataxeswing2.wav": {
+  "size": 22454,
+  "mtimeMs": 1102420413202,
+  "sha1": "0535791748934c057673b1367c26c162eeb5b0b6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bataxeswing2.ogg",
+  "ms": 498,
+  "channels": 1
+ },
+ "prim/snd/player/batblock1.wav": {
+  "size": 23392,
+  "mtimeMs": 1102420413295,
+  "sha1": "f643a5b0a723f60dbc8adc367fd2025ef3c75cb9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblock1.ogg",
+  "ms": 519,
+  "channels": 1
+ },
+ "prim/snd/player/batblock2.wav": {
+  "size": 24862,
+  "mtimeMs": 1102420413436,
+  "sha1": "f6c748cd038d089d19769ff7728df78f866be5fc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblock2.ogg",
+  "ms": 552,
+  "channels": 1
+ },
+ "prim/snd/player/batblockblade1.wav": {
+  "size": 22926,
+  "mtimeMs": 1173401017765,
+  "sha1": "a5423d7d3e292ce9d20facd7ae8804aaf3e45844",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblockblade1.ogg",
+  "ms": 519,
+  "channels": 1
+ },
+ "prim/snd/player/batblockbow1.wav": {
+  "size": 22652,
+  "mtimeMs": 1102420413561,
+  "sha1": "490bbff572170fece164505c76f636076d5f7fd4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblockbow1.ogg",
+  "ms": 502,
+  "channels": 1
+ },
+ "prim/snd/player/batblockbow2_a.wav": {
+  "size": 22588,
+  "mtimeMs": 1102420413670,
+  "sha1": "5ace9c91e8e600c70736c2c433c4b239aaf86ab6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblockbow2_a.ogg",
+  "ms": 501,
+  "channels": 1
+ },
+ "prim/snd/player/batblockbow2_b.wav": {
+  "size": 22240,
+  "mtimeMs": 1102420413780,
+  "sha1": "0125a0cf0d4d3ab41a7c043f99cafa22f5d74e1f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batblockbow2_b.ogg",
+  "ms": 493,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit1a.wav": {
+  "size": 22522,
+  "mtimeMs": 1102420413873,
+  "sha1": "1f842870abe067c9ff9913a3dd9adb0a5806634d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit1a.ogg",
+  "ms": 499,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit1b.wav": {
+  "size": 13722,
+  "mtimeMs": 1102420414030,
+  "sha1": "e1aa5ce9f99e3347d068f5d0c7dc50fc8bf2d83d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit1b.ogg",
+  "ms": 300,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit1n.wav": {
+  "size": 17884,
+  "mtimeMs": 1102420414170,
+  "sha1": "12f0bd3d12211f4adf0307a964c6cb410c7cc299",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit1n.ogg",
+  "ms": 386,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit2a.wav": {
+  "size": 26812,
+  "mtimeMs": 1102420414295,
+  "sha1": "64f141f611f5d48009dc5ef88ad240f8cb203bc5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit2a.ogg",
+  "ms": 581,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit2b.wav": {
+  "size": 21280,
+  "mtimeMs": 1102420414467,
+  "sha1": "57d1413ec2e8386583787b0f341f690784c5ff2f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit2b.ogg",
+  "ms": 471,
+  "channels": 1
+ },
+ "prim/snd/player/batbowhit2n.wav": {
+  "size": 17466,
+  "mtimeMs": 1102420414577,
+  "sha1": "d7249305023cf58343e9745dc532c3c55e81c71f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowhit2n.ogg",
+  "ms": 381,
+  "channels": 1
+ },
+ "prim/snd/player/batbowswing1.wav": {
+  "size": 13684,
+  "mtimeMs": 1102420414655,
+  "sha1": "970cbcfa6a5cad09deef31defab084b46d70df5b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowswing1.ogg",
+  "ms": 299,
+  "channels": 1
+ },
+ "prim/snd/player/batbowswing2.wav": {
+  "size": 17688,
+  "mtimeMs": 1102420414764,
+  "sha1": "c0674c1fe1bb36ad0ee7b65159459bc7284a31ec",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batbowswing2.ogg",
+  "ms": 389,
+  "channels": 1
+ },
+ "prim/snd/player/batcrihit.wav": {
+  "size": 23328,
+  "mtimeMs": 1102420416827,
+  "sha1": "570a05a2feb058c0908e60cf820a587b78eafa59",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batcrihit.ogg",
+  "ms": 517,
+  "channels": 1
+ },
+ "prim/snd/player/batdaggerswing1.wav": {
+  "size": 5402,
+  "mtimeMs": 1173401017765,
+  "sha1": "5d5c8aea4d006f5092f597b42007408557cf8195",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batdaggerswing1.ogg",
+  "ms": 112,
+  "channels": 1
+ },
+ "prim/snd/player/batdaggerswing2.wav": {
+  "size": 5672,
+  "mtimeMs": 1173401017765,
+  "sha1": "37b545cd49409559c4120a54e1be00679f1f486a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batdaggerswing2.ogg",
+  "ms": 117,
+  "channels": 1
+ },
+ "prim/snd/player/batduelaxeswing1.wav": {
+  "size": 23858,
+  "mtimeMs": 1173401017765,
+  "sha1": "21c52983cbf53fa1a673fcb49049e282ea5d407a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batduelaxeswing1.ogg",
+  "ms": 496,
+  "channels": 1
+ },
+ "prim/snd/player/batduelaxeswing2.wav": {
+  "size": 24644,
+  "mtimeMs": 1173401017765,
+  "sha1": "2f4bd2d753c6ec7ee95956e2b6769a1ec37a9b5b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batduelaxeswing2.ogg",
+  "ms": 513,
+  "channels": 1
+ },
+ "prim/snd/player/batharpswing1.wav": {
+  "size": 81396,
+  "mtimeMs": 1173401017765,
+  "sha1": "5ef0917eba30e87b231d5ff6707e10428d3f4bd1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batharpswing1.ogg",
+  "ms": 1632,
+  "channels": 1
+ },
+ "prim/snd/player/bathwancrihit.wav": {
+  "size": 44520,
+  "mtimeMs": 1102420416952,
+  "sha1": "86400f2f4eca1cfd8624a19c85e4fc0b3c1dcdf0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bathwancrihit.ogg",
+  "ms": 998,
+  "channels": 1
+ },
+ "prim/snd/player/bathwanhit.wav": {
+  "size": 37440,
+  "mtimeMs": 1102420417123,
+  "sha1": "5f650842b045f202be1e7e207a38b1ea74feb586",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/bathwanhit.ogg",
+  "ms": 837,
+  "channels": 1
+ },
+ "prim/snd/player/batpoleamswing2.wav": {
+  "size": 22102,
+  "mtimeMs": 1102420417342,
+  "sha1": "cf53585a4260435b4dd3d3fe439819cfdd9db13a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpoleamswing2.ogg",
+  "ms": 492,
+  "channels": 1
+ },
+ "prim/snd/player/batpolearmhit1n.wav": {
+  "size": 22020,
+  "mtimeMs": 1102420417764,
+  "sha1": "4f6bee2abf9e1f15888b56c63fba2504741db398",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpolearmhit1n.ogg",
+  "ms": 498,
+  "channels": 1
+ },
+ "prim/snd/player/batpolearmhit2b.wav": {
+  "size": 24422,
+  "mtimeMs": 1102420418030,
+  "sha1": "dc90b6f8805c1e95a66ad0e88bf97b3b422ecd61",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpolearmhit2b.ogg",
+  "ms": 553,
+  "channels": 1
+ },
+ "prim/snd/player/batpolearmhit2n.wav": {
+  "size": 22184,
+  "mtimeMs": 1102420418186,
+  "sha1": "1a5d0b227de7cfe8fabc807841efc0125a785d1e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpolearmhit2n.ogg",
+  "ms": 502,
+  "channels": 1
+ },
+ "prim/snd/player/batpolearmswing1.wav": {
+  "size": 22132,
+  "mtimeMs": 1102420418358,
+  "sha1": "79b25c0a448a20ac6fde6a9221b2092036380e76",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpolearmswing1.ogg",
+  "ms": 501,
+  "channels": 1
+ },
+ "prim/snd/player/batpolearmswing2.wav": {
+  "size": 22048,
+  "mtimeMs": 1102420418514,
+  "sha1": "286961a3a0ec69b16bbe5c78ebb9d66e47796347",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpolearmswing2.ogg",
+  "ms": 499,
+  "channels": 1
+ },
+ "prim/snd/player/batpunchhit1a.wav": {
+  "size": 22124,
+  "mtimeMs": 1102420418702,
+  "sha1": "7b100d8d18312ae370bda616ec61b95859531cd6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpunchhit1a.ogg",
+  "ms": 501,
+  "channels": 1
+ },
+ "prim/snd/player/batpunchhit1b.wav": {
+  "size": 17644,
+  "mtimeMs": 1102420418842,
+  "sha1": "4fa01e94aedd7774351484ddc316f611976eea7d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpunchhit1b.ogg",
+  "ms": 349,
+  "channels": 1
+ },
+ "prim/snd/player/batpunchhit1n.wav": {
+  "size": 21850,
+  "mtimeMs": 1102420418967,
+  "sha1": "b9be9afae58581381f2c3d2eec2553576668d0dc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpunchhit1n.ogg",
+  "ms": 453,
+  "channels": 1
+ },
+ "prim/snd/player/batpunchswing.wav": {
+  "size": 8924,
+  "mtimeMs": 1102420419077,
+  "sha1": "f216779a0d408ee604fa96b82f9a96c04fc45f8f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batpunchswing.ogg",
+  "ms": 201,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit1a.wav": {
+  "size": 26562,
+  "mtimeMs": 1102420419170,
+  "sha1": "d1217096ac8ce65eafa3ec539ebd83105d1c564f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit1a.ogg",
+  "ms": 591,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit1b.wav": {
+  "size": 22044,
+  "mtimeMs": 1102420419264,
+  "sha1": "456cd61894daa7cd4a07a83c52198fc795bfc6ad",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit1b.ogg",
+  "ms": 494,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit1n.wav": {
+  "size": 17016,
+  "mtimeMs": 1102420419405,
+  "sha1": "b961f4a843dffc454358e50f12c9ac89922ae8e4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit1n.ogg",
+  "ms": 385,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit2a.wav": {
+  "size": 22068,
+  "mtimeMs": 1102420419514,
+  "sha1": "1786972a15bbeab2ff372ee82c4daa6fbed2bd92",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit2a.ogg",
+  "ms": 499,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit2b.wav": {
+  "size": 24482,
+  "mtimeMs": 1102420419655,
+  "sha1": "ae5e2d5f7195ecbcd79cef5b6fcb8abfb1319a3d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit2b.ogg",
+  "ms": 550,
+  "channels": 1
+ },
+ "prim/snd/player/batspearhit2n.wav": {
+  "size": 22022,
+  "mtimeMs": 1102420419780,
+  "sha1": "39efe6ce8ebc3715ca8437ec539112a52cd43b73",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearhit2n.ogg",
+  "ms": 490,
+  "channels": 1
+ },
+ "prim/snd/player/batspearswing1.wav": {
+  "size": 17714,
+  "mtimeMs": 1102420419873,
+  "sha1": "77cb7b12f76cb180dd4143c683feaa746bb5bde5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearswing1.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/player/batspearswing2.wav": {
+  "size": 17558,
+  "mtimeMs": 1102420420045,
+  "sha1": "d1974b7abda794a901006c62534121f76455dbb8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batspearswing2.ogg",
+  "ms": 397,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit1a.wav": {
+  "size": 19436,
+  "mtimeMs": 1102420420733,
+  "sha1": "87e5a09360f61e2710ffb3f39141eddcb064686d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit1a.ogg",
+  "ms": 440,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit1b.wav": {
+  "size": 19198,
+  "mtimeMs": 1102420420858,
+  "sha1": "169949bc8261b99d903cc61fabb4c0f68d6d61fa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit1b.ogg",
+  "ms": 394,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit1n.wav": {
+  "size": 17768,
+  "mtimeMs": 1102420421014,
+  "sha1": "1db8b7acd201077f01b4f128d32d87ddddbc3d50",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit1n.ogg",
+  "ms": 402,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit2a.wav": {
+  "size": 22060,
+  "mtimeMs": 1102420421155,
+  "sha1": "e42fea0790d2db7636efc51505a93233a593be18",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit2a.ogg",
+  "ms": 499,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit2b.wav": {
+  "size": 22308,
+  "mtimeMs": 1102420421295,
+  "sha1": "6cb6a9ac4536121019019f4e1b58f061860405ba",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit2b.ogg",
+  "ms": 505,
+  "channels": 1
+ },
+ "prim/snd/player/batswordhit2n.wav": {
+  "size": 19876,
+  "mtimeMs": 1102420421514,
+  "sha1": "f2a95d06b402b8696f01f01f45efd503bce3af93",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordhit2n.ogg",
+  "ms": 450,
+  "channels": 1
+ },
+ "prim/snd/player/batswordswing1.wav": {
+  "size": 12748,
+  "mtimeMs": 1102420421686,
+  "sha1": "fbb43f77671147f3a00e5e7cbac6284ef7987c42",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordswing1.ogg",
+  "ms": 288,
+  "channels": 1
+ },
+ "prim/snd/player/batswordswing2.wav": {
+  "size": 13364,
+  "mtimeMs": 1102420421842,
+  "sha1": "6592fa20c3e34ce608d6ddbec9c331cca2bd5198",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batswordswing2.ogg",
+  "ms": 302,
+  "channels": 1
+ },
+ "prim/snd/player/battswordhit1n.wav": {
+  "size": 20964,
+  "mtimeMs": 1102420422264,
+  "sha1": "eba81bc3f18a79bd3ac29a26e2cb6f49da42192a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/battswordhit1n.ogg",
+  "ms": 474,
+  "channels": 1
+ },
+ "prim/snd/player/battswordhit2n.wav": {
+  "size": 21918,
+  "mtimeMs": 1102420422748,
+  "sha1": "2757ffc674d3592d8a34596e9397ae3ba164722b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/battswordhit2n.ogg",
+  "ms": 496,
+  "channels": 1
+ },
+ "prim/snd/player/battswordswing1.wav": {
+  "size": 45228,
+  "mtimeMs": 1173401017765,
+  "sha1": "82c777c21670de99d0260d75b18a6c886cf1f7f4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/battswordswing1.ogg",
+  "ms": 979,
+  "channels": 1
+ },
+ "prim/snd/player/battswordswing2.wav": {
+  "size": 43388,
+  "mtimeMs": 1173401017765,
+  "sha1": "5aaf8ffdb75b55f13745b16695760effe1280a6d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/battswordswing2.ogg",
+  "ms": 947,
+  "channels": 1
+ },
+ "prim/snd/player/batwandswing1.wav": {
+  "size": 48626,
+  "mtimeMs": 1173401017765,
+  "sha1": "e88778050b4921f6e9ca2492bea2cfd5ac6f1110",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batwandswing1.ogg",
+  "ms": 1012,
+  "channels": 1
+ },
+ "prim/snd/player/batwandswing2.wav": {
+  "size": 56746,
+  "mtimeMs": 1173401017765,
+  "sha1": "80a7fc2ce1e2497d272357f4fb591894af2cbf34",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/batwandswing2.ogg",
+  "ms": 1160,
+  "channels": 1
+ },
+ "prim/snd/player/hwanchange.wav": {
+  "size": 94542,
+  "mtimeMs": 1102420423186,
+  "sha1": "79f61cd655d1c5a3365eb5ac11a6b98722cdd2fe",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/hwanchange.ogg",
+  "ms": 2143,
+  "channels": 1
+ },
+ "prim/snd/player/hwanreturn.wav": {
+  "size": 80834,
+  "mtimeMs": 1102420423373,
+  "sha1": "4452d4cf1b08e8d5867063c3f617d837bcfe5c19",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/hwanreturn.ogg",
+  "ms": 1628,
+  "channels": 1
+ },
+ "prim/snd/player/hwbladeswing.wav": {
+  "size": 44334,
+  "mtimeMs": 1102420423514,
+  "sha1": "c1b38a84081d3d24b6957c115d6bb856aa65ee61",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/hwbladeswing.ogg",
+  "ms": 994,
+  "channels": 1
+ },
+ "prim/snd/player/hwbowswing.wav": {
+  "size": 44798,
+  "mtimeMs": 1102420423717,
+  "sha1": "eb67a3cb012d57e02a86c3f18bc33a0c421d0429",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/hwbowswing.ogg",
+  "ms": 775,
+  "channels": 1
+ },
+ "prim/snd/player/hwswordswing.wav": {
+  "size": 38142,
+  "mtimeMs": 1102420423827,
+  "sha1": "61edbdfb6e5fb624f93fd615457e57f06f5fe4c5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/hwswordswing.ogg",
+  "ms": 788,
+  "channels": 1
+ },
+ "prim/snd/player/mvruncloud.wav": {
+  "size": 13756,
+  "mtimeMs": 1173401017765,
+  "sha1": "dd46908bd45cf11e32d71c3fedae12620885178f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvruncloud.ogg",
+  "ms": 300,
+  "channels": 1
+ },
+ "prim/snd/player/mvrungrass.wav": {
+  "size": 18084,
+  "mtimeMs": 1173401017765,
+  "sha1": "013a3598c0191738d68f5899cfb07b7a54fc16ca",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrungrass.ogg",
+  "ms": 342,
+  "channels": 1
+ },
+ "prim/snd/player/mvrungravel.wav": {
+  "size": 18138,
+  "mtimeMs": 1173401017765,
+  "sha1": "62b0c4ba39ca01febfd63bd69d0b2ceea3e3f902",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrungravel.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunground.wav": {
+  "size": 9394,
+  "mtimeMs": 1173401017765,
+  "sha1": "ad57514e90a34e8e5a1693d96ac57204f4d21305",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunground.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunhground.wav": {
+  "size": 3270,
+  "mtimeMs": 1173401017765,
+  "sha1": "b721664717f245018091912b51a9680ee8bce50f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunhground.ogg",
+  "ms": 63,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunhwood.wav": {
+  "size": 9242,
+  "mtimeMs": 1173401017765,
+  "sha1": "1026e2213c88ef7cbda932f430eaa28330ec2e26",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunhwood.ogg",
+  "ms": 198,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunmud.wav": {
+  "size": 17472,
+  "mtimeMs": 1173401017765,
+  "sha1": "25875b9ae31c0135e63f7735f54987c6c26bdad6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunmud.ogg",
+  "ms": 385,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunsnow.wav": {
+  "size": 18206,
+  "mtimeMs": 1173401017765,
+  "sha1": "d343e0299d8694f5287eae6859c21f38ffdcbb5a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunsnow.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/player/mvrunwater.wav": {
+  "size": 17504,
+  "mtimeMs": 1173401017765,
+  "sha1": "bd1fdea91bcf9f07d966eb16e4beea4d7abd1a59",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvrunwater.ogg",
+  "ms": 385,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkcloud.wav": {
+  "size": 13720,
+  "mtimeMs": 1102420423983,
+  "sha1": "1b16f63311a66511c1930d8daabcc1e1b0e6233a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkcloud.ogg",
+  "ms": 300,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkgrass.wav": {
+  "size": 18086,
+  "mtimeMs": 1102420424139,
+  "sha1": "2ea5d97c970421a2362d1bb1de5007707090924b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkgrass.ogg",
+  "ms": 341,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkgravel.wav": {
+  "size": 20496,
+  "mtimeMs": 1102420424311,
+  "sha1": "d627e545fc1c47c0a538b5887b5b06fb56312c8e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkgravel.ogg",
+  "ms": 424,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkground.wav": {
+  "size": 10254,
+  "mtimeMs": 1102420424436,
+  "sha1": "f169609039d8a9b89b0856eb8a346cbaeb525326",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkground.ogg",
+  "ms": 219,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkhground.wav": {
+  "size": 3272,
+  "mtimeMs": 1102420424545,
+  "sha1": "bc9453e7a73c47316a1cd3a0bdfd7ad180d0ad00",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkhground.ogg",
+  "ms": 63,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkhwood.wav": {
+  "size": 16288,
+  "mtimeMs": 1102420424655,
+  "sha1": "f91dbb0586b0a57d6a99a7c3d4321fc975ced86d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkhwood.ogg",
+  "ms": 358,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkhwood_a.wav": {
+  "size": 27346,
+  "mtimeMs": 1173401017765,
+  "sha1": "df163192413b622c8282ce2387f7c90a8a83da87",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkhwood_a.ogg",
+  "ms": 399,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkhwood_b.wav": {
+  "size": 27346,
+  "mtimeMs": 1173401017765,
+  "sha1": "8894a6bfa884bb327d7da4f90cc3795ffccbc50a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkhwood_b.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkice.wav": {
+  "size": 9386,
+  "mtimeMs": 1102420424764,
+  "sha1": "8494674b230923349afcae65f41cf42b9fa53498",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkice.ogg",
+  "ms": 180,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkmud.wav": {
+  "size": 18848,
+  "mtimeMs": 1102420424920,
+  "sha1": "079e966fc7f383ce9a1dbe8305d1459a3afba4ff",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkmud.ogg",
+  "ms": 416,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalksand.wav": {
+  "size": 12378,
+  "mtimeMs": 1102420425092,
+  "sha1": "99fc2550b268039140eecef2776a32ca87cf99a4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalksand.ogg",
+  "ms": 269,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalksnow.wav": {
+  "size": 18208,
+  "mtimeMs": 1102420425186,
+  "sha1": "a68ed5b9c37e29667f2096a77849d74c8de58230",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalksnow.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/player/mvwalkwater.wav": {
+  "size": 17506,
+  "mtimeMs": 1102420425327,
+  "sha1": "240f6a4d4e97203080a273d6972244138e6a6107",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/mvwalkwater.ogg",
+  "ms": 385,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_avoid_a.wav": {
+  "size": 9582,
+  "mtimeMs": 1102420425436,
+  "sha1": "6c4d3cd5828967ec24bd5f5bcaf2449676c034dd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_avoid_a.ogg",
+  "ms": 216,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_avoid_b.wav": {
+  "size": 9294,
+  "mtimeMs": 1102420425592,
+  "sha1": "280cd87dbad1fc6a93eb5f74ac2c4645fd5c70d6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_avoid_b.ogg",
+  "ms": 210,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_die_a.wav": {
+  "size": 33582,
+  "mtimeMs": 1102420425764,
+  "sha1": "ca38f330c449c4dbdc865f15eda1e03867af3209",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_die_a.ogg",
+  "ms": 760,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_die_b.wav": {
+  "size": 22766,
+  "mtimeMs": 1102420425920,
+  "sha1": "2727ebbf47f744276ab2c4aadd5134216e86a0f9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_die_b.ogg",
+  "ms": 515,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_die_c.wav": {
+  "size": 22958,
+  "mtimeMs": 1102420426045,
+  "sha1": "3e5018adf47d4a7d5c64f4705729fdb61e12c258",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_die_c.ogg",
+  "ms": 509,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_moan1_a.wav": {
+  "size": 14478,
+  "mtimeMs": 1102420426217,
+  "sha1": "d0ff4baf4fadfc1b1f81b85c62f011cfaf7ca9b6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_moan1_a.ogg",
+  "ms": 327,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_moan1_b.wav": {
+  "size": 14670,
+  "mtimeMs": 1102420426420,
+  "sha1": "8cbe537f791e003e5b6888e8b1c6ea74ae5a594e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_moan1_b.ogg",
+  "ms": 332,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_moan1_c.wav": {
+  "size": 15330,
+  "mtimeMs": 1102420426561,
+  "sha1": "907c56a34fe70c698b198cb558f63c4891168b26",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_moan1_c.ogg",
+  "ms": 345,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_shout1.wav": {
+  "size": 17670,
+  "mtimeMs": 1102420427170,
+  "sha1": "e0b0ed3f6b8699017d4bb7b2870abffe8c1aee7f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_shout1.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_at_shout2.wav": {
+  "size": 15374,
+  "mtimeMs": 1102420427327,
+  "sha1": "9d73651a65875c7215516c568362f162d2dd343f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_at_shout2.ogg",
+  "ms": 348,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_die_a.wav": {
+  "size": 19916,
+  "mtimeMs": 1102420427780,
+  "sha1": "53ee2f6365b80fad46e4bd7a3710f7862fef5dd8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_die_a.ogg",
+  "ms": 448,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_die_b.wav": {
+  "size": 30220,
+  "mtimeMs": 1102420427983,
+  "sha1": "9a40529e6b56c35a08ae899306def4f490935778",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_die_b.ogg",
+  "ms": 667,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_die_c.wav": {
+  "size": 41612,
+  "mtimeMs": 1102420428202,
+  "sha1": "b6d587bc7646e3dbab44bb6dbe457cb5522d3c74",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_die_c.ogg",
+  "ms": 919,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_moan1_a.wav": {
+  "size": 9516,
+  "mtimeMs": 1102420428373,
+  "sha1": "35accfbd06fe5b1bffcd973cc1bed9b8d57fe7d2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_moan1_a.ogg",
+  "ms": 213,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_moan1_b.wav": {
+  "size": 12588,
+  "mtimeMs": 1102420428561,
+  "sha1": "992a92ac222862e40176fa18498ff6338bc19053",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_moan1_b.ogg",
+  "ms": 281,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_moan1_c.wav": {
+  "size": 14602,
+  "mtimeMs": 1102420428748,
+  "sha1": "185c8e63c24ab029db49111a248f8c9d6fca195f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_moan1_c.ogg",
+  "ms": 320,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_shout1_a.wav": {
+  "size": 13708,
+  "mtimeMs": 1102420429420,
+  "sha1": "52e4032ca07c71725ea422d014ec92a0dcdf0bb5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_shout1_a.ogg",
+  "ms": 308,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_shout1_b.wav": {
+  "size": 11708,
+  "mtimeMs": 1102420429545,
+  "sha1": "10296b7c58aa1c3bd57f1e0bff8217a253230df8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_shout1_b.ogg",
+  "ms": 262,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_shout2_a.wav": {
+  "size": 13324,
+  "mtimeMs": 1102420429717,
+  "sha1": "4e3ef58fb5354c072fda06621e860c73fe02db18",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_shout2_a.ogg",
+  "ms": 299,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_bt_shout2_b.wav": {
+  "size": 22084,
+  "mtimeMs": 1102420429811,
+  "sha1": "ff8380e71303f8acfdf0c9e34ca5a62280443eae",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_bt_shout2_b.ogg",
+  "ms": 498,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_avoid_a.wav": {
+  "size": 5452,
+  "mtimeMs": 1102420429936,
+  "sha1": "051dddd6886567109a36de068d551ba3f0b5b8a3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_avoid_a.ogg",
+  "ms": 120,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_avoid_b.wav": {
+  "size": 7180,
+  "mtimeMs": 1102420430108,
+  "sha1": "9c44ebe1815c183682e15f407294df1bc125b586",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_avoid_b.ogg",
+  "ms": 160,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_die_a.wav": {
+  "size": 39562,
+  "mtimeMs": 1102420430217,
+  "sha1": "03ef7f86655badec3020f1677a979c33e3a10b16",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_die_a.ogg",
+  "ms": 894,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_die_c.wav": {
+  "size": 32332,
+  "mtimeMs": 1102420430498,
+  "sha1": "0d58a54cf6ab3a0b0ec0f1b82a04edfab7cfef11",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_die_c.ogg",
+  "ms": 714,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_moan1_a.wav": {
+  "size": 9148,
+  "mtimeMs": 1102420430702,
+  "sha1": "dc17d047cd63a0b0396e818d972d58ebf16943a9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_moan1_a.ogg",
+  "ms": 204,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_moan1_b.wav": {
+  "size": 9388,
+  "mtimeMs": 1102420430842,
+  "sha1": "1e2f2c8117e288ee9d649abbce52bd6460027a39",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_moan1_b.ogg",
+  "ms": 210,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_moan2_a.wav": {
+  "size": 16012,
+  "mtimeMs": 1102420431014,
+  "sha1": "79ba8134e5bfec9952914c0d7deadcd1ea85bbec",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_moan2_a.ogg",
+  "ms": 360,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_shout1_a.wav": {
+  "size": 10540,
+  "mtimeMs": 1102420431311,
+  "sha1": "9fba5285df0a27a76f84ce7e552d355061d04388",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_shout1_a.ogg",
+  "ms": 236,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_shout1_b.wav": {
+  "size": 21452,
+  "mtimeMs": 1102420431452,
+  "sha1": "7e6885d1db1add03f550c471ee67b1b7f1bbacc4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_shout1_b.ogg",
+  "ms": 482,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_shout2_a.wav": {
+  "size": 36620,
+  "mtimeMs": 1102420431592,
+  "sha1": "ae98e410428561f2ed84098ce4f59a6c09cc4605",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_shout2_a.ogg",
+  "ms": 812,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_ct_shout2_b.wav": {
+  "size": 32650,
+  "mtimeMs": 1102420431811,
+  "sha1": "4034c8924b3e11ea46009771ace2f1e9c07d9a29",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_ct_shout2_b.ogg",
+  "ms": 717,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_avoid_a.wav": {
+  "size": 13708,
+  "mtimeMs": 1109237059828,
+  "sha1": "a998b771e4dc51fdc778a3ce785d83b0df4163fc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_avoid_a.ogg",
+  "ms": 290,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_avoid_b.wav": {
+  "size": 11052,
+  "mtimeMs": 1109237059859,
+  "sha1": "8e2f81841297e71b1a5bea6800e62d166b697f09",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_avoid_b.ogg",
+  "ms": 247,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_die_a.wav": {
+  "size": 32204,
+  "mtimeMs": 1109237059890,
+  "sha1": "12535ffa367352b89b9e4f719c5edf40b4ce1e48",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_die_a.ogg",
+  "ms": 727,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_die_b.wav": {
+  "size": 33996,
+  "mtimeMs": 1109237059906,
+  "sha1": "84d269075726b065483ca675b407a3fdc05ecb3d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_die_b.ogg",
+  "ms": 765,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_die_c.wav": {
+  "size": 35660,
+  "mtimeMs": 1109237059937,
+  "sha1": "7d5048113f1810e9dd0f6195e5fd9f344bc03d4e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_die_c.ogg",
+  "ms": 801,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_moan1_a.wav": {
+  "size": 9852,
+  "mtimeMs": 1109237059953,
+  "sha1": "ad68520bcb8daf3790ba4bcb244144cfb6c14019",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_moan1_a.ogg",
+  "ms": 220,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_moan1_b.wav": {
+  "size": 10044,
+  "mtimeMs": 1109237059968,
+  "sha1": "5ba6b52b0d2da97645c36a2b1a158b439987c62b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_moan1_b.ogg",
+  "ms": 225,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_shout1_a.wav": {
+  "size": 11212,
+  "mtimeMs": 1109237060031,
+  "sha1": "fa83e837bb030cd5bf2118b0df57587e9476f6d8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_shout1_a.ogg",
+  "ms": 251,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_shout2_a.wav": {
+  "size": 17036,
+  "mtimeMs": 1109237060046,
+  "sha1": "e017a3348ad107c972650147468920cefdc77df2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_shout2_a.ogg",
+  "ms": 383,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_dt_shout2_b.wav": {
+  "size": 16046,
+  "mtimeMs": 1109237060062,
+  "sha1": "4324d8bbcdb7d50c9f06957d996cb5643a9bda88",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_dt_shout2_b.ogg",
+  "ms": 363,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_avoid_a.wav": {
+  "size": 8246,
+  "mtimeMs": 1102420431936,
+  "sha1": "5e858564c061130e02d4b5c3fe298b20f9237287",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_avoid_a.ogg",
+  "ms": 184,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_avoid_b.wav": {
+  "size": 9174,
+  "mtimeMs": 1102420431998,
+  "sha1": "2830f903744393a1314eb7f096492a4bcfbc2a3b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_avoid_b.ogg",
+  "ms": 166,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_avoid_c.wav": {
+  "size": 7510,
+  "mtimeMs": 1102420432077,
+  "sha1": "3b22237ac3e0c65fb8066cb6cf83a7e17ebd261c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_avoid_c.ogg",
+  "ms": 152,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_die_a.wav": {
+  "size": 39432,
+  "mtimeMs": 1102420432202,
+  "sha1": "bc651161453424b3816081311b6d5765856cda9f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_die_a.ogg",
+  "ms": 831,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_die_b.wav": {
+  "size": 22280,
+  "mtimeMs": 1102420432327,
+  "sha1": "ff90042a9c07635b81b36de0a2e65970955cc6e6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_die_b.ogg",
+  "ms": 492,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_die_c.wav": {
+  "size": 38664,
+  "mtimeMs": 1102420432530,
+  "sha1": "070129bc9dbce3a2024015a9d18ca2bf61e43701",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_die_c.ogg",
+  "ms": 863,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_moan1_a.wav": {
+  "size": 11272,
+  "mtimeMs": 1102420432623,
+  "sha1": "dbb7cd779fec88dcb6378cde94305c15ca1fcc81",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_moan1_a.ogg",
+  "ms": 242,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_moan1_b.wav": {
+  "size": 9896,
+  "mtimeMs": 1102420432764,
+  "sha1": "7b81b3264118ed445a006864489d5b04d2937d84",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_moan1_b.ogg",
+  "ms": 198,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_moan1_c.wav": {
+  "size": 18984,
+  "mtimeMs": 1102420432873,
+  "sha1": "e68dc99c0d7b0512e51fec8544da4e095722f767",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_moan1_c.ogg",
+  "ms": 351,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_shout1_a.wav": {
+  "size": 7734,
+  "mtimeMs": 1102420433592,
+  "sha1": "c3b1bc3f3c008a00b36e6b30538268306c3b5a8a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_shout1_a.ogg",
+  "ms": 171,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_shout1_b.wav": {
+  "size": 7862,
+  "mtimeMs": 1102420433686,
+  "sha1": "9e4d7dafcc641fd7231b03d697bbb7945db37eea",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_shout1_b.ogg",
+  "ms": 141,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_shout2_a.wav": {
+  "size": 17110,
+  "mtimeMs": 1102420433795,
+  "sha1": "ae33a6967b0c97df29c4106f15913bd308239490",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_shout2_a.ogg",
+  "ms": 369,
+  "channels": 1
+ },
+ "prim/snd/player/vcf_et_shout2_b.wav": {
+  "size": 28918,
+  "mtimeMs": 1102420433920,
+  "sha1": "61d1f9f911a3935329e6ede18c5d5a65048ced64",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcf_et_shout2_b.ogg",
+  "ms": 529,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_avoid_a.wav": {
+  "size": 19852,
+  "mtimeMs": 1102420435858,
+  "sha1": "f1ce9f6853ac1cdbdbb3f16bfb44095ff8e393f8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_avoid_a.ogg",
+  "ms": 447,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_avoid_b.wav": {
+  "size": 21036,
+  "mtimeMs": 1102420436030,
+  "sha1": "8f2ea62b27185e80638e45caf56f51acde5579f4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_avoid_b.ogg",
+  "ms": 474,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_avoid_c.wav": {
+  "size": 18124,
+  "mtimeMs": 1102420436202,
+  "sha1": "6e42b495edd652541c36eb1e58c37e296dea726b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_avoid_c.ogg",
+  "ms": 408,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_die_a.wav": {
+  "size": 50700,
+  "mtimeMs": 1102420436373,
+  "sha1": "788aecd2256b5889417b741aeec48e12fa43bb1e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_die_a.ogg",
+  "ms": 1087,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_die_b.wav": {
+  "size": 38476,
+  "mtimeMs": 1102420436514,
+  "sha1": "eee54ef048a14a55f27876d614004d433ed3ef47",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_die_b.ogg",
+  "ms": 856,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_die_c.wav": {
+  "size": 39692,
+  "mtimeMs": 1102420436655,
+  "sha1": "658d5eaa1a5166ad0066fb49cc85fa4d1dd0f4fb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_die_c.ogg",
+  "ms": 861,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_moan1_a.wav": {
+  "size": 9884,
+  "mtimeMs": 1102420436936,
+  "sha1": "a4daa3c7a041b144e89cd6ad6fd665c6eb9ce97c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_moan1_a.ogg",
+  "ms": 221,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_moan1_c.wav": {
+  "size": 8684,
+  "mtimeMs": 1102420437170,
+  "sha1": "29134bf8c4a5bfff70d55cee76e4dc0d3f054939",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_moan1_c.ogg",
+  "ms": 194,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_moan2_a.wav": {
+  "size": 40716,
+  "mtimeMs": 1102420437295,
+  "sha1": "890ca859c55b5d5084c28f830a0ab29c101581fa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_moan2_a.ogg",
+  "ms": 829,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout1_a.wav": {
+  "size": 11596,
+  "mtimeMs": 1102420437795,
+  "sha1": "fbff405420be5bfcab1bf4cd280d802ef62f95f1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout1_a.ogg",
+  "ms": 260,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout1_b.wav": {
+  "size": 15400,
+  "mtimeMs": 1102420437936,
+  "sha1": "80c8ade3995d729ffd802d9d8247289bed209028",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout1_b.ogg",
+  "ms": 307,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout1_c.wav": {
+  "size": 15786,
+  "mtimeMs": 1102420438061,
+  "sha1": "40157b5db52c27fa76d2ea917548cde164c358cb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout1_c.ogg",
+  "ms": 355,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout2_a.wav": {
+  "size": 20684,
+  "mtimeMs": 1102420438233,
+  "sha1": "8214d269f945314f362872ff992a9edc4b242612",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout2_a.ogg",
+  "ms": 431,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout2_b.wav": {
+  "size": 22316,
+  "mtimeMs": 1102420438373,
+  "sha1": "195a5acc79a380f864a6a4792f3a27a3a90cd819",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout2_b.ogg",
+  "ms": 494,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout2_c.wav": {
+  "size": 20940,
+  "mtimeMs": 1102420438561,
+  "sha1": "7c976ccb1d26deae39c8fa94b0adb7d649b68c89",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout2_c.ogg",
+  "ms": 472,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_at_shout2_d.wav": {
+  "size": 25132,
+  "mtimeMs": 1173401017765,
+  "sha1": "87c3e572e51e6b2aa526f05707325a2de0bb2f67",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_at_shout2_d.ogg",
+  "ms": 519,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_avoid_a.wav": {
+  "size": 4996,
+  "mtimeMs": 1102420438686,
+  "sha1": "bd91651d069ef6a812b03888f4c2430c6ff2c4e0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_avoid_a.ogg",
+  "ms": 110,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_avoid_b.wav": {
+  "size": 4492,
+  "mtimeMs": 1102420438858,
+  "sha1": "c03e98ea685440065e9eda3d6b8f5fdce788efb1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_avoid_b.ogg",
+  "ms": 99,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_die_a.wav": {
+  "size": 48204,
+  "mtimeMs": 1102420438998,
+  "sha1": "692968f5ea8056e11c94af50ba839aa51e120faf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_die_a.ogg",
+  "ms": 1090,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_die_b.wav": {
+  "size": 40906,
+  "mtimeMs": 1102420439170,
+  "sha1": "0d5052173be5a3ab59213d46b8aa0d6f39f6a67c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_die_b.ogg",
+  "ms": 924,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_die_c.wav": {
+  "size": 42378,
+  "mtimeMs": 1102420439280,
+  "sha1": "0b9721e72780ae106e9f3b477f589daa2f08eb78",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_die_c.ogg",
+  "ms": 958,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_moan1_b.wav": {
+  "size": 19916,
+  "mtimeMs": 1102420439498,
+  "sha1": "4b234a6b888025d9c531c42ef78e40821f71590c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_moan1_b.ogg",
+  "ms": 448,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_moan1_c.wav": {
+  "size": 18252,
+  "mtimeMs": 1102420439670,
+  "sha1": "35008de3caaa3de087a4403dba2cba61ed489e28",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_moan1_c.ogg",
+  "ms": 411,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_moan2_a.wav": {
+  "size": 21484,
+  "mtimeMs": 1102420439780,
+  "sha1": "5b2c8cce6fabc8bb24b6995ab22166f11a218f34",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_moan2_a.ogg",
+  "ms": 484,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_moan2_b.wav": {
+  "size": 21132,
+  "mtimeMs": 1102420439905,
+  "sha1": "ef23e697682bc8f6fff29bee0a3c66f11ea748f6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_moan2_b.ogg",
+  "ms": 476,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_shout1_d.wav": {
+  "size": 16972,
+  "mtimeMs": 1102420440498,
+  "sha1": "38b6799a1e1e57c4270d5ea00ad2bc959eea24c2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_shout1_d.ogg",
+  "ms": 382,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_shout2_b.wav": {
+  "size": 23212,
+  "mtimeMs": 1102420440905,
+  "sha1": "e16d39f82f8c92f4494eacf4db2d148aa206679a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_shout2_b.ogg",
+  "ms": 523,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_bt_shout2_c.wav": {
+  "size": 26380,
+  "mtimeMs": 1102420441077,
+  "sha1": "3db5b03fe08609d55cb74f5be7c0f7029d53443f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_bt_shout2_c.ogg",
+  "ms": 594,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_avoid_a.wav": {
+  "size": 12716,
+  "mtimeMs": 1102420441452,
+  "sha1": "6b9f6106e608d5f41ec0d0c1767b387ba710fe65",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_avoid_a.ogg",
+  "ms": 285,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_avoid_b.wav": {
+  "size": 11180,
+  "mtimeMs": 1102420441592,
+  "sha1": "ba1821f97db40a9e361a67de8636447a7c7aefcc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_avoid_b.ogg",
+  "ms": 250,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_avoid_c.wav": {
+  "size": 6250,
+  "mtimeMs": 1102420441733,
+  "sha1": "40cf6105651a2671ff3ca9139b473db3e7dc046f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_avoid_c.ogg",
+  "ms": 139,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_avoid_d.wav": {
+  "size": 15500,
+  "mtimeMs": 1102420441827,
+  "sha1": "4cf1fa474b590e6ed32e0005db0dda5154710ab7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_avoid_d.ogg",
+  "ms": 348,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_avoid_e.wav": {
+  "size": 18668,
+  "mtimeMs": 1102420441983,
+  "sha1": "667e52dd3584fa78c7a51e5b2f403c622338d748",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_avoid_e.ogg",
+  "ms": 419,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_die_a.wav": {
+  "size": 42828,
+  "mtimeMs": 1102420442202,
+  "sha1": "cf93821b86a0e58613f1eeac1939530c60ad56ff",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_die_a.ogg",
+  "ms": 968,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_die_b.wav": {
+  "size": 59532,
+  "mtimeMs": 1102420442358,
+  "sha1": "1c3fba0b94f4ffab2d24bb3eb2b2b580b8468cfc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_die_b.ogg",
+  "ms": 1306,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_die_c.wav": {
+  "size": 61580,
+  "mtimeMs": 1102420442561,
+  "sha1": "fd711567dacc41420d910553c2fb6f45c77a3a8e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_die_c.ogg",
+  "ms": 1352,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_die_d.wav": {
+  "size": 56716,
+  "mtimeMs": 1102420442795,
+  "sha1": "3308f97e00958b868560e89dc8f3a3998c330e09",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_die_d.ogg",
+  "ms": 1232,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_moan1_a.wav": {
+  "size": 19532,
+  "mtimeMs": 1102420442905,
+  "sha1": "8630a160e724e605452e3ca06b966ed3ef62077e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_moan1_a.ogg",
+  "ms": 433,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_moan1_b.wav": {
+  "size": 35076,
+  "mtimeMs": 1102420443123,
+  "sha1": "152caf5d4e722ac1ce6e5192cc864b21906c3c69",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_moan1_b.ogg",
+  "ms": 698,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_moan1_c.wav": {
+  "size": 32652,
+  "mtimeMs": 1102420443295,
+  "sha1": "42417d2ef84a66fcc8e858c10202c1de153776bd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_moan1_c.ogg",
+  "ms": 737,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout1_a.wav": {
+  "size": 17964,
+  "mtimeMs": 1102420443920,
+  "sha1": "e388c337f4c8247f32bfc6f385e5e9400cdaed88",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout1_a.ogg",
+  "ms": 404,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout1_b.wav": {
+  "size": 11564,
+  "mtimeMs": 1102420444092,
+  "sha1": "5960c86db34c1d1a7d3a25f73c1f31f6116a8905",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout1_b.ogg",
+  "ms": 259,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout1_c.wav": {
+  "size": 11404,
+  "mtimeMs": 1102420444264,
+  "sha1": "d7be51050c3fc7bb1e2fac1b958992c538a9b869",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout1_c.ogg",
+  "ms": 255,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout2_a.wav": {
+  "size": 26572,
+  "mtimeMs": 1102420444405,
+  "sha1": "aec2ad2f9fc32507dd4e0728d2a791713ab21a44",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout2_a.ogg",
+  "ms": 598,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout2_b.wav": {
+  "size": 42116,
+  "mtimeMs": 1102420444530,
+  "sha1": "691635ca27ad4b5a2c498da611008e885baabfa6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout2_b.ogg",
+  "ms": 919,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_dt_shout2_c.wav": {
+  "size": 37754,
+  "mtimeMs": 1102420444733,
+  "sha1": "960bb47331e5ec76ff63abd20f3089aca732aebb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_dt_shout2_c.ogg",
+  "ms": 836,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_avoid_a.wav": {
+  "size": 27788,
+  "mtimeMs": 1102420444920,
+  "sha1": "490b1ed2c85ef4a20f24c7d7d41d83c05ebc11db",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_avoid_a.ogg",
+  "ms": 627,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_avoid_b.wav": {
+  "size": 20460,
+  "mtimeMs": 1102420445030,
+  "sha1": "408c855ab031246bd43f9923124168cb11898a7c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_avoid_b.ogg",
+  "ms": 461,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_avoid_c.wav": {
+  "size": 21740,
+  "mtimeMs": 1102420445139,
+  "sha1": "4e99c26f9471fc341696d0e3484800b87f3c2178",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_avoid_c.ogg",
+  "ms": 490,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_die_a.wav": {
+  "size": 26508,
+  "mtimeMs": 1102420445248,
+  "sha1": "58e44db085136b353008724c165b5541238c34b3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_die_a.ogg",
+  "ms": 598,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_die_b.wav": {
+  "size": 25932,
+  "mtimeMs": 1102420445420,
+  "sha1": "7d3211ffb55bb82a73cbbefde292c145e9084ffc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_die_b.ogg",
+  "ms": 585,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_die_c.wav": {
+  "size": 34636,
+  "mtimeMs": 1102420445530,
+  "sha1": "fb4f13f7975445489e51af5202f880b37ee089a6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_die_c.ogg",
+  "ms": 771,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_moan1_a.wav": {
+  "size": 10604,
+  "mtimeMs": 1102420445733,
+  "sha1": "139280688895d6b61621c59345d857094e2f444e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_moan1_a.ogg",
+  "ms": 237,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_moan1_b.wav": {
+  "size": 9996,
+  "mtimeMs": 1102420445842,
+  "sha1": "8635db9d915a064cdc2f3bb79f257e36611abc73",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_moan1_b.ogg",
+  "ms": 223,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_moan2_a.wav": {
+  "size": 16138,
+  "mtimeMs": 1102420445983,
+  "sha1": "517e9fab69e2678087465b48973d5aeaf7ffac81",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_moan2_a.ogg",
+  "ms": 363,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout1_a.wav": {
+  "size": 9900,
+  "mtimeMs": 1102420446264,
+  "sha1": "e111e715fc3d79d91306dece83cb40730b6a331c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout1_a.ogg",
+  "ms": 221,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout1_b.wav": {
+  "size": 10092,
+  "mtimeMs": 1102420446405,
+  "sha1": "70a7047012a98fc925391044ee4118ed0dff8806",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout1_b.ogg",
+  "ms": 226,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout1_c.wav": {
+  "size": 12844,
+  "mtimeMs": 1102420446514,
+  "sha1": "cdf84117afb3350975dc4df7d74495fb2089c88f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout1_c.ogg",
+  "ms": 288,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout2_a.wav": {
+  "size": 17482,
+  "mtimeMs": 1102420446655,
+  "sha1": "1e6d68930ca90d4a07751111bae3e158e5008280",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout2_a.ogg",
+  "ms": 393,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout2_b.wav": {
+  "size": 21004,
+  "mtimeMs": 1102420446795,
+  "sha1": "3c1bfcf4c056b5e27fb96270fb35c31a4659020d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout2_b.ogg",
+  "ms": 473,
+  "channels": 1
+ },
+ "prim/snd/player/vcm_et_shout2_c.wav": {
+  "size": 16140,
+  "mtimeMs": 1102420446952,
+  "sha1": "ce6ebc621b24bece10456cc0248e8c0f3bb0dcb9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vcm_et_shout2_c.ogg",
+  "ms": 363,
+  "channels": 1
+ },
+ "prim/snd/player/vuf_dt_shout1.wav": {
+  "size": 8926,
+  "mtimeMs": 1173401017765,
+  "sha1": "b9123e593787d39854d0d22943db0f8734ab784e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vuf_dt_shout1.ogg",
+  "ms": 200,
+  "channels": 1
+ },
+ "prim/snd/player/vum_at_shout1.wav": {
+  "size": 7500,
+  "mtimeMs": 1173401017765,
+  "sha1": "d43c2ef612e7119e1433d1f13df6b7622f84b191",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vum_at_shout1.ogg",
+  "ms": 167,
+  "channels": 1
+ },
+ "prim/snd/player/vum_at_shout2.wav": {
+  "size": 17682,
+  "mtimeMs": 1173401017765,
+  "sha1": "148f57b9cef0839ac13bc1ed00f4a8ac5b873ea8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vum_at_shout2.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/player/vum_bt_shout1.wav": {
+  "size": 11052,
+  "mtimeMs": 1173401017765,
+  "sha1": "23e4b8eed6b9d5447f52d4c7486e2374f4a9214e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "player/vum_bt_shout1.ogg",
+  "ms": 248,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_forceswing1.wav": {
+  "size": 76832,
+  "mtimeMs": 1102420447545,
+  "sha1": "4318848ef635327e736320bf77458b0e202625c1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_forceswing1.ogg",
+  "ms": 1569,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_forceswing2.wav": {
+  "size": 67758,
+  "mtimeMs": 1102420448405,
+  "sha1": "34f8c6977781bf8ee00b396f51bd42956884ab08",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_forceswing2.ogg",
+  "ms": 1518,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_forceswing3.wav": {
+  "size": 68224,
+  "mtimeMs": 1102420448608,
+  "sha1": "3d44e6a3cf47a528ecb7b9549a59eda4744d162c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_forceswing3.ogg",
+  "ms": 1518,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_hawk.wav": {
+  "size": 151726,
+  "mtimeMs": 1102420448858,
+  "sha1": "608bebf2799c236ab80641a4414ac6d805b3413b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_hawk.ogg",
+  "ms": 3439,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_hit_a.wav": {
+  "size": 17418,
+  "mtimeMs": 1102420449202,
+  "sha1": "bd3f2856667a700b86d936c57ca8b07007ca6069",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_hit_a.ogg",
+  "ms": 385,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_hit_boom.wav": {
+  "size": 98350,
+  "mtimeMs": 1102420449514,
+  "sha1": "8bfcc1cefbd08d73962d9a158a1b7d0d91779d9b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_hit_boom.ogg",
+  "ms": 2088,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_hit_c.wav": {
+  "size": 17790,
+  "mtimeMs": 1102420449670,
+  "sha1": "8524c120329043184358d16eec1d504715ba9d33",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_hit_c.ogg",
+  "ms": 402,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_hit_d.wav": {
+  "size": 21168,
+  "mtimeMs": 1102420449780,
+  "sha1": "66f8689f2866ac764aefcde7e1aff2ccde36606a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_hit_d.ogg",
+  "ms": 468,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_pongmyeol_fly.wav": {
+  "size": 40344,
+  "mtimeMs": 1102420449936,
+  "sha1": "43ed8996d99488f7c63b1694b293f9ce893af7e9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_pongmyeol_fly.ogg",
+  "ms": 903,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_scan.wav": {
+  "size": 85422,
+  "mtimeMs": 1173401017765,
+  "sha1": "edca6c36dd8ff6271112d96d4fc54c0689a30526",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_bow_scan.ogg",
+  "ms": 1936,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_bow_swing.wav": {
+  "size": 76832,
+  "mtimeMs": 1173401017765,
+  "sha1": "dca68778d4c4ec1079973d7571bc774404742718",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "skill/csk_bow_swing.wav",
+  "ms": 1569,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_binggong_fly.wav": {
+  "size": 56984,
+  "mtimeMs": 1102420450061,
+  "sha1": "cb0004bc5d3a6e6c9048d38e020ca3e07c161d4d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_binggong_fly.ogg",
+  "ms": 1195,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_binggong_hit.wav": {
+  "size": 41710,
+  "mtimeMs": 1173401017765,
+  "sha1": "b1ba57374ed8e0d3462cb593f82ebd7242baa852",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_binggong_hit.ogg",
+  "ms": 691,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_binghon.wav": {
+  "size": 67318,
+  "mtimeMs": 1102420450186,
+  "sha1": "138d9d6f78829495b70e3a987181da93877b997d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_binghon.ogg",
+  "ms": 1457,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_bingpan_hit.wav": {
+  "size": 80022,
+  "mtimeMs": 1102420450358,
+  "sha1": "91569c441ddae57d2d0e5a8cc1a8bea7221f922d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_bingpan_hit.ogg",
+  "ms": 1811,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_gigong_hand.wav": {
+  "size": 35692,
+  "mtimeMs": 1102420450498,
+  "sha1": "70eba923a3b1ea67f0be224694e9856333df728e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_gigong_hand.ogg",
+  "ms": 808,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_gigong_hit.wav": {
+  "size": 41708,
+  "mtimeMs": 1102420450717,
+  "sha1": "d193696a4a7bed378df425cb326e6dda5197d0a6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_gigong_hit.ogg",
+  "ms": 945,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_hosin_hit.wav": {
+  "size": 26220,
+  "mtimeMs": 1102420450842,
+  "sha1": "cf9a25ce5683e9e5649290f1e3235dddbdf6901b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_hosin_hit.ogg",
+  "ms": 594,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_icebody.wav": {
+  "size": 79732,
+  "mtimeMs": 1102420451045,
+  "sha1": "083790f1986fb7475b3e24230dbfd3215df95670",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_icebody.ogg",
+  "ms": 1805,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_icewind.wav": {
+  "size": 97154,
+  "mtimeMs": 1102420451233,
+  "sha1": "942a551006a29999ff8e88146d2dafa04b81e9e4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_icewind.ogg",
+  "ms": 2108,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_cold_ready.wav": {
+  "size": 98348,
+  "mtimeMs": 1102420451342,
+  "sha1": "30b882985ba2ade2eff16b7773ac3604219dc57a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_cold_ready.ogg",
+  "ms": 2114,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_defense_ready_a.wav": {
+  "size": 155736,
+  "mtimeMs": 1167807104187,
+  "sha1": "23838b00e258feb596ff5edf384123322edfe039",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_defense_ready_a.ogg",
+  "ms": 1741,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_fiecraze_ready.wav": {
+  "size": 191874,
+  "mtimeMs": 1173401017765,
+  "sha1": "bdc79e0c7f478cc66d180e56a6a72662f2e1a846",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_fiecraze_ready.ogg",
+  "ms": 4107,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_fiecraze_swing.wav": {
+  "size": 198808,
+  "mtimeMs": 1102420451577,
+  "sha1": "b7117499b7a722dbbd8329d6998758bc3fe8e769",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_fiecraze_swing.ogg",
+  "ms": 4178,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_fireball_fly.wav": {
+  "size": 53222,
+  "mtimeMs": 1102420451748,
+  "sha1": "11da9f6e9344d4aa50a0eba61cf13c6bdde081ea",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_fireball_fly.ogg",
+  "ms": 1200,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_gigong_hand.wav": {
+  "size": 74412,
+  "mtimeMs": 1102420451936,
+  "sha1": "668ea9c663c0f1851a41a1eef34437ae83c07e39",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_gigong_hand.ogg",
+  "ms": 1686,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_gigong_hit.wav": {
+  "size": 66604,
+  "mtimeMs": 1102420452061,
+  "sha1": "13c53c00d9ca79577b3ef1c0c16d4a95b18df3f6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_gigong_hit.ogg",
+  "ms": 1509,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_hosin_hit.wav": {
+  "size": 59180,
+  "mtimeMs": 1102420452280,
+  "sha1": "12538e195388139baa2d6e64fcb3a5055ab41286",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_hosin_hit.ogg",
+  "ms": 1341,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_fire_ready.wav": {
+  "size": 109476,
+  "mtimeMs": 1102420452452,
+  "sha1": "e6606164bcd2333d62d7f21d149c90fa1bc871ec",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_fire_ready.ogg",
+  "ms": 2223,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_buhwal_b.wav": {
+  "size": 487468,
+  "mtimeMs": 1102420452967,
+  "sha1": "429017a2a4912809586f4da27124a8c8890d8ca4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_buhwal_b.ogg",
+  "ms": 9420,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_chugung.wav": {
+  "size": 82860,
+  "mtimeMs": 1102420453108,
+  "sha1": "3750ef69a8ce5b4bc0395b92245df092c58aaebf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_chugung.ogg",
+  "ms": 1878,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_jehwang.wav": {
+  "size": 93996,
+  "mtimeMs": 1102420453295,
+  "sha1": "4521fbf0a6a974c8ecd0090b0bc952a78073cc87",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_jehwang.ogg",
+  "ms": 2130,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_johwa.wav": {
+  "size": 93440,
+  "mtimeMs": 1173401017765,
+  "sha1": "bc7d61e5badaad578b5c84728661ddacc6dcc741",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_johwa.ogg",
+  "ms": 2107,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_johwa_act.wav": {
+  "size": 111066,
+  "mtimeMs": 1173401017765,
+  "sha1": "1aa0a693511f056911268f58dce7c86c17b00001",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_johwa_act.ogg",
+  "ms": 2360,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_mind.wav": {
+  "size": 28070,
+  "mtimeMs": 1102420453420,
+  "sha1": "56f2b22a9ae3be3dee4d27e2477964594ec3b3e4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_mind.ogg",
+  "ms": 634,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_nega.wav": {
+  "size": 85548,
+  "mtimeMs": 1102420453608,
+  "sha1": "6a9eaaa60c408a9ffb2c5497ff09a0933790e2ab",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_nega.ogg",
+  "ms": 1939,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_ready.wav": {
+  "size": 108404,
+  "mtimeMs": 1102420453780,
+  "sha1": "4b7f820752a63c75d5d2b9841f0b73b3964f8136",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_ready.ogg",
+  "ms": 2442,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_heal_ready_a.wav": {
+  "size": 351790,
+  "mtimeMs": 1173401017765,
+  "sha1": "34c808c0693aeabc43b3474e0a48dd33b2fb419c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_heal_ready_a.ogg",
+  "ms": 3646,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_bolt_hit.wav": {
+  "size": 56036,
+  "mtimeMs": 1102420453936,
+  "sha1": "81b2706586caab8d8729b04c67d1ec646dcf70ff",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_bolt_hit.ogg",
+  "ms": 1268,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_cho_hit.wav": {
+  "size": 83500,
+  "mtimeMs": 1102420454186,
+  "sha1": "0779eb7420fb6326dce814fee0e74aede2cb915c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_cho_hit.ogg",
+  "ms": 1741,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_con.wav": {
+  "size": 86134,
+  "mtimeMs": 1102420454311,
+  "sha1": "36d87a121f9854c3663d2e0fe8f68e166d32036b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_con.ogg",
+  "ms": 1950,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_gigong_hand.wav": {
+  "size": 51756,
+  "mtimeMs": 1102420454483,
+  "sha1": "48015a498e063879387d34964fb8c543b0b5ea28",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_gigong_hand.ogg",
+  "ms": 1173,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_gigong_hit.wav": {
+  "size": 46508,
+  "mtimeMs": 1102420454623,
+  "sha1": "64aa7e255e4f4c24b71e6def2a28bb7f1e1d5341",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_gigong_hit.ogg",
+  "ms": 1023,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_gwantong_swing.wav": {
+  "size": 204438,
+  "mtimeMs": 1102420454827,
+  "sha1": "53e2b3b500639de0b8c94e89318652fafcf34c55",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_gwantong_swing.ogg",
+  "ms": 3532,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_mind_swing.wav": {
+  "size": 28070,
+  "mtimeMs": 1102420455014,
+  "sha1": "6928fa235ea31670a8af709fb997e37ad6ac1d9d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_mind_swing.ogg",
+  "ms": 634,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_ready.wav": {
+  "size": 71852,
+  "mtimeMs": 1102420455202,
+  "sha1": "942fff1550977fb5f8bcad088f7544e0a4a7272a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_ready.ogg",
+  "ms": 1373,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_sinbo_hit.wav": {
+  "size": 70702,
+  "mtimeMs": 1173401017765,
+  "sha1": "45a37819617c79eef40ec021feef56abd86870ce",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_sinbo_hit.ogg",
+  "ms": 801,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_light_sinbo_swing.wav": {
+  "size": 18956,
+  "mtimeMs": 1102420455405,
+  "sha1": "5c0f58b53669ea777797233e29c5528661d59ec3",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_light_sinbo_swing.ogg",
+  "ms": 429,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_spear_hit_b.wav": {
+  "size": 24482,
+  "mtimeMs": 1102420455623,
+  "sha1": "6802730f27a8b77560e815b74f97cc7e50854789",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_spear_hit_b.ogg",
+  "ms": 554,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_spear_hit_c.wav": {
+  "size": 22022,
+  "mtimeMs": 1102420455670,
+  "sha1": "88ae7f5bed43502eb5765df5bca2dc77c54afe4d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_spear_hit_c.ogg",
+  "ms": 489,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_spear_shield.wav": {
+  "size": 22122,
+  "mtimeMs": 1102420455733,
+  "sha1": "4acee31e75d76d1dcb287ab5f3b5346ac3350ba5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_spear_shield.ogg",
+  "ms": 501,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_spear_swing_a.wav": {
+  "size": 17714,
+  "mtimeMs": 1102420455811,
+  "sha1": "3b03ed5dcc491897b3d0fc557a220fe6d57efba7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_spear_swing_a.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_spear_swing_b.wav": {
+  "size": 17558,
+  "mtimeMs": 1102420455920,
+  "sha1": "e6232f87908ee60a1ae4932d8fe81592530598cd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_spear_swing_b.ogg",
+  "ms": 397,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_hit_a.wav": {
+  "size": 17768,
+  "mtimeMs": 1102420456045,
+  "sha1": "0ce3be9b6704f383af5b225ad80ef564ab82339c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_hit_a.ogg",
+  "ms": 402,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_hit_b.wav": {
+  "size": 19876,
+  "mtimeMs": 1102420456108,
+  "sha1": "55bd2c6deaad1ecda1666bf93a1f43b1bdf09afa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_hit_b.ogg",
+  "ms": 450,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_hit_c.wav": {
+  "size": 21918,
+  "mtimeMs": 1102420456186,
+  "sha1": "90c2a05a9b47d375f2458932ff170665eee45698",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_hit_c.ogg",
+  "ms": 496,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_shield.wav": {
+  "size": 24396,
+  "mtimeMs": 1102420456264,
+  "sha1": "14fc00bc51370941883f55744f46ce812d1bd4fe",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_shield.ogg",
+  "ms": 552,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_shieldpd_a.wav": {
+  "size": 42326,
+  "mtimeMs": 1237881286015,
+  "sha1": "6a6000d4f5188ec81ab246d9b57976063a1a3b94",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_shieldpd_a.ogg",
+  "ms": 958,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_shieldpd_b.wav": {
+  "size": 97202,
+  "mtimeMs": 1237881286015,
+  "sha1": "df291f3ff66a7665201741b5ec968d3f87b03a14",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_shieldpd_b.ogg",
+  "ms": 2196,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_swing_a.wav": {
+  "size": 12748,
+  "mtimeMs": 1102420456452,
+  "sha1": "e92b9955e41bd7aec488f235776612671bc5e72f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_swing_a.ogg",
+  "ms": 288,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_swing_b.wav": {
+  "size": 13364,
+  "mtimeMs": 1102420456545,
+  "sha1": "7d2eae0f60cba7148adb1df4f1179005f271eee6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_swing_b.ogg",
+  "ms": 302,
+  "channels": 1
+ },
+ "prim/snd/skill/csk_sword_swing_gumgi.wav": {
+  "size": 42872,
+  "mtimeMs": 1102420456608,
+  "sha1": "d85aa286079f4485d70bf281c6667a611516d53e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill/csk_sword_swing_gumgi.ogg",
+  "ms": 926,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_cleric_battle_cross_a.wav": {
+  "size": 71426,
+  "mtimeMs": 1173401017765,
+  "sha1": "fa05861b68825185a19829bbd3419614319031fa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_cleric_battle_cross_a.ogg",
+  "ms": 1487,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_cleric_heal_ready_a.wav": {
+  "size": 240428,
+  "mtimeMs": 1173401017765,
+  "sha1": "4ca7d8155e06a7c18c0420986cada28cdc3a7657",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_cleric_heal_ready_a.ogg",
+  "ms": 4929,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_cleric_heal_target_a.wav": {
+  "size": 58532,
+  "mtimeMs": 1173401017765,
+  "sha1": "e040697f1eba523e0d5a4ed3e4b67d98c52c5772",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_cleric_heal_target_a.ogg",
+  "ms": 1219,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_crossbow_fast_swing_a.wav": {
+  "size": 22268,
+  "mtimeMs": 1173401017765,
+  "sha1": "e480c0b8a95bfe92550be0ed64bd2ebad9b7faf0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_crossbow_fast_swing_a.ogg",
+  "ms": 463,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_crossbow_fast_swing_b.wav": {
+  "size": 24152,
+  "mtimeMs": 1173401017765,
+  "sha1": "f539ec6038043d09f8386e0df8c0725033b33cdd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_crossbow_fast_swing_b.ogg",
+  "ms": 502,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_crossbow_knock_swing_a.wav": {
+  "size": 55562,
+  "mtimeMs": 1173401017765,
+  "sha1": "cae17d2b8848f971207d68e5e996d4edcf1cfd54",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_crossbow_knock_swing_a.ogg",
+  "ms": 1157,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_dagger_swing_a.wav": {
+  "size": 46070,
+  "mtimeMs": 1173401017765,
+  "sha1": "1aae09c73a3092b93b67686ad2899b4bc2b1e718",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_dagger_swing_a.ogg",
+  "ms": 902,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_dagger_swing_b.wav": {
+  "size": 47056,
+  "mtimeMs": 1173401017765,
+  "sha1": "de3bc21e8813201720e02f2f6bc55eab1ad2a593",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_dagger_swing_b.ogg",
+  "ms": 906,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_dagger_swing_c.wav": {
+  "size": 45378,
+  "mtimeMs": 1173401017765,
+  "sha1": "a960fa9591b79b9339dfc4b846c8bed9eea43ccb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_dagger_swing_c.ogg",
+  "ms": 933,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_dagger_swing_k.wav": {
+  "size": 46234,
+  "mtimeMs": 1173401017765,
+  "sha1": "2a85f724ec6cba9aeacd6a5cef48ce34733da8b9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_dagger_swing_k.ogg",
+  "ms": 933,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_rog_stealth_attack_a.wav": {
+  "size": 47310,
+  "mtimeMs": 1173401017765,
+  "sha1": "c6cde57db3f6a735bddc5503e94d961137762c87",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_rog_stealth_attack_a.ogg",
+  "ms": 985,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_bathowl.wav": {
+  "size": 77606,
+  "mtimeMs": 1173401017765,
+  "sha1": "86319db0d21878bc6f4983968148854dadcecebd",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_bathowl.ogg",
+  "ms": 1590,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_dualaxe_swing_a.wav": {
+  "size": 44556,
+  "mtimeMs": 1173401017765,
+  "sha1": "0b5e59c4fe344a5947f2a4ea36895c41ffe5f65e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_dualaxe_swing_a.ogg",
+  "ms": 894,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_dualaxe_swing_b.wav": {
+  "size": 45226,
+  "mtimeMs": 1173401017765,
+  "sha1": "43ef4f4a95ae8609add643b86c331f99988948ea",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_dualaxe_swing_b.ogg",
+  "ms": 939,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_dualaxe_swing_c.wav": {
+  "size": 50476,
+  "mtimeMs": 1173401017765,
+  "sha1": "c5a23e5c737617b3abe804059e5977316440cb89",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_dualaxe_swing_c.ogg",
+  "ms": 1004,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_onehand_swing_a.wav": {
+  "size": 44406,
+  "mtimeMs": 1173401017765,
+  "sha1": "159b1c7f853a5df86327f40e034529e0481d4e9a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_onehand_swing_a.ogg",
+  "ms": 875,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_onehand_swing_b.wav": {
+  "size": 44556,
+  "mtimeMs": 1173401017765,
+  "sha1": "537d8daa29b4f940759c145dbf8b42736dd7266d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_onehand_swing_b.ogg",
+  "ms": 894,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_onehand_swing_c.wav": {
+  "size": 50478,
+  "mtimeMs": 1173401017765,
+  "sha1": "af3b85204c2a08b54e6684ff70fb45d7841261a2",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_onehand_swing_c.ogg",
+  "ms": 1026,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_shield_swing_a.wav": {
+  "size": 28752,
+  "mtimeMs": 1173401017765,
+  "sha1": "1555c1ca14c6cd946a84caef9be6e6b7b779846d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_shield_swing_a.ogg",
+  "ms": 598,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_shield_swing_b.wav": {
+  "size": 34388,
+  "mtimeMs": 1173401017765,
+  "sha1": "6af70f9410c55bd88bf39908e20df9e8d8eaed7d",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_shield_swing_b.ogg",
+  "ms": 710,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_shield_swing_c.wav": {
+  "size": 39934,
+  "mtimeMs": 1173401017765,
+  "sha1": "7eafb907e7aa8330ed2df949de4505c654d79321",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_shield_swing_c.ogg",
+  "ms": 831,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_twohand_swing_a.wav": {
+  "size": 56266,
+  "mtimeMs": 1173401017765,
+  "sha1": "df8ee159980fe8043ce17a7796d3aa7a25c82c4b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_twohand_swing_a.ogg",
+  "ms": 1161,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_twohand_swing_b.wav": {
+  "size": 48392,
+  "mtimeMs": 1173401017765,
+  "sha1": "9ae5501a27ed31740e20db34a5e5a18fc9999e94",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_twohand_swing_b.ogg",
+  "ms": 1007,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_twohand_swing_c.wav": {
+  "size": 51568,
+  "mtimeMs": 1173401017765,
+  "sha1": "96972a2302f09168e2794f36f7da245c09d01495",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_twohand_swing_c.ogg",
+  "ms": 1073,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_twohand_swing_d.wav": {
+  "size": 48392,
+  "mtimeMs": 1173401017765,
+  "sha1": "133ddd7d73394c0b7dff82d4374e2b9e7d546b80",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_twohand_swing_d.ogg",
+  "ms": 1007,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_twohand_swing_e.wav": {
+  "size": 61948,
+  "mtimeMs": 1173401017765,
+  "sha1": "66c84e766914ef82626d72e9450028f527c89388",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_twohand_swing_e.ogg",
+  "ms": 1272,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_wheel_a.wav": {
+  "size": 65680,
+  "mtimeMs": 1173401017765,
+  "sha1": "0f590ca457f667daf1013e35911f6a8ca08bb020",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_wheel_a.ogg",
+  "ms": 1367,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_warrior_wheel_b.wav": {
+  "size": 65346,
+  "mtimeMs": 1173401017765,
+  "sha1": "633c4d50d458e2bb85b225a347128c09e2234856",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_warrior_wheel_b.ogg",
+  "ms": 1355,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_wizard_fire_detect_a.wav": {
+  "size": 65826,
+  "mtimeMs": 1173401017765,
+  "sha1": "d1424870be9684328d5b5d62bbb9755a62341947",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_wizard_fire_detect_a.ogg",
+  "ms": 1370,
+  "channels": 1
+ },
+ "prim/snd/skill2/usk_wizard_light_ball_a.wav": {
+  "size": 50362,
+  "mtimeMs": 1173401017765,
+  "sha1": "f99dbea39b670d5e119acb5e8c9eb6c02d02c589",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "skill2/usk_wizard_light_ball_a.ogg",
+  "ms": 1048,
+  "channels": 1
+ },
+ "prim/snd/town/bed_busy.wav": {
+  "size": 882044,
+  "mtimeMs": 1790885156687.944,
+  "sha1": "edb752eecf8a0868ba85f4e8e405f11da04c3f68",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "town/bed_busy.ogg",
+  "ms": 20000,
+  "channels": 1
+ },
+ "prim/snd/town/bed_calm.wav": {
+  "size": 882044,
+  "mtimeMs": 1790885156687.944,
+  "sha1": "c944a0de591fc4f44ec545fe668fcaffb1e1eb65",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "town/bed_calm.ogg",
+  "ms": 20000,
+  "channels": 1
+ },
+ "prim/snd/town/chicken_1.wav": {
+  "size": 64910,
+  "mtimeMs": 1790885156691.2039,
+  "sha1": "5a06e5bb55fe762fc9e302d339015d92f0697847",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/chicken_1.ogg",
+  "ms": 1273,
+  "channels": 1
+ },
+ "prim/snd/town/chicken_2.wav": {
+  "size": 34658,
+  "mtimeMs": 1790885156691.2039,
+  "sha1": "00e83dfa373978de430d6d97ff996aafb3029af0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/chicken_2.ogg",
+  "ms": 619,
+  "channels": 1
+ },
+ "prim/snd/town/chicken_3.wav": {
+  "size": 70604,
+  "mtimeMs": 1790885156692.2026,
+  "sha1": "ff5788656fbf4cd3ec74540f013bab14ee282bf7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/chicken_3.ogg",
+  "ms": 1444,
+  "channels": 1
+ },
+ "prim/snd/town/chicken_4.wav": {
+  "size": 52420,
+  "mtimeMs": 1790885156692.2026,
+  "sha1": "c7a19c049de5a6962fbce45e1669b6fa500cdf7b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/chicken_4.ogg",
+  "ms": 1017,
+  "channels": 1
+ },
+ "prim/snd/town/dog_1.wav": {
+  "size": 38506,
+  "mtimeMs": 1790885156692.2026,
+  "sha1": "e0e21803c8b6b3943b52068a43c396dafa0ffca5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/dog_1.ogg",
+  "ms": 872,
+  "channels": 1
+ },
+ "prim/snd/town/dog_2.wav": {
+  "size": 15404,
+  "mtimeMs": 1790885156692.2026,
+  "sha1": "fc439883dfd2f63c3aac6345b3c718deed3aae13",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/dog_2.ogg",
+  "ms": 315,
+  "channels": 1
+ },
+ "prim/snd/town/dog_3.wav": {
+  "size": 14564,
+  "mtimeMs": 1790885156692.2026,
+  "sha1": "ac0cee50a867e96e86209856bb3dc461db0491ca",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/dog_3.ogg",
+  "ms": 329,
+  "channels": 1
+ },
+ "prim/snd/town/dog_4.wav": {
+  "size": 5590,
+  "mtimeMs": 1790885156693.204,
+  "sha1": "07be22b96e802491919affdc4a093398da71833b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/dog_4.ogg",
+  "ms": 126,
+  "channels": 1
+ },
+ "prim/snd/town/fountain.wav": {
+  "size": 529244,
+  "mtimeMs": 1790885156688.942,
+  "sha1": "86cf5ae7c8c580f3da49f4d48ac14b02939fddb3",
+  "bitrate": 64,
+  "codec": "opus",
+  "out": "town/fountain.ogg",
+  "ms": 12000,
+  "channels": 1
+ },
+ "prim/snd/town/hammer_1.wav": {
+  "size": 48554,
+  "mtimeMs": 1790885156689.943,
+  "sha1": "058f5fd4aa699d4f75ae4006cfec067cc65435a8",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/hammer_1.ogg",
+  "ms": 1100,
+  "channels": 1
+ },
+ "prim/snd/town/hammer_2.wav": {
+  "size": 48554,
+  "mtimeMs": 1790885156689.943,
+  "sha1": "7f41e6f0f24beba0ece5549c982c9ff6f945991f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/hammer_2.ogg",
+  "ms": 1100,
+  "channels": 1
+ },
+ "prim/snd/town/hammer_3.wav": {
+  "size": 48554,
+  "mtimeMs": 1790885156691.2039,
+  "sha1": "26e4c1df491e4fbc9134a0b201b7efe5d483c1a7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/hammer_3.ogg",
+  "ms": 1100,
+  "channels": 1
+ },
+ "prim/snd/town/murmur_1.wav": {
+  "size": 56490,
+  "mtimeMs": 1790885156688.942,
+  "sha1": "315374349e8d1c08b198579dfece6b6b862327e9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/murmur_1.ogg",
+  "ms": 1157,
+  "channels": 1
+ },
+ "prim/snd/town/murmur_2.wav": {
+  "size": 40258,
+  "mtimeMs": 1790885156688.942,
+  "sha1": "2b2c29026c713cc6c91b2d57034eed2eaeed2282",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/murmur_2.ogg",
+  "ms": 805,
+  "channels": 1
+ },
+ "prim/snd/town/murmur_3.wav": {
+  "size": 37474,
+  "mtimeMs": 1790885156689.943,
+  "sha1": "cdcc2c850dd88f79d08e9a4421b6a6622fe34984",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/murmur_3.ogg",
+  "ms": 728,
+  "channels": 1
+ },
+ "prim/snd/town/murmur_4.wav": {
+  "size": 60078,
+  "mtimeMs": 1790885156689.943,
+  "sha1": "6cd3eb545eda78042fedd3e183d78cd154ee0c9e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/murmur_4.ogg",
+  "ms": 1289,
+  "channels": 1
+ },
+ "prim/snd/town/wings_1.wav": {
+  "size": 39734,
+  "mtimeMs": 1790885156693.204,
+  "sha1": "d83df93e12b4269d938addee02143350d934a14e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/wings_1.ogg",
+  "ms": 719,
+  "channels": 1
+ },
+ "prim/snd/town/wings_2.wav": {
+  "size": 39734,
+  "mtimeMs": 1790885156693.204,
+  "sha1": "c9fb5e24c495d20b0d1b07321872ba0bc917bd76",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "town/wings_2.ogg",
+  "ms": 761,
+  "channels": 1
+ },
+ "prim/snd/ui/alarm_sound.wav": {
+  "size": 234626,
+  "mtimeMs": 1237881286015,
+  "sha1": "10b02ba8e509e971776904f2613b01dd6dd49d34",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/alarm_sound.ogg",
+  "ms": 4782,
+  "channels": 1
+ },
+ "prim/snd/ui/biff.wav": {
+  "size": 14336,
+  "mtimeMs": 1102420457077,
+  "sha1": "f39587f22e9f6610cee830ee5ac23cde668f64d6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/biff.ogg",
+  "ms": 313,
+  "channels": 1
+ },
+ "prim/snd/ui/elixir_des.wav": {
+  "size": 33190,
+  "mtimeMs": 1109237211265,
+  "sha1": "954ccf27c503ec1cb9c26c77fd08fad6b67f0f4a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/elixir_des.ogg",
+  "ms": 721,
+  "channels": 1
+ },
+ "prim/snd/ui/elixir_fail.wav": {
+  "size": 156636,
+  "mtimeMs": 1109237211312,
+  "sha1": "8e083ed92d2c8b928be1162b0636411b4caeb519",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/elixir_fail.ogg",
+  "ms": 3392,
+  "channels": 1
+ },
+ "prim/snd/ui/elixir_suc.wav": {
+  "size": 214878,
+  "mtimeMs": 1280189204984,
+  "sha1": "350e9f9efacb989558ef312cb5bc3c04e92cb2fc",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/elixir_suc.ogg",
+  "ms": 4284,
+  "channels": 1
+ },
+ "prim/snd/ui/elixir_use.wav": {
+  "size": 132622,
+  "mtimeMs": 1280189205640,
+  "sha1": "f175e6c6b2a2008886bf80383aaba9bed078cf7f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/elixir_use.ogg",
+  "ms": 2665,
+  "channels": 1
+ },
+ "prim/snd/ui/error.wav": {
+  "size": 26530,
+  "mtimeMs": 1102420457139,
+  "sha1": "fa5c988e07eec98c09fabc8a8fc0d498aa6f4696",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/error.ogg",
+  "ms": 599,
+  "channels": 1
+ },
+ "prim/snd/ui/eventcomplete.wav": {
+  "size": 134602,
+  "mtimeMs": 1173401017765,
+  "sha1": "a6e625875044200746f1db6b87c47ff3288f02ef",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/eventcomplete.ogg",
+  "ms": 3050,
+  "channels": 1
+ },
+ "prim/snd/ui/gacha_change.wav": {
+  "size": 92344,
+  "mtimeMs": 1173401017765,
+  "sha1": "20a6b9caad692e244b3d8cd9427a7fe6ed413128",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/gacha_change.ogg",
+  "ms": 2079,
+  "channels": 1
+ },
+ "prim/snd/ui/gacha_end.wav": {
+  "size": 51912,
+  "mtimeMs": 1173401017765,
+  "sha1": "1203218c63f90fc1cae4afc1dde662b83bbbe979",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/gacha_end.ogg",
+  "ms": 1176,
+  "channels": 1
+ },
+ "prim/snd/ui/gacha_move.wav": {
+  "size": 76622,
+  "mtimeMs": 1173401017765,
+  "sha1": "99d9cca6caba9c684e860ca1f67ea8f20a98ddcb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/gacha_move.ogg",
+  "ms": 1736,
+  "channels": 1
+ },
+ "prim/snd/ui/gacha_turn.wav": {
+  "size": 155096,
+  "mtimeMs": 1173401017765,
+  "sha1": "a4e17b3eaf79564b98dfb5282bbd3b727e8ce1fe",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/gacha_turn.ogg",
+  "ms": 3516,
+  "channels": 1
+ },
+ "prim/snd/ui/gacha_win.wav": {
+  "size": 118242,
+  "mtimeMs": 1173401017765,
+  "sha1": "7e44eec5ba20f6f4c0d90256243cbbbacc1114c5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/gacha_win.ogg",
+  "ms": 2577,
+  "channels": 1
+ },
+ "prim/snd/ui/hyanget.wav": {
+  "size": 145552,
+  "mtimeMs": 1173401017765,
+  "sha1": "49c392ccc1070ca23e9783c5783df71565b40266",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/hyanget.ogg",
+  "ms": 1637,
+  "channels": 1
+ },
+ "prim/snd/ui/itaxe.wav": {
+  "size": 31164,
+  "mtimeMs": 1102420457405,
+  "sha1": "d2b87ab09a5a9099ccbdf50588c1de5b00c3d0d4",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itaxe.ogg",
+  "ms": 675,
+  "channels": 1
+ },
+ "prim/snd/ui/itbow.wav": {
+  "size": 17828,
+  "mtimeMs": 1102420457577,
+  "sha1": "8e7f2310ff0be8f8a6c1666d726b859103db570f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itbow.ogg",
+  "ms": 393,
+  "channels": 1
+ },
+ "prim/snd/ui/itbreastplate.wav": {
+  "size": 15520,
+  "mtimeMs": 1102420457702,
+  "sha1": "b8f6c25fbbfdefc8c46565457a10a89245397a05",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itbreastplate.ogg",
+  "ms": 340,
+  "channels": 1
+ },
+ "prim/snd/ui/itcap.wav": {
+  "size": 18026,
+  "mtimeMs": 1102420457748,
+  "sha1": "efed64e85c235e4895c440398268f959d86e14df",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itcap.ogg",
+  "ms": 397,
+  "channels": 1
+ },
+ "prim/snd/ui/itchakram.wav": {
+  "size": 29562,
+  "mtimeMs": 1102420457842,
+  "sha1": "b69dbb091b542f4f803f1e74d21b835c1de18a4b",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itchakram.ogg",
+  "ms": 636,
+  "channels": 1
+ },
+ "prim/snd/ui/itcuisse.wav": {
+  "size": 17706,
+  "mtimeMs": 1102420457998,
+  "sha1": "d7d3a09e91efaea7309f496aca451caa32769eaf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itcuisse.ogg",
+  "ms": 367,
+  "channels": 1
+ },
+ "prim/snd/ui/itembreak.wav": {
+  "size": 35422,
+  "mtimeMs": 1102420458123,
+  "sha1": "cfbbbff1420a852cf233fabbe2f008fa66b56fb1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itembreak.ogg",
+  "ms": 800,
+  "channels": 1
+ },
+ "prim/snd/ui/itemdanger.wav": {
+  "size": 18000,
+  "mtimeMs": 1102420458170,
+  "sha1": "289d491e57f596c0dfc9371629ece36d57981d1a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itemdanger.ogg",
+  "ms": 406,
+  "channels": 1
+ },
+ "prim/snd/ui/itfly_elixir.wav": {
+  "size": 333168,
+  "mtimeMs": 1280189206453,
+  "sha1": "2c4889e134c4018b15d9ccdeb6c14a027ac2915e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itfly_elixir.ogg",
+  "ms": 3776,
+  "channels": 1
+ },
+ "prim/snd/ui/itfly_rarebox.wav": {
+  "size": 214918,
+  "mtimeMs": 1280189207343,
+  "sha1": "68f521a65ff4dc41635f8101e0f5e66c2b7b2637",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itfly_rarebox.ogg",
+  "ms": 2436,
+  "channels": 1
+ },
+ "prim/snd/ui/itgauntlet.wav": {
+  "size": 13740,
+  "mtimeMs": 1102420458311,
+  "sha1": "497e8184510f5688da5efad4ff949c6321fe366f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itgauntlet.ogg",
+  "ms": 299,
+  "channels": 1
+ },
+ "prim/snd/ui/itglove.wav": {
+  "size": 13778,
+  "mtimeMs": 1102420458358,
+  "sha1": "79a6e6d77c46357ed1d3ad48dc0fbc857de1d819",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itglove.ogg",
+  "ms": 275,
+  "channels": 1
+ },
+ "prim/snd/ui/itgold.wav": {
+  "size": 26974,
+  "mtimeMs": 1102420458405,
+  "sha1": "bca7fc49c43153088177c11b2dc557eb5607a403",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itgold.ogg",
+  "ms": 561,
+  "channels": 1
+ },
+ "prim/snd/ui/itgreave.wav": {
+  "size": 13740,
+  "mtimeMs": 1102420458452,
+  "sha1": "497e8184510f5688da5efad4ff949c6321fe366f",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itgreave.ogg",
+  "ms": 299,
+  "channels": 1
+ },
+ "prim/snd/ui/ithammer.wav": {
+  "size": 14758,
+  "mtimeMs": 1237881286015,
+  "sha1": "8ea1754012cf39ff7fd201dbe7abc49a0e6d01c0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/ithammer.ogg",
+  "ms": 334,
+  "channels": 1
+ },
+ "prim/snd/ui/ithelm.wav": {
+  "size": 13720,
+  "mtimeMs": 1102420458498,
+  "sha1": "07159638299ba4c89045cc14c41bb673b7d90941",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/ithelm.ogg",
+  "ms": 291,
+  "channels": 1
+ },
+ "prim/snd/ui/ithub.wav": {
+  "size": 13718,
+  "mtimeMs": 1173401017765,
+  "sha1": "313346992901c06d0efb3621a846410642799933",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/ithub.ogg",
+  "ms": 239,
+  "channels": 1
+ },
+ "prim/snd/ui/itlevelup.wav": {
+  "size": 238622,
+  "mtimeMs": 1102420458623,
+  "sha1": "4cf6a01e8852df2cff4edf719ae36e3d4be2c338",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itlevelup.ogg",
+  "ms": 5410,
+  "channels": 1
+ },
+ "prim/snd/ui/itmetal.wav": {
+  "size": 31228,
+  "mtimeMs": 1102420458702,
+  "sha1": "7f9d5c54c25c3f1413dde8aaf81c2cf0e816837c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itmetal.ogg",
+  "ms": 697,
+  "channels": 1
+ },
+ "prim/snd/ui/itmonsterpiece.wav": {
+  "size": 13664,
+  "mtimeMs": 1102420458733,
+  "sha1": "8e5bf255e164c315527e3f9e23aae9503a1226ec",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itmonsterpiece.ogg",
+  "ms": 298,
+  "channels": 1
+ },
+ "prim/snd/ui/itpauldron.wav": {
+  "size": 13788,
+  "mtimeMs": 1102420458795,
+  "sha1": "e4d8084a2378147ee1a98bc010abddb6a081fa67",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itpauldron.ogg",
+  "ms": 236,
+  "channels": 1
+ },
+ "prim/snd/ui/itpickup.wav": {
+  "size": 13032,
+  "mtimeMs": 1102420458905,
+  "sha1": "23446d4c507af8c3ee38bc429b7330cd6f79b472",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itpickup.ogg",
+  "ms": 279,
+  "channels": 1
+ },
+ "prim/snd/ui/itpolearm.wav": {
+  "size": 33726,
+  "mtimeMs": 1102420458967,
+  "sha1": "8e354c0de7d8f118d679a487bee16defc4fc4f64",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itpolearm.ogg",
+  "ms": 742,
+  "channels": 1
+ },
+ "prim/snd/ui/itpotion.wav": {
+  "size": 35402,
+  "mtimeMs": 1102420459014,
+  "sha1": "32b90785cadf130a0159b2ea7c009325a57898b9",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itpotion.ogg",
+  "ms": 802,
+  "channels": 1
+ },
+ "prim/snd/ui/itpotiondrink.wav": {
+  "size": 30500,
+  "mtimeMs": 1102420459155,
+  "sha1": "96fe81ce9f47815009e886e00d05d5537b38cd26",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itpotiondrink.ogg",
+  "ms": 655,
+  "channels": 1
+ },
+ "prim/snd/ui/itquest.wav": {
+  "size": 114286,
+  "mtimeMs": 1102420459202,
+  "sha1": "d670ecd7f38a57c980c74e429e550cc3fde987fa",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itquest.ogg",
+  "ms": 2579,
+  "channels": 1
+ },
+ "prim/snd/ui/itquickicon.wav": {
+  "size": 4666,
+  "mtimeMs": 1102420459248,
+  "sha1": "9667ef32afa06f964a3250bea8c9e510d6939f57",
+  "bitrate": 0,
+  "codec": "wav",
+  "out": "ui/itquickicon.wav",
+  "ms": 94,
+  "channels": 1
+ },
+ "prim/snd/ui/itquiver.wav": {
+  "size": 22676,
+  "mtimeMs": 1102420459327,
+  "sha1": "e6e8537183a24f15f03026aec9be7101a6dcec71",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itquiver.ogg",
+  "ms": 488,
+  "channels": 1
+ },
+ "prim/snd/ui/itrepair_a.wav": {
+  "size": 32380,
+  "mtimeMs": 1102420459452,
+  "sha1": "cfc8e297fc17f6174f3483f203b8b4db5d1fc308",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itrepair_a.ogg",
+  "ms": 723,
+  "channels": 1
+ },
+ "prim/snd/ui/itrepair_b.wav": {
+  "size": 24510,
+  "mtimeMs": 1102420459577,
+  "sha1": "1f2114ddd52e3cd26552955fe33c4fa15d53cd3a",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itrepair_b.ogg",
+  "ms": 555,
+  "channels": 1
+ },
+ "prim/snd/ui/itrepair_c.wav": {
+  "size": 23794,
+  "mtimeMs": 1102420459748,
+  "sha1": "46731110ccbc9158fd4aec66c4284bb02cd8a170",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itrepair_c.ogg",
+  "ms": 539,
+  "channels": 1
+ },
+ "prim/snd/ui/itrevive.wav": {
+  "size": 115194,
+  "mtimeMs": 1102420459842,
+  "sha1": "8390d809b962b70f697c9b91126673f54be22481",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itrevive.ogg",
+  "ms": 2462,
+  "channels": 1
+ },
+ "prim/snd/ui/itring.wav": {
+  "size": 44026,
+  "mtimeMs": 1102420459920,
+  "sha1": "e517f6ec1f9a065e838ab357bee8b3994342974c",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itring.ogg",
+  "ms": 987,
+  "channels": 1
+ },
+ "prim/snd/ui/itrobe.wav": {
+  "size": 13598,
+  "mtimeMs": 1102420460077,
+  "sha1": "c4a9c43e109064a4b561baed1553a00036379290",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itrobe.ogg",
+  "ms": 297,
+  "channels": 1
+ },
+ "prim/snd/ui/itscroll.wav": {
+  "size": 18174,
+  "mtimeMs": 1102420460155,
+  "sha1": "c6bcd184c36959a632548647e5f4f09b1c73d9e5",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itscroll.ogg",
+  "ms": 400,
+  "channels": 1
+ },
+ "prim/snd/ui/itshield.wav": {
+  "size": 28732,
+  "mtimeMs": 1102420460248,
+  "sha1": "7d8acb43b2f98b76c0d5242ebb2c6e7e853c195e",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itshield.ogg",
+  "ms": 650,
+  "channels": 1
+ },
+ "prim/snd/ui/itshoes.wav": {
+  "size": 19120,
+  "mtimeMs": 1102420460327,
+  "sha1": "5b2d5bdae54a601454d1fde29b4bc63123d34c23",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itshoes.ogg",
+  "ms": 422,
+  "channels": 1
+ },
+ "prim/snd/ui/itstaff.wav": {
+  "size": 13722,
+  "mtimeMs": 1102420460592,
+  "sha1": "3de92acb3f16be791132ae97a1fcd6f2c0468bcf",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itstaff.ogg",
+  "ms": 300,
+  "channels": 1
+ },
+ "prim/snd/ui/itsword.wav": {
+  "size": 13854,
+  "mtimeMs": 1102420460717,
+  "sha1": "9d71a92ba8aacdc39a4cce8ec9e3101cf8602a10",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/itsword.ogg",
+  "ms": 303,
+  "channels": 1
+ },
+ "prim/snd/ui/ittablet.wav": {
+  "size": 17734,
+  "mtimeMs": 1102420460827,
+  "sha1": "9a2bd9d3d576917f43a43b8ce8073b6866e70808",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/ittablet.ogg",
+  "ms": 401,
+  "channels": 1
+ },
+ "prim/snd/ui/questopen.wav": {
+  "size": 28066,
+  "mtimeMs": 1102420461123,
+  "sha1": "483e53a24e8811cfce130031fff2ecf7b30e87ce",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/questopen.ogg",
+  "ms": 1250,
+  "channels": 1
+ },
+ "prim/snd/ui/socket_add.wav": {
+  "size": 31786,
+  "mtimeMs": 1280189207468,
+  "sha1": "991f4c0ed1423a37d1a429bf680010bfed659eae",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/socket_add.ogg",
+  "ms": 360,
+  "channels": 1
+ },
+ "prim/snd/ui/socket_destroy.wav": {
+  "size": 172968,
+  "mtimeMs": 1280189208046,
+  "sha1": "62d617b5feb89a6ae7d541d80cbfe8552874c6b1",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/socket_destroy.ogg",
+  "ms": 1504,
+  "channels": 1
+ },
+ "prim/snd/ui/socket_magic.wav": {
+  "size": 353826,
+  "mtimeMs": 1280189209031,
+  "sha1": "f4e6d0069cc842464957a55a71a8251d07dd5beb",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/socket_magic.ogg",
+  "ms": 3378,
+  "channels": 1
+ },
+ "prim/snd/ui/uibutton_a.wav": {
+  "size": 4394,
+  "mtimeMs": 1102420461264,
+  "sha1": "bf5566339d2ae12d27c8ac196b816120f39ad9f7",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/uibutton_a.ogg",
+  "ms": 99,
+  "channels": 1
+ },
+ "prim/snd/ui/uibutton_b.wav": {
+  "size": 4362,
+  "mtimeMs": 1102420461358,
+  "sha1": "4644a9cf0b3e66f3b7ad2b2538f4faf5abbf36a0",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/uibutton_b.ogg",
+  "ms": 98,
+  "channels": 1
+ },
+ "prim/snd/ui/uiwinclose.wav": {
+  "size": 11526,
+  "mtimeMs": 1102420461467,
+  "sha1": "b1a17c206a70fd491dc6f16e0b170dd29d1bf351",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/uiwinclose.ogg",
+  "ms": 260,
+  "channels": 1
+ },
+ "prim/snd/ui/uiwinopen.wav": {
+  "size": 13282,
+  "mtimeMs": 1102420461561,
+  "sha1": "7bfe48979e1c9cbf2d88e38f3b4ec0770cbdebe6",
+  "bitrate": 48,
+  "codec": "opus",
+  "out": "ui/uiwinopen.ogg",
+  "ms": 300,
+  "channels": 1
+ }
+}

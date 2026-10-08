@@ -24,6 +24,12 @@ export interface ShadowQuality {
   terrain: boolean
   /** Small props (LOD group 3) cast. */
   props: boolean
+  /**
+   * PCSS sun shadows (contact hardening: sharp at the caster, soft further away; docs/LIGHTING.md §4): the light's size
+   * in shadow-map uv (Babylon's contactHardeningLightSizeUVRatio). Absent or 0: PCF. Every preset ships 0: with PCSS the
+   * shaded terrain slopes at golden hour came out sunlit and glossy (the terrain plugin's sun term; not yet found).
+   */
+  soft?: number
 }
 
 export interface IblQuality {
@@ -103,10 +109,19 @@ export interface RenderQuality {
   ibl: IblQuality | null
   nightLights: NightLightQuality
   /** SSAO (RND-P); null = off. */
-  ssao: { halfRes: boolean; samples: number } | null
+  /**
+   * SSAO; null = off. `optional` (Medium, lighting pass 2): dropped where it would stop FSR (render scale < 1: the
+   * iGPU default), since the prepass renders the scene at full size.
+   */
+  ssao: { halfRes: boolean; samples: number; optional?: boolean } | null
   /** SSR: off, only while puddles > 0.1, or always (D31). */
   ssr: 'off' | 'puddles' | 'always'
   aa: AntiAliasing
+  /**
+   * Eye adaptation (render/adaptation.ts, docs/LIGHTING.md §2): the bounded auto exposure on top of the sky's designed
+   * exposure. Absent/false: none (the Low guard never has it).
+   */
+  eyeAdaptation?: boolean
   /**
    * Sun shafts (wave 12 godrays, render/volumetrics/shafts.ts): 'off', 'low' (Medium: quarter resolution, 16 steps)
    * or 'high' (High/Ultra: half resolution, 24 steps). A boolean is the wave-9 Advanced row (`true` = 'high'): read it
@@ -154,6 +169,7 @@ export const RENDER_PRESETS: Readonly<Record<RenderPreset, Readonly<RenderQualit
     ssr: 'off',
     aa: 'msaa',
     lightShafts: 'off',
+    eyeAdaptation: false,
     fog: 'linear',
     horizonRingFog: false,
     water: 'classic',
@@ -174,14 +190,17 @@ export const RENDER_PRESETS: Readonly<Record<RenderPreset, Readonly<RenderQualit
     toneMap: 'neutral',
     lutGrade: true,
     bloom: 0, // Options → Bloom (BLOOM_LOOKS; the release shipped 0.5)
-    shadows: { cascades: 2, mapSize: 1024, distanceM: 60, foliageM: 0, terrain: false, props: false },
+    shadows: { cascades: 2, mapSize: 1024, distanceM: 60, foliageM: 0, terrain: false, props: false, soft: 0 },
     ibl: { cubeSize: 32, refreshS: 10 },
     // D29 (W9F D3): Medium is a PBR preset now; its cluster/pool lights the PBR terrain, so no terrain splat on top.
     nightLights: { cluster: 8, poolFallback: 2, terrainSplat: false, grassSplat: true },
+    // Lighting pass 2 measured SSAO on Medium (half res, 8 samples): +0.45 ms GPU but +1.5–2 ms CPU (the prepass), and
+    // the game is CPU-bound: not shipped (`optional` is there for it: dropped where it would stop FSR).
     ssao: null,
     ssr: 'off',
     aa: 'fxaa',
     lightShafts: 'low',
+    eyeAdaptation: true,
     fog: 'height',
     horizonRingFog: false,
     water: 'pbr',
@@ -202,7 +221,7 @@ export const RENDER_PRESETS: Readonly<Record<RenderPreset, Readonly<RenderQualit
     toneMap: 'neutral',
     lutGrade: true,
     bloom: 0, // Options → Bloom (BLOOM_LOOKS; the release shipped 1)
-    shadows: { cascades: 3, mapSize: 2048, distanceM: 150, foliageM: 60, terrain: true, props: false },
+    shadows: { cascades: 3, mapSize: 2048, distanceM: 150, foliageM: 60, terrain: true, props: false, soft: 0 },
     ibl: { cubeSize: 64, refreshS: 5 },
     nightLights: { cluster: 32, poolFallback: 2, terrainSplat: false, grassSplat: true },
     ssao: { halfRes: true, samples: 8 },
@@ -212,6 +231,7 @@ export const RENDER_PRESETS: Readonly<Record<RenderPreset, Readonly<RenderQualit
     ssr: 'off',
     aa: 'taa',
     lightShafts: 'high',
+    eyeAdaptation: true,
     fog: 'height',
     horizonRingFog: true,
     water: 'pbr',
@@ -231,13 +251,14 @@ export const RENDER_PRESETS: Readonly<Record<RenderPreset, Readonly<RenderQualit
     toneMap: 'neutral',
     lutGrade: true,
     bloom: 0, // Options → Bloom (BLOOM_LOOKS; the release shipped 1)
-    shadows: { cascades: 4, mapSize: 2048, distanceM: 250, foliageM: 60, terrain: true, props: true },
+    shadows: { cascades: 4, mapSize: 2048, distanceM: 250, foliageM: 60, terrain: true, props: true, soft: 0 },
     ibl: { cubeSize: 64, refreshS: 2 },
     nightLights: { cluster: 64, poolFallback: 2, terrainSplat: false, grassSplat: true },
     ssao: { halfRes: false, samples: 16 },
     ssr: 'always',
     aa: 'taa',
     lightShafts: 'high',
+    eyeAdaptation: true,
     fog: 'height',
     horizonRingFog: true,
     water: 'pbr',

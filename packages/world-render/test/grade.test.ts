@@ -103,7 +103,8 @@ describe('LUT strips', () => {
     const night = at(builtinLutStrip('night_clear'), mid, mid, mid)
     expect(night[2]).toBeGreaterThan(night[0] + 10)
     const day = at(builtinLutStrip('day_clear'), mid, mid, mid)
-    expect(Math.max(...day) - Math.min(...day)).toBeLessThan(14)
+    // Lighting pass 2: the warm-sun / cool-shadow split tints a mid grey a little (≤ 18 levels), never more.
+    expect(Math.max(...day) - Math.min(...day)).toBeLessThan(18)
     // Saturation: a saturated red loses chroma in rain.
     const chroma = (c: number[]) => Math.max(...c) - Math.min(...c)
     expect(chroma(at(builtinLutStrip('day_rain'), 28, 6, 6))).toBeLessThan(chroma(at(builtinLutStrip('day_clear'), 28, 6, 6)))

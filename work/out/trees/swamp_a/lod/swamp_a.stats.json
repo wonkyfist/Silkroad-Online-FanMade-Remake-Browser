@@ -1,0 +1,71 @@
+{
+ "species": "swamp_a",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 47,
+ "target": {
+  "h": 66.37,
+  "w": 76.22
+ },
+ "normalUp": 0.3,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 2412,
+   "byMaterial": {
+    "bark": 1144,
+    "leaf": 1268
+   },
+   "cards": 317,
+   "frontNormalY": -0.106,
+   "vertices": 3443,
+   "heightM": 66.37,
+   "widthM": 76.22,
+   "crownCentre": [
+    4.11,
+    -0.99,
+    32.74
+   ],
+   "crownRadius": 23.82,
+   "bytes": 416052
+  },
+  "1": {
+   "triangles": 742,
+   "byMaterial": {
+    "bark": 174,
+    "leaf": 568
+   },
+   "cards": 142,
+   "frontNormalY": -0.085,
+   "vertices": 1272,
+   "heightM": 66.402,
+   "widthM": 76.22,
+   "crownCentre": [
+    4.11,
+    -0.99,
+    32.74
+   ],
+   "crownRadius": 23.82,
+   "bytes": 301812
+  },
+  "2": {
+   "triangles": 250,
+   "byMaterial": {
+    "bark": 130,
+    "leaf": 120
+   },
+   "cards": 30,
+   "frontNormalY": -0.246,
+   "vertices": 348,
+   "heightM": 66.406,
+   "widthM": 76.22,
+   "crownCentre": [
+    4.11,
+    -0.99,
+    32.74
+   ],
+   "crownRadius": 23.82,
+   "bytes": 254496
+  }
+ }
+}

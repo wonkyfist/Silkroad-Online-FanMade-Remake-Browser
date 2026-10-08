@@ -203,6 +203,9 @@ describe('M3: target actions (decision D15)', () => {
     expect(targetVariant({ kind: 'mob', variant: 'unique' })).toBe('special')
     expect(targetVariant({ kind: 'npc' })).toBe('player')
     expect(targetVariant({ kind: 'player' })).toBe('player')
+    // Siege of Jangan layer 6: a Wanted player or an on-duty Hunter
+    expect(targetVariant({ kind: 'player', hostile: true })).toBe('enemy')
+    expect(targetVariant({ kind: 'npc', hostile: true })).toBe('player')
   })
 
   it('the cursor per hovered entity (docs/UI.md §4.10)', () => {

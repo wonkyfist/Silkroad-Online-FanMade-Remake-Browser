@@ -29,6 +29,7 @@ import { t } from '../i18n/index.ts'
 import { STAGES, STAGE_ORBIT_MS } from '../stage/stages.ts'
 import type { Stage } from '../stage/types.ts'
 import { buildPlaza, selectionRing } from '../three/backdrop.ts'
+import { licensedAvailable, licensedChoiceFor, licensedModel } from '../three/licensed-char.ts'
 import { ModelLibrary, type BaseClip, type CharacterActor } from '../three/models.ts'
 import { StudioEnvironment } from '../three/studio-env.ts'
 import { toScreen } from '../three/project.ts'
@@ -37,6 +38,8 @@ import { el, input, Listeners, place } from '../ui/dom.ts'
 import { rootScale } from '../ui/kit/index.ts'
 import { LOADING_PICTURES, LoadingOverlay, ProgressSet } from './loading.ts'
 import { describeError } from './login.ts'
+import { creatorAvailable } from './creator.ts'
+import { offersCreator } from './creator-model.ts'
 import { framedTag, outerButton, outerDialog, setDisabled } from './outer-ui.ts'
 
 const SLOT_X = [-2.4, -0.8, 0.8, 2.4]
@@ -241,12 +244,15 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
       try {
         const worn = character.equip?.weapon
         const family = (worn ? weaponFamilyOf(worn, app.catalog.item(worn)) : undefined) ?? character.weapon
-        const actor = await library.character(model, {
+        // the licensed body of its look (CHARACTERS §16.8) when the pack is served here, else the retail model
+        const lic = licensedChoiceFor(location.search, model.gender, character.look, character.id)
+        const licensed = lic && (await licensedAvailable(lic)) ? lic : null
+        const actor = await library.character(licensed ? { code: model.code, ...licensedModel(licensed) } : model, {
           equip: character.equip,
           family,
           fallbackWeapon: app.catalog.weapon(family),
           height: character.height,
-          volume: character.volume,
+          ...(licensed ? { licensed: true, ...(character.look?.body === licensed.gender ? { charLook: character.look } : {}) } : { volume: character.volume }),
           plus: character.equipPlus,
         }, tick)
         if (disposed || slots[i] !== slot) return actor.dispose()
@@ -371,7 +377,7 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
       const i = hit?.pickedMesh?.metadata?.slot as number | undefined
       if (i === undefined) return
       const now = performance.now()
-      if (i === selected && now - lastClick < 350) startGame()
+      if (i === selected && now - lastClick < 350) void startGame()
       lastClick = now
       select(i)
     })
@@ -464,7 +470,7 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
         if (i >= 0) {
           selected = i
           app.toast(t(back ? recoveryToast(back) : 'gpu.restored'), 'info', 8000)
-          startGame()
+          void startGame()
         }
       }
     }
@@ -502,11 +508,63 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
     frameObs = null
   }
 
-  const startGame = () => {
+  const startGame = async () => {
     const slot = slots[selected]
     if (!slot || busy) return
     busy = true
     refreshButtons()
+    // §16.10: a character made before the creator is offered it once (customise now, or keep the look and play)
+    if (slot.character.customise && offersCreator(slot.character, await creatorAvailable())) {
+      if (disposed) return
+      const character = slot.character
+      let modal: HTMLElement | null = null
+      const err = el('div', 'dialog-error')
+      const close = () => {
+        modal?.remove()
+        busy = false
+        refreshButtons()
+      }
+      const keepLook = async () => {
+        try {
+          const r = await session.request({ t: 'charLook', id: character.id }, ['charLookSet'])
+          modal?.remove()
+          void app.go('world', { character: r.character })
+        } catch (e) {
+          err.textContent = describeError(e)
+        }
+      }
+      modal = outerDialog(art, {
+        key: 'outer/warning_delete',
+        w: 344,
+        h: 192,
+        title: t('creator.offerTitle'),
+        titleRect: [16, 22, 312, 15],
+        body: [el('p', '', t('creator.offerBody', { name: character.name })), err],
+        bodyRect: [24, 46, 296, 92],
+        buttons: [
+          {
+            label: t('creator.offerCustomise'),
+            primary: true,
+            onClick: () => {
+              modal?.remove()
+              void app.go('creator', { character })
+            },
+          },
+          { label: t('creator.offerKeep'), onClick: () => void keepLook() },
+        ],
+        at: [
+          [90, 145],
+          [178, 145],
+        ],
+      })
+      modal.addEventListener('keydown', ev => {
+        ev.stopPropagation()
+        if (ev.key === 'Escape') close()
+      })
+      app.ui.append(modal)
+      modal.querySelector<HTMLButtonElement>('button.primary')?.focus()
+      return
+    }
     void app.go('world', { character: slot.character })
   }
 
@@ -562,8 +620,9 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
     field.focus()
   }
 
-  ls.on(start, 'click', startGame)
-  ls.on(create, 'click', () => void app.go('charcreate'))
+  ls.on(start, 'click', () => void startGame())
+  // §16.10: the creator when the licensed files are served here, else the classic screen
+  ls.on(create, 'click', () => void creatorAvailable().then(ok => app.go(ok ? 'creator' : 'charcreate')))
   ls.on(del, 'click', confirmDelete)
   ls.on(back, 'click', () => {
     app.setSession(null)
@@ -571,7 +630,7 @@ export function charSelectScreen(app: App, params: ScreenParams['charselect']): 
   })
   ls.on(window, 'keydown', ev => {
     if ((ev.target as HTMLElement)?.tagName === 'INPUT') return
-    if (ev.key === 'Enter') startGame()
+    if (ev.key === 'Enter') void startGame()
     if (ev.key === 'ArrowRight' && slots.length) select((selected + 1) % slots.length)
     if (ev.key === 'ArrowLeft' && slots.length) select((selected - 1 + slots.length) % slots.length)
   })

@@ -27,6 +27,7 @@
  */
 import {
   Animatable,
+  Buffer as BabylonBuffer,
   Animation,
   AnimationGroup,
   Color3,
@@ -51,15 +52,32 @@ import { GLTFLoaderAnimationStartMode } from '@babylonjs/loaders/glTF/glTFFileLo
 import '@babylonjs/loaders/glTF/2.0/index.js'
 import { composeWorn, heightScale, volumeBoneScales, type BoundItem, type Composition } from '@sro/appearance'
 import { HIGHLIGHT_COLOR, setHighlightOverlay } from '@sro/world-render'
-import { JUMP_MAX_SEEK_MS, type ClipTrack, type EquipSlot, type StarterWeapon } from '@sro/shared'
+import { JUMP_MAX_SEEK_MS, modelCodeOf, rarityOf, type CharLook, type ClipTrack, type EquipSlot, type RarityTier, type StarterWeapon } from '@sro/shared'
 import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
+import { solidifyWeapon } from './weapon-solid.ts'
 import { newLook, settings } from '../settings.ts'
 import { actorGraphics, actorTexturesFor } from './actor-textures.ts'
 import { GLOW_SLOTS, SHIELD_STRENGTH, WeaponGlow, glowModeFor, type GlowMode } from './weapon-glow.ts'
+import { RARITY_LOOKS, WeaponRarity, rarityModeFor, type RarityMode } from './weapon-rarity.ts'
 import { optPath, optUrl, slimAvailable } from './slim.ts'
+import { OutfitAtlases, buildOutfitMesh, outfitPartOf, type OutfitAtlas, type OutfitPart } from './outfit-merge.ts'
+import { applyPilotPreset, pilotCovers, pilotPresetOf, type PilotPreset } from './pilot-char.ts'
+import { PILOT_ROOT_JOINT, pilotRootScale, pilotTrackKept } from './pilot-clip.ts'
+import { makeRetargeter, type Retargeter, type RetargetSpec } from './retarget.ts'
+import { retargetGroup, retargetSpecOf } from './retarget-clips.ts'
+import { licensedLodOf, setLicensedFace, tuneLicensedMaterials } from './licensed-materials.ts'
+import { licensedFaceOf, licensedFaceUrl } from './licensed-char.ts'
+import { applyLicensedLook, refreshLicensedLook } from './licensed-look.ts'
+import { applyOutfit, loadClothAssets, outfitFromGear, partKeyOf, type AppliedOutfit } from './licensed-cloth.ts'
+import { CLEAN, outfitKey, outfitSeals, wearKey, type ClothWear, type Outfit } from './licensed-outfit.ts'
+import { clothFxFor, type ClothFx } from './licensed-cloth-fx.ts'
+import { attachCharPhysics, physicsDebugApi, type CharPhysics } from './char-physics.ts'
+import { CrowdTier, type CrowdMember, type CrowdPart, type CrowdSubject } from './crowd-tier.ts'
+import { ITEM_SHIELD, ITEM_WEAPON, itemCode } from './crowd-vat.ts'
 import type { ClipCursor, ClipCursors } from '../audio/clips.ts'
+import { PERF } from '../world/perf.ts'
 
 /**
  * Clips the client uses; the rest are dropped at load to keep instancing cheap. Skills (docs/SKILLS.md §6): the
@@ -218,7 +236,10 @@ export function movementTracksOf(info: MoveClipInfo): ClipTrack[] {
 /** The weapon-arm joints (clavicle → hand and fingers) of side `L` or `R` (the masked arm layer, MOVEMENT §6.2). */
 export function isArmJoint(name: string | undefined, sides: readonly ('L' | 'R')[]): boolean {
   const m = name ? /^Bip01 ([LR]) (Clavicle|UpperArm|Forearm|Hand|Finger)/.exec(name) : null
-  return !!m && sides.includes(m[1] as 'L' | 'R')
+  if (m) return sides.includes(m[1] as 'L' | 'R')
+  // licensed bodies (Epic skeleton, CHARACTERS §16): clavicle_l, upperarm_twist_01_r, index_02_l, ...
+  const e = name ? /^(?:clavicle|upperarm|lowerarm|hand|thumb|index|middle|ring|pinky)(?:_\w+)?_([lr])$/.exec(name) : null
+  return !!e && sides.includes(e[1]!.toUpperCase() as 'L' | 'R')
 }
 
 /** The arms the weapon layer holds for a family (sword/blade: the sword arm, plus the left with a shield; else both). */
@@ -296,6 +317,14 @@ export interface Look {
   volume?: number
   /** The +N of worn items (EntityState.equipPlus): the weapon and shield glow (weapon-glow.ts). Absent = all +0. */
   plus?: Partial<Record<EquipSlot, number>>
+  /** P1 pilot (`?newchar=1`, own character): the pilot body's preset; only weapons and shields are dressed on it. */
+  pilot?: PilotPreset
+  /** Licensed body (`?newchar=1`, CHARACTERS §16): only weapons and shields are dressed on it. */
+  licensed?: boolean
+  /** The character look (CHARACTERS §16.10, three/licensed-look.ts) a licensed body is drawn with: makeup, iris, hair, colours, accessories, build. */
+  charLook?: CharLook
+  /** The look's 2048 head map (the own character); others take the 1024 one. */
+  lookHi?: boolean
 }
 
 /** Clip facts from the converter sidecar. */
@@ -405,6 +434,39 @@ export class ModelLibrary {
   private readonly movementCache = new Map<string, Promise<MovementPack | null>>()
   private disposed = false
   private readonly decorators: ActorMaterialDecorator[] = []
+  /** P0 (docs/CHARACTERS.md §3.3): the outfit merge's atlases, made on first use. */
+  private outfits: OutfitAtlases | null = null
+
+  /** The outfit merge's atlases and materials (made on first use; tests, the bench). */
+  get outfitAtlases(): OutfitAtlases {
+    if (!this.outfits) this.outfits = new OutfitAtlases(this.scene, mat => this.decorateMaterial(mat), () => this.now())
+    return this.outfits
+  }
+
+  /** P1a (docs/CHARACTERS.md §3.5): the crowd tier, made on first use. */
+  private crowdPart: CrowdTier | null = null
+
+  /** The crowd tier of this scene (made on first use; the bench, tests). */
+  get crowdTier(): CrowdTier {
+    if (!this.crowdPart) this.crowdPart = new CrowdTier(this.scene, () => (this.disposed ? null : this.outfitAtlases), undefined, mat => this.decorateMaterial(mat))
+    return this.crowdPart
+  }
+
+  /** The crowd tier if one was made (stats without making one). */
+  get crowdTierIfAny(): CrowdTier | null {
+    return this.crowdPart
+  }
+
+  /** Runs every material decorator on a material the library made itself (the outfit merge's). */
+  decorateMaterial(mat: Material): void {
+    for (const fn of this.decorators) {
+      try {
+        fn(mat, { glb: 'outfit-atlas', container: undefined as unknown as AssetContainer })
+      } catch (err) {
+        console.warn('[models] material decorator failed', mat.name, err)
+      }
+    }
+  }
   /** Containers loaded so far (a decorator added later runs on them too). */
   private readonly loadedContainers: { container: AssetContainer; glb: string }[] = []
   /** Live actors made here, culled against the main camera before each active-mesh evaluation (CharacterActor.cull). */
@@ -433,11 +495,42 @@ export class ModelLibrary {
   private glowOff: (() => void) | null = null
   /** The glow's mode: set by tests and the lab (null = from the settings, effectiveGraphics of this engine). */
   glowMode: GlowMode | null = null
+  private rarityPart: WeaponRarity | null = null
+  private rarityOff: (() => void) | null = null
+  /** The rare look's mode: set by tests and the lab (null = from the settings). */
+  rarityMode: RarityMode | null = null
 
   /**
    * The alchemy glow of this scene's weapons and shields (weapon-glow.ts), made on first use. Its mode follows the
    * effective graphics (Low/Classic: the lite code, no glints; the glint cap per preset) and every settings change.
    */
+  /**
+   * The rare weapons' look of this scene (weapon-rarity.ts; docs/RARITY.md §5), made on first use; its mode follows the
+   * effective graphics like the glow's (Low/Classic: the lite code, your own motes only).
+   */
+  /** The seal armour's clock and hem particles of this scene (licensed-cloth-fx.ts), its mode the rare weapons'. */
+  get clothFx(): ClothFx {
+    return clothFxFor(this.scene, () => this.rarity.mode)
+  }
+
+  get rarity(): WeaponRarity {
+    if (!this.rarityPart) {
+      const fromSettings = (): RarityMode => {
+        try {
+          return rarityModeFor(actorGraphics(this.scene.getEngine()))
+        } catch {
+          return { lite: false, moteCap: 0 }
+        }
+      }
+      let mode = fromSettings()
+      this.rarityOff = settings.onChange(() => {
+        mode = fromSettings()
+      })
+      this.rarityPart = new WeaponRarity(this.scene, { mode: () => this.rarityMode ?? mode })
+    }
+    return this.rarityPart
+  }
+
   get glow(): WeaponGlow {
     if (!this.glowPart) {
       const fromSettings = (): GlowMode => {
@@ -458,7 +551,11 @@ export class ModelLibrary {
 
   constructor(readonly scene: Scene) {
     installPooledInterpolation()
-    this.cullObs = scene.onBeforeActiveMeshesEvaluationObservable.add(() => this.cullActors())
+    this.cullObs = scene.onBeforeActiveMeshesEvaluationObservable.add(() => {
+      this.cullActors()
+      // P1a: the crowd's instances after the cull (an actor off screen is not drawn) and the animations (its clip)
+      this.crowdPart?.frame()
+    })
     this.lodObs = scene.onBeforeAnimationsObservable.add(() => this.lodActors())
   }
 
@@ -472,13 +569,19 @@ export class ModelLibrary {
     const eye = this.animLod ? (this.scene.activeCamera?.globalPosition ?? null) : null
     const now = this.now()
     // An actor carrying an every-frame one (the player's horse: attachTo its saddle joint) updates every frame too.
-    for (const a of this.actors) a.lodCarrier = false
+    // P1a: an actor carrying anyone stays out of the crowd tier (its rider hangs on its joints).
     for (const a of this.actors) {
-      const at = a.lodFull ? a.attachedTo : null
+      a.lodCarrier = false
+      a.carrying = false
+    }
+    for (const a of this.actors) {
+      const at = a.attachedTo
+      if (!at) continue
       for (let p: Node | null = at; p; p = p.parent) {
         const carrier = this.actorOfRoot(p)
         if (carrier) {
-          carrier.lodCarrier = true
+          carrier.carrying = true
+          if (a.lodFull) carrier.lodCarrier = true
           break
         }
       }
@@ -601,6 +704,8 @@ export class ModelLibrary {
         g.dispose()
       }
     }
+    // Weapons and shields are solid: their texture alpha is a specular mask, not coverage (weapon-solid.ts).
+    solidifyWeapon(container, glb, sidecarData)
     // Remastered textures (test switch): swaps this glb's materials for PBR twins while the switch is on.
     remasterFor(this.scene).track(container, glb)
     // Wave 9B (TX-R): the texture tier's sets swap in a moment after the glb appears (three/actor-textures.ts).
@@ -674,19 +779,97 @@ export class ModelLibrary {
     const body = await this.load(model.glb, model.sidecar, pBody)
     if (this.disposed) throw new Error('scene disposed')
     const actor = new CharacterActor(this.scene, model, body)
+    const retarget = retargetSpecOf(body.sidecar)
+    if (retarget) {
+      actor.useRetarget(retarget)
+      // the lower LODs (CHARACTERS §16.8): hidden until the crowd budget asks for them
+      actor.initLicensedLods()
+      // the skin, eyes, lashes and hair pass the glTF cannot carry (CHARACTERS §16.1)
+      tuneLicensedMaterials(actor.root.getChildMeshes(false), mat => this.decorateMaterial(mat))
+      // outfits from gear (§16.9): the wardrobe's dye maps (once per scene); dress() shows the worn pieces
+      const decorate = (mat: Material) => this.decorateMaterial(mat)
+      actor.licensedCloth = { sidecar: body.sidecar, assets: await loadClothAssets(this.scene, model.glb, body.sidecar), decorate }
+      actor.clothFx = this.clothFx
+      if (this.disposed) throw new Error('scene disposed')
+      // hair, cloth and body springs on the pack's extra bones (CHARACTERS §16.2, char-physics.ts)
+      actor.physics = attachCharPhysics(this.scene, actor.root, actor.skeleton, actor.meshes)
+      // the head's makeup variant (§16.3, `?ncface=`; the creator's later choice)
+      const faceUrl = licensedFaceUrl(model.glb, body.sidecar, typeof location === 'undefined' ? null : licensedFaceOf(location.search))
+      if (faceUrl) void setLicensedFace(actor.meshes, faceUrl)
+      // the look check (CHARACTERS §16, charbench --licensed-shots): one clip held, or the bind pose (null). Your own
+      // body keeps it (another player's body loading later does not take it over)
+      const dbg = globalThis as { __sroLicensed?: { self?: boolean } & Record<string, unknown> }
+      if (look.lookHi || !dbg.__sroLicensed?.self) dbg.__sroLicensed = {
+        self: !!look.lookHi,
+        pose: (clip: string | null, frac = 0) => actor.debugPose(clip, frac),
+        // material experiments (the look lab, charbench --steps): a material of the body by name, the scene
+        mat: (name: string) => actor.root.getChildMeshes(false).map(m => m.material).find(m => m?.name === name) ?? null,
+        scene: this.scene,
+        info: () => ({ glb: model.glb, sidecar: (body.sidecar as { licensed?: unknown } | null)?.licensed, clips: actor.groupCount }),
+        // the springs' proof and bench (§16.2): run → stop strip, live clips, clones
+        ...physicsDebugApi(actor, () => this.character(model, { licensed: true })),
+        // §16.9 look check: wear this gear (slot → item code), e.g. gear({ chest: 'ITEM_CH_W_HEAVY_03_BA_A' })
+        gear: (equip: Record<string, string>) => {
+          const g = (body.sidecar?.licensed as { gender?: string } | undefined)?.gender
+          return g === 'f' || g === 'm' ? actor.setLicensedOutfit(outfitFromGear(equip, g)) && actor.licensedOutfit!.key : false
+        },
+        // §16.9 wear check: dirt / blood levels 0..3 on this body's cloth
+        wear: (dirt: number, blood: number) => actor.setLicensedWear({ dirt, blood }),
+        // §16.9 bench: every licensed body of the scene wears this gear (client side only), the first `n`
+        gearAll: (equip: Record<string, string>, n = 1000) => {
+          let k = 0
+          for (const a of this.actors) {
+            if (k >= n || !a.licensedCloth) continue
+            const g = (a.licensedCloth.sidecar?.licensed as { gender?: string } | undefined)?.gender
+            if ((g === 'f' || g === 'm') && (a.setLicensedOutfit(outfitFromGear(equip, g)) || a.licensedOutfit)) k++
+          }
+          return k
+        },
+        face: (v: string) => {
+          const url = licensedFaceUrl(model.glb, body.sidecar, v)
+          return url ? setLicensedFace(actor.meshes, url) : Promise.resolve(false)
+        },
+      }
+    }
+    if (look.pilot) {
+      actor.restOffsets = true
+      actor.rootScale = pilotRootScale(body.sidecar)
+      actor.enableGroundClamp()
+    }
     // Not drawn while it is dressed (P-STALL): it appears when everything it wears is ready, as documented above. A
     // frame that drew the half-dressed body (its meshes are always active) compiled its materials then and there:
     // 14 shaders and 12 pipelines in one 0.4 s frame when the create screen switched to a new model.
     actor.root.setEnabled(false)
     actor.loadPack = rel => this.pack(rel)
+    actor.outfitSource = () => (this.disposed ? null : this.outfitAtlases)
+    actor.crowdSource = () => (this.disposed ? null : this.crowdTier)
     actor.loadMovement = skeleton => this.movementPack(skeleton)
-    if (actor.isPlayer) actor.glow = this.glow
+    if (actor.isPlayer) {
+      actor.glow = this.glow
+      actor.rarityFx = this.rarity
+    }
     this.actors.add(actor)
     actor.root.onDisposeObservable.addOnce(() => this.actors.delete(actor))
     if (look.height !== undefined) actor.root.scaling.setAll(heightScale(look.height))
+    if (look.pilot) {
+      applyPilotPreset(actor.root, look.pilot, pilotCovers(body.sidecar, look.pilot.outfit))
+      // the pilot's look check: `__sroPilot.apply('?newchar=curvy&nchair=bob')` re-dresses it in place
+      ;(globalThis as { __sroPilot?: unknown }).__sroPilot = {
+        apply: (search: string) => {
+          const p = pilotPresetOf(search)
+          if (p && !actor.isDisposed) applyPilotPreset(actor.root, p, pilotCovers(body.sidecar, p.outfit))
+          return p
+        },
+        // the bind pose (null) or one clip held at a fraction of its length (CHARACTERS §15.3 checks)
+        pose: (clip: string | null, frac = 0) => actor.debugPose(clip, frac),
+      }
+    }
     await Promise.all([
       this.ensureClips(actor, look.family, pClips).catch(err => console.warn('[models] clips failed', model.code, err)),
       this.dress(actor, look).then(() => pDress(1)),
+      // §16.10: the look (makeup, iris, hair, colours, accessories, build) on a licensed body
+      // (`?nclook=0`: the file's own look, an A/B escape for the bench)
+      retarget && look.charLook && !(typeof location !== 'undefined' && new URLSearchParams(location.search).get('nclook') === '0') ? applyLicensedLook(actor, look.charLook, { hi: look.lookHi, decorate: mat => this.decorateMaterial(mat), builtInMakeup: (body.sidecar?.licensed as { face?: string } | undefined)?.face }).catch(err => console.warn('[models] look failed', model.code, err)) : null,
     ])
     pClips(1)
     if (this.disposed) {
@@ -726,10 +909,11 @@ export class ModelLibrary {
     const lookup = await equipmentLookup()
     let comp: Composition | null = null
     if (lookup && look.equip && lookup.characters.has(actor.model.code)) {
-      comp = composeWorn(lookup, actor.model.code, look.equip)
+      // docs/RARITY.md §5: a seal (`_RARE`) is drawn with its regular row's model (the manifest has no seal rows).
+      comp = composeWorn(lookup, actor.model.code, modelCodes(look.equip))
       for (const r of comp.rejected) if (r.reason !== 'unknown') console.warn(`[models] ${actor.model.code}: ${r.code} not drawn (${r.detail})`)
     }
-    const items = comp?.bind ?? []
+    const items = (comp?.bind ?? []).filter(b => (!look.pilot && !look.licensed) || b.kind === 'socket')
     const wornWeapon = look.equip ? look.equip.weapon : undefined
     const fallback = !items.some(b => b.slot === 'weapon') && look.fallbackWeapon && (look.equip === undefined || wornWeapon !== undefined)
       ? look.fallbackWeapon
@@ -742,6 +926,7 @@ export class ModelLibrary {
     ])
     if (this.disposed || actor.isDisposed || !actor.isDressToken(token)) return
     if (actor.isPlayer && !actor.glow) actor.glow = this.glow
+    if (actor.isPlayer && !actor.rarityFx) actor.rarityFx = this.rarity
     actor.applyDress({
       comp,
       items: items.flatMap((b, i) => (loaded[i] ? [{ item: b, container: loaded[i]!.container, sidecar: loaded[i]!.sidecar }] : [])),
@@ -750,7 +935,14 @@ export class ModelLibrary {
       gender: characterGender(actor.model.code, lookup),
       volume: look.volume,
       plus: look.plus,
+      rarity: rarityBySlot(look.equip),
     })
+    // §16.9: the licensed body wears its gear (the pieces, the covered body slices hidden, the cloth's colours)
+    // (`?ncgear=0`: the glb's own outfit, the A/B and the debug escape)
+    if (look.licensed && actor.licensedCloth && !(typeof location !== 'undefined' && new URLSearchParams(location.search).get('ncgear') === '0')) {
+      const g = (actor.licensedCloth.sidecar?.licensed as { gender?: string } | undefined)?.gender
+      if (g === 'f' || g === 'm') actor.setLicensedOutfit(outfitFromGear(look.equip, g))
+    }
   }
 
   dispose(): void {
@@ -760,7 +952,14 @@ export class ModelLibrary {
     this.glowOff?.()
     this.glowPart?.dispose()
     this.glowPart = null
+    this.rarityOff?.()
+    this.rarityPart?.dispose()
+    this.rarityPart = null
     this.actors.clear()
+    this.crowdPart?.dispose()
+    this.crowdPart = null
+    this.outfits?.dispose()
+    this.outfits = null
     this.decorators.length = 0
     this.loadedContainers.length = 0
     const remaster = remasterFor(this.scene)
@@ -943,10 +1142,29 @@ interface WornItem {
   skeletons: Skeleton[]
   /** Socket items: nodes at the sidecar `dummies` (trail points ai_start / ai_end), children of the item root. */
   dummies: Map<string, TransformNode>
+  /** Socket items: the bone they hang on (the crowd tier binds them to it). */
+  socket?: Bone
 }
 
 /** Slots Hide Weapon hides (setWeaponVisible). */
 const WEAPON_SLOTS: ReadonlySet<WornItem['slot']> = new Set(['weapon', 'shield', 'fallback'])
+
+/** Worn codes with each seal replaced by its regular row (the model it is drawn with; docs/RARITY.md §5). */
+export function modelCodes(equip: Partial<Record<EquipSlot, string>>): Partial<Record<EquipSlot, string>> {
+  const out: Partial<Record<EquipSlot, string>> = {}
+  for (const [slot, code] of Object.entries(equip) as [EquipSlot, string | undefined][]) if (code) out[slot] = modelCodeOf(code)
+  return out
+}
+
+/** The seal tier of the worn weapon and shield (absent: regular). */
+export function rarityBySlot(equip: Partial<Record<EquipSlot, string>> | undefined): Partial<Record<EquipSlot, RarityTier>> {
+  const out: Partial<Record<EquipSlot, RarityTier>> = {}
+  for (const slot of ['weapon', 'shield'] as const) {
+    const t = rarityOf(equip?.[slot])
+    if (t) out[slot] = t
+  }
+  return out
+}
 
 /** Sidecar `dummies` (docs/EFFECTS.md §5.2): bone name -> model-space glTF metres; malformed entries are skipped. */
 export function dummiesFromSidecar(sidecar: Record<string, unknown> | null | undefined): Map<string, [number, number, number]> {
@@ -979,9 +1197,14 @@ interface DressPlan {
   volume: number | undefined
   /** The +N of the worn items (Look.plus): the glow of the weapon and shield. */
   plus?: Partial<Record<EquipSlot, number>> | undefined
+  /** The seal tier of the worn weapon and shield (docs/RARITY.md §5), from their codes. */
+  rarity?: Partial<Record<EquipSlot, RarityTier>> | undefined
 }
 
 /** A bind pose whose lowest point is this far above the feet is authored floating; its clips pull it down (metres). */
+/** P0 (setOutfitMerge): how often a character's outfit merge is checked for changed parts (ms, × 1–2 staggered). */
+export const OUTFIT_RECHECK_MS = 1000
+
 export const FLOATING_BIND_M = 0.25
 /**
  * Actor culling (W9A perf pass): the sphere an actor is tested with is its bind-pose extent around the root axis ×
@@ -1041,20 +1264,40 @@ export function mergeSkinnedParts(parts: readonly Mesh[]): Mesh | null {
   if (!kinds.length || !kinds.every(k => MERGE_KINDS.has(k))) return null
   const counts = parts.map(p => p.getTotalVertices())
   const total = counts.reduce((a, b) => a + b, 0)
-  // Every part's data first (nothing is made for a group that cannot merge).
-  const datas: Uint8Array[][] = []
-  for (const k of kinds) {
-    const vb0 = first.getVertexBuffer(k)
-    if (!vb0) return null
-    const list: Uint8Array[] = []
-    for (const p of parts) {
-      const vb = p.getVertexBuffer(k)
-      if (!vb || vb.type !== vb0.type || vb.normalized !== vb0.normalized || vb.byteStride !== vb0.byteStride || vb.getSize() !== vb0.getSize() || vb.byteOffset !== 0 || vb.getIsInstanced()) return null
-      const src = vertexBytes(vb)
-      if (!src) return null
-      list.push(src)
+  // The kinds by the buffer they read (one each, or several interleaved in one: the licensed glbs, CHARACTERS §16.9);
+  // every part must share the first one's layout (offsets, strides, which kinds are interleaved together).
+  const groupOf = (p: Mesh) => {
+    const ids = new Map<unknown, number>()
+    return kinds.map(k => {
+      const b = p.getVertexBuffer(k)?.getWrapperBuffer() ?? null
+      if (!ids.has(b)) ids.set(b, ids.size)
+      return ids.get(b)!
+    })
+  }
+  const groups = groupOf(first)
+  const groupCount = Math.max(...groups) + 1
+  // Every part's data first (nothing is made for a group that cannot merge): per buffer, its vertices' bytes.
+  const datas: Uint8Array[][] = Array.from({ length: groupCount }, () => [])
+  for (let n = 0; n < kinds.length; n++) {
+    const vb0 = first.getVertexBuffer(kinds[n]!)
+    if (!vb0 || vb0.getIsInstanced() || vb0.byteOffset >= vb0.byteStride) return null
+  }
+  for (const p of parts) {
+    const g = groupOf(p)
+    if (g.some((x, n) => x !== groups[n])) return null
+    for (let n = 0; n < kinds.length; n++) {
+      const vb0 = first.getVertexBuffer(kinds[n]!)!
+      const vb = p.getVertexBuffer(kinds[n]!)
+      if (!vb || vb.type !== vb0.type || vb.normalized !== vb0.normalized || vb.byteStride !== vb0.byteStride || vb.getSize() !== vb0.getSize() || vb.byteOffset !== vb0.byteOffset || vb.getIsInstanced()) return null
     }
-    datas.push(list)
+    for (let gi = 0; gi < groupCount; gi++) {
+      const vb = p.getVertexBuffer(kinds[groups.indexOf(gi)]!)!
+      const src = vertexBytes(vb)
+      // an interleaved buffer holds every vertex whole from its byte 0 (an offset is the kind's place in a vertex)
+      const interleaved = groups.filter(x => x === gi).length > 1
+      if (!src || (interleaved && src.length < p.getTotalVertices() * vb.byteStride)) return null
+      datas[gi]!.push(src)
+    }
   }
   const indices: number[] = []
   let base = 0
@@ -1064,17 +1307,22 @@ export function mergeSkinnedParts(parts: readonly Mesh[]): Mesh | null {
     for (let j = 0; j < idx.length; j++) indices.push(idx[j]! + base)
     base += counts[i]!
   }
-  const buffers: VertexBuffer[] = []
-  kinds.forEach((k, n) => {
-    const vb0 = first.getVertexBuffer(k)!
-    const stride = vb0.byteStride
+  // one buffer per group as the parts had it (interleaved stays interleaved: the same vertex layout, the same pipeline)
+  const engine = scene.getEngine()
+  const shared = datas.map((list, gi) => {
+    const stride = first.getVertexBuffer(kinds[groups.indexOf(gi)]!)!.byteStride
     const bytes = new Uint8Array(total * stride)
     let at = 0
-    datas[n]!.forEach((src, i) => {
+    list.forEach((src, i) => {
       bytes.set(src.subarray(0, Math.min(counts[i]! * stride, src.length)), at)
       at += counts[i]! * stride
     })
-    buffers.push(new VertexBuffer(scene.getEngine(), bytes, k, { updatable: false, stride, size: vb0.getSize(), type: vb0.type, normalized: vb0.normalized, useBytes: true }))
+    return new BabylonBuffer(engine, bytes, false, stride, false, false, true)
+  })
+  const buffers = kinds.map((k, n) => {
+    const vb0 = first.getVertexBuffer(k)!
+    // each owns the shared buffer as the glTF loader's do (its release is counted: the last one frees it)
+    return new VertexBuffer(engine, shared[groups[n]!]!, k, { updatable: false, stride: vb0.byteStride, offset: vb0.byteOffset, size: vb0.getSize(), type: vb0.type, normalized: vb0.normalized, useBytes: true, takeBufferOwnership: true })
   })
   const m = new Mesh(`${first.name}:merged`, scene)
   for (const b of buffers) m.setVerticesBuffer(b)
@@ -1149,6 +1397,10 @@ export class CharacterActor {
   private dressToken = 0
   private current: AnimationGroup | null = null
   private currentBase: BaseClip | null = null
+  /** Set by debugPose: the world no longer starts clips on this actor. */
+  private debugHold = false
+  /** Licensed body: its hair, cloth and body springs (char-physics.ts, CHARACTERS §16.2); null otherwise. */
+  physics: CharPhysics | null = null
   private currentSpeed = 1
   private action: AnimationGroup | null = null
   private actionSerial = 0
@@ -1168,6 +1420,10 @@ export class CharacterActor {
   glow: WeaponGlow | null = null
   /** The +N of the worn items (Look.plus), kept across re-dressing. */
   private plusBySlot: Partial<Record<EquipSlot, number>> = {}
+  /** The scene's rare look (players; set by ModelLibrary): dresses a seal weapon or shield (docs/RARITY.md §5). */
+  rarityFx: WeaponRarity | null = null
+  /** The seal tier of the worn weapon and shield (from the codes of the last dress). */
+  private rarityBySlot: Partial<Record<EquipSlot, RarityTier>> = {}
   /** The dress token current when setPlus last ran (a dress begun before it keeps setPlus's value). */
   private plusDuring = -1
   /** A clip has posed this actor (the first one snaps instead of blending in from the bind pose: D25). */
@@ -1216,6 +1472,13 @@ export class CharacterActor {
   private lodOffscreen: CrowdOffscreen = 'normal'
   /** An every-frame actor rides on this one this frame (ModelLibrary.lodActors): it updates every frame too. */
   lodCarrier = false
+  /**
+   * P0 (docs/CHARACTERS.md §3.4, world/crowd-budget.ts): a far character in a crowd (beyond OUTFIT_FROM_M) starts its
+   * clips without the clip-change blend, so a clip change does not hold it at the every-frame rate for the blend's
+   * ≈ 12 updates (with ~70 changes a second in a 100-player fight, most of the crowd was updating every frame). Set
+   * by the crowd budget; near characters always blend.
+   */
+  snapClips = false
   /** Wave 11 (UNIQUES §2.3 step 3): the actor this one's clip calls are mirrored to (`companion`); null = none. */
   private companionActor: CharacterActor | null = null
   /** The actor whose clip calls drive this one (it is that actor's `companion`); null = none. */
@@ -1282,6 +1545,8 @@ export class CharacterActor {
 
   set companion(c: CharacterActor | null) {
     if (c === this.companionActor || c === this) return
+    this.dropCrowd()
+    c?.dropCrowd()
     if (this.companionActor?.driver === this) this.companionActor.driver = null
     this.companionActor = c
     if (c) c.driver = this
@@ -1298,6 +1563,8 @@ export class CharacterActor {
 
   set lodLeader(l: CharacterActor | null) {
     if (l === this.lodLeaderActor || l === this) return
+    this.dropCrowd()
+    l?.dropCrowd()
     const prev = this.lodLeaderActor
     if (prev) {
       const i = prev.lodFollowers.indexOf(this)
@@ -1360,7 +1627,8 @@ export class CharacterActor {
     }
     // W9F CPU-2: Babylon advances a clip-change blend per evaluation (blendingSpeed), not per second, so an actor on a
     // held rate would blend 3-6x longer and off the every-frame pose: it updates every frame until the blend is done.
-    if (this.blending()) {
+    // P0: not a far character in a crowd (`snapClips`): its clips snap, and a blend still running keeps its floor.
+    if (!this.snapClips && this.blending()) {
       this.lodSkip = false
       this.lodNext = 0
       return
@@ -1502,7 +1770,7 @@ export class CharacterActor {
 
   /** Every mesh drawn for this actor: the body (and its merged parts, G1 rescue) and what it wears. */
   allMeshes(): AbstractMesh[] {
-    return [...this.meshes, ...(this.merge?.meshes ?? []), ...this.worn.flatMap(w => w.meshes)]
+    return [...this.meshes, ...(this.merge?.meshes ?? []), ...(this.outfit ? [this.outfit.mesh] : []), ...this.worn.flatMap(w => w.meshes)]
   }
 
   // ---- G1 rescue: the part merge (world/crowd-budget.ts) ----------------------------------------------------------
@@ -1552,6 +1820,291 @@ export class CharacterActor {
     for (const p of m.parts) if (!p.isDisposed()) p.setEnabled(true)
     for (const x of m.meshes) if (!x.isDisposed()) x.dispose(false, false)
     this.mergeVersion++
+  }
+
+  // ---- P0 (docs/CHARACTERS.md §3.3): the outfit merge (world/crowd-budget.ts) ------------------------------------
+
+  /** The library's outfit atlases (set by ModelLibrary.character; null: no outfit merge). */
+  outfitSource: (() => OutfitAtlases | null) | null = null
+  private outfit: { mesh: Mesh; parts: AbstractMesh[]; atlas: OutfitAtlas; sig: string } | null = null
+  private outfitOn = false
+  private outfitCheckAt = 0
+
+  /**
+   * Draws the shown skinned parts (body, hair, the worn armour on the actor's own skeleton) as one mesh with one atlas
+   * material (on), or the parts again (off). Weapons, shields and items on a skeleton of their own stay as they are. A
+   * part whose texture is not ready, whose UVs tile or whose material blends stays apart; the merge is made again when
+   * the shown parts or their textures change (a re-dress, Berserk's hair, the remaster's texture swap). True when it
+   * built a merge now (the budget counts those).
+   */
+  setOutfitMerge(on: boolean): boolean {
+    if (this.disposed) return false
+    this.outfitOn = on
+    const atlases = this.outfitSource?.() ?? null
+    if (!on || !atlases || !this.skeleton) {
+      if (this.outfit) this.dropOutfit()
+      return false
+    }
+    // a merge in place is checked for changed parts every OUTFIT_RECHECK_MS (staggered), not on every plan: a re-dress
+    // drops it at once (applyDress), so this only waits for Berserk's hair or a texture swap
+    const now = typeof performance === 'undefined' ? Date.now() : performance.now()
+    if (this.outfit && now < this.outfitCheckAt) return false
+    this.outfitCheckAt = now + OUTFIT_RECHECK_MS * (1 + (this.root.uniqueId % 8) / 8)
+    const c = this.outfitCandidates()
+    if (this.outfit && this.outfit.sig === c.sig) return false
+    if (this.outfit) this.dropOutfit()
+    if (c.parts.length < 2) return false
+    const atlas = atlases.acquire(c.parts)
+    if (!atlas) return false
+    const built = buildOutfitMesh(c.parts, atlas, `${this.root.name}:outfit`)
+    if (!built) {
+      atlases.release(atlas)
+      return false
+    }
+    // the outfit replaces the G1 merge (its parts are among the outfit's)
+    this.dropMerge()
+    const mesh = built.mesh
+    mesh.visibility = this.opacity
+    mesh.alwaysSelectAsActiveMesh = !this.offscreen
+    if (this.highlight) setHighlightOverlay(mesh, this.highlight)
+    const parts = built.taken.map(p => p.mesh)
+    for (const p of parts) p.setEnabled(false)
+    this.outfit = { mesh, parts, atlas, sig: c.sig }
+    this.mergeVersion++
+    return true
+  }
+
+  /** The outfit merge is on (setOutfitMerge). */
+  get outfitMerged(): boolean {
+    return this.outfitOn && !!this.outfit
+  }
+
+  /** The outfit mesh and the parts it stands for (tests, the bench). */
+  get outfitInfo(): { readonly mesh: AbstractMesh; readonly parts: readonly AbstractMesh[] } | null {
+    return this.outfit
+  }
+
+  /** The parts the outfit merge would take now and their signature (ids, textures, cut-outs). */
+  private outfitCandidates(): { parts: OutfitPart[]; sig: string } {
+    const mine = new Set<AbstractMesh>([...(this.outfit?.parts ?? []), ...(this.merge?.parts ?? [])])
+    const parts: OutfitPart[] = []
+    const keys: string[] = []
+    for (const m of [...this.meshes, ...this.worn.flatMap(w => w.meshes)]) {
+      if (m.isDisposed() || !m.isVisible) continue
+      // a part this actor hid for a merge counts as shown when the dress shows it (its parent is enabled)
+      const shown = mine.has(m) ? (m.parent ? m.parent.isEnabled() : true) : m.isEnabled()
+      if (!shown) continue
+      const p = outfitPartOf(m, this.skeleton!)
+      if (!p) continue
+      parts.push(p)
+      keys.push(`${m.uniqueId}:${p.texture.uniqueId}:${p.cutout ? 1 : 0}`)
+    }
+    return { parts, sig: keys.join(',') }
+  }
+
+  /** `remerge` false: the G1 merge is dropped next anyway (a LOD switch, a re-dress): not made from the old parts first. */
+  private dropOutfit(remerge = true): void {
+    const o = this.outfit
+    if (!o) return
+    this.outfit = null
+    this.outfitCheckAt = 0
+    for (const p of o.parts) if (!p.isDisposed()) p.setEnabled(true)
+    if (!o.mesh.isDisposed()) o.mesh.dispose(false, false)
+    this.outfitSource?.()?.release(o.atlas)
+    // the G1 merge comes back where it was on
+    if (remerge && this.mergeOn && !this.merge && !this.disposed) this.merge = this.buildMerge()
+    this.mergeVersion++
+  }
+
+  // ---- P1a (docs/CHARACTERS.md §3.5): the crowd tier (world/crowd-budget.ts) ---------------------------------------
+
+  /** The library's crowd tier (set by ModelLibrary.character; null: no crowd tier). */
+  crowdSource: (() => CrowdTier | null) | null = null
+  private crowdMember: CrowdMember | null = null
+  /** The nodes setCrowd switched off (the glb's root nodes and the worn items' roots). */
+  private crowdRoots: Node[] = []
+  private crowdCheckAt = 0
+  private crowdSig = ''
+  /** Who keeps this actor out of the crowd tier now (holdCrowd: the Berserk makeover's outline needs the parts drawn). */
+  private readonly crowdHolds = new Set<string>()
+  /** Another actor hangs on this one's joints this frame (ModelLibrary.lodActors): not in the crowd tier. */
+  carrying = false
+  private skinKey = ''
+
+  /**
+   * Draws this actor through the crowd tier (on): one thin instance of its outfit batch skinned from the baked clips,
+   * its own parts hidden; or as before (off). Only an actor the tier can take: opaque, not highlighted, not riding or
+   * carried or carrying, no companion, no hold, every drawn part on its skeleton or a socket. The parts are checked
+   * every OUTFIT_RECHECK_MS (staggered) like the outfit merge's; a re-dress, an opacity, a highlight or a hidden
+   * weapon drops it at once. True when it joined now (the budget counts those).
+   */
+  setCrowd(on: boolean): boolean {
+    if (this.disposed) return false
+    const tier = on ? this.crowdSource?.() ?? null : null
+    if (!tier || !this.crowdEligible()) {
+      this.dropCrowd()
+      return false
+    }
+    const now = typeof performance === 'undefined' ? Date.now() : performance.now()
+    if (this.crowdMember) {
+      if (now < this.crowdCheckAt) return false
+      this.crowdCheckAt = now + OUTFIT_RECHECK_MS * (1 + (this.root.uniqueId % 8) / 8)
+      const c = this.crowdCandidates()
+      if (c && c.sig === this.crowdSig) return false
+      this.dropCrowd()
+    }
+    // the outfit merge and the part merge give their parts back first (the tier draws the parts themselves)
+    if (this.outfit) this.dropOutfit()
+    if (this.merge) this.dropMerge()
+    const c = this.crowdCandidates()
+    if (!c || !c.parts.length) return false
+    // a licensed body's sockets that slide in a clip (retarget-clips.ts) are bound at their rest place: one batch per
+    // outfit, whatever frame the actor joined on (the slide itself is not drawn at crowd distance)
+    const held = this.socketsAtRest()
+    const member = tier.join(this, c.parts)
+    for (const [n, p, q] of held) {
+      n.position.copyFrom(p)
+      n.rotationQuaternion?.copyFrom(q)
+    }
+    if (!member) return false
+    // the glb's and the worn items' roots go off (every part and empty glTF node under them leaves the active-mesh
+    // candidates: no world-matrix pass for them); the joints still animate and compute on demand (the effects' anchors)
+    const roots: Node[] = []
+    for (const n of [...this.nodes, ...this.worn.flatMap(w => w.nodes)]) {
+      if (n.isDisposed() || !n.isEnabled(false)) continue
+      n.setEnabled(false)
+      roots.push(n)
+    }
+    this.crowdRoots = roots
+    this.crowdMember = member
+    this.crowdSig = c.sig
+    this.crowdCheckAt = now + OUTFIT_RECHECK_MS * (1 + (this.root.uniqueId % 8) / 8)
+    return true
+  }
+
+  /** Puts the socket stand-ins at their rest locals; returns what to restore. */
+  private socketsAtRest(): [TransformNode, Vector3, Quaternion][] {
+    const out: [TransformNode, Vector3, Quaternion][] = []
+    for (const a of this.socketAliases.values()) {
+      const q = a.node.rotationQuaternion
+      if (!q) continue
+      out.push([a.node, a.node.position.clone(), q.clone()])
+      a.node.position.copyFrom(a.restP)
+      q.copyFrom(a.restQ)
+    }
+    return out
+  }
+
+  /** In the crowd tier (setCrowd). */
+  get inCrowd(): boolean {
+    return !!this.crowdMember
+  }
+
+  /** The crowd tier's member of this actor (tests, the bench). */
+  get crowdInfo(): CrowdMember | null {
+    return this.crowdMember
+  }
+
+  /** Keeps this actor out of the crowd tier while any `key` holds it (`on` false lets go of `key`). */
+  holdCrowd(key: string, on: boolean): void {
+    if (on) {
+      this.crowdHolds.add(key)
+      this.dropCrowd()
+    } else this.crowdHolds.delete(key)
+  }
+
+  private crowdEligible(): boolean {
+    return (
+      !!this.skeleton &&
+      this.opacity === 1 &&
+      !this.highlight &&
+      this.weaponsVisible &&
+      this.home === undefined &&
+      !this.carrying &&
+      !this.lodFull &&
+      !this.lodCarrier &&
+      !this.companionActor &&
+      !this.driver &&
+      !this.lodLeaderActor &&
+      !this.lodFollowers.length &&
+      !this.crowdHolds.size &&
+      this.root.isEnabled()
+    )
+  }
+
+  /** The drawn parts the tier would take now and their signature; null when one cannot be taken. */
+  private crowdCandidates(): { parts: CrowdPart[]; sig: string } | null {
+    // shown = enabled up to the actor's root, the nodes the crowd switched off counted as on
+    const off = new Set<Node>(this.crowdRoots)
+    const shownNow = (n: Node): boolean => {
+      for (let p: Node | null = n; p && p !== this.root; p = p.parent) if (!off.has(p) && !p.isEnabled(false)) return false
+      return true
+    }
+    const parts: CrowdPart[] = []
+    const keys: string[] = []
+    const take = (m: AbstractMesh, worn: WornItem | null): boolean => {
+      if (m.isDisposed() || !m.isVisible || m.getTotalVertices() <= 0) return true
+      const shown = off.size ? shownNow(m) : m.isEnabled()
+      if (!shown) return true
+      if (!(m instanceof Mesh)) return false
+      if (m.skeleton === this.skeleton) parts.push({ mesh: m, socket: null })
+      else if (!m.skeleton && worn?.socket) {
+        const item = worn.slot === 'shield' ? ITEM_SHIELD : worn.slot === 'weapon' || worn.slot === 'fallback' ? ITEM_WEAPON : 0
+        parts.push({ mesh: m, socket: { bone: worn.socket, item } })
+      } else return false
+      const mat = m.material as { uniqueId: number; albedoTexture?: { uniqueId: number } | null } | null
+      keys.push(`${m.uniqueId}:${mat?.uniqueId ?? -1}:${mat?.albedoTexture?.uniqueId ?? -1}`)
+      return true
+    }
+    for (const m of this.meshes) if (!take(m, null)) return null
+    for (const w of this.worn) for (const m of w.meshes) if (!take(m, w)) return null
+    return { parts, sig: keys.join(',') }
+  }
+
+  /** Out of the crowd tier: the parts are drawn again, posed at this frame's clip time (no old pose for a frame). */
+  private dropCrowd(): void {
+    const m = this.crowdMember
+    if (!m) return
+    this.crowdMember = null
+    this.crowdSource?.()?.leave(m)
+    const roots = this.crowdRoots
+    this.crowdRoots = []
+    if (this.disposed) return
+    for (const n of roots) if (!n.isDisposed()) n.setEnabled(true)
+    this.lodCatchUp()
+  }
+
+  /** CrowdSubject: the clip that shows (the death clip, else the action or skill phase, else the base clip). */
+  crowdTop(): AnimationGroup | null {
+    return this.dead ? this.deathClip : (this.action ?? this.current)
+  }
+
+  /** CrowdSubject: the weapon's and the shield's far look (crowd-vat.ts itemCode; low byte weapon, next byte shield). */
+  crowdItems(): number {
+    let w = 0
+    let s = 0
+    for (const x of this.worn) {
+      if (x.slot === 'shield') s = itemCode(this.plusBySlot.shield, this.rarityBySlot.shield ?? null)
+      else if (x.slot === 'weapon') w = itemCode(this.plusBySlot.weapon, this.rarityBySlot.weapon ?? null)
+      else if (x.slot === 'fallback' && !w) w = itemCode(this.plusBySlot.weapon, null)
+    }
+    if (!this.glow) w = s = 0
+    return w | (s << 8)
+  }
+
+  /** CrowdSubject: a seal or a +7 glow (glints) on the weapon or shield (its meshes follow the instance for the effects). */
+  crowdRare(): boolean {
+    return !!(this.rarityBySlot.weapon || this.rarityBySlot.shield) || (this.plusBySlot.weapon ?? 0) >= 7 || (this.plusBySlot.shield ?? 0) >= 7
+  }
+
+  /** CrowdSubject: the skin beyond the skeleton (the Volume step). */
+  get crowdSkinKey(): string {
+    return this.skinKey
+  }
+
+  /** CrowdSubject: the tier evaluated clips on the joints (a bake): the next frame evaluates the pose again. */
+  crowdPoseTouched(): void {
+    this.lodNext = 0
   }
 
   private buildMerge(): { meshes: Mesh[]; parts: AbstractMesh[] } {
@@ -1647,8 +2200,283 @@ export class CharacterActor {
     return this.worn.map(w => w.code)
   }
 
+  /**
+   * P1 pilot (docs/CHARACTERS.md §15.2): the body's own bone lengths. Retail clips key every joint's translation (the
+   * retail lengths); on a pilot body only the root keeps its keyed translation, every other joint stays at its rest offset.
+   */
+  restOffsets = false
+
+  private groundLift = 0
+  private groundObs: [Observer<Scene>, Observer<Scene>] | null = null
+  /**
+   * P1 pilot (CHARACTERS §15.4): the body's own leg proportions under the retail clips sink a kneel or a crouch a few cm
+   * into the floor. After the clips are applied, the root (`Bip01`) is lifted just enough that no knee, ankle or toe
+   * joint is below its clearance (the joint's height above the skin that touches the ground); undone before the next
+   * frame's clips. Own character only (a handful of matrix updates a frame).
+   */
+  enableGroundClamp(cfg?: RetargetSpec['clamp']): void {
+    const bip = this.joints.get(cfg?.root ?? 'Bip01')
+    if (!bip || this.groundObs) return
+    const clearance: [string, number][] = cfg?.probes ?? [
+      ['Bip01 L Calf', 0.045], ['Bip01 R Calf', 0.045], ['Bip01 L Foot', 0.06], ['Bip01 R Foot', 0.06], ['Bip01 L Toe0', 0.012], ['Bip01 R Toe0', 0.012],
+    ]
+    // the lift in the lifted joint's parent frame (world up; the Epic pelvis's parent is turned)
+    const up = cfg ? new Vector3(...cfg.up) : Vector3.Up()
+    const probes = clearance.map(([n, c]) => [this.joints.get(n), c] as const).filter((p): p is readonly [TransformNode, number] => !!p[0])
+    // every joint from the root down to a probe, parents first, so each world matrix is fresh when it is read
+    const chain: TransformNode[] = []
+    for (const [p] of probes) {
+      const up: TransformNode[] = []
+      for (let n: TransformNode | null = p; n && n !== bip; n = n.parent as TransformNode | null) up.push(n)
+      for (const n of up.reverse()) if (!chain.includes(n)) chain.push(n)
+    }
+    chain.unshift(bip)
+    const inv = new Matrix()
+    const v = new Vector3()
+    const before = this.scene.onBeforeAnimationsObservable.add(() => {
+      if (this.groundLift) bip.position.subtractInPlace(up.scale(this.groundLift))
+      this.groundLift = 0
+    })
+    const after = this.scene.onAfterAnimationsObservable.add(() => {
+      if (this.disposed || !this.root.isEnabled()) return
+      this.root.computeWorldMatrix(true).invertToRef(inv)
+      for (const n of chain) n.computeWorldMatrix(true)
+      let low = 0
+      for (const [p, c] of probes) {
+        Vector3.TransformCoordinatesToRef(p.getAbsolutePosition(), inv, v)
+        low = Math.min(low, v.y - c)
+      }
+      if (low < 0) {
+        this.groundLift = -low
+        bip.position.addInPlace(up.scale(this.groundLift))
+      }
+    })
+    this.groundObs = [before, after]
+    this.root.onDisposeObservable.addOnce(() => {
+      this.scene.onBeforeAnimationsObservable.remove(before)
+      this.scene.onAfterAnimationsObservable.remove(after)
+    })
+  }
+  /** P1 pilot (§15.3): the root translation keys scaled by own hip height / retail hip height (feet stay on the ground). */
+  rootScale = 1
+
+  /** Licensed body (CHARACTERS §16): the retail clips are rebuilt for its own skeleton (retarget.ts); null otherwise. */
+  private retargeter: Retargeter | null = null
+  /** Its stand-ins for the retail joints (weapon sockets): the node and the retail joint's world rest rotation. */
+  private readonly socketAliases = new Map<string, { node: TransformNode; bind: Quaternion; restP: Vector3; restQ: Quaternion }>()
+
+  /**
+   * Licensed body: plays the retail clips through `spec` (rotations onto its own joints + the hip path), gives every
+   * retail joint a stand-in node under the matching joint (sockets, effects find them by the retail name) and clamps
+   * deep poses to the ground on its own legs.
+   */
+  useRetarget(spec: RetargetSpec): void {
+    if (this.retargeter) return
+    this.retargeter = makeRetargeter(spec)
+    for (const [name, a] of Object.entries(spec.sockets)) {
+      const parent = this.joints.get(a.parent)
+      if (!parent || this.joints.has(name)) continue
+      const n = new TransformNode(name, this.scene)
+      n.parent = parent
+      n.position.set(a.t[0], a.t[1], a.t[2])
+      n.rotationQuaternion = new Quaternion(a.r[0], a.r[1], a.r[2], a.r[3])
+      this.joints.set(name, n)
+      this.socketAliases.set(name, { node: n, bind: new Quaternion(a.bind[0], a.bind[1], a.bind[2], a.bind[3]), restP: n.position.clone(), restQ: n.rotationQuaternion.clone() })
+    }
+    this.enableGroundClamp(spec.clamp)
+  }
+
+  // ---- licensed bodies: outfits from gear (CHARACTERS §16.9) ----------------------------------------------------------
+
+  /** The licensed body's wardrobe (sidecar, dye maps, the library's decorator); null: not a licensed body. */
+  licensedCloth: { sidecar: Record<string, unknown> | null; assets: Awaited<ReturnType<typeof loadClothAssets>>; decorate: (mat: Material) => void } | null = null
+  private appliedOutfit: AppliedOutfit | null = null
+  /** The outfit worn (setLicensedWear dresses it again at another wear level). */
+  private wornOutfit: Outfit | null = null
+  /** The cloth's dirt and blood (world/features/cloth-wear.ts), in WEAR_LEVELS steps. */
+  private clothWear: ClothWear = CLEAN
+  /** The seal clock and hem particles (licensed-cloth-fx.ts). */
+  clothFx: ClothFx | null = null
+  /** Whether the look's accessories show the earrings (licensed-look.ts); null before the look is drawn. */
+  lookEarrings: boolean | null = null
+
+  /** An earring item is worn (the girl's EARRINGS part shows: licensed-look.ts). */
+  get earringWorn(): boolean {
+    return !!this.wornOutfit?.earring
+  }
+
+  /** Licensed body: the cloth's dirt and blood (0..WEAR_LEVELS each). False when nothing changed or no outfit is worn. */
+  setLicensedWear(w: ClothWear): boolean {
+    if (wearKey(w) === wearKey(this.clothWear)) return false
+    this.clothWear = { dirt: w.dirt, blood: w.blood }
+    // LOD2 (and the crowd, which draws it) never shows the wear: a re-dress there would only rebuild the crowd slot and
+    // the merges. Kept, and dressed when the body comes back to LOD1 (setLicensedLod)
+    if (PERF.wearLazy && this.licensedLods && this.licensedLevel === 2) return false
+    return this.wornOutfit ? this.setLicensedOutfit(this.wornOutfit) : false
+  }
+  /** The parts the outfit took out of the scene, with their parent (setLicensedOutfit). */
+  private readonly outfitStash = new Map<AbstractMesh, Node | null>()
+
+  /**
+   * Licensed body: wears `outfit` (three/licensed-outfit.ts outfitFromGear: the creator's preview and dress() alike).
+   * The crowd and the merges give their parts back first (made again by the next plan). False when nothing changed or
+   * the body has no wardrobe (a pack built before §16.9, or the dye maps did not load: the glb's own outfit stays).
+   */
+  setLicensedOutfit(outfit: Outfit): boolean {
+    const c = this.licensedCloth
+    if (!c || this.disposed) return false
+    const wk = c.assets?.wear ? wearKey(this.clothWear) : ''
+    if (this.appliedOutfit && this.appliedOutfit.key === outfitKey(outfit) + (wk ? `|${wk}` : '')) return false
+    const earringBefore = this.earringWorn
+    this.wornOutfit = outfit
+    this.dropCrowd()
+    this.dropOutfit(false)
+    this.dropMerge()
+    const next = applyOutfit(this.root.getScene(), this.meshes, outfit, c.sidecar, c.assets, c.decorate, this.clothWear)
+    // the seal's hem particles (the nearest sealed outfits) and the worn earring (its part shown by the look)
+    this.clothFx?.set(this, outfitSeals(outfit))
+    if (this.earringWorn !== earringBefore) void refreshLicensedLook(this).catch(err => console.warn('[models] look failed', err))
+    // the outfit's hidden pieces and slices off altogether (the scene skips them; the LOD switch keeps them off), the
+    // shown ones on at the drawn LOD (only the parts the outfit manages: the look's hair and accessories are its own)
+    // and out of the scene: a body carries every piece at three LODs (≈ 70 meshes); the ones not worn leave the scene's
+    // mesh list and their parent (every per-frame pass over the scene's or a root's meshes skips them), kept here
+    const scene = this.root.getScene()
+    for (const m of this.meshes) {
+      if (m.getTotalVertices() <= 0 || m.isDisposed() || !partKeyOf(m.name)) continue
+      if (!m.isVisible) {
+        if (!this.outfitStash.has(m)) {
+          this.outfitStash.set(m, m.parent)
+          m.setEnabled(false)
+          m.parent = null
+          scene.removeMesh(m)
+        }
+        continue
+      }
+      if (this.outfitStash.has(m)) {
+        m.parent = this.outfitStash.get(m)!
+        this.outfitStash.delete(m)
+        scene.addMesh(m)
+      }
+      const atLod = !this.licensedLods || Math.min(2, licensedLodOf(m)) === this.licensedLevel
+      if (m.isEnabled(false) !== atLod) m.setEnabled(atLod)
+    }
+    // released after the new one holds its materials (an unchanged palette is not rebuilt)
+    this.appliedOutfit?.release()
+    this.appliedOutfit = next
+    return !!next
+  }
+
+  /** The outfit worn (its key and hidden body slices; tests, the bench). */
+  get licensedOutfit(): AppliedOutfit | null {
+    return this.appliedOutfit
+  }
+
+  // ---- licensed bodies: the lower LODs (CHARACTERS §16.8) ------------------------------------------------------------
+
+  /**
+   * Licensed body, the look (three/licensed-look.ts, §16.10): parts bound from the parts glb (a hairstyle, an accessory)
+   * become the actor's own, sorted into its LODs (shown at the LOD drawn now).
+   */
+  addLicensedParts(parts: readonly AbstractMesh[]): void {
+    for (const m of parts) {
+      this.meshes.push(m)
+      const l = Math.min(2, licensedLodOf(m))
+      this.licensedLods?.[l]!.push(m)
+      m.setEnabled(!this.licensedLods || l === this.licensedLevel)
+    }
+    this.lookChanged()
+    // a part that wears the outfit's colours (the worn earring's) came in: dress again
+    if (this.wornOutfit?.earring && parts.some(m => /_EARRINGS/.test(m.name)) && this.appliedOutfit) {
+      const o = this.wornOutfit
+      this.appliedOutfit.release()
+      this.appliedOutfit = null
+      this.setLicensedOutfit(o)
+    }
+  }
+
+  /** The look changed what is drawn (materials, parts): the crowd and the merges give their parts back (made again). */
+  lookChanged(): void {
+    this.dropCrowd()
+    this.dropOutfit(false)
+    this.dropMerge()
+  }
+
+  /** The licensed body's parts per LOD (0 the bought geometry, 1 and 2 the converter's simplified copies); null: none. */
+  private licensedLods: AbstractMesh[][] | null = null
+  private licensedLevel = 0
+
+  /** Licensed body: sorts its parts by LOD (`__LOD1` / `__LOD2`) and shows LOD0. No-op without lower LODs. */
+  initLicensedLods(): void {
+    const lods: AbstractMesh[][] = [[], [], []]
+    // the drawn parts only (not the glTF root, an empty mesh every part hangs under)
+    for (const m of this.meshes) if (m.getTotalVertices() > 0) lods[Math.min(2, licensedLodOf(m))]!.push(m)
+    if (!lods[1]!.length && !lods[2]!.length) return
+    this.licensedLods = lods
+    for (const m of [...lods[1]!, ...lods[2]!]) m.setEnabled(false)
+  }
+
+  /**
+   * Licensed body: which LOD is drawn (0..2; the crowd budget's plan, world/crowd-budget.ts licensedLodFor). The crowd
+   * tier draws whatever is shown when it takes the actor, so the budget sets 2 before it. A level without parts keeps
+   * the nearest lower one. True when it changed.
+   */
+  setLicensedLod(level: number): boolean {
+    const lods = this.licensedLods
+    if (!lods || this.disposed) return false
+    let l = Math.max(0, Math.min(2, Math.round(level)))
+    while (l > 0 && !lods[l]!.length) l--
+    if (l === this.licensedLevel) return false
+    // the crowd tier and the merges hold the parts they took: they go first (made again from the new parts)
+    this.dropCrowd()
+    this.dropOutfit(false)
+    this.dropMerge()
+    this.licensedLevel = l
+    // (a piece the outfit hides stays off: §16.9, an enabled hidden part still costs its world matrix every frame)
+    for (let i = 0; i < lods.length; i++) for (const m of lods[i]!) if (!m.isDisposed()) m.setEnabled(i === l && (m.isVisible || !partKeyOf(m.name)))
+    // a wear change kept while at LOD2 (setLicensedWear): dressed now (a no-op when the worn key is unchanged)
+    if (l < 2 && this.wornOutfit) this.setLicensedOutfit(this.wornOutfit)
+    this.lodNext = 0
+    return true
+  }
+
+  /** The licensed LOD drawn now (0 without lower LODs). */
+  get licensedLod(): number {
+    return this.licensedLevel
+  }
+
+  /** Whether the body has lower LODs (a licensed body built with them). */
+  get hasLicensedLods(): boolean {
+    return !!this.licensedLods
+  }
+
+  /** How many clip groups the actor has (debug). */
+  get groupCount(): number {
+    return this.groups.length
+  }
+
+  /** A pack clip on this actor: cloned onto the joints by name, or rebuilt through the retarget (licensed body). */
+  private clipCopy(src: AnimationGroup, name: string, pack?: string): AnimationGroup {
+    if (this.retargeter) return retargetGroup(src, name, this.retargeter, this.joints, this.scene, { pack, partial: this.clips.get(name)?.partial || undefined })
+    return src.clone(name, t => (t && typeof t.name === 'string' ? this.joints.get(t.name) ?? t : t))
+  }
+
   private prepareGroup(g: AnimationGroup): void {
     g.stop()
+    if (this.restOffsets) {
+      // only rotations play, plus the root's translation (scaled); no per-joint translation, no scale (pilot-clip.ts)
+      const ta = g.targetedAnimations
+      for (let i = ta.length - 1; i >= 0; i--) {
+        const t = ta[i]!
+        const name = (t.target as { name?: string } | null)?.name
+        if (!pilotTrackKept(t.animation.targetProperty, name)) ta.splice(i, 1)
+        else if (this.rootScale !== 1 && name === PILOT_ROOT_JOINT && t.animation.targetProperty === 'position') {
+          // the clip's Animation may be shared with other actors: scale a copy
+          const a = t.animation.clone()
+          a.setKeys(a.getKeys().map(k => ({ ...k, value: (k.value as Vector3).scale(this.rootScale) })))
+          t.animation = a
+        }
+      }
+    }
     g.enableBlending = true
     g.blendingSpeed = 0.08
     g.onAnimationGroupPlayObservable.add(() => {
@@ -1686,7 +2514,7 @@ export class CharacterActor {
       if (g !== group || !KEEP_CLIPS.test(clip) || this.groups.some(x => x.name === clip)) continue
       const src = byAnim.get(anim)
       if (!src) continue
-      const copy = src.clone(clip, t => (t && typeof t.name === 'string' ? this.joints.get(t.name) ?? t : t))
+      const copy = this.clipCopy(src, clip, group)
       this.prepareGroup(copy)
       this.groups.push(copy)
     }
@@ -1709,6 +2537,9 @@ export class CharacterActor {
   /** Replaces everything worn: hides the replaced body parts, binds armour, hangs weapons; sets family and volume. */
   applyDress(plan: DressPlan): void {
     // G1 rescue: the merged parts go first (a hidden part must not stay drawn in a merge); made again at the end.
+    // P0: the outfit merge too (the next crowd plan makes it again from the new parts); P1a: the crowd tier too.
+    this.dropCrowd()
+    this.dropOutfit(false)
     this.dropMerge()
     this.removeWorn()
     const drawn = new Set(plan.items.map(i => i.item.code))
@@ -1730,6 +2561,7 @@ export class CharacterActor {
     if (plan.fallback) this.hangOnSocket('weapon', 'fallback', plan.fallback.container, plan.fallback.attachBone, plan.fallback.sidecar)
     // A setPlus that came while this dress loaded is newer than the plan's look.
     if (this.plusDuring !== this.dressToken) this.plusBySlot = { ...(plan.plus ?? {}) }
+    this.rarityBySlot = { ...(plan.rarity ?? {}) }
     this.lightWeapons()
     this.family = plan.family
     this.setVolume(plan.gender, plan.volume)
@@ -1781,15 +2613,18 @@ export class CharacterActor {
    * with only the bone's bind-pose world rotation cancelled; the translation stays at the bone.
    */
   private hangOnSocket(code: string, slot: WornItem['slot'], container: AssetContainer, boneName: string, sidecar?: Record<string, unknown> | null): void {
-    const bone = this.boneByName(boneName) ?? this.boneByName(DEFAULT_ATTACH_BONE)
-    const target = bone?.getTransformNode()
-    if (!bone || !target) {
+    const alias = this.socketAliases.get(boneName) ?? (this.boneByName(boneName) ? undefined : this.socketAliases.get(DEFAULT_ATTACH_BONE))
+    const bone = alias ? undefined : this.boneByName(boneName) ?? this.boneByName(DEFAULT_ATTACH_BONE)
+    const target = alias?.node ?? bone?.getTransformNode()
+    if ((!bone && !alias) || !target) {
       console.warn(`[models] ${this.model.code}: no bone ${boneName} for ${code}`)
       return
     }
     const inst = container.instantiateModelsToScene(n => n, false, { doNotInstantiate: true })
     for (const g of inst.animationGroups) g.dispose()
-    const worn: WornItem = { code, slot, nodes: inst.rootNodes, meshes: [], skeletons: [...inst.skeletons], dummies: new Map() }
+    // a licensed body's stand-in hangs under a joint: the crowd tier binds the item to that joint's bone (§16.8)
+    const socket = bone ?? (alias?.node.parent ? this.boneByName(alias.node.parent.name) : undefined)
+    const worn: WornItem = { code, slot, nodes: inst.rootNodes, meshes: [], skeletons: [...inst.skeletons], dummies: new Map(), socket }
     for (const s of worn.skeletons) this.lodSkeleton(s)
     for (const root of inst.rootNodes) {
       const t = root as TransformNode
@@ -1798,7 +2633,8 @@ export class CharacterActor {
       t.position?.setAll(0)
       t.scaling?.setAll(1)
       t.rotationQuaternion = Quaternion.Identity()
-      bone.getAbsoluteInverseBindMatrix().decompose(undefined, t.rotationQuaternion, undefined)
+      if (alias) alias.bind.conjugateToRef(t.rotationQuaternion)
+      else bone!.getAbsoluteInverseBindMatrix().decompose(undefined, t.rotationQuaternion, undefined)
       worn.meshes.push(...t.getChildMeshes(false))
     }
     // Trail points: in the item's model space (glTF metres), like its meshes under the item root.
@@ -1817,6 +2653,7 @@ export class CharacterActor {
     }
     // The glow plugin goes on before the first draw, so a later +N changes defines only (weapon-glow.ts).
     if (this.glow && WEAPON_SLOTS.has(slot)) this.glow.prepare(worn.meshes)
+    if (this.rarityFx && WEAPON_SLOTS.has(slot)) this.rarityFx.prepare(worn.meshes)
     this.worn.push(worn)
   }
 
@@ -1835,10 +2672,16 @@ export class CharacterActor {
     return this.plusBySlot
   }
 
+  /** The seal tier of the worn weapon (null: regular); the swing trail reads it (docs/RARITY.md §5.4). */
+  get weaponRarity(): RarityTier | null {
+    return this.rarityBySlot.weapon ?? null
+  }
+
   /** Lights the worn weapon, shield and fallback weapon by their +N (the fallback stands in for the weapon). */
   private lightWeapons(): void {
     const glow = this.glow
-    if (!glow || this.disposed) return
+    const rare = this.rarityFx
+    if ((!glow && !rare) || this.disposed) return
     for (const w of this.worn) {
       if (!WEAPON_SLOTS.has(w.slot)) continue
       const slot = w.slot === 'fallback' ? 'weapon' : w.slot
@@ -1846,7 +2689,12 @@ export class CharacterActor {
       if (!root || !(GLOW_SLOTS as readonly string[]).includes(slot)) continue
       const dummies = new Map<string, Vector3>()
       for (const [name, node] of w.dummies) dummies.set(name, node.position)
-      glow.light(this, { meshes: w.meshes, root, dummies, strength: slot === 'shield' ? SHIELD_STRENGTH : 1 }, this.plusBySlot[slot])
+      // The fallback weapon is not the worn one: it never shows a seal.
+      const tier = w.slot === 'fallback' ? null : this.rarityBySlot[slot] ?? null
+      const look = tier ? RARITY_LOOKS[tier] : null
+      const spec = { meshes: w.meshes, root, dummies, slot: slot as 'weapon' | 'shield', strength: slot === 'shield' ? SHIELD_STRENGTH : 1, ...(look ? { tint: { color: look.rim, shimmer: look.accent } } : {}) }
+      glow?.light(this, spec, this.plusBySlot[slot])
+      rare?.light(this, spec, tier)
     }
   }
 
@@ -1863,6 +2711,12 @@ export class CharacterActor {
   /** Volume (build) 0..4: radial skin factors on the table bones of the gender; 2 = none. */
   setVolume(gender: 'male' | 'female', volume: number | undefined): void {
     const scales = volumeBoneScales(gender, volume)
+    // P1a: a skin of its own bakes a VAT of its own
+    const key = [...scales].map(([k, v]) => `${k}=${v}`).join(';')
+    if (key !== this.skinKey) {
+      this.dropCrowd()
+      this.skinKey = key
+    }
     const skeletons = new Set<Skeleton>()
     if (this.skeleton) skeletons.add(this.skeleton)
     for (const w of this.worn) for (const s of w.skeletons) skeletons.add(s)
@@ -1909,7 +2763,7 @@ export class CharacterActor {
   play(base: BaseClip, force = false, speed = 1, fromFrame?: number): void {
     this.currentBase = base
     this.currentSpeed = speed
-    if (this.dead || this.action) return
+    if (this.dead || this.action || this.debugHold) return
     // Wave 11: the companion plays the same base (its own clip); a forced start (this one's resume) ends its action.
     this.companionActor?.mirrorPlay(base, force, speed, fromFrame)
     if (!force && this.current?.isPlaying && this.current === this.clipFor(base)) {
@@ -1933,6 +2787,8 @@ export class CharacterActor {
    * `fromFrame`: jump there once started (the loop still covers the whole clip).
    */
   private startUnblended(g: AnimationGroup, snap: boolean, loop: boolean, speed: number, fromFrame?: number): void {
+    // P0 (CHAR_LOD.snap): a far character in a crowd changes clips without the blend (see `snapClips`)
+    if (this.snapClips) snap = true
     const seek = fromFrame !== undefined && Number.isFinite(fromFrame) && fromFrame > g.from && fromFrame < g.to
     if (!snap) {
       g.start(loop, speed, g.from, g.to)
@@ -1966,6 +2822,7 @@ export class CharacterActor {
    * MOVE_BLEND_OUT.
    */
   playAction(group: AnimationGroup, speed = 1, resumeBaseFrame?: number, resumeFor?: AnimationGroup): void {
+    if (this.debugHold) return
     if (this.dead) return
     const token = ++this.actionSerial
     const prev = this.action
@@ -2049,7 +2906,7 @@ export class CharacterActor {
     for (const [name, info] of Object.entries(pack.index.clips)) {
       const src = byAnim.get(info.anim)
       if (!src || this.groups.some(g => g.name === name)) continue
-      const copy = src.clone(name, t => (t && typeof t.name === 'string' ? this.joints.get(t.name) ?? t : t))
+      const copy = this.clipCopy(src, name)
       this.prepareGroup(copy)
       copy.blendingSpeed = MOVE_BLEND_IN
       this.groups.push(copy)
@@ -2257,6 +3114,7 @@ export class CharacterActor {
 
   /** Hide Weapon (docs/EFFECTS.md M7): hides or shows the worn weapon, shield and fallback weapon meshes. */
   setWeaponVisible(on: boolean): void {
+    if (!on) this.dropCrowd()
     this.weaponsVisible = on
     for (const w of this.worn) if (WEAPON_SLOTS.has(w.slot)) for (const m of w.meshes) m.isVisible = on
   }
@@ -2311,6 +3169,47 @@ export class CharacterActor {
     if (this.currentBase && !this.action && !this.dead) this.play(this.currentBase, true, this.currentSpeed)
   }
 
+  /**
+   * Debug (pilot checks, CHARACTERS §15.3): `null` stops every clip and puts the skeleton in its bind pose; a clip name
+   * loads its pack if needed, then holds the clip at `frac` (0–1) of its length.
+   */
+  /** Debug (the springs' proof, CHARACTERS §16.2): `clip` playing live and looped; the world starts no clips here. */
+  async debugLive(clip: string, speed = 1): Promise<boolean> {
+    this.debugHold = true
+    const group = this.clipGroupOf(clip)
+    if (group && group !== 'default') await this.loadClipGroup(group)
+    const g = this.groups.find(x => x.name === clip)
+    if (!g) return false
+    for (const o of this.groups) if (o !== g) o.stop()
+    g.enableBlending = false
+    g.start(true, speed, g.from, g.to)
+    return true
+  }
+
+  /** Debug: every playing clip held (0) or resumed (1). */
+  debugSpeed(speed: number): void {
+    for (const g of this.groups) if (g.isPlaying) g.speedRatio = speed
+  }
+
+  async debugPose(clip: string | null, frac = 0): Promise<boolean> {
+    this.debugHold = true
+    for (const g of this.groups) g.stop()
+    if (clip === null) {
+      this.skeleton?.returnToRest()
+      return true
+    }
+    const group = this.clipGroupOf(clip)
+    if (group && group !== 'default') await this.loadClipGroup(group)
+    const g = this.groups.find(x => x.name === clip)
+    if (!g) return false
+    // no blending (it would defer the held frame), speed 0 instead of pause (the frame keeps being applied)
+    g.enableBlending = false
+    g.start(true, 1, g.from, g.to)
+    g.goToFrame(g.from + (g.to - g.from) * Math.max(0, Math.min(1, frac)))
+    g.speedRatio = 0
+    return true
+  }
+
   /** Loads and retargets the pack of clip group `group` (slim layout); a no-op when the glb has the clips or no pack. */
   private loadClipGroup(group: string): Promise<void> {
     const rel = this.packs?.packs[group]
@@ -2348,6 +3247,7 @@ export class CharacterActor {
    */
   attachTo(node: TransformNode | null): void {
     if (this.disposed) return
+    this.dropCrowd()
     if (node) {
       if (this.home === undefined) this.home = this.root.parent
       this.root.parent = node
@@ -2555,6 +3455,7 @@ export class CharacterActor {
 
   /** Mesh opacity of the body and everything worn (1 = opaque; an invisible GM is drawn faded). */
   setOpacity(alpha: number): void {
+    if (alpha !== 1) this.dropCrowd()
     this.opacity = alpha
     for (const m of this.allMeshes()) m.visibility = alpha
     this.companionActor?.setOpacity(alpha)
@@ -2567,6 +3468,7 @@ export class CharacterActor {
    * as it was, a PBR entity became a solid white silhouette. On Classic (exposure 1) it is HEAD's overlay.
    */
   setHighlight(on: boolean, color: Readonly<Color3> = HIGHLIGHT_COLOR): void {
+    if (on) this.dropCrowd()
     this.highlight = on ? color : null
     for (const m of this.allMeshes()) setHighlightOverlay(m, on ? color : null)
     this.companionActor?.setHighlight(on, color)
@@ -2590,8 +3492,17 @@ export class CharacterActor {
     this.companion = null
     this.lodLeader = null
     for (const f of [...this.lodFollowers]) f.lodLeader = null
+    this.dropCrowd()
     for (const g of this.groups) g.dispose()
+    if (this.outfit) {
+      this.outfitSource?.()?.release(this.outfit.atlas)
+      this.outfit = null
+    }
     this.removeWorn()
+    this.appliedOutfit?.release()
+    this.appliedOutfit = null
+    for (const m of this.outfitStash.keys()) m.dispose(false, false)
+    this.outfitStash.clear()
     for (const s of this.skeleton ? [this.skeleton] : []) s.dispose()
     for (const n of this.nodes) n.dispose(false, false)
     this.root.dispose()

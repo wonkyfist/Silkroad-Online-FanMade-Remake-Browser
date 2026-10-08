@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "zones",
-  "generatedAt": "2026-10-01T20:05:14.344Z",
+  "generatedAt": "2026-10-06T23:41:25.168Z",
   "worldExport": "jangan-fields",
   "sources": [
     "client:textzonename.txt",
@@ -1183,7 +1183,7 @@
       "region": 24217,
       "rx": 153,
       "rz": 94,
-      "name": "Canyon Beach",
+      "name": "Western Strait",
       "area": null,
       "continent": null
     },
@@ -1375,7 +1375,7 @@
       "region": 24473,
       "rx": 153,
       "rz": 95,
-      "name": "Canyon Beach",
+      "name": "",
       "area": null,
       "continent": null
     },
@@ -1383,7 +1383,7 @@
       "region": 24474,
       "rx": 154,
       "rz": 95,
-      "name": "Canyon Beach",
+      "name": "",
       "area": null,
       "continent": null
     },
@@ -1567,23 +1567,23 @@
       "region": 24729,
       "rx": 153,
       "rz": 96,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 24730,
       "rx": 154,
       "rz": 96,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 24731,
       "rx": 155,
       "rz": 96,
-      "name": "Canyon Beach",
+      "name": "",
       "area": null,
       "continent": null
     },
@@ -1759,25 +1759,25 @@
       "region": 24985,
       "rx": 153,
       "rz": 97,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 24986,
       "rx": 154,
       "rz": 97,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 24987,
       "rx": 155,
       "rz": 97,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 24988,
@@ -1951,44 +1951,36 @@
       "continent": null
     },
     {
-      "region": 25241,
-      "rx": 153,
-      "rz": 98,
-      "name": "Earth Ghost Canyon",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 25242,
       "rx": 154,
       "rz": 98,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25243,
       "rx": 155,
       "rz": 98,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25244,
       "rx": 156,
       "rz": 98,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25245,
       "rx": 157,
       "rz": 98,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25246,
@@ -1996,7 +1988,7 @@
       "rz": 98,
       "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25247,
@@ -2146,68 +2138,52 @@
       "continent": null
     },
     {
-      "region": 25497,
-      "rx": 153,
-      "rz": 99,
-      "name": "Earth Ghost Canyon",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 25498,
-      "rx": 154,
-      "rz": 99,
-      "name": "Earth Ghost Canyon",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 25499,
       "rx": 155,
       "rz": 99,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25500,
       "rx": 156,
       "rz": 99,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25501,
       "rx": 157,
       "rz": 99,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25502,
       "rx": 158,
       "rz": 99,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25503,
       "rx": 159,
       "rz": 99,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25504,
       "rx": 160,
       "rz": 99,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25505,
@@ -2338,76 +2314,60 @@
       "continent": null
     },
     {
-      "region": 25753,
-      "rx": 153,
-      "rz": 100,
-      "name": "Earth Ghost Canyon",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 25754,
-      "rx": 154,
-      "rz": 100,
-      "name": "Earth Ghost Canyon",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 25755,
       "rx": 155,
       "rz": 100,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25756,
       "rx": 156,
       "rz": 100,
-      "name": "Earth Ghost Canyon",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25757,
       "rx": 157,
       "rz": 100,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25758,
       "rx": 158,
       "rz": 100,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25759,
       "rx": 159,
       "rz": 100,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25760,
       "rx": 160,
       "rz": 100,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25761,
       "rx": 161,
       "rz": 100,
-      "name": "Western China Ferry",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 25762,
@@ -2530,76 +2490,60 @@
       "continent": null
     },
     {
-      "region": 26009,
-      "rx": 153,
-      "rz": 101,
-      "name": "Entrance-Western China Donwhang",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26010,
-      "rx": 154,
-      "rz": 101,
-      "name": "Entrance-Western China Donwhang",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 26011,
       "rx": 155,
       "rz": 101,
-      "name": "Entrance-Western China Donwhang",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26012,
       "rx": 156,
       "rz": 101,
-      "name": "Entrance-Western China Donwhang",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26013,
       "rx": 157,
       "rz": 101,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26014,
       "rx": 158,
       "rz": 101,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26015,
       "rx": 159,
       "rz": 101,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26016,
       "rx": 160,
       "rz": 101,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26017,
       "rx": 161,
       "rz": 101,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26018,
@@ -2722,76 +2666,60 @@
       "continent": null
     },
     {
-      "region": 26265,
-      "rx": 153,
-      "rz": 102,
-      "name": "Western China Donwhang",
-      "area": "Town_Dunhwang",
-      "continent": "West_China"
-    },
-    {
-      "region": 26266,
-      "rx": 154,
-      "rz": 102,
-      "name": "Entrance-Western China Donwhang",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 26267,
       "rx": 155,
       "rz": 102,
-      "name": "Entrance-Western China Donwhang",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26268,
       "rx": 156,
       "rz": 102,
-      "name": "Entrance-Western China Donwhang",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26269,
       "rx": 157,
       "rz": 102,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26270,
       "rx": 158,
       "rz": 102,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26271,
       "rx": 159,
       "rz": 102,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26272,
       "rx": 160,
       "rz": 102,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26273,
       "rx": 161,
       "rz": 102,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26274,
@@ -2914,82 +2842,66 @@
       "continent": null
     },
     {
-      "region": 26521,
-      "rx": 153,
-      "rz": 103,
-      "name": "Western China Donwhang",
-      "area": "Town_Dunhwang",
-      "continent": "West_China"
-    },
-    {
-      "region": 26522,
-      "rx": 154,
-      "rz": 103,
-      "name": "Entrance-Western China Donwhang",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 26523,
       "rx": 155,
       "rz": 103,
-      "name": "Entrance-Western China Donwhang",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26524,
       "rx": 156,
       "rz": 103,
-      "name": "Western China Northern Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26525,
       "rx": 157,
       "rz": 103,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26526,
       "rx": 158,
       "rz": 103,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26527,
       "rx": 159,
       "rz": 103,
-      "name": "Western China Ruins",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26528,
       "rx": 160,
       "rz": 103,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26529,
       "rx": 161,
       "rz": 103,
-      "name": "Western China Main Road",
+      "name": "",
       "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 26530,
       "rx": 162,
       "rz": 103,
-      "name": "Spur Cove",
+      "name": "",
       "area": null,
       "continent": null
     },
@@ -3106,82 +3018,10 @@
       "continent": null
     },
     {
-      "region": 26777,
-      "rx": 153,
-      "rz": 104,
-      "name": "Okmungwan Field",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26778,
-      "rx": 154,
-      "rz": 104,
-      "name": "Okmungwan Field",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26779,
-      "rx": 155,
-      "rz": 104,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26780,
-      "rx": 156,
-      "rz": 104,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26781,
-      "rx": 157,
-      "rz": 104,
-      "name": "Western China Ruins",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26782,
-      "rx": 158,
-      "rz": 104,
-      "name": "Western China Ruins",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26783,
-      "rx": 159,
-      "rz": 104,
-      "name": "Western China Ruins",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26784,
-      "rx": 160,
-      "rz": 104,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 26785,
-      "rx": 161,
-      "rz": 104,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
       "region": 26786,
       "rx": 162,
       "rz": 104,
-      "name": "Spur Cove",
+      "name": "",
       "area": null,
       "continent": null
     },
@@ -3242,60 +3082,12 @@
       "continent": null
     },
     {
-      "region": 27033,
-      "rx": 153,
+      "region": 27042,
+      "rx": 162,
       "rz": 105,
-      "name": "Okmungwan Field",
+      "name": "",
       "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27034,
-      "rx": 154,
-      "rz": 105,
-      "name": "Okmungwan Field",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27035,
-      "rx": 155,
-      "rz": 105,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27036,
-      "rx": 156,
-      "rz": 105,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27039,
-      "rx": 159,
-      "rz": 105,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27040,
-      "rx": 160,
-      "rz": 105,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
-    },
-    {
-      "region": 27041,
-      "rx": 161,
-      "rz": 105,
-      "name": "Western China Northern Road",
-      "area": null,
-      "continent": "West_China"
+      "continent": null
     },
     {
       "region": 27051,

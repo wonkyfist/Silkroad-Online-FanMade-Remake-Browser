@@ -90,7 +90,7 @@ export function pilotHarness(o: PilotHarnessOpts = {}) {
           const f = (W - (from[0] < W ? 0.05 : -0.05) - from[0]) / (to[0] - from[0])
           return [from[0] + (to[0] - from[0]) * f, from[1], from[2] + (to[2] - from[2]) * f]
         }
-  const h = skillHarness({ data, book: new SkillBook([...SKILLS, ...TG_ROWS], MASTERIES), config: { contentDir: content }, ...(move ? { move } : {}) })
+  const h = skillHarness({ data, book: new SkillBook([...SKILLS, ...TG_ROWS], MASTERIES), config: { contentDir: content, levelCap: 25 }, ...(move ? { move } : {}) })
   cleanups.push(h.cleanup)
   ;(h.gameplay.setup as { places: unknown[] }).places = [{ name: 'palace-steps', group: 'town', x: PALACE.x, z: PALACE.z }]
   h.gameplay.start(h.now)
@@ -103,9 +103,9 @@ export function pilotHarness(o: PilotHarnessOpts = {}) {
     return her()!
   }
   const her = (): Mob | undefined => [...h.world.mobs.values()].find((m) => m.def.code === TG && m.ai !== 'dead')
-  /** A level-20 character with plenty of HP at x/z. */
+  /** A level-25 character (the Climb's cap; Play the Boss needs 25) with plenty of HP at x/z. */
   const player = (x: number, z: number, name?: string, hp = 1_000_000) => {
-    const r = h.hero({ pos: [x, 0, z], level: 20, ...(name ? { name } : {}) })
+    const r = h.hero({ pos: [x, 0, z], level: 25, ...(name ? { name } : {}) })
     r.p.maxHp = r.p.hp = hp
     return r
   }

@@ -340,7 +340,7 @@ export function listItems(c: AdminCall): AdminPage<AdminItemRow> {
     if (q && !def.code.toLowerCase().includes(q) && !(def.name ?? '').toLowerCase().includes(q)) continue
     if (category && def.category !== category) continue
     if (onlyOverridden && !patched.has(def.code)) continue
-    rows.push({ code: def.code, name: def.name, category: def.category, slot: def.slot ?? null, degree: def.degree, reqLevel: def.reqLevel, price: def.price, icon: null, overridden: patched.has(def.code) })
+    rows.push({ code: def.code, name: def.name, category: def.category, slot: def.slot ?? null, degree: def.degree, reqLevel: def.reqLevel, retailReqLevel: def.retailReqLevel ?? null, price: def.price, icon: null, overridden: patched.has(def.code) })
   }
   rows.sort((a, b) => a.degree - b.degree || (a.name ?? a.code).localeCompare(b.name ?? b.code) || a.code.localeCompare(b.code))
   const out = pageOf(rows, page, size)

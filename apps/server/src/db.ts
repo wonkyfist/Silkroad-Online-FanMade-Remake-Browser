@@ -1,7 +1,7 @@
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import Database from 'better-sqlite3'
-import { DEFAULT_HEIGHT, DEFAULT_VOLUME, EQUIP_SLOTS, type EquipSlot, type Role, type StarterOutfit, type StarterWeapon } from '@sro/shared'
+import { DEFAULT_HEIGHT, DEFAULT_VOLUME, EQUIP_SLOTS, defaultLook, lookBodyOf, lookOrDefault, type CharLook, type EquipSlot, type Role, type StarterOutfit, type StarterWeapon } from '@sro/shared'
 import { InvDraft, type InvItem, type InvState, type Result } from './inventory.ts'
 import type { Progress } from './progression.ts'
 
@@ -462,6 +462,90 @@ const MIGRATIONS: string[] = [
     last_plant_at INTEGER
   );
   `,
+  // 20: Siege of Jangan layer 6, anti-collusion (docs/SIEGE.md §8.6; siege/law-store.ts). law_contacts: account pairs
+  // (a < b) that were in a party together or where one watched the other plant a keg (kind party / lookout; trades and
+  // stall sales are read from social_log), the last time; pruned after law.contactDays. law_flags: a capture reward
+  // withheld by an anti-abuse rule (who, whom, which rule, the gold), for the admin Law tab.
+  `
+  CREATE TABLE law_contacts (
+    a INTEGER NOT NULL,
+    b INTEGER NOT NULL,
+    kind TEXT NOT NULL,
+    at INTEGER NOT NULL,
+    PRIMARY KEY (a, b, kind)
+  );
+  CREATE INDEX law_contacts_at ON law_contacts(at);
+  CREATE TABLE law_flags (
+    id INTEGER PRIMARY KEY,
+    at INTEGER NOT NULL,
+    wanted_character INTEGER NOT NULL,
+    wanted_account INTEGER NOT NULL,
+    hunter_character INTEGER NOT NULL,
+    hunter_account INTEGER,
+    rule TEXT NOT NULL,
+    withheld INTEGER NOT NULL DEFAULT 0,
+    data TEXT NOT NULL DEFAULT '{}'
+  );
+  CREATE INDEX law_flags_at ON law_flags(at);
+  `,
+  // 21: the Climb to 25 (docs/CLIMB.md §9.2, §9.3a; climb.ts convertClimbCharacters): which EXP curve a character's
+  // `exp` is measured against. 0 = the curve before the Climb (retail levels.json); the server moves every row to 1 (the
+  // cap-25 curve, content/climb/levels.json) once at the first start with CLIMB on: level 20s start the next bar at 0 %,
+  // the rest keep their bar fraction. Level, SP, skills, items and quests are never touched.
+  `
+  ALTER TABLE characters ADD COLUMN curve_version INTEGER NOT NULL DEFAULT 0;
+  `,
+  // 22: the Climb's rewards (docs/CLIMB.md §5.1, §7.3, §10.1; layer L7, climb/rewards.ts): the title a character wears
+  // (a pilot_honors code; NULL = the newest it holds), its Arts (JSON { "<tree>:<tier>": art id }) and the achievement
+  // counters (boss kills, penalised deaths). Every live character of today is a Pioneer (§7.3: a pre-Climb character),
+  // granted at time 0 so a title won later stays the newest.
+  `
+  ALTER TABLE characters ADD COLUMN title TEXT;
+  ALTER TABLE characters ADD COLUMN arts TEXT NOT NULL DEFAULT '{}';
+  CREATE TABLE char_achievements (
+    character_id INTEGER NOT NULL REFERENCES characters(id),
+    id TEXT NOT NULL,
+    progress INTEGER NOT NULL DEFAULT 0,
+    done_at INTEGER,
+    PRIMARY KEY (character_id, id)
+  );
+  INSERT OR IGNORE INTO pilot_honors (character_id, code, at) SELECT id, 'pioneer', 0 FROM characters WHERE deleted_at IS NULL;
+  `,
+  // 23: the character look (docs/CHARACTERS.md §16.8; packages/shared/src/look.ts): one JSON record per character that
+  // every client draws it with (body = the model's gender, outfit, hair, makeup, iris, colours, markings, accessories,
+  // height, build). Existing characters get their body's default (lookDefault in look.ts, mirrored here): the outfit and
+  // its hair from a hash of the id (a crowd made before the creator is not one outfit), the retail Volume as the Weight slider.
+  `
+  ALTER TABLE characters ADD COLUMN look TEXT;
+  UPDATE characters SET look = json_object(
+    'v', 1,
+    'body', CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN 'f' ELSE 'm' END,
+    'outfit', printf('%02d', (((id * 2654435761) % 4294967296) / 65536 % CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN 4 ELSE 3 END) + 1),
+    'hair', printf('%02d', (((id * 2654435761) % 4294967296) / 65536 % CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN 4 ELSE 3 END) + 1),
+    'makeup', CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN '16_04' ELSE '04' END,
+    'iris', CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN '01' ELSE '31' END,
+    'hairColor', 0, 'skinTone', 0, 'skinShift', 0,
+    'markings', json('[]'), 'accessories', json('[]'),
+    'height', height,
+    'build', CASE WHEN model GLOB 'CHAR_[A-Z]*_WOMAN_*' THEN json_object(
+        'weight', CASE volume WHEN 0 THEN 20 WHEN 1 THEN 30 WHEN 3 THEN 55 WHEN 4 THEN 70 ELSE 40 END,
+        'muscle', 30, 'chest', 35, 'buttocks', 40, 'hips', 45, 'waist', 40, 'thigh', 40, 'shoulders', 40)
+      ELSE json_object(
+        'weight', CASE volume WHEN 0 THEN 20 WHEN 1 THEN 30 WHEN 3 THEN 55 WHEN 4 THEN 70 ELSE 45 END,
+        'muscle', 45, 'chest', 20, 'buttocks', 35, 'hips', 40, 'waist', 45, 'thigh', 40, 'shoulders', 55) END
+  );
+  `,
+  // 24: the creator (docs/CHARACTERS.md §16.10). look_custom: 1 once the player chose the look in the creator (or skipped
+  // the offer); every existing character starts at 0 and is offered the creator once at its next login. The girls'
+  // default looks get the accessories their outfit always showed (earrings; outfits 03 / 04 the hair flower: look.ts
+  // lookOutfitAccessories), so a default look draws as before now that accessories are drawn.
+  `
+  ALTER TABLE characters ADD COLUMN look_custom INTEGER NOT NULL DEFAULT 0;
+  UPDATE characters SET look = json_set(look, '$.accessories', CASE WHEN json_extract(look, '$.outfit') IN ('03', '04')
+      THEN json('["earrings","hair_flower"]') ELSE json('["earrings"]') END)
+    WHERE look IS NOT NULL AND json_valid(look) AND json_extract(look, '$.body') = 'f'
+      AND json_array_length(json_extract(look, '$.accessories')) = 0;
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */
@@ -557,6 +641,20 @@ export interface CharacterRow {
   // migration 12
   /** ms spent in the world (Play the Boss eligibility; accrues from migration 12 on, added at every save). */
   played_ms: number
+  // migration 21
+  /** The EXP curve `exp` is measured against (0 = pre-Climb, 1 = the cap-25 curve; docs/CLIMB.md §9.2). */
+  curve_version: number
+  // migration 22
+  /** The worn title (a pilot_honors code; null = the newest held; docs/CLIMB.md §7.3). */
+  title: string | null
+  /** The picked Arts, JSON { "<tree>:<tier>": art id } (docs/CLIMB.md §5.1). */
+  arts: string
+  // migration 23
+  /** The look, JSON (packages/shared/src/look.ts; docs/CHARACTERS.md §16.8); null = the body's default (lookOrDefault). */
+  look: string | null
+  // migration 24
+  /** 1 once the look was chosen in the creator (or its one-time offer skipped); 0 = offer the creator at the next login. */
+  look_custom: 0 | 1
 }
 
 /** Character creation choices (docs/CHARACTER_SCALE.md; protocol charCreate). */
@@ -564,6 +662,8 @@ export interface Appearance {
   height: number
   volume: number
   outfit: StarterOutfit
+  /** The creator's look (look.ts; its body already checked against the model); absent = the body's default. */
+  look?: CharLook
 }
 
 export const DEFAULT_APPEARANCE: Appearance = { height: DEFAULT_HEIGHT, volume: DEFAULT_VOLUME, outfit: 'clothes' }
@@ -669,9 +769,12 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     characterOwned: db.prepare<[number, number], CharacterRow>(
       'SELECT * FROM characters WHERE id = ? AND account_id = ? AND deleted_at IS NULL',
     ),
-    insertCharacter: db.prepare<[number, string, string, string, string, number, number, number, string]>(
-      `INSERT INTO characters (account_id, name, model, weapon, world, created_at, height, volume, outfit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    insertCharacter: db.prepare<[number, string, string, string, string, number, number, number, string, number]>(
+      `INSERT INTO characters (account_id, name, model, weapon, world, created_at, height, volume, outfit, curve_version) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ),
+    setLook: db.prepare<[string, number]>('UPDATE characters SET look = ? WHERE id = ?'),
+    setLookCustom: db.prepare<[number, number]>('UPDATE characters SET look_custom = ? WHERE id = ?'),
+    setHeight: db.prepare<[number, number]>('UPDATE characters SET height = ? WHERE id = ?'),
     characterById: db.prepare<[number], CharacterRow>('SELECT * FROM characters WHERE id = ?'),
     softDelete: db.prepare<[number, number, number]>(
       'UPDATE characters SET deleted_at = ? WHERE id = ? AND account_id = ? AND deleted_at IS NULL',
@@ -767,12 +870,20 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     return true
   })
 
+  /** curve_version of new characters (migration 21): the server sets the Climb's once its curve is live (climb.ts). */
+  let newCurveVersion = 0
   const createCharacterTx = db.transaction(
     (accountId: number, name: string, model: string, weapon: string, world: string, maxSlots: number, now: number, look: Appearance) => {
       if (q.liveCharacterCount.get(accountId)!.n >= maxSlots) return 'slots_full' as const
       if (q.liveCharacterByName.get(name)) return 'name_taken' as const
-      const r = q.insertCharacter.run(accountId, name, model, weapon, world, now, look.height, look.volume, look.outfit)
-      return q.characterById.get(Number(r.lastInsertRowid))!
+      const r = q.insertCharacter.run(accountId, name, model, weapon, world, now, look.height, look.volume, look.outfit, newCurveVersion)
+      const id = Number(r.lastInsertRowid)
+      // the look (migration 23): the creator's, else the body's default; its height is the column's
+      const chosen = look.look ?? defaultLook(lookBodyOf(model), id, look.height, look.volume)
+      q.setLook.run(JSON.stringify({ ...chosen, height: look.height }), id)
+      // made in the creator: never offered it again (§16.10)
+      if (look.look) q.setLookCustom.run(1, id)
+      return q.characterById.get(id)!
     },
   )
 
@@ -806,6 +917,24 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
     trimSessions: (accountId: number, keep: number) => q.trimSessions.run(accountId, accountId, keep).changes,
     characters: (accountId: number) => q.liveCharacters.all(accountId),
     characterOwned: (id: number, accountId: number) => q.characterOwned.get(id, accountId),
+    /** A character's look (migration 23; look.ts): the stored one, or its body's default when absent or invalid. */
+    characterLook: (row: Pick<CharacterRow, 'id' | 'model' | 'look' | 'height' | 'volume'>): CharLook => lookOrDefault(row.look, row.model, row.id, row.height, row.volume),
+    /** Stores a look (already checked with parseLook against the character's body). */
+    setCharacterLook: (id: number, look: CharLook) => q.setLook.run(JSON.stringify(look), id).changes > 0,
+    /**
+     * The creator's one-time re-customise (§16.10): stores `look` (checked against the body; its height also in the height
+     * column) or, without one, keeps the stored look; either way the offer is used up. False when it was used already.
+     */
+    customiseLookOnce: db.transaction((id: number, look: CharLook | null): boolean => {
+      const row = q.characterById.get(id)
+      if (!row || row.look_custom) return false
+      if (look) {
+        q.setLook.run(JSON.stringify(look), id)
+        q.setHeight.run(look.height, id)
+      }
+      q.setLookCustom.run(1, id)
+      return true
+    }),
     nameInUse: (name: string) => q.liveCharacterByName.get(name) !== undefined,
     createCharacter(accountId: number, name: string, model: string, weapon: StarterWeapon, world: string, maxSlots: number, look: Partial<Appearance> = {}) {
       try {
@@ -813,11 +942,16 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
           height: look.height ?? DEFAULT_APPEARANCE.height,
           volume: look.volume ?? DEFAULT_APPEARANCE.volume,
           outfit: look.outfit ?? DEFAULT_APPEARANCE.outfit,
+          ...(look.look ? { look: look.look } : {}),
         })
       } catch (e) {
         if ((e as { code?: string }).code === 'SQLITE_CONSTRAINT_UNIQUE') return 'name_taken' as const
         throw e
       }
+    },
+    /** New characters are measured against this EXP curve (characters.curve_version; docs/CLIMB.md §9.2). */
+    setNewCharacterCurve(version: number) {
+      newCurveVersion = version
     },
     softDeleteCharacter: (id: number, accountId: number) => q.softDelete.run(Date.now(), id, accountId).changes > 0,
     savePositions: savePositionsTx,

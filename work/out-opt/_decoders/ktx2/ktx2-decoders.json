@@ -1,0 +1,101 @@
+{
+  "format": "sro-ktx2-decoders",
+  "version": 1,
+  "babylon": "9.28.0",
+  "sources": [
+    {
+      "name": "babylonjs-ktx2decoder",
+      "version": "9.28.0",
+      "tarball": "https://registry.npmjs.org/babylonjs-ktx2decoder/-/babylonjs-ktx2decoder-9.28.0.tgz",
+      "integrity": "sha512-7DQ+j/Wc1m2b94DsjNKXMYQCiP9yMIXPTWmSROnuDhhXEWjKII7GnvUHRtpgh6AOIJdCfJq8TwIyGdy+B3N0Qw==",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@babylonjs/ktx2decoder",
+      "version": "9.28.0",
+      "tarball": "https://registry.npmjs.org/@babylonjs/ktx2decoder/-/ktx2decoder-9.28.0.tgz",
+      "integrity": "sha512-tZ9Unf+PNVmf0tZQtwmZaUOUr6vPEdbFzalwu3mHwVF6SD4QZGKj6Y/99vIEA+zw+3diMOOoSEY9kCPHEheiFw==",
+      "license": "Apache-2.0"
+    }
+  ],
+  "files": [
+    {
+      "name": "babylon.ktx2Decoder.js",
+      "bytes": 24450,
+      "sha256": "3907b73546b65c08a46773a8b130fe2acde9cd1effa89f87d095d8b6f92cfb1d",
+      "from": "babylonjs-ktx2decoder@9.28.0/babylon.ktx2Decoder.js"
+    },
+    {
+      "name": "uastc_astc.wasm",
+      "bytes": 12212,
+      "sha256": "6846c972b4a52d938866f43896fd2b2450052da807cdd1285e898be80614d612",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_astc.wasm"
+    },
+    {
+      "name": "uastc_bc7.wasm",
+      "bytes": 14650,
+      "sha256": "be442ab8c0cbf734ded98e6ad38112aaba23c83bfeecac4213ded54631fc4eef",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_bc7.wasm"
+    },
+    {
+      "name": "uastc_rgba8_unorm_v2.wasm",
+      "bytes": 30121,
+      "sha256": "b7470b26a847994cdeb9226eeba1e3711688e378ee438b7dd941e83cb598b694",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_rgba8_unorm_v2.wasm"
+    },
+    {
+      "name": "uastc_rgba8_srgb_v2.wasm",
+      "bytes": 24158,
+      "sha256": "1f4d2e8bfef4e31679b23d473e1c410c29f7e485a739e76c5b357628f4190874",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_rgba8_srgb_v2.wasm"
+    },
+    {
+      "name": "uastc_r8_unorm.wasm",
+      "bytes": 14139,
+      "sha256": "0467c98b150a630e5a51f7810843e8b7fd9aad22e3888baf70aad255c55d02bc",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_r8_unorm.wasm"
+    },
+    {
+      "name": "uastc_rg8_unorm.wasm",
+      "bytes": 17611,
+      "sha256": "fb45a2c103c59cec21c3708a6534d43cd4381669f66d3292dd8a6e4e1956d773",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/uastc_rg8_unorm.wasm"
+    },
+    {
+      "name": "msc_basis_transcoder.js",
+      "bytes": 63318,
+      "sha256": "b8906bae7e55606aba070642eb3bce790a2b5aea774874e120e9fd41f7c7d60b",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/msc_basis_transcoder.js"
+    },
+    {
+      "name": "msc_basis_transcoder.wasm",
+      "bytes": 455582,
+      "sha256": "29becbf0eef2ce9f6d72109ad217704ec3799c432da0c26e3893b793ecab6bdc",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/msc_basis_transcoder.wasm"
+    },
+    {
+      "name": "zstddec.wasm",
+      "bytes": 29232,
+      "sha256": "67d12d34f82ef700ec3a3795a77590252858c70330908a87ed1e73efc268cb4b",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/zstddec.wasm"
+    },
+    {
+      "name": "LICENSE-babylon.md",
+      "bytes": 9226,
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6",
+      "from": "babylonjs-ktx2decoder@9.28.0/license.md"
+    },
+    {
+      "name": "LICENSE-transcoders.md",
+      "bytes": 24734,
+      "sha256": "a5f49089897509e43a03cfb81e1fd689e3b9e00f3381c5ec74a12cb716c7df49",
+      "from": "@babylonjs/ktx2decoder@9.28.0/wasm/license.md"
+    },
+    {
+      "name": "NOTICE.md",
+      "bytes": 821,
+      "sha256": "a08d8fde9948804d9c771da238d5b34e284caca5dc269dcf3c443fbd18fca7db",
+      "from": "@babylonjs/ktx2decoder@9.28.0/NOTICE.md"
+    }
+  ]
+}

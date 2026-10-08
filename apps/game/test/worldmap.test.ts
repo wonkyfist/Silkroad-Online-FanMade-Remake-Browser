@@ -16,7 +16,7 @@ import { markerKind, streamStatsText } from '../src/world/features/map.ts'
 import { EntityHeights } from '../src/world/jangan/heights.ts'
 import { LEVEL_BAND_COLOR } from '../src/world/level-band.ts'
 import { CLUSTER_LINK_M, huntColor, huntingClusters, linkage, type HuntMob, type HuntNest } from '../src/world/map/hunting.ts'
-import { MAP_FILL, MapTransform, clampZoom, isOpenSea, mapFill, mapGeometry, medianHex, type WorldMapGeometry } from '../src/world/map/worldmap.ts'
+import { MAP_FILL, MIN_ZOOM, MapTransform, clampCentre, clampZoom, isOpenSea, mapFill, mapGeometry, medianHex, minZoomFor, type WorldMapGeometry } from '../src/world/map/worldmap.ts'
 import { ZoneIndex, loadZones, parseZones, regionCentre, regionOf, resetZones, zoneAt, zoneIndex, type ZoneEntry } from '../src/world/map/zones.ts'
 
 const REPO = fileURLToPath(new URL('../../../', import.meta.url))
@@ -63,6 +63,19 @@ describe('world map transform', () => {
     expect(clampZoom(0.1)).toBe(0.5)
     expect(clampZoom(9)).toBe(4)
     expect(clampZoom(1.25)).toBe(1.25)
+    expect(clampZoom(0.1, 0.27)).toBe(0.27)
+  })
+
+  it('zooms out to the whole image and keeps the view on it (no panning off into empty sea)', () => {
+    // the island map (1,600 x 1,280) in the 628 x 350 canvas: the whole of it fits at 0.273
+    expect(minZoomFor(1600, 1280, 628, 350)).toBeCloseTo(350 / 1280, 9)
+    expect(minZoomFor(192, 192, 628, 350)).toBe(MIN_ZOOM)
+    expect(minZoomFor(0, 0, 628, 350)).toBe(MIN_ZOOM)
+    // a view 314 map pixels either side stays inside a 1,600 px image; one wider than the image is centred
+    expect(clampCentre(0, 1600, 314)).toBe(314)
+    expect(clampCentre(1600, 1600, 314)).toBe(1600 - 314)
+    expect(clampCentre(800, 1600, 314)).toBe(800)
+    expect(clampCentre(50, 1280, 700)).toBe(640)
   })
 
   it('fills around the image with the sea colour when the export has a coast (docs/COAST.md §11)', () => {
@@ -79,7 +92,7 @@ describe('world map transform', () => {
     expect(medianHex([[70, 90, 40, 255, 33, 74, 99, 255, 150, 140, 110, 255]], isOpenSea)).toBe('#214a63')
   })
 
-  it('the jangan-fields export covers the coast domain at 64 px per region, with a sea fill', () => {
+  it('the jangan-fields export covers the island and a region of sea round it at 64 px per region, with a sea fill', () => {
     const file = join(REPO, 'work/out/world/jangan-fields/manifest.json')
     if (!existsSync(file)) return
     const m = JSON.parse(readFileSync(file, 'utf8')) as Parameters<typeof mapGeometry>[0]
@@ -90,6 +103,8 @@ describe('world map transform', () => {
     for (const r of m.regions) {
       expect(r.x >= g.x0 && r.x <= g.x1 && r.z >= g.z0 && r.z <= g.z1).toBe(true)
     }
+    // centred on the island (docs/COAST.md §11): Jangan's land spans 153.8-175.9 x 87.6-104.4, the map one region more
+    expect(g).toMatchObject({ x0: 152, x1: 176, z0: 86, z1: 105 })
     expect(mapFill(m)).toMatch(/^#[0-9a-f]{6}$/i)
     expect(mapFill(m)).not.toBe(MAP_FILL)
   })
@@ -167,13 +182,19 @@ describe('zones', () => {
   const zonesFile = join(REPO, 'work', 'out', 'data', 'zones.json')
   it.skipIf(!existsSync(zonesFile))('reads the exported zones.json: Jangan at the spawn, the named fields and beaches around it', () => {
     const z = new ZoneIndex(parseZones(JSON.parse(readFileSync(zonesFile, 'utf8'))))
-    // every region of the export: the 307 retail ones and the coast's 107 synthetic ones (P-DATA, wave 10r polish)
-    expect(z.size).toBe(414)
+    // every region of the export: the 307 retail ones and the coast's synthetic ones (P-DATA, wave 10r polish; 107
+    // before the Western China side drowned, docs/COAST.md §4.1, about 75 since)
+    expect(z.size).toBeGreaterThan(307 + 60)
+    expect(z.size).toBeLessThan(307 + 100)
     expect(z.nameAt(96.9, -136.9)).toBe('Jangan')
     const labels = z.labels()
-    expect(labels.length).toBe(34)
-    // the playable town; the client also names the synthetic ring regions where retail Donwhang would be (153, 102)
-    expect(labels.filter(l => l.town).map(l => l.name)).toEqual(['Jangan', 'Western China Donwhang'])
+    expect(labels.length).toBe(24)
+    // only Jangan: the Western China side and Donwhang are open sea now, with no name, town or continent
+    expect(labels.filter(l => l.town).map(l => l.name)).toEqual(['Jangan'])
+    expect(labels.filter(l => /western china|donwhang|dunhuang|okmungwan|earth ghost/i.test(l.name))).toEqual([])
+    expect(z.entries.filter(e => e.continent === 'West_China' || e.area === 'Town_Dunhwang')).toEqual([])
+    // the sea where Donwhang's land bridge was takes the nearest Jangan name, never its own
+    expect(z.nameAt((153.5 - 168) * 192, -(102.5 - 97) * 192) ?? '').not.toMatch(/donwhang|western china/i)
     expect(labels.map(l => l.name)).toContain('North-Tiger Mt.')
     // the coast's own area names for the regions the client has no name for (content/coast/coast.json)
     expect(labels.find(l => l.name === 'Jangan South Beach')?.regions).toBe(20)

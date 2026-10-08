@@ -23,6 +23,8 @@ export type ModStat =
   | 'blockRate'
   | 'maxHp'
   | 'maxMp'
+  /** The Climb's set bonuses and Arts (docs/CLIMB.md §4.2, §5.1): max HP + this percent (after the flat 'hpi'). */
+  | 'maxHpPct'
   | 'speedPct'
   | 'range'
   /** 'spda': the equipped shield's physical defence -percent. */
@@ -61,6 +63,7 @@ const zero = (): ModTotals => ({
   blockRate: 0,
   maxHp: 0,
   maxMp: 0,
+  maxHpPct: 0,
   speedPct: 0,
   range: 0,
   shieldDefencePct: 0,

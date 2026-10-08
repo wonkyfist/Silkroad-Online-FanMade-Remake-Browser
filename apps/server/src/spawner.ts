@@ -107,6 +107,11 @@ export class Spawner {
     for (const id of nest.alive) this.byMob.delete(id)
   }
 
+  /** The nest a living (or corpse) mob belongs to (the Climb's pack links and calls, climb/roles.ts). */
+  nestOfMob(id: number): NestRuntime | undefined {
+    return this.byMob.get(id)
+  }
+
   /** The live nest with id `id`, if it spawns. */
   nest(id: number): NestRuntime | undefined {
     return this.nests.find((n) => n.def.id === id)

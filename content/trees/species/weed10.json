@@ -16,8 +16,7 @@
     {"name": "tarim", "textures": {"leaf": "prim\\mtrl\\nature\\oasis\\tarim\\oas_tarim_dvweed.ddj"}, "crops": {"leaf": [0.0, 0.24, 1.0, 1.0]}}
   ],
   "replaces": [
-    {"source": "res\\nature\\common\\grass\\grs_weed10.bsr"},
-    {"source": "res\\nature\\oasis\\tarim\\oas_tarim_dvweed_02.bsr", "tint": "tarim"}
+    {"source": "res\\nature\\common\\grass\\grs_weed10.bsr"}
   ],
   "params": {"parts": [{"role": "leaf", "orient": "up", "count": [10, 4], "size": [0.6, 0.75], "tilt": [0, 30], "radius": 0.3}], "normalRule": "retail", "normalUp": 1.0}
 }

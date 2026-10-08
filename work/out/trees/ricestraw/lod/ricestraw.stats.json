@@ -1,0 +1,50 @@
+{
+ "species": "ricestraw",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 61,
+ "target": {
+  "h": 1.49,
+  "w": 2.55
+ },
+ "normalUp": 0.3,
+ "normalRule": "mirror",
+ "lods": {
+  "0": {
+   "triangles": 20,
+   "byMaterial": {
+    "leaf": 20
+   },
+   "cards": 5,
+   "frontNormalY": 0.586,
+   "vertices": 40,
+   "heightM": 1.49,
+   "widthM": 2.55,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.18
+   ],
+   "crownRadius": 1.0,
+   "bytes": 58512
+  },
+  "1": {
+   "triangles": 20,
+   "byMaterial": {
+    "leaf": 20
+   },
+   "cards": 5,
+   "frontNormalY": 0.586,
+   "vertices": 40,
+   "heightM": 1.49,
+   "widthM": 2.55,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.18
+   ],
+   "crownRadius": 1.0,
+   "bytes": 58512
+  }
+ }
+}

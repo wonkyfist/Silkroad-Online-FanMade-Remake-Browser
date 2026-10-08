@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "cos",
-  "generatedAt": "2026-10-01T20:05:13.713Z",
+  "generatedAt": "2026-10-07T00:19:58.014Z",
   "sources": [
     "client:characterdata.txt",
     "client:itemdata.txt (summon items)",

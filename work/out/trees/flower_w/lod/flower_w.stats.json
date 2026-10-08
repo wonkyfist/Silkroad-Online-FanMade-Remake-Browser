@@ -1,0 +1,53 @@
+{
+ "species": "flower_w",
+ "archetype": "flower_bed",
+ "kind": "plant",
+ "seed": 69,
+ "target": {
+  "h": 0.66,
+  "w": 1.06
+ },
+ "normalUp": 1.0,
+ "normalRule": "up",
+ "lods": {
+  "0": {
+   "triangles": 88,
+   "byMaterial": {
+    "rosette": 24,
+    "stem": 32,
+    "head": 32
+   },
+   "cards": 22,
+   "frontNormalY": 1.0,
+   "vertices": 176,
+   "heightM": 0.66,
+   "widthM": 1.06,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.08
+   ],
+   "crownRadius": 1.0,
+   "bytes": 107252
+  },
+  "1": {
+   "triangles": 28,
+   "byMaterial": {
+    "rosette": 12,
+    "head": 16
+   },
+   "cards": 7,
+   "frontNormalY": 1.0,
+   "vertices": 56,
+   "heightM": 0.66,
+   "widthM": 1.06,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.08
+   ],
+   "crownRadius": 1.0,
+   "bytes": 79392
+  }
+ }
+}

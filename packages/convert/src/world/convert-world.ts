@@ -97,6 +97,7 @@ import {
   buildWorldNav, NAV_FILE, NAV_OBJECTS_FILE, NAV_REGION_DIR, parseTeleportData, pickSpawnTeleport, spawnFromTeleport, splitWorldNav,
   TELEPORTDATA_PATH,
 } from './nav.ts'
+import { islandRect } from './coast/drown.ts'
 import { createCoastPass, type CoastRun } from './coast/hook.ts'
 import { coastMinimapOptions, coastMinimapTile, coastWorldMapFill, coastWorldMapRect, droppedTouches, type CoastMinimapTile } from './coast/minimap.ts'
 import { bakeRegionLightmap } from './coast/lightmap.ts'
@@ -698,9 +699,10 @@ export async function convertWorld(opts: ConvertWorldOptions): Promise<ConvertWo
         return null
       }
     }
-    // with a coast the map grows to the coast domain and the sea fills it (docs/COAST.md §11, CST-M)
+    // with a coast the map covers the island and one region of sea round it, inside the coast domain, and the sea fills
+    // it (docs/COAST.md §11, CST-M; the drowned area, ./coast/drown.ts, is sea like the rest)
     const domain = coast ? { x0: coast.config.domain.x[0], x1: coast.config.domain.x[1], z0: coast.config.domain.z[0], z1: coast.config.domain.z[1] } : null
-    const rect = domain ? coastWorldMapRect(exportRect, domain) : exportRect
+    const rect = domain ? islandRect(coast!.result, domain) ?? coastWorldMapRect(exportRect, domain) : exportRect
     const tile = (x: number, z: number): RgbaImage | null => {
       const key = (z << 8) | x
       const edited = editTiles.get(key)
@@ -732,9 +734,10 @@ export async function convertWorld(opts: ConvertWorldOptions): Promise<ConvertWo
     else {
       try {
         const table = loadTextdataTable('textzonename.txt', name => (media.has(`${dir}/${name}`) ? media.read(`${dir}/${name}`) : undefined))
+        // no place in the drowned area (./coast/drown.ts): its zones are open sea now
         places = buildPlaces({
           world: navWorld, origin, spawn, zoneNames: zoneNameIndex(table.rows.map(r => r.cells), table.header),
-          regions, playable, warnings,
+          regions: coast ? regions.filter(r => !coast!.drowned(r.x, r.z)) : regions, playable, warnings,
         })
         if (coast) {
           const own = coast.places(navWorld, origin)

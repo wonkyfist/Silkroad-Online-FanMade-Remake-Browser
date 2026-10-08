@@ -144,7 +144,7 @@ export type EventPhase = 'call' | 'offer' | 'hunt' | 'ended'
 
 /** Layer 5 (§3.7): the hunters' recent damage to her and the max HP it gives. */
 export interface HuntScale {
-  /** Her max HP before any scaling (47,898 for Tiger Girl). */
+  /** Her max HP before any scaling (59,872 for Tiger Girl at level 25; 47,898 before the Climb). */
   baseMaxHp: number
   /** Character id -> [server ms, damage] of each hit on her (non-associates), pruned to `windowSec`. */
   hits: Map<number, [number, number][]>

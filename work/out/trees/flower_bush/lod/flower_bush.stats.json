@@ -1,0 +1,52 @@
+{
+ "species": "flower_bush",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 71,
+ "target": {
+  "h": 0.82,
+  "w": 8.39
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 184,
+   "byMaterial": {
+    "leaf": 120,
+    "bloom": 64
+   },
+   "cards": 46,
+   "frontNormalY": 1.0,
+   "vertices": 368,
+   "heightM": 0.82,
+   "widthM": 8.39,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.1
+   ],
+   "crownRadius": 1.0,
+   "bytes": 76120
+  },
+  "1": {
+   "triangles": 64,
+   "byMaterial": {
+    "leaf": 40,
+    "bloom": 24
+   },
+   "cards": 16,
+   "frontNormalY": 1.0,
+   "vertices": 128,
+   "heightM": 0.763,
+   "widthM": 8.39,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.1
+   ],
+   "crownRadius": 1.0,
+   "bytes": 63856
+  }
+ }
+}

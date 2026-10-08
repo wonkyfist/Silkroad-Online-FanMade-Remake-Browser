@@ -20,6 +20,8 @@ import { checkPilotDef } from './pilot.ts'
 
 type Problems = string[]
 
+const CODE_RE = /^[A-Z0-9_]{1,128}$/
+
 function isObj(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null && !Array.isArray(v)
 }
@@ -322,7 +324,22 @@ export function checkUniquesFile(json: unknown, refs: UniquesCheckRefs = {}): Pr
     if (seen.has(u.mob)) c.problems.push(`${w}.mob: listed twice`)
     seen.add(u.mob)
     c.str('world')
-    if (u.camps !== 'uniqueGroup') {
+    // the Climb's mini-bosses (docs/CLIMB.md §2.5): an authored spot replaces the camps; adds replace the summon rows
+    if (u.spot !== undefined) {
+      if (!isObj(u.spot) || typeof u.spot.x !== 'number' || typeof u.spot.z !== 'number' || !Number.isFinite(u.spot.x) || !Number.isFinite(u.spot.z)) c.problems.push(`${w}.spot: expected { x, z, y?, radiusM?, sightM?, leashM? }`)
+      else for (const k of ['y', 'radiusM', 'sightM', 'leashM']) if (u.spot[k] !== undefined && !(typeof u.spot[k] === 'number' && Number.isFinite(u.spot[k]) && (k === 'y' || (u.spot[k] as number) > 0))) c.problems.push(`${w}.spot.${k}: expected a number${k === 'y' ? '' : ' > 0'}`)
+    }
+    if (u.adds !== undefined) {
+      if (!Array.isArray(u.adds)) c.problems.push(`${w}.adds: expected a list of { mob, n, atPct }`)
+      else u.adds.forEach((a, j) => {
+        if (!isObj(a) || typeof a.mob !== 'string' || !CODE_RE.test(a.mob) || !Number.isInteger(a.n) || (a.n as number) < 1 || (a.n as number) > 8 || typeof a.atPct !== 'number' || a.atPct <= 0 || a.atPct > 100) {
+          c.problems.push(`${w}.adds[${j}]: expected { mob: a mob code, n: 1..8, atPct: 0 < pct <= 100 }`)
+        }
+      })
+    }
+    if (u.spot !== undefined) {
+      // no camp list needed
+    } else if (u.camps !== 'uniqueGroup') {
       if (!Array.isArray(u.camps) || u.camps.length === 0 || !u.camps.every((n) => Number.isInteger(n))) c.problems.push(`${w}.camps: expected 'uniqueGroup' or a non-empty list of nest ids`)
       else if (refs.nest) for (const n of u.camps as number[]) if (!refs.nest(n)) c.problems.push(`${w}.camps: unknown nest ${n}`)
     }
@@ -331,6 +348,8 @@ export function checkUniquesFile(json: unknown, refs: UniquesCheckRefs = {}): Pr
       const r = u[k]
       if (Array.isArray(r) && typeof r[0] === 'number' && r[0] < 0) c.problems.push(`${w}.${k}: expected minutes >= 0`)
     }
+    // the Climb (docs/CLIMB.md §2.6): an optional level of her own
+    if (u.level !== undefined && !(Number.isInteger(u.level) && (u.level as number) >= 1 && (u.level as number) <= 300)) c.problems.push(`${w}.level: expected a whole level 1..300`)
     sub(c, u, 'tuning', (t) => ['hpMul', 'attackMul', 'expMul'].forEach((k) => t.num(k, false, 0)))
     sub(c, u, 'summons', (t) => {
       t.bool('on')
@@ -338,6 +357,14 @@ export function checkUniquesFile(json: unknown, refs: UniquesCheckRefs = {}): Pr
       t.num('maxAlive', false, 0)
       const vs = t.o.variants
       if (!Array.isArray(vs) || !vs.every((x) => (MOB_VARIANTS as readonly unknown[]).includes(x))) t.problems.push(`${t.where}.variants: expected a list of mob variants`)
+      const ms = t.o.mobs
+      if (ms !== undefined) {
+        if (!isObj(ms)) t.problems.push(`${t.where}.mobs: expected { retail code: summoned code }`)
+        else for (const [from, to] of Object.entries(ms)) {
+          // shape only: a code this world lacks (CLIMB=off: no MOB_CL_* rows) summons the row's own monster
+          if (typeof to !== 'string' || !CODE_RE.test(to) || !CODE_RE.test(from)) t.problems.push(`${t.where}.mobs.${from}: expected a mob code`)
+        }
+      }
     })
     sub(c, u, 'enrage', (t) => {
       t.num('hpPct', false, 0)
@@ -408,6 +435,8 @@ function checkUniqueDropTable(v: unknown, where: string, refs: UniquesCheckRefs)
       const gw = p.o.gradeWeights
       if (gw !== undefined && (!Array.isArray(gw) || gw.length === 0 || !gw.every((n) => typeof n === 'number' && Number.isFinite(n) && n >= 0))) p.problems.push(`${p.where}.gradeWeights: expected weights >= 0`)
       p.bool('rare', true)
+      if (p.o.seal !== undefined && !['star', 'moon', 'sun'].includes(p.o.seal as string)) p.problems.push(`${p.where}.seal: expected star, moon or sun`)
+      if (p.o.seal !== undefined && p.o.rare !== true) p.problems.push(`${p.where}.seal: only with rare: true`)
     })
     if (grp.plus !== undefined) {
       if (!Array.isArray(grp.plus) || grp.plus.length === 0) g.problems.push(`${w}.plus: expected a non-empty list`)

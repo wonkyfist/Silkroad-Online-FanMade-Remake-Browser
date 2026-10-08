@@ -384,6 +384,10 @@ describe('a keg breaches the wall: the breaker is Wanted (§7.1, §8.1)', () => 
     expect(x.plant(a.p, a.inbox)).toMatchObject({ ok: true })
     x.tick(5100)
     const k = [...x.g.kegs.kegs.values()][0]!
+    // layer 6: the planter and the planter's associates are told the keg is theirs (no Defuse prompt)
+    expect(x.h.all(a.inbox, 'keg').at(-1)).toMatchObject({ id: k.id, mine: true })
+    expect(x.h.all(alt.inbox, 'keg').at(-1)).toMatchObject({ id: k.id, mine: true })
+    expect(x.h.all(d.inbox, 'keg').at(-1)?.mine).toBeUndefined()
     x.h.req(alt.p, { t: 'kegDefuse', id: k.id })
     expect(x.h.result(alt.inbox, 'kegDefuse')).toMatchObject({ ok: false, reason: 'not_usable' })
     x.h.req(a.p, { t: 'kegDefuse', id: k.id })
@@ -396,6 +400,38 @@ describe('a keg breaches the wall: the breaker is Wanted (§7.1, §8.1)', () => 
     expect(x.h.all(a.inbox, 'lawNotice').at(-1)).toEqual({ t: 'lawNotice', event: 'defused', wall: 'N1', name: 'Hero' })
     x.tick(20_000)
     expect(x.walls.ip.get('N1')).toBe(20_000)
+  })
+})
+
+describe('lookouts (layer 6 anti-collusion, §8.6)', () => {
+  it('players within 30 m of the plant or the burning keg who never try to defuse it claim no bounty on the planter', () => {
+    const x = lawHarness()
+    x.walls.set('N1', 50)
+    const a = x.char(FOOT, { name: 'Breaker' })
+    const look = x.char([-40, 0, -125], { name: 'Lookout' })
+    const helper = x.char([-42, 0, -126], { name: 'Helper' })
+    const far = x.char([0, 0, -125], { name: 'Far' })
+    expect(x.plant(a.p, a.inbox)).toMatchObject({ ok: true })
+    x.tick(5100)
+    const k = [...x.g.kegs.kegs.values()][0]!
+    // the helper walks up and tries to defuse, then runs (the try counts)
+    x.h.world.warp(helper.p, -41, 0, -111, x.h.now)
+    x.h.req(helper.p, { t: 'kegDefuse', id: k.id })
+    expect(x.h.result(helper.inbox, 'kegDefuse')).toMatchObject({ ok: true })
+    x.h.world.warp(helper.p, -42, 0, -126, x.h.now)
+    x.tick(15_100)
+    expect(x.law.isWanted(a.p.characterId)).toBe(true)
+    const acc = (p: Player) => x.accountOf(p)
+    const since = x.h.now - 86_400_000
+    expect(x.law.store.contactSince(acc(look.p), acc(a.p), since)).toBe('lookout')
+    expect(x.law.store.contactSince(acc(helper.p), acc(a.p), since)).toBeNull()
+    expect(x.law.store.contactSince(acc(far.p), acc(a.p), since)).toBeNull()
+    // the lookout catches the breaker: no gold, no credit; the honest helper is paid
+    const r = x.law.capture(a.p.characterId, [{ player: look.p, share: 1 }, { player: helper.p, share: 1 }], x.h.now)!
+    expect(r.captors).toEqual([
+      { characterId: look.p.characterId, name: 'Lookout', gold: 0, credit: false, rule: 'lookout' },
+      { characterId: helper.p.characterId, name: 'Helper', gold: 20_000, credit: true },
+    ])
   })
 })
 
@@ -565,6 +601,10 @@ describe('GM law (§12)', () => {
     expect(x.h.all(gm.inbox, 'lawNotice').at(-1)).toMatchObject({ event: 'pardoned', name: 'Suspect' })
     run('wanted', 'Suspect')
     expect(run('capture', 'Suspect').data).toMatchObject({ bounty: 20_000, sentenceMs: 2 * HOUR })
+    // layer 6: the capture jails; out again and back at the wall
+    expect(x.g.jail.jailedNow(a.p)).toBe(true)
+    expect(run('release', 'Suspect')).toMatchObject({ ok: true })
+    x.h.world.warp(a.p, FOOT[0], FOOT[1], FOOT[2], x.h.now)
     x.h.store.db.prepare('INSERT INTO law_records (account_id, offences, last_offence_at) VALUES (?, 3, ?) ON CONFLICT (account_id) DO UPDATE SET offences = 3').run(x.accountOf(a.p), x.h.now)
     expect(run('forgive', 'Suspect').message).toMatch(/3 -> 2/)
     expect(run('forgive', 'Suspect', 'all').message).toMatch(/2 -> 0/)

@@ -119,6 +119,9 @@ describe('routing', () => {
       // layer 5: the players' Thunder Kegs and the law (Wanted)
       'kegs',
       'law',
+      // layer 6: the Hunters and the Garrison Stockade
+      'hunters',
+      'jail',
       // wave 10 (docs/WAVE_PLAN6.md §3): the jump (movement.ts, lane MV-P)
       'movement',
       // docs/WINTER.md §13: the winter gameplay layer and its five modules
@@ -132,6 +135,12 @@ describe('routing', () => {
       'uniques',
       // Play the Boss (docs/PLAY_THE_BOSS.md §3.1): after uniques
       'pilot',
+      // The Climb (docs/CLIMB.md §20 L3, L4): monster roles, then the death penalty
+      'roles',
+      'penalty',
+      // The Climb (L7, L2): the rewards (titles, sets, Arts), the high country's notices
+      'climbRewards',
+      'climbPlaces',
     ])
     expect(HIDDEN_NPCS).not.toContain('NPC_CH_WAREHOUSE_M') // Wangu + the storage chest (docs/SHOPS.md §1.3)
     expect(h.gameplay.storage.enabled).toBe(true) // ST-S landed (storage.test.ts)
@@ -408,9 +417,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(19)
-      expect(store.schemaVersion).toBe(19)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(19)
+      expect(SCHEMA_VERSION).toBe(24)
+      expect(store.schemaVersion).toBe(24)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(24)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

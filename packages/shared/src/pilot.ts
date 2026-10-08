@@ -80,7 +80,7 @@ export interface HuntEventView {
   /** call (layer 4): when the draw happens, how many volunteered (also while drawing: the event came from a call). */
   callEndsAt?: number
   volunteers?: number
-  /** call (layer 4): the level a volunteer needs (the banner's "level 20 only"). */
+  /** call (layer 4): the level a volunteer needs (the banner's "level 25 only"; the Climb: 25, was 20). */
   minLevel?: number
   /** call (layer 4), per recipient. */
   you?: { volunteered: boolean; eligible: boolean; why?: PilotIneligible }
@@ -253,8 +253,8 @@ export const PILOT_DEFAULTS: PilotSettings = {
   enabled: false,
   schedule: { slots: [{ weekday: 6, time: '21:00' }], tz: '' },
   call: { minutes: 10, acceptSec: 30, maxDraws: 5 },
-  eligibility: { minLevel: 20, minPlayHours: 10, cooldownDays: 14, recentEvents: 3, firstTimerWeight: 3 },
-  win: { surviveMin: 15, downsTarget: 15, downMinLevel: 15, downMinDamage: 200 },
+  eligibility: { minLevel: 25, minPlayHours: 10, cooldownDays: 14, recentEvents: 3, firstTimerWeight: 3 },
+  win: { surviveMin: 15, downsTarget: 15, downMinLevel: 20, downMinDamage: 200 },
   hunt: { radiusM: 350, pingSec: 60, pingRadiusM: 60, idleSec: 20, speedMul: 1, senseM: 60 },
   scaling: { on: true, baseHunters: 4, exponent: 0.9, capHunters: 40, windowSec: 60, minDamage: 200 },
   rewards: { baseGold: 5000, perDownGold: 500, perMinuteGold: 300, winGold: 10_000, title: 'tiger_spirit', cosmetic: null },
@@ -459,7 +459,7 @@ export function pilotScaleFactor(hunters: number, s: PilotSettings['scaling']): 
   return (n / base) ** s.exponent
 }
 
-/** round(baseMaxHp × s): 47,898 × s for Tiger Girl. */
+/** round(baseMaxHp × s): 59,872 × s for Tiger Girl (level 25; 47,898 before the Climb). */
 export function pilotScaledMaxHp(baseMaxHp: number, factor: number): number {
   return Math.max(1, Math.round(baseMaxHp * Math.max(1, factor)))
 }

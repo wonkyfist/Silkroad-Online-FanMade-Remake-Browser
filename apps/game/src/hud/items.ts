@@ -4,7 +4,7 @@
  * items.json the names come from the game text (SN_<code>) or the code itself, the slot kind is guessed from
  * the CodeName128 pattern, and the tooltip says the data is missing. No DOM here (unit-tested).
  */
-import { contentEntries, equipSlotsFor, type EquipSlot, type ItemDef, type ItemSlotKind, type ItemStack, type PlayerStats } from '@sro/shared'
+import { applyClimbItemLevels, climbSetBonus, climbSetLineFor, contentEntries, equipSlotsFor, rarityOf, type EquipSlot, type ItemDef, type ItemSlotKind, type ItemStack, type PlayerStats } from '@sro/shared'
 import { genderOf, weaponLabel } from '../content/catalog.ts'
 import { gameText, t, type StringKey } from '../i18n/index.ts'
 import { curDurability, durabilityState, maxDurability } from './repair.ts'
@@ -19,6 +19,8 @@ const OUT = '/out/'
 export interface TooltipLine {
   text: string
   cls: 'title' | 'title-plus' | 'type' | 'stat' | 'req' | 'bad' | 'hint' | 'desc' | 'magic' | 'sep' | 'price' | 'warn' | 'struck'
+    // docs/RARITY.md §5.6: a seal's name in its tier's colour, and the seal banner
+    | 'title-star' | 'title-moon' | 'title-sun' | 'rare-star' | 'rare-moon' | 'rare-sun'
 }
 
 /** A section separator line of the item tooltip. */
@@ -157,8 +159,11 @@ export class ItemCatalog {
    * Tooltip content in the retail layout (docs/UI.md §4.8): name; type/degree; — stats and effects; — requirements;
    * — price and trade flags; then the action hint. Sections are joined by 'sep' lines.
    */
-  tooltip(stack: ItemStack, opts: { player?: Pick<PlayerStats, 'level'> | null; equipped?: boolean; model?: string | null } = {}): TooltipLine[] {
-    const head: TooltipLine[] = [{ text: this.stackName(stack), cls: stack.plus || isRareCode(stack.code) ? 'title-plus' : 'title' }]
+  tooltip(stack: ItemStack, opts: { player?: Pick<PlayerStats, 'level'> | null; equipped?: boolean; model?: string | null; worn?: readonly string[] } = {}): TooltipLine[] {
+    const tier = rarityOf(stack.code)
+    const head: TooltipLine[] = [{ text: this.stackName(stack), cls: tier ? `title-${tier}` : stack.plus || isRareCode(stack.code) ? 'title-plus' : 'title' }]
+    // docs/RARITY.md §5.6: the seal banner right under the name ("✦ Seal of Sun ✦").
+    if (tier) head.push({ text: t(`rarity.banner.${tier}` as StringKey), cls: `rare-${tier}` })
     const d = this.defs.get(stack.code)
     const wearable = d ? !!d.slot : !!guessSlotKind(stack.code)
     const hint: TooltipLine = { text: t(opts.equipped ? 'item.hintUnequip' : wearable ? 'item.hintEquip' : 'item.hintUse'), cls: 'hint' }
@@ -218,6 +223,9 @@ export class ItemCatalog {
       if (u.cooldownMs) stats.push({ text: t('item.cooldown', { s: Math.round(u.cooldownMs / 100) / 10 }), cls: 'desc' })
     }
     if (d.maxStack > 1) stats.push({ text: t('item.maxStack', { n: d.maxStack }), cls: 'desc' })
+    // The Climb's set bonuses (docs/CLIMB.md §4.2): the set this piece belongs to, counted on the worn items.
+    const set = opts.worn ? this.setLine(d, opts.worn) : null
+    if (set) stats.push(set)
     const reqs: TooltipLine[] = []
     if (d.reqLevel > 0) {
       const level = opts.player?.level
@@ -234,6 +242,17 @@ export class ItemCatalog {
     else if (d.sellPrice > 0) trade.push({ text: t('item.sellPrice', { gold: formatNumber(d.sellPrice * Math.max(1, stack.count)) }), cls: 'price' })
     if (d.canDrop === false) trade.push({ text: t('item.noDrop'), cls: 'desc' })
     return [...tooltipSections(head, stats, reqs, trade), hint]
+  }
+
+  /** "Iron set (4/6): +3 % max HP" (the step reached), or the next step's pieces and bonus; null for a piece of no set. */
+  setLine(d: ItemDef, worn: readonly string[]): TooltipLine | null {
+    const defs = worn.map((c) => this.defs.get(c)).filter((x): x is ItemDef => !!x)
+    const line = climbSetLineFor(d, climbSetBonus(defs).lines)
+    if (!line) return null
+    const text = line.bonus
+      ? t('climb.set.on', { name: line.name, n: line.count, of: line.of, bonus: line.bonus })
+      : t('climb.set.next', { name: line.name, n: line.count, of: line.of, at: line.next?.at ?? line.of, bonus: line.next?.bonus ?? '' })
+    return { text, cls: line.bonus ? 'stat' : 'desc' }
   }
 }
 
@@ -282,7 +301,11 @@ export function loadItemCatalog(): Promise<ItemCatalog> {
           return {}
         }),
     ])
-    return new ItemCatalog(defs, icons)
+    // The Climb (docs/CLIMB.md §4.1.2, D53): the required levels the server checks (every degree inside the cap), as
+    // content/gameplay.ts applies them; without this the tooltip and the equip check read the client's retail levels.
+    const byCode = new Map(defs.map(d => [d.code, d]))
+    applyClimbItemLevels(byCode)
+    return new ItemCatalog([...byCode.values()], icons)
   })()
   return shared
 }

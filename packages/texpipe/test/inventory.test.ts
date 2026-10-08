@@ -62,8 +62,11 @@ const HERO_TILES = [
 
 /** The coast's palette tiles (COAST §7, CST-T): 4 new to the export at X1 (407, 412, 70, 534) plus 226 and 154. */
 const COAST_TILES = ['asiaminor_sand_01', 'asiaminor_sand_02', 'oaho_dust_earth01', 'alex_dust_05', 'c_stone_hmfld_02', 'oaho_dust_earth06'].map(s => `tile2d:${s}`)
-/** 104 retail tiles (D36) + the coast's 4 new ones. */
-const TILE_COUNT = 108
+/**
+ * 104 retail tiles (D36) + the coast's 4 new ones = 108; 65 since Jangan is an island (docs/COAST.md §4.1): 43 tiles
+ * painted only the drowned Western China side.
+ */
+const TILE_COUNT = 65
 /** TT-B (TERRAIN_TEX D6): the B3a and B3b tiles are heroes too (content/texpipe/b3-terrain.json). */
 const B3 = JSON.parse(readFileSync(join(import.meta.dirname, '../../../content/texpipe/b3-terrain.json'), 'utf8')) as { groups: Record<string, string[]> }
 const B3_HERO = [...B3.groups.B3a!, ...B3.groups.B3b!]
@@ -80,18 +83,19 @@ describe.skipIf(!HAS_OUT)('inventory of work/out', () => {
     inv = await buildInventory({ outDir: OUT, overrides: null })
   }, 120_000) // ~2.5 s alone; reads ~1,000 glbs, so slow when the suite runs in parallel
 
-  it('has the §1.1 totals: 104 tiles + 4 coast tiles, ≥ 780 world textures, 1,213 textures / 91.4 Mpx', () => {
+  it('has the §1.1 totals: the 65 tiles of the island, ≥ 780 world textures, ≥ 1,200 textures / 83 Mpx', () => {
     const s = summarize(inv)
     expect(s.groups.tile.textures).toBe(TILE_COUNT)
     expect(s.groups.world.textures).toBeGreaterThanOrEqual(780)
     expect(s.total.textures).toBeGreaterThanOrEqual(1200)
-    expect(s.total.mpx).toBeGreaterThan(85)
+    // Jangan an island: the 43 drowned tiles leave the export, 101.4 -> 83.4 Mpx
+    expect(s.total.mpx).toBeGreaterThan(80)
     // X2: coast phase 2 emits 39 more regions (look-only corridor lightmaps, more placed models): 98.4 Mpx
     // wave 12 X2: the 35 tree species' own textures (models/trees, ~2.4 Mpx): 101.4 Mpx
     expect(s.total.mpx).toBeLessThan(105)
   })
 
-  it('has unique keys, unique key paths and 108 unique tile stems (D36 + 4 coast tiles)', () => {
+  it('has unique keys, unique key paths and 65 unique tile stems (the tiles of the island)', () => {
     const keys = inv.entries.map(e => e.key)
     expect(new Set(keys).size).toBe(keys.length)
     expect(new Set(keys.map(keyPath)).size).toBe(keys.length)
@@ -127,15 +131,18 @@ describe.skipIf(!HAS_OUT)('inventory of work/out', () => {
     expect(get('/cj_pal_roof.ddj').class).toBe('roof_tile')
   })
 
-  it('puts the 16 terrain tiles of §1.3 in the hero set (with the reviewed overrides), plus only coast and B3a/B3b tiles: 63', () => {
+  it('puts the 16 terrain tiles of §1.3 in the hero set (with the reviewed overrides), plus only coast and B3a/B3b tiles: 54', () => {
     // The coast's repaint of the ring moved two §1.3 tiles out of the computed top 16; the overrides pin them (X1).
-    // Wave 12's TT-B makes every B3a and B3b tile and the three used B-coast sets heroes (TERRAIN_TEX D6): 63.
+    // Wave 12's TT-B makes every B3a and B3b tile and the three used B-coast sets heroes (TERRAIN_TEX D6): 63;
+    // 54 on the island: 8 B3a/B3b tiles and wc_dust_don_07 painted only the drowned side (COAST §4.1); c_dust_swmp_06
+    // fell out of the computed top 16 and is pinned by its override.
     const tiles = inv.entries.filter(e => e.group === 'tile').map(e => ({ ...e }))
     expect(tiles.filter(e => e.hero).length).toBe(16)
     applyOverrides(tiles, loadOverrides())
     const heroTiles = tiles.filter(e => e.hero).map(e => e.key)
-    expect(heroTiles).toHaveLength(63)
-    expect(heroTiles.filter(k => !COAST_TILES.includes(k) && !B3_HERO.includes(k)).sort()).toEqual(HERO_TILES.map(s => `tile2d:${s}`).sort())
+    expect(heroTiles).toHaveLength(54)
+    const exported = new Set(tiles.map(t => t.key))
+    expect(heroTiles.filter(k => !COAST_TILES.includes(k) && !B3_HERO.includes(k)).sort()).toEqual(HERO_TILES.map(s => `tile2d:${s}`).filter(k => exported.has(k)).sort())
     const share = tiles.filter(e => e.hero && HERO_TILES.some(h => e.key === `tile2d:${h}`)).reduce((s, e) => s + e.cover!.town, 0)
     expect(share).toBeGreaterThan(0.75)
   })
@@ -151,7 +158,8 @@ describe.skipIf(!HAS_OUT)('inventory of work/out', () => {
 
   it('measures texel density near TEXPIPE §1.4 (median ≈ 22 px/m by covered surface)', () => {
     const { bySurface } = summarize(inv).worldPxPerM
-    expect(bySurface[1]).toBeGreaterThan(15)
+    // the island alone: 14.9 (the drowned desert flats were the low-density ground)
+    expect(bySurface[1]).toBeGreaterThan(12)
     expect(bySurface[1]).toBeLessThan(30)
   })
 })

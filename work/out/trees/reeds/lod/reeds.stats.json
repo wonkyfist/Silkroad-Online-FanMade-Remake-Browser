@@ -1,0 +1,50 @@
+{
+ "species": "reeds",
+ "archetype": "clump",
+ "kind": "plant",
+ "seed": 63,
+ "target": {
+  "h": 2.21,
+  "w": 15.41
+ },
+ "normalUp": 0.6,
+ "normalRule": "dim",
+ "lods": {
+  "0": {
+   "triangles": 240,
+   "byMaterial": {
+    "leaf": 240
+   },
+   "cards": 60,
+   "frontNormalY": 0.815,
+   "vertices": 480,
+   "heightM": 2.21,
+   "widthM": 15.41,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.27
+   ],
+   "crownRadius": 1.0,
+   "bytes": 182720
+  },
+  "1": {
+   "triangles": 80,
+   "byMaterial": {
+    "leaf": 80
+   },
+   "cards": 20,
+   "frontNormalY": 0.813,
+   "vertices": 160,
+   "heightM": 2.21,
+   "widthM": 15.41,
+   "crownCentre": [
+    0.0,
+    0.0,
+    0.27
+   ],
+   "crownRadius": 1.0,
+   "bytes": 166392
+  }
+ }
+}

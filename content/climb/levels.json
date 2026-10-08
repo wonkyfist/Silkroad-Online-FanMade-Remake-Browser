@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "kind": "climb-levels",
+  "about": "The Climb's EXP curve at x1 (docs/CLIMB.md §3.2a, cap 25; work/tmp/climb25 run 4, seed 1188): exp[i] is the EXP from level i + 1 to i + 2. 1 -> 25 = 1,555,570 EXP. The server reads it with CLIMB on (packages/shared/src/climb.ts CLIMB_LEVELS_FILE) and keeps levels.json's masterySp.",
+  "exp": [1780, 2700, 3960, 5610, 7720, 10300, 13500, 17200, 21400, 26200, 31600, 37600, 44200, 51500, 59600, 68700, 79000, 91000, 105000, 122000, 142000, 168000, 201000, 244000]
+}

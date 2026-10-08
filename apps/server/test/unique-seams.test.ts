@@ -107,9 +107,10 @@ describe('UNIQUES and the module slot', () => {
     const on = skillHarness()
     cleanups.push(on.cleanup)
     expect(on.gameplay.uniques).toBeInstanceOf(Uniques)
-    // Play the Boss (docs/PLAY_THE_BOSS.md §3.1) registers right after it.
-    expect(on.gameplay.modules.at(-2)).toBe(on.gameplay.uniques)
-    expect(on.gameplay.modules.at(-1)).toBe(on.gameplay.pilot)
+    // Play the Boss (docs/PLAY_THE_BOSS.md §3.1) registers right after it; then only the Climb's roles and penalty.
+    expect(on.gameplay.modules.at(-6)).toBe(on.gameplay.uniques)
+    expect(on.gameplay.modules.at(-5)).toBe(on.gameplay.pilot)
+    expect(on.gameplay.modules.slice(-4)).toEqual([on.gameplay.roles, on.gameplay.penalty, on.gameplay.climbRewards, on.gameplay.climbPlaces])
     expect(on.gameplay.spawner.opts.skipUniqueGroups).toBe(true)
     // The stub is a no-op: nothing to start, normal loot, no summon policy.
     expect(on.gameplay.uniques!.start(on.now)).toBeNull()
@@ -142,9 +143,9 @@ describe('migration 10 (the uniques table)', () => {
     v9.close()
     const store = openStore(root)
     cleanups.push(() => store.close())
-    expect(SCHEMA_VERSION).toBe(19)
-    expect(store.schemaVersion).toBe(19)
-    expect(store.db.pragma('user_version', { simple: true })).toBe(19)
+    expect(SCHEMA_VERSION).toBe(24)
+    expect(store.schemaVersion).toBe(24)
+    expect(store.db.pragma('user_version', { simple: true })).toBe(24)
     expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 12, gold: 4321 })
     expect(cols(store.db, 'uniques').map((c) => [c.name, c.type, c.notnull, c.dflt_value, c.pk])).toEqual([
       ['code', 'TEXT', 0, null, 1],
@@ -173,7 +174,7 @@ describe('migration 10 (the uniques table)', () => {
     expect(version).toBeGreaterThanOrEqual(9)
     const store = openStore(dir)
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(19)
+    expect(store.schemaVersion).toBe(24)
     expect((store.db.prepare('SELECT COUNT(*) AS n FROM characters').get() as { n: number }).n).toBe(chars)
     expect(cols(store.db, 'uniques').map((c) => c.name)).toEqual(['code', 'phase', 'due_at', 'camp', 'spawns', 'last_killer', 'last_killed_at'])
   })

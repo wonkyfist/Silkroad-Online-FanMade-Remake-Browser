@@ -318,6 +318,8 @@ export interface AdminItemRow {
   slot: string | null
   degree: number
   reqLevel: number
+  /** The Climb (docs/CLIMB.md §4.1.2): the client's level when the gear re-spacing moved it; null = unmoved. */
+  retailReqLevel?: number | null
   price: number
   icon: string | null
   overridden: boolean

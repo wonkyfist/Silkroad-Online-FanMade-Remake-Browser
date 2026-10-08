@@ -7,6 +7,10 @@ import type { CoastConfig } from './config.ts'
 import { CELLS_PER_REGION, type RegionRect } from './lattice.ts'
 import type { CoastResult } from './pass.ts'
 
+/** The drowned area's sea is emitted down to this depth (m): the minimap's sea reaches the open-sea tone there
+ *  (./minimap.ts, its deepest stop), the colour the client fills tile-less regions with. */
+export const DROWNED_EMIT_DEPTH_M = 40
+
 export interface EmittedRegion {
   x: number
   z: number
@@ -31,8 +35,9 @@ export function regionWindow(r: CoastResult, x: number, z: number): { row0: numb
 
 /**
  * Synthetic regions to emit: every region of the emit rectangle that is not an active exported region, with any dry
- * vertex (land) or any water shallower than emit.depthM (shallow). A region whose every vertex is a land edge is not
- * synthesised (the fade lies on the sea side).
+ * vertex (land) or any water shallower than emit.depthM (shallow); in the drowned area (./drown.ts) any water shallower
+ * than DROWNED_EMIT_DEPTH_M, so the minimap's tiles reach the open sea's tone before the tile-less sea begins. A region
+ * whose every vertex is a land edge is not synthesised (the fade lies on the sea side).
  */
 export function emitCensus(r: CoastResult, cfg: CoastConfig, exportRect: RegionRect, active: (x: number, z: number) => boolean): EmitCensus {
   const out: EmitCensus = { emitted: [], land: 0, shallow: 0, deepOnly: 0, landEdge: 0 }
@@ -47,19 +52,21 @@ export function emitCensus(r: CoastResult, cfg: CoastConfig, exportRect: RegionR
       let dry = false
       let minDepth = Infinity
       let edge = true
+      let drowned = false
       for (let i = 0; i <= CELLS_PER_REGION; i++) {
         for (let j = 0; j <= CELLS_PER_REGION; j++) {
           const k = (win.row0 + i) * cols + win.col0 + j
           if (!r.masks.waterSurface[k]) dry = true
           minDepth = Math.min(minDepth, SL - r.h[k]!)
           if (r.landFade[k]! < 0.999) edge = false
+          if (r.masks.drowned?.[k]) drowned = true
         }
       }
       if (edge) out.landEdge++
       else if (dry) {
         out.land++
         out.emitted.push({ x, z, kind: 'land' })
-      } else if (minDepth < cfg.emit.depthM) {
+      } else if (minDepth < cfg.emit.depthM || (drowned && minDepth < DROWNED_EMIT_DEPTH_M)) {
         out.shallow++
         out.emitted.push({ x, z, kind: 'shallow' })
       } else out.deepOnly++

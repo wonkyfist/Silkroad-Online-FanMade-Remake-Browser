@@ -20,6 +20,18 @@
       "staleToLocal": []
     }
   },
+  "dummies": {
+    "Bone01": [
+      -0.00004,
+      0,
+      -0.00048
+    ],
+    "Bone02": [
+      -0.27231,
+      0,
+      -0.00048
+    ]
+  },
   "attachBone": "Bip01 L Hand",
   "attachable": {
     "kind": 1,
@@ -202,17 +214,5 @@
     "skeleton": null,
     "joints": [],
     "provenance": "vSRO 1.188 client (Data.pk2 res/, Media.pk2 textdata)"
-  },
-  "dummies": {
-    "Bone01": [
-      -0.00004,
-      0,
-      -0.00048
-    ],
-    "Bone02": [
-      -0.27231,
-      0,
-      -0.00048
-    ]
   }
 }

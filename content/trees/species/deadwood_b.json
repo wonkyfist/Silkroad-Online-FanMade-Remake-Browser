@@ -16,9 +16,7 @@
     {"name": "dunhuang", "textures": {"bark": "prim\\mtrl\\nature\\china\\dunhuang\\tree3\\w_cd_stump01.ddj", "leaf": "prim\\mtrl\\nature\\common\\tree\\tre_dry_leaf.ddj"}, "crops": {"bark": [0.0, 0.45, 1.0, 1.0]}}
   ],
   "replaces": [
-    {"source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr"},
-    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp03.bsr", "tint": "dunhuang"},
-    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp05.bsr", "tint": "dunhuang"}
+    {"source": "res\\nature\\common\\tree\\tre_dead_tre01.bsr"}
   ],
   "params": {"form": "stump", "rootLen": [0.26, 0.34], "rootTaper": 0.75, "stumpRadius": 0.15, "barkSides": [[10, 5], [6, 4], [5, 3]], "normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}
 }

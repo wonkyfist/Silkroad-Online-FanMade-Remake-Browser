@@ -7,6 +7,10 @@
 > **TREE-TUNE (2026-10-03, §WT):** the crown gate (G5) was re-tuned at the root (card normals per the retail cards,
 > the retail texture sets themselves, no compensating grades) and measured for all 35 species in game; the result
 > and the species still outside ±10 % are in §WT.
+> **Island (2026-10-10, docs/COAST.md §4.1):** with the Western China side under the sea the export places 29 of the
+> 35 species (81 swapped retail models on 4,150 retail placements); reeds and the five Dunhuang families (dh_poplar,
+> dh_hotree, dh_tree, dh_brush, dh_twig) stood only there. Their rows stay in swap.json; the pass appends a species
+> only for placed models (`trees-manifest.ts`).
 
 **Wave 12 (2026-10-01).** The user: "i would love if all tree's in the game and terrains use the newer tree's instead
 of the retail low poly and low texture tree's and plants." The scope grew from "trees only" (wave 10) to **every tree

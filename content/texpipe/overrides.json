@@ -71,8 +71,9 @@
       "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). 9B check: the derived relief turned the flat retail slabs into dark pillowed edges (same under GAN and SDXL); soft maps (normal x0.35, AO x0.4) as for c_marble_jang_02 give flat slabs with crisp joints."
     },
     "tile2d:c_dust_swmp_06": {
+      "hero": true,
       "detail": "sdxl",
-      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock)."
+      "note": "DT-2 (2026-09-29): hero terrain tile, local SDXL detail (terrain profile: seam repair + colour lock). Pinned hero 2026-10-10: with Jangan an island (docs/COAST.md §4.1) the B3a sets push it out of the computed top 16; the index already has it as a hero."
     },
     "tile2d:c_dust_fld_08": {
       "detail": "sdxl",

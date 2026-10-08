@@ -1,12 +1,15 @@
 /**
  * items.json: ItemDef records from itemdata (client, authoritative). Scope (docs/DATA.md "Items"):
  *  - Chinese equipment (weapons, shields, garment/protector/armour sets for both genders, accessories) of degree
- *    <= maxDegree: the ordinary _A/_B/_C grades and the creation defaults (*_DEF). Seal items (_RARE) only at degree
- *    RARE_ITEM_DEGREE (wave 11, docs/UNIQUES.md §3.4: the unique's Seal of Star drop; normal drop tables skip them,
- *    ./drops.ts); the other degrees' seals are left out.
+ *    <= maxDegree (4: the Climb's top tier, docs/CLIMB.md §4.1.2): the ordinary _A/_B/_C grades and the creation
+ *    defaults (*_DEF). Seal items (_RARE): every degree's weapon seals (docs/RARITY.md §2: Seal of Star / Moon / Sun,
+ *    the rare weapons) and, of the other equipment, degrees RARE_ITEM_DEGREES (wave 11, docs/UNIQUES.md §3.4: the
+ *    unique's Seal of Star drop; the Climb: the cap tier's seals too). Normal drop tables skip
+ *    every seal (./drops.ts); the server makes rare weapons from ordinary weapon drops (docs/RARITY.md §4).
  *  - Consumables: HP/MP/vigor potions and grains, universal pills, return scrolls, arrows, and the gold piles.
  *  - Wave 8 (docs/SYSTEMS_COMBAT.md §1.1, §4.1, by code): the Red Horse, the three horse Recovery Kits, the four _A
- *    elixirs and the 1st-3rd Lucky Powders (the degree limit alone would let powders _04.._09 through).
+ *    elixirs and the 1st-4th Lucky Powders (the degree limit alone would let powders _05.._09 through; the 4th matches
+ *    degree 4, docs/CLIMB.md §4.1.2).
  */
 import {
   CH_WEAPON_TID4,
@@ -22,26 +25,30 @@ import type { ArmorType, ItemCategory, ItemDef, ItemReinforce, ItemSlotKind, Ite
 import { textOf } from './client-source.ts'
 import { iconUrl, modelRef, modelSource, type OutExists } from './models.ts'
 
-export const MAX_ITEM_DEGREE = 3
+export const MAX_ITEM_DEGREE = 4
 
 /** Potion and pill cooldown per group: the server rule POTION_COOLDOWN_MS; the client data has no column for it. */
 export const ITEM_USE_COOLDOWN_MS = 1000
 
 const EQUIP_CODE =
   /^ITEM_CH_(SWORD|BLADE|SPEAR|TBLADE|BOW|SHIELD|EARRING|NECKLACE|RING)_\d\d_[ABC](_DEF|_RARE)?$|^ITEM_CH_[MW]_(CLOTHES|LIGHT|HEAVY)_\d\d_[A-Z]{2}_[ABC](_DEF|_RARE)?$/
-/** The one degree whose Seal of Star rows (_RARE) are exported (wave 11, W11-CV; docs/WAVE_PLAN7.md §4.5). */
-export const RARE_ITEM_DEGREE = 3
+/**
+ * The degrees whose non-weapon seal rows (_RARE) are exported (wave 11, W11-CV, docs/WAVE_PLAN7.md §4.5: degree 3; the
+ * Climb's cap tier, docs/CLIMB.md §4.1.2: degree 4). Weapon seals: every degree.
+ */
+export const RARE_ITEM_DEGREES: readonly number[] = [3, 4]
 const CONSUMABLE_CODE =
   /^ITEM_ETC_(HP|MP|ALL)_S?POTION_\d\d$|^ITEM_ETC_CURE_ALL_\d\d$|^ITEM_ETC_SCROLL_RETURN_0[1-3]$|^ITEM_ETC_AMMO_ARROW_01(_DEF)?$|^ITEM_ETC_GOLD_0[1-3]$/
-/** Wave 8 (docs/SYSTEMS_COMBAT.md §8 EXP work 1): horse, Recovery Kits, _A elixirs, Lucky Powders 1st-3rd. */
+/** Wave 8 (docs/SYSTEMS_COMBAT.md §8 EXP work 1): horse, Recovery Kits, _A elixirs, Lucky Powders 1st-4th (4th: CLIMB §4.1.2). */
 const SYSTEMS_CODE =
-  /^ITEM_COS_C_HORSE1$|^ITEM_ETC_COS_HP_POTION_0[1-3]$|^ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_(WEAPON|SHIELD|ARMOR|ACCESSARY)_A$|^ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_0[1-3]$/
+  /^ITEM_COS_C_HORSE1$|^ITEM_ETC_COS_HP_POTION_0[1-3]$|^ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_(WEAPON|SHIELD|ARMOR|ACCESSARY)_A$|^ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_0[1-4]$/
 
 /** Rows the export includes (before the degree limit). */
 export function isExportedItem(r: ItemDataRow, maxDegree = MAX_ITEM_DEGREE): boolean {
   if (!r.service || r.cashItem !== 0) return false
   if (EQUIP_CODE.test(r.codeName)) {
-    if (/_RARE$/.test(r.codeName) && r.degree !== RARE_ITEM_DEGREE) return false
+    // docs/RARITY.md §2: weapon seals (TypeID 3/1/6/x) at every degree, the other seals at RARE_ITEM_DEGREES only.
+    if (/_RARE$/.test(r.codeName) && !RARE_ITEM_DEGREES.includes(r.degree) && r.typeId[2] !== 6) return false
     return r.typeId[0] === 3 && r.typeId[1] === 1 && r.country === COUNTRY_CHINA && r.degree >= 1 && r.degree <= maxDegree
   }
   if (CONSUMABLE_CODE.test(r.codeName) || SYSTEMS_CODE.test(r.codeName)) return r.typeId[0] === 3 && r.typeId[1] === 3 && r.degree <= maxDegree

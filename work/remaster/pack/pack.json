@@ -1,0 +1,1220 @@
+{
+ "parts": [
+  {
+   "id": "chinaman_adventurer_body",
+   "glb": "chinaman_adventurer_body/model.glb",
+   "renders": [
+    "chinaman_adventurer_body/view_front.png",
+    "chinaman_adventurer_body/view_back.png",
+    "chinaman_adventurer_body/view_left.png",
+    "chinaman_adventurer_body/view_right.png"
+   ],
+   "prompt": "Keep the exact design, colours and placement of every feature. A lean, muscular East Asian man with warm light-tan skin; dark brown hair painted on the scalp; an ornate black-and-gold band with spiral scroll engraving over the right eye and brow; grey-green eyes and a thin tear-like scar under the eye. Small yellow talisman paper strips with red brush marks painted on the chest, forearms and shins, kept as abstract red brush strokes. Dark olive-green loincloth shorts with a gold cloud-scroll pattern and gold trim. Target: realistic skin with pores, subtle subsurface warmth, natural muscle definition and veins, detailed hands and feet with nails and creases, fine woven fabric with gold thread embroidery on the shorts. No text, no logos, no added clothing or armour."
+  },
+  {
+   "id": "chinaman_adventurer_hair",
+   "glb": "chinaman_adventurer_hair/model.glb",
+   "renders": [
+    "chinaman_adventurer_hair/view_front.png",
+    "chinaman_adventurer_hair/view_back.png",
+    "chinaman_adventurer_hair/view_left.png",
+    "chinaman_adventurer_hair/view_right.png"
+   ],
+   "prompt": "Keep the exact shape, colour and strand direction. Short-to-medium straight hair in chestnut to dark reddish brown, layered, with a fringe falling over the forehead and longer layered strands down the back of the neck; strands flow downward and slightly sideways, darker near the roots with warm auburn highlights toward the tips. Target: realistic hair with fine individual strands, natural sheen and anisotropic highlights, soft shadow at the roots, clean tapered strand tips. Keep a single natural hair colour. No text, no logos, no hats, ribbons or accessories."
+  },
+  {
+   "id": "ch_m_heavy_01_ba",
+   "glb": "ch_m_heavy_01_ba/model.glb",
+   "renders": [
+    "ch_m_heavy_01_ba/view_front.png",
+    "ch_m_heavy_01_ba/view_back.png",
+    "ch_m_heavy_01_ba/view_left.png",
+    "ch_m_heavy_01_ba/view_right.png"
+   ],
+   "prompt": "Keep the exact design, colours and pattern placement. A Chinese heavy lamellar cuirass over a padded tunic. Torso: a grid of rust-brown hardened leather and copper plates in horizontal rows, each fixed with small round iron rivets, dark gaps between plates. Across the upper chest and upper back: a band of dark hammered iron with large dome rivets. Shoulder straps of deep red lacquered leather ending in small gold ornamental clasp plaques; a pale cream stand-up collar. Long sleeves of cream-ivory quilted linen with soft folds, finished with dark teal-green cloth cuffs. Target: aged copper and leather plates with patina, scratches and edge wear, hammered iron with dents, woven linen with visible weave and stitching, glossy red lacquer. No text, no logos."
+  },
+  {
+   "id": "ch_m_heavy_01_la",
+   "glb": "ch_m_heavy_01_la/model.glb",
+   "renders": [
+    "ch_m_heavy_01_la/view_front.png",
+    "ch_m_heavy_01_la/view_back.png",
+    "ch_m_heavy_01_la/view_left.png",
+    "ch_m_heavy_01_la/view_right.png"
+   ],
+   "prompt": "Keep the exact design, colours and pattern placement. Armoured trousers of a Chinese heavy soldier. Waist: a layered belt of deep crimson cloth with thin gold trim over a dark teal-green silk sash, fastened at the front by a round bronze medallion with a crossed knot emblem. Front: a curved bronze apron plate with engraved swirl pattern and a grey riveted metal rim. Back: a moss-green silk flap with faint gold embroidery. Thighs: long rust-brown lamellar tassets of small riveted plates, edged with dark iron strips. Cream-ivory linen trousers underneath, gathered into dark teal-green cuffs at the ankles. Target: realistic aged copper and leather lamellar with rivets and wear, engraved bronze, silk with soft sheen, woven linen with folds and stitching. No text, no logos."
+  },
+  {
+   "id": "ch_m_heavy_01_fa",
+   "glb": "ch_m_heavy_01_fa/model.glb",
+   "renders": [
+    "ch_m_heavy_01_fa/view_front.png",
+    "ch_m_heavy_01_fa/view_back.png",
+    "ch_m_heavy_01_fa/view_left.png",
+    "ch_m_heavy_01_fa/view_right.png"
+   ],
+   "prompt": "Keep the exact design, colours and pattern placement. Knee-high heavy soldier boots. Front shin guard: a rust-brown copper and leather plate divided into panels with rows of round silver rivets, framed at the top and bottom by a band of worn grey steel. Back and sides: cream-grey linen leg wrappings wound in horizontal layers. Low shoe: dark bottle-green leather upper with a thin gold edge line and a small gold scroll curl at the toe, pale cream sole and padded cream ankle. Target: realistic aged copper plate with patina and scratches, brushed iron trim, coarse wrapped linen with visible weave, slight fraying and dust, dark green leather with creases and stitched welts. No text, no logos."
+  },
+  {
+   "id": "ch_sword_01",
+   "glb": "ch_sword_01/model.glb",
+   "renders": [
+    "ch_sword_01/view_front.png",
+    "ch_sword_01/view_back.png",
+    "ch_sword_01/view_left.png",
+    "ch_sword_01/view_right.png"
+   ],
+   "prompt": "Keep the exact design, colours and proportions. A plain Chinese straight double-edged sword (jian), the starter copper sword. Long tapering blade of grey steel with a slightly darker central ridge and lighter edges, unadorned. Small flat guard of polished brass with a thin dark red band above it, a short grip wrapped in dark reddish-brown leather, and a small brass pommel cap. Target: realistic forged steel with fine lengthwise grinding marks, light scratches and subtle edge wear, softly polished brass fittings with slight tarnish in the recesses, tightly wrapped worn leather grip with visible texture. No text, no logos, no engraving or inlay on the blade."
+  },
+  {
+   "id": "ch_m_clothes_01_ba",
+   "glb": "ch_m_clothes_01_ba/model.glb",
+   "renders": [
+    "ch_m_clothes_01_ba/view_front.png",
+    "ch_m_clothes_01_ba/view_back.png",
+    "ch_m_clothes_01_ba/view_left.png",
+    "ch_m_clothes_01_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_01_la",
+   "glb": "ch_m_clothes_01_la/model.glb",
+   "renders": [
+    "ch_m_clothes_01_la/view_front.png",
+    "ch_m_clothes_01_la/view_back.png",
+    "ch_m_clothes_01_la/view_left.png",
+    "ch_m_clothes_01_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_01_fa",
+   "glb": "ch_m_clothes_01_fa/model.glb",
+   "renders": [
+    "ch_m_clothes_01_fa/view_front.png",
+    "ch_m_clothes_01_fa/view_back.png",
+    "ch_m_clothes_01_fa/view_left.png",
+    "ch_m_clothes_01_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_01_ba",
+   "glb": "ch_w_clothes_01_ba/model.glb",
+   "renders": [
+    "ch_w_clothes_01_ba/view_front.png",
+    "ch_w_clothes_01_ba/view_back.png",
+    "ch_w_clothes_01_ba/view_left.png",
+    "ch_w_clothes_01_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_01_la",
+   "glb": "ch_w_clothes_01_la/model.glb",
+   "renders": [
+    "ch_w_clothes_01_la/view_front.png",
+    "ch_w_clothes_01_la/view_back.png",
+    "ch_w_clothes_01_la/view_left.png",
+    "ch_w_clothes_01_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_01_fa",
+   "glb": "ch_w_clothes_01_fa/model.glb",
+   "renders": [
+    "ch_w_clothes_01_fa/view_front.png",
+    "ch_w_clothes_01_fa/view_back.png",
+    "ch_w_clothes_01_fa/view_left.png",
+    "ch_w_clothes_01_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_ba",
+   "glb": "ch_m_light_01_ba/model.glb",
+   "renders": [
+    "ch_m_light_01_ba/view_front.png",
+    "ch_m_light_01_ba/view_back.png",
+    "ch_m_light_01_ba/view_left.png",
+    "ch_m_light_01_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_la",
+   "glb": "ch_m_light_01_la/model.glb",
+   "renders": [
+    "ch_m_light_01_la/view_front.png",
+    "ch_m_light_01_la/view_back.png",
+    "ch_m_light_01_la/view_left.png",
+    "ch_m_light_01_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_fa",
+   "glb": "ch_m_light_01_fa/model.glb",
+   "renders": [
+    "ch_m_light_01_fa/view_front.png",
+    "ch_m_light_01_fa/view_back.png",
+    "ch_m_light_01_fa/view_left.png",
+    "ch_m_light_01_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_ba",
+   "glb": "ch_w_light_01_ba/model.glb",
+   "renders": [
+    "ch_w_light_01_ba/view_front.png",
+    "ch_w_light_01_ba/view_back.png",
+    "ch_w_light_01_ba/view_left.png",
+    "ch_w_light_01_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_la",
+   "glb": "ch_w_light_01_la/model.glb",
+   "renders": [
+    "ch_w_light_01_la/view_front.png",
+    "ch_w_light_01_la/view_back.png",
+    "ch_w_light_01_la/view_left.png",
+    "ch_w_light_01_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_fa",
+   "glb": "ch_w_light_01_fa/model.glb",
+   "renders": [
+    "ch_w_light_01_fa/view_front.png",
+    "ch_w_light_01_fa/view_back.png",
+    "ch_w_light_01_fa/view_left.png",
+    "ch_w_light_01_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_ba",
+   "glb": "ch_w_heavy_01_ba/model.glb",
+   "renders": [
+    "ch_w_heavy_01_ba/view_front.png",
+    "ch_w_heavy_01_ba/view_back.png",
+    "ch_w_heavy_01_ba/view_left.png",
+    "ch_w_heavy_01_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_la",
+   "glb": "ch_w_heavy_01_la/model.glb",
+   "renders": [
+    "ch_w_heavy_01_la/view_front.png",
+    "ch_w_heavy_01_la/view_back.png",
+    "ch_w_heavy_01_la/view_left.png",
+    "ch_w_heavy_01_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_fa",
+   "glb": "ch_w_heavy_01_fa/model.glb",
+   "renders": [
+    "ch_w_heavy_01_fa/view_front.png",
+    "ch_w_heavy_01_fa/view_back.png",
+    "ch_w_heavy_01_fa/view_left.png",
+    "ch_w_heavy_01_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "chinaman_bogy_body",
+   "glb": "chinaman_bogy_body/model.glb",
+   "renders": [
+    "chinaman_bogy_body/view_front.png",
+    "chinaman_bogy_body/view_back.png",
+    "chinaman_bogy_body/view_left.png",
+    "chinaman_bogy_body/view_right.png"
+   ]
+  },
+  {
+   "id": "chinaman_bogy_hair",
+   "glb": "chinaman_bogy_hair/model.glb",
+   "renders": [
+    "chinaman_bogy_hair/view_front.png",
+    "chinaman_bogy_hair/view_back.png",
+    "chinaman_bogy_hair/view_left.png",
+    "chinaman_bogy_hair/view_right.png"
+   ]
+  },
+  {
+   "id": "chinaman_fighter_body",
+   "glb": "chinaman_fighter_body/model.glb",
+   "renders": [
+    "chinaman_fighter_body/view_front.png",
+    "chinaman_fighter_body/view_back.png",
+    "chinaman_fighter_body/view_left.png",
+    "chinaman_fighter_body/view_right.png"
+   ]
+  },
+  {
+   "id": "chinaman_fighter_hair",
+   "glb": "chinaman_fighter_hair/model.glb",
+   "renders": [
+    "chinaman_fighter_hair/view_front.png",
+    "chinaman_fighter_hair/view_back.png",
+    "chinaman_fighter_hair/view_left.png",
+    "chinaman_fighter_hair/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_adventurer_body",
+   "glb": "chinawoman_adventurer_body/model.glb",
+   "renders": [
+    "chinawoman_adventurer_body/view_front.png",
+    "chinawoman_adventurer_body/view_back.png",
+    "chinawoman_adventurer_body/view_left.png",
+    "chinawoman_adventurer_body/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_adventurer_hair",
+   "glb": "chinawoman_adventurer_hair/model.glb",
+   "renders": [
+    "chinawoman_adventurer_hair/view_front.png",
+    "chinawoman_adventurer_hair/view_back.png",
+    "chinawoman_adventurer_hair/view_left.png",
+    "chinawoman_adventurer_hair/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_assassin_body",
+   "glb": "chinawoman_assassin_body/model.glb",
+   "renders": [
+    "chinawoman_assassin_body/view_front.png",
+    "chinawoman_assassin_body/view_back.png",
+    "chinawoman_assassin_body/view_left.png",
+    "chinawoman_assassin_body/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_assassin_hair",
+   "glb": "chinawoman_assassin_hair/model.glb",
+   "renders": [
+    "chinawoman_assassin_hair/view_front.png",
+    "chinawoman_assassin_hair/view_back.png",
+    "chinawoman_assassin_hair/view_left.png",
+    "chinawoman_assassin_hair/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_bogy_body",
+   "glb": "chinawoman_bogy_body/model.glb",
+   "renders": [
+    "chinawoman_bogy_body/view_front.png",
+    "chinawoman_bogy_body/view_back.png",
+    "chinawoman_bogy_body/view_left.png",
+    "chinawoman_bogy_body/view_right.png"
+   ]
+  },
+  {
+   "id": "chinawoman_bogy_hair",
+   "glb": "chinawoman_bogy_hair/model.glb",
+   "renders": [
+    "chinawoman_bogy_hair/view_front.png",
+    "chinawoman_bogy_hair/view_back.png",
+    "chinawoman_bogy_hair/view_left.png",
+    "chinawoman_bogy_hair/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_blade_01_02_03",
+   "glb": "ch_blade_01_02_03/model.glb",
+   "renders": [
+    "ch_blade_01_02_03/view_front.png",
+    "ch_blade_01_02_03/view_back.png",
+    "ch_blade_01_02_03/view_left.png",
+    "ch_blade_01_02_03/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_spear_01_02_03",
+   "glb": "ch_spear_01_02_03/model.glb",
+   "renders": [
+    "ch_spear_01_02_03/view_front.png",
+    "ch_spear_01_02_03/view_back.png",
+    "ch_spear_01_02_03/view_left.png",
+    "ch_spear_01_02_03/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_tblade_01_02_03",
+   "glb": "ch_tblade_01_02_03/model.glb",
+   "renders": [
+    "ch_tblade_01_02_03/view_front.png",
+    "ch_tblade_01_02_03/view_back.png",
+    "ch_tblade_01_02_03/view_left.png",
+    "ch_tblade_01_02_03/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_bow_01_02_03",
+   "glb": "ch_bow_01_02_03/model.glb",
+   "renders": [
+    "ch_bow_01_02_03/view_front.png",
+    "ch_bow_01_02_03/view_back.png",
+    "ch_bow_01_02_03/view_left.png",
+    "ch_bow_01_02_03/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_01_ha",
+   "glb": "ch_m_clothes_01_ha/model.glb",
+   "renders": [
+    "ch_m_clothes_01_ha/view_front.png",
+    "ch_m_clothes_01_ha/view_back.png",
+    "ch_m_clothes_01_ha/view_left.png",
+    "ch_m_clothes_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_01_sa",
+   "glb": "ch_m_clothes_01_sa/model.glb",
+   "renders": [
+    "ch_m_clothes_01_sa/view_front.png",
+    "ch_m_clothes_01_sa/view_back.png",
+    "ch_m_clothes_01_sa/view_left.png",
+    "ch_m_clothes_01_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_01_aa",
+   "glb": "ch_m_clothes_01_aa/model.glb",
+   "renders": [
+    "ch_m_clothes_01_aa/view_front.png",
+    "ch_m_clothes_01_aa/view_back.png",
+    "ch_m_clothes_01_aa/view_left.png",
+    "ch_m_clothes_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_01_ha",
+   "glb": "ch_w_clothes_01_ha/model.glb",
+   "renders": [
+    "ch_w_clothes_01_ha/view_front.png",
+    "ch_w_clothes_01_ha/view_back.png",
+    "ch_w_clothes_01_ha/view_left.png",
+    "ch_w_clothes_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_01_aa",
+   "glb": "ch_w_clothes_01_aa/model.glb",
+   "renders": [
+    "ch_w_clothes_01_aa/view_front.png",
+    "ch_w_clothes_01_aa/view_back.png",
+    "ch_w_clothes_01_aa/view_left.png",
+    "ch_w_clothes_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_ha",
+   "glb": "ch_m_light_01_ha/model.glb",
+   "renders": [
+    "ch_m_light_01_ha/view_front.png",
+    "ch_m_light_01_ha/view_back.png",
+    "ch_m_light_01_ha/view_left.png",
+    "ch_m_light_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_sa",
+   "glb": "ch_m_light_01_sa/model.glb",
+   "renders": [
+    "ch_m_light_01_sa/view_front.png",
+    "ch_m_light_01_sa/view_back.png",
+    "ch_m_light_01_sa/view_left.png",
+    "ch_m_light_01_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_01_aa",
+   "glb": "ch_m_light_01_aa/model.glb",
+   "renders": [
+    "ch_m_light_01_aa/view_front.png",
+    "ch_m_light_01_aa/view_back.png",
+    "ch_m_light_01_aa/view_left.png",
+    "ch_m_light_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_ha",
+   "glb": "ch_w_light_01_ha/model.glb",
+   "renders": [
+    "ch_w_light_01_ha/view_front.png",
+    "ch_w_light_01_ha/view_back.png",
+    "ch_w_light_01_ha/view_left.png",
+    "ch_w_light_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_sa",
+   "glb": "ch_w_light_01_sa/model.glb",
+   "renders": [
+    "ch_w_light_01_sa/view_front.png",
+    "ch_w_light_01_sa/view_back.png",
+    "ch_w_light_01_sa/view_left.png",
+    "ch_w_light_01_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_01_aa",
+   "glb": "ch_w_light_01_aa/model.glb",
+   "renders": [
+    "ch_w_light_01_aa/view_front.png",
+    "ch_w_light_01_aa/view_back.png",
+    "ch_w_light_01_aa/view_left.png",
+    "ch_w_light_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_01_ha",
+   "glb": "ch_m_heavy_01_ha/model.glb",
+   "renders": [
+    "ch_m_heavy_01_ha/view_front.png",
+    "ch_m_heavy_01_ha/view_back.png",
+    "ch_m_heavy_01_ha/view_left.png",
+    "ch_m_heavy_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_01_sa",
+   "glb": "ch_m_heavy_01_sa/model.glb",
+   "renders": [
+    "ch_m_heavy_01_sa/view_front.png",
+    "ch_m_heavy_01_sa/view_back.png",
+    "ch_m_heavy_01_sa/view_left.png",
+    "ch_m_heavy_01_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_01_aa",
+   "glb": "ch_m_heavy_01_aa/model.glb",
+   "renders": [
+    "ch_m_heavy_01_aa/view_front.png",
+    "ch_m_heavy_01_aa/view_back.png",
+    "ch_m_heavy_01_aa/view_left.png",
+    "ch_m_heavy_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_ha",
+   "glb": "ch_w_heavy_01_ha/model.glb",
+   "renders": [
+    "ch_w_heavy_01_ha/view_front.png",
+    "ch_w_heavy_01_ha/view_back.png",
+    "ch_w_heavy_01_ha/view_left.png",
+    "ch_w_heavy_01_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_sa",
+   "glb": "ch_w_heavy_01_sa/model.glb",
+   "renders": [
+    "ch_w_heavy_01_sa/view_front.png",
+    "ch_w_heavy_01_sa/view_back.png",
+    "ch_w_heavy_01_sa/view_left.png",
+    "ch_w_heavy_01_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_01_aa",
+   "glb": "ch_w_heavy_01_aa/model.glb",
+   "renders": [
+    "ch_w_heavy_01_aa/view_front.png",
+    "ch_w_heavy_01_aa/view_back.png",
+    "ch_w_heavy_01_aa/view_left.png",
+    "ch_w_heavy_01_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_shield_01",
+   "glb": "ch_shield_01/model.glb",
+   "renders": [
+    "ch_shield_01/view_front.png",
+    "ch_shield_01/view_back.png",
+    "ch_shield_01/view_left.png",
+    "ch_shield_01/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_ba",
+   "glb": "ch_m_clothes_02_ba/model.glb",
+   "renders": [
+    "ch_m_clothes_02_ba/view_front.png",
+    "ch_m_clothes_02_ba/view_back.png",
+    "ch_m_clothes_02_ba/view_left.png",
+    "ch_m_clothes_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_la",
+   "glb": "ch_m_clothes_02_la/model.glb",
+   "renders": [
+    "ch_m_clothes_02_la/view_front.png",
+    "ch_m_clothes_02_la/view_back.png",
+    "ch_m_clothes_02_la/view_left.png",
+    "ch_m_clothes_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_fa",
+   "glb": "ch_m_clothes_02_fa/model.glb",
+   "renders": [
+    "ch_m_clothes_02_fa/view_front.png",
+    "ch_m_clothes_02_fa/view_back.png",
+    "ch_m_clothes_02_fa/view_left.png",
+    "ch_m_clothes_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_ha",
+   "glb": "ch_m_clothes_02_ha/model.glb",
+   "renders": [
+    "ch_m_clothes_02_ha/view_front.png",
+    "ch_m_clothes_02_ha/view_back.png",
+    "ch_m_clothes_02_ha/view_left.png",
+    "ch_m_clothes_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_sa",
+   "glb": "ch_m_clothes_02_sa/model.glb",
+   "renders": [
+    "ch_m_clothes_02_sa/view_front.png",
+    "ch_m_clothes_02_sa/view_back.png",
+    "ch_m_clothes_02_sa/view_left.png",
+    "ch_m_clothes_02_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_02_aa",
+   "glb": "ch_m_clothes_02_aa/model.glb",
+   "renders": [
+    "ch_m_clothes_02_aa/view_front.png",
+    "ch_m_clothes_02_aa/view_back.png",
+    "ch_m_clothes_02_aa/view_left.png",
+    "ch_m_clothes_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_02_ba",
+   "glb": "ch_w_clothes_02_ba/model.glb",
+   "renders": [
+    "ch_w_clothes_02_ba/view_front.png",
+    "ch_w_clothes_02_ba/view_back.png",
+    "ch_w_clothes_02_ba/view_left.png",
+    "ch_w_clothes_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_02_la",
+   "glb": "ch_w_clothes_02_la/model.glb",
+   "renders": [
+    "ch_w_clothes_02_la/view_front.png",
+    "ch_w_clothes_02_la/view_back.png",
+    "ch_w_clothes_02_la/view_left.png",
+    "ch_w_clothes_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_02_fa",
+   "glb": "ch_w_clothes_02_fa/model.glb",
+   "renders": [
+    "ch_w_clothes_02_fa/view_front.png",
+    "ch_w_clothes_02_fa/view_back.png",
+    "ch_w_clothes_02_fa/view_left.png",
+    "ch_w_clothes_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_02_ha",
+   "glb": "ch_w_clothes_02_ha/model.glb",
+   "renders": [
+    "ch_w_clothes_02_ha/view_front.png",
+    "ch_w_clothes_02_ha/view_back.png",
+    "ch_w_clothes_02_ha/view_left.png",
+    "ch_w_clothes_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_02_aa",
+   "glb": "ch_w_clothes_02_aa/model.glb",
+   "renders": [
+    "ch_w_clothes_02_aa/view_front.png",
+    "ch_w_clothes_02_aa/view_back.png",
+    "ch_w_clothes_02_aa/view_left.png",
+    "ch_w_clothes_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_ba",
+   "glb": "ch_m_light_02_ba/model.glb",
+   "renders": [
+    "ch_m_light_02_ba/view_front.png",
+    "ch_m_light_02_ba/view_back.png",
+    "ch_m_light_02_ba/view_left.png",
+    "ch_m_light_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_la",
+   "glb": "ch_m_light_02_la/model.glb",
+   "renders": [
+    "ch_m_light_02_la/view_front.png",
+    "ch_m_light_02_la/view_back.png",
+    "ch_m_light_02_la/view_left.png",
+    "ch_m_light_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_fa",
+   "glb": "ch_m_light_02_fa/model.glb",
+   "renders": [
+    "ch_m_light_02_fa/view_front.png",
+    "ch_m_light_02_fa/view_back.png",
+    "ch_m_light_02_fa/view_left.png",
+    "ch_m_light_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_ha",
+   "glb": "ch_m_light_02_ha/model.glb",
+   "renders": [
+    "ch_m_light_02_ha/view_front.png",
+    "ch_m_light_02_ha/view_back.png",
+    "ch_m_light_02_ha/view_left.png",
+    "ch_m_light_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_sa",
+   "glb": "ch_m_light_02_sa/model.glb",
+   "renders": [
+    "ch_m_light_02_sa/view_front.png",
+    "ch_m_light_02_sa/view_back.png",
+    "ch_m_light_02_sa/view_left.png",
+    "ch_m_light_02_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_02_aa",
+   "glb": "ch_m_light_02_aa/model.glb",
+   "renders": [
+    "ch_m_light_02_aa/view_front.png",
+    "ch_m_light_02_aa/view_back.png",
+    "ch_m_light_02_aa/view_left.png",
+    "ch_m_light_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_ba",
+   "glb": "ch_w_light_02_ba/model.glb",
+   "renders": [
+    "ch_w_light_02_ba/view_front.png",
+    "ch_w_light_02_ba/view_back.png",
+    "ch_w_light_02_ba/view_left.png",
+    "ch_w_light_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_la",
+   "glb": "ch_w_light_02_la/model.glb",
+   "renders": [
+    "ch_w_light_02_la/view_front.png",
+    "ch_w_light_02_la/view_back.png",
+    "ch_w_light_02_la/view_left.png",
+    "ch_w_light_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_fa",
+   "glb": "ch_w_light_02_fa/model.glb",
+   "renders": [
+    "ch_w_light_02_fa/view_front.png",
+    "ch_w_light_02_fa/view_back.png",
+    "ch_w_light_02_fa/view_left.png",
+    "ch_w_light_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_ha",
+   "glb": "ch_w_light_02_ha/model.glb",
+   "renders": [
+    "ch_w_light_02_ha/view_front.png",
+    "ch_w_light_02_ha/view_back.png",
+    "ch_w_light_02_ha/view_left.png",
+    "ch_w_light_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_sa",
+   "glb": "ch_w_light_02_sa/model.glb",
+   "renders": [
+    "ch_w_light_02_sa/view_front.png",
+    "ch_w_light_02_sa/view_back.png",
+    "ch_w_light_02_sa/view_left.png",
+    "ch_w_light_02_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_02_aa",
+   "glb": "ch_w_light_02_aa/model.glb",
+   "renders": [
+    "ch_w_light_02_aa/view_front.png",
+    "ch_w_light_02_aa/view_back.png",
+    "ch_w_light_02_aa/view_left.png",
+    "ch_w_light_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_ba",
+   "glb": "ch_m_heavy_02_ba/model.glb",
+   "renders": [
+    "ch_m_heavy_02_ba/view_front.png",
+    "ch_m_heavy_02_ba/view_back.png",
+    "ch_m_heavy_02_ba/view_left.png",
+    "ch_m_heavy_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_la",
+   "glb": "ch_m_heavy_02_la/model.glb",
+   "renders": [
+    "ch_m_heavy_02_la/view_front.png",
+    "ch_m_heavy_02_la/view_back.png",
+    "ch_m_heavy_02_la/view_left.png",
+    "ch_m_heavy_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_fa",
+   "glb": "ch_m_heavy_02_fa/model.glb",
+   "renders": [
+    "ch_m_heavy_02_fa/view_front.png",
+    "ch_m_heavy_02_fa/view_back.png",
+    "ch_m_heavy_02_fa/view_left.png",
+    "ch_m_heavy_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_ha",
+   "glb": "ch_m_heavy_02_ha/model.glb",
+   "renders": [
+    "ch_m_heavy_02_ha/view_front.png",
+    "ch_m_heavy_02_ha/view_back.png",
+    "ch_m_heavy_02_ha/view_left.png",
+    "ch_m_heavy_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_sa",
+   "glb": "ch_m_heavy_02_sa/model.glb",
+   "renders": [
+    "ch_m_heavy_02_sa/view_front.png",
+    "ch_m_heavy_02_sa/view_back.png",
+    "ch_m_heavy_02_sa/view_left.png",
+    "ch_m_heavy_02_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_02_aa",
+   "glb": "ch_m_heavy_02_aa/model.glb",
+   "renders": [
+    "ch_m_heavy_02_aa/view_front.png",
+    "ch_m_heavy_02_aa/view_back.png",
+    "ch_m_heavy_02_aa/view_left.png",
+    "ch_m_heavy_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_ba",
+   "glb": "ch_w_heavy_02_ba/model.glb",
+   "renders": [
+    "ch_w_heavy_02_ba/view_front.png",
+    "ch_w_heavy_02_ba/view_back.png",
+    "ch_w_heavy_02_ba/view_left.png",
+    "ch_w_heavy_02_ba/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_la",
+   "glb": "ch_w_heavy_02_la/model.glb",
+   "renders": [
+    "ch_w_heavy_02_la/view_front.png",
+    "ch_w_heavy_02_la/view_back.png",
+    "ch_w_heavy_02_la/view_left.png",
+    "ch_w_heavy_02_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_fa",
+   "glb": "ch_w_heavy_02_fa/model.glb",
+   "renders": [
+    "ch_w_heavy_02_fa/view_front.png",
+    "ch_w_heavy_02_fa/view_back.png",
+    "ch_w_heavy_02_fa/view_left.png",
+    "ch_w_heavy_02_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_ha",
+   "glb": "ch_w_heavy_02_ha/model.glb",
+   "renders": [
+    "ch_w_heavy_02_ha/view_front.png",
+    "ch_w_heavy_02_ha/view_back.png",
+    "ch_w_heavy_02_ha/view_left.png",
+    "ch_w_heavy_02_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_sa",
+   "glb": "ch_w_heavy_02_sa/model.glb",
+   "renders": [
+    "ch_w_heavy_02_sa/view_front.png",
+    "ch_w_heavy_02_sa/view_back.png",
+    "ch_w_heavy_02_sa/view_left.png",
+    "ch_w_heavy_02_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_02_aa",
+   "glb": "ch_w_heavy_02_aa/model.glb",
+   "renders": [
+    "ch_w_heavy_02_aa/view_front.png",
+    "ch_w_heavy_02_aa/view_back.png",
+    "ch_w_heavy_02_aa/view_left.png",
+    "ch_w_heavy_02_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_sword_02_03",
+   "glb": "ch_sword_02_03/model.glb",
+   "renders": [
+    "ch_sword_02_03/view_front.png",
+    "ch_sword_02_03/view_back.png",
+    "ch_sword_02_03/view_left.png",
+    "ch_sword_02_03/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_shield_02_1",
+   "glb": "ch_shield_02_1/model.glb",
+   "renders": [
+    "ch_shield_02_1/view_front.png",
+    "ch_shield_02_1/view_back.png",
+    "ch_shield_02_1/view_left.png",
+    "ch_shield_02_1/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_shield_02_2",
+   "glb": "ch_shield_02_2/model.glb",
+   "renders": [
+    "ch_shield_02_2/view_front.png",
+    "ch_shield_02_2/view_back.png",
+    "ch_shield_02_2/view_left.png",
+    "ch_shield_02_2/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_03_la",
+   "glb": "ch_m_clothes_03_la/model.glb",
+   "renders": [
+    "ch_m_clothes_03_la/view_front.png",
+    "ch_m_clothes_03_la/view_back.png",
+    "ch_m_clothes_03_la/view_left.png",
+    "ch_m_clothes_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_03_fa",
+   "glb": "ch_m_clothes_03_fa/model.glb",
+   "renders": [
+    "ch_m_clothes_03_fa/view_front.png",
+    "ch_m_clothes_03_fa/view_back.png",
+    "ch_m_clothes_03_fa/view_left.png",
+    "ch_m_clothes_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_03_ha",
+   "glb": "ch_m_clothes_03_ha/model.glb",
+   "renders": [
+    "ch_m_clothes_03_ha/view_front.png",
+    "ch_m_clothes_03_ha/view_back.png",
+    "ch_m_clothes_03_ha/view_left.png",
+    "ch_m_clothes_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_03_sa",
+   "glb": "ch_m_clothes_03_sa/model.glb",
+   "renders": [
+    "ch_m_clothes_03_sa/view_front.png",
+    "ch_m_clothes_03_sa/view_back.png",
+    "ch_m_clothes_03_sa/view_left.png",
+    "ch_m_clothes_03_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_clothes_03_aa",
+   "glb": "ch_m_clothes_03_aa/model.glb",
+   "renders": [
+    "ch_m_clothes_03_aa/view_front.png",
+    "ch_m_clothes_03_aa/view_back.png",
+    "ch_m_clothes_03_aa/view_left.png",
+    "ch_m_clothes_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_03_la",
+   "glb": "ch_w_clothes_03_la/model.glb",
+   "renders": [
+    "ch_w_clothes_03_la/view_front.png",
+    "ch_w_clothes_03_la/view_back.png",
+    "ch_w_clothes_03_la/view_left.png",
+    "ch_w_clothes_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_03_fa",
+   "glb": "ch_w_clothes_03_fa/model.glb",
+   "renders": [
+    "ch_w_clothes_03_fa/view_front.png",
+    "ch_w_clothes_03_fa/view_back.png",
+    "ch_w_clothes_03_fa/view_left.png",
+    "ch_w_clothes_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_03_ha",
+   "glb": "ch_w_clothes_03_ha/model.glb",
+   "renders": [
+    "ch_w_clothes_03_ha/view_front.png",
+    "ch_w_clothes_03_ha/view_back.png",
+    "ch_w_clothes_03_ha/view_left.png",
+    "ch_w_clothes_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_clothes_03_aa",
+   "glb": "ch_w_clothes_03_aa/model.glb",
+   "renders": [
+    "ch_w_clothes_03_aa/view_front.png",
+    "ch_w_clothes_03_aa/view_back.png",
+    "ch_w_clothes_03_aa/view_left.png",
+    "ch_w_clothes_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_03_la",
+   "glb": "ch_m_light_03_la/model.glb",
+   "renders": [
+    "ch_m_light_03_la/view_front.png",
+    "ch_m_light_03_la/view_back.png",
+    "ch_m_light_03_la/view_left.png",
+    "ch_m_light_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_03_fa",
+   "glb": "ch_m_light_03_fa/model.glb",
+   "renders": [
+    "ch_m_light_03_fa/view_front.png",
+    "ch_m_light_03_fa/view_back.png",
+    "ch_m_light_03_fa/view_left.png",
+    "ch_m_light_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_03_ha",
+   "glb": "ch_m_light_03_ha/model.glb",
+   "renders": [
+    "ch_m_light_03_ha/view_front.png",
+    "ch_m_light_03_ha/view_back.png",
+    "ch_m_light_03_ha/view_left.png",
+    "ch_m_light_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_03_sa",
+   "glb": "ch_m_light_03_sa/model.glb",
+   "renders": [
+    "ch_m_light_03_sa/view_front.png",
+    "ch_m_light_03_sa/view_back.png",
+    "ch_m_light_03_sa/view_left.png",
+    "ch_m_light_03_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_light_03_aa",
+   "glb": "ch_m_light_03_aa/model.glb",
+   "renders": [
+    "ch_m_light_03_aa/view_front.png",
+    "ch_m_light_03_aa/view_back.png",
+    "ch_m_light_03_aa/view_left.png",
+    "ch_m_light_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_03_la",
+   "glb": "ch_w_light_03_la/model.glb",
+   "renders": [
+    "ch_w_light_03_la/view_front.png",
+    "ch_w_light_03_la/view_back.png",
+    "ch_w_light_03_la/view_left.png",
+    "ch_w_light_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_03_fa",
+   "glb": "ch_w_light_03_fa/model.glb",
+   "renders": [
+    "ch_w_light_03_fa/view_front.png",
+    "ch_w_light_03_fa/view_back.png",
+    "ch_w_light_03_fa/view_left.png",
+    "ch_w_light_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_03_ha",
+   "glb": "ch_w_light_03_ha/model.glb",
+   "renders": [
+    "ch_w_light_03_ha/view_front.png",
+    "ch_w_light_03_ha/view_back.png",
+    "ch_w_light_03_ha/view_left.png",
+    "ch_w_light_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_03_sa",
+   "glb": "ch_w_light_03_sa/model.glb",
+   "renders": [
+    "ch_w_light_03_sa/view_front.png",
+    "ch_w_light_03_sa/view_back.png",
+    "ch_w_light_03_sa/view_left.png",
+    "ch_w_light_03_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_light_03_aa",
+   "glb": "ch_w_light_03_aa/model.glb",
+   "renders": [
+    "ch_w_light_03_aa/view_front.png",
+    "ch_w_light_03_aa/view_back.png",
+    "ch_w_light_03_aa/view_left.png",
+    "ch_w_light_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_03_la",
+   "glb": "ch_m_heavy_03_la/model.glb",
+   "renders": [
+    "ch_m_heavy_03_la/view_front.png",
+    "ch_m_heavy_03_la/view_back.png",
+    "ch_m_heavy_03_la/view_left.png",
+    "ch_m_heavy_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_03_fa",
+   "glb": "ch_m_heavy_03_fa/model.glb",
+   "renders": [
+    "ch_m_heavy_03_fa/view_front.png",
+    "ch_m_heavy_03_fa/view_back.png",
+    "ch_m_heavy_03_fa/view_left.png",
+    "ch_m_heavy_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_03_ha",
+   "glb": "ch_m_heavy_03_ha/model.glb",
+   "renders": [
+    "ch_m_heavy_03_ha/view_front.png",
+    "ch_m_heavy_03_ha/view_back.png",
+    "ch_m_heavy_03_ha/view_left.png",
+    "ch_m_heavy_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_03_sa",
+   "glb": "ch_m_heavy_03_sa/model.glb",
+   "renders": [
+    "ch_m_heavy_03_sa/view_front.png",
+    "ch_m_heavy_03_sa/view_back.png",
+    "ch_m_heavy_03_sa/view_left.png",
+    "ch_m_heavy_03_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_m_heavy_03_aa",
+   "glb": "ch_m_heavy_03_aa/model.glb",
+   "renders": [
+    "ch_m_heavy_03_aa/view_front.png",
+    "ch_m_heavy_03_aa/view_back.png",
+    "ch_m_heavy_03_aa/view_left.png",
+    "ch_m_heavy_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_03_la",
+   "glb": "ch_w_heavy_03_la/model.glb",
+   "renders": [
+    "ch_w_heavy_03_la/view_front.png",
+    "ch_w_heavy_03_la/view_back.png",
+    "ch_w_heavy_03_la/view_left.png",
+    "ch_w_heavy_03_la/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_03_fa",
+   "glb": "ch_w_heavy_03_fa/model.glb",
+   "renders": [
+    "ch_w_heavy_03_fa/view_front.png",
+    "ch_w_heavy_03_fa/view_back.png",
+    "ch_w_heavy_03_fa/view_left.png",
+    "ch_w_heavy_03_fa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_03_ha",
+   "glb": "ch_w_heavy_03_ha/model.glb",
+   "renders": [
+    "ch_w_heavy_03_ha/view_front.png",
+    "ch_w_heavy_03_ha/view_back.png",
+    "ch_w_heavy_03_ha/view_left.png",
+    "ch_w_heavy_03_ha/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_03_sa",
+   "glb": "ch_w_heavy_03_sa/model.glb",
+   "renders": [
+    "ch_w_heavy_03_sa/view_front.png",
+    "ch_w_heavy_03_sa/view_back.png",
+    "ch_w_heavy_03_sa/view_left.png",
+    "ch_w_heavy_03_sa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_w_heavy_03_aa",
+   "glb": "ch_w_heavy_03_aa/model.glb",
+   "renders": [
+    "ch_w_heavy_03_aa/view_front.png",
+    "ch_w_heavy_03_aa/view_back.png",
+    "ch_w_heavy_03_aa/view_left.png",
+    "ch_w_heavy_03_aa/view_right.png"
+   ]
+  },
+  {
+   "id": "ch_shield_03",
+   "glb": "ch_shield_03/model.glb",
+   "renders": [
+    "ch_shield_03/view_front.png",
+    "ch_shield_03/view_back.png",
+    "ch_shield_03/view_left.png",
+    "ch_shield_03/view_right.png"
+   ]
+  }
+ ]
+}

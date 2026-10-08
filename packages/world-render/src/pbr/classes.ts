@@ -174,9 +174,20 @@ export function parseClassOverrides(raw: unknown): { overrides: Map<string, Mate
   return out
 }
 
-/** `classify` with the override file (and a set's own resolved class) first. */
+/**
+ * PLAZA-RAIN: classes the code knows better than the built sets (the texture pipeline baked `default` into them, and
+ * the override file is not shipped): the Jangan plaza's paving, `cj_jang_gate07` (a "gate" texture by name, the
+ * flagstones of the plaza and the gate squares by use), is stone, so it darkens, glosses and pools in the rain like the
+ * stone fields (puddle weight 0.9) instead of the `default` class's 0 (no puddles, a 0.75 film).
+ */
+export const BUILTIN_CLASS_OVERRIDES: ClassOverrides = new Map<string, MaterialClass>([
+  ['prim/mtrl/bldg/china/jangan01/cj_jang_gate07.ddj', 'stone'],
+])
+
+/** `classify` with the override file, the built-in overrides and a set's own resolved class first. */
 export function resolveClass(key: string, hints: ClassifyHints = {}, overrides?: ClassOverrides | null, setClass?: MaterialClass | null): MaterialClass {
-  return overrides?.get(overrideKey(key)) ?? setClass ?? classify(key, hints)
+  const k = overrideKey(key)
+  return overrides?.get(k) ?? BUILTIN_CLASS_OVERRIDES.get(k) ?? setClass ?? classify(key, hints)
 }
 
 // ---- terrain surface classes (Classic terrain shader, layer-map alpha) ------------------------------------------

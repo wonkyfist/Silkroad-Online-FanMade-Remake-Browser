@@ -3,7 +3,8 @@
  *
  * `createCoastPass` runs once, before the terrain step, when the world preset names a coast config (WorldPreset.coast):
  * 1. reads coast.json and the retail .m of every region in the coast domain (./retail.ts);
- * 2. runs the procedural pass (./pass.ts), merges the authored height layers (./authored.ts), paints the texture
+ * 2. runs the procedural pass (./pass.ts), merges the authored height layers (./authored.ts), drowns coast.json's
+ *    `drown` area (./drown.ts: Jangan an island, docs/COAST.md §4.1), paints the texture
  *    words (./paint.ts), fills the sea mask (./field.ts) and counts the synthetic regions to emit (./census.ts);
  * 3. writes coast/field.png (manifest.coast, §8.1).
  * The returned object is the region-source overlay (`source`, ./source.ts: terrain, normals' heights, navigation) and
@@ -25,6 +26,7 @@ import { settleBanks } from './banks.ts'
 import { changedRegions, emitCensus } from './census.ts'
 import * as checks from './checks.ts'
 import { parseCoastConfig, type CoastConfig } from './config.ts'
+import { drownArea, drownedRegions } from './drown.ts'
 import { coastField, seaMasks } from './field.ts'
 import { slopeDeg } from './grid.ts'
 import { CELL_M, type RegionRect } from './lattice.ts'
@@ -80,6 +82,8 @@ export interface CoastRun extends CoastPass {
   typeNames(): Map<number, string>
   /** The footprints of the placements C9 dropped (empty before the placement pass): the minimap draws over them. */
   dropFootprints(): DropFootprint[]
+  /** Whether region (x, z) is drowned (./drown.ts DROWNED_REGION_SHARE): no zone name, no place, open sea on the map. */
+  drowned(x: number, z: number): boolean
 }
 
 export async function createCoastPass(opts: CoastPassOptions): Promise<CoastRun> {
@@ -123,6 +127,10 @@ export async function createCoastPass(opts: CoastPassOptions): Promise<CoastRun>
   const layers = await readAuthoredHeights(contentDir, authoredErrors)
   const authored = mergeAuthoredHeights(result, layers, authoredErrors)
   if (authored.weighted) result.slope = Float32Array.from(slopeDeg(result.h, result.shape.rows, result.shape.cols, CELL_M))
+  // the drowned area (coast.json drown, ./drown.ts): open sea from here on, for every step below
+  const drown = drownArea(result, cfg)
+  const drownedSet = drownedRegions(result)
+  for (let i = 0; i < slPlane.length; i++) if (result.masks.drowned?.[i] || result.masks.opened?.[i]) slPlane[i] = 0
   // the banks of the in-bounds sea-level water (W10R CST-H1/H2): no water plane ends over a dry trench below SL
   const banks = settleBanks(result, cfg, slPlane)
   for (const e of authoredErrors) opts.warnings.push(`coast: ${e}`)
@@ -179,7 +187,7 @@ export async function createCoastPass(opts: CoastPassOptions): Promise<CoastRun>
   const secs = (performance.now() - t0) / 1000
   opts.log(`coast: ${cfg.domain.x[0]}-${cfg.domain.x[1]} x ${cfg.domain.z[0]}-${cfg.domain.z[1]} (phase ${cfg.phase}) in ${secs.toFixed(1)} s; ` +
     `${census.emitted.length} synthetic regions (${census.land} land, ${census.shallow} shallow), ${changed.length} changed export regions, ` +
-    `${authored.layers} authored layer(s); checks ${problems.length ? problems.join('; ') : 'clean'}`)
+    `${authored.layers} authored layer(s)${drown ? `, ${drownedSet.size} drowned region(s) (${drown.islands} island(s))` : ''}; checks ${problems.length ? problems.join('; ') : 'clean'}`)
 
   const run: CoastRun = {
     config: cfg,
@@ -224,6 +232,9 @@ export async function createCoastPass(opts: CoastPassOptions): Promise<CoastRun>
       }
       return out
     },
+    drowned(x, z) {
+      return drownedSet.has((z << 8) | x)
+    },
     dropFootprints() {
       return c9 ? (c9 as ReturnType<typeof placementEdits>).dropFootprints : []
     },
@@ -267,6 +278,7 @@ export async function createCoastPass(opts: CoastPassOptions): Promise<CoastRun>
         footprintsAccepted: c9 ? (c9 as ReturnType<typeof placementEdits>).accepted : [],
         placementsDropUnmatched: c9 ? (c9 as ReturnType<typeof placementEdits>).unmatched : [],
         banks: banks.stats,
+        drown: drown ? { vertices: drown.vertices, openedVertices: drown.openedVertices, islands: drown.islands, islandVertices: drown.islandVertices, regions: drown.regions } : null,
         seaVertices: countOf(masks.ocean),
         sandClassVertices: countClass(result, COAST_CLASS.sand) + countClass(result, COAST_CLASS.wetSand),
       }

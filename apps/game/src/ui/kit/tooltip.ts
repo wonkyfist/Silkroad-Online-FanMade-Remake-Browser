@@ -24,6 +24,13 @@ export interface KitTooltipLine {
 export const TOOLTIP_STYLES: Record<KitTooltipLine['cls'], string> = {
   title: 'kit-tt-title',
   'title-plus': 'kit-tt-title plus',
+  // docs/RARITY.md §5.6: a seal's name and banner
+  'title-star': 'kit-tt-title rarity star',
+  'title-moon': 'kit-tt-title rarity moon',
+  'title-sun': 'kit-tt-title rarity sun',
+  'rare-star': 'kit-tt-rarity star',
+  'rare-moon': 'kit-tt-rarity moon',
+  'rare-sun': 'kit-tt-rarity sun',
   type: 'kit-tt-type',
   stat: 'kit-tt-stat',
   req: 'kit-tt-req',

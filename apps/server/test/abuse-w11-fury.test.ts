@@ -89,7 +89,7 @@ describe('H-11 fury and leash griefing (UNIQUES §3.6 reset, §10 risks)', () =>
     hit(tank.p, Math.ceil(m.maxHp * 0.85)) // three bands: 4 adds (capped), enraged
     h.runTo(h.now + 50)
     jump(h.now + 601_000) // and furious
-    expect(m.damageMul).toBe(2.5)
+    expect(m.damageMul).toBe(3.75) // fury x3 x enrage 1.25 (CLIMB §2.6)
     expect(adds().length).toBeGreaterThan(0)
     // The tank runs out of the leash; in the same server tick the archer's projectile (fired before) lands on her.
     h.world.warp(tank.p, m.home[0] + 80, 0, m.home[1], h.now)

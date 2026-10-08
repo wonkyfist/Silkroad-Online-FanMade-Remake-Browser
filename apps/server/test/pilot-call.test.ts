@@ -55,13 +55,13 @@ const pastTurn = (s: S, account: number, at: number) => {
 const offers = (s: S, x: { inbox: unknown[] }) => s.h.all(x.inbox as never, 'pilotOffer')
 
 describe('the call (§2.2, §4.5)', () => {
-  it('a GM start opens it for everyone: the draw time, the volunteers, level 20 only, each player its own eligibility', () => {
+  it('a GM start opens it for everyone: the draw time, the volunteers, level 25 only (the Climb), each player its own eligibility', () => {
     const s = setup()
     const low = s.h.hero({ pos: [10, 0, 10] as Vec3, level: 10, name: 'Low' })
     const r = s.gm('start')
     expect(r.ok, r.message).toBe(true)
     const ev = s.last(s.pc.inbox, 'huntEvent')!.event
-    expect(ev).toMatchObject({ phase: 'call', mob: TG, callEndsAt: s.h.now + 10 * MIN, volunteers: 0, minLevel: 20, you: { volunteered: false, eligible: true } })
+    expect(ev).toMatchObject({ phase: 'call', mob: TG, callEndsAt: s.h.now + 10 * MIN, volunteers: 0, minLevel: 25, you: { volunteered: false, eligible: true } })
     expect(ev.pilot).toBeUndefined()
     expect(s.last(low.inbox, 'huntEvent')!.event.you).toEqual({ volunteered: false, eligible: false, why: 'level' })
     expect(s.pilot.store.get(ev.id)).toMatchObject({ phase: 'call', origin: 'gm', call_ends_at: s.h.now + 10 * MIN })
@@ -107,7 +107,7 @@ describe('the call (§2.2, §4.5)', () => {
     const acc = accountOf(s, s.pc.p)
     const row = s.h.store.createCharacter(acc, 'PixiAlt', 'CHAR_CH_MAN_ADVENTURER', 'sword', 'jangan', 4)
     if (typeof row === 'string') throw new Error(row)
-    s.h.store.saveProgress(row.id, { level: 20, exp: 0, sp: 0, spExp: 0, str: 39, int: 39, statPoints: 0 })
+    s.h.store.saveProgress(row.id, { level: 25, exp: 0, sp: 0, spExp: 0, str: 44, int: 44, statPoints: 0 })
     played(s, { characterId: row.id } as Player, 11 * HOUR)
     const alt = s.h.hero({ characterId: row.id, pos: [150, 0, 152] })
     expect(volunteer(s, alt)).toMatchObject({ ok: false, reason: 'not_eligible', message: expect.stringMatching(/Another character of your account/) })

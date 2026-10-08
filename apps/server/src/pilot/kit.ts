@@ -319,7 +319,9 @@ export class Kit {
   // ---- Call the Pack ------------------------------------------------------------------------------------------
 
   private pack(t: Turn, m: Mob, e: KitEntry, def: Extract<PilotAbilityDef, { kind: 'pack' }>, target: Player | null, now: number): Fail | true {
-    const mob = this.g.data.mob(def.mob)
+    // the Climb (docs/CLIMB.md §2.6): her pack follows her summons' remap (White Tigers -> Tiger Girl's Guard)
+    const mapped = this.g.uniques?.unique(m.def.code)?.def.summons.mobs?.[def.mob]
+    const mob = (mapped ? this.g.data.mob(mapped) : undefined) ?? this.g.data.mob(def.mob)
     if (!mob) return fail('not_found')
     const w = this.g.world
     this.endStalk(t, m, now)

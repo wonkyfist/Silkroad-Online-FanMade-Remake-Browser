@@ -12,6 +12,11 @@ const CSS = `
 .entity-label.kind-item { font: 12px var(--font-body); }
 .entity-label.kind-item .name { color: #fff3c4; }
 .entity-label.kind-item.owned .name { color: #c9a39c; }
+/* docs/RARITY.md §5.6: a seal on the ground carries its tier's colour (dimmed while someone else owns it). */
+.entity-label.kind-item.rarity-star .name { color: #c9a6ff; text-shadow: 0 0 4px rgba(150, 100, 255, 0.9), 1px 1px 0 #000; }
+.entity-label.kind-item.rarity-moon .name { color: #8ff5da; text-shadow: 0 0 4px rgba(60, 220, 180, 0.9), 1px 1px 0 #000; }
+.entity-label.kind-item.rarity-sun .name { color: #ffc24a; text-shadow: 0 0 5px rgba(255, 140, 20, 0.95), 1px 1px 0 #000; }
+.entity-label.kind-item.owned[class*='rarity-'] .name { opacity: 0.7; }
 .entity-label.dead .name, .entity-label.dead .level { color: #9a9a9a; }
 .entity-label.hover .name { text-decoration: underline; text-underline-offset: 3px; }
 .entity-label .badge-gm { color: #7fd3ff; font-weight: bold; margin-right: 4px; }

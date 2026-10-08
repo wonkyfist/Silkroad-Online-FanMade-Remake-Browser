@@ -43,19 +43,21 @@ export function gainExp(p: Progress, exp: number, spExp: number, cap: number, ex
 }
 
 /**
- * SP a typical player owns on reaching `level` at SP_RATE 1 (docs/BALANCE.md §4, the greedy-build table): the kill
- * SP-EXP of levels 1 … level−1 (kill SP-EXP = kill EXP = each level's EXP minus that level's questline EXP) / 400,
- * plus the questline's SP of those levels. Computed by work/tmp/balance/sim.ts over the real export and
- * content/quests/jangan.json; index = level − 1. Level 20 = 2,530 SP (1,957 from kills + 573 from quests).
+ * SP a typical player owns on reaching `level` at SP_RATE 1 on the Climb's curve (docs/CLIMB.md §5.2, cap 25): the
+ * kill SP-EXP of levels 1 … level−1 (kill SP-EXP = kill EXP = each level's EXP minus its quest share: 50 / 35 / 30 /
+ * 25 / 20 % by band, 1–5, 6–10, 11–15, 16–20, 21–24) / 400, plus the quest SP (quest EXP / 600), over
+ * content/climb/levels.json. Index = level − 1. Level 20 = 1,533 SP, level 25 = 3,575 (CLIMB §5.2's ≈ 3,575).
+ * (The pre-Climb table, retail curve and the old questline: 0, 2, 4, 7, 10, 16, 28, 48, 78, 118, 171, 250, 357, 499,
+ * 676, 894, 1182, 1546, 1993, 2530.)
  *
- *   level  1  2  3  4   5   6   7   8   9   10   11   12   13   14   15   16    17    18    19    20
- *   SP     0  2  4  7  10  16  28  48  78  118  171  250  357  499  676  894  1182  1546  1993  2530
+ *   level  1  2  3   4   5   6   7   8    9   10   11   12   13   14   15   16   17    18    19    20    21    22    23    24    25
+ *   SP     0  3  9  17  29  45  67  97  135  183  241  312  396  496  611  746  903  1085  1293  1533  1813  2144  2536  3005  3575
  */
-export const TYPICAL_SP_BY_LEVEL: readonly number[] = [0, 2, 4, 7, 10, 16, 28, 48, 78, 118, 171, 250, 357, 499, 676, 894, 1182, 1546, 1993, 2530]
+export const TYPICAL_SP_BY_LEVEL: readonly number[] = [0, 3, 9, 17, 29, 45, 67, 97, 135, 183, 241, 312, 396, 496, 611, 746, 903, 1085, 1293, 1533, 1813, 2144, 2536, 3005, 3575]
 
 /**
- * `TYPICAL_SP_BY_LEVEL` for any level. Past the table (LEVEL_CAP > 20) every further level adds its kill SP-EXP, which
- * is the whole level's EXP there (no questline): floor(expToNext(l) / 400) for l = 20 … level−1 (0 without `expToNext`).
+ * `TYPICAL_SP_BY_LEVEL` for any level. Past the table (LEVEL_CAP > 25) every further level adds its kill SP-EXP, which
+ * is the whole level's EXP there (no questline): floor(expToNext(l) / 400) for l = 25 … level−1 (0 without `expToNext`).
  */
 export function typicalSp(level: number, expToNext?: (level: number) => number): number {
   const table = TYPICAL_SP_BY_LEVEL

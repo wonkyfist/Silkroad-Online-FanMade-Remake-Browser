@@ -12,7 +12,8 @@
     "paint.allowInsideBoundsM 182 = the S1 patch's depth (0.95 region): S1's waterline lies 62 m (12-105 m) inside the line and its sand up to 48 m behind it, so the old 48 m left the whole dry beach on the retail grass tile (CST-C2, from the X1 look review).",
     "X2: paint.palette 'wet-sand' is tile 154 (the sea bed's warm sand), not 70: the tile-70 remaster is de-lit at x0.65 and the PBR coast wet band darkens it again, so the waterline read as a flat grey strip (look item 2); the wet look now comes from the wet band. The S1 patch is sea only in front of its waterline (no lagoon over the meadow behind the dune), its sand edge wanders by up to 14 m and its waterline has small bays and cusps (look items 1-3).",
     "W10R fix (CST-H1/H2, coast/banks.ts): dry ground below the sea level that touches the in-bounds sea-level water (outside the bounds, or in a height patch) becomes sea, so the ocean continues the +5 m plane instead of a water wall; a pocket the sea mask does not reach is filled to SL + 0.5 m and the ring blocks over it get water at SL (buried, C10). The S2-bank patch takes in the dry retail river channel of 166_90 (166.0-166.4 x 90.95-91.0, down to -27 m, no water block) next to the S1 patch, so it joins the river as water; the patch's sea more than 0.4 m deep is closed in the nav (C7).",
-    "P-DATA (wave 10r polish): sections[].area names the coast in zones.json (data/zones.ts coastAreaNamer: the synthetic and nameless ring regions and the S1 patch row read e.g. 'Jangan South Beach'); the banks pocket at 175_99-175_103 is a smooth bank now, not a flat SL + 0.5 m fill (coast/banks.ts); placements.drop / placements.accept record the hand check of the footprint findings (a mesh-level check of each model against the old and new ground, and a look in game)."
+    "P-DATA (wave 10r polish): sections[].area names the coast in zones.json (data/zones.ts coastAreaNamer: the synthetic and nameless ring regions and the S1 patch row read e.g. 'Jangan South Beach'); the banks pocket at 175_99-175_103 is a smooth bank now, not a flat SL + 0.5 m fill (coast/banks.ts); placements.drop / placements.accept record the hand check of the footprint findings (a mesh-level check of each model against the old and new ground, and a look in game).",
+    "Jangan island (2026-10-06, the user: only the Jangan region on the map, pure ocean round it): drown sinks the Western China side (the West_China regions across the strait: Western China Ferry, Main Road, Ruins, Entrance-Western China Donwhang, Earth Ghost Canyon, Okmungwan Field) and Option A's land bridge toward Donwhang (the corridor, its faces A-S and A-N, N1 and N2) under the sea after the pass (coast/drown.ts). regions are whole regions; soft regions are the strait's nameless border regions, where Jangan's own shore runs (only their water and the cut-off desert bits and islet drown); areas the corridor's south flank, the west of 155_96 (the flank and its inlet, up to the island's own shore) the hooked tip of the Western Strait beach the cut left, and the bay mouth's sand bar (a line of sand in open sea now), which cross region lines; openWater is the old strait's and Jangan Bay's in-bounds retail water, open sea now (whole 32 m blocks: no retail plane, the ocean draws it and the map shades it like the sea); islands the cut leaves (cliff slivers past x 163) drown with it. The corridor and its sections stay in this file (the pass still runs them); everything they shape lies in the drowned area."
   ],
   "seed": 1188,
   "seaLevelM": 5.0,
@@ -189,5 +190,35 @@
     ]
   },
   "places": [{ "name": "beach-south", "x": 170.5, "z": 90.6 }],
-  "ocean": { "mapColor": "#2a5d7c", "fieldMetresPerTexel": 4 }
+  "ocean": { "mapColor": "#2a5d7c", "fieldMetresPerTexel": 4 },
+  "drown": {
+    "regions": [
+      { "x": [145, 162], "z": [100, 105] },
+      { "x": [145, 161], "z": [99, 99] },
+      { "x": [145, 158], "z": [98, 98] },
+      { "x": [145, 155], "z": [97, 97] },
+      { "x": [145, 154], "z": [96, 96] }
+    ],
+    "soft": [
+      { "x": [159, 161], "z": [98, 98] },
+      { "x": [156, 157], "z": [97, 97] },
+      { "x": [162, 162], "z": [99, 99] }
+    ],
+    "areas": [
+      { "x": [145, 154.8], "z": [95, 96] },
+      { "x": [155, 155.68], "z": [96, 97] },
+      { "x": [154.8, 155.35], "z": [95.78, 96] },
+      { "x": [163.3, 166.4], "z": [102.85, 103.3] }
+    ],
+    "openWater": [
+      { "x": [155.5, 163.2], "z": [95.6, 99.6] },
+      { "x": [163, 166], "z": [99.2, 106] },
+      { "x": [166, 171], "z": [100.95, 106] }
+    ],
+    "islandMaxKm2": 0.5,
+    "depthM": [2, 45],
+    "shelfM": 450,
+    "rampDeg": 24,
+    "rampMinM": 24
+  }
 }

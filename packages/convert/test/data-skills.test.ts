@@ -137,7 +137,8 @@ describe.skipIf(!hasConfig)('skills export (vSRO 1.188 client)', () => {
   })
 
   it('keeps the existing fields and adds the new ones', () => {
-    expect(r.skills).toHaveLength(180)
+    expect(r.skills).toHaveLength(253) // masteries to 25 (MAX_SKILL_MASTERY_LEVEL, docs/CLIMB.md §5.2): 180 up to 20, 73 rows of 21-25
+    expect(r.skills.filter(s => s.masteryLevel <= 20)).toHaveLength(180)
     expect(skill('SKILL_CH_SWORD_SMASH_A_01')).toMatchObject({
       name: 'Strike Smash', castMs: 411, actionMs: 1022, category: 'melee', kind: 'attack', aniGroup: 'SWORD',
       targets: { required: true, groups: ['enemy_mob', 'enemy_player'] }, ui: { tab: 'weapon', page: 0, column: 0, row: 0 },

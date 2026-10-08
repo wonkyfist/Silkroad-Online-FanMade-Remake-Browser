@@ -1,7 +1,7 @@
 /**
  * The skills engine on the REAL export (work/out/data skills.json, masteries.json, levels.json, items.json, mobs.json).
- * Skipped when the export is not there. Every one of the Chinese skill lines up to mastery 20 is learned with the GM
- * path and used by a level-20 character on a real monster; each must do what its kind says (docs/SKILLS.md §2.1) and
+ * Skipped when the export is not there. Every one of the Chinese skill lines up to mastery 25 (the Climb's cap, docs/CLIMB.md
+ * §5.2; 20 before) is learned with the GM path and used by a level-25 character on a real monster; each must do what its kind says (docs/SKILLS.md §2.1) and
  * every message must pass the client parser.
  */
 import { existsSync } from 'node:fs'
@@ -29,14 +29,15 @@ describe.skipIf(!HAVE)('skills on the real export', () => {
     h = null
   })
 
-  it('has the 41 Chinese skill lines up to mastery 20 and the four basic attacks', () => {
+  it('has the 52 Chinese skill lines up to mastery 25 and the four basic attacks (41 up to 20; 11 new lines at 23-25)', () => {
     expect(book.masteries.size).toBe(7)
     const lines = [...book.byGroup.keys()]
-    expect(lines).toHaveLength(41)
+    expect(lines).toHaveLength(52)
     const per = Object.fromEntries(MASTERY_CODES.map((m) => [m, book.linesOf.get(m)?.length ?? 0]))
-    expect(per).toEqual({ BICHEON: 8, HEUKSAL: 6, PACHEON: 6, COLD: 6, LIGHTNING: 5, FIRE: 5, FORCE: 5 })
+    expect(per).toEqual({ BICHEON: 8, HEUKSAL: 7, PACHEON: 8, COLD: 8, LIGHTNING: 7, FIRE: 7, FORCE: 7 })
+    expect([...book.byGroup.values()].filter((rows) => rows[0]!.masteryLevel <= 20)).toHaveLength(41)
     for (const code of ['SKILL_PUNCH_01', 'SKILL_CH_SWORD_BASE_01', 'SKILL_CH_SPEAR_BASE_01', 'SKILL_CH_BOW_BASE_01']) expect(book.skill(code)?.basicAttack, code).toBe(true)
-    for (const rows of book.byGroup.values()) for (const r of rows) expect(r.masteryLevel).toBeLessThanOrEqual(20)
+    for (const rows of book.byGroup.values()) for (const r of rows) expect(r.masteryLevel).toBeLessThanOrEqual(25)
     expect(book.chain(book.skill('SKILL_CH_SWORD_CHAIN_A_1S_01')!)?.code).toBe('SKILL_CH_SWORD_CHAIN_A_2S_01')
   })
 
@@ -61,9 +62,9 @@ describe.skipIf(!HAVE)('skills on the real export', () => {
       const row = rows[rows.length - 1]
       const weapon = row.weapons.includes('bow') || row.requiresItem?.typeId3 === 6 ? 'bow' : row.weapons.includes('spear') ? 'spear' : 'sword'
       const wear = row.requiresItem?.typeId3 === 4 ? [shield!.code] : []
-      h = skillHarness({ data, book, rng: () => 0.3 })
-      const { p, inbox } = h.hero({ level: 20, weapon, wear })
-      expect(runSkillCommand(h.gameplay.skills, p, ['all', '20'], 20, h.now).ok).toBe(true)
+      h = skillHarness({ data, book, rng: () => 0.3, config: { levelCap: 25 } })
+      const { p, inbox } = h.hero({ level: 25, weapon, wear })
+      expect(runSkillCommand(h.gameplay.skills, p, ['all', '25'], 25, h.now).ok).toBe(true)
       h.gameplay.setVitals(p, p.maxHp, p.maxMp)
       const m = h.dummy(0, 2, { ...mob, hp: 1_000_000, walkSpeed: 0, runSpeed: 0, attackIntervalMs: 1_000_000 })
       let target: number | undefined
@@ -121,7 +122,7 @@ describe.skipIf(!HAVE)('skills on the real export', () => {
       h.cleanup()
       h = null
     }
-    expect(report).toHaveLength(41)
+    expect(report).toHaveLength(52)
   })
 
   it('basic attacks use the weapon rows (spear 1 hit at the row cadence, sword 2 hits)', () => {

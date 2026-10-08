@@ -6,6 +6,7 @@
  */
 import { QUALITY_PRESETS } from '@sro/world-render'
 import { describe, expect, it } from 'vitest'
+import { setTownLifeOff } from '../src/settings.ts'
 import {
   ADVANCED_CHOICES,
   PRESETS,
@@ -38,6 +39,9 @@ import {
 import { FX_BUDGETS } from '../src/world/fx/quality.ts'
 import { optionRows, pageRows, type OptionsHost } from '../src/hud/options.ts'
 import { t } from '../src/i18n/index.ts'
+
+// Town life is switched off in the game (settings.ts TOWN_LIFE_OFF); these tests cover the system itself.
+setTownLifeOff(false)
 
 /** A settings blob as saved before wave 9 (v: 1, no wave-9 keys). */
 const OLD = {
@@ -558,7 +562,7 @@ describe('light shafts row (w12r GODRAYS)', () => {
     }
     const row = optionRows(host, defaultSettings(), 'on').graphics.find(r => r.id === 'graphics.advanced.lightShafts')
     if (row?.kind !== 'choice') throw new Error('row missing')
-    expect(t(row.label)).toBe('Light shafts')
+    expect(t(row.label)).toBe('Volumetric light')
     expect(row.choices.map(c => c.label)).toEqual(['Auto', 'Off', 'Low', 'High'])
     const store = new SettingsStore(null)
     store.set(row.patch('low'))

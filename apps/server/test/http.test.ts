@@ -91,7 +91,7 @@ describe('accounts API', () => {
     expect(r.json).toEqual([{ id: 'jangan', name: 'Jangan', status: 'online', online: 0, capacity: 50, world: 'jangan', clock: expect.any(Object), weather: expect.any(Object), registration: 'open' }])
     const h = await api(s.url, '/health')
     expect(h.json.ok).toBe(true)
-    expect(h.json.schema).toBe(19)
+    expect(h.json.schema).toBe(24)
   })
 
   it('logout revokes the token', async () => {

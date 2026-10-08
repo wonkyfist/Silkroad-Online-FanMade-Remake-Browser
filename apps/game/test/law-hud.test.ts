@@ -30,6 +30,7 @@ describe('law text', () => {
       bounty: 'Bounty on your head: 20,000 gold',
       lapse: 'The warrant lapses in 59:59 online',
       note: 'Offence 2 · accomplice · treason',
+      warn: 'Hunters can attack you anywhere but the Stockade',
     })
     expect(actionFailText('keg_limit')).toBe('Not another Thunder Keg yet.')
   })

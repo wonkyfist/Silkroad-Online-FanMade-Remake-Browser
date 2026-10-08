@@ -5,19 +5,25 @@
  */
 import { Color3, CreateBox, CreateCapsule, CreateCylinder, Matrix, StandardMaterial, TransformNode, Vector3, type Mesh, type Scene } from '@babylonjs/core'
 import { heightScale } from '@sro/appearance'
-import { JUMP_LATE_DROP_MS, variantScale, type EntityState, type EquipSlot, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
+import { JUMP_LATE_DROP_MS, defaultLook, rarityOf, variantScale, type CharLook, type EntityState, type EquipSlot, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
 import { weaponFamilyOf, type Catalog } from '../content/catalog.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 import { sampleMove } from '../net/clock.ts'
 import type { BaseClip, CharacterActor, DeathClip, Look, ModelLibrary } from '../three/models.ts'
+import { PILOT_MODEL, pilotPresetOf, type PilotPreset } from '../three/pilot-char.ts'
+import { licensedAvailable, licensedChoiceFor, licensedEnabled, licensedModel, type LicensedChoice } from '../three/licensed-char.ts'
+import { applyLicensedLook } from '../three/licensed-look.ts'
 import { toScreen } from '../three/project.ts'
 import { el } from '../ui/dom.ts'
 import type { DropAssets } from './drops.ts'
 import { DropVisual } from './drops.ts'
 import type { IdleKind } from './fx/types.ts'
 import { LEVEL_BANDS, levelBand } from './level-band.ts'
+import { setLabelAnchor } from './nameplates.ts'
 import { loadRide, type RideMob } from './ride-mob.ts'
 
+/** The shared shape of the loading stand-in, per scene (EntityView.makeLoadingPlaceholder). */
+const loadingShapes = new WeakMap<Scene, Mesh>()
 /** Above this speed (m/s) the RUN clip plays, below it WALK. */
 const RUN_THRESHOLD = 3.2
 const TURN_RATE = 12
@@ -93,6 +99,7 @@ export function itemLabel(state: EntityState, name: string): string {
 }
 
 let serial = 0
+let warnedUnavailable = false
 
 export class EntityView {
   state: EntityState
@@ -108,6 +115,11 @@ export class EntityView {
    * `actor` stays the rider (the clip leader); the ride's root takes her root's place: it is turned and scaled.
    */
   ride: RideMob | null = null
+  /**
+   * The locomotion clip and rate at a ground speed (m/s), instead of RUN above RUN_THRESHOLD else WALK at 1x: Tiger
+   * Girl's Stalk walks at the rate that matches her speed (world/features/tiger-moves.ts sets it). null = the default.
+   */
+  gait: ((speed: number) => { clip: 'WALK' | 'RUN'; rate: number }) | null = null
   placeholder: Mesh | null = null
   drop: DropVisual | null = null
   /** Invisible pick proxy (metadata.entityId); disabled for yourself, corpses and fading entities. */
@@ -158,6 +170,9 @@ export class EntityView {
     this.hpEl = el('div', 'hp', this.hpFill)
     this.label = el('div', `entity-label kind-${state.kind}${this.isSelf ? ' self' : ''}`, this.nameEl, this.levelEl, this.hpEl)
     this.label.classList.toggle('ghost', !!state.invisible)
+    // docs/RARITY.md §5.6: a seal's name on the ground in its tier's colour.
+    const rare = state.kind === 'item' ? rarityOf(state.model) : null
+    if (rare) this.label.classList.add(`rarity-${rare}`)
     ctx.labels.append(this.label)
     if (state.kind === 'mob') {
       const mob = ctx.catalog.mob(state.model)
@@ -417,8 +432,47 @@ export class EntityView {
   }
 
   /** How this player is drawn: worn items, weapon family (clips), Height and Volume. */
+  /** P1 pilot (docs/CHARACTERS.md §15): `?newchar=1` swaps the own female character's body; null otherwise. */
+  private pilotPreset(): PilotPreset | null {
+    if (this.state.kind !== 'player' || !this.isSelf || typeof location === 'undefined' || this.licensed) return null
+    // the licensed bodies are the standard (§16.8); the pilot stays on `newchar=average|slim|curvy`
+    if (licensedEnabled(location.search)) return null
+    if (this.ctx.catalog.characterOrFallback(this.state.model)?.gender !== 'female') return null
+    return pilotPresetOf(location.search)
+  }
+
+  /** Licensed body (docs/CHARACTERS.md §16, §16.8): set by load() when its files are served; null otherwise (retail). */
+  private licensed: LicensedChoice | null = null
+
+  /**
+   * The licensed body this player is drawn with (its look, or its body's default), if the files are served here; null:
+   * the existing (retail) body: `?newchar=0`, or a server without the pack (a clone from GitHub).
+   */
+  private async licensedChoice(): Promise<LicensedChoice | null> {
+    if (this.state.kind !== 'player' || typeof location === 'undefined') return null
+    const c = licensedChoiceFor(location.search, this.ctx.catalog.characterOrFallback(this.state.model)?.gender, this.state.look, this.state.id, this.isSelf)
+    if (!c) return null
+    if (await licensedAvailable(c)) return c
+    if (!warnedUnavailable) console.info('[entities] licensed character files not served here: the existing bodies are used', licensedModel(c).glb)
+    warnedUnavailable = true
+    return null
+  }
+
+  /** The licensed body in use (null: retail; the bench, tests). */
+  get licensedBody(): LicensedChoice | null {
+    return this.licensed
+  }
+
   look(): Look {
     const family = this.weaponFamily()
+    if (this.licensed) {
+      // §16.10: the look (its own, else the default of the body drawn); the own character takes the 2048 head map
+      const g = this.licensed.gender
+      const charLook = this.state.look?.body === g ? this.state.look : defaultLook(g, this.state.id, this.state.height ?? undefined)
+      return { equip: this.state.equip, family, fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined, height: this.state.height, plus: this.state.equipPlus, licensed: true, charLook, lookHi: this.isSelf }
+    }
+    const pilot = this.pilotPreset()
+    if (pilot) return { equip: this.state.equip, family, fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined, height: this.state.height, plus: this.state.equipPlus, pilot }
     return {
       equip: this.state.equip,
       family,
@@ -441,6 +495,18 @@ export class EntityView {
     else delete this.state.equipPlus
     if (!this.actor) return
     await this.ctx.library.dress(this.actor, this.look()).catch((err: unknown) => console.warn('[world] re-dress failed', err))
+  }
+
+  /**
+   * The look changed (appearance.look, §16.10): drawn at once on a licensed body of the same outfit (makeup, iris, hair,
+   * colours, accessories, build). A look of the other body is ignored (the model never changes gender).
+   */
+  setLook(look: CharLook): void {
+    if (this.kind !== 'player' || (this.state.look && JSON.stringify(this.state.look) === JSON.stringify(look))) return
+    this.state.look = look
+    const lic = this.licensed
+    if (!lic || look.body !== lic.gender || !this.actor) return
+    void applyLicensedLook(this.actor, look, { hi: this.isSelf, decorate: m => this.ctx.library.decorateMaterial(m) }).catch((err: unknown) => console.warn('[world] look failed', err))
   }
 
   /** The +N of the worn items changed alone (no new codes): re-lights the weapon and shield. */
@@ -598,7 +664,10 @@ export class EntityView {
       if (!this.dead) {
         if (this.moving) {
           this.actor.cancelAction(this.moveCancels)
-          this.actor.play((this.move?.speed ?? 0) >= RUN_THRESHOLD ? 'RUN' : 'WALK')
+          const speed = this.move?.speed ?? 0
+          const g = this.gait?.(speed)
+          if (g) this.actor.play(g.clip, false, g.rate)
+          else this.actor.play(speed >= RUN_THRESHOLD ? 'RUN' : 'WALK')
         } else {
           this.actor.cancelAction(this.stopCancels)
           this.actor.play(IDLE_CLIP[this.idleKind])
@@ -633,11 +702,15 @@ export class EntityView {
       return
     }
     let ride: RideMob | null = null
+    // §16.8: a player still loading (or streaming its body) shows a light stand-in, never the retail model first
+    if (s.kind === 'player' && !this.placeholder && !this.disposed) this.makeLoadingPlaceholder()
     try {
       let actor: CharacterActor
       if (s.kind === 'player') {
-        const model = catalog.characterOrFallback(s.model)
-        if (!model) throw new Error(`no model for ${s.model}`)
+        const base = catalog.characterOrFallback(s.model)
+        if (!base) throw new Error(`no model for ${s.model}`)
+        this.licensed = await this.licensedChoice()
+        const model = this.licensed ? { code: base.code, ...licensedModel(this.licensed) } : this.pilotPreset() ? { code: base.code, ...PILOT_MODEL } : base
         actor = await library.character(model, this.look(), onProgress)
       } else {
         const mob = s.kind === 'mob' ? catalog.mob(s.model) : null
@@ -670,6 +743,8 @@ export class EntityView {
       if (s.kind === 'player') console.warn('[world] model failed, using a placeholder', s.model, err)
       onProgress?.(1)
       if (this.disposed) return
+      this.placeholder?.dispose()
+      this.placeholder = null
       this.makePlaceholder()
     }
     if (!this.disposed) this.eachAttachment(a => a.loaded?.())
@@ -688,6 +763,35 @@ export class EntityView {
   /** The root that carries the entity's model, scale and yaw: the ride's for a ridden mob, else the actor's. */
   private bodyRoot(): TransformNode | null {
     return (this.ride?.actor ?? this.actor)?.root ?? null
+  }
+
+  /**
+   * The stand-in of a player whose body is loading (§16.8): one shared translucent capsule shape per scene (an
+   * instance each), soft blue-grey, no shadow, not pickable. load() replaces it with the body (or the error capsule).
+   */
+  private makeLoadingPlaceholder(): void {
+    const scene = this.ctx.scene
+    let src = loadingShapes.get(scene)
+    if (!src || src.isDisposed()) {
+      src = CreateCapsule('ph:loading', { height: 1.7, radius: 0.24, tessellation: 10, capSubdivisions: 3 }, scene)
+      src.bakeTransformIntoVertices(Matrix.Translation(0, 0.85, 0))
+      const m = new StandardMaterial('ph:loading', scene)
+      m.diffuseColor = new Color3(0.62, 0.68, 0.78)
+      m.specularColor = new Color3(0, 0, 0)
+      m.emissiveColor = new Color3(0.12, 0.13, 0.16)
+      m.alpha = 0.35
+      src.material = m
+      src.isPickable = false
+      src.setEnabled(false)
+      src.metadata = { sroNoCast: true }
+      loadingShapes.set(scene, src)
+    }
+    const inst = src.createInstance(`phl${this.id}`)
+    inst.isPickable = false
+    inst.parent = this.root
+    inst.scaling.setAll(this.scale)
+    inst.metadata = { sroNoCast: true, sroLoading: true }
+    this.placeholder = inst as unknown as Mesh
   }
 
   private makePlaceholder(): void {
@@ -723,10 +827,14 @@ export class EntityView {
     if (this.label.hidden === p.visible) this.label.hidden = !p.visible
     if (!p.visible) return
     // G1 rescue: a label that did not move keeps its style (no style invalidation for a still crowd).
-    const tr = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -100%)`
+    const xs = p.x.toFixed(1)
+    const ys = p.y.toFixed(1)
+    const tr = `translate(${xs}px, ${ys}px) translate(-50%, -100%)`
     if (tr !== this.labelAt) {
       this.labelAt = tr
       this.label.style.transform = tr
+      // the numbers of the transform, for the plate layout (nameplates.ts labelAnchor; no CSS read back)
+      setLabelAnchor(this.label, Number(xs), Number(ys))
     }
   }
 
@@ -742,7 +850,7 @@ export class EntityView {
     this.ride?.dispose()
     this.ride = null
     if (this.placeholder) {
-      this.placeholder.material?.dispose()
+      if (!(this.placeholder.metadata as { sroLoading?: boolean } | null)?.sroLoading) this.placeholder.material?.dispose()
       this.placeholder.dispose()
     }
     this.placeholder = null

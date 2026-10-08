@@ -7,7 +7,8 @@
  * Inventory tab beside the bag: 12 slots at the resinfo rects with the `equip_slot_*` silhouettes behind them.
  * The + buttons send `statUp`; the numbers change when the server's `stats` / `statsDelta` arrive.
  */
-import { MAX_STAT_POINTS_PER_REQUEST, type EquipSlot, type PlayerStats } from '@sro/shared'
+import { MAX_STAT_POINTS_PER_REQUEST, TITLE_NAMES, type EquipSlot, type PlayerStats } from '@sro/shared'
+import { climbState } from './climb-state.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 import type { Art } from '../ui/art.ts'
 import { el, place, type Rect } from '../ui/dom.ts'
@@ -68,6 +69,10 @@ export class EquipmentPanel {
   readonly slots = new Map<EquipSlot, SlotView>()
   private readonly nameEl: HTMLElement
   private readonly levelEl: HTMLElement
+  /** The Climb (docs/CLIMB.md §7.3): the worn title under the level; a click wears the next title held. */
+  private readonly titleEl: HTMLElement
+  /** Sends `climbTitle` (set by the HUD). */
+  onTitle: ((code: string) => void) | null = null
 
   constructor(art: Art, items: ItemCatalog, on: (v: SlotView, kind: 'down' | 'context' | 'hover', ev: PointerEvent | MouseEvent | null) => void) {
     this.root = el('div', 'eq-panel')
@@ -76,7 +81,12 @@ export class EquipmentPanel {
     figure.innerHTML = FIGURE_SVG
     this.nameEl = place(el('div', 'eq-name kit-t-value kit-fit'), [50, 18, 78, 15])
     this.levelEl = place(el('div', 'eq-level kit-t-level'), [50, 34, 78, 14])
-    this.root.append(figure, this.nameEl, this.levelEl)
+    this.titleEl = place(el('div', 'eq-title kit-t-label kit-fit'), [30, 50, 118, 14])
+    this.titleEl.style.cssText += ';text-align:center;cursor:pointer;color:#ffd27a;font-size:11px'
+    this.titleEl.addEventListener('click', () => this.nextTitle())
+    climbState.subscribe(() => this.renderTitle())
+    this.renderTitle()
+    this.root.append(figure, this.nameEl, this.levelEl, this.titleEl)
     for (const [slot, spec] of Object.entries(EQUIP_LAYOUT) as [EquipSlot, (typeof EQUIP_LAYOUT)[EquipSlot]][]) {
       const [x, y] = spec.rect
       // The silhouette frames the 32×32 slot: 40×40 boxes (4 px rim), 56×56 for weapon and shield.
@@ -97,6 +107,23 @@ export class EquipmentPanel {
       this.slots.set(slot, v)
       this.root.append(sil, v.root)
     }
+  }
+
+  /** The worn title's name ('' without one); the tooltip lists what a click does. */
+  renderTitle(): void {
+    const v = climbState.get()
+    const shown = climbState.shown()
+    this.titleEl.textContent = shown ? `«${TITLE_NAMES[shown] ?? shown}»` : ''
+    this.titleEl.title = v.titles.length > 1 ? t('climb.title.cycle', { n: v.titles.length }) : ''
+  }
+
+  /** Wears the next title held (the list is newest first; '' = back to the newest). */
+  private nextTitle(): void {
+    const v = climbState.get()
+    if (v.titles.length < 2 || !this.onTitle) return
+    const cur = climbState.shown()
+    const i = cur ? v.titles.indexOf(cur) : -1
+    this.onTitle(v.titles[(i + 1) % v.titles.length]!)
   }
 
   setIdentity(name: string, level: number | null): void {

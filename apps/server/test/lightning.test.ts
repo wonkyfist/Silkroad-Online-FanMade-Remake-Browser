@@ -408,7 +408,7 @@ describe('lightning over the wire', () => {
   let s: TestServer
   let counter = 0
   beforeAll(async () => {
-    s = await startTestServer({ config: { weather: 'auto' } })
+    s = await startTestServer({ config: { weather: 'clear' } })
   })
   afterAll(async () => {
     await s.stopAndClean()

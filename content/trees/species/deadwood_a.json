@@ -17,7 +17,6 @@
   ],
   "replaces": [
     {"source": "res\\nature\\common\\tree\\tre_dry01.bsr"},
-    {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_01.bsr", "tint": "dunhuang"},
     {"source": "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_02.bsr", "tint": "dunhuang"}
   ],
   "params": {"normalRule": "mirror", "normalUp": 0.0, "normalBend": 0.0}

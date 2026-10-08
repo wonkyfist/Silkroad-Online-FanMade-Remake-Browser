@@ -21,10 +21,7 @@
     "res\\nature\\china\\dunhuang\\tree2\\w_cd_twig02_tree01.bsr": {"species":"dh_twig","fit":[1.0001,1.0001],"offset":[-0.02,-0.25]},
     "res\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood03_01.bsr": {"species":"dh_brush","fit":[0.8939,0.5174],"offset":[1.56,14.46]},
     "res\\nature\\china\\dunhuang\\tree3\\w_cd_brhwood04_01.bsr": {"species":"dh_brush","fit":[0.9999,0.9999],"offset":[-10.17,9.26]},
-    "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_01.bsr": {"species":"deadwood_a","fit":[2.0297,2.5659],"offset":[-1.53,-0.42],"tint":"dunhuang"},
     "res\\nature\\china\\dunhuang\\tree3\\w_cd_deadtree_02.bsr": {"species":"deadwood_a","fit":[1.7334,1.922],"offset":[-0.91,-0.83],"tint":"dunhuang"},
-    "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp03.bsr": {"species":"deadwood_b","fit":[0.9655,1.1364],"offset":[-0.09,-0.57],"tint":"dunhuang"},
-    "res\\nature\\china\\dunhuang\\tree3\\w_cd_stumpp05.bsr": {"species":"deadwood_b","fit":[1.0106,2.0194],"offset":[0.4,0.33],"tint":"dunhuang"},
     "res\\nature\\common\\cj_ricestraw.bsr": {"species":"ricestraw","fit":[0.9997,0.9979]},
     "res\\nature\\common\\flower\\flw_g01_wha.bsr": {"species":"flower_w","fit":[0.9964,0.9958]},
     "res\\nature\\common\\flower\\flw_g01_yall.bsr": {"species":"flower_y","fit":[1.0019,0.9987]},
@@ -106,7 +103,6 @@
     "res\\nature\\common\\tree\\tre_tree02.bsr": {"species":"broad02","fit":[1,1.0001],"offset":[-1.89,0.35]},
     "res\\nature\\common\\tree\\tre_willow01.bsr": {"species":"willow03","fit":[0.1956,0.2671],"offset":[-0.54,-1.37],"tint":"willow01"},
     "res\\nature\\common\\tree\\tre_willow02.bsr": {"species":"willow03","fit":[0.323,0.3227],"offset":[-1.83,-0.6],"tint":"willow02"},
-    "res\\nature\\common\\tree\\tre_willow03.bsr": {"species":"willow03","fit":[1,1],"offset":[-2.83,-1.38]},
-    "res\\nature\\oasis\\tarim\\oas_tarim_dvweed_02.bsr": {"species":"weed10","fit":[3.2243,2.5849],"tint":"tarim"}
+    "res\\nature\\common\\tree\\tre_willow03.bsr": {"species":"willow03","fit":[1,1],"offset":[-2.83,-1.38]}
   }
 }

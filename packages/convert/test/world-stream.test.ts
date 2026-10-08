@@ -17,6 +17,8 @@ import { buildZones, checkZones, zoneNameIndex } from '../src/data/zones.ts'
 import { textdataReader } from '../src/data/textdata-source.ts'
 import { openArchive, REPO_ROOT } from '../src/node-io.ts'
 import { convertWorld, rectBounds, regionRange, WORLD_PRESETS } from '../src/world/convert-world.ts'
+import { parseCoastConfig } from '../src/world/coast/config.ts'
+import { configDrowns } from '../src/world/coast/drown.ts'
 import { validateWorldManifest, type WorldManifest } from '../src/world/manifest.ts'
 import { navRegionFile } from '../src/world/nav.ts'
 import { placeSlug } from '../src/world/places.ts'
@@ -220,13 +222,37 @@ describe.skipIf(!hasFields)('work/out/world/jangan-fields (the full export)', ()
     expect(m.bounds).toEqual({ minX: -2304, maxX: 1344, minZ: -1152, maxZ: 1344 })
     expect(m.bounds).toEqual(rectBounds(p.playable!, p.centre))
     expect(m.stream!.playable).toEqual({ x0: 156, x1: 174, z0: 90, z1: 102 })
-    // with the coast the world map grows to the coast domain (docs/COAST.md §11, CST-M)
-    const wm = m.coast ? { x0: 150, x1: 177, z0: 86, z1: 105, width: 1792, height: 1280 } : { x0: 155, x1: 175, z0: 89, z1: 103, width: 1344, height: 960 }
+    // with the coast the world map covers the island and a region of sea round it, in the coast domain (docs/COAST.md §11,
+    // CST-M): the drowned Western China side (§4.1) is not on it
+    const wm = m.coast ? { x0: 152, x1: 176, z0: 86, z1: 105, width: 1600, height: 1280 } : { x0: 155, x1: 175, z0: 89, z1: 103, width: 1344, height: 960 }
     expect(m.stream!.worldMap).toMatchObject({ pxPerRegion: 64, ...wm })
     expect(pngSize(new Uint8Array(readFileSync(join(FIELDS, m.stream!.worldMap!.file))))).toEqual({ width: wm.width, height: wm.height })
     expect(m.spawn).toMatchObject({ x: 96.9, z: -136.9 })
     const names = m.places!.map(x => x.name)
     for (const n of ['jangan', 'grassland', 'north-tiger-mt', 'south-tiger-mt', 'bandits-mountain-stronghold', 'chinese-tomb']) expect(names).toContain(n)
+  })
+
+  it('has no Western China or Donwhang left: no place, no placement in the drowned area, which is open sea (COAST §4.1)', () => {
+    if (!m.coast) return
+    const cfg = parseCoastConfig(readFileSync(join(REPO_ROOT, 'content', 'coast', 'coast.json'), 'utf8'))
+    expect(cfg.drown).toBeDefined()
+    expect(m.places!.map(x => x.name).filter(n => /western-china|donwhang|okmungwan|earth-ghost/.test(n))).toEqual([])
+    const o = m.space.originRegion
+    const regionOf = (x: number, z: number) => ({ x: o.x + Math.floor(x / 192), z: o.z + Math.floor(-z / 192) })
+    const inDrowned = m.placements.filter(p => {
+      const r = regionOf(p.position[0], p.position[2])
+      return configDrowns(cfg, r.x, r.z)
+    })
+    expect(inDrowned.map(p => `${p.region}:${p.uid} ${p.source}`)).toEqual([])
+    // the report lists the drowned regions: every West_China region of the old export among them (Donwhang town 153,102)
+    const drowned = new Set((m.report.coast as { drown?: { regions: string[] } } | undefined)?.drown?.regions ?? [])
+    for (const r of ['153,102', '153,103', '156,101', '158,99', '160,102', '161,100']) expect(drowned.has(r), r).toBe(true)
+    // and no retail water block is left in a region the config drowns: the ocean draws the sea there (a soft border
+    // region keeps the blocks over Jangan's own shore)
+    for (const r of m.regions) {
+      if (!drowned.has(`${r.x},${r.z}`) || !configDrowns(cfg, r.x, r.z)) continue
+      expect(r.blocks.filter(b => b.water).length, `${r.x},${r.z}`).toBe(0)
+    }
   })
 
   it('has every nav chunk and nav-objects.bin on disk with the stated sizes', () => {

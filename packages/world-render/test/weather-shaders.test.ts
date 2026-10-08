@@ -142,8 +142,9 @@ describe('the WGSL rules and no GLSL on WebGPU', () => {
 
   it('every #ifdef in the chunks is a weather define (or Babylon\'s own)', () => {
     const src = [...ownWGSL, ...ownGLSL].join('\n')
+    // SH_BAND: the shelter height pass's band collapse of the tree groups (PLAZA-RAIN).
     // SRO_HDR: RND-W's HDR grass (render/grass-chunks.ts GRASS_HDR_DEFINE) compiles the Classic flash multiply out (W9F D5).
-    const known = new Set<string>([...WX_DEFINES, 'WX_FOLIAGE', 'DRIPS', 'LIGHTMAP', 'SRO_HDR'])
+    const known = new Set<string>([...WX_DEFINES, 'WX_FOLIAGE', 'DRIPS', 'LIGHTMAP', 'SRO_HDR', 'SH_BAND'])
     for (const m of src.matchAll(/#ifn?def\s+(\w+)/g)) expect(known.has(m[1]!), m[1]).toBe(true)
   })
 

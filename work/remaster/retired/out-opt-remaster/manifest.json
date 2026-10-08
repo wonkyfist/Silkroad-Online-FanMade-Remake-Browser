@@ -1,0 +1,54 @@
+{
+ "format": "sro-remaster",
+ "version": 1,
+ "textures": {
+  "char/china/chinaman_adventurer#chinaman_adventurer_body": {
+   "albedo": "chinaman_adventurer_body/multiview/albedo.webp",
+   "normal": "chinaman_adventurer_body/multiview/normal.webp",
+   "metallic": "chinaman_adventurer_body/multiview/metallic.webp",
+   "roughness": "chinaman_adventurer_body/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "char/china/chinaman_adventurer#chinaman_adventurer_hair": {
+   "albedo": "chinaman_adventurer_hair/multiview/albedo.webp",
+   "normal": "chinaman_adventurer_hair/multiview/normal.webp",
+   "metallic": "chinaman_adventurer_hair/multiview/metallic.webp",
+   "roughness": "chinaman_adventurer_hair/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/heavy_01_ba#heavy_01_ba": {
+   "albedo": "ch_m_heavy_01_ba/multiview/albedo.webp",
+   "normal": "ch_m_heavy_01_ba/multiview/normal.webp",
+   "metallic": "ch_m_heavy_01_ba/multiview/metallic.webp",
+   "roughness": "ch_m_heavy_01_ba/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/heavy_01_la#heavy_01_la": {
+   "albedo": "ch_m_heavy_01_la/multiview/albedo.webp",
+   "normal": "ch_m_heavy_01_la/multiview/normal.webp",
+   "metallic": "ch_m_heavy_01_la/multiview/metallic.webp",
+   "roughness": "ch_m_heavy_01_la/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/man_item/heavy_01_fa#heavy_01_fa": {
+   "albedo": "ch_m_heavy_01_fa/multiview/albedo.webp",
+   "normal": "ch_m_heavy_01_fa/multiview/normal.webp",
+   "metallic": "ch_m_heavy_01_fa/multiview/metallic.webp",
+   "roughness": "ch_m_heavy_01_fa/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  },
+  "equipment/china/weapon/sword_01#sword1_2_3": {
+   "albedo": "ch_sword_01/multiview/albedo.webp",
+   "normal": "ch_sword_01/multiview/normal.webp",
+   "metallic": "ch_sword_01/multiview/metallic.webp",
+   "roughness": "ch_sword_01/multiview/roughness.webp",
+   "normalGreen": "gl",
+   "alpha": "original"
+  }
+ }
+}

@@ -93,6 +93,9 @@ export class HeightFog {
   heightFalloffM = DEFAULT_HEIGHT_FALLOFF_M
   /** The scatter towards the sun (0 = none). */
   sunScatter = 0.5
+  /** Lighting pass 2 (render/atmosphere.ts): × the retail density and start (RenderPost sets them per frame). */
+  densityScale = 1
+  startScale = 1
   /** The horizon ring bound on High+ (null: fogColor only). */
   ring: BaseTexture | null = null
   private activeValue = false
@@ -135,9 +138,10 @@ export class HeightFog {
   update(sky: Readonly<SkyState>, exposure: number, toneMap: ToneMap = 'neutral'): void {
     const s = this.scene
     const on = s.fogMode !== Scene.FOGMODE_NONE
-    const start = Math.max(0, s.fogStart)
-    const end = Math.max(start + 1, s.fogEnd)
-    this.a.set(fogDensity(start, end), 1 / Math.max(1, this.heightFalloffM), start, on ? 1 : 0)
+    const start0 = Math.max(0, s.fogStart)
+    const end = Math.max(start0 + 1, s.fogEnd)
+    const start = start0 * this.startScale
+    this.a.set(fogDensity(start0, end) * this.densityScale, 1 / Math.max(1, this.heightFalloffM), start, on ? 1 : 0)
     const inv = 1 / Math.max(1e-3, exposure)
     // The fog colour shows as designed after the post's single tone curve (D4).
     const f = displayToExposed(sky.fogColor, toneMap, this.lin)

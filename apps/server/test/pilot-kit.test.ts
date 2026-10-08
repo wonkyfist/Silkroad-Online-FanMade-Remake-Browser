@@ -4,6 +4,7 @@
  * cooldown, charges, known and attackable target, reach with an 8 m walk-in), the taunts and the hunt's signals (pings,
  * footprints, roars), on the in-process harness.
  */
+import { CLIMB_ROSTER, deriveClimbMob } from '@sro/shared'
 import { afterEach, describe, expect, it } from 'vitest'
 import { castIdOf } from '../src/pilot/kit.ts'
 import { bearing } from '../src/pilot/steer.ts'
@@ -211,10 +212,22 @@ describe('Call the Pack (§3.5)', () => {
     expect(act(s, { ability: 'pack' })).toMatchObject({ ok: false, reason: 'no_charges' })
     expect(s.g.mobSkills.dismissSummons(s.m)).toBe(4)
   })
+
+  it("the Climb (docs/CLIMB.md §2.6): with Tiger Girl's Guard in the tables, her pack follows her summons' remap", () => {
+    const s = setup()
+    const tiger = s.h.data.mob('MOB_CH_WHITETIGER')!
+    const guard = deriveClimbMob(tiger, CLIMB_ROSTER.find((r) => r.code === 'MOB_CL_TIGERGUARD_24')!)
+    s.h.data.mobs.set(guard.code, guard)
+    const hunter = s.player(6, 0, 'Hunter')
+    s.tick(300)
+    expect(act(s, { ability: 'pack', target: hunter.p.id })).toMatchObject({ ok: true })
+    const pack = [...s.h.world.mobs.values()].filter((m) => s.g.mobSkills.summonerOf(m.id) === s.m.id)
+    expect(pack.map((m) => [m.def.code, m.level])).toEqual([['MOB_CL_TIGERGUARD_24', 24], ['MOB_CL_TIGERGUARD_24', 24]])
+  })
 })
 
 describe('Stalk (§3.5)', () => {
-  it('a hunter at 9 m loses her within one interest pass, one at 7 m keeps her, staff and her pilot keep her; speed ×0.4', () => {
+  it('a hunter at 9 m loses her within one interest pass, one at 7 m keeps her, staff and her pilot keep her; speed ×0.3', () => {
     const s = setup()
     const at9 = s.player(9, 0, 'Nine')
     const at7 = s.player(7, 0, 'Seven')
@@ -230,7 +243,7 @@ describe('Stalk (§3.5)', () => {
     expect(staff.p.known.has(s.m.id)).toBe(true)
     expect(s.pc.p.known.has(s.m.id)).toBe(true)
     s.moveTo(s.pc.p, 0, -30)
-    expect(s.m.move!.speed).toBeCloseTo(3.6)
+    expect(s.m.move!.speed).toBeCloseTo(2.7)
     expect(s.last(s.pc.inbox, 'pilotState')!.stalkUntil).toBeGreaterThan(s.h.now)
   })
 

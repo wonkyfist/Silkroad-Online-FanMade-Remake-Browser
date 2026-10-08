@@ -13,6 +13,8 @@ import {
   type GameplayRequest,
   type Role,
   type ServerMessage,
+  lookBodyOf,
+  type CharLook,
 } from '@sro/shared'
 import type { WebSocket } from 'ws'
 import { TokenBucket, hashToken } from './auth.ts'
@@ -208,7 +210,10 @@ export class Connection {
       }
       case 'charCreate':
         if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
-        return this.charCreate(msg.name, msg.model, msg.weapon, { height: msg.height, volume: msg.volume, outfit: msg.outfit })
+        return this.charCreate(msg.name, msg.model, msg.weapon, { height: msg.height ?? msg.look?.height, volume: msg.volume, outfit: msg.outfit, look: msg.look })
+      case 'charLook':
+        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
+        return this.charLook(msg.id, msg.look)
       case 'charDelete':
         if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
         if (!this.game.store.softDeleteCharacter(msg.id, this.accountId)) return this.error('not_found', 'no such character', msg.t)
@@ -222,7 +227,11 @@ export class Connection {
         // Play the Boss (docs/PLAY_THE_BOSS.md §3.2): the pilot's moveTo steers the boss instead.
         if (this.game.gameplay.pilot?.steer(this.player, msg.x, msg.z)) return
         // Dead characters stay put (only respawn brings them back); a move cancels auto-attack/pickup.
-        if (this.game.gameplay.onMoveTo(this.player)) this.game.world.moveTo(this.player, msg.x, msg.z)
+        if (this.game.gameplay.onMoveTo(this.player)) {
+          // Siege of Jangan layer 6 (docs/SIEGE.md §8.5): a prisoner's target is clamped inside the Garrison Stockade.
+          const [x, z] = this.game.gameplay.jail.clampMove(this.player, msg.x, msg.z)
+          this.game.world.moveTo(this.player, x, z)
+        }
         return
       case 'chat': {
         if (!this.player) return this.error('not_in_world', 'not in the world', msg.t)
@@ -346,12 +355,36 @@ export class Connection {
       return
     }
     // parseClientMessage already bounded height/volume (0..4) and outfit (STARTER_OUTFITS); absent = the defaults.
+    // The look (look.ts) was parsed there too; its body must be the model's (a girl's look on a boy is refused).
+    if (look.look && look.look.body !== lookBodyOf(model)) {
+      this.error('bad_request', `look.body ${look.look.body} does not match ${model}`, 'charCreate')
+      return
+    }
     const r = this.game.store.createCharacter(this.accountId, name, model, weapon, this.game.config.world, MAX_CHARACTER_SLOTS, look)
     if (r === 'slots_full') return this.error('slots_full', `at most ${MAX_CHARACTER_SLOTS} characters`, 'charCreate')
     if (r === 'name_taken') return this.error('name_taken', 'That name is taken.', 'charCreate')
     this.game.gameplay.grantStarterKit(r.id, r.weapon, r.model, r.outfit)
     this.game.config.log(`character ${r.name} (${r.model}, height ${r.height}, volume ${r.volume}, ${r.outfit}) created by ${this.account}`)
     this.send({ t: 'charCreated', character: this.summary(r) })
+  }
+
+  /**
+   * The creator's one-time re-customise (docs/CHARACTERS.md §16.10): a character made before the creator chooses its look
+   * once (or skips: keeps its default). Only its owner, only in the lobby, only while the offer is open (characters
+   * .look_custom 0); the look's body must be the model's (parseLook already clamped every number and checked every id);
+   * a few tries per connection (CLIENT_RATE_LIMITS.charLook). Level, items and gold are untouched.
+   */
+  private charLook(id: number, look: CharLook | undefined): void {
+    const limit = CLIENT_RATE_LIMITS.charLook!
+    let bucket = this.actionBuckets.get('charLook')
+    if (!bucket) this.actionBuckets.set('charLook', (bucket = new TokenBucket(limit.perSecond, limit.burst)))
+    if (!bucket.take()) return this.error('rate_limited', 'too many look changes', 'charLook')
+    const row = this.game.store.characterOwned(id, this.accountId)
+    if (!row) return this.error('not_found', 'no such character', 'charLook')
+    if (look && look.body !== lookBodyOf(row.model)) return this.error('bad_request', `look.body ${look.body} does not match ${row.model}`, 'charLook')
+    if (!this.game.store.customiseLookOnce(id, look ?? null)) return this.error('bad_request', 'the look was chosen already', 'charLook')
+    this.game.config.log(`character ${row.name} ${look ? 'customised its look' : 'kept its default look'} (${this.account})`)
+    this.send({ t: 'charLookSet', character: this.summary(this.game.store.characterById(id)!) })
   }
 
   /**
@@ -380,6 +413,8 @@ export class Connection {
       volume: r.volume,
       equip: look.equip,
       ...(Object.keys(look.plus).length > 0 ? { equipPlus: look.plus } : {}),
+      look: this.game.store.characterLook(r),
+      ...(r.look_custom ? {} : { customise: true }),
     }
   }
 
@@ -425,8 +460,12 @@ export class Connection {
     if (!row.starter_kit && this.game.gameplay.grantStarterKit(row.id, row.weapon, row.model, row.outfit)) row = this.game.store.characterOwned(id, this.accountId)!
     this.applyRole(this.game.store.accountRole(this.accountId))
     const { world } = this.game
+    // The Climb (docs/CLIMB.md §6.1, F6): the body of this character still lingers in a fight.
+    const linger = this.game.gameplay.penalty.lingerLeft(row.id, Date.now())
+    if (linger > 0) return this.error('already_in_world', `Your character is still in combat. Try again in ${linger} s.`, 'enterWorld')
     if (world.online >= this.game.config.capacity) return this.error('server_error', 'the server is full', 'enterWorld')
-    const at = this.entryPoint(row)
+    // Siege of Jangan layer 6 (docs/SIEGE.md §8.5): a prisoner enters in the Garrison Stockade (a served term: at its gate).
+    const at = this.game.gameplay.jail.entryPoint(row.id, row.y ?? 0) ?? this.entryPoint(row)
     const [x, y, z] = [at.x, at.y, at.z]
     this.player = world.add({
       ...this.game.gameplay.playerInit(row),
@@ -439,6 +478,7 @@ export class Connection {
       surface: at.surface,
       height: row.height,
       volume: row.volume,
+      look: this.game.store.characterLook(row),
       yaw: row.yaw,
       send: (m) => this.send(m),
       staff: isStaff(this.role),
@@ -475,12 +515,19 @@ export class Connection {
     const p = this.player
     if (!p) return
     this.player = null
-    const now = Date.now()
-    this.game.world.settle(p, now)
-    this.game.persist([p], now)
-    this.game.world.remove(p.id, now)
-    this.game.gameplay.forget(p)
-    this.game.config.log(`${this.account} left as ${p.name} (${this.game.world.online} online)`)
+    const account = this.account
+    const game = this.game
+    const leave = (): void => {
+      const now = Date.now()
+      game.world.settle(p, now)
+      game.persist([p], now)
+      game.world.remove(p.id, now)
+      game.gameplay.forget(p)
+      game.config.log(`${account} left as ${p.name} (${game.world.online} online)`)
+    }
+    // The Climb (docs/CLIMB.md §6.1, F6): leaving within seconds of monster damage leaves the body in the world that
+    // long (still a target), so closing the tab does not dodge the death penalty; climb/penalty.ts removes it later.
+    if (!game.gameplay.penalty.linger(p, Date.now(), leave)) leave()
     if (this.state === 'world') this.state = 'lobby'
     if (notify) this.send({ t: 'worldLeft' })
   }

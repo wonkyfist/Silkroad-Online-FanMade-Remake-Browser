@@ -575,6 +575,8 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     kind: v.kind === 'item' || v.kind === 'cos' ? ('npc' as const) : v.kind,
     band: v.kind === 'mob' ? levelBand(v.state.level, selfLevel()) : undefined,
     variant: v.kind === 'mob' ? v.state.variant : undefined,
+    // Siege of Jangan layer 6: a Wanted player or an on-duty Hunter shows the enemy window (HP) and the hostile ring
+    hostile: v.kind === 'player' && ((v.state.wanted ?? 0) > 0 || v.state.hunter !== undefined),
   })
 
   const clearTarget = () => {
@@ -587,7 +589,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   const setTarget = (v: EntityView) => {
     if (v.kind === 'item') return
     target = v
-    const tone: RingTone = v.kind === 'mob' ? 'hostile' : v.kind === 'npc' ? 'neutral' : 'friendly'
+    const tone: RingTone = v.kind === 'mob' || (v.kind === 'player' && (v.state.wanted ?? 0) > 0) ? 'hostile' : v.kind === 'npc' ? 'neutral' : 'friendly'
     ring.show(tone, v.radius)
     hud.setTarget(targetInfo(v))
   }
@@ -930,6 +932,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
         break
       case 'appearance':
         void entities.get(msg.id)?.setEquip(msg.equip, msg.plus)
+        if (msg.look) entities.get(msg.id)?.setLook(msg.look)
         break
       case 'actionResult':
         onActionResult(msg)

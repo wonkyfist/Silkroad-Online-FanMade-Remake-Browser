@@ -11,6 +11,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
   PROVENANCE_PORT,
+  applyClimbItemLevels,
   contentEntries,
   type ClientMessage,
   type DropTable,
@@ -45,6 +46,9 @@ afterEach(() => {
 const MIN = 60_000
 const TG = 'MOB_CH_TIGERWOMAN'
 const REAL_FILE = JSON.parse(readFileSync(join(REPO_ROOT, 'content/uniques.json'), 'utf8')) as UniquesFile
+/** The fixture gear is degree 3 at a cap of 20: the real table with its pools on degree 3 (the file's own: degree 4, CLIMB D53). */
+const FILE3 = structuredClone(REAL_FILE)
+for (const g of FILE3.dropTables.UNIQUE_TIGERWOMAN!.groups) if (g.pool) g.pool.degree = 3
 
 // ---- fixtures: Tiger Girl, her adds, five camps, the loot's items, one named zone ---------------------------------
 
@@ -121,7 +125,7 @@ interface BootOpts {
 function boot(o: BootOpts = {}) {
   const content = mkdtempSync(join(tmpdir(), 'sro-uniques-content-'))
   cleanups.push(() => rmSync(content, { recursive: true, force: true }))
-  const file = structuredClone(REAL_FILE)
+  const file = structuredClone(FILE3)
   o.file?.(file)
   writeFileSync(join(content, 'uniques.json'), JSON.stringify(file))
   const data = new GameData({ mobs: MOBS, items: ITEMS, levels: SKILL_LEVELS, towns: [SAFE_TOWN], nests: CAMPS.map((n) => ({ ...n })), zones: ZONES, drops: NORMAL_DROPS })
@@ -171,12 +175,13 @@ const tmpDataDir = () => {
 // ---- the file --------------------------------------------------------------------------------------------------
 
 describe('content/uniques.json', () => {
-  it('is UNIQUES §5.3: Tiger Girl only, her retail group, the §3.2 timers, the §3.6 / §4 tuning and the §3.4 table', () => {
-    expect(REAL_FILE.uniques.map((x) => x.mob)).toEqual([TG])
+  it('is UNIQUES §5.3: Tiger Girl only, her retail group, the §3.2 timers, the §3.6 / §4 tuning (at level 25: CLIMB §2.6) and the §3.4 table', () => {
+    // Tiger Girl first, then the Climb's seven mini-bosses (docs/CLIMB.md §2.5; climb-bosses.test.ts)
+    expect(REAL_FILE.uniques.map((x) => x.mob)).toEqual([TG, 'MOB_CL_OLDSCAR_6', 'MOB_CL_MAGISTRATE_10', 'MOB_CL_GWANGMU_14', 'MOB_CL_GATEWARDEN_16', 'MOB_CL_HEUKPUNG_19', 'MOB_CL_MODUN_23', 'MOB_CL_HYEONGCHEON_25'])
     expect(REAL_FILE.uniques[0]).toMatchObject({
-      world: 'jangan', camps: 'uniqueGroup', respawnMin: [180, 360], firstSpawnMin: [10, 30], restartSpawnMin: [1, 2],
-      tuning: { hpMul: 0.08, attackMul: 1, expMul: 1 }, summons: { on: true, perWave: 2, maxAlive: 4, variants: ['normal'] },
-      enrage: { hpPct: 20, damageMul: 1.25 }, fury: { afterSec: 600, damageMul: 2 }, corpseSec: 8, announce: { appear: true, defeat: true }, drops: 'UNIQUE_TIGERWOMAN',
+      world: 'jangan', camps: 'uniqueGroup', respawnMin: [180, 360], firstSpawnMin: [10, 30], restartSpawnMin: [1, 2], level: 25,
+      tuning: { hpMul: 0.18, attackMul: 1.4, expMul: 0.2 }, summons: { on: true, perWave: 2, maxAlive: 4, variants: ['normal'], mobs: { MOB_CH_WHITETIGER: 'MOB_CL_TIGERGUARD_24' } },
+      enrage: { hpPct: 20, damageMul: 1.25 }, fury: { afterSec: 600, damageMul: 3 }, corpseSec: 8, announce: { appear: true, defeat: true }, drops: 'UNIQUE_TIGERWOMAN',
     })
   })
 
@@ -229,10 +234,11 @@ describe('timers (UNIQUES §3.2, persisted in the uniques table)', () => {
     jump(due)
     const m = her()!
     expect(m.variant).toBe('unique')
-    expect(m.maxHp).toBe(47_898) // 598,720 x 0.08
+    expect(m.maxHp).toBe(107_770) // 598,720 x 0.18 (docs/CLIMB.md §2.6: level 25; 0.08 = 47,898 before)
+    expect(m.level).toBe(25)
     expect(m.hp).toBe(m.maxHp)
     expect(m.corpseMs).toBe(8000)
-    expect(m.tuning).toEqual({ hpMul: 0.08, attackMul: 1, expMul: 1 })
+    expect(m.tuning).toEqual({ hpMul: 0.18, attackMul: 1.4, expMul: 0.2 })
     // her retail camps roam 100 m and spawn within 60 m, but leash at 50 m: she lives within 40 m (uniqueHome)
     expect(m.leashRange).toBe(50)
     expect(m.roamRadius).toBe(40)
@@ -489,7 +495,7 @@ describe('the fight (UNIQUES §3.6)', () => {
     expect(lines(far.inbox).filter((t) => /enraged/.test(t))).toHaveLength(0)
   })
 
-  it('the fury: 600 s after the first damage, damage x2 (x2.5 enraged), one line; a fake clock', () => {
+  it('the fury: 600 s after the first damage, damage x3 (x3.75 enraged; CLIMB §2.6, was x2), one line; a fake clock', () => {
     const { h, u, spawnNow, beside, hit, lines, jump } = boot({ seed: 17 })
     const m = spawnNow()
     const near = beside(m)
@@ -502,11 +508,11 @@ describe('the fight (UNIQUES §3.6)', () => {
     expect(m.ai).toBe('chase')
     expect(m.damageMul).toBeUndefined()
     jump(t0 + 600_100)
-    expect(m.damageMul).toBe(2)
+    expect(m.damageMul).toBe(3)
     expect(lines(near.inbox).filter((x) => x === 'Tiger Girl grows furious!')).toHaveLength(1)
     hit(near.p, m, Math.ceil(m.hp - m.maxHp * 0.15))
     h.runTo(h.now + 100)
-    expect(m.damageMul).toBe(2.5)
+    expect(m.damageMul).toBe(3.75)
     // (that Mob.damageMul scales her swings: unique-seams.test.ts)
     expect(u().row.phase).toBe('alive')
   })
@@ -519,7 +525,7 @@ describe('the fight (UNIQUES §3.6)', () => {
     h.runTo(h.now + 50)
     jump(h.now + 601_000)
     expect(adds()).toHaveLength(4)
-    expect(m.damageMul).toBe(2.5)
+    expect(m.damageMul).toBe(3.75)
     h.world.warp(near.p, m.home[0] + 80, 0, m.home[1], h.now)
     h.runTo(h.now + 2000)
     expect(m.ai).toBe('idle')
@@ -551,13 +557,13 @@ describe('the fight (UNIQUES §3.6)', () => {
     expect(h.world.mobs.has(m.id)).toBe(false)
   })
 
-  it('EXP: 451,200 at expMul 1 (not tuned down with her HP)', () => {
+  it('EXP: 90,240 at expMul 0.2 (CLIMB §2.6: ≈ 10 % of a level-24 bar each in a party of four)', () => {
     const { h, spawnNow, beside, hit } = boot({ seed: 20 })
     const m = spawnNow()
     const { p, inbox } = beside(m)
     hit(p, m, 1e9)
     const gains = h.all(inbox, 'statsDelta').flatMap((d) => (d.gain?.from === m.id ? [d.gain] : []))
-    expect(gains[0]).toMatchObject({ exp: 451_200, spExp: 451_200 })
+    expect(gains[0]).toMatchObject({ exp: 90_240, spExp: 90_240 })
   })
 })
 
@@ -575,8 +581,8 @@ describe('loot (UNIQUES §3.4)', () => {
     expect(gearPool(ITEMS, { degree: 3, maxReqLevel: 'levelCap' }, 25).find((f) => f.base === 'ITEM_CH_SWORD_03')!.grades.map((g) => g.code)).toEqual(['ITEM_CH_SWORD_03_C', 'ITEM_CH_SWORD_03_B', 'ITEM_CH_SWORD_03_A'])
   })
 
-  it('the table rolls as §3.4: 3 gold piles, 3 gear, 2 elixirs, 10 + 10 potions, powder 50 %, seal 20 %, plus 55/25/15/5', () => {
-    const table = resolveDropTable(REAL_FILE.dropTables.UNIQUE_TIGERWOMAN, ITEMS, 20)
+  it('the table rolls as §3.4: 3 gold piles, 3 gear, 2 elixirs, 10 + 10 potions, powder 50 %, a seal 2 % of each of 3 gear drops (D54), plus 55/25/15/5', () => {
+    const table = resolveDropTable(FILE3.dropTables.UNIQUE_TIGERWOMAN, ITEMS, 20)
     const rng = seeded(42)
     const known = (c: string) => ITEMS.some((i) => i.code === c)
     const plus = [0, 0, 0, 0]
@@ -612,7 +618,7 @@ describe('loot (UNIQUES §3.4)', () => {
     expect(plus[3] / total).toBeGreaterThan(0.03)
     expect(grade.hi / (grade.hi + grade.lo)).toBeCloseTo(0.6, 1)
     expect(powder / N).toBeCloseTo(0.5, 1)
-    expect(seal / N).toBeCloseTo(0.2, 1)
+    expect(seal / N).toBeCloseTo(3 * 0.02, 1)
   })
 
   it('the field unique drops her own table, plus levels on the ground, all owned by the loot owner; GOLD_RATE applies', () => {
@@ -780,27 +786,31 @@ const HAVE = ['mobs.json', 'nests.json', 'items.json'].every((f) => existsSync(j
 
 describe.skipIf(!HAVE)('content/uniques.json on the real export (work/out/data)', () => {
   const read = <T,>(f: string): T[] => contentEntries<T>(JSON.parse(readFileSync(join(DATA, f), 'utf8')))
-  const items = HAVE ? read<ItemDef>('items.json') : []
+  let items = HAVE ? read<ItemDef>('items.json') : []
   const mobs = HAVE ? read<MobDef>('mobs.json') : []
   const nests = HAVE ? read<NestDef>('nests.json') : []
 
-  it('starts clean: her 11 camps, every item known; every gear drop wearable at LEVEL_CAP 20', () => {
+  it('starts clean: her 11 camps, every item known; every gear drop degree 4 and wearable at LEVEL_CAP 25 (CLIMB D53)', () => {
+    const climbed = new Map(items.map((i) => [i.code, i]))
+    applyClimbItemLevels(climbed)
+    items = [...climbed.values()]
     const content = mkdtempSync(join(tmpdir(), 'sro-uniques-real-'))
     cleanups.push(() => rmSync(content, { recursive: true, force: true }))
     mkdirSync(content, { recursive: true })
     writeFileSync(join(content, 'uniques.json'), JSON.stringify(REAL_FILE))
     const data = new GameData({ mobs, items, nests, levels: SKILL_LEVELS, towns: [SAFE_TOWN] })
-    const h = skillHarness({ data, config: { contentDir: content, levelCap: 20 } })
+    const h = skillHarness({ data, config: { contentDir: content, levelCap: 25 } })
     cleanups.push(h.cleanup)
     h.gameplay.start(h.now)
     const g = h.gameplay.uniques!
     expect(g.uniques.map((x) => x.def.mob)).toEqual([TG])
     expect(g.camps(g.uniques[0].def).map((n) => n.id).sort()).toEqual([5656, 5657, 5658, 5659, 5903, 5904, 5905, 5906, 5907, 5908, 5909])
-    const table = resolveDropTable(REAL_FILE.dropTables.UNIQUE_TIGERWOMAN, items, 20)
+    expect(REAL_FILE.dropTables.UNIQUE_TIGERWOMAN!.groups.filter((g) => g.pool).every((g) => g.pool!.degree === 4)).toBe(true)
+    const table = resolveDropTable(REAL_FILE.dropTables.UNIQUE_TIGERWOMAN, items, 25)
     const byCode = new Map(items.map((i) => [i.code, i]))
     const pool = table.groups[0].pool!
     expect(pool.length).toBeGreaterThan(10)
-    for (const f of pool) for (const it of f.grades) expect(it.reqLevel, it.code).toBeLessThanOrEqual(20)
+    for (const f of pool) for (const it of f.grades) expect(it.reqLevel, it.code).toBeLessThanOrEqual(25)
     const rng = seeded(5)
     const plus = [0, 0, 0, 0]
     for (let i = 0; i < 500; i++) {
@@ -808,8 +818,9 @@ describe.skipIf(!HAVE)('content/uniques.json on the real export (work/out/data)'
         if (d.gold) continue
         const def = byCode.get(d.code)!
         expect(def, d.code).toBeDefined()
-        if (def.degree === 3 && ['weapon', 'shield', 'armor', 'accessory'].includes(def.category)) {
-          expect(def.reqLevel, d.code).toBeLessThanOrEqual(20)
+        if (['weapon', 'shield', 'armor', 'accessory'].includes(def.category)) {
+          expect(def.degree, d.code).toBe(4)
+          expect(def.reqLevel, d.code).toBeLessThanOrEqual(25)
           plus[d.plus ?? 0]++
         }
       }

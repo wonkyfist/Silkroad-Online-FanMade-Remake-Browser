@@ -562,8 +562,8 @@ describe('turn-in', () => {
     h.turnIn(p, inbox, 'T_001')
     const gain = inbox.find((m): m is Msg<'statsDelta'> => m.t === 'statsDelta' && !!m.gain)!
     expect(gain.gain).toEqual({ exp: 0, spExp: 20 + CHARACTER_RULES.spExpPerSp, quest: 'T_001' })
-    // 10 SP from gmSetLevel(5) (typical SP of level 5, progression.ts) + 1 from the quest
-    expect(p.progress).toMatchObject({ level: 5, exp: 0, sp: 11, spExp: 20 })
+    // 29 SP from gmSetLevel(5) (typical SP of level 5 on the Climb's curve, progression.ts) + 1 from the quest
+    expect(p.progress).toMatchObject({ level: 5, exp: 0, sp: 30, spExp: 20 })
   })
 })
 

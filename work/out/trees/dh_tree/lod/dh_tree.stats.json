@@ -1,0 +1,71 @@
+{
+ "species": "dh_tree",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 85,
+ "target": {
+  "h": 19.89,
+  "w": 7.19
+ },
+ "normalUp": 0.62,
+ "normalRule": "dim",
+ "lods": {
+  "0": {
+   "triangles": 2304,
+   "byMaterial": {
+    "bark": 1168,
+    "leaf": 1136
+   },
+   "cards": 284,
+   "frontNormalY": 0.843,
+   "vertices": 3184,
+   "heightM": 19.89,
+   "widthM": 7.19,
+   "crownCentre": [
+    0.2,
+    0.33,
+    10.32
+   ],
+   "crownRadius": 6.46,
+   "bytes": 339056
+  },
+  "1": {
+   "triangles": 740,
+   "byMaterial": {
+    "bark": 228,
+    "leaf": 512
+   },
+   "cards": 128,
+   "frontNormalY": 0.843,
+   "vertices": 1208,
+   "heightM": 19.89,
+   "widthM": 7.19,
+   "crownCentre": [
+    0.2,
+    0.33,
+    10.32
+   ],
+   "crownRadius": 6.46,
+   "bytes": 234808
+  },
+  "2": {
+   "triangles": 358,
+   "byMaterial": {
+    "bark": 166,
+    "leaf": 192
+   },
+   "cards": 48,
+   "frontNormalY": 0.838,
+   "vertices": 528,
+   "heightM": 19.89,
+   "widthM": 7.19,
+   "crownCentre": [
+    0.2,
+    0.33,
+    10.32
+   ],
+   "crownRadius": 6.46,
+   "bytes": 199868
+  }
+ }
+}

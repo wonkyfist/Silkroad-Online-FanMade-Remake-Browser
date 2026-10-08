@@ -3,6 +3,7 @@
 Every update to Jangan, newest first. This is the same text and pictures the game shows in its **What's new**
 window (press **J** in game). It is generated from `content/changelog/` by `pnpm changelog`; edit the entries there.
 
+- [October 8: Hunters and the Garrison Stockade](#october-8-hunters-and-the-garrison-stockade)
 - [October 7 (night): Thunder Kegs and the Wanted](#october-7-night-thunder-kegs-and-the-wanted)
 - [October 7 (evening): The Siege of Jangan](#october-7-evening-the-siege-of-jangan)
 - [October 7: Jangan's walls can break — and be rebuilt](#october-7-jangans-walls-can-break--and-be-rebuilt)
@@ -11,6 +12,58 @@ window (press **J** in game). It is generated from `content/changelog/` by `pnpm
 - [October 6: No more stuck black screens](#october-6-no-more-stuck-black-screens)
 - [October 5 (evening): Storms, lightning, a tornado and a new Berserk](#october-5-evening-storms-lightning-a-tornado-and-a-new-berserk)
 - [October 5: Play the Boss, the black-screen fix and more](#october-5-play-the-boss-the-black-screen-fix-and-more)
+
+---
+
+## October 8: Hunters and the Garrison Stockade
+
+*October 8, 2026*
+
+**The law has teeth. Become a Hunter, track down the Wanted wall-breakers, catch them and collect the bounty. Caught players serve their time in the Garrison Stockade: 2 hours, then 4, 8, 16... for every repeat offence.**
+
+![October 8: Hunters and the Garrison Stockade](content/changelog/img/oct7-captured.jpg)
+
+## Become a Hunter
+
+**Captain Yun**, by the west gate, sells the **Hunter's licence**: level 15+, 10,000 gold, and a clean record (not Wanted, no offences in the last 30 days).
+
+![Captain Yun's licence window](content/changelog/img/oct7-hunter-yun.jpg "Captain Yun hires Hunters by the west gate.")
+
+- Go **on duty** in town, out of combat. A blue **HUNTER** label shows over your head.
+- On duty, you get a **ping** every minute showing roughly where the Wanted are, and they show on your minimap when you're close (120 m).
+- Captain Yun also sells the **Hunter's Net**: throw it to stun a fleeing Wanted for 2 seconds.
+- Start as a **Recruit** and climb five ranks (Tracker first) as your captures add up.
+
+## The hunt
+
+Only **on-duty Hunters** and **Wanted** players can fight each other, both ways, almost anywhere, even inside town. Nobody else can be attacked, so normal players are never caught in it. Damage between players is halved, and area skills never hit players.
+
+![A Hunter takes on a Wanted wall-breaker](content/changelog/img/oct7-hunter-fight.jpg "On duty: a Hunter takes on a Wanted wall-breaker.")
+
+A blow that would kill the Wanted leaves them at 1 HP instead: they're **bound**, and after 3 seconds they're **caught**. The garrison pays the bounty, split between the Hunters who did the damage. Logging out within 30 seconds of a Hunter's hit doesn't help: you're caught on the spot.
+
+![Captured!](content/changelog/img/oct7-captured.jpg "Caught: the garrison pays the bounty and the Hunter moves up a rank.")
+
+## The Garrison Stockade
+
+Caught wall-breakers go straight to the **Garrison Stockade**: **2 hours** for a first offence, then **4, 8, 16 and 24 hours**. Treason (a keg during a siege) doubles it. The sentence keeps counting while you're logged off.
+
+![Inside the Stockade](content/changelog/img/oct7-stockade.jpg "Serving time in the Garrison Stockade, breaking rocks to get out sooner.")
+
+- You can't leave, fight or use skills. Chat, potions, sitting and emotes still work.
+- **Break rocks** at the pile to take a minute off each time (up to a quarter of your sentence). Warden Bae keeps an eye on you.
+- When you're released, you walk out of the gate free, and nobody can hunt you for 10 minutes.
+
+## No farming the bounty
+
+Getting a friend Wanted so another friend can collect the bounty does **not** work:
+
+- Your party, guild, other characters and anyone on the same connection can never fight or claim you.
+- Anyone who **traded**, used your **stall** or **partied** with you in the last week gets nothing. Neither does anyone who stood near the keg and didn't try to defuse it.
+- The same Hunter catching the same player again within 7 days gets no gold and no credit.
+- A bounty is always worth **less than the keg** that caused it, each catch of the same player within a week pays half, and Hunters have a daily bounty limit.
+- Every capture still means **jail**, paid or not.
+- Staff see every blocked reward and can take away a Hunter's licence.
 
 ---
 

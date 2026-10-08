@@ -40,6 +40,7 @@ import {
   type WorldQuality,
 } from '@sro/world-render'
 import { RENDER_ROLLOUT, type RenderRollout } from './rollout.ts'
+import { physicsMaxFor, type CharPhysicsConfig } from './three/spring-bones.ts'
 import { UI_SCALE_MODES, type UiScaleMode } from './ui/kit/scale.ts'
 
 export type GraphicsPreset = WorldQuality
@@ -64,6 +65,12 @@ export type WildlifeSetting = 'on' | 'off'
  * bubbles (World.town). 'auto' is Full, Low on an Apple or integrated GPU (`townLifeFor`), and nothing on Low (Classic).
  */
 export type TownLifeSetting = 'auto' | 'off' | 'low' | 'full'
+/** The Jangan townsfolk, animals and bubbles are switched off (the user, 2026-10-09); false brings Town life back. */
+export let TOWN_LIFE_OFF = true
+/** Tests of the town system switch it back on. */
+export function setTownLifeOff(off: boolean): void {
+  TOWN_LIFE_OFF = off
+}
 /** What the town runs (`townLifeFor`): 'low' halves the counts. */
 export type TownLifeLevel = 'off' | 'low' | 'full'
 /**
@@ -142,6 +149,10 @@ export interface Settings {
     townLife: TownLifeSetting
     /** Wave 12 (TREES Part W): the new trees and plants on the PBR presets ('new' by default; Low always retail). */
     trees: TreesSetting
+    /** Licensed characters (CHARACTERS §16.2): hair and cloth springs (Medium and up; on by default). */
+    hairCloth: boolean
+    /** Licensed characters (§16.2): body jiggle (on by default). */
+    bodyPhysics: boolean
     /**
      * Retired (wave 9B, TX-R): the remastered-textures test switch (three/remaster.ts twins and RemasterLighting; no
      * Options row any more, `?remaster=1|0` still overrides it). Kept one wave as an alias: a saved `true` without a
@@ -292,6 +303,8 @@ export function defaultSettings(): Settings {
       wildlife: 'on',
       townLife: 'auto',
       trees: 'new',
+      hairCloth: true,
+      bodyPhysics: true,
       remaster: false,
       textures: 'auto',
       sky: 'modern',
@@ -378,6 +391,8 @@ export function normalizeSettings(raw: unknown): Settings {
       // A saved settings blob (v: 1) from before wave 9 has no flag: it keeps its preset (not a first run).
       firstRun: bool(g.firstRun, r.v !== 1),
       modern: bool(g.modern, d.graphics.modern),
+      hairCloth: bool(g.hairCloth, d.graphics.hairCloth),
+      bodyPhysics: bool(g.bodyPhysics, d.graphics.bodyPhysics),
       recommended: recommendation(g.recommended),
       // Like firstRun: a saved blob without the key was saved before the release and still gets its one-time move.
       releaseMigrated: bool(g.releaseMigrated, r.v !== 1),
@@ -772,6 +787,8 @@ export interface EffectiveGraphics {
    * Trees on the PBR path; 'retail' on the Classic path and without the new look (the Low guard: the swap never applies).
    */
   trees: TreesSetting
+  /** §16.2: the licensed characters' springs (none on Low / Classic; Medium 8, High and Ultra 12 characters). */
+  charPhysics: CharPhysicsConfig
 }
 
 export interface EffectiveOptions {
@@ -871,7 +888,7 @@ export function effectiveGraphics(s: Settings, o: EffectiveOptions = {}): Effect
     return {
       preset, renderPreset: 'low', modern: false, render: 'classic', sky: 'classic', weather: 'off', weatherShown: false, clock: false, toneMap,
       renderQuality: PREVIEW_OFF_RENDER, skyQuality: SKY_PRESETS.low, textureTier: 'retail', batching: false, grassStyle: 'retail', wildlife: false,
-      trees: 'retail',
+      trees: 'retail', charPhysics: { max: 0, cloth: false, body: false },
     }
   }
   const renderPreset = renderPresetFor(preset, o.gpu)
@@ -896,6 +913,7 @@ export function effectiveGraphics(s: Settings, o: EffectiveOptions = {}): Effect
     grassStyle: base.path === 'pbr' ? presetGrassStyle(preset) : 'retail',
     wildlife: base.path === 'pbr' && s.graphics.wildlife === 'on',
     trees: base.path === 'pbr' ? s.graphics.trees : 'retail',
+    charPhysics: { max: physicsMaxFor(base.path, renderPreset), cloth: s.graphics.hairCloth, body: s.graphics.bodyPhysics },
   }
 }
 
@@ -926,6 +944,8 @@ export function grassQualityFor(s: Settings, e: EffectiveGraphics, gpu?: GpuHint
  * Grass: Low rule); a level the player picked is kept on every device.
  */
 export function townLifeFor(s: Settings, e: Pick<EffectiveGraphics, 'render'>, gpu?: GpuHint | DeviceHint | null): TownLifeLevel {
+  // The user (2026-10-09): no townsfolk in Jangan; the crowd is off everywhere until it is wanted back (TOWN_LIFE_OFF).
+  if (TOWN_LIFE_OFF) return 'off'
   if (e.render !== 'pbr') return 'off'
   const v = s.graphics.townLife
   if (v !== 'auto') return v

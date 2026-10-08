@@ -1,0 +1,71 @@
+{
+ "species": "dh_hotree",
+ "archetype": "broadleaf",
+ "kind": "tree",
+ "seed": 87,
+ "target": {
+  "h": 40.72,
+  "w": 38.55
+ },
+ "normalUp": 1.0,
+ "normalRule": "retail",
+ "lods": {
+  "0": {
+   "triangles": 1332,
+   "byMaterial": {
+    "bark": 712,
+    "leaf": 620
+   },
+   "cards": 155,
+   "frontNormalY": 1.0,
+   "vertices": 1787,
+   "heightM": 40.72,
+   "widthM": 38.55,
+   "crownCentre": [
+    3.16,
+    -1.77,
+    27.26
+   ],
+   "crownRadius": 17.91,
+   "bytes": 306788
+  },
+  "1": {
+   "triangles": 454,
+   "byMaterial": {
+    "bark": 174,
+    "leaf": 280
+   },
+   "cards": 70,
+   "frontNormalY": 1.0,
+   "vertices": 696,
+   "heightM": 40.715,
+   "widthM": 37.905,
+   "crownCentre": [
+    3.16,
+    -1.77,
+    27.26
+   ],
+   "crownRadius": 17.91,
+   "bytes": 249136
+  },
+  "2": {
+   "triangles": 250,
+   "byMaterial": {
+    "bark": 130,
+    "leaf": 120
+   },
+   "cards": 30,
+   "frontNormalY": 1.0,
+   "vertices": 348,
+   "heightM": 40.706,
+   "widthM": 38.55,
+   "crownCentre": [
+    3.16,
+    -1.77,
+    27.26
+   ],
+   "crownRadius": 17.91,
+   "bytes": 231200
+  }
+ }
+}

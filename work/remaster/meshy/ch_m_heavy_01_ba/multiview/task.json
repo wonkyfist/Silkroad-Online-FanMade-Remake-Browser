@@ -1,0 +1,47 @@
+{
+  "id": "01a0ea2a-9d81-74ee-9ad6-19045eac7fbe",
+  "type": "retexture",
+  "name": "",
+  "art_style": "realistic",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "multiview_image_urls": [
+    "https://assets.meshy.ai/uploads/0_01a0ea2a-9d81-74ee-9ad6-19045eac7fbe.png?Expires=1790894334&Signature=eIhDErFN6CayhQJnL0Yx98V9wMxJqXkDzm14qFDRz16J1lTEfDSQebc-gXbSPQHi-KX545LXgNEf5tvAPGaWCtyN0Bkhwr0EUdrrfhVlISE9-x2oiwSOJxDCXt6VX4snX0axyHNyagRnm0IaiEVaKw3g-kZY4uMR9By2S5Q1-7HxZ0YCLf5o5xglVYrUbn1MTu4NCJzxMXevW~oczT9UhmiPc1FJdloxEiRq9-YViX86ev8nfcDNMdtS1xuRnWSFN5plaFKzqy~R7QNwlmPbXlNI6oeYuF-8KupQOollLxFZ71InZlNQrCdA~ctm~G83XJJNBpyuqQd0tpGvg6i53A__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/1_01a0ea2a-9d81-74ee-9ad6-19045eac7fbe.png?Expires=1790894334&Signature=G4AF7U5EBC2PZRCGjyeNckO-KSdAB4rv3Pk1jsZgomjTGmOkLxmSCia9g-Ca4-bCQs-Ne54JdUYjuCUd~u1iV2h0t8mZCbdeaTYwp-ktyqQLnH9twBuN~S7WdLoS7dhuJD-e4j0Yc3Hb-3L~Sftqj4ZxW6xKn09xOLgDXgB6X3F7Rwt-qTpfrt1PwPsDqMRW0lv1XeLDJYgOoHX2EDE8JXLtJuarkDT6PG56UK6WHzA~87KRr0Oik42r8IuTC5OWsmc88jQhE~GEaklvb90NA6tCuEaxXZttxcwwZSdLBBj9l2CtM6GBXwmGq03YxEMnuT9TlOqDFUcQjcpMPEmL3Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/2_01a0ea2a-9d81-74ee-9ad6-19045eac7fbe.png?Expires=1790894334&Signature=Z2fiQItv8saCrrcv08Tnzb~Fd6KRQobww0bps0qFvmdgSrABGwZ-ezhzNns56leyEulcHww57I2zAUOhN3ORWIhkuSzQJBhiRkczpTv3rNfSy9sBrDS3Ypsh6m1tB-oyAe8IRuuagGrOCXv4JMT8ifXL6dNzOeRUvvv1G43rpMGMpBslLoTD~lYz537lYTTUU1byNWb~6GEq3mbP9qq5A9JkYnLMtlifLMzIn0rhWeIGf1sv1j1ZtG39N1CEzChnm5YFZNy~6rnvot2qTsadbwfIPwXfNmggwsf87i9ASQ95F~HfbIXXEduTi~cj8pIOq0fCjUkGef~IhFCYCwMpwg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "https://assets.meshy.ai/uploads/3_01a0ea2a-9d81-74ee-9ad6-19045eac7fbe.png?Expires=1790894334&Signature=Ksg8Jvs9wausb6-wfGK6xtN3kAqsRXyDx9jpzkp1NG~egwnZG5XsetgtZK0kL2FHl6vCbZG-wDotQp8~U8knsSP3vg4dOHVHyKz8mwkHjworHromXxh0-D-bFk0~gwjevHj5jZyxH0Y7VCZZqT8bqhcEOtQak8HW2ZZQd7vvpwU8n5I~L5UIl0OJJDWIPN6QavEGXAWi4kSTw9DXv8L~3Twf5KekIGjwH-gZ5O9ptQ6WsUDSQTEy33BbBGMAE9jiu4D1oKGZO5QQPjMr08~MuA8dIXWW53B8g1i~iXdPeVqLnJV9xY7-utQtbcTmHeu8OdQdoHyjSaXxnqIPP4m6fw__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "status": "SUCCEEDED",
+  "created_at": 1790635058636,
+  "progress": 100,
+  "started_at": 1790635058643,
+  "finished_at": 1790635134313,
+  "expires_at": 1790894334313,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/23f7f15d-92f6-4ee4-b474-f20d2af648b3/tasks/01a0ea2a-9d81-74ee-9ad6-19045eac7fbe/output/model.glb?Expires=1790894334&Signature=Ux7eJS0u3Lhtv~wHX4ehUHm0ohDPOkWJq0QJBSzoJq8LyviEt2Tix~VScs-eKFr9eZ~o8XI9yLFuta1BVBV5TDLICEUBLh0clRtzFSp8SNkP6ajO9mkXopd6cFNZR4pFDfLdCDqPK8QmhYwMghHhpT9haWc4Xi1Atrsi1FM1aE5CIkQwepCdRxA5rKv8Lt2OVq9CbL1Mo5H5eRUuYBxXKQMgCtxzO9PIUHTpNpfq5ALSz2NMLVlkv0FlSxyrDX6ChrepdYUr~oQyLoYdgWSNeat1m5GSsUkW0miKlaJ2JlzJeuy0iPIqzWRZnKW-XMOou1wNW34y6Fgy2cS7oxn2Iw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "hd_texture": true,
+  "texture_resolution": "4k",
+  "consumed_credits": 10,
+  "files": [
+    "model.glb",
+    "base_color.png",
+    "metallic.png",
+    "roughness.png",
+    "normal.png"
+  ],
+  "source": {
+    "glb": "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\model.glb",
+    "renders": [
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_front.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_back.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_left.png",
+      "C:\\dev\\silkroad\\work\\remaster\\pack\\ch_m_heavy_01_ba\\view_right.png"
+    ],
+    "prompt": "Keep the exact design, colours and pattern placement. A Chinese heavy lamellar cuirass over a padded tunic. Torso: a grid of rust-brown hardened leather and copper plates in horizontal rows, each fixed with small round iron rivets, dark gaps between plates. Across the upper chest and upper back: a band of dark hammered iron with large dome rivets. Shoulder straps of deep red lacquered leather ending in small gold ornamental clasp plaques; a pale cream stand-up collar. Long sleeves of cream-ivory quilted linen with soft folds, finished with dark teal-green cloth cuffs. Target: aged copper and leather plates with patina, scratches and edge wear, hammered iron with dents, woven linen with visible weave and stitching, glossy red lacquer. No text, no logos."
+  }
+}

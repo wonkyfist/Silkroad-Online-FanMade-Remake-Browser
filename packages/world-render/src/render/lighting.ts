@@ -45,6 +45,7 @@ import type { SkyState, SkyStyle } from '../sky/types.ts'
 import type { RenderPart } from './index.ts'
 import type { RenderQuality } from './quality.ts'
 import { CLEAR_RENDER_WEATHER, type RenderWeather } from './weather.ts'
+import { LIGHT_LOOK } from './look.ts'
 
 export const CELESTIAL_LIGHT_NAME = 'celestial'
 /** Sorts the celestial light before every other light (the game's lights keep priority 0). */
@@ -154,6 +155,38 @@ export function addConstantSH(sh: Float32Array, rgb: Readonly<RGB>, scale = 1): 
   const k = Math.sqrt(4 * Math.PI) * scale
   for (let c = 0; c < 3; c++) sh[c] = sh[c]! + rgb[c]! * k
   return sh
+}
+
+/**
+ * Adds a constant radiance `rgb` × scale over the lower hemisphere (y < 0) to an L1 SH (in place): the sun-lit ground's
+ * bounce. Exact L1 projection, so an up-facing surface gets nothing from it and a wall gets π/2 × that radiance.
+ */
+export function addGroundSH(sh: Float32Array, rgb: Readonly<RGB>, scale = 1): Float32Array {
+  for (let c = 0; c < 3; c++) {
+    const g = rgb[c]! * scale
+    sh[c] = sh[c]! + Y00 * 2 * Math.PI * g
+    sh[3 + c] = sh[3 + c]! - Y1 * Math.PI * g
+  }
+  return sh
+}
+
+/**
+ * The sun-lit ground's albedo × its share in the sun (docs/LIGHTING.md §1): the key light's irradiance on level ground
+ * comes back up as Lambertian radiance E · GROUND_BOUNCE / π. The sky's own ambient below the horizon is only the SKY's
+ * irradiance × 0.25 (sky-system), so shaded walls, eaves and the undersides of things were lit by a dim blue copy of
+ * the sky; this is the warm light that fills them in a sunny scene. Level ground is unchanged (LIGHT_CALIBRATIONS holds).
+ */
+export const GROUND_BOUNCE = 0.15
+
+/**
+ * The bounce radiance in the SH's units (scene radiance / cal.env) of a key light: colour × intensity × cal.sun ×
+ * max(0, sine of its elevation) × albedo / π / cal.env.
+ */
+export function groundBounceRadiance(key: { color: Readonly<RGB>; intensity: number; dirY: number }, cal: Readonly<Pick<LightCalibration, 'sun' | 'env'>>, albedo = GROUND_BOUNCE, out: RGB = [0, 0, 0]): RGB {
+  const e = Math.max(0, key.intensity) * cal.sun * Math.max(0, key.dirY)
+  const k = cal.env > 0 ? (e * albedo) / Math.PI / cal.env : 0
+  for (let c = 0; c < 3; c++) out[c] = Math.max(0, key.color[c]!) * k
+  return out
 }
 
 /** Irradiance E (not E / π) of an L1 radiance SH on a surface with world normal n. */
@@ -653,6 +686,7 @@ export class WorldLighting implements RenderPart {
   private readonly sh = new Float32Array(SH_L1_FLOATS)
   private readonly lastSH = new Float32Array(SH_L1_FLOATS).fill(NaN)
   private readonly harmonics = new SphericalHarmonics()
+  private readonly bounce: RGB = [0, 0, 0]
   private readonly flipZ: boolean
   private lastRefresh: { key: CubeRefreshKey; at: number } | null = null
   private lastFrameKey: CubeRefreshKey | null = null
@@ -735,6 +769,10 @@ export class WorldLighting implements RenderPart {
     // Ambient: the sky's SH at the ambient level (+ the flash), re-uploaded only when it moved.
     skyStateSH(sky, this.sh)
     if (flash > 0) addConstantSH(this.sh, FLASH_RGB, flash * cal.flashAmbient)
+    if (LIGHT_LOOK.groundBounce) {
+      groundBounceRadiance({ color: k.color, intensity: k.intensity, dirY: k.dir.y / l }, cal, GROUND_BOUNCE, this.bounce)
+      addGroundSH(this.sh, this.bounce)
+    }
     let moved = false
     for (let i = 0; i < SH_L1_FLOATS; i++) {
       const last = this.lastSH[i]!

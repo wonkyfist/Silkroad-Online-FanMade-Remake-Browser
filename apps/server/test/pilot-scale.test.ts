@@ -22,6 +22,8 @@ import { pilotHarness, type PilotHarness } from './pilot-harness.ts'
 
 const S = PILOT_DEFAULTS.scaling
 const BASE = 47_898
+/** Her max HP in the hunt: 598,720 x hpMul 0.18 (content/uniques.json at level 25, docs/CLIMB.md §2.6; 47,898 before). */
+const HER = 107_770
 const BAND = { perWave: 2, maxAlive: 4 }
 
 describe('the formula (§3.7)', () => {
@@ -87,34 +89,34 @@ function setup(patch: PilotSettingsPatch = {}) {
 }
 
 describe('the hunt (§3.7)', () => {
-  it('10 hunters with ≥ 200 damage: max HP 109,262 at the next step, HP fraction kept, everyone sees it; the summons follow', () => {
+  it('10 hunters with ≥ 200 damage: max HP 245,835 at the next step, HP fraction kept, everyone sees it; the summons follow', () => {
     const s = setup()
-    expect(s.m.maxHp).toBe(BASE)
+    expect(s.m.maxHp).toBe(HER)
     // 10 real hunters, one who scratched her (150), one that hit only a summon (not her).
     for (const h of s.hunters.slice(0, 10)) s.hit(h.p, 250)
     s.hit(s.hunters[10].p, 150)
     const before = s.m.hp / s.m.maxHp
     s.step()
-    expect(s.m.maxHp).toBe(pilotScaledMaxHp(BASE, pilotScaleFactor(10, S)))
-    expect(s.m.maxHp).toBe(109_261)
+    expect(s.m.maxHp).toBe(pilotScaledMaxHp(HER, pilotScaleFactor(10, S)))
+    expect(s.m.maxHp).toBe(245_835)
     expect(s.m.hp / s.m.maxHp).toBeCloseTo(before, 4)
     const upd = s.last(s.hunters[11].inbox, 'entityUpdate')!
-    expect(upd).toMatchObject({ id: s.m.id, maxHp: 109_261, hp: Math.round(s.m.hp) })
+    expect(upd).toMatchObject({ id: s.m.id, maxHp: 245_835, hp: Math.round(s.m.hp) })
     // The pilot (her viewer) sees it too.
-    expect(s.h.all(s.pc.inbox, 'entityUpdate').some((u) => u.id === s.m.id && u.maxHp === 109_261)).toBe(true)
+    expect(s.h.all(s.pc.inbox, 'entityUpdate').some((u) => u.id === s.m.id && u.maxHp === 245_835)).toBe(true)
     expect(s.g.uniques!.summonPolicy(s.m)).toMatchObject({ perWave: 3, maxAlive: 6 })
-    expect(s.pilot.event!.scale).toMatchObject({ hunters: 10, peakHunters: 10, peakMaxHp: 109_261 })
-    expect(s.gm('status').message).toMatch(/max HP 109261 \(10 hunters in the last 60 s\)/)
+    expect(s.pilot.event!.scale).toMatchObject({ hunters: 10, peakHunters: 10, peakMaxHp: 245_835 })
+    expect(s.gm('status').message).toMatch(/max HP 245835 \(10 hunters in the last 60 s\)/)
   })
 
-  it("a hunter's damage leaves the window after 60 s; then she falls by at most 10 % a step, back to 47,898", () => {
+  it("a hunter's damage leaves the window after 60 s; then she falls by at most 10 % a step, back to 107,770", () => {
     const s = setup()
     for (const h of s.hunters.slice(0, 10)) s.hit(h.p, 250)
     s.step()
-    expect(s.m.maxHp).toBe(109_261)
+    expect(s.m.maxHp).toBe(245_835)
     // N stays 10 until those hits are older than the window.
     s.tick(55_000)
-    expect(s.m.maxHp).toBe(109_261)
+    expect(s.m.maxHp).toBe(245_835)
     s.tick(10_000)
     const max: number[] = []
     for (let i = 0; i < 12; i++) {
@@ -122,8 +124,8 @@ describe('the hunt (§3.7)', () => {
       s.step()
     }
     for (let i = 1; i < max.length; i++) expect(max[i]).toBeGreaterThanOrEqual(Math.round(max[i - 1] * 0.9))
-    expect(max.some((v) => v < 109_261 && v > BASE)).toBe(true)
-    expect(s.m.maxHp).toBe(BASE)
+    expect(max.some((v) => v < 245_835 && v > HER)).toBe(true)
+    expect(s.m.maxHp).toBe(HER)
     expect(s.g.uniques!.summonPolicy(s.m)).toMatchObject({ perWave: 2, maxAlive: 4 })
     expect(s.m.hp).toBeGreaterThan(0)
   })
@@ -146,14 +148,14 @@ describe('the hunt (§3.7)', () => {
     const partners = friends.filter((f) => s.g.party.sameParty(pc.p, f.p)).length
     expect(s.pilot.event!.scale!.hunters).toBe(8 - partners)
     expect(partners).toBeGreaterThan(0)
-    expect(m.maxHp).toBe(pilotScaledMaxHp(BASE, pilotScaleFactor(8 - partners, PILOT_DEFAULTS.scaling)))
+    expect(m.maxHp).toBe(pilotScaledMaxHp(HER, pilotScaleFactor(8 - partners, PILOT_DEFAULTS.scaling)))
   })
 
-  it('scaling off: she stays at 47,898 whatever the crowd; a step never kills her', () => {
+  it('scaling off: she stays at 107,770 whatever the crowd; a step never kills her', () => {
     const s = setup({ scaling: { on: false } })
     for (const h of s.hunters) s.hit(h.p, 400)
     s.step()
-    expect(s.m.maxHp).toBe(BASE)
+    expect(s.m.maxHp).toBe(HER)
     expect(s.g.uniques!.summonPolicy(s.m)).toMatchObject({ perWave: 2, maxAlive: 4 })
   })
 
@@ -165,7 +167,7 @@ describe('the hunt (§3.7)', () => {
     expect(s.gm('attach', 'Pixi').ok).toBe(true)
     for (let i = 0; i < 8; i++) s.g.dealHits(s.player(m.pos[0] + 3, m.pos[2] + i, `Att${String.fromCharCode(65 + i)}`).p, m, [{ outcome: 'hit', damage: 300, hp: 0 }], {}, s.h.now)
     s.tick(PILOT_SCALE_EVERY_MS * 2)
-    expect(m.maxHp).toBe(BASE)
+    expect(m.maxHp).toBe(HER)
     expect(s.g.uniques!.summonPolicy(m)).toMatchObject({ perWave: 2, maxAlive: 4 })
     void pc
   })

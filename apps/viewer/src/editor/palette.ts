@@ -1,6 +1,6 @@
 /**
  * The paint palette (docs/WORLD_EDITOR.md §4.3, D20; WAVE_PLAN8 D19): `content/world-edits/<world>/palette.json`, one
- * row per terrain tile of the export (108 in jangan-fields), grouped by surface as the user named them (grass, sand,
+ * row per terrain tile of the export (65 in jangan-fields), grouped by surface as the user named them (grass, sand,
  * dirt, rock, road...). The swatch is the remastered 512 albedo where texpipe made one (`work/out/pbr/index.json`
  * `tile2d:<stem>`), else the retail tile image. A tile the palette does not list falls back to its `typeName` and
  * grass weight.

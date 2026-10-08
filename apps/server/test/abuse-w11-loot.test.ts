@@ -48,6 +48,9 @@ afterEach(() => {
 
 const TG = 'MOB_CH_TIGERWOMAN'
 const REAL_FILE = JSON.parse(readFileSync(join(REPO_ROOT, 'content/uniques.json'), 'utf8')) as UniquesFile
+// The loot mechanics below are checked on degree 3 at a cap of 20 (the fixture gear); the file's pools are degree 4
+// since the Climb's D53, so they are put back to degree 3 here.
+for (const g of REAL_FILE.dropTables.UNIQUE_TIGERWOMAN!.groups) if (g.pool) g.pool.degree = 3
 const DATA = join(REPO_ROOT, 'work/out/data')
 const HAVE_ITEMS = existsSync(join(DATA, 'items.json'))
 

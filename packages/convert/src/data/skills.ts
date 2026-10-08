@@ -21,7 +21,8 @@ export const CH_MASTERIES: ReadonlyArray<{ id: number; code: string }> = [
   { id: 276, code: 'FORCE' },
 ]
 
-export const MAX_SKILL_MASTERY_LEVEL = 20
+/** Highest mastery level whose skill rows are exported: the level cap (25 since the Climb, docs/CLIMB.md §5.2; was 20). */
+export const MAX_SKILL_MASTERY_LEVEL = 25
 
 const WEAPON_BY_TID4: Readonly<Record<number, WeaponType>> = { 2: 'sword', 3: 'blade', 4: 'spear', 5: 'glaive', 6: 'bow' }
 
