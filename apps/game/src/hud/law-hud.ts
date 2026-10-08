@@ -65,7 +65,8 @@ export function wantedLines(w: WantedView, leftMs: number): { head: string; boun
   if (w.role === 'accomplice') notes.push(t('law.panel.accomplice'))
   if (w.treason) notes.push(t('law.panel.treason'))
   return {
-    head: t('law.panel.head'),
+    // docs/JOBS.md §6.4: a robbery warrant reads ROBBER (WANTED stays the walls')
+    head: w.robbery ? t('jobs.robber.label') : t('law.panel.head'),
     bounty: t('law.panel.bounty', { bounty: formatNumber(w.bounty) }),
     lapse: t('law.panel.lapse', { time: fmtLeft(leftMs) }),
     note: notes.join(' · '),
@@ -234,10 +235,10 @@ export class FenceWindow extends NpcWindow {
 
 /** "Tracker" for rank 1 (0: a recruit). */
 export function hunterRankName(rank: number): string {
-  return t(`hunter.rank.${Math.max(0, Math.min(5, Math.floor(rank)))}` as 'hunter.rank.0')
+  return t(`hunter.rank.${Math.max(0, Math.min(6, Math.floor(rank)))}` as 'hunter.rank.0')
 }
 
-/** The badge line over an on-duty Hunter: "HUNTER · Tracker". */
+/** The badge line over an on-duty Bounty Hunter: "BOUNTY HUNTER · Tracker". */
 export function hunterLabel(rank: number): string {
   return t('hunter.label', { rank: hunterRankName(rank) })
 }
@@ -265,7 +266,7 @@ const CSS6 = `
 .law-hunter { background: linear-gradient(rgba(6, 22, 48, 0.9), rgba(2, 8, 20, 0.9)); border: 1px solid rgba(90, 160, 255, 0.75); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.85), 0 0 12px rgba(60, 140, 255, 0.3); }
 .law-jail { background: linear-gradient(rgba(34, 30, 24, 0.92), rgba(14, 12, 10, 0.92)); border: 1px solid rgba(190, 170, 130, 0.75); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.85), 0 0 10px rgba(0, 0, 0, 0.5); }
 .law-hunter[hidden], .law-jail[hidden] { display: none; }
-.law-hunter-head { font: 14px/19px var(--font-title); letter-spacing: 0.2em; color: #7ab8ff; text-transform: uppercase; }
+.law-hunter-head { font: 12px/19px var(--font-title); letter-spacing: 0.1em; color: #7ab8ff; text-transform: uppercase; }
 .law-hunter.off .law-hunter-head { color: #9aa8bc; }
 .law-hunter-line { font: 12px/16px var(--font-body); color: #dfe9f7; }
 .law-hunter-note { font: 10px/13px var(--font-body); color: #9cc4f0; }
@@ -282,7 +283,7 @@ const CSS6 = `
 .law-yun-text { color: var(--c-text); font: 12px/16px var(--font-body); text-shadow: var(--t-shadow); white-space: pre-wrap; }
 .law-yun-note { color: #b9ad8f; font: 11px/14px var(--font-body); text-shadow: var(--t-shadow); }
 .law-yun-status { color: #9cc4f0; font: 12px/16px var(--font-body); text-shadow: var(--t-shadow); }
-.entity-label .label-line-hunter { color: #7ab8ff; font-weight: bold; letter-spacing: 0.08em; text-shadow: 1px 0 1px #000, -1px 0 1px #000, 0 1px 1px #000, 0 -1px 1px #000, 0 0 6px rgba(40, 120, 255, 0.55); }
+.entity-label .label-line-hunter { color: #7ab8ff; font-weight: bold; letter-spacing: 0.04em; text-shadow: 1px 0 1px #000, -1px 0 1px #000, 0 1px 1px #000, 0 -1px 1px #000, 0 0 6px rgba(40, 120, 255, 0.55); }
 .entity-label .label-line-jailed { color: #d8c8a0; letter-spacing: 0.12em; text-shadow: 1px 0 1px #000, -1px 0 1px #000, 0 1px 1px #000, 0 -1px 1px #000; }
 `
 

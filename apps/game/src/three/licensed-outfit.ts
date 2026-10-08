@@ -3,8 +3,9 @@
 // cloth's colours (by class, degree, grade) and effects (degree, seal). The Babylon part (materials, the per-outfit
 // colour bake, applying it to a body) is three/licensed-cloth.ts. Stats, levels and sources of the items are untouched:
 // only the drawing reads the item codes the client already receives (EntityState.equip / appearance.equip).
-import type { EquipSlot, RarityTier } from '@sro/shared'
+import type { EquipSlot, JobBadge, RarityTier } from '@sro/shared'
 import { rarityOf } from '@sro/shared'
+import { jobClothFx, jobDyeOf, jobKey, jobPaletteRow, type JobDye } from './job-look.ts'
 
 /** Silkroad's armour classes: garment (CLOTHES), protector (LIGHT), armour (HEAVY). */
 export type ArmourClass = 'garment' | 'protector' | 'armour'
@@ -22,9 +23,14 @@ export interface GearPiece {
   degree: number
   grade: Grade
   seal: RarityTier | null
+  /** In job mode (docs/JOBS.md §3.3): the job's palette, trim and twill over the item's (three/job-look.ts). */
+  job?: JobDye
 }
 
-const ARMOUR_RE = /^ITEM_(?:CH|EU)_[MW]_(CLOTHES|LIGHT|HEAVY)_(\d\d)_([A-Z]{2})_([ABC])(?:_RARE)?$/
+// `_DEF`: the starter set every new character wears (the plain row's model and look). Unparsed, a licensed body drew
+// the lingerie for it; in job mode the suit's plain fill hid that, so the gear seemed to vanish when the suit came off
+// (docs/JOBS.md "Polish status").
+const ARMOUR_RE = /^ITEM_(?:CH|EU)_[MW]_(CLOTHES|LIGHT|HEAVY)_(\d\d)_([A-Z]{2})_([ABC])(?:_DEF)?(?:_RARE)?$/
 
 /** An armour code as the look reads it (`ITEM_CH_W_HEAVY_03_BA_B_RARE` → chest, armour, D3, B, moon); null otherwise. */
 export function gearOf(code: string | null | undefined, slot?: EquipSlot): GearPiece | null {
@@ -93,14 +99,17 @@ export function earringOf(code: string | null | undefined, cls: ArmourClass = 'a
 /**
  * The outfit of `equip` (EntityState.equip: slot → item code) on body `gender`. Missing slots draw nothing (the bare
  * body slice, the lingerie where chest / legs are empty); a slot with a non-armour code (a costume, an unknown row) too.
- * Mixed classes and degrees work per slot.
+ * Mixed classes and degrees work per slot. `job` (EntityState.job, job mode): every piece takes the job's colours
+ * (JOBS.md §3.3); a missing chest, legs or feet is filled with plain garment cloth then (a suit is never the
+ * lingerie).
  */
-export function outfitFromGear(equip: Partial<Record<EquipSlot, string>> | null | undefined, gender: 'f' | 'm'): Outfit {
+export function outfitFromGear(equip: Partial<Record<EquipSlot, string>> | null | undefined, gender: 'f' | 'm', job?: JobBadge | null): Outfit {
+  const dye = jobDyeOf(job)
   const pieces: OutfitPiece[] = []
   const bySlot = new Map<OutfitSlot, GearPiece>()
   for (const slot of OUTFIT_SLOTS) {
-    const g = gearOf(equip?.[slot], slot)
-    if (g) bySlot.set(slot, g)
+    const g = gearOf(equip?.[slot], slot) ?? (dye && JOB_FILL.includes(slot) ? { ...JOB_PLAIN, slot } : null)
+    if (g) bySlot.set(slot, dye ? { ...g, job: dye } : g)
   }
   const skirt = bySlot.get('legs')?.cls === 'armour'
   for (const [slot, gear] of bySlot) {
@@ -115,6 +124,10 @@ export function outfitFromGear(equip: Partial<Record<EquipSlot, string>> | null 
   const earring = gender === 'f' ? earringOf(equip?.earring, bySlot.get('chest')?.cls) : null
   return earring ? { gender, pieces, earring } : { gender, pieces }
 }
+
+/** The plain cloth a job suit fills an empty chest, legs or feet with (garment D1, then dyed by the job). */
+const JOB_FILL: readonly OutfitSlot[] = ['chest', 'legs', 'feet']
+const JOB_PLAIN: GearPiece = { slot: 'chest', cls: 'garment', degree: 1, grade: 'A', seal: null }
 
 /** The lingerie's stand-in item (its own flat material; never recoloured). */
 const UNDERWEAR: GearPiece = { slot: 'chest', cls: 'garment', degree: 1, grade: 'A', seal: null }
@@ -289,7 +302,7 @@ export function paletteRowOf(cls: ArmourClass, degree: number): PaletteRow {
 /** The palette's key (class, degree row, grade, seal): one material per key. */
 export function paletteKey(g: GearPiece): string {
   const row = Math.max(1, Math.min(PALETTES[g.cls].length, Math.floor(g.degree)))
-  return `${g.cls[0]}${row}${g.grade}${g.seal ? `*${SEAL_CODE[g.seal]}` : ''}`
+  return `${g.cls[0]}${row}${g.grade}${g.seal ? `*${SEAL_CODE[g.seal]}` : ''}${jobKey(g.job)}`
 }
 
 export function hexRgb(hex: string): [number, number, number] {
@@ -308,7 +321,7 @@ export function gradeTrim(rgb: readonly [number, number, number], grade: Grade):
 
 /** The region colours of a piece's item, linear RGB (what the shader and the bake multiply the shade by). */
 export function paletteLinear(g: GearPiece): Record<DyeRegion, [number, number, number]> {
-  const row = paletteRowOf(g.cls, g.degree)
+  const row = g.job ? jobPaletteRow(paletteRowOf(g.cls, g.degree), g.job) : paletteRowOf(g.cls, g.degree)
   const out = {} as Record<DyeRegion, [number, number, number]>
   for (const r of DYE_REGIONS) {
     let c = hexRgb(row[r])
@@ -322,9 +335,11 @@ export function paletteLinear(g: GearPiece): Record<DyeRegion, [number, number, 
 export function clothFxOf(g: GearPiece): ClothFx {
   const d = Math.floor(g.degree)
   const gradeK = GRADE_TRIM[g.grade] - 1
+  const base = { sheen: d >= 3 ? 0.35 + gradeK * 1.5 : 0, weave: d >= 4 ? 0.6 + gradeK * 2 : 0 }
+  const { sheen, weave } = g.job ? jobClothFx(base, g.job) : base
   return {
-    sheen: d >= 3 ? 0.35 + gradeK * 1.5 : 0,
-    weave: d >= 4 ? 0.6 + gradeK * 2 : 0,
+    sheen,
+    weave,
     seal: g.seal ? SEAL_CODE[g.seal] : 0,
     sealAmount: g.seal ? SEAL_AMOUNT[g.seal] : 0,
   }

@@ -211,10 +211,12 @@ describe.skipIf(!hasPort)('wave-8 export on the real data (docs/SYSTEMS_COMBAT.m
   it('Red Horse: level 10, 1,200 gold, summons COS_C_HORSE1; cos.json has its body', () => {
     expect(item('ITEM_COS_C_HORSE1')).toMatchObject({ name: 'Red Horse', reqLevel: 10, price: 1200, use: { summon: 'COS_C_HORSE1' } })
     const cos = entries<CosDef>(CONTENT_FILES.cos)
-    expect(cos.map(c => c.code)).toEqual(['COS_C_HORSE1'])
-    expect(cos[0]).toMatchObject({ id: 2191, level: 20, hp: 983, walkSpeed: 4.5, runSpeed: 9, radius: 1.2, icon: '/out/icon/cos/cos_c_horse1.png', model: { bsr: 'res/cos/c_horse1.bsr' } })
+    // with the job system's four trade transports (docs/JOBS.md §5.4, layer 0)
+    expect(cos.map(c => c.code).sort()).toEqual(['COS_C_HORSE1', 'COS_T_DHORSE1', 'COS_T_DONKEY', 'COS_T_HORSE1', 'COS_T_HORSE2'])
+    expect(cos.find(c => c.code === 'COS_T_DONKEY')).toMatchObject({ name: 'Donkey' })
+    expect(cos.find(c => c.code === 'COS_C_HORSE1')).toMatchObject({ id: 2191, level: 20, hp: 983, walkSpeed: 4.5, runSpeed: 9, radius: 1.2, icon: '/out/icon/cos/cos_c_horse1.png', model: { bsr: 'res/cos/c_horse1.bsr' } })
     expect(checkContentFile('cos', out.files[CONTENT_FILES.cos])).toEqual([])
-    expect(out.report.models.cos).toEqual(['res/cos/c_horse1.bsr'])
+    expect(out.report.models.cos).toEqual(['res/cos/c_horse1.bsr', 'res/cos/t_dhorse1.bsr', 'res/cos/t_donkey.bsr', 'res/cos/t_horse1.bsr', 'res/cos/t_horse2.bsr'])
     expect(out.report.icons).toContain('cos\\cos_c_horse1.ddj')
   })
 
@@ -243,7 +245,7 @@ describe.skipIf(!hasPort)('wave-8 export on the real data (docs/SYSTEMS_COMBAT.m
       expect(item(`ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_${k}_A`).icon).toBe(`/out/icon/item/etc/archemy_reinforce_recipe_${k.toLowerCase()}_b.png`)
     }
     expect(item('ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_04').reinforce).toMatchObject({ kind: 'powder', degree: 4 })
-    expect(entries<ItemDef>(CONTENT_FILES.items).some(i => /PROB_UP_A_0[5-9]|RECIPE_\w+_B$|HORSE[23]$/.test(i.code))).toBe(false)
+    expect(entries<ItemDef>(CONTENT_FILES.items).some(i => /PROB_UP_A_0[5-9]|RECIPE_\w+_B$|C_HORSE[23]$/.test(i.code))).toBe(false)
   })
 
   it('types perPlus (Copper Sword +2.4 / +4.1 per plus)', () => {

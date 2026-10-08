@@ -1,0 +1,289 @@
+{
+  "source": "res/cos/t_donkey.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "t_donkey",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\cos\\cart\\trade_cart_donkey.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Neck2",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail2",
+      "Bone05",
+      "Bone06",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "saddle",
+      "Bone03",
+      "Bone04",
+      "Bone01",
+      "Bone02",
+      "Bone07",
+      "Bone08"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 0.0000010736017770351935,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "trade_cart_donkey",
+      "bmt": "prim\\mtrl\\cos\\cart\\trade_cart_donkey.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\cos\\cart\\trade_cart_donkey.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (4.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "trade_cart_donkey_part1",
+      "bms": "prim\\mesh\\cos\\cart\\trade_cart_donkey_part1.bms",
+      "material": "trade_cart_donkey",
+      "vertices": 386,
+      "triangles": 522,
+      "skinned": true,
+      "bones": [
+        "Bip01 Neck1",
+        "Bip01 R Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 R UpperArm",
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 Neck2",
+        "Bip01 Head",
+        "Bone05",
+        "Bip01 Ponytail2",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 L Clavicle",
+        "Bip01 Pelvis",
+        "Bip01 Ponytail1",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bone07"
+      ]
+    },
+    {
+      "name": "trade_cart_donkey_part2",
+      "bms": "prim\\mesh\\cos\\cart\\trade_cart_donkey_part2.bms",
+      "material": "trade_cart_donkey",
+      "vertices": 455,
+      "triangles": 390,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone01",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 Spine1",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Tail2",
+        "Bone07"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\stand01.ban",
+      "banName": "stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 24,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\walk.ban",
+      "banName": "walk",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 18.6560001373291,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\damage01.ban",
+      "banName": "damage01",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 7,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 7,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\die.ban",
+      "banName": "die",
+      "durationMs": 1633,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 44,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\run.ban",
+      "banName": "run",
+      "durationMs": 1066,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 33,
+      "walkLength": 42.63999938964844,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\cos\\cart\\trade_cart_donkey\\die_loop.ban",
+      "banName": "die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 3,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    }
+  ],
+  "stats": {
+    "vertices": 841,
+    "triangles": 912,
+    "joints": 41,
+    "meshes": 2,
+    "animations": 6,
+    "textures": 1,
+    "heightM": 1.899073965381831,
+    "boundsMin": [
+      -0.6078159213066101,
+      0.0037349392659962177,
+      -1.8163608312606812
+    ],
+    "boundsMax": [
+      0.6074084043502808,
+      1.9028089046478271,
+      1.4069559574127197
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

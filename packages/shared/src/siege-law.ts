@@ -184,8 +184,11 @@ export function kegSpot(walls: Pick<WallsExport, 'segments' | 'sides'>, x: numbe
 // ---- the law (docs/SIEGE.md §8.1, §8.5) -----------------------------------------------------------------------------------
 
 export type WarrantRole = 'breaker' | 'accomplice'
-export type WarrantStatus = 'open' | 'captured' | 'lapsed' | 'pardoned'
-export const WARRANT_STATUSES: readonly WarrantStatus[] = ['open', 'captured', 'lapsed', 'pardoned']
+/** docs/JOBS.md §6.4 (layer 4): a robbery warrant also closes when the goods are sold at the den or dropped by a death. */
+export type WarrantStatus = 'open' | 'captured' | 'lapsed' | 'pardoned' | 'sold' | 'dropped'
+export const WARRANT_STATUSES: readonly WarrantStatus[] = ['open', 'captured', 'lapsed', 'pardoned', 'sold', 'dropped']
+/** Why a warrant was issued: a wall broken (SIEGE.md §8.1) or goods robbed (JOBS.md §6.4). */
+export type WarrantReason = 'wall' | 'robbery'
 
 /** Sentences by offence (hours; the 5th and later: the cap). Used by the jail (layer 6). */
 export const SENTENCES_H = [2, 4, 8, 16, 24] as const
@@ -248,6 +251,8 @@ export interface WantedView {
   offence: number
   role: WarrantRole
   treason?: true
+  /** docs/JOBS.md §6.4: an open robbery warrant (the offence is then the robbery ladder's level). */
+  robbery?: true
 }
 
 export type LawServerMessage =

@@ -217,7 +217,7 @@ describe('the gate seam', () => {
 describe('the wave-8 modules', () => {
   it('register in the §2.5 order and route every new request type', () => {
     const h = harness()
-    expect(h.gameplay.modules.map((m) => m.name).slice(8)).toEqual(['mobSkills', 'mounts', 'durability', 'repairs', 'alchemy', 'berserk', 'trade', 'stalls', 'guilds', 'weather', 'winter', 'lightning', 'storm', 'tornado', 'walls', 'wallRepair', 'wallLooters', 'siege', 'kegs', 'law', 'hunters', 'jail', 'movement', 'winterPlay', 'warmth', 'snowballs', 'snowSpirits', 'iceYeti', 'gifts', 'uniques', 'pilot', 'roles', 'penalty', 'climbRewards', 'climbPlaces'])
+    expect(h.gameplay.modules.map((m) => m.name).slice(8)).toEqual(['mobSkills', 'mounts', 'durability', 'repairs', 'alchemy', 'berserk', 'trade', 'stalls', 'guilds', 'weather', 'winter', 'lightning', 'storm', 'tornado', 'walls', 'wallRepair', 'wallLooters', 'siege', 'kegs', 'law', 'hunters', 'jail', 'jobs', 'market', 'transports', 'robbery', 'caravan', 'movement', 'winterPlay', 'warmth', 'snowballs', 'snowSpirits', 'iceYeti', 'gifts', 'uniques', 'pilot', 'roles', 'penalty', 'climbRewards', 'climbPlaces'])
     expect(W8).toHaveLength(34)
     expect(new Set(Object.keys(FRAMES))).toEqual(new Set(W8))
     for (const t of W8) expect(GAMEPLAY_REQUESTS).toContain(t)

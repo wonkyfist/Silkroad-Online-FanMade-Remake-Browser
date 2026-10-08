@@ -5,7 +5,7 @@
  */
 import { Color3, CreateBox, CreateCapsule, CreateCylinder, Matrix, StandardMaterial, TransformNode, Vector3, type Mesh, type Scene } from '@babylonjs/core'
 import { heightScale } from '@sro/appearance'
-import { JUMP_LATE_DROP_MS, defaultLook, rarityOf, variantScale, type CharLook, type EntityState, type EquipSlot, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
+import { JUMP_LATE_DROP_MS, defaultLook, rarityOf, variantScale, type CharLook, type EntityState, type EquipSlot, type JobBadge, type MoveState, type StarterWeapon, type Vec3 } from '@sro/shared'
 import { weaponFamilyOf, type Catalog } from '../content/catalog.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 import { sampleMove } from '../net/clock.ts'
@@ -458,6 +458,11 @@ export class EntityView {
     return null
   }
 
+  /** The model library this view draws with (attachments that load their own props: job-looks.ts). */
+  get modelLibrary(): ModelLibrary {
+    return this.ctx.library
+  }
+
   /** The licensed body in use (null: retail; the bench, tests). */
   get licensedBody(): LicensedChoice | null {
     return this.licensed
@@ -469,7 +474,7 @@ export class EntityView {
       // §16.10: the look (its own, else the default of the body drawn); the own character takes the 2048 head map
       const g = this.licensed.gender
       const charLook = this.state.look?.body === g ? this.state.look : defaultLook(g, this.state.id, this.state.height ?? undefined)
-      return { equip: this.state.equip, family, fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined, height: this.state.height, plus: this.state.equipPlus, licensed: true, charLook, lookHi: this.isSelf }
+      return { equip: this.state.equip, family, fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined, height: this.state.height, plus: this.state.equipPlus, licensed: true, charLook, lookHi: this.isSelf, job: this.state.job ?? null }
     }
     const pilot = this.pilotPreset()
     if (pilot) return { equip: this.state.equip, family, fallbackWeapon: family ? this.ctx.catalog.weapon(family) : undefined, height: this.state.height, plus: this.state.equipPlus, pilot }
@@ -480,6 +485,7 @@ export class EntityView {
       height: this.state.height,
       volume: this.state.volume,
       plus: this.state.equipPlus,
+      job: this.state.job ?? null,
     }
   }
 
@@ -507,6 +513,19 @@ export class EntityView {
     const lic = this.licensed
     if (!lic || look.body !== lic.gender || !this.actor) return
     void applyLicensedLook(this.actor, look, { hi: this.isSelf, decorate: m => this.ctx.library.decorateMaterial(m) }).catch((err: unknown) => console.warn('[world] look failed', err))
+  }
+
+  /**
+   * Job mode changed (EntityState.job / entityUpdate.job, docs/JOBS.md §3.3): the suit on or off, or another level (its
+   * tier, trim and emblem pips). Re-dresses only when the look changes (job and level). null: out of job mode.
+   */
+  async setJob(job: JobBadge | null): Promise<void> {
+    const was = this.state.job
+    if (job) this.state.job = { job: job.job, level: job.level }
+    else delete this.state.job
+    if ((was?.job ?? null) === (job?.job ?? null) && (was?.level ?? 0) === (job?.level ?? 0)) return
+    if (!this.actor || this.kind !== 'player') return
+    await this.ctx.library.dress(this.actor, this.look()).catch((err: unknown) => console.warn('[world] re-dress failed', err))
   }
 
   /** The +N of the worn items changed alone (no new codes): re-lights the weapon and shield. */

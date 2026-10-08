@@ -50,9 +50,9 @@ import {
 } from '@babylonjs/core'
 import { GLTFLoaderAnimationStartMode } from '@babylonjs/loaders/glTF/glTFFileLoader.js'
 import '@babylonjs/loaders/glTF/2.0/index.js'
-import { composeWorn, heightScale, volumeBoneScales, type BoundItem, type Composition } from '@sro/appearance'
+import { composeEquipment, composeWorn, heightScale, volumeBoneScales, type BoundItem, type Composition } from '@sro/appearance'
 import { HIGHLIGHT_COLOR, setHighlightOverlay } from '@sro/world-render'
-import { JUMP_MAX_SEEK_MS, modelCodeOf, rarityOf, type CharLook, type ClipTrack, type EquipSlot, type RarityTier, type StarterWeapon } from '@sro/shared'
+import { JUMP_MAX_SEEK_MS, modelCodeOf, rarityOf, type CharLook, type ClipTrack, type EquipSlot, type JobBadge, type RarityTier, type StarterWeapon } from '@sro/shared'
 import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
@@ -73,6 +73,7 @@ import { applyLicensedLook, refreshLicensedLook } from './licensed-look.ts'
 import { applyOutfit, loadClothAssets, outfitFromGear, partKeyOf, type AppliedOutfit } from './licensed-cloth.ts'
 import { CLEAN, outfitKey, outfitSeals, wearKey, type ClothWear, type Outfit } from './licensed-outfit.ts'
 import { clothFxFor, type ClothFx } from './licensed-cloth-fx.ts'
+import { jobDyeOf, retailSuitPlan } from './job-look.ts'
 import { attachCharPhysics, physicsDebugApi, type CharPhysics } from './char-physics.ts'
 import { CrowdTier, type CrowdMember, type CrowdPart, type CrowdSubject } from './crowd-tier.ts'
 import { ITEM_SHIELD, ITEM_WEAPON, itemCode } from './crowd-vat.ts'
@@ -325,6 +326,11 @@ export interface Look {
   charLook?: CharLook
   /** The look's 2048 head map (the own character); others take the 1024 one. */
   lookHi?: boolean
+  /**
+   * In job mode (EntityState.job, docs/JOBS.md §3.3): a licensed body's cloth takes the job's palette and emblem; a
+   * retail body wears the retail suit (three/job-look.ts).
+   */
+  job?: JobBadge | null
 }
 
 /** Clip facts from the converter sidecar. */
@@ -809,9 +815,10 @@ export class ModelLibrary {
         // the springs' proof and bench (§16.2): run → stop strip, live clips, clones
         ...physicsDebugApi(actor, () => this.character(model, { licensed: true })),
         // §16.9 look check: wear this gear (slot → item code), e.g. gear({ chest: 'ITEM_CH_W_HEAVY_03_BA_A' })
-        gear: (equip: Record<string, string>) => {
+        // (`job`: in job mode, JOBS.md §3.3, e.g. { job: 'trader', level: 7 })
+        gear: (equip: Record<string, string>, job?: JobBadge | null) => {
           const g = (body.sidecar?.licensed as { gender?: string } | undefined)?.gender
-          return g === 'f' || g === 'm' ? actor.setLicensedOutfit(outfitFromGear(equip, g)) && actor.licensedOutfit!.key : false
+          return g === 'f' || g === 'm' ? actor.setLicensedOutfit(outfitFromGear(equip, g, job)) && actor.licensedOutfit!.key : false
         },
         // §16.9 wear check: dirt / blood levels 0..3 on this body's cloth
         wear: (dirt: number, blood: number) => actor.setLicensedWear({ dirt, blood }),
@@ -909,8 +916,13 @@ export class ModelLibrary {
     const lookup = await equipmentLookup()
     let comp: Composition | null = null
     if (lookup && look.equip && lookup.characters.has(actor.model.code)) {
+      // docs/JOBS.md §3.3: a retail body in job mode wears the retail suit (instead of or over the armour)
+      const dye = !look.licensed && !look.pilot ? jobDyeOf(look.job) : null
+      const body = lookup.characters.get(actor.model.code)!.gender === 'female' ? 'f' : 'm'
+      const plan = dye ? retailSuitPlan(look.equip, dye, body, code => lookup.items.get(code)?.model?.method) : null
       // docs/RARITY.md §5: a seal (`_RARE`) is drawn with its regular row's model (the manifest has no seal rows).
-      comp = composeWorn(lookup, actor.model.code, modelCodes(look.equip))
+      comp = composeWorn(lookup, actor.model.code, modelCodes(plan?.equip ?? look.equip))
+      if (plan?.extra.length) comp.bind.unshift(...composeEquipment(lookup, actor.model.code, plan.extra).bind)
       for (const r of comp.rejected) if (r.reason !== 'unknown') console.warn(`[models] ${actor.model.code}: ${r.code} not drawn (${r.detail})`)
     }
     const items = (comp?.bind ?? []).filter(b => (!look.pilot && !look.licensed) || b.kind === 'socket')
@@ -941,7 +953,7 @@ export class ModelLibrary {
     // (`?ncgear=0`: the glb's own outfit, the A/B and the debug escape)
     if (look.licensed && actor.licensedCloth && !(typeof location !== 'undefined' && new URLSearchParams(location.search).get('ncgear') === '0')) {
       const g = (actor.licensedCloth.sidecar?.licensed as { gender?: string } | undefined)?.gender
-      if (g === 'f' || g === 'm') actor.setLicensedOutfit(outfitFromGear(look.equip, g))
+      if (g === 'f' || g === 'm') actor.setLicensedOutfit(outfitFromGear(look.equip, g, look.job))
     }
   }
 

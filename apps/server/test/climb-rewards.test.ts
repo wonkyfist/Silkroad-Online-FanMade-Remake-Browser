@@ -55,7 +55,7 @@ describe('migration 22', () => {
     raw.close()
     const store = openStore(dir)
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(24)
+    expect(store.schemaVersion).toBe(27)
     expect(store.db.prepare('SELECT c.name, h.at FROM pilot_honors h JOIN characters c ON c.id = h.character_id WHERE h.code = ?').all('pioneer')).toEqual([{ name: 'Veteran', at: 0 }])
     expect(store.db.prepare('SELECT title, arts FROM characters WHERE name = ?').get('Veteran')).toEqual({ title: null, arts: '{}' })
   })

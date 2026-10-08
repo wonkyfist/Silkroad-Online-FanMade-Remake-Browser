@@ -28,6 +28,7 @@ import { WALL_RATE_LIMITS, WALL_REQUESTS, type WallClientMessage, type WallReque
 import { SIEGE_RATE_LIMITS, SIEGE_REQUESTS, type SiegeClientMessage, type SiegeRequest, type SiegeRole, type SiegeServerMessage } from './siege-event.ts'
 import { LAW_FAIL_REASONS, LAW_RATE_LIMITS, LAW_REQUESTS, type LawClientMessage, type LawFailReason, type LawRequest, type LawServerMessage } from './siege-law.ts'
 import { HUNTER_FAIL_REASONS, HUNTER_RATE_LIMITS, HUNTER_REQUESTS, type HunterClientMessage, type HunterFailReason, type HunterRequest, type HunterServerMessage } from './siege-hunter.ts'
+import { JOB_FAIL_REASONS, JOB_RATE_LIMITS, JOB_REQUESTS, type JobBadge, type JobClientMessage, type JobFailReason, type JobRequest, type JobServerMessage } from './jobs.ts'
 
 // Wave 9 (docs/WAVE_PLAN3.md §3.2): the clock and weather types live in their own modules.
 export type { WorldClockState } from './world-clock.ts'
@@ -257,10 +258,17 @@ export interface EntityState {
   /** Players: Wanted for breaking the town wall, with this bounty (gold); the red "WANTED" label line. */
   wanted?: number
   // ---- Siege of Jangan, layer 6 (docs/SIEGE.md §8.2, §8.5, §10.2) ----
-  /** Players: an on-duty Hunter of this rank (0-5); the blue Hunter badge. Absent: not on duty. */
+  /** Players: an on-duty Hunter of this rank (0-6, the job level − 1); the blue Hunter badge. Absent: not on duty. */
   hunter?: number
   /** Players: serving a sentence in the Garrison Stockade. */
   jailed?: true
+  // ---- the job system, layer 1 (docs/JOBS.md §9.4) ----
+  /** Players: in job mode (the suit on): the job and its level (the label line; the suit tier = suitTier(level)). */
+  job?: JobBadge
+  /** Trade transports (cos, docs/JOBS.md §5.3): the load's stars (1-5) while loaded. */
+  stars?: number
+  /** Players (docs/JOBS.md §6.4, layer 4): an open robbery warrant: the ROBBER label line (the client shows it to job-mode players). */
+  robber?: true
 }
 
 export interface WorldInfo {
@@ -639,6 +647,8 @@ export type ClientMessage =
   // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.1; siege-law.ts). GameplayRequests. ----
   | LawClientMessage
   | HunterClientMessage
+  // ---- the job system, layer 1 (docs/JOBS.md §9.4; jobs.ts). GameplayRequests. ----
+  | JobClientMessage
 
 // ---- server -> client ---------------------------------------------------------------------------
 
@@ -725,6 +735,12 @@ export type ServerMessage =
       hunter?: number
       /** Layer 6: jailed (true) or released (false). */
       jailed?: boolean
+      /** The job system (docs/JOBS.md §9.4): job mode on (or the level changed); null = off. */
+      job?: JobBadge | null
+      /** A trade transport's stars (0 = unloaded). */
+      stars?: number
+      /** Layer 4: a robbery warrant opened (true) or closed (false). */
+      robber?: boolean
     }
   /**
    * GM addition: this account's role changed while connected (`pnpm gm grant|revoke`; the server
@@ -988,6 +1004,8 @@ export type ServerMessage =
   // ---- Siege of Jangan, layer 5: player kegs and Wanted (docs/SIEGE.md §10.2; siege-law.ts) ----
   | LawServerMessage
   | HunterServerMessage
+  // ---- the job system, layer 1 (docs/JOBS.md §9.4; jobs.ts) ----
+  | JobServerMessage
 
 /**
  * `uniqueNotice.event` (wave 11). `roar` (H11-NL-5): on an appearance, true for the players within the unique's
@@ -1155,6 +1173,8 @@ export type GameplayRequest =
   | LawRequest
   // Siege of Jangan, layer 6 (docs/SIEGE.md §10.1)
   | HunterRequest
+  // the job system, layer 1 (docs/JOBS.md §9.4)
+  | JobRequest
 
 /** Winter gameplay requests (docs/WINTER.md §13): throw a snowball, ask for the scoreboard. */
 export type WinterRequest = 'snowball' | 'winterBoard'
@@ -1189,6 +1209,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...LAW_REQUESTS,
   ...HUNTER_REQUESTS,
   'climbArt', 'climbTitle',
+  ...JOB_REQUESTS,
 ]
 
 /** Why a gameplay request was refused. Clients show a short localized line per reason. */
@@ -1319,6 +1340,8 @@ export type ActionFailReason =
   /** Siege of Jangan layer 5: a Thunder Keg limit (carry, the per-account plant cooldown). */
   | LawFailReason
   | HunterFailReason
+  /** The job system, layers 2-3 (docs/JOBS.md §9.4): trade and transports. */
+  | JobFailReason
 
 export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   'not_found', 'invalid_target', 'target_dead', 'dead', 'not_dead', 'too_far', 'unreachable', 'not_owner',
@@ -1336,6 +1359,7 @@ export const ACTION_FAIL_REASONS: readonly ActionFailReason[] = [
   ...PILOT_FAIL_REASONS,
   ...LAW_FAIL_REASONS,
   ...HUNTER_FAIL_REASONS,
+  ...JOB_FAIL_REASONS,
 ]
 
 export type HitOutcome = 'hit' | 'crit' | 'miss' | 'block'
@@ -1544,6 +1568,8 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   ...LAW_RATE_LIMITS,
   // Siege of Jangan, layer 6 (docs/SIEGE.md §10.1)
   ...HUNTER_RATE_LIMITS,
+  // the job system, layer 1 (docs/JOBS.md §9.4)
+  ...JOB_RATE_LIMITS,
 }
 
 /** Narrows an entity to a player (which always carries `weapon`). */
@@ -1642,10 +1668,11 @@ export interface SkillCooldown {
  * What an NPC dialog offers; the server decides per NPC. Wave 8: 'repair' (NpcDef.roles; the client shows it as the
  * shop window's Repair buttons, not as a dialog option) and 'guild' (GUILD_MANAGER_NPCS). Siege of Jangan layer 3:
  * 'mason' (Master Mason Ko's donations, docs/SIEGE.md §2.4). Layer 5: 'fence' (Old Fang crafts a Thunder Keg, §7).
- * Layer 6: 'hunter' (Captain Yun: the licence and the duty, §8.2), 'warden' (Warden Bae: the sentence, §8.5).
+ * Layer 6: 'hunter' (Captain Yun: the licence and the duty, §8.2), 'warden' (Warden Bae: the sentence, §8.5). The job
+ * system (docs/JOBS.md §2.1): 'trader' (Specialty Trader Jodaesan: the Trader licence), 'thief' (Old Fang: the Thief's).
  */
-export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason' | 'fence' | 'hunter' | 'warden'
-export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason', 'fence', 'hunter', 'warden']
+export type NpcService = 'shop' | 'storage' | 'repair' | 'quest' | 'guild' | 'mason' | 'fence' | 'hunter' | 'warden' | 'trader' | 'thief' | 'market' | 'den'
+export const NPC_SERVICES: readonly NpcService[] = ['shop', 'storage', 'repair', 'quest', 'guild', 'mason', 'fence', 'hunter', 'warden', 'trader', 'thief', 'market', 'den']
 
 /** Why a dialog closed without the client asking ('closed' = replaced by another npcTalk). */
 export type NpcCloseReason = 'closed' | 'too_far' | 'dead' | 'warp' | 'gone'

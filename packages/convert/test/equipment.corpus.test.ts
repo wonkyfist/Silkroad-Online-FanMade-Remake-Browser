@@ -74,6 +74,10 @@ describe.skipIf(!HAS_CONFIG)('equipment export (real client)', () => {
     // 12 plus the creation-default shield.
     expect(items.filter(i => i.slot === 'shield')).toHaveLength(12 + 1)
     expect(items.filter(i => i.slot === 'weapon')).toHaveLength(5 * 12 + 5)
+    // the job suits (docs/JOBS.md §3.3): 3 jobs x 3 tiers x 2 bodies, minus the Thief's missing tier II (_04_01)
+    const suits = items.filter(i => /_TRADE_/.test(i.code))
+    expect(suits).toHaveLength(16)
+    expect(suits.every(i => i.slot === 'chest' && i.model?.kind === 'skinned' && !!i.gender)).toBe(true)
     // CA head items ("crown") have no model; every other item has one.
     expect(items.filter(i => !i.model).every(i => /_CA_/.test(i.code))).toBe(true)
     expect(items.filter(i => /_CA_/.test(i.code)).every(i => !i.model)).toBe(true)
@@ -162,7 +166,16 @@ describe.skipIf(!HAS_CONFIG)('equipment export (real client)', () => {
   it('every REPLACE model covers the body parts it hides (no gaps outside the hair)', () => {
     expect(result.coverage.length).toBeGreaterThan(70)
     // retail's own gap (CLIMB §4.1.2): woman clothes_04_la leaves 1 pelvis vertex of 73 uncovered by 7 cm; kept as shipped
-    const KNOWN: Record<string, number> = { 'res/item/china/woman_item/clothes_04_la.bsr': 1 }
+    // the job suits (JOBS.md §3.3) as retail shipped them: the simple clothes and the man's black suits leave a few
+    // skin vertices of the hidden parts uncovered (drawn as shipped)
+    const KNOWN: Record<string, number> = {
+      'res/item/china/woman_item/clothes_04_la.bsr': 1,
+      'res/item/china/man_item/avatar_trader_01.bsr': 22,
+      'res/item/china/woman_item/avatar_trader_01.bsr': 19,
+      'res/item/china/man_item/avatar_hunter_01.bsr': 2,
+      'res/item/china/man_item/thief_02.bsr': 2,
+      'res/item/china/man_item/thief_03.bsr': 2,
+    }
     for (const c of result.coverage) expect(bodyGaps(c.reports), `${c.bsr} ${JSON.stringify(c.reports)}`).toBe(KNOWN[c.bsr] ?? 0)
   })
 

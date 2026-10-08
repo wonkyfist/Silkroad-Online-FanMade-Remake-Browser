@@ -188,16 +188,49 @@ export interface MapOverlayShape {
   to?: { x: number; z: number }
   width?: number
   radius?: number
+  /** A name drawn beside the shape (the job system's trade posts, pings). */
+  label?: string
+  /** A label alone (no dot): e.g. a route's profit at its middle. */
+  text?: true
 }
 export type MapOverlaySource = () => Iterable<MapOverlayShape>
 const overlaySources = new Set<MapOverlaySource>()
 
-/** Adds an overlay source drawn on every redraw; returns the remove function. */
-export function addWorldMapOverlay(fn: MapOverlaySource): () => void {
+/**
+ * A named layer of overlay sources the player turns on and off with a toggle on the map (the job system's "Trade
+ * routes"). Sources without a layer are always drawn. On by default; the choice is kept for the session.
+ */
+export interface MapLayer {
+  id: string
+  label: () => string
+}
+const sourceLayer = new Map<MapOverlaySource, MapLayer>()
+const layersOff = new Set<string>()
+
+/** Adds an overlay source drawn on every redraw (in `layer`, toggled on the map); returns the remove function. */
+export function addWorldMapOverlay(fn: MapOverlaySource, layer?: MapLayer): () => void {
   overlaySources.add(fn)
+  if (layer) sourceLayer.set(fn, layer)
   return () => {
     overlaySources.delete(fn)
+    sourceLayer.delete(fn)
   }
+}
+
+/** The layers with a source now (one entry per id), in the order first added. */
+export function worldMapLayers(): MapLayer[] {
+  const out = new Map<string, MapLayer>()
+  for (const l of sourceLayer.values()) if (!out.has(l.id)) out.set(l.id, l)
+  return [...out.values()]
+}
+
+export function worldMapLayerOn(id: string): boolean {
+  return !layersOff.has(id)
+}
+
+export function setWorldMapLayer(id: string, on: boolean): void {
+  if (on) layersOff.delete(id)
+  else layersOff.add(id)
 }
 
 export interface WorldMapSource {
@@ -229,6 +262,11 @@ const CSS = `
 .fld-map canvas.drag { cursor: grabbing; }
 .fld-map-foot { display: flex; justify-content: space-between; gap: 8px; height: 18px; font: 11px/18px var(--font-body); color: #e8e2cf; white-space: nowrap; overflow: hidden; }
 .fld-map-foot .fld-map-hint { color: #a89f86; }
+.fld-map-layers { position: absolute; left: 6px; top: 6px; display: flex; gap: 4px; z-index: 1; }
+.fld-map-layer { font: 11px/16px var(--font-body); color: #e8e2cf; background: rgba(20, 16, 10, 0.78); border: 1px solid rgba(156, 131, 80, 0.8); border-radius: 2px; padding: 0 6px 0 4px; cursor: pointer; user-select: none; }
+.fld-map-layer::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 5px; border: 1px solid #c8b27a; vertical-align: -1px; }
+.fld-map-layer.on::before { background: #ffcc4a; }
+.fld-map-layer:not(.on) { color: #a89f86; }
 `
 let injected = false
 function ensureStyles(): void {
@@ -260,6 +298,9 @@ interface Box {
 export class WorldMapWindow extends Window {
   private readonly canvas: HTMLCanvasElement
   private readonly info: HTMLElement
+  /** The layer toggles (top left of the map). */
+  private readonly layerBar: HTMLElement
+  private layerKey = ''
   private readonly dpr: number
   private image: CanvasImageSource | null = null
   private imageStarted = false
@@ -297,7 +338,8 @@ export class WorldMapWindow extends Window {
     this.canvas.style.background = this.fill
     this.info = el('div', 'fld-map-foot')
     const wrap = el('div', 'fld-map')
-    wrap.append(this.canvas, this.info)
+    this.layerBar = el('div', 'fld-map-layers')
+    wrap.append(this.canvas, this.info, this.layerBar)
     this.body.append(wrap)
     const c = this.canvas
     this.ls.on(c, 'wheel', ev => {
@@ -575,14 +617,39 @@ export class WorldMapWindow extends Window {
     this.updateInfo(self)
   }
 
+  /** The toggles of the layers that have sources (rebuilt when that list changes). */
+  private syncLayers(): void {
+    const layers = worldMapLayers()
+    const key = layers.map(l => `${l.id}:${worldMapLayerOn(l.id) ? 1 : 0}`).join(',')
+    if (key === this.layerKey) return
+    this.layerKey = key
+    this.layerBar.replaceChildren(
+      ...layers.map(l => {
+        const b = el('div', `fld-map-layer${worldMapLayerOn(l.id) ? ' on' : ''}`, l.label())
+        b.dataset.layer = l.id
+        b.addEventListener('pointerdown', ev => {
+          ev.stopPropagation()
+          setWorldMapLayer(l.id, !worldMapLayerOn(l.id))
+          this.draw()
+        })
+        return b
+      }),
+    )
+  }
+
   /** The overlay sources' shapes (`pxPerM`: map pixels per metre at zoom 1). */
   private drawOverlays(ctx: CanvasRenderingContext2D, toCanvas: (x: number, z: number) => { x: number; y: number }, pxPerM: number): void {
+    this.syncLayers()
     for (const src of overlaySources) {
+      const layer = sourceLayer.get(src)
+      if (layer && !worldMapLayerOn(layer.id)) continue
       try {
         for (const s of src()) {
           const p = toCanvas(s.x, s.z)
           ctx.beginPath()
-          if (s.to) {
+          if (s.text) {
+            // a label alone
+          } else if (s.to) {
             const q = toCanvas(s.to.x, s.to.z)
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(q.x, q.y)
@@ -604,6 +671,28 @@ export class WorldMapWindow extends Window {
             ctx.arc(p.x, p.y, s.width ?? 2.5, 0, Math.PI * 2)
             ctx.fillStyle = s.color
             ctx.fill()
+            ctx.lineWidth = 1
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)'
+            ctx.stroke()
+          }
+          if (s.label) {
+            ctx.font = '11px Georgia, serif'
+            ctx.textBaseline = 'middle'
+            ctx.textAlign = s.text ? 'center' : 'left'
+            const dx = s.text ? 0 : 7
+            if (s.text) {
+              // a route's label: bold on a dark plate (it sits on the busy map, not beside a dot)
+              ctx.font = 'bold 12px Georgia, serif'
+              const w = ctx.measureText(s.label).width + 8
+              ctx.fillStyle = 'rgba(12, 10, 6, 0.78)'
+              ctx.fillRect(p.x - w / 2, p.y - 8, w, 16)
+            }
+            ctx.lineWidth = 3
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.85)'
+            ctx.strokeText(s.label, p.x + dx, p.y)
+            ctx.fillStyle = s.color
+            ctx.fillText(s.label, p.x + dx, p.y)
+            ctx.textAlign = 'left'
           }
         }
       } catch (err) {

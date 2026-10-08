@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "kind": "jobs",
+  "goods": [
+    {
+      "code": "ITEM_ETC_TRADE_CH_01",
+      "name": "White Silk",
+      "origin": "jangan",
+      "base": 800
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_02",
+      "name": "Red Silk",
+      "origin": "jangan",
+      "base": 1000
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_03",
+      "name": "Blue Celadon Vase",
+      "origin": "jangan",
+      "base": 1500
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_04",
+      "name": "Wolju Celadon Vase",
+      "origin": "jangan",
+      "base": 1900
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_05",
+      "name": "Tiger Eye Stone",
+      "origin": "jangan",
+      "base": 2400
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_06",
+      "name": "Poplar Tree",
+      "origin": "jangan",
+      "base": 600
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_07",
+      "name": "High Class Tiger Leather",
+      "origin": "jangan",
+      "base": 3000
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_05",
+      "name": "Brown Pearl",
+      "origin": "south-beach",
+      "base": 2000
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_01",
+      "name": "Leather",
+      "origin": "ferry-landing",
+      "base": 700
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_02",
+      "name": "Footstall",
+      "origin": "ferry-landing",
+      "base": 900
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_03",
+      "name": "Saddle",
+      "origin": "ferry-landing",
+      "base": 1400
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_04",
+      "name": "Horseshoe",
+      "origin": "ferry-landing",
+      "base": 1100
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_06",
+      "name": "Silver Bar",
+      "origin": "sea-cliffs",
+      "base": 2600
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_07",
+      "name": "Gold Bar",
+      "origin": "sea-cliffs",
+      "base": 4000
+    }
+  ],
+  "posts": [
+    {
+      "id": "jangan",
+      "name": "Jangan",
+      "npc": {
+        "code": "NPC_CH_SPECIAL",
+        "name": "Specialty Trader Jodaesan",
+        "base": "NPC_CH_SPECIAL",
+        "greeting": ""
+      },
+      "x": 176,
+      "z": -48,
+      "yaw": -1.571,
+      "place": "jangan",
+      "danger": 0
+    },
+    {
+      "id": "south-beach",
+      "name": "South Beach",
+      "npc": {
+        "code": "NPC_JOB_POST_HAEUN",
+        "name": "Pearl Diver Haeun",
+        "base": "NPC_CH_SPECIAL",
+        "greeting": "Pearls from the shallows, salt from the sea. Bring me Jangan silk and I will pay you better than the market does."
+      },
+      "x": 470,
+      "z": 1240,
+      "yaw": 3.141592653589793,
+      "place": "trade-south-beach",
+      "danger": 1
+    },
+    {
+      "id": "tomb-camp",
+      "name": "Tomb Camp",
+      "npc": {
+        "code": "NPC_JOB_POST_GONG",
+        "name": "Quartermaster Gong",
+        "base": "NPC_CH_SOLDIER_SO1",
+        "greeting": "The diggers at the tomb eat, drink and wear out their boots. Whatever you haul up the road, the camp buys."
+      },
+      "x": 840,
+      "z": -990,
+      "yaw": -1.5707963267948966,
+      "place": "trade-tomb-camp",
+      "danger": 2
+    },
+    {
+      "id": "ferry-landing",
+      "name": "Ferry Landing",
+      "npc": {
+        "code": "NPC_JOB_POST_WOL",
+        "name": "Ferry Master Wol",
+        "base": "NPC_CH_FERRY",
+        "greeting": "No boats cross any more, but the landing still trades. Leather and saddlery from the old Western stock, for Jangan goods."
+      },
+      "x": -2249,
+      "z": 338.9,
+      "yaw": 1.5707963267948966,
+      "place": "trade-ferry-landing",
+      "danger": 4
+    },
+    {
+      "id": "sea-cliffs",
+      "name": "Sea Cliffs",
+      "npc": {
+        "code": "NPC_JOB_POST_MOK",
+        "name": "Salvager Mok",
+        "base": "NPC_CH_FERRY2",
+        "greeting": "The sea gives back what it takes: silver, gold, the odd crate. Haul your goods up here alive and I pay the best price on the island."
+      },
+      "x": -2030,
+      "z": 990,
+      "yaw": 1.5707963267948966,
+      "place": "trade-sea-cliffs",
+      "danger": 5
+    }
+  ],
+  "den": {
+    "npc": "NPC_CH_SPECIAL2",
+    "place": "bandit-den",
+    "x": -1495,
+    "z": 808
+  },
+  "transports": [
+    {
+      "tier": 1,
+      "cos": "COS_T_DONKEY",
+      "item": "ITEM_COS_T_DONKEY",
+      "name": "Donkey",
+      "jobLevel": 1,
+      "hold": 30,
+      "hp": 2500,
+      "speed": 4,
+      "price": 2000
+    },
+    {
+      "tier": 2,
+      "cos": "COS_T_HORSE1",
+      "item": "ITEM_COS_T_HORSE1",
+      "name": "Horse",
+      "jobLevel": 3,
+      "hold": 60,
+      "hp": 3800,
+      "speed": 4.5,
+      "price": 5000
+    },
+    {
+      "tier": 3,
+      "cos": "COS_T_HORSE2",
+      "item": "ITEM_COS_T_HORSE2",
+      "name": "Thoroughbred",
+      "jobLevel": 5,
+      "hold": 90,
+      "hp": 5000,
+      "speed": 4.8,
+      "price": 9000
+    },
+    {
+      "tier": 4,
+      "cos": "COS_T_DHORSE1",
+      "item": "ITEM_COS_T_DHORSE1",
+      "name": "Ironclad Trade Horse",
+      "jobLevel": 7,
+      "hold": 120,
+      "hp": 7000,
+      "speed": 4.5,
+      "price": 14000
+    }
+  ]
+}

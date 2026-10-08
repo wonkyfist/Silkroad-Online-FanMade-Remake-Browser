@@ -1,13 +1,88 @@
 {
   "schema": 1,
   "kind": "cos",
-  "generatedAt": "2026-10-07T00:19:58.014Z",
+  "generatedAt": "2026-10-08T14:04:39.493Z",
   "sources": [
     "client:characterdata.txt",
     "client:itemdata.txt (summon items)",
     "client:textdataname.txt"
   ],
   "entries": [
+    {
+      "code": "COS_T_DONKEY",
+      "id": 2183,
+      "name": "Donkey",
+      "level": 20,
+      "hp": 3933,
+      "walkSpeed": 1.9,
+      "runSpeed": 3.6,
+      "radius": 1.2,
+      "physAbsorb": 20,
+      "magAbsorb": 20,
+      "parryRate": 65,
+      "hitRate": 65,
+      "model": {
+        "bsr": "res/cos/t_donkey.bsr",
+        "glb": "/out/cos/t_donkey.glb",
+        "sidecar": "/out/cos/t_donkey.json"
+      },
+      "icon": "/out/icon/cos/cos_t_donkey.png",
+      "fieldSources": {
+        "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
+        "runSpeed": "client characterdata Speed2 (col 47) x 0.1",
+        "radius": "client characterdata BCRadius (col 50) x 0.1"
+      }
+    },
+    {
+      "code": "COS_T_HORSE1",
+      "id": 2184,
+      "name": "Horse",
+      "level": 30,
+      "hp": 6571,
+      "walkSpeed": 2.4,
+      "runSpeed": 4.8,
+      "radius": 1.2,
+      "physAbsorb": 30,
+      "magAbsorb": 30,
+      "parryRate": 85,
+      "hitRate": 85,
+      "model": {
+        "bsr": "res/cos/t_horse1.bsr",
+        "glb": "/out/cos/t_horse1.glb",
+        "sidecar": "/out/cos/t_horse1.json"
+      },
+      "icon": "/out/icon/cos/cos_t_horse1.png",
+      "fieldSources": {
+        "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
+        "runSpeed": "client characterdata Speed2 (col 47) x 0.1",
+        "radius": "client characterdata BCRadius (col 50) x 0.1"
+      }
+    },
+    {
+      "code": "COS_T_HORSE2",
+      "id": 2185,
+      "name": "Thoroughbred",
+      "level": 45,
+      "hp": 12428,
+      "walkSpeed": 2.4,
+      "runSpeed": 4.8,
+      "radius": 1.2,
+      "physAbsorb": 45,
+      "magAbsorb": 45,
+      "parryRate": 115,
+      "hitRate": 115,
+      "model": {
+        "bsr": "res/cos/t_horse2.bsr",
+        "glb": "/out/cos/t_horse2.glb",
+        "sidecar": "/out/cos/t_horse2.json"
+      },
+      "icon": "/out/icon/cos/cos_t_horse2.png",
+      "fieldSources": {
+        "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
+        "runSpeed": "client characterdata Speed2 (col 47) x 0.1",
+        "radius": "client characterdata BCRadius (col 50) x 0.1"
+      }
+    },
     {
       "code": "COS_C_HORSE1",
       "id": 2191,
@@ -27,6 +102,31 @@
         "sidecar": "/out/cos/c_horse1.json"
       },
       "icon": "/out/icon/cos/cos_c_horse1.png",
+      "fieldSources": {
+        "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
+        "runSpeed": "client characterdata Speed2 (col 47) x 0.1",
+        "radius": "client characterdata BCRadius (col 50) x 0.1"
+      }
+    },
+    {
+      "code": "COS_T_DHORSE1",
+      "id": 3912,
+      "name": "Ironclad Trade Horse",
+      "level": 75,
+      "hp": 35500,
+      "walkSpeed": 2.4,
+      "runSpeed": 4.8,
+      "radius": 1.2,
+      "physAbsorb": 75,
+      "magAbsorb": 75,
+      "parryRate": 152,
+      "hitRate": 152,
+      "model": {
+        "bsr": "res/cos/t_dhorse1.bsr",
+        "glb": "/out/cos/t_dhorse1.glb",
+        "sidecar": "/out/cos/t_dhorse1.json"
+      },
+      "icon": "/out/icon/cos/cos_t_dhorse1.png",
       "fieldSources": {
         "walkSpeed": "client characterdata Speed1 (col 46) x 0.1",
         "runSpeed": "client characterdata Speed2 (col 47) x 0.1",

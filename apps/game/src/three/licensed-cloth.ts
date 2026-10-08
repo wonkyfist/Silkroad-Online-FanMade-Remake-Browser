@@ -43,6 +43,7 @@ import {
   type PieceKey,
   type WardrobeCoverage,
 } from './licensed-outfit.ts'
+import { EMBLEM_COL, EMBLEM_COLOURS, EMBLEM_M_RANGE, EMBLEM_PIECES, EMBLEM_SPOTS, emblemAnchor, writeEmblem, type EmblemAnchor, type EmblemAnchors, type EmblemSide } from './job-look.ts'
 import { exposureScale } from './weapon-glow.ts'
 
 export { outfitFromGear } from './licensed-outfit.ts'
@@ -72,9 +73,10 @@ export const CLOTH_UNIFORMS = ['sroClothK', 'sroClothW'] as const
 /**
  * The outfit strip (one per outfit, STRIP_W × STRIP_H RGBA8, nearest): row = the owner piece's index + 1 in the body's
  * piece list (row 0: no piece), columns 0..4 the region colours (linear, stored ^(1/2.2)), column 5 the effects
- * (sheen / 2, weave / 2, seal / 3, seal amount), column 6 (jewel: 1 = the earring's sparkle, 0, 0, 0).
+ * (sheen / 2, weave / 2, seal / 3, seal amount), column 6 (jewel: 1 = the earring's sparkle, 0, 0, 0), columns 7-11 the
+ * job emblem of a piece in job mode (three/job-look.ts writeEmblem: the front and back anchors, the job and level).
  */
-export const STRIP_W = 8
+export const STRIP_W = 12
 export const STRIP_H = 32
 /**
  * The seals' glow strengths (display-relative, × the exposure scale like the weapons' glow): Star's star points and
@@ -115,6 +117,69 @@ fn sroPt(c: vec2f) -> vec2f { return c + 0.5 + (vec2f(sroH(c + 0.37), sroH(c + 5
 fn sroLink(a: vec2f, b: vec2f, q: vec2f) -> f32 { return mix(9.0, sroSeg(q, sroPt(a), sroPt(b)), step(0.58, sroH(a * 1.7 + b * 0.31 + 2.0))); }
 `
 
+const lin3 = (hex: string, w: boolean) => {
+  const n = parseInt(hex.slice(1), 16)
+  const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => Math.pow(v / 255, 2.2).toFixed(4))
+  return `${w ? 'vec3f' : 'vec3'}(${c.join(', ')})`
+}
+
+/**
+ * The job emblem (docs/JOBS.md §3.3; three/job-look.ts): p in emblem units (1 = its edge; body x, y up), job 1-3, level
+ * 1-7, px a pixel in those units; returns the embroidered colour (linear) and its coverage. Trader: a gold cash coin
+ * with its square hole; Bounty Hunter: a blue arrowhead on silver; Thief: three claw slashes on blood red. The level's
+ * pips arc over the top.
+ */
+function emblemCode(lang: 'glsl' | 'wgsl'): string {
+  const w = lang === 'wgsl'
+  const v2 = w ? 'vec2f' : 'vec2'
+  const v3 = w ? 'vec3f' : 'vec3'
+  const L = w ? 'let' : 'float'
+  const LV2 = w ? 'let' : 'vec2'
+  const VV3 = w ? 'var' : 'vec3'
+  const VF = w ? 'var' : 'float'
+  const T = EMBLEM_COLOURS
+  const col = (k: 'ground' | 'rim' | 'symbol' | 'pip') => `
+  if (job < 1.5) { c${k} = ${lin3(T.trader[k], w)}; } else if (job < 2.5) { c${k} = ${lin3(T.hunter[k], w)}; } else { c${k} = ${lin3(T.thief[k], w)}; }`
+  const head = w ? 'fn sroEmblem(p: vec2f, job: f32, lv: f32, px: f32) -> vec4f {' : 'vec4 sroEmblem(vec2 p, float job, float lv, float px) {'
+  const box = (name: string, c: string, b: string) => `${LV2} ${name}D = abs(p - ${c}) - ${b};
+    ${L} ${name} = length(max(${name}D, ${v2}(0.0))) + min(max(${name}D.x, ${name}D.y), 0.0);`
+  return `
+${head}
+  ${L} r = length(p);
+  ${VV3} cground = ${v3}(0.0);
+  ${VV3} crim = ${v3}(0.0);
+  ${VV3} csymbol = ${v3}(0.0);
+  ${VV3} cpip = ${v3}(0.0);${col('ground')}${col('rim')}${col('symbol')}${col('pip')}
+  ${L} disc = 1.0 - smoothstep(1.0 - px, 1.0 + px, r);
+  ${L} rim = smoothstep(0.8 - px, 0.8 + px, r);
+  ${VF} sym = 0.0;
+  if (job < 1.5) {
+    ${L} ring = 1.0 - smoothstep(0.04 - px, 0.04 + px, abs(r - 0.58));
+    ${box('hole', `${v2}(0.0)`, `${v2}(0.22)`)}
+    sym = max(ring, 1.0 - smoothstep(-px, px, hole));
+  } else if (job < 2.5) {
+    ${L} tri = max(-(p.y + 0.02), (abs(p.x) * 1.4762 + p.y - 0.62) * 0.5609);
+    ${box('shaft', `${v2}(0.0, -0.3)`, `${v2}(0.09, 0.3)`)}
+    sym = 1.0 - smoothstep(-px, px, min(tri, shaft));
+  } else {
+    ${L} sl = min(min(sroSeg(p, ${v2}(-0.62, 0.4), ${v2}(-0.08, -0.5)), sroSeg(p, ${v2}(-0.28, 0.56), ${v2}(0.28, -0.56))), sroSeg(p, ${v2}(0.08, 0.5), ${v2}(0.62, -0.4)));
+    sym = (1.0 - smoothstep(0.08 - px, 0.08 + px, sl)) * (1.0 - rim);
+  }
+  ${VV3} c = mix(mix(cground, csymbol, sym), crim, rim);
+  // the level's pips: the nearest of lv dots on an arc over the emblem
+  ${L} an = ${w ? 'atan2' : 'atan'}(p.y, p.x) - 1.5708;
+  ${L} k = clamp(floor(an / 0.36 + (lv - 1.0) * 0.5 + 0.5), 0.0, max(lv - 1.0, 0.0));
+  ${L} pa = 1.5708 + (k - (lv - 1.0) * 0.5) * 0.36;
+  ${L} pd = length(p - 1.3 * ${v2}(cos(pa), sin(pa)));
+  ${L} pip = (1.0 - smoothstep(0.12 - px, 0.12 + px, pd)) * step(0.5, lv);
+  ${L} pipEdge = (1.0 - smoothstep(0.17 - px, 0.17 + px, pd)) * step(0.5, lv);
+  c = mix(c, crim, pipEdge * (1.0 - disc));
+  c = mix(c, cpip, pip);
+  return ${w ? 'vec4f' : 'vec4'}(c, max(disc, pipEdge));
+}
+`
+}
+
 const DEFS_GLSL = `
 #ifdef SROCLOTH
 uniform sampler2D sroDye;
@@ -124,6 +189,9 @@ uniform sampler2D sroStrip;
 uniform sampler2D sroWear;
 #endif
 ${NOISE_GLSL}
+#ifdef SROJOB
+${emblemCode('glsl')}
+#endif
 #endif
 `
 const DEFS_WGSL = `
@@ -139,8 +207,37 @@ var sroWearSampler: sampler;
 var sroWear: texture_2d<f32>;
 #endif
 ${NOISE_WGSL}
+#ifdef SROJOB
+${emblemCode('wgsl')}
+#endif
 #endif
 `
+
+/** One side's emblem in the albedo code (strip columns EMBLEM_COL + off and + off + 1, its side bit). */
+function emblemSide(lang: 'glsl' | 'wgsl', side: EmblemSide, off: number): string {
+  const w = lang === 'wgsl'
+  const v2 = w ? 'vec2f' : 'vec2'
+  const L = w ? 'let' : 'float'
+  const LV2 = w ? 'let' : 'vec2'
+  const LV4 = w ? 'let' : 'vec4'
+  const uv = w ? 'fragmentInputs.vAlbedoUV' : 'vAlbedoUV'
+  const at = (col: number) => `${v2}((${col}.0 + 0.5) / ${STRIP_W}.0, (cdRow + 0.5) / ${STRIP_H}.0)`
+  const strip = (col: number) => (w ? `textureSampleLevel(sroStrip, sroStripSampler, ${at(col)}, 0.0)` : `texture2D(sroStrip, ${at(col)})`)
+  const bit = side === 'front' ? '(jbSd - 2.0 * floor(jbSd / 2.0)) > 0.5' : 'jbSd > 1.5'
+  const n = side === 'front' ? 'jbf' : 'jbb'
+  const R = EMBLEM_SPOTS[side].radius.toFixed(4)
+  return `    if (${bit}) {
+      ${LV4} ${n}A = ${strip(EMBLEM_COL + off)} * 255.0;
+      ${LV4} ${n}M = (${strip(EMBLEM_COL + off + 1)} * 2.0 - 1.0) * ${EMBLEM_M_RANGE.toFixed(1)};
+      ${LV2} ${n}D = ${uv} - ${v2}((${n}A.r * 256.0 + ${n}A.g) / 65535.0, (${n}A.b * 256.0 + ${n}A.a) / 65535.0);
+      ${LV2} ${n}Q = ${v2}(${n}M.r * ${n}D.x + ${n}M.g * ${n}D.y, ${n}M.b * ${n}D.x + ${n}M.a * ${n}D.y) / ${R};
+      ${L} ${n}Px = max(cdFw * max(length(${n}M.rb), length(${n}M.ga)) / ${R}, 0.02);
+      if (dot(${n}Q, ${n}Q) < 2.6) {
+        ${LV4} ${n}E = sroEmblem(${n}Q, jbJob, jbLv, ${n}Px);
+        cdC = mix(cdC, ${n}E.rgb, ${n}E.a);
+      }
+    }`
+}
 
 // one source for both languages: U the uniform prefix, v2/v3 the vector types, L/LV2/LV3/VV3/VF the declarations
 function albedoCode(lang: 'glsl' | 'wgsl'): string {
@@ -194,6 +291,17 @@ ${VV3} sroClothGlow = ${v3}(0.0);
     ${L} cdCl0 = cdW.r + cdW.g;
     cdC = cdC * (1.0 + cdFx.y * (cdCl0 * (0.16 * cdTw * cdAa + 0.12 * cdF) + cdW.b * 0.35 * cdF));
   }
+#ifdef SROJOB
+  // the job emblem (JOBS.md §3.3), embroidered into the piece that carries it: the front from tier I, the back from II
+  ${w ? 'let' : 'vec4'} jbF = ${strip(EMBLEM_COL + 4)};
+  ${L} jbJob = floor(jbF.r * 3.0 + 0.5);
+  ${L} jbSd = floor(jbF.b * 3.0 + 0.5);
+  ${L} jbLv = floor(jbF.g * 7.0 + 0.5);
+  if (jbJob > 0.5) {
+${emblemSide(lang, 'front', 0)}
+${emblemSide(lang, 'back', 2)}
+  }
+#endif
 #ifdef SROSEAL
   // the seal of the piece's item, in the cloth itself (§16.9), animated by the seal clock (static on Low / Classic):
   // Star a deep violet nebula drifting through the dyed cloth with twinkling stars and faint constellation lines; Moon a
@@ -336,14 +444,72 @@ export function stripRow(g: GearPiece, out = new Uint8Array(STRIP_W * 4), jewel 
   return out
 }
 
-/** The outfit's strip (STRIP_W × STRIP_H RGBA8): row i + 1 for `pieces[i]` (the body's piece list) when worn. */
-export function outfitStrip(o: Outfit, pieces: readonly string[]): Uint8Array {
+/**
+ * The outfit's strip (STRIP_W × STRIP_H RGBA8): row i + 1 for `pieces[i]` (the body's piece list) when worn; a piece in
+ * job mode with an emblem anchor (`anchors`, emblemAnchorsOf) carries the emblem's columns (job-look.ts writeEmblem).
+ */
+export function outfitStrip(o: Outfit, pieces: readonly string[], anchors?: EmblemAnchors | null): Uint8Array {
   const out = new Uint8Array(STRIP_W * STRIP_H * 4)
   const worn = new Map(o.pieces.map(x => [x.piece as string, x.gear]))
   pieces.forEach((name, i) => {
     const g = worn.get(name)
-    if (g && i + 1 < STRIP_H) stripRow(g, out.subarray((i + 1) * STRIP_W * 4, (i + 2) * STRIP_W * 4))
+    if (!g || i + 1 >= STRIP_H) return
+    const row = out.subarray((i + 1) * STRIP_W * 4, (i + 2) * STRIP_W * 4)
+    stripRow(g, row)
+    if (g.job && anchors) writeEmblem(row, anchors.get(name), g.job)
   })
+  return out
+}
+
+/** The outfit shows an emblem (a job piece with an anchor): its materials compile the SROJOB code. */
+export function outfitHasEmblem(o: Outfit, anchors: EmblemAnchors | null | undefined): boolean {
+  if (!anchors) return false
+  return o.pieces.some(p => !!p.gear.job && Object.keys(anchors.get(p.piece) ?? {}).length > 0)
+}
+
+const anchorCache = new WeakMap<object, EmblemAnchors>()
+
+/**
+ * The job emblem's anchors of a licensed body, per wardrobe (every body of that glb shares them): measured once on its
+ * LOD0 chest pieces' bind-pose data (job-look.ts emblemAnchor), the spots' height from the TOP's bounds. Empty when the
+ * meshes keep no vertex data (the emblem is then left out; the job colours stay).
+ */
+export function emblemAnchorsOf(meshes: readonly AbstractMesh[], key: object): EmblemAnchors {
+  const hit = anchorCache.get(key)
+  if (hit) return hit
+  const out: EmblemAnchors = new Map()
+  const parts = new Map<string, { pos: ArrayLike<number>; uv: ArrayLike<number>; idx: ArrayLike<number> }[]>()
+  let y0 = Infinity
+  let y1 = -Infinity
+  for (const m of meshes) {
+    const part = partKeyOf(m.name)
+    if (!part || !(EMBLEM_PIECES as readonly string[]).includes(part) || licensedLodOf(m) !== 0) continue
+    const pos = m.getVerticesData('position')
+    const uv = m.getVerticesData('uv')
+    const idx = m.getIndices()
+    if (!pos || !uv || !idx || !idx.length) continue
+    parts.set(part, [...(parts.get(part) ?? []), { pos, uv, idx }])
+    if (part !== 'TOP') continue
+    for (let i = 1; i < pos.length; i += 3) {
+      y0 = Math.min(y0, pos[i]!)
+      y1 = Math.max(y1, pos[i]!)
+    }
+  }
+  if (!(y1 > y0)) return out
+  for (const [part, list] of parts) {
+    const a: Partial<Record<EmblemSide, EmblemAnchor>> = {}
+    for (const side of ['front', 'back'] as const) {
+      const s = EMBLEM_SPOTS[side]
+      let best: EmblemAnchor | null = null
+      for (const d of list) {
+        const h = emblemAnchor(d.pos, d.uv, d.idx, s.x, y0 + (y1 - y0) * s.yFrac, side === 'front' ? 1 : -1)
+        if (h && (!best || h.z > best.z)) best = h
+      }
+      if (best) a[side] = best
+    }
+    out.set(part, a)
+  }
+  anchorCache.set(key, out)
   return out
 }
 
@@ -367,8 +533,9 @@ export class ClothDyePlugin extends MaterialPluginBase {
     readonly strip: BaseTexture,
     readonly seal = false,
     readonly wear: { dirt: number; blood: number; map: BaseTexture } | null = null,
+    readonly job = false,
   ) {
-    super(material, CLOTH_PLUGIN, 320, { SROCLOTH: false, SROSEAL: false, SROWEAR: false }, true, false)
+    super(material, CLOTH_PLUGIN, 320, { SROCLOTH: false, SROSEAL: false, SROWEAR: false, SROJOB: false }, true, false)
     this.clock = clothClockOf(material.getScene())
     // hardBindForSubMesh (the clock, the exposure, the wear) runs only for plugins registered for the extra events
     this.registerForExtraEvents = true
@@ -389,7 +556,7 @@ export class ClothDyePlugin extends MaterialPluginBase {
 
   override prepareDefines(defines: MaterialDefines): void {
     const d = defines as MaterialDefines & Record<string, unknown>
-    const want = { SROCLOTH: true, SROSEAL: this.seal, SROWEAR: !!this.wear }
+    const want = { SROCLOTH: true, SROSEAL: this.seal, SROWEAR: !!this.wear, SROJOB: this.job }
     for (const [k, v] of Object.entries(want)) {
       if (d[k] === v) continue
       d[k] = v
@@ -601,6 +768,9 @@ export function applyOutfit(
   const wk = assets.wear ? wearKey(wear) : ''
   const wearOf = wk && wear && assets.wear ? { dirt: wear.dirt / WEAR_LEVELS, blood: wear.blood / WEAR_LEVELS, map: assets.wear } : null
   const sealed = outfit.pieces.some(p => !!p.gear.seal)
+  // the job emblem's spots on this body (measured once per glb; JOBS.md §3.3)
+  const anchors = emblemAnchorsOf(meshes, w)
+  const emblem = outfitHasEmblem(outfit, anchors)
   const held: string[] = []
   for (const m of meshes) {
     if (m.getTotalVertices() <= 0) continue
@@ -649,10 +819,10 @@ export function applyOutfit(
       m.material = acquire(cache, key, () => {
         const mat = cloneUndecorated(base, `${base.name}~outfit`)
         mat.albedoTexture = assets.shade
-        const strip = RawTexture.CreateRGBATexture(outfitStrip(outfit, w.pieces), STRIP_W, STRIP_H, scene, false, false, Constants.TEXTURE_NEAREST_SAMPLINGMODE)
+        const strip = RawTexture.CreateRGBATexture(outfitStrip(outfit, w.pieces, anchors), STRIP_W, STRIP_H, scene, false, false, Constants.TEXTURE_NEAREST_SAMPLINGMODE)
         strip.name = 'clothStrip'
         strip.wrapU = strip.wrapV = Constants.TEXTURE_CLAMP_ADDRESSMODE
-        new ClothDyePlugin(mat, assets.dye, assets.owner, strip, sealed, wearOf)
+        new ClothDyePlugin(mat, assets.dye, assets.owner, strip, sealed, wearOf, emblem)
         // the outfit merge and the crowd copy albedos into an atlas: this shade map is not a colour (they keep it apart)
         mat.metadata = { ...(mat.metadata as object | null), sroNoAtlas: true }
         decorate?.(mat)

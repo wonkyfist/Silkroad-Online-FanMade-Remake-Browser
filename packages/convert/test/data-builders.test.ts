@@ -42,7 +42,11 @@ describe('items', () => {
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_EU_SWORD_01_A', [3, 1, 6, 7], { 14: '1' }))))).toBe(false)
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_W_HEAVY_02_BA_B', [3, 1, 3, 3], { 61: '5' }))))).toBe(true)
     expect(isExportedItem(itemDataRow(row(itemCells('ITEM_ETC_HP_POTION_01', [3, 3, 1, 1], { 14: '3' }))))).toBe(true)
-    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_ETC_TRADE_CH_01', [3, 3, 3, 1], { 14: '3' }))))).toBe(false)
+    // docs/JOBS.md §12 layer 0: the job items by code (trade goods, suits, the four transports, the den scroll), no others
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_ETC_TRADE_CH_01', [3, 3, 8, 1], { 14: '3' }))))).toBe(true)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_CH_F_TRADE_THIEF_03', [3, 1, 7, 2], { 61: '20' }))))).toBe(true)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_COS_T_CAMEL1', [3, 3, 3, 2], { 14: '3' }))))).toBe(false)
+    expect(isExportedItem(itemDataRow(row(itemCells('ITEM_ETC_TRADE_EU_01', [3, 3, 8, 1], { 14: '3' }))))).toBe(false)
   })
 
   it('classifies by TypeID', () => {

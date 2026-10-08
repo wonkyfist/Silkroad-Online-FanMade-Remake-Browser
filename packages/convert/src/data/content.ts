@@ -32,7 +32,7 @@ import {
   type PortFrameFit,
   type WorldFrame,
 } from './frame.ts'
-import { buildItems, itemIconSource, MAX_ITEM_DEGREE } from './items.ts'
+import { buildItems, itemIconSource, JOB_ITEM_CODE, MAX_ITEM_DEGREE } from './items.ts'
 import { buildMobDef, characterRides, type DataExists } from './mobs.ts'
 import { modelSource, type OutExists } from './models.ts'
 import { buildNests, DEFAULT_ZONE, portFrameAnchors, terrainEvidence, type NestRecord, type TerrainEvidence, type TerrainProbe } from './nests.ts'
@@ -164,6 +164,8 @@ export function buildContent(input: ContentInput): ContentOutput {
   const itemCtx = { strings: client.strings, exists: input.exists, basicAttacks, ...(input.hasIcon ? { hasIcon: input.hasIcon } : {}) }
   const items = buildItems(client.items, itemCtx, input.maxItemDegree ?? MAX_ITEM_DEGREE)
   const itemCodes = new Set(items.map(i => i.code))
+  // The job items (docs/JOBS.md §12 layer 0) never enter the retail shops or drop tables: the job modules hand them out.
+  const tradeable = new Set([...itemCodes].filter(c => !JOB_ITEM_CODE.test(c)))
   // Wave 8 (docs/SYSTEMS_COMBAT.md §2.4, §6.3; WAVE_PLAN2 D6): the monsters' MSKILL rows join skills.json, and the
   // COS the summon items name go to cos.json.
   const mobSkills = buildMobSkills(client.skills, mobs, { skilleffect: client.tables['skilleffect.txt'] }, client.strings, id => charById.get(id)?.codeName)
@@ -197,14 +199,14 @@ export function buildContent(input: ContentInput): ContentOutput {
     regions,
     teleportsByNpc,
     chain,
-    itemCodes,
+    itemCodes: tradeable,
     itemGender: new Map(items.map(i => [i.code, i.reqGender])),
     port,
     portFrame: frame,
   })
 
   // 7. Drops.
-  const dropResult = buildDrops(mobs, port.drops, port.itemMap, itemCodes, client.levelGold)
+  const dropResult = buildDrops(mobs, port.drops, port.itemMap, tradeable, client.levelGold)
   for (const m of dropResult.missing) warnings.push(`drops: no port drop table for ${m}`)
 
   // 8. Towns: Jangan's teleport arrival point and safe box.

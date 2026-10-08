@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest'
 import { itemDataRow, type TextdataRow } from '@sro/formats'
 import { checkItemDef } from '../../shared/src/index.ts'
 import { loadClientSources } from '../src/data/client-source.ts'
-import { buildItemDef, buildItems } from '../src/data/items.ts'
+import { buildItemDef, buildItems, JOB_ITEM_CODE } from '../src/data/items.ts'
 import { textdataReader } from '../src/data/textdata-source.ts'
 import { loadConfig, openArchive, REPO_ROOT } from '../src/node-io.ts'
 
@@ -44,7 +44,8 @@ describe.skipIf(!hasConfig)('canTrade on the real itemdata', () => {
     const items = buildItems(client.items, ctx)
     const def = items.filter(i => /_DEF$/.test(i.code))
     expect(def).toHaveLength(25)
-    expect(items.filter(i => i.canTrade === false).map(i => i.code).sort()).toEqual(def.map(i => i.code).sort())
+    // and the job items (docs/JOBS.md layer 0: retail CanTrade 0 on trade goods, suits and transports' scrolls)
+    expect(items.filter(i => i.canTrade === false && !JOB_ITEM_CODE.test(i.code)).map(i => i.code).sort()).toEqual(def.map(i => i.code).sort())
     expect(items.find(i => i.code === 'ITEM_CH_SWORD_01_A')!.canTrade).toBeUndefined()
     // D49: the horse and its kits are ordinary tradable bag items.
     for (const code of ['ITEM_COS_C_HORSE1', 'ITEM_ETC_COS_HP_POTION_01', 'ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_WEAPON_A']) {
@@ -57,7 +58,8 @@ describe.skipIf(!hasConfig)('canTrade on the real itemdata', () => {
     if (!existsSync(file)) return
     const items = (JSON.parse(readFileSync(file, 'utf8')) as { entries: Array<{ code: string; canTrade?: boolean }> }).entries
     if (!items.some(i => 'canTrade' in i)) return // an export from before wave 8
-    expect(items.filter(i => i.canTrade === false).every(i => /_DEF$/.test(i.code))).toBe(true)
-    expect(items.filter(i => i.canTrade === false)).toHaveLength(25)
+    const locked = items.filter(i => i.canTrade === false && !JOB_ITEM_CODE.test(i.code))
+    expect(locked.every(i => /_DEF$/.test(i.code))).toBe(true)
+    expect(locked).toHaveLength(25)
   })
 })

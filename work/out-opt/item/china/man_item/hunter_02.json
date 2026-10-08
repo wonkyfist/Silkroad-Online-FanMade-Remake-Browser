@@ -1,0 +1,118 @@
+{
+  "source": "res/item/china/man_item/hunter_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "hunter_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 16,
+    "attachPointName": "ATTACH",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "hunter_02"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "hunter_02",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\hunter_02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\hunter_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (24.8% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hunter_02",
+      "bms": "prim\\mesh\\item\\china\\man_item\\hunter_02.bms",
+      "material": "hunter_02",
+      "vertices": 195,
+      "triangles": 178,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 195,
+    "triangles": 178,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.6985645294189453,
+    "boundsMin": [
+      -0.5484626889228821,
+      1.2415478229522705,
+      -0.34865570068359375
+    ],
+    "boundsMax": [
+      0.5665090084075928,
+      1.9401123523712158,
+      -0.0944182425737381
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

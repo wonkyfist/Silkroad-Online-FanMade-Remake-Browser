@@ -1,0 +1,209 @@
+{
+  "source": "res/item/china/man_item/avatar_hunter_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "avatar_hunter_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "avatar_hunter_01_part1_part1"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "avatar_hunter_01_part1_part2"
+      },
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "avatar_hunter_01_part1_part1"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "avatar_hunter_01_part1_part2"
+      },
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "avatar_hunter_01_part2"
+      },
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "avatar_hunter_01_part2"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "avatar_hunter_01_part1_part1"
+      },
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "avatar_hunter_01_part1_part2"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "avatar_hunter_01",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\avatar_hunter_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\avatar_hunter_01.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.0% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "avatar_hunter_01_part2",
+      "bms": "prim\\mesh\\item\\china\\man_item\\avatar_hunter_01_part2.bms",
+      "material": "avatar_hunter_01",
+      "vertices": 225,
+      "triangles": 337,
+      "skinned": false,
+      "bones": [
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 R Finger0",
+        "Bip01 R Finger01",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R UpperArm",
+        "Bip01 L Hand",
+        "Bip01 L Forearm",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21",
+        "Bip01 L UpperArm"
+      ]
+    },
+    {
+      "name": "avatar_hunter_01_part1_part1",
+      "bms": "prim\\mesh\\item\\china\\man_item\\avatar_hunter_01_part1_part1.bms",
+      "material": "avatar_hunter_01",
+      "vertices": 15,
+      "triangles": 16,
+      "skinned": false,
+      "bones": [
+        "Bip01 L Clavicle",
+        "Bip01 Spine1"
+      ]
+    },
+    {
+      "name": "avatar_hunter_01_part1_part2",
+      "bms": "prim\\mesh\\item\\china\\man_item\\avatar_hunter_01_part1_part2.bms",
+      "material": "avatar_hunter_01",
+      "vertices": 792,
+      "triangles": 1056,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 R Clavicle",
+        "Bip01 Neck1",
+        "Bip01 R UpperArm",
+        "Spine_Base",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 L Calf",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Forearm"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1032,
+    "triangles": 1409,
+    "joints": 0,
+    "meshes": 3,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.6137530654668808,
+    "boundsMin": [
+      -0.9116619825363159,
+      -0.00988362729549408,
+      -0.20552881062030792
+    ],
+    "boundsMax": [
+      0.9111827611923218,
+      1.6038694381713867,
+      0.1996166706085205
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

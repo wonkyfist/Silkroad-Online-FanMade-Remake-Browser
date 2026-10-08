@@ -1,7 +1,7 @@
-# Siege of Jangan: destructible walls, wall-breakers jailed by Hunters
+# Siege of Jangan: destructible walls, wall-breakers jailed by Bounty Hunters
 
 **Status (2026-10-06): layers 0 and 1 built** (the cut, walls that break and walk through); layers 2 (looks and sound)
-and 3 (repair), 4 (the siege event), 5 (player kegs and Wanted) and 6 (Hunters and the jail) built, see their status
+and 3 (repair), 4 (the siege event), 5 (player kegs and Wanted) and 6 (Bounty Hunters and the jail) built, see their status
 notes below. Built as written, with these deviations: the cut glbs and the nav pieces live in the world export
 (`<world>/siege/models/cj_<side>_cut.glb`, one glb per side with a node per piece; `siege/walls-nav.bin`), never in
 `content/` (retail meshes are never committed); `nav.bin` / `nav-objects.bin` keep the retail wall instances and the
@@ -14,22 +14,22 @@ underpass stays inside the gatehouse piece); layer 1 shows cracks as a dark over
 (docs/WEATHER.md §2.7 `LightningService.onStrike`, §13 `TornadoService.onTornado`) and borrows the event, settings and
 admin patterns of docs/PLAY_THE_BOSS.md.
 
-**Layer 6 status (2026-10-06): built** (Hunters and the jail; every layer of this spec is now built). Server
+**Layer 6 status (2026-10-06): built** (Bounty Hunters and the jail; every layer of this spec is now built). Server
 `apps/server/src/siege/{hunters,jail,hunter-store,law-admin}.ts` (GameplayModules `hunters` and `jail`, after `law`);
 shared rules, content and protocol `packages/shared/src/siege-hunter.ts` (settings: new `law` fields and the `hunter`
-group in siege-event.ts); client `apps/game/src/world/features/law.ts` (extended), `hud/law-hud.ts` (Hunter panel,
+group in siege-event.ts); client `apps/game/src/world/features/law.ts` (extended), `hud/law-hud.ts` (Bounty Hunter panel,
 Stockade panel, Yun's and Bae's windows), `world/siege/stockade.ts`, `i18n/en-siege-hunter.ts`; admin
 `apps/admin/src/pages/siege-law.ts` (the Law tab) and two Numbers cards; migration **20** (`law_contacts`, `law_flags`:
 anti-collusion, below). Built as written (all §16.2 defaults), with these deviations:
 - **Captain Yun** (`NPC_SIEGE_CAPTAIN_YUN`, Hunter Associate Gwakwi's model) at (−145, −207); his `hunter` service
-  (licence, duty) and a shop selling the Hunter's Net (8,000 gold; **no Siege Seal price**: the shop system takes gold
+  (licence, duty) and a shop selling the Bounty Hunter's Net (8,000 gold; **no Siege Seal price**: the shop system takes gold
   only). **Warden Bae** (`NPC_SIEGE_WARDEN_BAE`, a gate soldier's model) at (−146, −293.5), `warden` service.
 - **PvP paths**: basic attacks, single-target attack/debuff skills (chains too) and DoTs; an area skill never hits a
   player (the rule "areas only hit whom pvpAllowed allows" holds trivially). `pvpDamage` is `hunter.pvpMul` on every
-  player-on-player hit in `Gameplay.dealHits`. A Hunter killed by a Wanted dies normally (there is no death penalty
-  in the game). The target window shows the enemy frame (HP) and the hostile ring for a Wanted or on-duty Hunter.
+  player-on-player hit in `Gameplay.dealHits`. A Bounty Hunter killed by a Wanted dies normally (there is no death penalty
+  in the game). The target window shows the enemy frame (HP) and the hostile ring for a Wanted or on-duty Bounty Hunter.
 - **The Net** is the `hunterNet {target}` request (a HUD button on the selected Wanted), snaring with the `stun` status
-  for `netSec` (the game has no root status). **Pings**: blue circles on the minimap for a minute; on-duty Hunters see
+  for `netSec` (the game has no root status). **Pings**: blue circles on the minimap for a minute; on-duty Bounty Hunters see
   the Wanted within `senseM` as red dots (client side).
 - **Ranks** are 0 ("Recruit") below the first capture, then 1-5 at 1/3/10/25/60. `EntityState.hunter` = the rank while on
   duty; `entityUpdate.hunter` −1 = off duty; `EntityState.jailed` / `entityUpdate.jailed`.
@@ -47,12 +47,12 @@ anti-collusion, below). Built as written (all §16.2 defaults), with these devia
   `law hunter <name> [licence|revoke|restore|duty on|off]`; `law capture` now jails and credits the captor.
 - **Admin** routes under the `siege` group: GET `law`, POST `law/pardon|jail|release|time|hunter|forgive`
   (`{character}` = a name or an id; `time` adds or takes minutes).
-- **Anti-collusion (the user's rules, beyond §8.6; settings in `law` / `hunter`)**: (1) a Hunter whose account traded or
+- **Anti-collusion (the user's rules, beyond §8.6; settings in `law` / `hunter`)**: (1) a Bounty Hunter whose account traded or
   bought from a stall of the Wanted's account (social_log), partied with it (law_contacts, written at a party join), or
   was a **lookout** (within `law.lookoutM` 30 m of the keg while it was planted or burned, without trying to defuse it)
   within `law.contactDays` (7) gets no bounty and no capture credit; (2) the **pair rule** now withholds the capture
   credit too (no capture count, no rank; the spec's "still counts" is dropped); (3) a bounty is capped at
-  `law.bountyKegPct` (80 %) of the keg's price (40,000 by default) and a Hunter account earns at most
+  `law.bountyKegPct` (80 %) of the keg's price (40,000 by default) and a Bounty Hunter account earns at most
   `hunter.dailyBountyCap` (60,000) of bounties per 24 h; (4) each earlier capture of the same Wanted account within
   the pair window takes `law.repeatPct` (50 %) off, and from `law.repeatMax` (3) earlier captures nothing is paid and
   nobody gets credit; (5) every capture closes all warrants and jails, rewarded or not, and the jailed are untouchable;
@@ -87,12 +87,12 @@ anti-collusion, below). Built as written (all §16.2 defaults), with these devia
   `siegeNotice`; during a siege the siege's own breach banner is skipped for a keg breach (the law's names the traitor).
 - **The online clock**: the warrant's time runs while the Wanted is in the world (saved every 30 s and at logout);
   `EntityState.wanted` (the bounty) and `entityUpdate.wanted` (0 clears) draw the red label; the own HUD shows the
-  bounty, the online time left, the offence and treason (no "Hunters can attack you" line before layer 6).
+  bounty, the online time left, the offence and treason (no "Bounty Hunters can attack you" line before layer 6).
 - **Associates rule of layer 4**: a siege's traitors (breakers and accomplices of a treason breach) and their
   associates (party, guild, same account, same IP) get no siege rewards (`LawService.barredFromSiege`).
 - **Layer 6 hooks**: `law.wantedOf / isWanted / bountyOf / onWanted` (readable state), `law.capture(characterId,
   captors, now)` (closes the warrants `captured`, pays the bounty from the server by share, associates of the Wanted get
-  nothing, returns the sentence), `law.kegRefusal(p)` (the jail and Hunter duty will refuse kegs there). The 7-day pair
+  nothing, returns the sentence), `law.kegRefusal(p)` (the jail and Bounty Hunter duty will refuse kegs there). The 7-day pair
   rule and the jail are layer 6.
 - **GM** `law [status] | record | wanted [off] | lapse <min> | pardon | forgive [all] | capture [captor] | cooldown |
   kegs` (the spec's `law jail/release/hunter` come with layer 6; the admin Law tab too).
@@ -225,13 +225,13 @@ Screenshots: `siege-preview/layer2-*.png`.
 > - A breach is a real hole: monsters walk in, and the ground behind it is no longer safe until it is repaired.
 > - Walls mend slowly on their own; Master Mason Ko speeds it up with your gold and stone, or grab a Mason's Kit.
 > - Players can blow up a wall with a Thunder Keg, but the whole server is warned and you become **WANTED**.
-> - Become a **Hunter** (Captain Yun, west gate): only Hunters may fight the Wanted, catch them and claim the bounty.
+> - Become a **Bounty Hunter** (Captain Yun, west gate): only Bounty Hunters may fight the Wanted, catch them and claim the bounty.
 > - Caught wall-breakers sit in the Garrison Stockade for 2 hours, then 4, 8, 16... for each repeat offence.
 
 **The user's decisions (not re-opened here).** The outer walls become destructible in segments with damage stages
 (intact → cracked → breached → rubble) and repair. Lightning only chips and cracks, never breaches. Monsters damage
 walls during a "Siege of Jangan" event (monster armies attack, players defend). Players can break walls with siege
-items; that triggers a server-wide notice, the wall-breaker becomes Wanted, and Hunters (the Hunter/Thief/Trader job
+items; that triggers a server-wide notice, the wall-breaker becomes Wanted, and Bounty Hunters (the Hunter/Thief/Trader job
 system, not built yet; idea card "Trade runs: the Trader, Hunter & Thief job war") hunt them down and jail them for a
 couple of hours, more for each repeat offence. A breach lets monsters into town (safe-area rules change while
 breached). Repair: slowly on its own, and/or by player donations of gold and materials to builder NPCs.
@@ -275,10 +275,10 @@ open-ground map of the west camp.
 7. **Wanted**: whoever's blast takes a segment through 0 is the wall-breaker; damage-dealers of the last 10 min are
    accomplices. Server-wide notice at the plant and at the breach. The server alone sets Wanted, so false reports
    cannot exist.
-8. **Minimal job system**: a **Hunter licence** (level 15, 10,000 gold, Captain Yun at the west gate) and an
-   **on-duty** toggle. One PvP rule function `pvpAllowed(a, b)`: an on-duty Hunter and a Wanted player may fight each
+8. **Minimal job system**: a **Bounty Hunter licence** (level 15, 10,000 gold, Captain Yun at the west gate) and an
+   **on-duty** toggle. One PvP rule function `pvpAllowed(a, b)`: an on-duty Bounty Hunter and a Wanted player may fight each
    other, nobody else. The table is where Trader and Thief rows go later.
-9. **Capture**: a Wanted player brought to 0 HP by Hunters is **subdued**, not killed, and warped to the **Garrison
+9. **Capture**: a Wanted player brought to 0 HP by Bounty Hunters is **subdued**, not killed, and warped to the **Garrison
    Stockade** (the open ground by the west wall's military camp, inside the safe area). Sentences 2 / 4 / 8 / 16 / 24 h
    by offence count (per account, one level forgiven per 30 clean days), real time, offline included.
 10. **Repair**: +1 % per 10 min on its own; donations queue work that Master Mason Ko's builders apply at ≤ 1 %/min
@@ -476,7 +476,7 @@ Without this the army walks in by the gates and the walls never matter.
 
 `apps/server/src/siege/`: `walls.ts` (WallService: state, damage, stages, repair, nav apply, persistence),
 `event.ts` (the siege state machine, waves, lanes, objectives, rewards), `army.ts` (siege mob behaviour), `keg.ts`
-(Thunder Keg and sapper kegs), `law.ts` (wanted, capture, jail), `jobs.ts` (Hunter licence and duty), `store.ts`
+(Thunder Keg and sapper kegs), `law.ts` (wanted, capture, jail), `jobs.ts` (Bounty Hunter licence and duty), `store.ts`
 (SQL), `settings.ts`, `admin.ts`, `gm.ts`. Two GameplayModules: `walls` (always on with a mesh nav and a
 `walls.json`) and `siege` (event + law + jobs), registered after `lightning` and `tornado`.
 
@@ -487,14 +487,14 @@ Without this the army walks in by the gates and the walls never matter.
 | `packages/nav/src/world.ts`, `apps/server/src/nav.ts` | §4.1 | gaps |
 | `gamedata.ts` | `inSafeArea` also returns false inside an `unsafeAt(x, z)` predicate the walls module sets (breach zones); the town rectangle stays content | one seam for ~20 callers |
 | `world.ts` | `Mob.siege?: SiegeMobState`; `walkEntity` asks `siege.clip(m, from, to)` for mobs with `m.siege`; `EntityState.wanted`, `hunter`, `jailed` | wards; markers |
-| `gameplay.ts` | `attackRequest`, skill targeting and `attackable`: a player target is allowed when `pvpAllowed(p, t)` (§8.3); `dealHits` player → player uses `pvpDamage`; at 0 HP a Wanted target hit by a Hunter goes to `law.subdue` instead of death | the only PvP |
+| `gameplay.ts` | `attackRequest`, skill targeting and `attackable`: a player target is allowed when `pvpAllowed(p, t)` (§8.3); `dealHits` player → player uses `pvpDamage`; at 0 HP a Wanted target hit by a Bounty Hunter goes to `law.subdue` instead of death | the only PvP |
 | `formulas.ts` | `pvpDamage` = the player → mob formula against the target's player defence × `pvpMul` 0.5 | captures take time |
 | `ai.ts` | `thinkMob` skips mobs whose `m.siege.mode` is `march` / `assault` (the army drives them) | lanes |
 | `item-use.ts` | item `use.kind: 'keg' \| 'masonKit'` routed to the siege module (a timed cast, as the return scroll) | plant / repair |
 | `lightning/service.ts` | none: the module subscribes `onStrike`; `select.ts` asks `walls.rodUp(x, z)` to skip downed rods | chips |
 | `storm/tornado.ts` | none: `onTornado` | wear |
 | `connection.ts` / gates | jailed players' requests refused (`jailed`) except the list in §8.5; their `moveTo` clamped into the stockade | jail |
-| `progression.ts` (death penalty) | no EXP loss for a PvP death (Hunter or Wanted) | fairness |
+| `progression.ts` (death penalty) | no EXP loss for a PvP death (Bounty Hunter or Wanted) | fairness |
 
 ### 5.3 State and persistence
 
@@ -579,7 +579,7 @@ Contribution points: 1 per 100 damage to siege mobs, 20 per sapper killed before
 | won | 50 × points (≤ 30,000) | points / 50 (≤ 10) | "Defender of Jangan" to the top 3 and to anyone ≥ 300 points (permanent, `EntityState.honor`) |
 | lost | 25 % of that | 0 | – |
 
-Seals buy Mason's Kits, Stone Blocks, a Hunter's Net (§8.4), later cosmetics, at Ko and Captain Yun.
+Seals buy Mason's Kits, Stone Blocks, a Bounty Hunter's Net (§8.4), later cosmetics, at Ko and Captain Yun.
 **Failure** [decision]: no shop or town penalty; the breaches stay open, looters move in (§2.5), and the notice says so.
 Repairing becomes the community's job.
 
@@ -597,11 +597,11 @@ Repairing becomes the community's job.
 
 | Item | Get | Cost | Use | Limits |
 |---|---|---|---|---|
-| **Thunder Keg** | crafted by **Old Fang the Fence** (new NPC, a bandit-side camp ≈ 600 m west of town, outside the safe area) | 50,000 gold + 3 Saltpeter | plant at a segment's **outer** foot (within 6 m of the outer face, outside the safe area): 5 s timed cast, then a 15 s fuse; 60 % damage | level 18; ≥ 10 h `played_ms`; character-bound (no trade, stall, storage, drop); carry ≤ 2; one plant per **account** per 30 min; refused for an on-duty Hunter and while jailed |
+| **Thunder Keg** | crafted by **Old Fang the Fence** (new NPC, a bandit-side camp ≈ 600 m west of town, outside the safe area) | 50,000 gold + 3 Saltpeter | plant at a segment's **outer** foot (within 6 m of the outer face, outside the safe area): 5 s timed cast, then a 15 s fuse; 60 % damage | level 18; ≥ 10 h `played_ms`; character-bound (no trade, stall, storage, drop); carry ≤ 2; one plant per **account** per 30 min; refused for an on-duty Bounty Hunter and while jailed |
 | **Mason's Kit** | Ko's shop | 1,500 gold | §2.4 | stack 20 |
 | **Stone Block** | Stone Ghost drops (8 %), Ko's shop (1,200) | – | donation material (2 = 1 %) | stack 50 |
 | **Saltpeter** | Bandit and Bandit Archer drops (2 %), siege mobs (2 %) | – | keg material | stack 50 |
-| **Hunter's Net** | Captain Yun for 2 Siege Seals or 8,000 gold | – | a Hunter's thrown snare at a Wanted player within 12 m: 2 s root (existing `root`-like status), 60 s cooldown | Hunters on duty only |
+| **Bounty Hunter's Net** | Captain Yun for 2 Siege Seals or 8,000 gold | – | a Bounty Hunter's thrown snare at a Wanted player within 12 m: 2 s root (existing `root`-like status), 60 s cooldown | Bounty Hunters on duty only |
 
 ### 7.1 The keg in the world
 
@@ -613,7 +613,7 @@ same.
 
 ---
 
-## 8. Wanted, Hunters and the jail (the minimal job system)
+## 8. Wanted, Bounty Hunters and the jail (the minimal job system)
 
 ### 8.1 From a blast to Wanted
 
@@ -626,18 +626,18 @@ same.
 4. A blast that does not breach: no Wanted, but the damage is remembered for 10 min (step 2) and logged.
 
 **Wanted** (warrant): bounty = 20,000 × min(offence, 4) (accomplice: half, half the sentence). A red **WANTED** label
-line over the character for everyone; on-duty Hunters get a `wantedPing` (a circle of 80 m around a point ≤ 50 m from
+line over the character for everyone; on-duty Bounty Hunters get a `wantedPing` (a circle of 80 m around a point ≤ 50 m from
 the target) every 60 s, and see the Wanted on their minimap within 120 m. The warrant **lapses** after 2 h of the
 Wanted's **online** time without capture: no jail, no bounty paid, but the offence still counts [decision: escaping is
 part of the game; the clock only runs online so logging off cannot outwait it]. During a siege the sentence and the
 bounty are ×2 ("treason") [decision].
 
-### 8.2 Hunters
+### 8.2 Bounty Hunters
 
 - **Licence** from **Captain Yun** (new NPC by the west gate, x ≈ −145, z ≈ −200): level ≥ 15, 10,000 gold, not
-  Wanted, no offence in the last 30 days. Permanent unless revoked (a GM, or the Hunter breaks a wall: revoked for
+  Wanted, no offence in the last 30 days. Permanent unless revoked (a GM, or the Bounty Hunter breaks a wall: revoked for
   30 days).
-- **On duty** (toggle at Yun or a HUD button, only in a safe area and out of combat): a blue Hunter badge on the
+- **On duty** (toggle at Yun or a HUD button, only in a safe area and out of combat): a blue Bounty Hunter badge on the
   label; sees pings; may fight the Wanted. **Off duty** is refused for 2 min after the last PvP hit (no escaping a
   fight).
 - **Rank** 1–5 by captures (1, 3, 10, 25, 60): a label title and later the Trader-escort tie-in; no stat bonuses.
@@ -646,23 +646,23 @@ bounty are ×2 ("treason") [decision].
 
 | Attacker | Target | Allowed | Where |
 |---|---|---|---|
-| on-duty Hunter | Wanted (not an associate of the Hunter) | yes | anywhere but the stockade, including the safe area [decision: town cannot be a permanent sanctuary] |
-| Wanted | on-duty Hunter | yes | same |
+| on-duty Bounty Hunter | Wanted (not an associate of the Bounty Hunter) | yes | anywhere but the stockade, including the safe area [decision: town cannot be a permanent sanctuary] |
+| Wanted | on-duty Bounty Hunter | yes | same |
 | anyone | anyone else | no (today's `no PvP`) | – |
 
-Later rows (not built): Thief vs Trader on a trade run, Hunter vs Thief, Trader's escort. Damage between players uses
+Later rows (not built): Thief vs Trader on a trade run, Bounty Hunter vs Thief, Trader's escort. Damage between players uses
 `pvpDamage` (§5.2). Skills with area effects hit only bodies `pvpAllowed` lets them hit. Party heals and buffs are
 unchanged.
 
 ### 8.4 Capture
 
-A Wanted at 0 HP from a Hunter's hit (or a Hunter's DoT) is **subdued**: HP set to 1, a 3 s bound pose (`subdued`
+A Wanted at 0 HP from a Bounty Hunter's hit (or a Bounty Hunter's DoT) is **subdued**: HP set to 1, a 3 s bound pose (`subdued`
 status: no actions), then `World.warp` to the stockade + `Gameplay.warped(p, 'gm')`. No death, no EXP loss, no item
-drop [decision: the jail is the penalty]. The bounty is split among the Hunters (not associates of the Wanted) who
-dealt ≥ 10 % of the Wanted's max HP in the last 90 s, by damage; the same Hunter account capturing the same Wanted
+drop [decision: the jail is the penalty]. The bounty is split among the Bounty Hunters (not associates of the Wanted) who
+dealt ≥ 10 % of the Wanted's max HP in the last 90 s, by damage; the same Bounty Hunter account capturing the same Wanted
 account again within 7 days gets 0 gold (still counts as a capture). If the Wanted dies to a monster or lightning the
-warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Hunter's hit is captured on the spot
-(sentence served from the next login if the clock is `online`), bounty to those Hunters.
+warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Bounty Hunter's hit is captured on the spot
+(sentence served from the next login if the clock is `online`), bounty to those Bounty Hunters.
 
 ### 8.5 The Garrison Stockade
 
@@ -676,7 +676,7 @@ warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Hunt
 - **Can**: walk, sit, emote, all chat channels, look at the inventory and equipment, party chat, talk to Warden Bae
   (time left, offence, rules), **chores** (§ below).
 - **Cannot** (`jailed` refusal): attack, skills, items except food and potions, return scrolls, teleports, mount,
-  trade, stall, storage, shops, quest turn-ins, keg, Hunter duty, Play the Boss, siege rewards.
+  trade, stall, storage, shops, quest turn-ins, keg, Bounty Hunter duty, Play the Boss, siege rewards.
 - **Chores**: break a rock at the pile (10 s channel) = −1 min, up to 25 % of the sentence [decision: something to
   do, and a reason to stay online].
 - **Clock**: **real time**, offline included [decision: a couple of real hours is the user's intent; `sentenceClock:
@@ -693,17 +693,17 @@ warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Hunt
 
   One offence level is forgiven per 30 days without an offence. Accomplices: half (≥ 1 h). Treason ×2 (cap 24 h).
 - **Release**: at the end, the character is warped to the stockade gate with 10 min of **pardon** (cannot be Wanted
-  from old damage; not a Hunter target); chat "You have served your sentence."
+  from old damage; not a Bounty Hunter target); chat "You have served your sentence."
 
 ### 8.6 Anti-abuse
 
 | Abuse | Guard |
 |---|---|
 | alt breaks, friend hunts (bounty farm) | associates (party, guild, same account, same IP) cannot claim; 7-day pair rule (layer 6: no gold **and no capture credit**); a keg (50,000 + materials) costs more than the bounty it creates (layer 6: bounties capped at `law.bountyKegPct` 80 % of the keg price) |
-| friends farm bounties, ranks or titles (layer 6, the user's rules) | accounts that traded, used each other's stall or partied within `law.contactDays` (7), and lookouts at the keg (within `law.lookoutM` 30 m, never tried to defuse), get no bounty and no capture; a Wanted account caught again within 7 days pays `law.repeatPct` (50 %) less per earlier capture and nothing (no credit) from `law.repeatMax` (3); at most `hunter.dailyBountyCap` (60,000) of bounty per Hunter account per 24 h; a capture always closes every warrant and jails (only the reward is withheld); every withheld reward is flagged in the admin Law tab ("Suspected collusion") |
+| friends farm bounties, ranks or titles (layer 6, the user's rules) | accounts that traded, used each other's stall or partied within `law.contactDays` (7), and lookouts at the keg (within `law.lookoutM` 30 m, never tried to defuse), get no bounty and no capture; a Wanted account caught again within 7 days pays `law.repeatPct` (50 %) less per earlier capture and nothing (no credit) from `law.repeatMax` (3); at most `hunter.dailyBountyCap` (60,000) of bounty per Bounty Hunter account per 24 h; a capture always closes every warrant and jails (only the reward is withheld); every withheld reward is flagged in the admin Law tab ("Suspected collusion") |
 | alts rotating offences | offences per account; keg needs level 18 + 10 h played; character-bound kegs; 30 min per-account plant cooldown |
-| griefing Hunters | Hunters can only hit the Wanted; off-duty lock after PvP; licence revocable; no PvP EXP loss |
-| hiding in town | the safe area does not protect the Wanted from Hunters |
+| griefing Bounty Hunters | Bounty Hunters can only hit the Wanted; off-duty lock after PvP; licence revocable; no PvP EXP loss |
+| hiding in town | the safe area does not protect the Wanted from Bounty Hunters |
 | logging out | the warrant clock runs online only; combat logout = capture |
 | false reports | impossible: the server alone issues warrants, from the blast it computed |
 | camping the jail exit | 10 min pardon; release inside the safe area |
@@ -716,8 +716,8 @@ warrant stays. **Combat logout**: a Wanted who disconnects within 30 s of a Hunt
 
 `char_jobs` already has a `job` column (`hunter` now; `trader`, `thief` later) and a rank; `warrants.reason` takes
 `'wall'` now and `'robbery'` later; `pvpAllowed` is one table. When trade runs land: a Thief who robs a caravan gets a
-`robbery` warrant (same Wanted, ping, capture and jail), Traders can hire on-duty Hunters as escorts (a party flag),
-and Hunter ranks gain trade-run perks. Nothing in this spec needs to be undone for that.
+`robbery` warrant (same Wanted, ping, capture and jail), Traders can hire on-duty Bounty Hunters as escorts (a party flag),
+and Bounty Hunter ranks gain trade-run perks. Nothing in this spec needs to be undone for that.
 
 ---
 
@@ -751,8 +751,8 @@ and Hunter ranks gain trade-run perks. Nothing in this spec needs to be undone f
   coloured by stage, "N defenders". The minimap and the world map draw the wall as segments coloured by stage, breach
   zones as red rings, kegs as blinking icons.
 - **Wanted**: the label line "WANTED · 40,000" in red over the character; the Wanted player's own HUD shows "Wanted:
-  1:42:10 until the warrant lapses" and the warning "Hunters can attack you anywhere".
-- **Hunter**: duty toggle, rank, captures; ping circles on the minimap; the Wanted's minimap dot within 120 m.
+  1:42:10 until the warrant lapses" and the warning "Bounty Hunters can attack you anywhere".
+- **Bounty Hunter**: duty toggle, rank, captures; ping circles on the minimap; the Wanted's minimap dot within 120 m.
 - **Jail**: "Garrison Stockade · 1:47:33 left · offence 2" and the chores counter.
 - Notices go through the existing NoticeBanner queue with `kind: 'siege'` (plant, breach, captured, siege phases).
 
@@ -802,7 +802,7 @@ and Hunter ranks gain trade-run perks. Nothing in this spec needs to be undone f
 | { t: 'keg'; id: number; seg: string; x: number; y: number; z: number; fuseEndsAt: number; sapper?: true }
 | { t: 'kegEnd'; id: number; how: 'blast' | 'defused' | 'cancelled' }
 | { t: 'siegeNotice'; event: 'plant' | 'breach' | 'captured' | 'lapsed' | 'phase'; wall?: string; name?: string; bounty?: number }
-| { t: 'wantedPing'; id: number; x: number; z: number; r: number; at: number }   // on-duty Hunters
+| { t: 'wantedPing'; id: number; x: number; z: number; r: number; at: number }   // on-duty Bounty Hunters
 | { t: 'lawState'; wanted?: { bounty: number; lapseMs: number }; jail?: { until: number; offence: number; chores: number }; hunter?: { licensed: boolean; onDuty: boolean; rank: number; captures: number } }
 
 type WallStage = 'intact' | 'cracked' | 'breached' | 'rubble'
@@ -900,7 +900,7 @@ start; a sparse DB patch `siege_settings` for the operator's live numbers and sc
 3. **Schedule** and **Numbers** (§11.2 groups as forms, per-field reset, bounds, inline 422s).
 4. **Events**: date, origin, outcome, breaches, defenders, top contributors; detail with the log.
 5. **Law**: open warrants (name, bounty, online time left), jailed (time left; release, add time), records (offences;
-   forgive), Hunters (rank, captures; revoke).
+   forgive), Bounty Hunters (rank, captures; revoke).
 
 ---
 
@@ -914,7 +914,7 @@ start; a sparse DB patch `siege_settings` for the operator's live numbers and sc
 | `mason [status]` / `mason queue <seg\|any> <pct>` / `mason clear <seg\|all>` / `mason build [steps]` / `mason looters [spawn\|clear]` | layer 3 (built): queues and kits at work, free work, run the builders now, the looters at the gaps |
 | `siege start [warningMin]` / `stop` / `status` / `wave <1-3>` / `warlord` | the event |
 | `law wanted <name> [off]` / `law jail <name> <minutes> [reason]` / `law release <name>` / `law pardon <name>` / `law forgive <name>` | the law |
-| `law hunter <name> licence\|revoke\|duty on\|off` | Hunters |
+| `law hunter <name> licence\|revoke\|duty on\|off` | Bounty Hunters |
 
 ---
 
@@ -928,7 +928,7 @@ start; a sparse DB patch `siege_settings` for the operator's live numbers and sc
   muster) and the raiders' 40 ip hits barely dent a wall.
 - Rubble to closed by builders alone with enough donations: 55 % at 1 %/min ≈ 55 min, costing 110,000 gold; by nature
   alone ≈ 9 h.
-- Capture: a Wanted lv 20 vs two Hunters at `pvpMul` 0.5 ≈ 20–40 s of fighting [projected from player → mob DPS ≈ 50/s,
+- Capture: a Wanted lv 20 vs two Bounty Hunters at `pvpMul` 0.5 ≈ 20–40 s of fighting [projected from player → mob DPS ≈ 50/s,
   UNIQUES §4.1, and player HP ≈ 2,000 at level 20].
 
 ---
@@ -949,14 +949,14 @@ glbs; `walls.json` schema.
 **Integration (in-process server, bot clients)**: GM `wall break W3` → a bot walks through the gap, a second bot's
 client-side prediction agrees; lightning at a wall chips to the floor and stops; a tornado path near the E wall wears
 it; restart keeps the stages and the gap; keg: plant, notice, defuse by another bot; keg blast breaches → wanted notice,
-WANTED label, a Hunter bot on duty attacks, 0 HP → subdued → stockade; jail refusals for each request; relog in jail;
+WANTED label, a Bounty Hunter bot on duty attacks, 0 HP → subdued → stockade; jail refusals for each request; relog in jail;
 sentence ends offline (real clock); combat logout = capture; warrant lapses after 2 h online (fast clock). A mini
 siege with 3 bot defenders: lanes march, sappers plant, a breach, mobs reach the Bell, the Warlord dies → won and
 rewards; a second run lost on the Bell.
 
 **Abuse** (`abuse-siege.test.ts`): kegs from inside the town, on the inner face, from an alt below level 18, a third
-keg carried, a second plant within 30 min on another character of the account; Hunter attacking a non-Wanted, an
-off-duty Hunter, a Wanted attacking a non-Hunter; Hunter capturing an associate (no bounty); jailed player's
+keg carried, a second plant within 30 min on another character of the account; Bounty Hunter attacking a non-Wanted, an
+off-duty Bounty Hunter, a Wanted attacking a non-Bounty Hunter; Bounty Hunter capturing an associate (no bounty); jailed player's
 `moveTo` 200 m away (clamped), `itemUse` a return scroll, `trade`; `wallRepair` from 50 m; donation with negative gold.
 
 **Client**: the walls feature hides the four retail placements and draws 33 segments; a stage change swaps variants;
@@ -978,7 +978,7 @@ the event-loop lag of today's Play the Boss load gate.
 | **3. Repair** | Master Mason Ko, donations and the builder queue, Mason's Kit, Stone Block drops, looters at breaches | a breached segment is closed by donations; looters appear and leave |
 | **4. Siege event** | event state machine, lanes, roster, sappers and their kegs, rams, archers, Warlord, Town Bell, gate wards, scaling, rewards and title, schedule, migration 18, admin page (walls + event + settings), GM `siege` | **playable**: a GM-started siege with friends, won and lost once each; load gate |
 | **5. Player kegs and Wanted** | Thunder Keg and Old Fang, Saltpeter, plant/defuse/blast, notices, warrants (wanted label, lapse), law records, migration 19 (all tables) | a keg breach names the breaker server-wide; the warrant lapses after 2 h online |
-| **6. Hunters and the jail** | Captain Yun, licence, duty, ranks, `pvpAllowed` and `pvpDamage`, Hunter's Net, pings, capture and bounty, the Stockade (props via the World Editor, Warden Bae, clamp, chores), sentences and clock, admin Law tab, GM `law`, abuse tests | **the full loop**: break a wall, get hunted, sit 2 h, the second time 4 h |
+| **6. Bounty Hunters and the jail** | Captain Yun, licence, duty, ranks, `pvpAllowed` and `pvpDamage`, Bounty Hunter's Net, pings, capture and bounty, the Stockade (props via the World Editor, Warden Bae, clamp, chores), sentences and clock, admin Law tab, GM `law`, abuse tests | **the full loop**: break a wall, get hunted, sit 2 h, the second time 4 h |
 
 ---
 
@@ -991,7 +991,7 @@ the event-loop lag of today's Play the Boss load gate.
 | The cut changes the town's look (UV or lightmap seams at cuts) | cuts at the texture repeat; UV0/UV1 untouched; layer 0's gate is a side-by-side render |
 | The nav split leaks (a gap in the split outline lets walkers through an intact wall) | the 2,000-chord equality test and a walker fuzz along each wall (as I7B's walk fuzz) |
 | The ditch: a gap's corridor may still be closed somewhere (the N side has a wider closed band) | per-third probe in the converter, corridor widening, a hard stop if it still fails |
-| First PvP in the game: damage formulas, skills with areas, buffs, heals never met a player target | one `pvpAllowed` gate used by every targeting path; `pvpDamage` only Hunter ↔ Wanted; dedicated tests; `pvpMul` setting |
+| First PvP in the game: damage formulas, skills with areas, buffs, heals never met a player target | one `pvpAllowed` gate used by every targeting path; `pvpDamage` only Bounty Hunter ↔ Wanted; dedicated tests; `pvpMul` setting |
 | ≈ 150 siege mobs + 30 players: tick time and broadcast load | the load gate of layer 4; caps on scaling (`scaleCap`); mobs outside every player's interest go dormant except marching ones (march by legs, one move per leg) |
 | Gate wards feel odd (monsters stop at an open gate) | portcullis prop dropped in each arch during a siege (visual only), so the ward reads as a barred gate |
 | The safe-area seam changes ~20 behaviours at once | it only ever removes safety inside breach zones; tests for attack, mob targeting, stalls, lightning, tornado in a zone |
@@ -1007,7 +1007,7 @@ the event-loop lag of today's Play the Boss load gate.
    a later layer could add stair links.
 4. Jail clock: **real time, offline included** (`sentenceClock` setting).
 5. Uncaught Wanted: the warrant **lapses after 2 h of online time**; the offence still counts.
-6. Can Hunters attack the Wanted inside the safe area? **Yes**, everywhere except the stockade.
+6. Can Bounty Hunters attack the Wanted inside the safe area? **Yes**, everywhere except the stockade.
 7. Kegs during a siege: **allowed, ×2 sentence and bounty** ("treason").
 8. Bail: **none** in v1; chores cut up to 25 %.
 9. Offence record: **per account** (alts share it); one level forgiven per 30 clean days.
@@ -1016,13 +1016,13 @@ the event-loop lag of today's Play the Boss load gate.
 12. Schedule: **weekly, Sunday 20:00 server time, disabled by default**; skipped below 5 eligible players; never
     during a Night of the Tiger.
 13. Bounty source: **paid by the server** (the keg's 50,000 gold sink exceeds it); no player-posted bounties in v1.
-14. Hunter licence: **level 15, 10,000 gold, 30 days clean**; on duty only from a safe area; off-duty locked 2 min
+14. Bounty Hunter licence: **level 15, 10,000 gold, 30 days clean**; on duty only from a safe area; off-duty locked 2 min
     after a PvP hit.
-15. PvP death penalty: **none** (no EXP loss for Hunter or Wanted deaths; capture is not a death).
+15. PvP death penalty: **none** (no EXP loss for Bounty Hunter or Wanted deaths; capture is not a death).
 16. Lightning and tornado wear floor: **35 %** (deep cracks, never a breach).
 17. Natural repair: **1 % per 10 min**, paused during a siege.
 18. Looters outside a siege: **3 Bandits per breached segment**, respawn 5 min.
-19. Who sees the Wanted: **everyone sees the label**; only on-duty Hunters get pings and the minimap dot.
+19. Who sees the Wanted: **everyone sees the label**; only on-duty Bounty Hunters get pings and the minimap dot.
 20. NPC names and spots (Master Mason Ko at the south gate, Captain Yun at the west gate, Warden Bae at the stockade,
     Old Fang ≈ 600 m west): placeholders for the user to rename.
 
@@ -1036,8 +1036,8 @@ the event-loop lag of today's Play the Boss load gate.
 | 3. Repair | 2 | 1 | – | 1 | **4** |
 | 4. Siege event | 6 | 3 | 0.5 | 2.5 | **12** |
 | 5. Player kegs and Wanted | 2.5 | 1 | – | 1 | **4.5** |
-| 6. Hunters and the jail | 4 | 2 | 0.5 (stockade props) | 2 | **8.5** |
+| 6. Bounty Hunters and the jail | 4 | 2 | 0.5 (stockade props) | 2 | **8.5** |
 | | | | | | **≈ 45** |
 
-Walls players can break and walk through: after layers 0–1 (≈ 12 agent-days). The full wall-breaker → Hunter → jail
+Walls players can break and walk through: after layers 0–1 (≈ 12 agent-days). The full wall-breaker → Bounty Hunter → jail
 loop needs layers 0, 1, 5 and 6 (≈ 25), so it can ship before the siege event if the user prefers.

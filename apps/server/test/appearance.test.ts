@@ -154,7 +154,7 @@ describe('migration 23: the look', () => {
       raw.close()
       const store = openStore(dir)
       try {
-        expect(store.schemaVersion).toBe(24)
+        expect(store.schemaVersion).toBe(27)
         for (const [id, body, h, v] of [[5, 'f', 2, 2], [6, 'm', 4, 0], [7, 'f', 1, 4]] as const) {
           const row = store.characterById(id)!
           expect(JSON.parse(row.look!)).toEqual(defaultLook(body, id, h, v))

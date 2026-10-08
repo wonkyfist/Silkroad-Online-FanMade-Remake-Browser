@@ -139,6 +139,7 @@ import { WALL_FX_KINDS, WALL_LIMITS, WALL_SEGMENT_ID, WALL_STAGES, type WallRepa
 import { MAX_DONATE_BLOCKS } from './siege-repair.ts'
 import { LAW_LIMITS, LAW_NOTICE_EVENTS, type LawServerMessage, type WantedView } from './siege-law.ts'
 import { CAPTURE_RULES, HUNTER_LIMITS, SENTENCE_CLOCKS, type HunterServerMessage, type HunterView, type JailView } from './siege-hunter.ts'
+import { JOB_IDS, JOB_LIMITS, JOB_SIDES, TRADE_GOOD_CODE, TRADE_POINT_IDS, type HoldEntry, type JobBadge, type JobServerMessage, type MarketRow, type SackEntryView, type TransportView, SACK_KINDS } from './jobs.ts'
 import {
   SIEGE_APPROACHES,
   SIEGE_CONTRIB_KINDS,
@@ -296,6 +297,23 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   hunterDuty: ['t', 'on'],
   hunterNet: ['t', 'target'],
   jailChore: ['t'],
+  // the job system, layer 1 (docs/JOBS.md §9.4)
+  jobJoin: ['t', 'npc', 'job'],
+  jobLeave: ['t', 'npc'],
+  jobMode: ['t', 'on'],
+  // the job system, layers 2-3 (docs/JOBS.md §9.4)
+  tradeMarket: ['t', 'npc'],
+  tradeSummon: ['t', 'npc', 'tier'],
+  tradeBuy: ['t', 'npc', 'good', 'crates', 'dest'],
+  tradeSell: ['t', 'npc'],
+  transportRide: ['t', 'on'],
+  transportDismiss: ['t'],
+  transportFollow: ['t', 'on'],
+  bagPick: ['t', 'id'],
+  // layer 4 (docs/JOBS.md §6.4)
+  denSell: ['t', 'npc'],
+  denBuy: ['t', 'npc', 'count'],
+  yunTurnIn: ['t', 'npc'],
 }
 
 /** Keys a client message may omit. */
@@ -326,6 +344,8 @@ const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]
   snowball: ['target', 'x', 'z'],
   // Siege of Jangan: a segment or 'where it is needed'; gold and/or Stone Blocks
   wallDonate: ['seg', 'gold', 'blocks'],
+  // the job system: every good / all its crates
+  tradeSell: ['good', 'crates'],
 }
 
 const MAX_ID = Number.MAX_SAFE_INTEGER
@@ -663,6 +683,41 @@ function clientMessage(v: unknown): ClientMessage {
       return { t: 'hunterNet', target: int(v, 'target', 1, MAX_ID) }
     case 'jailChore':
       return { t: 'jailChore' }
+    // ---- the job system, layer 1 (docs/JOBS.md §9.4) ----
+    case 'jobJoin':
+      return { t: 'jobJoin', npc: npcId(v), job: oneOf(v, 'job', JOB_IDS) }
+    case 'jobLeave':
+      return { t: 'jobLeave', npc: npcId(v) }
+    case 'jobMode':
+      return { t: 'jobMode', on: bool(v, 'on') }
+    // ---- the job system, layers 2-3 (docs/JOBS.md §9.4) ----
+    case 'tradeMarket':
+      return { t: 'tradeMarket', npc: npcId(v) }
+    case 'tradeSummon':
+      return { t: 'tradeSummon', npc: npcId(v), tier: int(v, 'tier', 1, JOB_LIMITS.tier) }
+    case 'tradeBuy':
+      return { t: 'tradeBuy', npc: npcId(v), good: goodCode(v, 'good'), crates: int(v, 'crates', 1, JOB_LIMITS.crates), dest: oneOf(v, 'dest', TRADE_POINT_IDS) }
+    case 'tradeSell': {
+      const m: Extract<ClientMessage, { t: 'tradeSell' }> = { t: 'tradeSell', npc: npcId(v) }
+      if (has(v, 'good')) m.good = goodCode(v, 'good')
+      if (has(v, 'crates')) m.crates = int(v, 'crates', 1, JOB_LIMITS.crates)
+      return m
+    }
+    case 'transportRide':
+      return { t: 'transportRide', on: bool(v, 'on') }
+    case 'transportDismiss':
+      return { t: 'transportDismiss' }
+    case 'transportFollow':
+      return { t: 'transportFollow', on: bool(v, 'on') }
+    case 'bagPick':
+      return { t: 'bagPick', id: int(v, 'id', 1, MAX_ID) }
+    // ---- the job system, layer 4 (docs/JOBS.md §6.4) ----
+    case 'denSell':
+      return { t: 'denSell', npc: npcId(v) }
+    case 'denBuy':
+      return { t: 'denBuy', npc: npcId(v), count: int(v, 'count', 1, JOB_LIMITS.scrolls) }
+    case 'yunTurnIn':
+      return { t: 'yunTurnIn', npc: npcId(v) }
     // ---- Play the Boss (docs/PLAY_THE_BOSS.md §5.1) ----
     case 'pilotVolunteer':
       return { t: 'pilotVolunteer', on: bool(v, 'on') }
@@ -1048,6 +1103,10 @@ function entity(v: unknown): EntityState {
   // Siege of Jangan, layer 6 (docs/SIEGE.md §10.2)
   if (o.hunter !== undefined) e.hunter = int(o, 'hunter', 0, HUNTER_LIMITS.rank)
   if (o.jailed !== undefined && bool(o, 'jailed')) e.jailed = true
+  // the job system (docs/JOBS.md §9.4)
+  if (o.job !== undefined) e.job = jobBadge(o.job)
+  if (o.stars !== undefined) e.stars = int(o, 'stars', 1, JOB_LIMITS.stars)
+  if (o.robber !== undefined && bool(o, 'robber')) e.robber = true
   return e
 }
 
@@ -1619,6 +1678,26 @@ function boundedList<T>(o: Record<string, unknown>, k: string, max: number, item
   return list(o, k, item)
 }
 
+/** The Climb's rewards (docs/CLIMB.md §5.1, §7.3; climb/rewards.ts): titles, the worn one, the Arts, the counters. */
+function climbMessage(o: Record<string, unknown>): ServerMessage {
+  const titles = boundedList(o, 'titles', 128, (x) => honorCode({ n: x }, 'n'))
+  const title = o.title === null ? null : honorCode(o, 'title')
+  const map = <T>(k: string, max: number, val: (x: Record<string, unknown>) => T): Record<string, T> => {
+    const r = rec(o[k], k)
+    const keys = Object.keys(r)
+    if (keys.length > max) fail(k + ' must have at most ' + max + ' entries')
+    const out: Record<string, T> = {}
+    for (const key of keys) {
+      if (key.length < 1 || key.length > 64 || key === '__proto__') fail(k + ' has a bad key')
+      out[key] = val({ v: r[key] })
+    }
+    return out
+  }
+  const arts = map('arts', 64, (x) => str(x, 'v', 32, 1))
+  const progress = map('progress', 256, (x) => int(x, 'v', 0, BIG))
+  return { t: 'climb', titles, title, arts, progress }
+}
+
 function serverMessage(v: unknown): ServerMessage {
   const o = rec(v, 'message')
   switch (o.t) {
@@ -1709,6 +1788,10 @@ function serverMessage(v: unknown): ServerMessage {
       // layer 6: the Hunter's rank on duty (-1 = off duty), jailed or released
       if (o.hunter !== undefined) m.hunter = int(o, 'hunter', -1, HUNTER_LIMITS.rank)
       if (o.jailed !== undefined) m.jailed = bool(o, 'jailed')
+      // the job system: job mode on (the badge) or off (null)
+      if (o.job !== undefined) m.job = o.job === null ? null : jobBadge(o.job)
+      if (o.stars !== undefined) m.stars = int(o, 'stars', 0, JOB_LIMITS.stars)
+      if (o.robber !== undefined) m.robber = bool(o, 'robber')
       return m
     }
     case 'role':
@@ -1742,6 +1825,8 @@ function serverMessage(v: unknown): ServerMessage {
     }
     case 'levelUp':
       return { t: 'levelUp', id: int(o, 'id', 0, MAX_ID), level: int(o, 'level', 0, BIG) }
+    case 'climb':
+      return climbMessage(o)
     case 'deathPenalty':
       return { t: 'deathPenalty', outcome: oneOf(o, 'outcome', DEATH_PENALTY_OUTCOMES), exp: int(o, 'exp', 0, BIG), pct: int(o, 'pct', 0, 100), graceMs: int(o, 'graceMs', 0, 24 * 3_600_000) }
     case 'inventory':
@@ -2056,6 +2141,16 @@ function serverMessage(v: unknown): ServerMessage {
     case 'wantedPing':
     case 'lawCapture':
       return hunterMessage(o)
+    // the job system (docs/JOBS.md §9.4)
+    case 'jobState':
+      return jobState(o)
+    case 'market':
+    case 'transportState':
+    case 'bag':
+    case 'bagGone':
+    case 'jobSack':
+    case 'caravanPing':
+      return tradeMessage(o)
     default:
       fail('unknown message type')
   }
@@ -2194,6 +2289,7 @@ function wantedView(v: unknown): WantedView {
     role: oneOf(o, 'role', ['breaker', 'accomplice'] as const),
   }
   if (o.treason !== undefined && bool(o, 'treason')) w.treason = true
+  if (o.robbery !== undefined && bool(o, 'robbery')) w.robbery = true
   return w
 }
 
@@ -2245,10 +2341,34 @@ function jailView(v: unknown): JailView {
   return j
 }
 
+// ---- the job system (docs/JOBS.md §9.4; jobs.ts) ------------------------------------------------------------------------
+
+function jobBadge(v: unknown): JobBadge {
+  const o = rec(v, 'job')
+  return { job: oneOf(o, 'job', JOB_IDS), level: int(o, 'level', 1, JOB_LIMITS.level) }
+}
+
+function jobState(o: Record<string, unknown>): JobServerMessage {
+  const m: JobServerMessage = {
+    t: 'jobState',
+    job: o.job === null ? null : oneOf(o, 'job', JOB_IDS),
+    level: int(o, 'level', 0, JOB_LIMITS.level),
+    exp: int(o, 'exp', 0, JOB_LIMITS.exp),
+    mode: bool(o, 'mode'),
+    side: o.side === null ? null : oneOf(o, 'side', JOB_SIDES),
+  }
+  if (o.next !== undefined) m.next = int(o, 'next', 0, JOB_LIMITS.exp)
+  if (o.lockUntil !== undefined) m.lockUntil = num(o, 'lockUntil', 0, BIG)
+  if (o.joinAfter !== undefined) m.joinAfter = num(o, 'joinAfter', 0, BIG)
+  return m
+}
+
 function hunterMessage(o: Record<string, unknown>): HunterServerMessage {
   const c = MAX_COORD
   if (o.t === 'wantedPing') {
-    return { t: 'wantedPing', id: int(o, 'id', 1, MAX_ID), name: str(o, 'name', 64, 1), x: num(o, 'x', -c, c), z: num(o, 'z', -c, c), r: num(o, 'r', 0, HUNTER_LIMITS.pingR), at: num(o, 'at', 0, BIG) }
+    const w: Extract<HunterServerMessage, { t: 'wantedPing' }> = { t: 'wantedPing', id: int(o, 'id', 1, MAX_ID), name: str(o, 'name', 64, 1), x: num(o, 'x', -c, c), z: num(o, 'z', -c, c), r: num(o, 'r', 0, HUNTER_LIMITS.pingR), at: num(o, 'at', 0, BIG) }
+    if (o.robbery !== undefined && bool(o, 'robbery')) w.robbery = true
+    return w
   }
   const m: Extract<HunterServerMessage, { t: 'lawCapture' }> = {
     t: 'lawCapture',
@@ -2484,5 +2604,86 @@ function pilotMessage(o: Record<string, unknown>): PilotServerMessage {
       return { t: 'huntTaunt', id: int(o, 'id', 0, MAX_ID), line: int(o, 'line', 0, PILOT_TAUNT_MAX) }
     default:
       fail('unknown message type')
+  }
+}
+
+// ---- the job system, layers 2-3: the market, transports, bags (docs/JOBS.md §9.4) ------------------------------------------
+
+function goodCode(o: Record<string, unknown>, k: string): string {
+  const v = str(o, k, 32, 1)
+  if (!TRADE_GOOD_CODE.test(v)) fail(`${k} must be a trade good`)
+  return v
+}
+
+function holdEntry(v: unknown): HoldEntry {
+  const o = rec(v, 'hold entry')
+  return { good: goodCode(o, 'good'), crates: int(o, 'crates', 0, JOB_LIMITS.crates), cost: int(o, 'cost', 0, JOB_LIMITS.gold) }
+}
+
+function marketRow(v: unknown): MarketRow {
+  const o = rec(v, 'market row')
+  const r: MarketRow = { good: goodCode(o, 'good'), name: str(o, 'name', 64, 1), origin: oneOf(o, 'origin', TRADE_POINT_IDS), sell: int(o, 'sell', 0, JOB_LIMITS.gold), demand: num(o, 'demand', 0, 10) }
+  if (o.buy !== undefined) r.buy = int(o, 'buy', 0, JOB_LIMITS.gold)
+  if (o.buyMul !== undefined) r.buyMul = num(o, 'buyMul', 0, 10)
+  if (o.news !== undefined && bool(o, 'news')) r.news = true
+  return r
+}
+
+function transportView(v: unknown): TransportView {
+  const o = rec(v, 'transport')
+  const t: TransportView = {
+    id: int(o, 'id', 1, MAX_ID),
+    tier: int(o, 'tier', 1, JOB_LIMITS.tier),
+    name: str(o, 'name', 64, 1),
+    hp: int(o, 'hp', 0, BIG),
+    maxHp: int(o, 'maxHp', 1, BIG),
+    capacity: int(o, 'capacity', 0, JOB_LIMITS.crates),
+    hold: boundedList(o, 'hold', JOB_LIMITS.goods, holdEntry),
+    stars: int(o, 'stars', 0, JOB_LIMITS.stars),
+    dest: o.dest === null ? null : oneOf(o, 'dest', TRADE_POINT_IDS),
+    from: o.from === null ? null : oneOf(o, 'from', TRADE_POINT_IDS),
+    ridden: bool(o, 'ridden'),
+  }
+  if (o.staying !== undefined && bool(o, 'staying')) t.staying = true
+  return t
+}
+
+function sackEntry(v: unknown): SackEntryView {
+  const o = rec(v, 'sack entry')
+  return { kind: oneOf(o, 'kind', SACK_KINDS), good: goodCode(o, 'good'), crates: int(o, 'crates', 1, JOB_LIMITS.crates), owner: str(o, 'owner', 64, 1), value: int(o, 'value', 0, JOB_LIMITS.gold) }
+}
+
+function tradeMessage(o: Record<string, unknown>): JobServerMessage {
+  const c = MAX_COORD
+  switch (o.t) {
+    case 'market':
+      return { t: 'market', post: oneOf(o, 'post', TRADE_POINT_IDS), rows: boundedList(o, 'rows', JOB_LIMITS.goods, marketRow) }
+    case 'transportState':
+      return { t: 'transportState', transport: o.transport === null ? null : transportView(o.transport) }
+    case 'jobSack':
+      return { t: 'jobSack', entries: boundedList(o, 'entries', JOB_LIMITS.goods, sackEntry) }
+    case 'caravanPing':
+      return {
+        t: 'caravanPing',
+        id: int(o, 'id', 1, MAX_ID),
+        x: num(o, 'x', -c, c),
+        z: num(o, 'z', -c, c),
+        r: num(o, 'r', 0, JOB_LIMITS.pingR),
+        stars: int(o, 'stars', 1, JOB_LIMITS.stars),
+        at: num(o, 'at', 0, BIG),
+      }
+    case 'bag':
+      return {
+        t: 'bag',
+        id: int(o, 'id', 1, MAX_ID),
+        x: num(o, 'x', -c, c),
+        z: num(o, 'z', -c, c),
+        good: goodCode(o, 'good'),
+        crates: int(o, 'crates', 1, JOB_LIMITS.crates),
+        owner: str(o, 'owner', 64, 1),
+        expiresAt: num(o, 'expiresAt', 0, BIG),
+      }
+    default:
+      return { t: 'bagGone', id: int(o, 'id', 1, MAX_ID) }
   }
 }

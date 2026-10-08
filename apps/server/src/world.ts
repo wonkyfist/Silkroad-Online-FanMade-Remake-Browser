@@ -774,7 +774,7 @@ export class World {
    * Starts a straight-line move of any mover at `speed` m/s (clamped, then validated by the navmesh hook).
    * Returns false when the entity ends up standing still (refused or zero-length move).
    */
-  moveEntity(p: Player | Mob, x: number, z: number, speed: number, now = Date.now()): boolean {
+  moveEntity(p: Player | Mob | Cos, x: number, z: number, speed: number, now = Date.now()): boolean {
     return this.walkEntity(p, x, z, speed, now) !== null
   }
 
@@ -783,7 +783,7 @@ export class World {
    * bounds-clamped target, stopping at the first blocking edge (docs/NAVIGATION.md §6). null when the entity ends up
    * standing (refused, blocked at once, or a zero-length move); otherwise whether the walk was clipped.
    */
-  walkEntity(p: Player | Mob, x: number, z: number, speed: number, now = Date.now()): { blocked: boolean } | null {
+  walkEntity(p: Player | Mob | Cos, x: number, z: number, speed: number, now = Date.now()): { blocked: boolean } | null {
     const start = this.livePoint(p, now)
     const from: Vec3 = [start.x, start.y, start.z]
     let [cx, cz] = this.clamp(x, z)
@@ -816,7 +816,7 @@ export class World {
    * re-announced only when it turns by more than TURN_EPS (so fighting a slowly moving target does not flood
    * `stop` messages every tick).
    */
-  halt(p: Player | Mob, now: number, yaw?: number): void {
+  halt(p: Player | Mob | Cos, now: number, yaw?: number): void {
     const moving = p.move !== null
     if (moving) this.standAt(p, this.livePoint(p, now))
     const diff = yaw === undefined ? 0 : Math.abs(Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)))
@@ -833,11 +833,13 @@ export class World {
   tick(now: number): void {
     for (const p of this.players.values()) this.arrive(p, now)
     for (const m of this.mobs.values()) this.arrive(m, now)
+    // a walking trade transport (docs/JOBS.md §5.4); a ridden horse shares its rider's move and is never sent one
+    for (const c of this.cos.values()) if (c.rider === null) this.arrive(c, now)
     this.onTick?.(now)
     if (now - this.interestAt >= INTEREST_MS || now < this.interestAt) this.updateInterest(now)
   }
 
-  private arrive(p: Player | Mob, now: number): void {
+  private arrive(p: Player | Mob | Cos, now: number): void {
     if (!p.move || this.arrivalTime(p.move) > now) return
     this.standAt(p, { x: p.move.to[0], y: p.move.to[1], z: p.move.to[2], surface: p.path ? p.path.end : (p.surface ?? null) })
     this.broadcastAbout(p, { t: 'stop', id: p.id, pos: [...p.pos], yaw: p.yaw })

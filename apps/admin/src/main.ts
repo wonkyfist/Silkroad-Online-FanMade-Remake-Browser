@@ -13,6 +13,7 @@ import { eventsPage } from './pages/events.ts'
 import { newsEntryPage, newsPage } from './pages/news.ts'
 import './pages/boss.ts' // Play the Boss: EVENT_PAGES 'boss' (docs/PLAY_THE_BOSS.md §6.4)
 import './pages/siege.ts' // Siege of Jangan: EVENT_PAGES 'siege' (docs/SIEGE.md §11.4)
+import { jobsPage } from './pages/jobs.ts' // Jobs & Trade, and EVENT_PAGES 'jobs' (the Silk Caravan; docs/JOBS.md §9.5)
 import { auditPage } from './pages/audit.ts'
 import { serversPage } from './pages/servers.ts'
 import { updatesPage } from './pages/updates.ts'
@@ -60,6 +61,7 @@ const SECTIONS: { label: string; items: Route[] }[] = [
     label: 'Live',
     items: [
       { path: 'events', label: 'Events', icon: 'events', page: eventsPage },
+      { path: 'jobs', label: 'Jobs & Trade', icon: 'swap', page: jobsPage },
       { path: 'news', label: "What's new", icon: 'megaphone', page: newsPage, detail: newsEntryPage },
     ],
   },

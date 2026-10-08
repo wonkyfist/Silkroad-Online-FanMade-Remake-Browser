@@ -64,8 +64,8 @@
         512,
         512
       ],
-      "alphaMode": "MASK",
-      "alphaReason": "equipment: BMT alpha test (reference 128) cuts 49% of the surface",
+      "alphaMode": "OPAQUE",
+      "alphaReason": "weapon/shield: texture alpha is a specular/env mask (79.1% partial, 9.4% zero)",
       "doubleSided": true,
       "diffuse": [
         0.5879999995231628,
@@ -91,8 +91,7 @@
         0,
         1
       ],
-      "power": 0,
-      "alphaCutoff": 0.5
+      "power": 0
     }
   ],
   "meshes": [

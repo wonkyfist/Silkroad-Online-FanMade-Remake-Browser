@@ -19,7 +19,7 @@ const RULE_TEXT: Record<string, string> = {
   repeat: 'Wanted caught repeatedly',
   daily_cap: 'daily bounty cap',
 }
-const RANKS = ['Recruit', 'Tracker', 'Bounty Hunter', 'Manhunter', 'Hunter Sergeant', 'Hunter Captain']
+const RANKS = ['Recruit', 'Tracker', 'Bloodhound', 'Manhunter', 'Bounty Sergeant', 'Bounty Captain']
 
 function table(heads: string[], rows: HTMLElement[]): HTMLElement {
   return h('div', { class: 'table-scroll' }, stackTable(h('table', { class: 'table' }, h('thead', null, h('tr', null, heads.map((x) => h('th', null, x)))), h('tbody', null, rows))))
@@ -120,7 +120,7 @@ export function lawTab(root: HTMLElement): void {
       : emptyState('No offences on record.', 'inbox')
     const hunters = v.hunters.length
       ? table(
-          ['Hunter', 'Rank', 'Captures', 'Duty', 'Licence', ''],
+          ['Bounty Hunter', 'Rank', 'Captures', 'Duty', 'Licence', ''],
           v.hunters.map((x) =>
             h(
               'tr',
@@ -135,15 +135,15 @@ export function lawTab(root: HTMLElement): void {
                 { class: 'row-actions' },
                 x.revokedUntil
                   ? button('Restore', () => void act('hunter', { character: x.characterId, action: 'restore' }, `${x.name}'s licence is restored.`), 'small')
-                  : button('Revoke', () => void confirmAct('Revoke', `Take ${x.name}'s Hunter licence away (for the revoke days of the settings).`, 'hunter', { character: x.characterId, action: 'revoke' }, `${x.name}'s licence is revoked.`), 'small'),
+                  : button('Revoke', () => void confirmAct('Revoke', `Take ${x.name}'s Bounty Hunter licence away (for the revoke days of the settings).`, 'hunter', { character: x.characterId, action: 'revoke' }, `${x.name}'s licence is revoked.`), 'small'),
               ),
             ),
           ),
         )
-      : emptyState('No Hunters licensed yet (Captain Yun, west gate).', 'inbox')
+      : emptyState('No Bounty Hunters licensed yet (Captain Yun, west gate).', 'inbox')
     const flags = v.flags.length
       ? table(
-          ['When', 'Hunter', 'Wanted', 'Rule', 'Gold withheld', ''],
+          ['When', 'Bounty Hunter', 'Wanted', 'Rule', 'Gold withheld', ''],
           v.flags.map((f) =>
             h(
               'tr',
@@ -153,7 +153,7 @@ export function lawTab(root: HTMLElement): void {
               h('td', null, f.wanted, h('span', { class: 'dim small' }, ` (account #${f.wantedAccount})`)),
               h('td', null, badge(RULE_TEXT[f.rule] ?? f.rule, f.rule === 'daily_cap' || f.rule === 'repeat' ? 'info' : 'bad')),
               h('td', { class: 'num' }, fmtNum(f.withheld)),
-              h('td', { class: 'row-actions' }, v.hunters.some((x) => x.name === f.hunter && !x.revokedUntil) ? button('Revoke licence', () => void confirmAct('Revoke', `Take ${f.hunter}'s Hunter licence away.`, 'hunter', { character: f.hunter, action: 'revoke' }, `${f.hunter}'s licence is revoked.`), 'small') : null),
+              h('td', { class: 'row-actions' }, v.hunters.some((x) => x.name === f.hunter && !x.revokedUntil) ? button('Revoke licence', () => void confirmAct('Revoke', `Take ${f.hunter}'s Bounty Hunter licence away.`, 'hunter', { character: f.hunter, action: 'revoke' }, `${f.hunter}'s licence is revoked.`), 'small') : null),
             ),
           ),
         )
@@ -185,7 +185,7 @@ export function lawTab(root: HTMLElement): void {
       card(cardHead(`Wanted (${v.wanted.length})`, button('Refresh', () => void load(), 'small')), wanted),
       card(cardHead(`The Garrison Stockade (${v.jailed.length})`, button('Jail a character…', () => void jailSomeone(), 'small')), jailed),
       card(`Offence records (${v.records.length})`, records),
-      card(`Hunters (${v.hunters.length})`, hunters),
+      card(`Bounty Hunters (${v.hunters.length})`, hunters),
       card(`Suspected collusion: withheld capture rewards (${v.flags.length})`, h('p', { class: 'dim small' }, 'Captures whose bounty or credit an anti-collusion rule refused: friends farming bounties show up here again and again.'), flags),
       card('Latest warrants', recent),
     )

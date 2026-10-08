@@ -3320,3 +3320,78 @@ button.siege-seg:focus-visible {
   margin-right: 4px;
   vertical-align: -1px;
 }
+
+/* ---- Jobs & Trade (pages/jobs.ts) ------------------------------------------------------------------------------- */
+.jobs-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.jobs-stat {
+  flex: 1 1 120px;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.jobs-stat-n {
+  font-family: var(--font-title);
+  font-size: var(--fs-xl);
+  color: var(--gold);
+}
+.jobs-up {
+  color: var(--ok);
+}
+.jobs-down {
+  color: var(--bad-text);
+}
+.jobs-hp {
+  width: 90px;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.jobs-hp-fill {
+  height: 100%;
+  background: var(--ok);
+}
+.jobs-plan-wrap {
+  max-width: 760px;
+  margin-bottom: var(--sp-2);
+}
+.jobs-plan {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.jobs-plan-sea {
+  fill: #12202a;
+}
+.jobs-plan-road {
+  stroke: var(--bronze);
+  stroke-dasharray: 12 10;
+  opacity: 0.7;
+}
+.jobs-plan-post {
+  fill: var(--surface-3);
+  stroke: var(--gold);
+  stroke-width: 3;
+}
+.jobs-plan-post.boosted {
+  fill: var(--gold);
+}
+.jobs-plan-label {
+  fill: var(--text-2);
+}
+.jobs-plan-cart rect {
+  fill: var(--info);
+}
+.jobs-plan-cart.saved rect {
+  fill: none;
+  stroke: var(--info);
+  stroke-width: 3;
+}

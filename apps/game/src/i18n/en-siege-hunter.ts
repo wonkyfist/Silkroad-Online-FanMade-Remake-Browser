@@ -1,35 +1,37 @@
 /**
- * English strings of the Siege of Jangan, layer 6: Hunters and the jail (docs/SIEGE.md §8.2-§8.5, §9.3, §9.5): Captain
- * Yun's window, the Hunter panel and badge, pings, captures, the Garrison Stockade's panel and Warden Bae. Spread into
+ * English strings of the Siege of Jangan, layer 6: Bounty Hunters and the jail (docs/SIEGE.md §8.2-§8.5, §9.3, §9.5): Captain
+ * Yun's window, the Bounty Hunter panel and badge, pings, captures, the Garrison Stockade's panel and Warden Bae. Spread into
  * en.ts.
  */
 export const enSiegeHunter = {
   'action.fail.jailed': 'Not while you are locked in the Garrison Stockade.',
-  'action.fail.not_hunter': 'Only Hunters on duty may do that.',
-  'npc.option.hunter': "The Hunter's licence",
+  'action.fail.not_hunter': 'Only Bounty Hunters on duty may do that.',
+  'npc.option.hunter': "The Bounty Hunter's licence",
   'npc.option.warden': 'Ask about the Stockade',
-  'yun.title': 'Captain Yun · Hunters',
+  'yun.title': 'Captain Yun · Bounty Hunters',
   'yun.text':
-    "Wall-breakers are worth {bounty} gold and more to the garrison, alive. A Hunter's licence costs {gold} gold: you must be level {level} or higher, not Wanted, and your account clean for {days} days. On duty you may fight the Wanted anywhere but the Stockade, and they may fight you. Bring one down and the garrison takes them to the Stockade and pays you the bounty.",
+    "Wall-breakers are worth {bounty} gold and more to the garrison, alive. A Bounty Hunter's licence costs {gold} gold: you must be level {level} or higher, not Wanted, and your account clean for {days} days. On duty you may fight the Wanted anywhere but the Stockade, and they may fight you. Bring one down and the garrison takes them to the Stockade and pays you the bounty.",
   'yun.rules': 'Go on duty in a town, out of combat. After a fight with a player you stay on duty for {min} min. Nets: in my shop.',
   'yun.status.none': 'You hold no licence.',
   'yun.status.revoked': 'Your licence is revoked until {date}.',
-  'yun.status.licensed': 'Licensed Hunter · {rank} · {captures} captures · {duty}',
+  'yun.status.licensed': 'Licensed Bounty Hunter · {rank} · {captures} captures · {duty}',
   'yun.buy': 'Buy the licence',
   'yun.dutyOn': 'Go on duty',
   'yun.dutyOff': 'Go off duty',
   'yun.back': 'Back',
   'hunter.rank.0': 'Recruit',
   'hunter.rank.1': 'Tracker',
-  'hunter.rank.2': 'Bounty Hunter',
+  'hunter.rank.2': 'Bloodhound',
   'hunter.rank.3': 'Manhunter',
-  'hunter.rank.4': 'Hunter Sergeant',
-  'hunter.rank.5': 'Hunter Captain',
-  'hunter.label': 'HUNTER · {rank}',
+  'hunter.rank.4': 'Bounty Sergeant',
+  'hunter.rank.5': 'Bounty Captain',
+  // docs/JOBS.md §3.2: the Hunter job's level 7 (rank = job level − 1)
+  'hunter.rank.6': 'Warden of the Roads',
+  'hunter.label': 'BOUNTY HUNTER · {rank}',
   'hunter.onDuty': 'on duty',
   'hunter.offDuty': 'off duty',
-  'hunter.panel.head': 'Hunter on duty',
-  'hunter.panel.offHead': 'Hunter · off duty',
+  'hunter.panel.head': 'Bounty Hunter on duty',
+  'hunter.panel.offHead': 'Bounty Hunter · off duty',
   'hunter.panel.rank': '{rank} · {captures} captures',
   'hunter.panel.wanted': '{n} Wanted online',
   'hunter.panel.none': 'No one is Wanted right now',
@@ -39,7 +41,7 @@ export const enSiegeHunter = {
   'hunter.duty.on': 'Go on duty',
   'hunter.duty.off': 'Go off duty',
   'hunter.ping': '{name} was seen near here',
-  'law.panel.hunters': 'Hunters can attack you anywhere but the Stockade',
+  'law.panel.hunters': 'Bounty Hunters can attack you anywhere but the Stockade',
   'law.capture.captor': 'You caught {name}! The garrison pays you {gold} gold of the {bounty} bounty.',
   'law.capture.rule.pair': 'You caught {name} again within 7 days: no bounty and no capture this time.',
   'law.capture.rule.associate': 'You caught {name}, but you are their party, guild, account or connection: no bounty, no capture.',

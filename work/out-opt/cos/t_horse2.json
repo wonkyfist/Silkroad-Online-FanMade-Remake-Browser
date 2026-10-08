@@ -1,0 +1,289 @@
+{
+  "source": "res/cos/t_horse2.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "t_horse2",
+  "type": "OTHER",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\cos\\cart\\t_horse1.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Neck2",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail2",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "saddle",
+      "Bone05",
+      "Bone06",
+      "Bone07",
+      "Bone08",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.838730751164036e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "t_horse",
+      "bmt": "prim\\mtrl\\cos\\cart\\t_horse2.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\cos\\cart\\t_horse2.ddj",
+      "textureFormat": "DXT3",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (3.6% zero, 1.3% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "t_horse1_part1",
+      "bms": "prim\\mesh\\cos\\cart\\t_horse1_part1.bms",
+      "material": "t_horse",
+      "vertices": 407,
+      "triangles": 574,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Neck2",
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Neck1",
+        "Bip01 Ponytail1",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Ponytail2",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 Pelvis",
+        "Bip01 Neck"
+      ]
+    },
+    {
+      "name": "t_horse1_part2",
+      "bms": "prim\\mesh\\cos\\cart\\t_horse1_part2.bms",
+      "material": "t_horse",
+      "vertices": 464,
+      "triangles": 458,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone01",
+        "Bip01 Spine",
+        "Bip01 Spine1",
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Tail2",
+        "Bone05",
+        "Bone07"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\stand01.ban",
+      "banName": "stand01",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\walk.ban",
+      "banName": "walk",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 27,
+      "walkLength": 23.31999969482422,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\damage01.ban",
+      "banName": "damage01",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 5,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\die.ban",
+      "banName": "die",
+      "durationMs": 1633,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\run.ban",
+      "banName": "run",
+      "durationMs": 1066,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 33,
+      "walkLength": 47.970001220703125,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\cos\\cart\\t_horse\\die_loop.ban",
+      "banName": "die_loop",
+      "durationMs": 333,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    }
+  ],
+  "stats": {
+    "vertices": 871,
+    "triangles": 1032,
+    "joints": 41,
+    "meshes": 2,
+    "animations": 6,
+    "textures": 1,
+    "heightM": 2.529160078658606,
+    "boundsMin": [
+      -0.6266588568687439,
+      0.0001377500157104805,
+      -1.1498794555664062
+    ],
+    "boundsMax": [
+      0.6334593296051025,
+      2.5292978286743164,
+      1.4033499956130981
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

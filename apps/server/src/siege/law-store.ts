@@ -1,5 +1,5 @@
 import type Database from 'better-sqlite3'
-import type { OffenceRecord, WarrantRole, WarrantStatus } from '@sro/shared'
+import type { OffenceRecord, WarrantReason, WarrantRole, WarrantStatus } from '@sro/shared'
 
 /**
  * Siege of Jangan, layer 5: the law's SQL (migration 19, docs/SIEGE.md §10.3): warrants (one per Wanted character and
@@ -11,7 +11,7 @@ export interface WarrantRow {
   id: number
   account_id: number
   character_id: number
-  reason: string
+  reason: WarrantReason
   role: WarrantRole
   wall: string | null
   offence: number
@@ -39,7 +39,7 @@ export interface FlagRow {
 export interface NewWarrant {
   account: number
   character: number
-  reason: 'wall'
+  reason: WarrantReason
   role: WarrantRole
   wall: string | null
   offence: number
@@ -85,6 +85,7 @@ export class LawStore {
          WHERE s.at >= ? AND ((ca.account_id = ? AND cb.account_id = ?) OR (ca.account_id = ? AND cb.account_id = ?)) ORDER BY s.at DESC LIMIT 1`,
       ),
       prune: db.prepare<[number]>('DELETE FROM law_contacts WHERE at < ?'),
+      bounty: db.prepare<[number, number]>('UPDATE warrants SET bounty = ? WHERE id = ?'),
       flag: db.prepare<[number, number, number, number, number | null, string, number, string]>(
         'INSERT INTO law_flags (at, wanted_character, wanted_account, hunter_character, hunter_account, rule, withheld, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       ),
@@ -117,6 +118,29 @@ export class LawStore {
 
   ofCharacter(characterId: number, limit: number): WarrantRow[] {
     return this.q.ofCharacter.all(characterId, limit)
+  }
+
+  setBounty(id: number, bounty: number): void {
+    this.q.bounty.run(Math.max(0, Math.round(bounty)), id)
+  }
+
+  /** docs/JOBS.md §6.4: the account's robbery ladder (migration 27; null on an older schema or no row). */
+  robberyRecord(accountId: number): OffenceRecord | null {
+    try {
+      const r = this.db.prepare<[number], { robberies: number; last_robbery_at: number | null }>('SELECT robberies, last_robbery_at FROM law_records WHERE account_id = ?').get(accountId)
+      return r ? { offences: r.robberies, lastAt: r.last_robbery_at } : null
+    } catch {
+      return null
+    }
+  }
+
+  saveRobbery(accountId: number, rec: OffenceRecord): void {
+    this.db
+      .prepare<[number, number, number | null]>(
+        `INSERT INTO law_records (account_id, offences, robberies, last_robbery_at) VALUES (?, 0, ?, ?)
+         ON CONFLICT (account_id) DO UPDATE SET robberies = excluded.robberies, last_robbery_at = excluded.last_robbery_at`,
+      )
+      .run(accountId, rec.offences, rec.lastAt)
   }
 
   saveLeft(id: number, leftMs: number): void {

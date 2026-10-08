@@ -13,8 +13,8 @@ import { stockadeProps } from '../src/world/siege/stockade.ts'
 
 describe('Hunter and jail text', () => {
   it('ranks and the badge', () => {
-    expect([0, 1, 2, 3, 4, 5].map(hunterRankName)).toEqual(['Recruit', 'Tracker', 'Bounty Hunter', 'Manhunter', 'Hunter Sergeant', 'Hunter Captain'])
-    expect(hunterLabel(2)).toBe('HUNTER · Bounty Hunter')
+    expect([0, 1, 2, 3, 4, 5].map(hunterRankName)).toEqual(['Recruit', 'Tracker', 'Bloodhound', 'Manhunter', 'Bounty Sergeant', 'Bounty Captain'])
+    expect(hunterLabel(2)).toBe('BOUNTY HUNTER · Bloodhound')
   })
 
   it("the Stockade panel's lines: time left, offence and clock, chores", () => {
@@ -35,7 +35,7 @@ describe('Hunter and jail text', () => {
     expect(captureText({ t: 'lawCapture', name: 'Aki', bounty: 40_000, gold: 10_000, sentenceMs: 1, rule: 'repeat' })).toBe('You caught Aki! The garrison pays you 10,000 gold of the 40,000 bounty. (Aki was caught several times this week: the garrison pays less.)')
     expect(captureText({ t: 'lawCapture', name: 'Aki', bounty: 40_000, gold: 0, sentenceMs: 7_200_000, prisoner: true, captors: ['Mei', 'Ryu'] })).toBe('Caught by Mei, Ryu. The garrison takes you to the Stockade for 2:00:00.')
     expect(actionFailText('jailed')).toBe('Not while you are locked in the Garrison Stockade.')
-    expect(actionFailText('not_hunter')).toBe('Only Hunters on duty may do that.')
+    expect(actionFailText('not_hunter')).toBe('Only Bounty Hunters on duty may do that.')
   })
 })
 

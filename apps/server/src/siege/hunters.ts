@@ -2,10 +2,11 @@ import {
   HUNTER_CODES,
   HUNTER_SERVICE,
   captureShares,
+  hunterThiefExp,
   type CaptureRule,
-  hunterRank,
   inStockade,
   installSiegeHunterContent,
+  jobSide,
   pvpAllowed,
   wardenNpc,
   yunNpc,
@@ -51,6 +52,10 @@ import { fmtTime } from './jail.ts'
  *   around a point within `pingOffsetM` of them).
  * - **The Hunter's Net** (`hunterNet {target}`): an on-duty Hunter throws one at a Wanted within `netRangeM`: a
  *   `netSec` snare (the stun status), `netCooldownSec` cooldown, one Net from the bag.
+ * - **The Hunter job** (docs/JOBS.md §2.3; jobs/jobs.ts): the licence is the job (one job per character, one side per
+ *   account: `jobs.joinProblem`), duty is its job mode (`jobMode` aliases `hunterDuty`), the rank is the job level − 1
+ *   (a credited capture gives `exp.hunterWallCapture` job EXP; `points` still counts the captures), and the PvP rule
+ *   carries the job rows (`side`: a Trader or Hunter against a Thief in job mode, outside towns and the safe rings).
  */
 
 /** The chat line to a captor whose reward a rule withheld (docs/SIEGE.md §8.6). */
@@ -140,7 +145,30 @@ export class HunterService implements GameplayModule {
 
   private reload(characterId: number): HunterRow | null {
     this.rows.delete(characterId)
+    this.g.jobs.invalidate(characterId)
     return this.row(characterId)
+  }
+
+  /** Drops the cached row (the jobs module calls it after writing the Hunter's row). */
+  invalidate(characterId: number): void {
+    this.rows.delete(characterId)
+  }
+
+  /** A PvP-like hit (a Thief's on a trade transport, docs/JOBS.md §2.2): the suit stays on for the lock. */
+  markPvp(characterId: number, now: number): void {
+    this.lastPvp.set(characterId, now)
+  }
+
+  /** The last PvP hit given or taken (null: none since the login). */
+  lastPvpAt(characterId: number): number | null {
+    return this.lastPvp.get(characterId) ?? null
+  }
+
+  /** The Hunter's badge (rank on duty, -1 off) and the job badge to everyone around, the own job state. */
+  private badge(p: Player, now: number): void {
+    const r = this.row(p.characterId)
+    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: r && r.on_duty === 1 ? r.rank : -1, job: this.g.jobs.badgeOf(p.characterId) })
+    this.g.jobs.sendState(p, now)
   }
 
   private onDutyRow(characterId: number): HunterRow | null {
@@ -186,10 +214,13 @@ export class HunterService implements GameplayModule {
     const [x, , z] = this.g.world.positionAt(p, now)
     return {
       hunter: this.onDuty(p),
-      wanted: this.g.law.bountyOf(p.characterId) > 0,
+      // docs/JOBS.md §6.4: a robber is huntable too, but not inside the Bandit Den's ring
+      wanted: this.g.law.huntable(p.characterId) && !(this.g.law.robberOnly(p.characterId) && this.g.jobs.inDenRing(x, z)),
       jailed: this.g.jail.jailedNow(p) || this.subdued.has(p.characterId),
       pardoned: this.g.jail.pardoned(p.characterId, now),
       inStockade: inStockade(x, z),
+      // docs/JOBS.md §4: the job war
+      ...this.g.jobs.pvpSide(p, x, z),
     }
   }
 
@@ -204,18 +235,26 @@ export class HunterService implements GameplayModule {
     if (t.dead) return fail('target_dead')
     const sa = this.side(a, now)
     const st = this.side(t, now)
-    if (!sa.hunter && !sa.wanted) return st.wanted ? fail('not_hunter', 'Only Hunters on duty may fight the Wanted (Captain Yun, by the west gate).') : fail('invalid_target', 'no PvP')
+    const war = !!(sa.jobMode && st.jobMode && sa.job && st.job && jobSide(sa.job) !== jobSide(st.job))
+    if (!sa.hunter && !sa.wanted && !war) return st.wanted ? fail('not_hunter', 'Only Bounty Hunters on duty may fight the Wanted (Captain Yun, by the west gate).') : fail('invalid_target', 'no PvP')
     const assoc = this.g.law.isAssociate(this.g.law.associates(a), t)
     if (pvpAllowed(sa, st, assoc)) return null
     if (sa.inStockade || st.inStockade || st.jailed) return fail('invalid_target', 'No fighting in the Garrison Stockade.')
-    if (assoc && ((sa.hunter && st.wanted) || (sa.wanted && st.hunter))) return fail('invalid_target', 'You cannot fight your own party, guild, account or friends.')
+    if (assoc && ((sa.hunter && st.wanted) || (sa.wanted && st.hunter) || war)) return fail('invalid_target', 'You cannot fight your own party, guild, account or friends.')
     if (sa.hunter && st.pardoned) return fail('invalid_target', 'Just released: the garrison has pardoned them for now.')
+    if (war && (sa.inJobSafe || st.inJobSafe)) return fail('safe_zone', 'Towns and the trade posts are safe: the job war is fought on the roads.')
+    if (sa.hunter && this.g.law.robberOnly(t.characterId)) return fail('safe_zone', 'The Bandit Den shelters its customers: catch the robber on the road.')
     return fail('invalid_target', 'no PvP')
   }
 
-  /** Damage between players (docs/SIEGE.md §5.2 pvpDamage): × `hunter.pvpMul`, at least 1. */
-  pvpDamage(damage: number): number {
-    return damage > 0 ? Math.max(1, Math.round(damage * this.settings.pvpMul)) : 0
+  /**
+   * Damage between players (docs/SIEGE.md §5.2 pvpDamage): × `hunter.pvpMul`, at least 1. An on-duty Bounty Hunter's hit
+   * on a robber (docs/JOBS.md §6.4) is × `robbery.hunterMul` instead (the jobs' own balance; the siege's Wanted keep pvpMul).
+   */
+  pvpDamage(damage: number, a?: Player | Mob, t?: Player): number {
+    if (damage <= 0) return 0
+    const robber = a?.kind === 'player' && t !== undefined && this.onDuty(a) && this.g.law.robber(t.characterId)
+    return Math.max(1, Math.round(damage * (robber ? this.g.jobs.settings.robbery.hunterMul : this.settings.pvpMul)))
   }
 
   /** A player-on-player hit landed (both sides' combat lock; a Hunter's hit on the Wanted counts for the bounty). */
@@ -223,7 +262,7 @@ export class HunterService implements GameplayModule {
     if (a.kind !== 'player' || a === t) return
     this.lastPvp.set(a.characterId, now)
     this.lastPvp.set(t.characterId, now)
-    if (dealt <= 0 || !this.onDuty(a) || this.g.law.bountyOf(t.characterId) <= 0) return
+    if (dealt <= 0 || !this.onDuty(a) || !this.g.law.huntable(t.characterId)) return
     const win = this.law.captureWindowSec * 1000
     const list = (this.hits.get(t.characterId) ?? []).filter((h) => now - h.at <= win)
     list.push({ characterId: a.characterId, damage: dealt, at: now })
@@ -234,7 +273,7 @@ export class HunterService implements GameplayModule {
   subdues(a: Player | Mob, t: Player): boolean {
     if (a.kind !== 'player' || a === t) return false
     if (this.subdued.has(t.characterId)) return true
-    return this.onDuty(a) && this.g.law.bountyOf(t.characterId) > 0
+    return this.onDuty(a) && this.g.law.huntable(t.characterId)
   }
 
   /** Starts the subdue (HP 1, bound for `law.subdueSec`); the capture follows in tick. */
@@ -291,8 +330,16 @@ export class HunterService implements GameplayModule {
     // a capture counts (captures, rank) only for captors the anti-collusion rules leave in credit (docs/SIEGE.md §8.6)
     for (const c of r.captors) {
       const row = this.row(c.characterId)
-      if (c.credit && row) this.store.addCapture(c.characterId, hunterRank(row.points + 1))
-      const fresh = this.reload(c.characterId)
+      if (c.credit && row) {
+        // docs/JOBS.md §2.3, §3.1: the capture counts and gives job EXP (the rank is the job level − 1); jobs.ts sends the
+        // promotion line and the badge
+        this.store.addCapture(c.characterId)
+        // docs/JOBS.md §3.1: a wall-breaker 2,000; a robber 300 × the Thief's job level × 2
+        const e = this.g.jobs.settings.exp
+        const exp = (r.wall ? e.hunterWallCapture : 0) + (r.robbery ? hunterThiefExp(r.thiefLevel, true, e) : 0)
+        this.g.jobs.addExp(c.characterId, exp, now, `captured ${name}`)
+      }
+      this.reload(c.characterId)
       const p = this.playerOf(c.characterId)
       if (!p) continue
       const msg: Extract<ServerMessage, { t: 'lawCapture' }> = { t: 'lawCapture', name, bounty: r.bounty, gold: c.gold, sentenceMs: r.sentenceMs, captors: names.slice(0, 20) }
@@ -302,10 +349,6 @@ export class HunterService implements GameplayModule {
       p.send(msg)
       if (c.rule && c.rule !== 'daily_cap' && c.rule !== 'repeat') p.send({ t: 'chat', channel: 'system', text: WITHHELD[c.rule].replace('{name}', name).replace('{days}', String(this.law.pairCooldownDays)) })
       else if (c.rule) p.send({ t: 'chat', channel: 'system', text: WITHHELD[c.rule].replace('{name}', name) })
-      if (row && fresh && fresh.rank !== row.rank) {
-        if (fresh.on_duty === 1) this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: fresh.rank })
-        p.send({ t: 'chat', channel: 'system', text: `Captain Yun promotes you: Hunter rank ${fresh.rank}.` })
-      }
       this.g.law.sendState(p, now)
     }
   }
@@ -315,7 +358,7 @@ export class HunterService implements GameplayModule {
   request(p: Player, msg: GameplayMessage, answer: Answer, now: number): void {
     switch (msg.t) {
       case 'hunterLicence':
-        return this.licence(p, msg.npc, answer, now)
+        return this.licenceAt(p, msg.npc, answer, now)
       case 'hunterDuty':
         return answer(this.setDuty(p, msg.on, now))
       case 'hunterNet':
@@ -325,17 +368,21 @@ export class HunterService implements GameplayModule {
     }
   }
 
-  private licence(p: Player, npcId: number, answer: Answer, now: number): void {
-    if (!this.g.kegs.on) return answer(fail('not_found', 'There are no Hunters on this server.'))
+  /** The Bounty Hunter's licence at Yun (`hunterLicence`, or `jobJoin {job: 'hunter'}`). */
+  licenceAt(p: Player, npcId: number, answer: Answer, now: number): void {
+    if (!this.g.kegs.on) return answer(fail('not_found', 'There are no Bounty Hunters on this server.'))
     const npc = this.g.npcs.requireService(p, npcId, HUNTER_SERVICE, now)
     if (!npc.ok) return answer(npc)
     const s = this.settings
     const r = this.row(p.characterId)
     if (r && r.revoked_until !== null && r.revoked_until > now) return answer(fail('not_usable', `Your licence is revoked until ${new Date(r.revoked_until).toISOString().slice(0, 10)}.`))
-    if (r) return answer(fail('not_usable', 'You already hold a Hunter\'s licence.'))
-    if (p.level < s.minLevel) return answer(fail('requirements', `Hunters are level ${s.minLevel} and up.`))
+    if (r) return answer(fail('not_usable', 'You already hold a Bounty Hunter\'s licence.'))
+    if (p.level < s.minLevel) return answer(fail('requirements', `Bounty Hunters are level ${s.minLevel} and up.`))
     if (this.g.law.isWanted(p.characterId)) return answer(fail('not_usable', 'The garrison does not license the Wanted.'))
     if (this.g.jail.jailedNow(p)) return answer(fail('jailed'))
+    // docs/JOBS.md §2.1: one job per character, one side per account, the wait after leaving a job
+    const job = this.g.jobs.joinProblem(p, 'hunter', now)
+    if (job) return answer(job)
     const acc = this.g.law.accountOf(p.characterId)
     const rec = acc === null ? null : this.g.law.store.record(acc)
     if (rec && rec.offences > 0 && rec.lastAt !== null && now - rec.lastAt < s.cleanDays * DAY_MS) {
@@ -346,20 +393,21 @@ export class HunterService implements GameplayModule {
     if (!result.ok) return answer(result)
     this.store.license(p.characterId, now)
     this.reload(p.characterId)
+    this.g.jobs.joined(p, 'hunter', now)
     answer(true)
     this.g.afterInventory(p, draft)
     this.g.law.sendState(p, now)
-    p.send({ t: 'chat', channel: 'system', text: `Captain Yun hands you a Hunter's licence (${s.licenceGold.toLocaleString('en-US')} gold). Go on duty to hunt the Wanted.` })
+    p.send({ t: 'chat', channel: 'system', text: `Captain Yun hands you a Bounty Hunter's licence (${s.licenceGold.toLocaleString('en-US')} gold). Go on duty to hunt the Wanted.` })
     this.g.config.log(`hunters: ${p.name} bought a Hunter's licence`)
   }
 
   /** Duty on or off (the request, Yun's dialog, the HUD). */
   setDuty(p: Player, on: boolean, now: number): true | Fail {
     const r = this.row(p.characterId)
-    if (!r) return fail('not_hunter', 'You need a Hunter\'s licence from Captain Yun (west gate).')
+    if (!r) return fail('not_hunter', 'You need a Bounty Hunter\'s licence from Captain Yun (west gate).')
     if (on) {
       if (r.on_duty === 1) return true
-      if (!this.licensed(p.characterId, now)) return fail('not_hunter', 'Your Hunter\'s licence is revoked.')
+      if (!this.licensed(p.characterId, now)) return fail('not_hunter', 'Your Bounty Hunter\'s licence is revoked.')
       if (this.g.law.isWanted(p.characterId)) return fail('not_usable', 'The Wanted cannot go on duty.')
       if (this.g.jail.jailedNow(p)) return fail('jailed')
       const [x, , z] = this.g.world.positionAt(p, now)
@@ -372,7 +420,7 @@ export class HunterService implements GameplayModule {
     }
     this.store.setDuty(p.characterId, on)
     this.reload(p.characterId)
-    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: on ? r.rank : -1 })
+    this.badge(p, now)
     this.g.law.sendState(p, now)
     if (on) this.ping(now, p)
     return true
@@ -384,7 +432,7 @@ export class HunterService implements GameplayModule {
     if (!r || r.on_duty === 0) return
     this.store.setDuty(p.characterId, false)
     this.reload(p.characterId)
-    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: -1 })
+    this.badge(p, now)
     this.g.law.sendState(p, now)
   }
 
@@ -396,27 +444,27 @@ export class HunterService implements GameplayModule {
     this.reload(characterId)
     const p = this.playerOf(characterId)
     if (p) {
-      if (r.on_duty === 1) this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: -1 })
+      if (r.on_duty === 1) this.badge(p, now)
       this.g.law.sendState(p, now)
-      p.send({ t: 'chat', channel: 'system', text: `Captain Yun revokes your Hunter's licence for ${this.settings.revokeDays} days (${why}).` })
+      p.send({ t: 'chat', channel: 'system', text: `Captain Yun revokes your Bounty Hunter's licence for ${this.settings.revokeDays} days (${why}).` })
     }
     this.g.config.log(`hunters: ${this.g.store.characterById(characterId)?.name ?? characterId}'s licence revoked (${why})`)
     return true
   }
 
   private net(p: Player, targetId: number, answer: Answer, now: number): void {
-    if (!this.onDuty(p)) return answer(fail('not_hunter', 'Only Hunters on duty throw nets.'))
+    if (!this.onDuty(p)) return answer(fail('not_hunter', 'Only Bounty Hunters on duty throw nets.'))
     const t = this.g.world.players.get(targetId)
     if (!t || !p.known.has(targetId)) return answer(fail('not_found'))
     const why = this.refusal(p, t, now)
     if (why) return answer(why)
-    if (this.g.law.bountyOf(t.characterId) <= 0) return answer(fail('invalid_target', 'Nets are for the Wanted.'))
+    if (!this.g.law.huntable(t.characterId)) return answer(fail('invalid_target', 'Nets are for the Wanted.'))
     const s = this.settings
     if (this.g.world.distance(p, t, now) > s.netRangeM) return answer(fail('too_far', `Within ${s.netRangeM} m.`))
     if ((this.netAt.get(p.characterId) ?? 0) > now) return answer(fail('cooldown'))
     const { result, draft } = this.g.store.inventoryTx(p.characterId, (d) => {
       const i = d.bag.findIndex((it) => it?.code === HUNTER_CODES.net)
-      return i < 0 ? fail('not_usable', "You have no Hunter's Net (Captain Yun sells them).") : takeFromBag(d, i, 1)
+      return i < 0 ? fail('not_usable', "You have no Bounty Hunter's Net (Captain Yun sells them).") : takeFromBag(d, i, 1)
     })
     if (!result.ok) return answer(result)
     answer(true)
@@ -427,7 +475,7 @@ export class HunterService implements GameplayModule {
     p.lastCombatAt = now
     t.lastCombatAt = now
     if (s.netSec > 0) this.g.skills.applyHazardStatus(t, 'stun', s.netSec * 1000, now)
-    t.send({ t: 'chat', channel: 'system', text: `${p.name} throws a Hunter's Net over you!` })
+    t.send({ t: 'chat', channel: 'system', text: `${p.name} throws a Bounty Hunter's Net over you!` })
     this.g.law.sendState(p, now)
   }
 
@@ -439,11 +487,12 @@ export class HunterService implements GameplayModule {
     if (!hunters.length) return
     const s = this.settings
     for (const w of this.g.world.players.values()) {
-      if (w.dead || this.g.law.bountyOf(w.characterId) <= 0 || this.g.jail.jailedNow(w)) continue
+      if (w.dead || !this.g.law.huntable(w.characterId) || this.g.jail.jailedNow(w)) continue
       const [x, , z] = this.g.world.positionAt(w, now)
       const a = this.g.rng() * Math.PI * 2
       const d = Math.sqrt(this.g.rng()) * Math.min(s.pingOffsetM, s.pingR)
-      const msg: ServerMessage = { t: 'wantedPing', id: w.id, name: w.name, x: x + Math.sin(a) * d, z: z + Math.cos(a) * d, r: s.pingR, at: now }
+      const msg: Extract<ServerMessage, { t: 'wantedPing' }> = { t: 'wantedPing', id: w.id, name: w.name, x: x + Math.sin(a) * d, z: z + Math.cos(a) * d, r: s.pingR, at: now }
+      if (this.g.law.robberOnly(w.characterId)) msg.robbery = true
       for (const h of hunters) if (h !== w) h.send(msg)
     }
   }
@@ -494,10 +543,12 @@ export class HunterService implements GameplayModule {
     const p = this.playerOf(row.id)
     const v = verb.toLowerCase()
     if (v === 'licence' || v === 'license' || v === 'restore') {
+      const other = this.g.jobs.jobOf(row.id)
+      if (other && other !== 'hunter') return { ok: false, message: `${row.name} is a ${other} (one job per character: job ${row.name} leave first).` }
       this.store.license(row.id, now)
       this.reload(row.id)
       if (p) this.g.law.sendState(p, now)
-      return { ok: true, message: `${row.name} holds a Hunter's licence.` }
+      return { ok: true, message: `${row.name} holds a Bounty Hunter's licence.` }
     }
     if (v === 'revoke') {
       if (!this.row(row.id)) return { ok: false, message: `${row.name} has no licence.` }
@@ -505,7 +556,7 @@ export class HunterService implements GameplayModule {
       this.store.revoke(row.id, now + this.settings.revokeDays * DAY_MS)
       this.reload(row.id)
       if (p) {
-        if (r.on_duty === 1) this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: -1 })
+        if (r.on_duty === 1) this.badge(p, now)
         this.g.law.sendState(p, now)
       }
       return { ok: true, message: `${row.name}'s licence is revoked for ${this.settings.revokeDays} days.` }
@@ -518,16 +569,16 @@ export class HunterService implements GameplayModule {
       this.store.setDuty(row.id, on)
       this.reload(row.id)
       if (p) {
-        this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, hunter: on ? r.rank : -1 })
+        this.badge(p, now)
         this.g.law.sendState(p, now)
       }
       return { ok: true, message: `${row.name} is ${on ? 'on' : 'off'} duty.` }
     }
     const r = this.row(row.id)
-    if (!r) return { ok: false, message: `${row.name} has no Hunter's licence.` }
+    if (!r) return { ok: false, message: `${row.name} has no Bounty Hunter's licence.` }
     return {
       ok: true,
-      message: `${row.name}: Hunter rank ${r.rank}, ${r.points} captures, ${r.on_duty ? 'on' : 'off'} duty${r.revoked_until && r.revoked_until > now ? `, revoked until ${new Date(r.revoked_until).toISOString().slice(0, 16)}` : ''}.`,
+      message: `${row.name}: Bounty Hunter rank ${r.rank}, ${r.points} captures, ${r.on_duty ? 'on' : 'off'} duty${r.revoked_until && r.revoked_until > now ? `, revoked until ${new Date(r.revoked_until).toISOString().slice(0, 16)}` : ''}.`,
     }
   }
 

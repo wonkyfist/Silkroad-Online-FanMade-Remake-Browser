@@ -1,0 +1,116 @@
+{
+  "source": "res/item/china/man_item/trader_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "trader_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 16,
+    "attachPointName": "ATTACH",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "trader_02"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "trader_02",
+      "bmt": "prim\\mtrl\\item\\china\\man_item\\trader_02.bmt",
+      "flags": 321,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\man_item\\trader_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "trader_02",
+      "bms": "prim\\mesh\\item\\china\\man_item\\trader_02.bms",
+      "material": "trader_02",
+      "vertices": 75,
+      "triangles": 72,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 75,
+    "triangles": 72,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.2981982231140137,
+    "boundsMin": [
+      -0.3676197826862335,
+      0.9272212982177734,
+      -1.029557466506958
+    ],
+    "boundsMax": [
+      -0.03713896498084068,
+      2.225419521331787,
+      -0.11391790211200714
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

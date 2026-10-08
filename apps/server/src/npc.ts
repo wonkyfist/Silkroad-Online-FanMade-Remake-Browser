@@ -155,12 +155,22 @@ export class NpcDialogs implements GameplayModule {
       case 'warden':
         // Layer 6 (§8.5): Warden Bae at the Garrison Stockade.
         return this.g.jail.offers(npc.code)
+      case 'trader':
+      case 'thief':
+        // the job system (docs/JOBS.md §2.1): Jodaesan's Trader licence, Old Fang's Thief licence
+        return this.g.jobs.offers(npc.code, service)
+      case 'market':
+        // the job system, layer 2 (docs/JOBS.md §5): Jodaesan's and the four posts' markets
+        return this.g.market.offers(npc.code)
+      case 'den':
+        // the job system, layer 4 (docs/JOBS.md §6.4): Seopok buys stolen goods at the Bandit Den
+        return this.g.robbery.offers(npc.code)
     }
   }
 
   /** What the dialog of `npc` offers `p`, in the dialog's order (the client shows 'repair' as shop buttons, D13). */
   servicesOf(p: Player | null, npc: Npc): NpcService[] {
-    return (['shop', 'storage', 'quest', 'repair', 'guild', 'mason', 'fence', 'hunter', 'warden'] as const).filter((s) => this.has(p, npc, s))
+    return (['shop', 'storage', 'quest', 'repair', 'guild', 'mason', 'fence', 'hunter', 'warden', 'trader', 'thief', 'market', 'den'] as const).filter((s) => this.has(p, npc, s))
   }
 
   /**

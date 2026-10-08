@@ -152,7 +152,7 @@ describe('migration 24: customise once', () => {
       raw.close()
       const store = openStore(dir)
       try {
-        expect(store.schemaVersion).toBe(24)
+        expect(store.schemaVersion).toBe(27)
         for (const id of [5, 6, 7, 8, 9, 10]) {
           const row = store.characterById(id)!
           const body = id % 2 ? 'f' : 'm'

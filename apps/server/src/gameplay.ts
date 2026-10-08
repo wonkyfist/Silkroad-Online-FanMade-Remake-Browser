@@ -91,6 +91,11 @@ import { SiegeService } from './siege/event.ts'
 import { ThunderKegs } from './siege/keg.ts'
 import { LawService } from './siege/law.ts'
 import { HunterService } from './siege/hunters.ts'
+import { JobService } from './jobs/jobs.ts'
+import { MarketService } from './jobs/market.ts'
+import { TransportService } from './jobs/transport.ts'
+import { RobberyService } from './jobs/robbery.ts'
+import { CaravanService } from './jobs/caravan.ts'
 import { JailService } from './siege/jail.ts'
 import { MovementService } from './movement.ts'
 import { WinterPlay } from './winter-play/service.ts'
@@ -347,6 +352,18 @@ export class Gameplay implements AiHost {
   readonly hunters: HunterService
   readonly jail: JailService
   /**
+   * The job system, layer 1 (docs/JOBS.md; jobs/jobs.ts): Trader, Bounty Hunter and Thief licences, one side per account,
+   * job mode (the suit), job EXP and levels, the job rows of the PvP rule.
+   */
+  readonly jobs: JobService
+  /** The job system, layers 2-3 (docs/JOBS.md §5, §6; jobs/market.ts, jobs/transport.ts): the market and the trade transports. */
+  readonly market: MarketService
+  readonly transports: TransportService
+  /** The job system, layer 4 (docs/JOBS.md §6.1, §6.4; jobs/robbery.ts): stolen goods, the den, robbery warrants, recovery. */
+  readonly robbery: RobberyService
+  /** The job system, layer 7 (docs/JOBS.md §8; jobs/caravan.ts): the weekly Silk Caravan event. */
+  readonly caravan: CaravanService
+  /**
    * The snow season (docs/WINTER.md): the season's dates, the snow cover and the frost; the weather asks it whether rain
    * falls as snow. Other modules read `winter.state(now)`.
    */
@@ -436,6 +453,11 @@ export class Gameplay implements AiHost {
     this.law = new LawService(this)
     this.hunters = new HunterService(this)
     this.jail = new JailService(this)
+    this.jobs = new JobService(this)
+    this.market = new MarketService(this)
+    this.transports = new TransportService(this)
+    this.robbery = new RobberyService(this)
+    this.caravan = new CaravanService(this)
     this.roles = new MonsterRoles(this)
     this.penalty = new DeathPenalty(this)
     this.climbRewards = new ClimbRewards(this)
@@ -473,6 +495,15 @@ export class Gameplay implements AiHost {
       // docs/SIEGE.md §8.2-§8.5: the Hunters and the jail, after the law (warrants, capture)
       this.hunters,
       this.jail,
+      // docs/JOBS.md §9.2: the jobs core, after the Hunters (the Hunter job is their licence)
+      this.jobs,
+      // docs/JOBS.md §9.2: the market and the transports, after the jobs core
+      this.market,
+      this.transports,
+      // docs/JOBS.md §9.2: robbery after the transports (their bags)
+      this.robbery,
+      // docs/JOBS.md §8: the Silk Caravan event, after the trade modules it boosts
+      this.caravan,
       this.movement,
       // docs/WINTER.md §13: the winter gameplay layer (after the winter, weather and storm modules it reads)
       this.winterPlay,
@@ -573,7 +604,7 @@ export class Gameplay implements AiHost {
 
   // ---- AiHost ---------------------------------------------------------------------------------------
 
-  positionOf(e: Mob | Player): Vec3 {
+  positionOf(e: Mob | Player | Cos): Vec3 {
     return this.world.positionAt(e, this.now)
   }
 
@@ -581,6 +612,16 @@ export class Gameplay implements AiHost {
   target(id: number): Player | undefined {
     const p = this.world.players.get(id)
     return p && this.attackable(p) ? p : undefined
+  }
+
+  /** AiHost.targetAny: docs/JOBS.md §5.4, a loaded trade transport counts as a player for the monsters. */
+  targetAny(id: number): Player | Cos | undefined {
+    return this.target(id) ?? (this.world.players.has(id) ? undefined : this.transports.mobTarget(id))
+  }
+
+  /** AiHost.targetsNear: loaded trade transports an aggressive monster sees (docs/JOBS.md §5.4). */
+  targetsNear(x: number, z: number, range: number): Cos[] {
+    return this.transports.targetsNear(x, z, range)
   }
 
   playersNear(x: number, z: number, range: number): Player[] {
@@ -619,18 +660,20 @@ export class Gameplay implements AiHost {
   }
 
   /** AiHost.aggro: the Climb's pack link on sight (climb/roles.ts). */
-  aggro(m: Mob, target: Player): void {
-    this.roles.aggro(m, target, this.now)
+  aggro(m: Mob, target: Player | Cos): void {
+    if (target.kind === 'player') this.roles.aggro(m, target, this.now)
   }
 
-  swing(m: Mob, target: Player): void {
+  swing(m: Mob, target: Player | Cos): void {
+    // docs/JOBS.md §5.4: a trade transport takes a basic attack against its own defence
+    if (target.kind === 'cos') return this.transports.mobSwing(m, target, this.now)
     // Wave 8: the monster-skill pick (mob-skills.ts); the stub keeps today's one basic attack.
     this.mobSkills.swing(m, target, this.now)
   }
 
   /** Wave 8 (docs/SYSTEMS_COMBAT.md §2.2): a mob's ranged special instead of a chase (mob-skills.ts). */
-  ranged(m: Mob, target: Player, dist: number): boolean {
-    return this.mobSkills.ranged(m, target, dist, this.now)
+  ranged(m: Mob, target: Player | Cos, dist: number): boolean {
+    return target.kind === 'player' && this.mobSkills.ranged(m, target, dist, this.now)
   }
 
   restored(m: Mob): void {
@@ -959,6 +1002,15 @@ export class Gameplay implements AiHost {
       p.action = { kind: 'attack', target: e.id, chaseAt: 0, chaseTo: null }
       return answer(true)
     }
+    if (e.kind === 'cos') {
+      // docs/JOBS.md §4: Thieves in the suit rob loaded trade transports on the roads
+      const t = this.transports.byId(e.id)
+      if (!t) return answer(fail(e.diedAt !== 0 ? 'target_dead' : 'invalid_target'))
+      const why = this.transports.attackRefusal(p, t, this.now)
+      if (why) return answer(why)
+      p.action = { kind: 'attack', target: e.id, chaseAt: 0, chaseTo: null }
+      return answer(true)
+    }
     if (e.kind !== 'mob') return answer(fail('invalid_target'))
     if (e.ai === 'dead') return answer(fail('target_dead'))
     const [x, , z] = this.world.positionAt(p, this.now)
@@ -1138,7 +1190,8 @@ export class Gameplay implements AiHost {
     // Wave 8 (docs/SYSTEMS_COMBAT.md §1.3): a mounted player's hits land on its horse (not DoT ticks); mounts.ts
     // applies hits on a horse itself.
     const to = this.mounts.redirect(target, extra, now)
-    if (to.kind === 'cos') return this.mounts.hitCos(a, to, rolled, extra, now)
+    // docs/JOBS.md §5.4: a trade transport (ridden, or hit itself) takes its hits in jobs/transport.ts
+    if (to.kind === 'cos') return this.transports.owns(to) ? this.transports.hit(a, to, rolled, extra, now) : this.mounts.hitCos(a, to, rolled, extra, now)
     const t: Player | Mob = to
     const msg = (hits: CombatHit[], killed: boolean): ServerMessage => {
       const m: ServerMessage = { t: 'combat', attacker: a.id, target: t.id, hits }
@@ -1170,7 +1223,7 @@ export class Gameplay implements AiHost {
     let subdue = false
     for (const h of rolled.slice(0, MAX_COMBAT_HITS)) {
       let damage = Math.max(0, h.damage)
-      if (pvp) damage = this.hunters.pvpDamage(damage)
+      if (pvp) damage = this.hunters.pvpDamage(damage, a, t as Player)
       if (damage > 0 && t.kind === 'player') damage = this.skills.absorb(t, damage, now)
       damage = Math.min(damage, Math.ceil(t.hp))
       if (pvp && damage > 0 && damage >= t.hp && this.hunters.subdues(a, t as Player)) {
@@ -1445,9 +1498,10 @@ export class Gameplay implements AiHost {
     if ((a?.kind === 'attack' || a?.kind === 'pickup') && (this.skills.busy(p, now) || this.skills.held(p, now))) return
     if (a?.kind === 'attack') {
       // a player target: the Hunter / Wanted fight (docs/SIEGE.md §8.3), re-checked every swing (duty, the jail, the stockade)
-      const t: Mob | Player | undefined = this.world.mobs.get(a.target) ?? this.world.players.get(a.target)
-      const pvpWhy = t?.kind === 'player' ? this.hunters.refusal(p, t, now) : null
-      if (!t || (t.kind === 'player' ? t.dead || pvpWhy !== null : t.ai === 'dead') || !p.known.has(t.id)) {
+      const t: Mob | Player | Cos | undefined = this.world.mobs.get(a.target) ?? this.world.players.get(a.target) ?? this.transports.byId(a.target)?.c
+      const live = this.transports.byId(a.target)
+      const pvpWhy = t?.kind === 'player' ? this.hunters.refusal(p, t, now) : t?.kind === 'cos' && live ? this.transports.attackRefusal(p, live, now) : null
+      if (!t || (t.kind === 'player' ? t.dead || pvpWhy !== null : t.kind === 'cos' ? pvpWhy !== null : t.ai === 'dead') || !p.known.has(t.id)) {
         // a target that was just caught (jailed, being subdued) ends the fight quietly
         const caught = t?.kind === 'player' && (this.jail.jailedNow(t) || this.hunters.isSubdued(t))
         if (pvpWhy?.message && pvpWhy.reason !== 'target_dead' && !caught) p.send({ t: 'chat', channel: 'system', text: pvpWhy.message === 'no PvP' ? 'You can no longer fight that player.' : pvpWhy.message })
@@ -1473,7 +1527,8 @@ export class Gameplay implements AiHost {
               return
             }
             p.nextSwingAt = now + this.skills.basicFor(p).intervalMs
-            this.attack(p, t, now)
+            if (t.kind === 'cos') this.transports.playerSwing(p, t, now)
+            else this.attack(p, t, now)
           }
         }
       }
@@ -1493,7 +1548,7 @@ export class Gameplay implements AiHost {
    * Walks `p` towards `t` until within `reach` (re-planning as the target moves). Returns true when in reach.
    * An unreachable target ends the action (`p.action = null`).
    */
-  approach(p: Player, t: Mob | Player | GroundItem | Npc, reach: number, a: { chaseAt: number; chaseTo: [number, number] | null }, now: number): boolean {
+  approach(p: Player, t: Mob | Player | GroundItem | Npc | Cos, reach: number, a: { chaseAt: number; chaseTo: [number, number] | null }, now: number): boolean {
     const pp = this.world.positionAt(p, now)
     const tp = this.world.positionAt(t, now)
     const d = Math.hypot(tp[0] - pp[0], tp[2] - pp[2])

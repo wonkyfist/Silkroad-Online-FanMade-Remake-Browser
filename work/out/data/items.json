@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "items",
-  "generatedAt": "2026-10-07T00:19:58.014Z",
+  "generatedAt": "2026-10-08T14:04:39.493Z",
   "sources": [
     "client:itemdata.txt",
     "client:textdataname.txt"
@@ -43000,6 +43000,136 @@
       }
     },
     {
+      "code": "ITEM_ETC_SCROLL_RETURN_THIEFDEN_01",
+      "id": 2128,
+      "name": "Bandit Den Return Scroll",
+      "typeId": [
+        3,
+        3,
+        3,
+        1
+      ],
+      "category": "scroll",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 50,
+      "price": 1000,
+      "sellPrice": 300,
+      "model": null,
+      "icon": "/out/icon/item/etc/scroll_return_thiefden_01.png",
+      "canRepair": false,
+      "keepFee": 15,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_scroll.bsr",
+        "glb": "/out/item/etc/drop_scroll.glb",
+        "sidecar": "/out/item/etc/drop_scroll.json"
+      }
+    },
+    {
+      "code": "ITEM_COS_T_DONKEY",
+      "id": 2129,
+      "name": "Donkey",
+      "typeId": [
+        3,
+        3,
+        3,
+        2
+      ],
+      "category": "scroll",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 50,
+      "price": 800,
+      "sellPrice": 240,
+      "model": null,
+      "icon": "/out/icon/cos/item_cos_t_scroll.png",
+      "use": {
+        "summon": "COS_T_DONKEY"
+      },
+      "canRepair": false,
+      "keepFee": 12,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_scroll.bsr",
+        "glb": "/out/item/etc/drop_scroll.glb",
+        "sidecar": "/out/item/etc/drop_scroll.json"
+      },
+      "fieldSources": {
+        "use.summon": "client itemdata Param1 Desc (col 119): the characterdata COS code"
+      }
+    },
+    {
+      "code": "ITEM_COS_T_HORSE1",
+      "id": 2130,
+      "name": "Horse",
+      "typeId": [
+        3,
+        3,
+        3,
+        2
+      ],
+      "category": "scroll",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 50,
+      "price": 1200,
+      "sellPrice": 360,
+      "model": null,
+      "icon": "/out/icon/cos/item_cos_t_scroll.png",
+      "use": {
+        "summon": "COS_T_HORSE1"
+      },
+      "canRepair": false,
+      "keepFee": 18,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_scroll.bsr",
+        "glb": "/out/item/etc/drop_scroll.glb",
+        "sidecar": "/out/item/etc/drop_scroll.json"
+      },
+      "fieldSources": {
+        "use.summon": "client itemdata Param1 Desc (col 119): the characterdata COS code"
+      }
+    },
+    {
+      "code": "ITEM_COS_T_HORSE2",
+      "id": 2131,
+      "name": "Thoroughbred",
+      "typeId": [
+        3,
+        3,
+        3,
+        2
+      ],
+      "category": "scroll",
+      "degree": 1,
+      "reqLevel": 30,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 50,
+      "price": 2100,
+      "sellPrice": 630,
+      "model": null,
+      "icon": "/out/icon/cos/item_cos_t_scroll.png",
+      "use": {
+        "summon": "COS_T_HORSE2"
+      },
+      "canRepair": false,
+      "keepFee": 32,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_scroll.bsr",
+        "glb": "/out/item/etc/drop_scroll.glb",
+        "sidecar": "/out/item/etc/drop_scroll.json"
+      },
+      "fieldSources": {
+        "use.summon": "client itemdata Param1 Desc (col 119): the characterdata COS code"
+      }
+    },
+    {
       "code": "ITEM_COS_C_HORSE1",
       "id": 2137,
       "name": "Red Horse",
@@ -43107,6 +43237,622 @@
       "fieldSources": {
         "use.cooldownMs": "rule: POTION_COOLDOWN_MS (no client column)",
         "use.target": "client itemdata TypeID 3/3/1/4 (COS recovery kit): the user's horse"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_01",
+      "id": 2147,
+      "name": "White Silk",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_01.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_02",
+      "id": 2148,
+      "name": "Red Silk",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_02.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_03",
+      "id": 2149,
+      "name": "Blue Celadon Vase",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_03.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_04",
+      "id": 2150,
+      "name": "Wolju Celadon Vase",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_04.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_01",
+      "id": 2151,
+      "name": "Leather",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_01.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_02",
+      "id": 2152,
+      "name": "Footstall",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_02.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_03",
+      "id": 2153,
+      "name": "Saddle",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_03.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_04",
+      "id": 2154,
+      "name": "Horseshoe",
+      "typeId": [
+        3,
+        3,
+        8,
+        1
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_04.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_02",
+      "id": 2160,
+      "name": "White flag",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/man_item/trader_02.bsr",
+        "glb": "/out/item/china/man_item/trader_02.glb",
+        "sidecar": "/out/item/china/man_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_03",
+      "id": 2161,
+      "name": "Red flag",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/man_item/trader_03.bsr",
+        "glb": "/out/item/china/man_item/trader_03.glb",
+        "sidecar": "/out/item/china/man_item/trader_03.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_THIEF_02",
+      "id": 2163,
+      "name": "Black suit",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/man_item/thief_02.bsr",
+        "glb": "/out/item/china/man_item/thief_02.glb",
+        "sidecar": "/out/item/china/man_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_THIEF_03",
+      "id": 2164,
+      "name": "Black devil suit",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/man_item/thief_03.bsr",
+        "glb": "/out/item/china/man_item/thief_03.glb",
+        "sidecar": "/out/item/china/man_item/thief_03.json"
+      },
+      "icon": "/out/icon/item/china/man_item/thief_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_02",
+      "id": 2166,
+      "name": "Identity card",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/man_item/hunter_02.bsr",
+        "glb": "/out/item/china/man_item/hunter_02.glb",
+        "sidecar": "/out/item/china/man_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_03",
+      "id": 2167,
+      "name": "Special Identity card",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/man_item/hunter_03.bsr",
+        "glb": "/out/item/china/man_item/hunter_03.glb",
+        "sidecar": "/out/item/china/man_item/hunter_03.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_TRADER_02",
+      "id": 2169,
+      "name": "White flag",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/woman_item/trader_02.bsr",
+        "glb": "/out/item/china/woman_item/trader_02.glb",
+        "sidecar": "/out/item/china/woman_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_TRADER_03",
+      "id": 2170,
+      "name": "Red flag",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/woman_item/trader_03.bsr",
+        "glb": "/out/item/china/woman_item/trader_03.glb",
+        "sidecar": "/out/item/china/woman_item/trader_03.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_THIEF_02",
+      "id": 2172,
+      "name": "Black suit",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/woman_item/thief_02.bsr",
+        "glb": "/out/item/china/woman_item/thief_02.glb",
+        "sidecar": "/out/item/china/woman_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_THIEF_03",
+      "id": 2173,
+      "name": "Black devil suit",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/woman_item/thief_03.bsr",
+        "glb": "/out/item/china/woman_item/thief_03.glb",
+        "sidecar": "/out/item/china/woman_item/thief_03.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/thief_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_HUNTER_02",
+      "id": 2175,
+      "name": "Identity card",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4600,
+      "model": {
+        "bsr": "res/item/china/woman_item/hunter_02.bsr",
+        "glb": "/out/item/china/woman_item/hunter_02.glb",
+        "sidecar": "/out/item/china/woman_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_F_TRADE_HUNTER_03",
+      "id": 2176,
+      "name": "Special Identity card",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 1000000,
+      "sellPrice": 440000,
+      "model": {
+        "bsr": "res/item/china/woman_item/hunter_03.bsr",
+        "glb": "/out/item/china/woman_item/hunter_03.glb",
+        "sidecar": "/out/item/china/woman_item/hunter_03.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_03.png",
+      "canRepair": false,
+      "keepFee": 9000,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
       }
     },
     {
@@ -45379,6 +46125,40 @@
       },
       "fieldSources": {
         "reinforce": "client itemdata Param1 (degree; not ItemDef.degree = ceil(class / 3)); Param2-4 big-endian bytes = rates for +1..+12"
+      }
+    },
+    {
+      "code": "ITEM_COS_T_DHORSE1",
+      "id": 3903,
+      "name": "Ironclad trade Horse",
+      "typeId": [
+        3,
+        3,
+        3,
+        2
+      ],
+      "category": "scroll",
+      "degree": 2,
+      "reqLevel": 60,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 50,
+      "price": 3600,
+      "sellPrice": 1080,
+      "model": null,
+      "icon": "/out/icon/cos/item_cos_t_scroll.png",
+      "use": {
+        "summon": "COS_T_DHORSE1"
+      },
+      "canRepair": false,
+      "keepFee": 54,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_scroll.bsr",
+        "glb": "/out/item/etc/drop_scroll.glb",
+        "sidecar": "/out/item/etc/drop_scroll.json"
+      },
+      "fieldSources": {
+        "use.summon": "client itemdata Param1 Desc (col 119): the characterdata COS code"
       }
     },
     {
@@ -69472,6 +70252,564 @@
       }
     },
     {
+      "code": "ITEM_ETC_TRADE_CH_05",
+      "id": 7570,
+      "name": "Tiger Eye Stone",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_05.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_06",
+      "id": 7571,
+      "name": "Poplar Tree",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_06.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_CH_07",
+      "id": 7572,
+      "name": "High Class Tiger Leather",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_ch_07.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_05",
+      "id": 7573,
+      "name": "Brown Pearl",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_05.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_06",
+      "id": 7574,
+      "name": "Silver Bar",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_06.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_ETC_TRADE_WC_07",
+      "id": 7575,
+      "name": "Gold Bar",
+      "typeId": [
+        3,
+        3,
+        8,
+        2
+      ],
+      "category": "etc",
+      "degree": 2,
+      "reqLevel": 0,
+      "reqGender": "any",
+      "race": "any",
+      "maxStack": 40,
+      "price": 383,
+      "sellPrice": 191,
+      "model": null,
+      "icon": "/out/icon/item/etc/trade_wc_07.png",
+      "canTrade": false,
+      "canDrop": false,
+      "canRepair": false,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_trade.bsr",
+        "glb": "/out/item/etc/drop_trade.glb",
+        "sidecar": "/out/item/etc/drop_trade.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_04",
+      "id": 8986,
+      "name": "Low Level White Flag - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/trader_02.bsr",
+        "glb": "/out/item/china/man_item/trader_02.glb",
+        "sidecar": "/out/item/china/man_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_05",
+      "id": 8987,
+      "name": "Low Level White Flag - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/trader_02.bsr",
+        "glb": "/out/item/china/man_item/trader_02.glb",
+        "sidecar": "/out/item/china/man_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_04",
+      "id": 9006,
+      "name": "Low Level Identity Card - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/hunter_02.bsr",
+        "glb": "/out/item/china/man_item/hunter_02.glb",
+        "sidecar": "/out/item/china/man_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_05",
+      "id": 9007,
+      "name": "Low Level Identity Card - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/hunter_02.bsr",
+        "glb": "/out/item/china/man_item/hunter_02.glb",
+        "sidecar": "/out/item/china/man_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_THIEF_04",
+      "id": 9026,
+      "name": "Low Level Black Suit - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/thief_02.bsr",
+        "glb": "/out/item/china/man_item/thief_02.glb",
+        "sidecar": "/out/item/china/man_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_THIEF_05",
+      "id": 9027,
+      "name": "Low Level Black Suit - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/thief_02.bsr",
+        "glb": "/out/item/china/man_item/thief_02.glb",
+        "sidecar": "/out/item/china/man_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/man_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_TRADER_04",
+      "id": 9046,
+      "name": "Low Level White Flag - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/trader_02.bsr",
+        "glb": "/out/item/china/woman_item/trader_02.glb",
+        "sidecar": "/out/item/china/woman_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_TRADER_05",
+      "id": 9047,
+      "name": "Low Level White Flag - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        1
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/trader_02.bsr",
+        "glb": "/out/item/china/woman_item/trader_02.glb",
+        "sidecar": "/out/item/china/woman_item/trader_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_HUNTER_04",
+      "id": 9066,
+      "name": "Low Level Identity Card - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/hunter_02.bsr",
+        "glb": "/out/item/china/woman_item/hunter_02.glb",
+        "sidecar": "/out/item/china/woman_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_HUNTER_05",
+      "id": 9067,
+      "name": "Low Level Identity Card - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        3
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/hunter_02.bsr",
+        "glb": "/out/item/china/woman_item/hunter_02.glb",
+        "sidecar": "/out/item/china/woman_item/hunter_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_THIEF_04",
+      "id": 9086,
+      "name": "Low Level Black Suit - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/thief_02.bsr",
+        "glb": "/out/item/china/woman_item/thief_02.glb",
+        "sidecar": "/out/item/china/woman_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_THIEF_05",
+      "id": 9087,
+      "name": "Low Level Black Suit - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        2
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/thief_02.bsr",
+        "glb": "/out/item/china/woman_item/thief_02.glb",
+        "sidecar": "/out/item/china/woman_item/thief_02.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/thief_02.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
       "code": "ITEM_ETC_COS_HP_POTION_03",
       "id": 9237,
       "name": "Recovery Kit (x-large)",
@@ -69571,6 +70909,262 @@
       "canRepair": true,
       "repairCost": 110,
       "keepFee": 12,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_04_01",
+      "id": 24679,
+      "name": "Simple Merchant Clothes - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        6
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/avatar_trader_01.bsr",
+        "glb": "/out/item/china/man_item/avatar_trader_01.glb",
+        "sidecar": "/out/item/china/man_item/avatar_trader_01.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_TRADER_05_01",
+      "id": 24680,
+      "name": "Simple Merchant Clothes - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        6
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/avatar_trader_01.bsr",
+        "glb": "/out/item/china/man_item/avatar_trader_01.glb",
+        "sidecar": "/out/item/china/man_item/avatar_trader_01.json"
+      },
+      "icon": "/out/icon/item/china/man_item/trader_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_04_01",
+      "id": 24681,
+      "name": "Warrior Clothing Simple - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        7
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/avatar_hunter_01.bsr",
+        "glb": "/out/item/china/man_item/avatar_hunter_01.glb",
+        "sidecar": "/out/item/china/man_item/avatar_hunter_01.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_M_TRADE_HUNTER_05_01",
+      "id": 24682,
+      "name": "Warrior Clothing Simple - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        7
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "male",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/man_item/avatar_hunter_01.bsr",
+        "glb": "/out/item/china/man_item/avatar_hunter_01.glb",
+        "sidecar": "/out/item/china/man_item/avatar_hunter_01.json"
+      },
+      "icon": "/out/icon/item/china/man_item/hunter_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_TRADER_04_01",
+      "id": 24683,
+      "name": "Simple Merchant Clothes - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        6
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/avatar_trader_01.bsr",
+        "glb": "/out/item/china/woman_item/avatar_trader_01.glb",
+        "sidecar": "/out/item/china/woman_item/avatar_trader_01.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_TRADER_05_01",
+      "id": 24684,
+      "name": "Simple Merchant Clothes - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        6
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/avatar_trader_01.bsr",
+        "glb": "/out/item/china/woman_item/avatar_trader_01.glb",
+        "sidecar": "/out/item/china/woman_item/avatar_trader_01.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/trader_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_HUNTER_04_01",
+      "id": 24685,
+      "name": "Warrior Clothing Simple - Str",
+      "typeId": [
+        3,
+        1,
+        7,
+        7
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/avatar_hunter_01.bsr",
+        "glb": "/out/item/china/woman_item/avatar_hunter_01.glb",
+        "sidecar": "/out/item/china/woman_item/avatar_hunter_01.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
+      "dropModel": {
+        "bsr": "res/item/etc/drop_ch_equip.bsr",
+        "glb": "/out/item/etc/drop_ch_equip.glb",
+        "sidecar": "/out/item/etc/drop_ch_equip.json"
+      }
+    },
+    {
+      "code": "ITEM_CH_W_TRADE_HUNTER_05_01",
+      "id": 24686,
+      "name": "Warrior Clothing Simple - Int",
+      "typeId": [
+        3,
+        1,
+        7,
+        7
+      ],
+      "category": "etc",
+      "degree": 1,
+      "reqLevel": 20,
+      "reqGender": "female",
+      "race": "china",
+      "maxStack": 1,
+      "price": 10000,
+      "sellPrice": 4800,
+      "model": {
+        "bsr": "res/item/china/woman_item/avatar_hunter_01.bsr",
+        "glb": "/out/item/china/woman_item/avatar_hunter_01.glb",
+        "sidecar": "/out/item/china/woman_item/avatar_hunter_01.json"
+      },
+      "icon": "/out/icon/item/china/woman_item/hunter_02_01.png",
+      "canRepair": false,
+      "keepFee": 150,
       "dropModel": {
         "bsr": "res/item/etc/drop_ch_equip.bsr",
         "glb": "/out/item/etc/drop_ch_equip.glb",

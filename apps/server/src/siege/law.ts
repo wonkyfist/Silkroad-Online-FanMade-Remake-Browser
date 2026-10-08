@@ -1,6 +1,7 @@
 import {
   addOffence,
   offenceLevel,
+  robberySentenceMs,
   sentenceMs,
   wallName,
   wantedBounty,
@@ -9,6 +10,7 @@ import {
   type ServerMessage,
   type SiegeEventSettings,
   type WantedView,
+  type WarrantReason,
   type WarrantRole,
   type WarrantStatus,
 } from '@sro/shared'
@@ -60,6 +62,8 @@ export interface Associates {
 
 interface OpenWarrant {
   id: number
+  /** docs/JOBS.md §6.4: 'robbery' warrants (stolen goods) beside the wall's. */
+  reason: WarrantReason
   accountId: number
   characterId: number
   role: WarrantRole
@@ -90,10 +94,14 @@ export interface CaptureResult {
   /** The sentence the jail serves (ms; layer 6). */
   sentenceMs: number
   offence: number
+  /** docs/JOBS.md §6.4: which kinds of warrant the capture closed (the Hunters' job EXP), the Thief's job level. */
+  wall: boolean
+  robbery: boolean
+  thiefLevel: number
 }
 
 const fromRow = (r: WarrantRow, now: number): OpenWarrant => ({
-  id: r.id, accountId: r.account_id, characterId: r.character_id, role: r.role, wall: r.wall, offence: r.offence, bounty: r.bounty,
+  id: r.id, reason: r.reason === 'robbery' ? 'robbery' : 'wall', accountId: r.account_id, characterId: r.character_id, role: r.role, wall: r.wall, offence: r.offence, bounty: r.bounty,
   treason: r.treason === 1, issuedAt: r.issued_at, leftMs: r.online_ms_left, at: now, savedAt: now,
 })
 
@@ -116,6 +124,7 @@ export class LawService implements GameplayModule {
       if (e.kind !== 'player') return
       const b = this.bountyOf(e.characterId)
       if (b > 0) s.wanted = b
+      if (this.robber(e.characterId)) s.robber = true
     })
   }
 
@@ -181,7 +190,7 @@ export class LawService implements GameplayModule {
   /** Layer 6: the jail and Hunter duty refuse kegs (null: allowed). */
   kegRefusal(p: Player): Fail | null {
     if (this.g.jail.jailedNow(p)) return fail('jailed', 'Not from the Garrison Stockade.')
-    if (this.g.hunters.onDuty(p)) return fail('not_usable', 'A Hunter on duty does not blow up walls (and one who does loses the licence).')
+    if (this.g.hunters.onDuty(p)) return fail('not_usable', 'A Bounty Hunter on duty does not blow up walls (and one who does loses the licence).')
     return null
   }
 
@@ -197,10 +206,26 @@ export class LawService implements GameplayModule {
     }
   }
 
-  /** The bounty on a character (all open warrants; 0 = not Wanted). Online characters from memory. */
+  /** The bounty on a character's wall warrants (the WANTED label; 0 = none). Online characters from memory. */
   bountyOf(characterId: number): number {
     const list = this.open.get(characterId)
-    return list ? list.reduce((s, w) => s + w.bounty, 0) : 0
+    return list ? list.reduce((s, w) => s + (w.reason === 'wall' ? w.bounty : 0), 0) : 0
+  }
+
+  /** docs/JOBS.md §6.4: an online character with an open robbery warrant (the ROBBER label). */
+  robber(characterId: number): boolean {
+    return this.open.get(characterId)?.some((w) => w.reason === 'robbery') === true
+  }
+
+  /** Online and huntable by Bounty Hunters: a wall warrant with a bounty, or a robbery warrant. */
+  huntable(characterId: number): boolean {
+    return this.open.get(characterId)?.some((w) => w.reason === 'robbery' || w.bounty > 0) === true
+  }
+
+  /** Only robbery warrants open (the den's ring shelters a robber, not a wall-breaker). */
+  robberOnly(characterId: number): boolean {
+    const list = this.open.get(characterId)
+    return !!list?.length && list.every((w) => w.reason === 'robbery')
   }
 
   isWanted(characterId: number): boolean {
@@ -218,6 +243,7 @@ export class LawService implements GameplayModule {
       role: list.some((w) => w.role === 'breaker') ? 'breaker' : 'accomplice',
     }
     if (list.some((w) => w.treason)) v.treason = true
+    if (list.some((w) => w.reason === 'robbery')) v.robbery = true
     return v
   }
 
@@ -327,7 +353,7 @@ export class LawService implements GameplayModule {
       const p = this.playerOf(x.characterId)
       if (p) {
         const list = this.open.get(x.characterId) ?? []
-        list.push({ id, accountId: acc, characterId: x.characterId, role: x.role, wall, offence, bounty, treason, issuedAt: now, leftMs, at: now, savedAt: now })
+        list.push({ id, reason: 'wall', accountId: acc, characterId: x.characterId, role: x.role, wall, offence, bounty, treason, issuedAt: now, leftMs, at: now, savedAt: now })
         this.open.set(x.characterId, list)
         this.changed(p, now)
         p.send({
@@ -340,10 +366,56 @@ export class LawService implements GameplayModule {
     return out
   }
 
+  // ---- robbery warrants (docs/JOBS.md §6.4; jobs/robbery.ts) ----------------------------------------------------------------
+
+  /** The open robbery warrant of a character (live, else the table), or null. */
+  robberyOf(characterId: number): { id: number; bounty: number } | null {
+    const w = this.warrantsOf(characterId).find((x) => x.reason === 'robbery')
+    return w ? { id: w.id, bounty: w.bounty } : null
+  }
+
+  /**
+   * A Thief picked up stolen goods: an open robbery warrant (one at a time) with `bounty` (the recovery reward), or the
+   * open one's bounty updated. It lapses after `robbery.warrantOnlineMin` of online time; no server-wide notice. The
+   * offence shown is the robbery level a capture would make (recorded at the capture: the robbery ladder).
+   */
+  robbery(characterId: number, bounty: number, now: number): number {
+    const b = Math.max(0, Math.floor(bounty))
+    const open = this.warrantsOf(characterId).find((x) => x.reason === 'robbery')
+    const p = this.playerOf(characterId)
+    if (open) {
+      if (open.bounty !== b) {
+        open.bounty = b
+        this.store.setBounty(open.id, b)
+        if (p) this.sendState(p, now)
+      }
+      return open.id
+    }
+    const acc = this.accountOf(characterId) ?? 0
+    const js = this.g.jobs.settings.robbery
+    const offence = offenceLevel(this.store.robberyRecord(acc), now, js.forgiveDays) + 1
+    const leftMs = Math.round(js.warrantOnlineMin * 60_000)
+    const id = this.store.issue({ account: acc, character: characterId, reason: 'robbery', role: 'breaker', wall: null, offence, bounty: b, treason: false, issuedAt: now, onlineMsLeft: leftMs })
+    if (p) {
+      const list = this.open.get(characterId) ?? []
+      list.push({ id, reason: 'robbery', accountId: acc, characterId, role: 'breaker', wall: null, offence, bounty: b, treason: false, issuedAt: now, leftMs, at: now, savedAt: now })
+      this.open.set(characterId, list)
+      this.changed(p, now)
+      p.send({ t: 'chat', channel: 'system', text: `You carry stolen goods: a ROBBERY warrant is out and the Bounty Hunters can track you. Sell the goods at the Bandit Den, or stay hidden for ${fmtHours(leftMs)} of your time online.` })
+    }
+    this.g.config.log(`law: robbery warrant #${id} for ${this.g.store.characterById(characterId)?.name ?? characterId} (bounty ${b})`)
+    return id
+  }
+
+  /** Closes a character's robbery warrants only (`sold` at the den, `dropped` by a death). */
+  closeRobbery(characterId: number, status: 'sold' | 'dropped' | 'pardoned', now: number): number {
+    return this.close(characterId, status, now, [], 'robbery').length
+  }
+
   /** A character's Wanted state changed: the label for everyone in view, lawState to them, the listeners. */
   private changed(p: Player, now: number): void {
     const bounty = this.bountyOf(p.characterId)
-    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, wanted: bounty })
+    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, wanted: bounty, robber: this.robber(p.characterId) })
     this.sendState(p, now)
     for (const fn of this.listeners) {
       try {
@@ -370,12 +442,12 @@ export class LawService implements GameplayModule {
    * Closes every open warrant of a character (`lapsed`, `pardoned`, `captured`); online: the label goes, lawState. Returns
    * the closed warrants.
    */
-  close(characterId: number, status: Exclude<WarrantStatus, 'open'>, now: number, captors: unknown[] = []): OpenWarrant[] {
+  close(characterId: number, status: Exclude<WarrantStatus, 'open'>, now: number, captors: unknown[] = [], only?: WarrantReason): OpenWarrant[] {
     const live = this.open.get(characterId)
-    const list = live ?? this.store.openOf(characterId).map((r) => fromRow(r, now))
+    const list = (live ?? this.store.openOf(characterId).map((r) => fromRow(r, now))).filter((w) => !only || w.reason === only)
     const closed: OpenWarrant[] = []
     for (const w of list) if (this.store.close(w.id, status, now, w.leftMs, captors)) closed.push(w)
-    if (live) this.open.set(characterId, [])
+    if (live) this.open.set(characterId, live.filter((w) => !list.includes(w)))
     const p = this.playerOf(characterId)
     if (p && closed.length) this.changed(p, now)
     return closed
@@ -467,15 +539,38 @@ export class LawService implements GameplayModule {
       records.push(rule ? { character: c.player.characterId, account: c.acc, gold, credit, rule } : { character: c.player.characterId, account: c.acc, gold, credit })
       out.push(rule ? { characterId: c.player.characterId, name: c.player.name, gold, credit, rule } : { characterId: c.player.characterId, name: c.player.name, gold, credit })
     }
+    const wall = list.some((w) => w.reason === 'wall')
+    const robbery = list.some((w) => w.reason === 'robbery')
+    // docs/JOBS.md §6.4: a robber's goods are confiscated; the robbery ladder (per account) is the sentence
+    let robberyMs = 0
+    let robberyLevel = 0
+    const thiefLevel = this.g.jobs.jobOf(characterId) === 'thief' ? this.g.jobs.levelOf(characterId) : 0
+    if (robbery) {
+      const js = this.g.jobs.settings.robbery
+      const acc = wantedAcc ?? 0
+      const rec = addOffence(this.store.robberyRecord(acc), now, js.forgiveDays)
+      try {
+        this.store.saveRobbery(acc, rec)
+      } catch (e) {
+        this.g.config.log(`law: the robbery record could not be saved: ${(e as Error).message}`)
+      }
+      robberyLevel = rec.offences
+      robberyMs = robberySentenceMs(rec.offences, js.sentencesMin)
+      this.g.robbery.confiscate(characterId, now)
+    }
     const closed = this.close(characterId, 'captured', now, records)
-    this.broadcast({ t: 'lawNotice', event: 'captured', name, bounty })
+    if (wall) this.broadcast({ t: 'lawNotice', event: 'captured', name, bounty })
+    const walls = list.filter((w) => w.reason === 'wall')
     return {
       warrants: closed.map((w) => w.id),
       bounty,
       paid,
       captors: out,
-      sentenceMs: Math.max(0, ...list.map((w) => sentenceMs(w.offence, w.role, w.treason, s))),
-      offence: Math.max(...list.map((w) => w.offence)),
+      sentenceMs: Math.max(robberyMs, ...walls.map((w) => sentenceMs(w.offence, w.role, w.treason, s))),
+      offence: Math.max(robberyLevel, ...walls.map((w) => w.offence)),
+      wall,
+      robbery,
+      thiefLevel,
     }
   }
 
@@ -504,7 +599,7 @@ export class LawService implements GameplayModule {
     if (rows.length) {
       this.open.set(p.characterId, rows.map((r) => fromRow(r, now)))
       // the enter-world snapshot was built before this hook: the label to the player and whoever sees them already
-      this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, wanted: this.bountyOf(p.characterId) })
+      this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, wanted: this.bountyOf(p.characterId), robber: this.robber(p.characterId) })
     } else this.open.delete(p.characterId)
     // a clean record says nothing (the client starts clean)
     if (rows.length || this.offences(this.accountOf(p.characterId) ?? 0, now) > 0) this.sendState(p, now)
@@ -555,6 +650,11 @@ export class LawService implements GameplayModule {
     this.open.set(p.characterId, left)
     this.changed(p, now)
     if (left.length) return
+    if (lapsed.every((w) => w.reason === 'robbery')) {
+      // docs/JOBS.md §6.4: no server-wide notice for robbers; the goods stay sellable
+      p.send({ t: 'chat', channel: 'system', text: 'Your robbery warrant has lapsed: the Bounty Hunters lost your trail. The goods are still yours to sell at the Bandit Den.' })
+      return
+    }
     this.broadcast({ t: 'lawNotice', event: 'lapsed', name: p.name })
     p.send({ t: 'chat', channel: 'system', text: 'Your warrant has lapsed: the garrison has stopped looking for you. The offence stays on your record.' })
     this.g.config.log(`law: ${p.name}'s warrant lapsed`)

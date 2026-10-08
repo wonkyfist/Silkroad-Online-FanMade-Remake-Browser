@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generator": "packages/convert/src/tools/export-ui.ts",
-  "generatedAt": "2026-09-28T14:21:55.461Z",
+  "generatedAt": "2026-10-08T14:06:00.595Z",
   "images": {
     "icon/icon_disable": {
       "file": "ui/icon/icon_disable.png",
@@ -1249,6 +1249,32 @@
         0,
         44,
         54
+      ]
+    },
+    "character/chr_job": {
+      "file": "ui/character/chr_job.png",
+      "src": "interface/character/chr_job.ddj",
+      "width": 204,
+      "height": 8,
+      "format": "A1R5G5B5",
+      "content": [
+        0,
+        0,
+        204,
+        8
+      ]
+    },
+    "character/chr_job_window": {
+      "file": "ui/character/chr_job_window.png",
+      "src": "interface/character/chr_job_window.ddj",
+      "width": 364,
+      "height": 96,
+      "format": "A1R5G5B5",
+      "content": [
+        0,
+        0,
+        364,
+        96
       ]
     },
     "chat/chatwindow_big_middle": {

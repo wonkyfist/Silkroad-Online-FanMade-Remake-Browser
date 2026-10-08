@@ -41,6 +41,12 @@ export const GENERATOR = 'silkroad-web convert (packages/convert/src/equipment)'
 export const ARMOR_CODE = /^ITEM_CH_([MW])_(CLOTHES|LIGHT|HEAVY)_0([1-4])_(HA|CA|SA|BA|LA|AA|FA)_[ABC](_DEF)?$/
 export const SHIELD_CODE = /^ITEM_CH_SHIELD_0([1-4])_[ABC](_DEF)?$/
 export const WEAPON_CODE = /^ITEM_CH_(SWORD|BLADE|SPEAR|TBLADE|BOW)_0([1-4])_[ABC](_DEF)?$/
+/**
+ * The job suits worn on the retail bodies (docs/JOBS.md §3.3, shared `jobSuitCode`): tier I `_02`, II `_04_01`, III `_03`,
+ * both bodies (the woman's `_02` / `_03` rows are `F`, her `_04_01` `W`). Exported under the `chest` slot; the client
+ * swaps them in while a job member is in job mode (apps/game/src/three/job-look.ts).
+ */
+export const JOB_SUIT_CODE = /^ITEM_CH_[MWF]_TRADE_(TRADER|HUNTER|THIEF)_(02|03|04_01)$/
 
 /** itemdata TypeID4 of Chinese armour -> equip slot (openroad textdata-itemdata; checked against the part suffix). */
 export const ARMOR_SLOT_BY_TID4: Readonly<Record<number, EquipSlot>> = { 1: 'head', 2: 'shoulders', 3: 'chest', 4: 'legs', 5: 'hands', 6: 'feet' }
@@ -169,6 +175,9 @@ export async function exportEquipment(opts: ExportOptions): Promise<ExportResult
       const gender = genderOfItem(r)
       if (gender !== (m[1] === 'M' ? 'male' : 'female')) throw new Error(`${r.codeName}: ReqGender ${r.reqGender} contradicts the code`)
       pending.push({ item: { ...base, slot, gender, armorClass }, bsr })
+    } else if (JOB_SUIT_CODE.test(r.codeName)) {
+      if (!bsr) throw new Error(`${r.codeName}: no model`)
+      pending.push({ item: { ...base, slot: 'chest', gender: genderOfItem(r) }, bsr })
     } else if ((m = SHIELD_CODE.exec(r.codeName))) {
       if (!bsr) throw new Error(`${r.codeName}: no model`)
       pending.push({ item: { ...base, slot: 'shield', gender: genderOfItem(r) }, bsr })

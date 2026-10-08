@@ -19,7 +19,7 @@ import { BASIC_ATTACK, imbueDamage, mobCombatStats, reductionMul, rollSkillHit, 
 import type { Gameplay } from '../gameplay.ts'
 import { fail, takeFromBag, type Result } from '../inventory.ts'
 import type { Answer, GameplayMessage, GameplayModule, WarpReason } from '../modules.ts'
-import type { Mob, Player } from '../world.ts'
+import type { Cos, Mob, Player } from '../world.ts'
 import { SkillBook, groupOf } from './book.ts'
 import { EffectTable, STATUS_RULES, effectState, overlapClass, type Effect } from './effects.ts'
 import { checkLearn, checkMasteryUp } from './learn.ts'
@@ -88,7 +88,8 @@ interface Plan {
   row: SkillDef
   head: SkillDef
   group: string
-  target: Player | Mob
+  /** A trade transport (docs/JOBS.md §4: a Thief's attack skill) is a target too. */
+  target: Player | Mob | Cos
   mp: number
   hp: number
 }
@@ -305,7 +306,7 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** The target of a use (docs/SKILLS.md §10.1 step 5; decision 13: friendly skills may target any visible player). */
-  private resolveTarget(p: Player, row: SkillDef, targetId: number | undefined, _now: number): Result<Player | Mob> {
+  private resolveTarget(p: Player, row: SkillDef, targetId: number | undefined, _now: number): Result<Player | Mob | Cos> {
     const w = this.g.world
     const groups = row.targets?.groups ?? []
     if (this.hostile(row)) {
@@ -316,6 +317,13 @@ export class SkillEngine implements GameplayModule {
         // Siege of Jangan layer 6 (docs/SIEGE.md §8.3): a Hunter's / a Wanted's single-target skill on the other side
         const why = this.g.hunters.refusal(p, e, this.g.now)
         return why ?? { ok: true, value: e }
+      }
+      if (e.kind === 'cos') {
+        // docs/JOBS.md §4, layer 4: a Thief's attack skills on a loaded trade transport (no debuffs: it has no states)
+        const t = this.g.transports.byId(e.id)
+        if (!t) return fail('invalid_target')
+        if (row.kind !== 'attack') return fail('invalid_target')
+        return this.g.transports.attackRefusal(p, t, this.g.now) ?? { ok: true, value: e }
       }
       if (e.kind !== 'mob') return fail('invalid_target')
       if (e.ai === 'dead') return fail('target_dead')
@@ -341,8 +349,13 @@ export class SkillEngine implements GameplayModule {
     return { ok: true, value: e }
   }
 
+  /** A target by entity id: a player, a mob, or a live trade transport. */
+  private targetOf(id: number): Player | Mob | Cos | undefined {
+    return this.g.world.players.get(id) ?? this.g.world.mobs.get(id) ?? this.g.transports.byId(id)?.c
+  }
+
   /** Reach for a targeted action (docs/SKILLS.md §10.1 "Range"). */
-  private reach(p: Player, row: SkillDef, t: Player | Mob): number {
+  private reach(p: Player, row: SkillDef, t: Player | Mob | Cos): number {
     return (row.range > 0 ? row.range : p.combat.range) + p.radius + t.radius
   }
 
@@ -382,7 +395,7 @@ export class SkillEngine implements GameplayModule {
     const instance = this.instanceId()
     this.g.world.broadcastAbout(p, this.castMsg(p, plan.row, instance, plan.target.id, { prepareMs: 0, castMs: 0, actionMs: 0 }, true))
     this.pay(p, plan)
-    this.applyBuff(p, plan.row, plan.target, now, instance)
+    if (plan.target.kind !== 'cos') this.applyBuff(p, plan.row, plan.target, now, instance)
   }
 
   /** t0 (docs/SKILLS.md §5.1): cost, cooldown, `cast`, then the tick runs release and end. */
@@ -419,7 +432,7 @@ export class SkillEngine implements GameplayModule {
   private release(p: Player, s: CasterState, c: Cast, now: number): void {
     c.released = true
     const row = c.row
-    const t = c.target === p.id ? p : this.g.world.players.get(c.target) ?? this.g.world.mobs.get(c.target)
+    const t = c.target === p.id ? p : this.targetOf(c.target)
     // The weapon or shield changed during the cast (inventoryChanged normally catches it first), or the weapon broke
     // mid-cast (a bow's earlier arrow, a hit taken): a broken weapon refuses every row that needs one (COMBAT §3.2).
     if (this.gear(p, row) || this.g.durability.refuse(p, row)) {
@@ -427,10 +440,18 @@ export class SkillEngine implements GameplayModule {
       s.cast = null
       return this.afterAction(p, s, null, now)
     }
-    const gone = !t || (t.kind === 'mob' ? t.ai === 'dead' : row.kind !== 'resurrect' && t.dead)
+    const gone = !t || (t.kind === 'mob' ? t.ai === 'dead' : t.kind === 'cos' ? t.diedAt !== 0 : row.kind !== 'resurrect' && t.dead)
     // A target other than the caster must still be in view and within reach (plus slack): no heals across the map.
     const away = !!t && t.id !== p.id && (!p.known.has(t.id) || this.g.world.distance(p, t, now) > this.reach(p, row, t) + RELEASE_SLACK_M)
     if (gone || away || (row.kind === 'resurrect' && !(t as Player).dead)) {
+      this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'target_lost' })
+      s.cast = null
+      return this.afterAction(p, s, null, now)
+    }
+    if (t.kind === 'cos') {
+      // a trade transport: attack rows only, while the Thief may still rob it
+      const live = this.g.transports.byId(t.id)
+      if (row.kind === 'attack' && live && !this.g.transports.attackRefusal(p, live, now)) return this.strike(p, row, t, c.instance, now)
       this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'target_lost' })
       s.cast = null
       return this.afterAction(p, s, null, now)
@@ -465,7 +486,8 @@ export class SkillEngine implements GameplayModule {
     if (next) {
       // a chain on a player (the Hunter / Wanted fight) goes on while the fight is allowed
       const pt = this.g.world.players.get(c.target)
-      const t = this.g.world.mobs.get(c.target) ?? (pt && pt.id !== p.id && !pt.dead && this.g.hunters.allowed(p, pt, now) ? pt : undefined)
+      const live = this.g.transports.byId(c.target)
+      const t = this.g.world.mobs.get(c.target) ?? (pt && pt.id !== p.id && !pt.dead && this.g.hunters.allowed(p, pt, now) ? pt : undefined) ?? (live && !this.g.transports.attackRefusal(p, live, now) ? live.c : undefined)
       // A segment that broke the weapon ends the chain: the later segments need the weapon too (COMBAT §3.2).
       if (this.gear(p, next) || this.g.durability.refuse(p, next)) {
         this.g.world.broadcastAbout(p, { t: 'castEnd', id: p.id, instance: c.instance, reason: 'interrupted' })
@@ -647,18 +669,45 @@ export class SkillEngine implements GameplayModule {
     }
   }
 
-  private xz(e: Player | Mob, now: number): { x: number; z: number } {
+  private xz(e: Player | Mob | Cos, now: number): { x: number; z: number } {
     const p = this.g.world.positionAt(e, now)
     return { x: p[0], z: p[2] }
   }
 
-  private cand(e: Player | Mob, now: number): Candidate {
+  private cand(e: Player | Mob | Cos, now: number): Candidate {
     const p = this.g.world.positionAt(e, now)
     return { id: e.id, x: p[0], z: p[2], radius: e.radius }
   }
 
   /** Living enemies (mobs; no PvP) within `range` of `around`, as area candidates. */
-  private candidates(caster: Player | Mob, around: Player | Mob, range: number, now: number): Candidate[] {
+  /** docs/JOBS.md §4 (layer 4): loaded trade transports a Thief's area skill may hit (attackRefusal: none), near `around`. */
+  private cosCandidates(caster: Player, around: Player | Mob | Cos, range: number, now: number): Candidate[] {
+    const c = this.xz(around, now)
+    const out: Candidate[] = []
+    for (const t of this.g.transports.loadedTransports()) {
+      if (!caster.known.has(t.c.id) || this.g.transports.attackRefusal(caster, t, now)) continue
+      const q = this.cand(t.c, now)
+      if (Math.hypot(q.x - c.x, q.z - c.z) <= range + q.radius) out.push(q)
+    }
+    return out
+  }
+
+  /** A skill's hits on a trade transport (its fixed defence; no statuses, no imbue). */
+  private rollCosHits(a: Player, cos: Cos, row: SkillDef, mul: number): CombatHit[] {
+    const d = row.damage
+    if (!d) return []
+    const magic = d.physPct === 0 && d.magPct > 0
+    const weather = this.g.storm?.elementMul(row) ?? 1
+    const spec = { pct: magic ? d.magPct : d.physPct, flat: d.flat, magic, critBonus: PARAM(row, 'cr')?.[0] ?? 0, mul: mul * weather }
+    const hits: CombatHit[] = []
+    for (let i = 0; i < Math.min(MAX_COMBAT_HITS, Math.max(1, d.hits)); i++) {
+      const h = rollSkillHit(a.combat, this.g.transports.combatVsPlayers(cos), spec, this.g.rng)
+      hits.push({ outcome: h.outcome, damage: h.damage, hp: 0 })
+    }
+    return hits
+  }
+
+  private candidates(caster: Player | Mob, around: Player | Mob | Cos, range: number, now: number): Candidate[] {
     const c = this.xz(around, now)
     const out: Candidate[] = []
     for (const m of this.g.world.mobs.values()) {
@@ -671,7 +720,7 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** An attack or debuff at release: area targets, hits per target, projectiles held until they land. */
-  private strike(p: Player, row: SkillDef, primary: Player | Mob, instance: number, now: number): void {
+  private strike(p: Player, row: SkillDef, primary: Player | Mob | Cos, instance: number, now: number): void {
     // a player (the Hunter / Wanted fight, docs/SIEGE.md §8.3): the primary only; areas never reach other players
     const area = primary.kind === 'player' ? undefined : row.area
     const proj = projectileOf(row)
@@ -680,12 +729,21 @@ export class SkillEngine implements GameplayModule {
       const from = area.shape === 'caster' ? p : primary
       const lineLen = area.shape === 'projectile_pierce' ? Math.max(row.range, PROJECTILE_LINE_M) : 0
       const range = Math.max(area.distance, lineLen, this.g.world.distance(p, primary, now)) + 3
-      targets = selectTargets(area, this.xz(p, now), this.cand(primary, now), this.candidates(p, from, range, now), lineLen)
+      // docs/JOBS.md §4: a Thief's area also reaches the loaded transports he may rob
+      targets = selectTargets(area, this.xz(p, now), this.cand(primary, now), [...this.candidates(p, from, range, now), ...this.cosCandidates(p, from, range, now)], lineLen)
     }
     targets.forEach((c, i) => {
-      const t = c.id === primary.id ? primary : this.g.world.mobs.get(c.id)
-      if (!t) return
       const aoe = i > 0
+      const cos = primary.kind === 'cos' && c.id === primary.id ? primary : this.g.transports.byId(c.id)?.c
+      if (cos) {
+        const hits = this.rollCosHits(p, cos, row, aoe && area ? reductionMul(area.reductionPct) : 1)
+        if (hits.length === 0) return
+        if (proj) this.flights.push({ at: arrivalAt(now, this.g.world.distance(p, cos, now), proj), caster: p.id, target: cos.id, code: row.code, instance, aoe, hits, statuses: hits.map(() => null) })
+        else this.g.dealHits(p, cos, hits, aoe ? { skill: row.code, instance, aoe } : { skill: row.code, instance }, now)
+        return
+      }
+      const t = c.id === primary.id ? (primary as Player | Mob) : this.g.world.mobs.get(c.id)
+      if (!t) return
       const { hits, statuses } = this.rollHits(p, t, row, aoe && area ? reductionMul(area.reductionPct) : 1, now)
       if (proj) {
         const at = arrivalAt(now, this.g.world.distance(p, t, now), proj)
@@ -1162,9 +1220,9 @@ export class SkillEngine implements GameplayModule {
 
   /** Walking into range of a skill's target (the auto-attack chase); starts it on arrival. */
   private chase(p: Player, a: Extract<Player['action'], { kind: 'skill' }>, now: number): void {
-    const t = this.g.world.players.get(a.target) ?? this.g.world.mobs.get(a.target)
+    const t = this.targetOf(a.target)
     const row = this.book.skill(a.skill)
-    if (!t || !row || !p.known.has(t.id) || (t.kind === 'mob' && t.ai === 'dead')) {
+    if (!t || !row || !p.known.has(t.id) || (t.kind === 'mob' && t.ai === 'dead') || (t.kind === 'cos' && t.diedAt !== 0)) {
       p.action = null
       return
     }
@@ -1195,6 +1253,11 @@ export class SkillEngine implements GameplayModule {
 
   private arrive(f: Flight, now: number): void {
     const a = this.g.world.players.get(f.caster)
+    const cos = this.g.transports.byId(f.target)
+    if (a && cos) {
+      if (!this.g.transports.attackRefusal(a, cos, now)) this.g.dealHits(a, cos.c, f.hits, { skill: f.code, instance: f.instance, at: f.at, aoe: f.aoe || undefined }, now)
+      return
+    }
     const t = this.g.world.mobs.get(f.target) ?? this.g.world.players.get(f.target)
     if (!a || !t || (t.kind === 'mob' ? t.ai === 'dead' : t.dead || !this.g.hunters.allowed(a, t, now))) return
     this.land(a, t, f.code, f.hits, f.statuses, { instance: f.instance, at: f.at, aoe: f.aoe || undefined }, now)

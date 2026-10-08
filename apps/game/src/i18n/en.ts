@@ -43,6 +43,8 @@ import { enSiege } from './en-siege.ts'
 import { enSiegeRepair } from './en-siege-repair.ts'
 import { enSiegeLaw } from './en-siege-law.ts'
 import { enSiegeHunter } from './en-siege-hunter.ts'
+import { enJobs } from './en-jobs.ts'
+import { enJobsLooks } from './en-jobs-looks.ts'
 import { enNews } from './en-news.ts'
 import { enWinterPlay } from './en-winter-play.ts'
 import { enClimb } from './en-climb.ts'
@@ -83,6 +85,8 @@ export const en = {
   ...enSiegeRepair,
   ...enSiegeLaw,
   ...enSiegeHunter,
+  ...enJobs,
+  ...enJobsLooks,
   // Wave 10 (docs/WAVE_PLAN6.md D15): the jump's toasts (MV-C).
   ...enMovement,
   // Wave 11 (docs/WAVE_PLAN7.md D8): the unique-monster announcements (U-H).

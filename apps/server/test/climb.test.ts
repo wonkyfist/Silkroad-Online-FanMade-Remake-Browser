@@ -285,7 +285,7 @@ describe('migration 21 on a copy of a schema-20 database', () => {
 
     const store = openStore(dir)
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(24)
+    expect(store.schemaVersion).toBe(27)
     const before = store.db.prepare('SELECT name, level, exp, sp, sp_exp, curve_version FROM characters ORDER BY id').all()
     expect(before.map((r: any) => r.curve_version)).toEqual([0, 0, 0, 0])
     const retail: Record<number, number> = { 1: 118, 15: 96_938, 19: 238_878, 20: 282_000 }
@@ -309,7 +309,7 @@ describe('migration 21 on a copy of a schema-20 database', () => {
   it('a fresh database is at schema 21 and new characters start at curve 0 until the server sets the curve', () => {
     const store = openStore(tmp())
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(24)
+    expect(store.schemaVersion).toBe(27)
     const acc = store.createAccount('a1', 'x')!
     const c = store.createCharacter(acc, 'Zero', 'CHAR_CH_MAN_ADVENTURER', 'sword', 'jangan', 4)
     expect(typeof c === 'object' && c.curve_version).toBe(0)
@@ -403,7 +403,7 @@ describe.skipIf(!HAVE)('the Climb on the real export', () => {
     for (const n of b4) if (low.some((m) => Math.hypot(n.x - m.x, n.z - m.z) < 100)) expect(n.tactics.aggressive, `nest ${n.id}`).toBe(false)
   })
   it('gear (§4.1.2, D53): four degrees inside the cap, degree 4 at 21-25 with its seals, grades ordered, nothing past 25', () => {
-    const ch = [...d.items.values()].filter((i) => /^ITEM_CH_/.test(i.code) && i.category !== 'alchemy')
+    const ch = [...d.items.values()].filter((i) => /^ITEM_CH_/.test(i.code) && i.category !== 'alchemy' && !/_TRADE_/.test(i.code)) // the job suits (docs/JOBS.md) are no gear
     const d4 = ch.filter((i) => i.degree === 4)
     expect(d4.length).toBe(306)
     expect(d4.filter((i) => /_RARE$/.test(i.code)).length).toBe(153)

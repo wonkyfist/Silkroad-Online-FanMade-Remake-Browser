@@ -3,7 +3,8 @@
 Every update to Jangan, newest first. This is the same text and pictures the game shows in its **What's new**
 window (press **J** in game). It is generated from `content/changelog/` by `pnpm changelog`; edit the entries there.
 
-- [October 8: Hunters and the Garrison Stockade](#october-8-hunters-and-the-garrison-stockade)
+- [The Job System: Traders, Bounty Hunters and Thieves](#the-job-system-traders-bounty-hunters-and-thieves)
+- [October 8: Bounty Hunters and the Garrison Stockade](#october-8-bounty-hunters-and-the-garrison-stockade)
 - [October 7 (night): Thunder Kegs and the Wanted](#october-7-night-thunder-kegs-and-the-wanted)
 - [October 7 (evening): The Siege of Jangan](#october-7-evening-the-siege-of-jangan)
 - [October 7: Jangan's walls can break — and be rebuilt](#october-7-jangans-walls-can-break--and-be-rebuilt)
@@ -15,34 +16,115 @@ window (press **J** in game). It is generated from `content/changelog/` by `pnpm
 
 ---
 
-## October 8: Hunters and the Garrison Stockade
+## The Job System: Traders, Bounty Hunters and Thieves
 
 *October 8, 2026*
 
-**The law has teeth. Become a Hunter, track down the Wanted wall-breakers, catch them and collect the bounty. Caught players serve their time in the Garrison Stockade: 2 hours, then 4, 8, 16... for every repeat offence.**
+**Jangan island gets its trade war. Haul goods by donkey and horse between the four trade posts as a Trader, rob the caravans as a Thief and fence the loot at the Bandit Den, or ride escort and catch the robbers as a Bounty Hunter. Seven job levels each, a suit to show it, and a world map of the trade routes.**
 
-![October 8: Hunters and the Garrison Stockade](content/changelog/img/oct7-captured.jpg)
+![The Job System: Traders, Bounty Hunters and Thieves](content/changelog/img/jobs-post.jpg)
 
-## Become a Hunter
+## Three jobs, two sides
 
-**Captain Yun**, by the west gate, sells the **Hunter's licence**: level 15+, 10,000 gold, and a clean record (not Wanted, no offences in the last 30 days).
+From **level 15** you can take one of three jobs. Each has its own licence, its own seven job levels and its own suit:
 
-![Captain Yun's licence window](content/changelog/img/oct7-hunter-yun.jpg "Captain Yun hires Hunters by the west gate.")
+- **Trader**: Specialty Trader **Jodaesan** in Jangan. Buy goods, load them on your pack animal and sell them where they are wanted.
+- **Bounty Hunter**: **Captain Yun** by the west gate. The old Bounty Hunter licence is now a full job: escort caravans, catch robbers, return stolen goods.
+- **Thief**: **Old Fang**. Rob the caravans on the roads and sell what you take at the Bandit Den.
 
-- Go **on duty** in town, out of combat. A blue **HUNTER** label shows over your head.
+Traders and Bounty Hunters are **the law**, Thieves are **the outlaws**, and all characters on one account stay on the same side. Put your **suit** on to go to work: only players in their suits can fight over the goods, and nobody else is ever pulled in. Towns, the trade posts and the Bandit Den are always safe. Your job, level and a coloured badge show under your name for everyone to see.
+
+## Four trade posts on the island
+
+Goods are bought cheap where they come from and sell for more the farther and the more dangerous the road. Jangan sells silk, celadon, tiger eye stones and leather. Four posts out on the island buy them and sell their own goods for the way back: **Pearl Diver Haeun** on South Beach, **Quartermaster Gong** at the Tomb Camp, **Ferry Master Wol** at the old Ferry Landing and **Salvager Mok** on the Sea Cliffs. Each post has its own market corner with a stall, a cart and crates of goods, so you can see it from the road.
+
+![A trade post on South Beach with two loaded donkeys](content/changelog/img/jobs-post.jpg "Pearl Diver Haeun's stall on South Beach. The donkey on the right is loaded to five stars, the one on the left to one.")
+
+Prices move with the market: every crate bought makes the next one dearer, every crate sold lowers the demand, and both slowly drift back. Every day one good is in the news and sells for 20 % more somewhere.
+
+![Jodaesan's market window](content/changelog/img/jobs-market.jpg "The trade window: prices, your load, the stars your load will have, and an estimate of every route.")
+
+## Donkeys, horses and stars
+
+Summon your **trade transport** at any trader: a **Donkey** (30 crates) first, then the **Horse**, the **Thoroughbred** and finally the armoured **Ironclad Trade Horse** (120 crates) as your Trader level rises. It walks behind you along your own path. You can **ride** it at its walking pace, tell it to **stay here** while you scout ahead, then call it back with **Follow**. All of these buttons are on its frame next to your portrait.
+
+The value of the load sets its **stars**, from one to five. The stars show above the transport, and you can now see the load from a distance too: a one-star donkey carries a single small bundle, a five-star one is piled high with crates.
+
+![A light load and a full load side by side](content/changelog/img/jobs-loads.jpg "One star on the left, five stars on the right.")
+
+More stars mean more profit, more job EXP and more trouble: **bandit ambushes** wait on the road for rich caravans, monsters go for loaded animals, lightning strikes them and a tornado can scatter part of the load.
+
+## Robbing a caravan
+
+A Thief in his suit gets a rough **ping** of nearby caravans of three stars and more. Attack the transport (not the Trader). When it falls, **60 %** of its goods drop to the ground as crates and the rest is lost. Fallen goods now show as stacks of crates where they lie, as well as on the prompt and the minimap.
+
+![A Thief robs a three-star donkey](content/changelog/img/jobs-thief.jpg "A Thief on the beach road goes for a three-star caravan.")
+
+![Goods on the ground](content/changelog/img/jobs-bags.jpg "What's left of a dead donkey: the crates lie on the sand for five minutes.")
+
+Whoever gets there first decides what happens to them. The Trader and his party can load them back on, a Bounty Hunter takes them to return to Captain Yun, and a Thief who picks them up becomes a **ROBBER**: every on-duty Bounty Hunter is told roughly where he is. Specialty Trader **Seopok** at the Bandit Den pays 60 % of the base price for stolen goods, no questions asked. Selling there closes the warrant.
+
+## Catching robbers
+
+Bounty Hunters can fight robbers anywhere except the Stockade and the Bandit Den's own ring. Bring one down and he is **caught**: the stolen goods are taken from him, the Bounty Hunters share a recovery reward, and the robber goes to the **Garrison Stockade** for 15 minutes, then 30, 60 and 120 for repeat robberies. Escorting a Trader in a party also gives Bounty Hunters a share of his job EXP.
+
+![A Bounty Hunter catches a robber](content/changelog/img/jobs-hunter.jpg "On duty: a Bounty Hunter runs down a robber on the beach.")
+
+## Balanced for real fights
+
+We measured robbing and catching against characters of level 15, 20 and 25 with normal gear for their level, and tuned it so a fight lasts about a minute:
+
+- A **Thief** of the same level takes a one- or two-star **Donkey** alone in about **45 to 90 seconds** at level 20 (faster with skills, slower with only basic attacks).
+- The armoured **Ironclad Trade Horse** takes several minutes alone: rob it with **friends**.
+- A **Bounty Hunter** brings down a robber of the same level in about **20 to 40 seconds**.
+- Monsters and bandits hit transports exactly as before.
+
+All of these numbers are live settings the team can adjust without a restart.
+
+## The Trade routes map
+
+Press **M**: the world map has a new **Trade routes** layer you can turn on and off. It shows the five trade points, the Bandit Den and the road from Jangan to each post, coloured by how dangerous it is and labelled with the profit per crate.
+
+![The Trade routes layer on the world map](content/changelog/img/jobs-map.jpg "The safe road to South Beach pays 5 %, the deadly one to the Sea Cliffs 21 %.")
+
+## Fixes
+
+- Taking the suit off (for example when you were jailed) could leave a character wearing **no clothes at all** if they still had the starting outfit on. The starting outfit is now always drawn.
+
+## No farming
+
+The robbery rules follow the siege's: your party, guild, other characters, anyone on your connection and anyone you recently traded or partied with can't rob you or claim your goods. Robbing the same Trader again within a day pays half, then nothing, and robbing your own caravan always loses more than it pays. Staff see every blocked reward.
+
+---
+
+## October 8: Bounty Hunters and the Garrison Stockade
+
+*October 8, 2026*
+
+**The law has teeth. Become a Bounty Hunter, track down the Wanted wall-breakers, catch them and collect the bounty. Caught players serve their time in the Garrison Stockade: 2 hours, then 4, 8, 16... for every repeat offence.**
+
+![October 8: Bounty Hunters and the Garrison Stockade](content/changelog/img/oct7-captured.jpg)
+
+## Become a Bounty Hunter
+
+**Captain Yun**, by the west gate, sells the **Bounty Hunter's licence**: level 15+, 10,000 gold, and a clean record (not Wanted, no offences in the last 30 days).
+
+![Captain Yun's licence window](content/changelog/img/oct7-hunter-yun.jpg "Captain Yun hires Bounty Hunters by the west gate.")
+
+- Go **on duty** in town, out of combat. A blue **BOUNTY HUNTER** label shows over your head.
 - On duty, you get a **ping** every minute showing roughly where the Wanted are, and they show on your minimap when you're close (120 m).
-- Captain Yun also sells the **Hunter's Net**: throw it to stun a fleeing Wanted for 2 seconds.
+- Captain Yun also sells the **Bounty Hunter's Net**: throw it to stun a fleeing Wanted for 2 seconds.
 - Start as a **Recruit** and climb five ranks (Tracker first) as your captures add up.
 
 ## The hunt
 
-Only **on-duty Hunters** and **Wanted** players can fight each other, both ways, almost anywhere, even inside town. Nobody else can be attacked, so normal players are never caught in it. Damage between players is halved, and area skills never hit players.
+Only **on-duty Bounty Hunters** and **Wanted** players can fight each other, both ways, almost anywhere, even inside town. Nobody else can be attacked, so normal players are never caught in it. Damage between players is halved, and area skills never hit players.
 
-![A Hunter takes on a Wanted wall-breaker](content/changelog/img/oct7-hunter-fight.jpg "On duty: a Hunter takes on a Wanted wall-breaker.")
+![A Bounty Hunter takes on a Wanted wall-breaker](content/changelog/img/oct7-hunter-fight.jpg "On duty: a Bounty Hunter takes on a Wanted wall-breaker.")
 
-A blow that would kill the Wanted leaves them at 1 HP instead: they're **bound**, and after 3 seconds they're **caught**. The garrison pays the bounty, split between the Hunters who did the damage. Logging out within 30 seconds of a Hunter's hit doesn't help: you're caught on the spot.
+A blow that would kill the Wanted leaves them at 1 HP instead: they're **bound**, and after 3 seconds they're **caught**. The garrison pays the bounty, split between the Bounty Hunters who did the damage. Logging out within 30 seconds of a Bounty Hunter's hit doesn't help: you're caught on the spot.
 
-![Captured!](content/changelog/img/oct7-captured.jpg "Caught: the garrison pays the bounty and the Hunter moves up a rank.")
+![Captured!](content/changelog/img/oct7-captured.jpg "Caught: the garrison pays the bounty and the Bounty Hunter moves up a rank.")
 
 ## The Garrison Stockade
 
@@ -60,10 +142,10 @@ Getting a friend Wanted so another friend can collect the bounty does **not** wo
 
 - Your party, guild, other characters and anyone on the same connection can never fight or claim you.
 - Anyone who **traded**, used your **stall** or **partied** with you in the last week gets nothing. Neither does anyone who stood near the keg and didn't try to defuse it.
-- The same Hunter catching the same player again within 7 days gets no gold and no credit.
-- A bounty is always worth **less than the keg** that caused it, each catch of the same player within a week pays half, and Hunters have a daily bounty limit.
+- The same Bounty Hunter catching the same player again within 7 days gets no gold and no credit.
+- A bounty is always worth **less than the keg** that caused it, each catch of the same player within a week pays half, and Bounty Hunters have a daily bounty limit.
 - Every capture still means **jail**, paid or not.
-- Staff see every blocked reward and can take away a Hunter's licence.
+- Staff see every blocked reward and can take away a Bounty Hunter's licence.
 
 ---
 

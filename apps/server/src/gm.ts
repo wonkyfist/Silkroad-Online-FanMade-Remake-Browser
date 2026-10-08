@@ -42,6 +42,11 @@ import { STORM_USAGE } from './storm/service.ts'
 import { WALL_USAGE } from './siege/walls.ts'
 import { MASON_USAGE } from './siege/repair.ts'
 import { LAW_USAGE } from './siege/law.ts'
+import { JOB_USAGE } from './jobs/jobs.ts'
+import { TRADE_USAGE } from './jobs/market.ts'
+import { ROBBERY_USAGE } from './jobs/robbery.ts'
+import { CARAVAN_USAGE } from './jobs/caravan.ts'
+import { AMBUSH_USAGE, BAG_USAGE, TRANSPORT_USAGE } from './jobs/transport.ts'
 import { SIEGE_USAGE } from './siege/event.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
@@ -564,8 +569,47 @@ export const COMMANDS: Record<string, Command> = {
   // body in siege/law.ts (jail.ts, hunters.ts).
   law: {
     usage: LAW_USAGE,
-    about: "The law: open warrants and recent keg hits, a character's offence record, issue or close a warrant, make one lapse (online minutes left), pardon, forgive offences, capture (pays the bounty and jails), clear the keg cooldown, burning kegs; jail for minutes (or list the jailed), release; a Hunter's licence, revoke, duty on/off.",
+    about: "The law: open warrants and recent keg hits, a character's offence record, issue or close a warrant, make one lapse (online minutes left), pardon, forgive offences, capture (pays the bounty and jails), clear the keg cooldown, burning kegs; jail for minutes (or list the jailed), release; a Bounty Hunter's licence, revoke, duty on/off.",
     run: ({ ctx, args, self }) => ctx.gameplay.law.gm(self, args, Date.now()),
+  },
+  // The job system, layer 1 (docs/JOBS.md §9.5): a character's job; body in jobs/jobs.ts.
+  job: {
+    usage: JOB_USAGE,
+    about: "A character's job (Trader, Bounty Hunter, Thief): status, join one (no checks but one job per character), leave (no wait), set the job level or job EXP, job mode on/off, the account's side.",
+    run: ({ ctx, args }) => ctx.gameplay.jobs.gm(args, ctx.gameplay.now),
+  },
+  // The job system, layers 2-3 (docs/JOBS.md §9.5; the doc's `trade` is a client chat prefix, so `market`): the market, transports, ambushes, goods bags; jobs/market.ts, transport.ts.
+  market: {
+    usage: TRADE_USAGE,
+    about: "The trade market: status, a post's demand for a good, a source's buy multiplier, every price back to normal, today's market news.",
+    run: ({ ctx, args }) => ctx.gameplay.market.gm(args, ctx.gameplay.now),
+  },
+  transport: {
+    usage: TRANSPORT_USAGE,
+    about: "A Trader's transport: status, summon one of a tier (no checks), load it to some stars, kill it (the goods drop), heal it, dismiss it.",
+    run: ({ ctx, args }) => ctx.gameplay.transports.gm(args, ctx.gameplay.now),
+  },
+  ambush: {
+    usage: AMBUSH_USAGE,
+    about: "Bandit groups charge a Trader's transport now.",
+    run: ({ ctx, args }) => ctx.gameplay.transports.gmAmbush(args, ctx.gameplay.now),
+  },
+  bag: {
+    usage: BAG_USAGE,
+    about: 'Goods bags on the ground (dead or scattered transports): list them, or clear them all.',
+    run: ({ ctx, args }) => ctx.gameplay.transports.gmBag(args),
+  },
+  // The job system, layer 4 (docs/JOBS.md §6.4, §9.5): stolen / recovered / own goods, robbery warrants, caravan pings; jobs/robbery.ts.
+  robbery: {
+    usage: ROBBERY_USAGE,
+    about: 'Robbery: open robbery warrants and sacks; what a character carries, give goods (stolen opens a robbery warrant), clear them (and the warrant), send caravan pings now.',
+    run: ({ ctx, args }) => ctx.gameplay.robbery.gm(args, ctx.gameplay.now),
+  },
+  // The job system, layer 7 (docs/JOBS.md §8, §9.5): the weekly Silk Caravan event; jobs/caravan.ts.
+  caravan: {
+    usage: CARAVAN_USAGE,
+    about: 'The Silk Caravan event: status and the next slot, start one now (minutes, the boosted post), stop it.',
+    run: ({ ctx, args }) => ctx.gameplay.caravan.gm(args, ctx.gameplay.now),
   },
   // Siege of Jangan layer 3 (docs/SIEGE.md §2.4, §2.5): repair queues, builders, looters; body in siege/repair.ts.
   mason: {

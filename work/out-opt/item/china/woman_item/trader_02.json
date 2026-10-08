@@ -1,0 +1,118 @@
+{
+  "source": "res/item/china/woman_item/trader_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "trader_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 2,
+    "attachPoint": 16,
+    "attachPointName": "ATTACH",
+    "attachMethod": 2,
+    "attachMethodName": "ADD",
+    "slots": [
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "trader_02"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "trader_02",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\trader_02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\trader_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (16.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "trader_02",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\trader_02.bms",
+      "material": "trader_02",
+      "vertices": 117,
+      "triangles": 129,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 117,
+    "triangles": 129,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 0.8905394077301025,
+    "boundsMin": [
+      -0.2962486147880554,
+      1.1161112785339355,
+      -1.2981421947479248
+    ],
+    "boundsMax": [
+      -0.04578389972448349,
+      2.006650686264038,
+      -0.12160839885473251
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

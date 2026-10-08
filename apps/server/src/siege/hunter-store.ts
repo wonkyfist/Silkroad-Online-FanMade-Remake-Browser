@@ -41,7 +41,7 @@ export class HunterStore {
       ),
       revoke: db.prepare<[number | null, number]>(`UPDATE char_jobs SET revoked_until = ?, on_duty = 0 WHERE character_id = ? AND job = '${HUNTER_JOB}'`),
       duty: db.prepare<[number, number]>(`UPDATE char_jobs SET on_duty = ? WHERE character_id = ? AND job = '${HUNTER_JOB}'`),
-      capture: db.prepare<[number, number]>(`UPDATE char_jobs SET points = points + 1, rank = ? WHERE character_id = ? AND job = '${HUNTER_JOB}'`),
+      capture: db.prepare<[number]>(`UPDATE char_jobs SET points = points + 1 WHERE character_id = ? AND job = '${HUNTER_JOB}'`),
       term: db.prepare<[number], JailRow>('SELECT character_id, account_id, warrant_id, starts_at, ends_at, served_ms, chores FROM jail_terms WHERE character_id = ?'),
       terms: db.prepare<[], JailRow>('SELECT character_id, account_id, warrant_id, starts_at, ends_at, served_ms, chores FROM jail_terms ORDER BY ends_at'),
       putTerm: db.prepare<[number, number, number | null, number, number, number, number]>(
@@ -83,9 +83,9 @@ export class HunterStore {
     this.q.duty.run(on ? 1 : 0, characterId)
   }
 
-  /** One capture more; `rank` is the new rank. */
-  addCapture(characterId: number, rank: number): void {
-    this.q.capture.run(rank, characterId)
+  /** One capture more (the rank follows the job EXP since docs/JOBS.md §2.3: jobs/jobs.ts). */
+  addCapture(characterId: number): void {
+    this.q.capture.run(characterId)
   }
 
   term(characterId: number): JailRow | null {

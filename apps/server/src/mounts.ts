@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { CODE_NAME, CONTENT_FILES, MAX_COMBAT_HITS, checkCosDef, contentEntries, type CombatHit, type CosDef, type GameplayRequest, type ItemDef, type ServerMessage } from '@sro/shared'
+import { CODE_NAME, CONTENT_FILES, MAX_COMBAT_HITS, checkCosDef, contentEntries, isTransportCos, type CombatHit, type CosDef, type GameplayRequest, type ItemDef, type ServerMessage } from '@sro/shared'
 import { knob } from './config.ts'
 import type { Store } from './db.ts'
 import { CORPSE_MS, PLAYER_BASE, POTION_COOLDOWN_MS } from './formulas.ts'
@@ -166,7 +166,8 @@ export class Mounts implements GameplayModule {
   /** The entity a hit on `t` lands on: a mounted player's horse (unless `extra.dot`), else `t` itself. */
   redirect(t: Player | Mob | Cos, extra: HitExtra, _now: number): Player | Mob | Cos {
     if (t.kind !== 'player' || extra.dot) return t
-    return this.ridden(t) ?? t
+    // docs/JOBS.md §5.4: a Trader riding his trade transport is hit through it, like a horse
+    return this.ridden(t) ?? this.g.transports?.ridden(t) ?? t
   }
 
   /** Applies rolled hits of `a` on horse `c` (HP, the `combat` message, its death). Gameplay.dealHits' result shape. */
@@ -202,14 +203,14 @@ export class Mounts implements GameplayModule {
 
   /** Why `p` may not attack or use a skill now (`mounted`), or null. */
   refuse(p: Player, what: 'attack' | 'skill'): Fail | null {
-    if (!this.ridden(p)) return null
+    if (!this.ridden(p) && !this.g.transports?.ridden(p)) return null
     return fail('mounted', what === 'skill' ? 'Cannot use the skill while on the vehicle.' : 'Cannot attack while riding.')
   }
 
   /** D43: while mounted, sit, emote, stallCreate, alchemyReinforce and berserk are refused `mounted`. */
   gate(p: Player, t: GameplayRequest | 'moveTo', _now: number): Fail | null {
     if (t === 'moveTo' || !MOUNTED_REFUSED.includes(t)) return null
-    return this.ridden(p) ? fail('mounted') : null
+    return this.ridden(p) || this.g.transports?.ridden(p) ? fail('mounted') : null
   }
 
   /** itemUse of a horse item (`use.summon`) or a Recovery Kit (`use.target === 'mount'`), after the cooldown check. */
@@ -231,8 +232,10 @@ export class Mounts implements GameplayModule {
   private summonItem(p: Player, def: ItemDef, bag: number, answer: Answer, now: number): void {
     const cos = this.defs.get(def.use!.summon!)
     if (!cos) return answer(fail('not_usable', 'That horse is not available.'))
+    // docs/JOBS.md §5.4: the trade transports are the job system's (layer 3), never a riding horse
+    if (isTransportCos(cos.code)) return answer(fail('not_usable', 'Trade transports are summoned by Traders at a trade post.'))
     if (p.progress.level < def.reqLevel) return answer(fail('requirements'))
-    if (this.horseOf(p)) return answer(fail('cos_active', 'Cannot summon more than one transport.'))
+    if (this.horseOf(p) || this.g.transports?.of(p.characterId)) return answer(fail('cos_active', 'Cannot summon more than one transport.'))
     const why = this.boardProblem(p, now)
     if (why) return answer(why)
     const group = def.use!.cooldownGroup ?? def.code
@@ -582,7 +585,7 @@ export class Mounts implements GameplayModule {
       return { ok: true, message: `${c.name} dismissed.` }
     }
     if (self.dead) return { ok: false, message: 'You are dead.' }
-    const code = arg !== undefined ? arg.toUpperCase() : this.defs.has(DEFAULT_HORSE) ? DEFAULT_HORSE : this.defs.keys().next().value
+    const code = arg !== undefined ? arg.toUpperCase() : this.defs.has(DEFAULT_HORSE) ? DEFAULT_HORSE : [...this.defs.keys()].find((k) => !isTransportCos(k))
     if (code !== undefined && !CODE_NAME.test(code)) return { ok: false, message: `Usage: ${HORSE_USAGE}` }
     const def = code === undefined ? undefined : this.defs.get(code)
     if (!def) return { ok: false, message: code === undefined ? 'No horses in cos.json.' : `No horse ${code} in cos.json.` }

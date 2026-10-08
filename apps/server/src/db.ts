@@ -546,6 +546,117 @@ const MIGRATIONS: string[] = [
     WHERE look IS NOT NULL AND json_valid(look) AND json_extract(look, '$.body') = 'f'
       AND json_array_length(json_extract(look, '$.accessories')) = 0;
   `,
+  // 25: the job system, layers 0-1 (docs/JOBS.md §2, §3, §9.3; jobs/job-store.ts). char_jobs gets job_exp (job levels 1-7
+  // by the settings' thresholds; on_duty is job mode for every job). Today's Bounty Hunters become the Hunter job: rank r
+  // (0-5) -> job level r + 1 with that level's default threshold as job EXP (rank = level − 1 from now on). account_jobs:
+  // one side per account (law = Trader / Hunter, outlaw = Thief), when it last changed, when a character last left a job;
+  // every account with a Hunter starts on the law's side. job_settings: the admin panel's sparse settings patch.
+  `
+  ALTER TABLE char_jobs ADD COLUMN job_exp INTEGER NOT NULL DEFAULT 0;
+  UPDATE char_jobs SET job_exp = CASE MIN(MAX(rank, 0), 6)
+      WHEN 0 THEN 0 WHEN 1 THEN 2000 WHEN 2 THEN 6000 WHEN 3 THEN 15000 WHEN 4 THEN 35000 WHEN 5 THEN 70000 ELSE 130000 END,
+    rank = MIN(MAX(rank, 0), 6)
+    WHERE job = 'hunter';
+  CREATE TABLE account_jobs (
+    account_id INTEGER PRIMARY KEY,
+    side TEXT NOT NULL,
+    side_changed_at INTEGER NOT NULL,
+    left_at INTEGER
+  );
+  INSERT OR IGNORE INTO account_jobs (account_id, side, side_changed_at, left_at)
+    SELECT DISTINCT c.account_id, 'law', 0, NULL FROM char_jobs j JOIN characters c ON c.id = j.character_id WHERE j.job = 'hunter';
+  CREATE TABLE job_settings (
+    code TEXT PRIMARY KEY,
+    json TEXT NOT NULL,
+    rev INTEGER NOT NULL DEFAULT 1,
+    updated_at INTEGER NOT NULL,
+    updated_by INTEGER
+  );
+  `,
+  // 26: the job system, layers 2-3 (docs/JOBS.md §5, §6.3, §7, §9.3; jobs/trade-store.ts). market: per trade point and
+  // good, the post's demand (sells lower it) and the source's buy multiplier (buys raise it), both as of updated_at
+  // (they recover toward 1 with time). market_account_day: how much an account's sells moved demand that UTC day.
+  // transports: a Trader's live or saved transport (tier, HP, the hold as JSON, the declared destination, where the load
+  // was bought, where it stands); one per character, deleted when it dies or is dismissed. trade_log: every buy, sale and
+  // loss (the admin's run log and the per-account hourly buy cap).
+  `
+  CREATE TABLE market (
+    post TEXT NOT NULL,
+    good TEXT NOT NULL,
+    demand REAL NOT NULL DEFAULT 1,
+    buy_mul REAL NOT NULL DEFAULT 1,
+    updated_at INTEGER NOT NULL,
+    PRIMARY KEY (post, good)
+  );
+  CREATE TABLE market_account_day (
+    account_id INTEGER NOT NULL,
+    day INTEGER NOT NULL,
+    moved REAL NOT NULL DEFAULT 0,
+    PRIMARY KEY (account_id, day)
+  );
+  CREATE TABLE transports (
+    character_id INTEGER PRIMARY KEY,
+    tier INTEGER NOT NULL,
+    code TEXT NOT NULL,
+    hp INTEGER NOT NULL,
+    hold TEXT NOT NULL DEFAULT '[]',
+    dest TEXT,
+    origin TEXT,
+    stars INTEGER NOT NULL DEFAULT 0,
+    x REAL NOT NULL,
+    y REAL NOT NULL,
+    z REAL NOT NULL,
+    saved_at INTEGER NOT NULL
+  );
+  CREATE TABLE trade_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    at INTEGER NOT NULL,
+    character_id INTEGER NOT NULL,
+    account_id INTEGER,
+    kind TEXT NOT NULL,
+    post TEXT,
+    good TEXT,
+    crates INTEGER NOT NULL DEFAULT 0,
+    gold INTEGER NOT NULL DEFAULT 0,
+    stars INTEGER NOT NULL DEFAULT 0
+  );
+  CREATE INDEX trade_log_account_at ON trade_log (account_id, kind, at);
+  CREATE INDEX trade_log_at ON trade_log (at);
+  `,
+  // 27: the job system, layer 4 (docs/JOBS.md §6.3, §6.4, §7; jobs/robbery.ts). job_sacks: goods a character carries
+  // outside a transport (kind stolen = a Thief's, recovered = a Bounty Hunter's for Captain Yun, own = a Trader's own crates
+  // picked up without a transport), per good, robbed Trader and robbery (batch), with the den multiplier of the pair rule
+  // (mul). robbery_log: robberies (kind rob: a Thief account picked a Trader account's goods of a batch) and Thief kills by
+  // Hunters (kind kill), for the pair rules. law_records gets the robbery ladder (per account, like the wall offences).
+  `
+  CREATE TABLE job_sacks (
+    id INTEGER PRIMARY KEY,
+    character_id INTEGER NOT NULL,
+    kind TEXT NOT NULL,
+    good TEXT NOT NULL,
+    crates INTEGER NOT NULL,
+    cost INTEGER NOT NULL DEFAULT 0,
+    owner_character INTEGER NOT NULL,
+    owner_account INTEGER,
+    batch INTEGER NOT NULL DEFAULT 0,
+    mul REAL NOT NULL DEFAULT 1,
+    picked_at INTEGER NOT NULL
+  );
+  CREATE INDEX job_sacks_character ON job_sacks (character_id);
+  CREATE TABLE robbery_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    at INTEGER NOT NULL,
+    kind TEXT NOT NULL,
+    actor_character INTEGER NOT NULL,
+    actor_account INTEGER,
+    victim_character INTEGER NOT NULL,
+    victim_account INTEGER,
+    batch INTEGER NOT NULL DEFAULT 0
+  );
+  CREATE INDEX robbery_log_pair ON robbery_log (actor_account, victim_account, kind, at);
+  ALTER TABLE law_records ADD COLUMN robberies INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE law_records ADD COLUMN last_robbery_at INTEGER;
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */

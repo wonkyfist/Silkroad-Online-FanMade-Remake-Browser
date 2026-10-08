@@ -1,0 +1,205 @@
+{
+  "source": "res/item/china/woman_item/thief_02.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "thief_02",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "thief_02_part1"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "thief_02_part2"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "thief_02_part1"
+      },
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "thief_02_part2"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "thief_02_part1"
+      },
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "thief_02_part2"
+      },
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "thief_02_part1"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "thief_02_part2"
+      },
+      {
+        "slot": 6,
+        "slotName": "ARM_LOWER",
+        "mesh": "thief_02_part1"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "thief_02",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\thief_02.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\thief_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (0.7% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "ambient": [
+        0.5879999995231628,
+        0.5879999995231628,
+        0.5879999995231628,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "thief_02_part1",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\thief_02_part1.bms",
+      "material": "thief_02",
+      "vertices": 616,
+      "triangles": 832,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1",
+        "Bone01",
+        "Bip01 Neck",
+        "Bip01 L UpperArm",
+        "Bip01 L Forearm",
+        "Bip01 L Clavicle",
+        "Bip01 Spine",
+        "Bip01 Neck1",
+        "Bip01 Head",
+        "Bip01 R UpperArm",
+        "Bip01 R Forearm",
+        "Bip01 R Clavicle",
+        "Bip01 L Hand",
+        "Bip01 L Finger0",
+        "Bip01 L Finger01",
+        "Bip01 L Finger1",
+        "Bip01 L Finger11",
+        "Bip01 L Finger2",
+        "Bip01 L Finger21"
+      ]
+    },
+    {
+      "name": "thief_02_part2",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\thief_02_part2.bms",
+      "material": "thief_02",
+      "vertices": 571,
+      "triangles": 684,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 L Calf",
+        "Bip01 L Thigh",
+        "Bip01 L Foot",
+        "Bip01 L Toe0",
+        "Bip01 R Forearm",
+        "Bip01 R UpperArm",
+        "Bip01 R Hand",
+        "Bip01 R Finger01",
+        "Bip01 R Finger0",
+        "Bip01 R Finger1",
+        "Bip01 R Finger11",
+        "Bip01 R Finger2",
+        "Bip01 R Finger21",
+        "Bip01 R Calf",
+        "Bip01 R Thigh",
+        "Bip01 R Foot",
+        "Bip01 R Toe0"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1187,
+    "triangles": 1516,
+    "joints": 0,
+    "meshes": 2,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.7540153407899197,
+    "boundsMin": [
+      -0.7860952615737915,
+      -0.00042213438428007066,
+      -0.2549216151237488
+    ],
+    "boundsMax": [
+      0.7861140966415405,
+      1.7535932064056396,
+      0.2544822692871094
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

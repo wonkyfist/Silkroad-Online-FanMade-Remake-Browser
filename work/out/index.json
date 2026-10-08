@@ -3392,5 +3392,257 @@
     "category": "item/china/woman_item",
     "glb": "item/china/woman_item/light_04_sa.glb",
     "sidecar": "item/china/woman_item/light_04_sa.json"
+  },
+  {
+    "id": "item/china/man_item/avatar_hunter_01",
+    "name": "avatar_hunter_01",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/avatar_hunter_01.glb",
+    "sidecar": "item/china/man_item/avatar_hunter_01.json"
+  },
+  {
+    "id": "item/china/man_item/avatar_trader_01",
+    "name": "avatar_trader_01",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/avatar_trader_01.glb",
+    "sidecar": "item/china/man_item/avatar_trader_01.json"
+  },
+  {
+    "id": "item/china/man_item/hunter_02",
+    "name": "hunter_02",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/hunter_02.glb",
+    "sidecar": "item/china/man_item/hunter_02.json"
+  },
+  {
+    "id": "item/china/man_item/hunter_03",
+    "name": "hunter_03",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/hunter_03.glb",
+    "sidecar": "item/china/man_item/hunter_03.json"
+  },
+  {
+    "id": "item/china/man_item/thief_02",
+    "name": "thief_02",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/thief_02.glb",
+    "sidecar": "item/china/man_item/thief_02.json"
+  },
+  {
+    "id": "item/china/man_item/thief_03",
+    "name": "thief_03",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/thief_03.glb",
+    "sidecar": "item/china/man_item/thief_03.json"
+  },
+  {
+    "id": "item/china/man_item/trader_02",
+    "name": "trader_02",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/trader_02.glb",
+    "sidecar": "item/china/man_item/trader_02.json"
+  },
+  {
+    "id": "item/china/man_item/trader_03",
+    "name": "trader_03",
+    "category": "item/china/man_item",
+    "glb": "item/china/man_item/trader_03.glb",
+    "sidecar": "item/china/man_item/trader_03.json"
+  },
+  {
+    "id": "item/china/woman_item/avatar_hunter_01",
+    "name": "avatar_hunter_01",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/avatar_hunter_01.glb",
+    "sidecar": "item/china/woman_item/avatar_hunter_01.json"
+  },
+  {
+    "id": "item/china/woman_item/avatar_trader_01",
+    "name": "avatar_trader_01",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/avatar_trader_01.glb",
+    "sidecar": "item/china/woman_item/avatar_trader_01.json"
+  },
+  {
+    "id": "item/china/woman_item/hunter_02",
+    "name": "hunter_02",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/hunter_02.glb",
+    "sidecar": "item/china/woman_item/hunter_02.json"
+  },
+  {
+    "id": "item/china/woman_item/hunter_03",
+    "name": "hunter_03",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/hunter_03.glb",
+    "sidecar": "item/china/woman_item/hunter_03.json"
+  },
+  {
+    "id": "item/china/woman_item/thief_02",
+    "name": "thief_02",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/thief_02.glb",
+    "sidecar": "item/china/woman_item/thief_02.json"
+  },
+  {
+    "id": "item/china/woman_item/thief_03",
+    "name": "thief_03",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/thief_03.glb",
+    "sidecar": "item/china/woman_item/thief_03.json"
+  },
+  {
+    "id": "item/china/woman_item/trader_02",
+    "name": "trader_02",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/trader_02.glb",
+    "sidecar": "item/china/woman_item/trader_02.json"
+  },
+  {
+    "id": "item/china/woman_item/trader_03",
+    "name": "trader_03",
+    "category": "item/china/woman_item",
+    "glb": "item/china/woman_item/trader_03.glb",
+    "sidecar": "item/china/woman_item/trader_03.json"
+  },
+  {
+    "id": "cos/t_donkey",
+    "name": "t_donkey",
+    "category": "cos",
+    "glb": "cos/t_donkey.glb",
+    "sidecar": "cos/t_donkey.json"
+  },
+  {
+    "id": "cos/t_horse1",
+    "name": "t_horse1",
+    "category": "cos",
+    "glb": "cos/t_horse1.glb",
+    "sidecar": "cos/t_horse1.json"
+  },
+  {
+    "id": "cos/t_horse2",
+    "name": "t_horse2",
+    "category": "cos",
+    "glb": "cos/t_horse2.glb",
+    "sidecar": "cos/t_horse2.json"
+  },
+  {
+    "id": "cos/t_dhorse1",
+    "name": "t_dhorse1",
+    "category": "cos",
+    "glb": "cos/t_dhorse1.glb",
+    "sidecar": "cos/t_dhorse1.json"
+  },
+  {
+    "id": "equipment/china/man_item/trader_02",
+    "name": "trader_02",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/trader_02.glb",
+    "sidecar": "equipment/china/man_item/trader_02.json"
+  },
+  {
+    "id": "equipment/china/man_item/trader_03",
+    "name": "trader_03",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/trader_03.glb",
+    "sidecar": "equipment/china/man_item/trader_03.json"
+  },
+  {
+    "id": "equipment/china/man_item/thief_02",
+    "name": "thief_02",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/thief_02.glb",
+    "sidecar": "equipment/china/man_item/thief_02.json"
+  },
+  {
+    "id": "equipment/china/man_item/thief_03",
+    "name": "thief_03",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/thief_03.glb",
+    "sidecar": "equipment/china/man_item/thief_03.json"
+  },
+  {
+    "id": "equipment/china/man_item/hunter_02",
+    "name": "hunter_02",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/hunter_02.glb",
+    "sidecar": "equipment/china/man_item/hunter_02.json"
+  },
+  {
+    "id": "equipment/china/man_item/hunter_03",
+    "name": "hunter_03",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/hunter_03.glb",
+    "sidecar": "equipment/china/man_item/hunter_03.json"
+  },
+  {
+    "id": "equipment/china/woman_item/trader_02",
+    "name": "trader_02",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/trader_02.glb",
+    "sidecar": "equipment/china/woman_item/trader_02.json"
+  },
+  {
+    "id": "equipment/china/woman_item/trader_03",
+    "name": "trader_03",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/trader_03.glb",
+    "sidecar": "equipment/china/woman_item/trader_03.json"
+  },
+  {
+    "id": "equipment/china/woman_item/thief_02",
+    "name": "thief_02",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/thief_02.glb",
+    "sidecar": "equipment/china/woman_item/thief_02.json"
+  },
+  {
+    "id": "equipment/china/woman_item/thief_03",
+    "name": "thief_03",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/thief_03.glb",
+    "sidecar": "equipment/china/woman_item/thief_03.json"
+  },
+  {
+    "id": "equipment/china/woman_item/hunter_02",
+    "name": "hunter_02",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/hunter_02.glb",
+    "sidecar": "equipment/china/woman_item/hunter_02.json"
+  },
+  {
+    "id": "equipment/china/woman_item/hunter_03",
+    "name": "hunter_03",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/hunter_03.glb",
+    "sidecar": "equipment/china/woman_item/hunter_03.json"
+  },
+  {
+    "id": "equipment/china/man_item/avatar_trader_01",
+    "name": "avatar_trader_01",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/avatar_trader_01.glb",
+    "sidecar": "equipment/china/man_item/avatar_trader_01.json"
+  },
+  {
+    "id": "equipment/china/man_item/avatar_hunter_01",
+    "name": "avatar_hunter_01",
+    "category": "equipment/china/man_item",
+    "glb": "equipment/china/man_item/avatar_hunter_01.glb",
+    "sidecar": "equipment/china/man_item/avatar_hunter_01.json"
+  },
+  {
+    "id": "equipment/china/woman_item/avatar_trader_01",
+    "name": "avatar_trader_01",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/avatar_trader_01.glb",
+    "sidecar": "equipment/china/woman_item/avatar_trader_01.json"
+  },
+  {
+    "id": "equipment/china/woman_item/avatar_hunter_01",
+    "name": "avatar_hunter_01",
+    "category": "equipment/china/woman_item",
+    "glb": "equipment/china/woman_item/avatar_hunter_01.glb",
+    "sidecar": "equipment/china/woman_item/avatar_hunter_01.json"
   }
 ]

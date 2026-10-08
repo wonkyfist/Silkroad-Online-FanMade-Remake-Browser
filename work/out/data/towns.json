@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kind": "towns",
-  "generatedAt": "2026-10-07T00:19:58.014Z",
+  "generatedAt": "2026-10-08T14:04:39.493Z",
   "sources": [
     "client:teleportdata.txt",
     "client:refregion.txt",

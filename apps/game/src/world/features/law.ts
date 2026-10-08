@@ -2,7 +2,7 @@
  * Siege of Jangan, layers 5-6 on the client (docs/SIEGE.md §7, §8, §9.3, §9.5): player kegs, Wanted, Hunters, the jail.
  *
  * - **The WANTED label**: a red line "WANTED · 40,000" over every Wanted player (EntityState.wanted on spawn,
- *   `entityUpdate.wanted` when it changes; 0 removes it), for everyone. Layer 6: the blue "HUNTER · Tracker" badge over
+ *   `entityUpdate.wanted` when it changes; 0 removes it), for everyone. Layer 6: the blue "BOUNTY HUNTER · Tracker" badge over
  *   an on-duty Hunter (EntityState.hunter, `entityUpdate.hunter`, −1 removes it) and "PRISONER" over the jailed.
  * - **Banners** (`lawNotice`) on the one NoticeBanner queue: someone planting a Thunder Keg (no name), the breach that
  *   names the breaker and the bounty (the temple bell tolls), a keg defused, a warrant that lapsed, was pardoned or
@@ -91,7 +91,7 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
   let wallsLoading = false
   const stages = new Map<string, WallStage>()
   const kegs = new Map<number, { x: number; z: number; seg: string }>()
-  const pings = new Map<number, { x: number; z: number; r: number; name: string; at: number }>()
+  const pings = new Map<number, { x: number; z: number; r: number; name: string; at: number; robbery?: true }>()
   let siegeOn = false
   /** The own keg's plant cast is running (the prompt steps aside). */
   let planting = false
@@ -201,14 +201,7 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
       },
       'npc.option.fence',
     ),
-    registerNpcService(
-      'hunter',
-      (c) => {
-        talk = c
-        yunWindow().show(YUN_TERMS, hunter, ctx.hud.inventory.gold, ctx.serverNow())
-      },
-      'npc.option.hunter',
-    ),
+    // Captain Yun's 'hunter' service is the Bounty Hunter job's window now (world/features/jobs.ts, docs/JOBS.md §2.3).
     registerNpcService(
       'warden',
       (c) => {
@@ -228,11 +221,13 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
         const b = v.state.wanted ?? 0
         const h = v.state.hunter
         const j = v.state.jailed === true
-        const key = `${b}|${h ?? ''}|${j}`
+        // a job member in job mode shows the job line instead (job-looks.ts; the Hunter job is the Bounty Hunter)
+        const job = !!v.state.job
+        const key = `${b}|${h ?? ''}|${j}|${job}`
         if (key === shown) return
         shown = key
         v.setLabelLine('wanted', b > 0 ? wantedLabel(b) : null)
-        v.setLabelLine('hunter', h !== undefined ? hunterLabel(h) : null)
+        v.setLabelLine('hunter', h !== undefined && !job ? hunterLabel(h) : null)
         v.setLabelLine('jailed', j ? t('jail.label') : null)
       }
       return {
@@ -284,7 +279,7 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
         pings.delete(id)
         continue
       }
-      yield { x: p.x, z: p.z, color: 'rgba(90, 160, 255, 0.85)', radius: p.r }
+      yield { x: p.x, z: p.z, color: p.robbery ? 'rgba(255, 122, 42, 0.85)' : 'rgba(90, 160, 255, 0.85)', radius: p.r }
     }
     for (const v of ctx.views()) {
       if (v.kind !== 'player' || v === me || !(v.state.wanted ?? 0)) continue
@@ -297,7 +292,7 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
   hunterPanel.onDuty = (on) => ctx.send({ t: 'hunterDuty', on })
   hunterPanel.onNet = () => {
     const v = ctx.target()
-    if (v && v.kind === 'player' && (v.state.wanted ?? 0) > 0) ctx.send({ t: 'hunterNet', target: v.id })
+    if (v && v.kind === 'player' && ((v.state.wanted ?? 0) > 0 || v.state.robber === true)) ctx.send({ t: 'hunterNet', target: v.id })
   }
   jailPanel.onChore = () => ctx.send({ t: 'jailChore' })
 
@@ -309,10 +304,10 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
     // the Wanted we know of: in view, or pinged in the last minute
     for (const [id, p] of pings) if (performance.now() - p.at > PING_MS) pings.delete(id)
     const known = new Set(pings.keys())
-    for (const v of ctx.views()) if (v.kind === 'player' && (v.state.wanted ?? 0) > 0 && v !== me) known.add(v.id)
+    for (const v of ctx.views()) if (v.kind === 'player' && ((v.state.wanted ?? 0) > 0 || v.state.robber === true) && v !== me) known.add(v.id)
     const wantedOnline = known.size
     const tgt = ctx.target()
-    const inReach = !!me && !!tgt && tgt.kind === 'player' && (tgt.state.wanted ?? 0) > 0 && Math.hypot(tgt.pos.x - me.pos.x, tgt.pos.z - me.pos.z) <= HUNTER.netRangeM
+    const inReach = !!me && !!tgt && tgt.kind === 'player' && ((tgt.state.wanted ?? 0) > 0 || tgt.state.robber === true) && Math.hypot(tgt.pos.x - me.pos.x, tgt.pos.z - me.pos.z) <= HUNTER.netRangeM
     hunterPanel.set(hunter, now, wantedOnline, { can: inReach, waitMs: hunter?.netAt ? Math.max(0, hunter.netAt - now) : 0, have: nets() })
     const chore = jail?.choreEndsAt ? 1 - (jail.choreEndsAt - now) / (SIEGE_EVENT_DEFAULTS.law.choreSec * 1000) : null
     const atPile = !!me && Math.hypot(me.pos.x - STOCKADE.pile.x, me.pos.z - STOCKADE.pile.z) <= PILE_REACH_M
@@ -371,7 +366,7 @@ export function lawFeature(ctx: WorldFeatureContext): WorldFeature {
           captured(msg)
           break
         case 'wantedPing':
-          pings.set(msg.id, { x: msg.x, z: msg.z, r: msg.r, name: msg.name, at: performance.now() })
+          pings.set(msg.id, { x: msg.x, z: msg.z, r: msg.r, name: msg.name, at: performance.now(), ...(msg.robbery ? { robbery: true as const } : {}) })
           break
         case 'lawState':
           wanted = msg.wanted ?? null

@@ -1,0 +1,171 @@
+{
+  "source": "res/item/china/woman_item/avatar_trader_01.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "avatar_trader_01",
+  "type": "ITEM",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": null,
+  "attachBone": null,
+  "attachable": {
+    "kind": 1,
+    "attachPoint": 1,
+    "attachPointName": "_ba",
+    "attachMethod": 1,
+    "attachMethodName": "REPLACE",
+    "slots": [
+      {
+        "slot": 0,
+        "slotName": "HAIR",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 2,
+        "slotName": "TORSO_UPPER",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 3,
+        "slotName": "TORSO_LOWER",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 11,
+        "slotName": "PELVIS",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 12,
+        "slotName": "THIGH",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 13,
+        "slotName": "CALF",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 4,
+        "slotName": "OVERRIDE",
+        "mesh": "avatar_trader_01"
+      },
+      {
+        "slot": 5,
+        "slotName": "ARM_UPPER",
+        "mesh": "avatar_trader_01"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "name": "avatar_trader_01",
+      "bmt": "prim\\mtrl\\item\\china\\woman_item\\avatar_trader_01.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\item\\china\\woman_item\\avatar_trader_01.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        512,
+        512
+      ],
+      "alphaMode": "BLEND",
+      "alphaReason": "BMT alpha flag; texture alpha mostly partial (4.6% partial, 1.9% zero)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "avatar_trader_01",
+      "bms": "prim\\mesh\\item\\china\\woman_item\\avatar_trader_01.bms",
+      "material": "avatar_trader_01",
+      "vertices": 1178,
+      "triangles": 1644,
+      "skinned": false,
+      "bones": [
+        "Bip01 Spine1",
+        "Spine_Base",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Neck1",
+        "Bip01 L UpperArm",
+        "Bip01 L Clavicle",
+        "Bip01 Head",
+        "Bip01 Neck",
+        "Bip01 Pelvis",
+        "Bip01 R Thigh",
+        "Bip01 L Thigh",
+        "Bip01 R Calf",
+        "Bip01 L Calf",
+        "Bip01 R Forearm",
+        "Bip01 L Forearm",
+        "Bip01 R Foot",
+        "Bip01 R Toe0",
+        "Bip01 L Foot",
+        "Bip01 L Toe0"
+      ]
+    }
+  ],
+  "animations": [],
+  "stats": {
+    "vertices": 1178,
+    "triangles": 1644,
+    "joints": 0,
+    "meshes": 1,
+    "animations": 0,
+    "textures": 1,
+    "heightM": 1.7672933383728378,
+    "boundsMin": [
+      -0.6657235026359558,
+      -0.0002981467987410724,
+      -0.27158257365226746
+    ],
+    "boundsMax": [
+      0.6656931638717651,
+      1.7669951915740967,
+      0.17666539549827576
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -1,5 +1,8 @@
 import { yawTowards, type MobDef, type MobVariant, type TacticsDef, type Vec3 } from '@sro/shared'
-import type { Mob, Player } from './world.ts'
+import type { Cos, Mob, Player } from './world.ts'
+
+/** What a monster fights: a player, or a loaded trade transport (docs/JOBS.md §5.4). */
+export type AiTarget = Player | Cos
 
 /**
  * Monster AI: a small state machine per mob, independent of networking. It sees the world only through
@@ -21,11 +24,15 @@ import type { Mob, Player } from './world.ts'
 export interface AiHost {
   now: number
   rng(): number
-  positionOf(e: Mob | Player): Vec3
+  positionOf(e: Mob | AiTarget): Vec3
   /** An attackable player by id (in the world, alive, not an invisible GM), else undefined. */
   target(id: number): Player | undefined
+  /** Optional (docs/JOBS.md §5.4): `target` or a loaded trade transport. Absent: `target`. */
+  targetAny?(id: number): AiTarget | undefined
   /** Attackable players within `range` metres of x/z. */
   playersNear(x: number, z: number, range: number): Player[]
+  /** Optional (docs/JOBS.md §5.4): other bodies an aggressive mob acquires on sight (loaded trade transports). */
+  targetsNear?(x: number, z: number, range: number): Cos[]
   canWalk(x: number, z: number): boolean
   /**
    * Optional (navmesh worlds): whether the straight walk from the mob to x/z is clear of blocking edges. Idle mobs
@@ -42,21 +49,21 @@ export interface AiHost {
   /** Stops the mob, optionally facing `yaw`. */
   halt(m: Mob, yaw?: number): void
   /** One basic attack of `m` on `target` (damage, messages, death). */
-  swing(m: Mob, target: Player): void
+  swing(m: Mob, target: AiTarget): void
   /** The mob reached home: full HP, broadcast. */
   restored(m: Mob): void
   /**
    * Optional (wave 8, monster skills; docs/SYSTEMS_COMBAT.md §2.2): asked in the chase branch before re-planning a
    * chase, with the target out of reach at dist metres. True = the mob cast a ranged special instead (no chase now).
    */
-  ranged?(m: Mob, target: Player, dist: number): boolean
+  ranged?(m: Mob, target: AiTarget, dist: number): boolean
   /**
    * Optional (storms, docs/WEATHER.md §12.2): the weather's say on a mob's sight, leash, roam radius and chase speed.
    * Absent = the mob's own.
    */
   storm?: AiStorm
   /** Optional (the Climb's monster roles, docs/CLIMB.md §2.3; climb/roles.ts): an idle mob acquired `target` on sight. */
-  aggro?(m: Mob, target: Player): void
+  aggro?(m: Mob, target: AiTarget): void
 }
 
 /** The storm module's view of one mob (storm/service.ts): each returns the value the AI uses now. */
@@ -144,12 +151,17 @@ function arriveHome(m: Mob, host: AiHost): void {
   host.restored(m)
 }
 
+/** The AI's view of a target id: a player, or (with targetAny) a loaded trade transport. */
+function foe(host: AiHost, id: number): AiTarget | undefined {
+  return host.targetAny ? host.targetAny(id) : host.target(id)
+}
+
 /** Next player to fight: the one that did the most damage and is still attackable within the leash. */
-function nextTarget(m: Mob, host: AiHost): Player | undefined {
-  let best: Player | undefined
+function nextTarget(m: Mob, host: AiHost): AiTarget | undefined {
+  let best: AiTarget | undefined
   let bestDamage = -1
   for (const [id, dmg] of m.damage) {
-    const p = host.target(id)
+    const p = foe(host, id)
     if (!p) {
       m.damage.delete(id)
       continue
@@ -185,9 +197,11 @@ export function thinkMob(m: Mob, host: AiHost): void {
     const sight = sightOf(m, host)
     if (m.aggressive && sight > 0) {
       const leash = leashOf(m, host)
-      let best: Player | undefined
+      let best: AiTarget | undefined
       let bestD = Infinity
-      for (const p of host.playersNear(pos[0], pos[2], sight)) {
+      const near: AiTarget[] = host.playersNear(pos[0], pos[2], sight)
+      if (host.targetsNear) near.push(...host.targetsNear(pos[0], pos[2], sight))
+      for (const p of near) {
         const d = dist2(host.positionOf(p), pos)
         if (d < bestD && dist2(host.positionOf(p), m.home) <= leash ** 2) {
           best = p
@@ -225,7 +239,7 @@ export function thinkMob(m: Mob, host: AiHost): void {
   // chase
   const leash = leashOf(m, host)
   if (dist2(pos, m.home) > leash ** 2) return goHome(m, host)
-  let target = m.target === null ? undefined : host.target(m.target)
+  let target = m.target === null ? undefined : foe(host, m.target)
   if (!target) {
     if (m.target !== null) m.damage.delete(m.target)
     target = nextTarget(m, host)

@@ -1,0 +1,416 @@
+{
+  "source": "res/cos/t_dhorse1.bsr",
+  "version": "JMXVRES 0109",
+  "generator": "silkroad-web convert (packages/convert/src/gltf)",
+  "name": "t_dhorse4",
+  "type": "NPC",
+  "units": {
+    "metresPerUnit": 0.1,
+    "sourceUnit": "decimetre",
+    "handedness": "right-handed (Silkroad left-handed file space mirrored on Z)",
+    "up": "+Y",
+    "forward": "+Z"
+  },
+  "skeleton": {
+    "bsk": "prim\\skel\\cos\\cart\\t_dhorse4.bsk",
+    "joints": [
+      "Bip01",
+      "Bip01 Pelvis",
+      "Bip01 Spine",
+      "Spine_Base",
+      "Bip01 Spine1",
+      "Bip01 Neck",
+      "Bip01 Neck1",
+      "Bip01 Neck2",
+      "Bip01 Head",
+      "Bip01 Ponytail1",
+      "Bip01 Ponytail2",
+      "Bip01 L Clavicle",
+      "Bip01 L UpperArm",
+      "Bip01 L Forearm",
+      "Bip01 L Hand",
+      "Bip01 L Finger0",
+      "Bip01 R Clavicle",
+      "Bip01 R UpperArm",
+      "Bip01 R Forearm",
+      "Bip01 R Hand",
+      "Bip01 R Finger0",
+      "Bip01 L Thigh",
+      "Bip01 L Calf",
+      "Bip01 L Foot",
+      "Bip01 L Toe0",
+      "Bip01 R Thigh",
+      "Bip01 R Calf",
+      "Bip01 R Foot",
+      "Bip01 R Toe0",
+      "Bip01 Tail",
+      "Bip01 Tail1",
+      "Bip01 Tail2",
+      "saddle",
+      "Bone05",
+      "Bone06",
+      "Bone07",
+      "Bone08",
+      "Bone01",
+      "Bone02",
+      "Bone03",
+      "Bone04"
+    ],
+    "bindCheck": {
+      "maxIdentityError": 7.055727226923381e-7,
+      "maxHierarchyError": 4.440892098500626e-16,
+      "staleToLocal": []
+    }
+  },
+  "attachBone": null,
+  "attachable": null,
+  "materials": [
+    {
+      "name": "t_dhorse_01",
+      "bmt": "prim\\mtrl\\cos\\cart\\t_dhorse4.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\cos\\cart\\t_dhorse4_01.ddj",
+      "textureFormat": "A8R8G8B8",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (1.3% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "t_dhorse_03",
+      "bmt": "prim\\mtrl\\cos\\cart\\t_dhorse4.bmt",
+      "flags": 320,
+      "flagNames": [
+        "colorTint",
+        "diffuseMap"
+      ],
+      "texture": "prim\\mtrl\\cos\\cart\\t_dhorse4_03.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        256,
+        256
+      ],
+      "alphaMode": "OPAQUE",
+      "alphaReason": "no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask",
+      "doubleSided": false,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    },
+    {
+      "name": "t_dhorse_02",
+      "bmt": "prim\\mtrl\\cos\\cart\\t_dhorse4.bmt",
+      "flags": 833,
+      "flagNames": [
+        "twoSided",
+        "colorTint",
+        "diffuseMap",
+        "alpha"
+      ],
+      "texture": "prim\\mtrl\\cos\\cart\\t_dhorse4_02.ddj",
+      "textureFormat": "DXT1",
+      "textureSize": [
+        512,
+        256
+      ],
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.5,
+      "alphaReason": "BMT alpha flag; texture alpha mostly binary (14.1% zero, 0.0% partial)",
+      "doubleSided": true,
+      "diffuse": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "ambient": [
+        0.5882353186607361,
+        0.5882353186607361,
+        0.5882353186607361,
+        1
+      ],
+      "specular": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421,
+        1
+      ],
+      "emissive": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "power": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "t_dhorse4_01",
+      "bms": "prim\\mesh\\cos\\cart\\t_dhorse4_01.bms",
+      "material": "t_dhorse_01",
+      "vertices": 522,
+      "triangles": 636,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Bip01 Spine",
+        "Bip01 Pelvis",
+        "Bip01 Tail",
+        "Bip01 L Thigh",
+        "Bip01 R Thigh",
+        "Bip01 L Clavicle",
+        "Bip01 R Clavicle",
+        "Bip01 Head",
+        "Bip01 Neck2",
+        "Bip01 Neck1",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Bip01 L Hand",
+        "Bip01 L Forearm",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 L Calf",
+        "Bip01 L Foot"
+      ]
+    },
+    {
+      "name": "t_dhorse4_03",
+      "bms": "prim\\mesh\\cos\\cart\\t_dhorse4_03.bms",
+      "material": "t_dhorse_03",
+      "vertices": 265,
+      "triangles": 198,
+      "skinned": true,
+      "bones": [
+        "Bone03",
+        "Bone01",
+        "Bone05",
+        "Bone07",
+        "Bip01 Pelvis"
+      ]
+    },
+    {
+      "name": "t_dhorse4_02_part1",
+      "bms": "prim\\mesh\\cos\\cart\\t_dhorse4_02_part1.bms",
+      "material": "t_dhorse_02",
+      "vertices": 390,
+      "triangles": 558,
+      "skinned": true,
+      "bones": [
+        "Bip01 Head",
+        "Bip01 Spine1",
+        "Bip01 Neck1",
+        "Bip01 L Clavicle",
+        "Bip01 L UpperArm",
+        "Bip01 Neck2",
+        "Bip01 Ponytail1",
+        "Bip01 L Forearm",
+        "Bip01 L Hand",
+        "Bip01 R Clavicle",
+        "Bip01 R UpperArm",
+        "Bip01 Ponytail2",
+        "Bip01 R Forearm",
+        "Bip01 R Hand",
+        "Spine_Base"
+      ]
+    },
+    {
+      "name": "t_dhorse4_02_part2",
+      "bms": "prim\\mesh\\cos\\cart\\t_dhorse4_02_part2.bms",
+      "material": "t_dhorse_02",
+      "vertices": 197,
+      "triangles": 258,
+      "skinned": true,
+      "bones": [
+        "Bip01 Spine1",
+        "Spine_Base",
+        "Bip01 L Thigh",
+        "Bip01 Pelvis",
+        "Bip01 L Calf",
+        "Bip01 L Foot",
+        "Bip01 R Thigh",
+        "Bip01 R Calf",
+        "Bip01 R Foot",
+        "Bip01 Tail",
+        "Bip01 Tail1",
+        "Bip01 Tail2"
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "STAND1",
+      "group": "default",
+      "type": 0,
+      "typeName": "STAND1",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_stand.ban",
+      "banName": "t_dhorse4_stand",
+      "durationMs": 2666,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 34,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "WALK",
+      "group": "default",
+      "type": 1,
+      "typeName": "WALK",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_walk.ban",
+      "banName": "t_dhorse4_walk",
+      "durationMs": 1166,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 24,
+      "walkLength": 23.31999969482422,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DAMAGE1",
+      "group": "default",
+      "type": 3,
+      "typeName": "DAMAGE1",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_damage.ban",
+      "banName": "t_dhorse4_damage",
+      "durationMs": 666,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 6,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 6,
+      "partial": true
+    },
+    {
+      "name": "DIE1",
+      "group": "default",
+      "type": 4,
+      "typeName": "DIE1",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_die.ban",
+      "banName": "t_dhorse4_die",
+      "durationMs": 1633,
+      "fps": 30,
+      "cyclic": false,
+      "keys": 46,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "RUN",
+      "group": "default",
+      "type": 7,
+      "typeName": "RUN",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_run.ban",
+      "banName": "t_dhorse4_run",
+      "durationMs": 1066,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 30,
+      "walkLength": 42.63999938964844,
+      "events": [],
+      "trackedJoints": 40
+    },
+    {
+      "name": "DIE1_RM",
+      "group": "default",
+      "type": 36,
+      "typeName": "DIE1_RM",
+      "ban": "prim\\ani\\cos\\cart\\t_dhorse4\\t_dhorse4_die_loop.ban",
+      "banName": "t_dhorse4_die_loop",
+      "durationMs": 200,
+      "fps": 30,
+      "cyclic": true,
+      "keys": 2,
+      "walkLength": 0,
+      "events": [],
+      "trackedJoints": 40
+    }
+  ],
+  "stats": {
+    "vertices": 1374,
+    "triangles": 1650,
+    "joints": 41,
+    "meshes": 4,
+    "animations": 6,
+    "textures": 3,
+    "heightM": 2.5001370335376123,
+    "boundsMin": [
+      -0.6143292784690857,
+      0.00013762466551270336,
+      -1.1498770713806152
+    ],
+    "boundsMax": [
+      0.6210806965827942,
+      2.500274658203125,
+      1.5872457027435303
+    ]
+  },
+  "warnings": [],
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "issues": []
+  }
+}

@@ -98,6 +98,8 @@ const SELECTION: { folder: string; include: RegExp; exclude?: RegExp }[] = [
   { folder: 'interface/animal', include: /^am_/, exclude: KIT_EXCLUDE },
   { folder: 'interface/chattingwnd', include: /\.ddj$/, exclude: KIT_EXCLUDE },
   { folder: 'interface/guide', include: /^gd_paper/, exclude: KIT_EXCLUDE },
+  // the job window (docs/JOBS.md §10; the job gauges and the equipment's job slot come with ifcommon / equipment above)
+  { folder: 'interface/character', include: /^chr_job(_window)?\.ddj$/ },
   // Media/icon is not under interface/, so these keys keep their icon/ prefix.
   { folder: 'icon', include: /^(icon_disable|icon_item_broken|icon_item_warning|icon_item_select)\.ddj$/ },
   { folder: 'icon/stateodd', include: /^s_stateodd_time(0[12])?_gauge\.ddj$/ },

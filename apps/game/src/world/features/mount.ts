@@ -14,7 +14,7 @@
  *    `ui.cos_summon` cue and the SYSTEM_PET_APPEAR effect;
  *  - refusals of the three mount requests toasted with the retail line where there is one.
  */
-import type { ActionFailReason, ClientMessage, EntityState, ServerMessage } from '@sro/shared'
+import { isTransportCos, type ActionFailReason, type ClientMessage, type EntityState, type ServerMessage } from '@sro/shared'
 import { MountFrame, type MountFrameInfo } from '../../hud/mount-frame.ts'
 import { t, type StringKey } from '../../i18n/index.ts'
 import { kitArt } from '../../ui/kit/host.ts'
@@ -109,7 +109,8 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
   const mounted = (): boolean => selfView()?.state.mount !== undefined
   const ownHorse = (): HorseView | undefined => {
     let best: HorseView | undefined
-    for (const h of horses) if (h.own && !h.isDisposed && (!best || (best.dead && !h.dead))) best = h
+    // trade transports (docs/JOBS.md §5.4) have their own frame and requests (world/features/jobs.ts)
+    for (const h of horses) if (h.own && !h.isDisposed && !isTransportCos(h.state.model) && (!best || (best.dead && !h.dead))) best = h
     return best
   }
   /** Sends in order; false at the first message that could not be sent. */
@@ -311,6 +312,8 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
     },
 
     clickEntity(v: EntityView): boolean {
+      // a trade transport: world/features/jobs.ts (ride your own, a Thief attacks a loaded one)
+      if (v.kind === 'cos' && isTransportCos(v.state.model)) return false
       if (v instanceof HorseView || v.kind === 'cos') {
         // Your own parked horse: ride it (the server walks you there). Anyone else's: nothing.
         const h = v as HorseView

@@ -200,7 +200,8 @@ export class JailService implements GameplayModule {
     if (p) {
       const t: Term = { row, at: now, savedAt: now, chore: null }
       this.live.set(characterId, t)
-      this.g.hunters.dutyOff(p, now, true)
+      // a Hunter goes off duty, a Thief out of the suit (docs/JOBS.md §6.4)
+      this.g.jobs.modeOff(p, now)
       this.toCell(p, now)
       this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, jailed: true })
       this.g.law.sendState(p, now)

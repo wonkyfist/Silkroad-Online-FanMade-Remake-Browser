@@ -43,9 +43,19 @@ const CONSUMABLE_CODE =
 const SYSTEMS_CODE =
   /^ITEM_COS_C_HORSE1$|^ITEM_ETC_COS_HP_POTION_0[1-3]$|^ITEM_ETC_ARCHEMY_REINFORCE_RECIPE_(WEAPON|SHIELD|ARMOR|ACCESSARY)_A$|^ITEM_ETC_ARCHEMY_REINFORCE_PROB_UP_A_0[1-4]$/
 
+/**
+ * The job system (docs/JOBS.md §1, §12 layer 0), by code and outside the degree limit: Jangan's and the posts' trade
+ * goods (CH/WC 01-07), the job suits of both genders (M, and W / F for the woman; 3/1/7/x: `etc` here, never equipment), the four trade transports'
+ * summon scrolls (their COS rows go to cos.json) and the Bandit Den Return Scroll. The retail shop and drop tables never
+ * hand them out (content.ts keeps them out of shops and drops): the job modules do.
+ */
+export const JOB_ITEM_CODE =
+  /^ITEM_ETC_TRADE_(CH|WC)_0[1-7]$|^ITEM_CH_[MWF]_TRADE_(TRADER|HUNTER|THIEF)_0[2-5](_01)?$|^ITEM_COS_T_(DONKEY|HORSE1|HORSE2|DHORSE1)$|^ITEM_ETC_SCROLL_RETURN_THIEFDEN_01$/
+
 /** Rows the export includes (before the degree limit). */
 export function isExportedItem(r: ItemDataRow, maxDegree = MAX_ITEM_DEGREE): boolean {
   if (!r.service || r.cashItem !== 0) return false
+  if (JOB_ITEM_CODE.test(r.codeName)) return true
   if (EQUIP_CODE.test(r.codeName)) {
     // docs/RARITY.md §2: weapon seals (TypeID 3/1/6/x) at every degree, the other seals at RARE_ITEM_DEGREES only.
     if (/_RARE$/.test(r.codeName) && !RARE_ITEM_DEGREES.includes(r.degree) && r.typeId[2] !== 6) return false

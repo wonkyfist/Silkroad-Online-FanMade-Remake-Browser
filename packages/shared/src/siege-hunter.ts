@@ -24,6 +24,7 @@
  */
 import type { ItemDef, NpcDef, ShopDef } from './content.ts'
 import type { SiegeEventSettings } from './siege-event.ts'
+import { jobPvp, type JobId } from './jobs.ts'
 
 // ---- content -----------------------------------------------------------------------------------------------------------
 
@@ -70,7 +71,7 @@ export const PILE_REACH_M = 4
 
 export const HUNTER_ICONS = { net: '/out/icons/item/etc/etc_net_yellow.png' } as const
 
-/** Captures for ranks 1-5 (docs/SIEGE.md §8.2). */
+/** Captures for ranks 1-5 (docs/SIEGE.md §8.2); since the job system the rank is the Hunter job level − 1 (docs/JOBS.md §2.3). */
 export const HUNTER_RANKS = [1, 3, 10, 25, 60] as const
 
 /** A Hunter's rank by captures: 0 (a recruit) below the first, else 1-5. */
@@ -84,7 +85,7 @@ export function hunterNetItem(price = 8000): ItemDef {
   return {
     code: HUNTER_CODES.net,
     id: 0,
-    name: "Hunter's Net",
+    name: "Bounty Hunter's Net",
     typeId: [3, 3, 3, 1],
     category: 'etc',
     degree: 0,
@@ -113,7 +114,7 @@ export function yunNpc(world: string): NpcDef {
     model: null,
     provenance: 'authored',
     greeting:
-      'Someone blows a hole in our walls and expects to stroll away? Not while I hold this gate. The garrison pays for every wall-breaker brought in alive. Take a Hunter\'s licence, go on duty, and bring them to the Stockade.',
+      'Someone blows a hole in our walls and expects to stroll away? Not while I hold this gate. The garrison pays for every wall-breaker brought in alive. Take a Bounty Hunter\'s licence, go on duty, and bring them to the Stockade.',
   }
 }
 
@@ -133,7 +134,7 @@ export function wardenNpc(world: string): NpcDef {
 }
 
 export function yunShop(): ShopDef {
-  return { id: HUNTER_CODES.shop, npcs: [HUNTER_CODES.yun], tabs: [{ name: 'Hunter', items: [HUNTER_CODES.net] }], provenance: 'authored' }
+  return { id: HUNTER_CODES.shop, npcs: [HUNTER_CODES.yun], tabs: [{ name: 'Bounty Hunter', items: [HUNTER_CODES.net] }], provenance: 'authored' }
 }
 
 /**
@@ -227,18 +228,26 @@ export interface PvpSide {
   pardoned: boolean
   /** Standing in the stockade (no fighting there). */
   inStockade: boolean
+  // ---- the job system (docs/JOBS.md §4; absent = no job) ----
+  /** The character's job (a Hunter in job mode is also `hunter`). */
+  job?: JobId | null
+  /** The job suit is on (job mode). */
+  jobMode?: boolean
+  /** In a place safe from the job war: a safe area (town), the stockade, a trade post's or the den's ring. */
+  inJobSafe?: boolean
 }
 
 /**
  * Whether `a` may attack `b` (docs/SIEGE.md §8.3): an on-duty Hunter a Wanted, a Wanted an on-duty Hunter, never
  * associates (party, guild, the same account, the same IP), never in the stockade, never the jailed or the pardoned.
- * Everyone else: no PvP.
+ * The job war (docs/JOBS.md §4): two players in job mode on opposite sides (a Trader or a Hunter against a Thief),
+ * neither in a job-safe place (towns stay safe for it; the Wanted row keeps its "no sanctuary"). Everyone else: no PvP.
  */
 export function pvpAllowed(a: PvpSide, b: PvpSide, associates: boolean): boolean {
   if (associates || a.jailed || b.jailed || a.inStockade || b.inStockade) return false
   if (a.hunter && b.wanted && !b.pardoned) return true
   if (a.wanted && b.hunter && !a.pardoned) return true
-  return false
+  return jobPvp(a, b)
 }
 
 // ---- capture (docs/SIEGE.md §8.4) -------------------------------------------------------------------------------------------
@@ -306,7 +315,7 @@ export type HunterServerMessage =
    * To on-duty Hunters every `hunter.pingSec`: Wanted player `id` is somewhere in the circle (x, z, r); the centre lies
    * within `pingOffsetM` of them.
    */
-  | { t: 'wantedPing'; id: number; name: string; x: number; z: number; r: number; at: number }
+  | { t: 'wantedPing'; id: number; name: string; x: number; z: number; r: number; at: number; /** docs/JOBS.md §6.4: a robber (robbery warrant only). */ robbery?: true }
   /**
    * A capture, to the captors and the prisoner: `name` (the Wanted) was caught; `gold` what this captor was paid;
    * `rule` the anti-collusion rule that withheld (part of) it (`pair` also sets `pair`); `uncounted`: no capture credit
@@ -336,7 +345,7 @@ export type HunterFailReason = 'jailed' | 'not_hunter'
 export const HUNTER_FAIL_REASONS: readonly HunterFailReason[] = ['jailed', 'not_hunter']
 
 /** Wire limits (validate.ts). */
-export const HUNTER_LIMITS = { rank: 5, captures: 1_000_000, sentenceMs: 400 * 3_600_000, chores: 10_000, pingR: 1000, captors: 20 } as const
+export const HUNTER_LIMITS = { rank: 6, captures: 1_000_000, sentenceMs: 400 * 3_600_000, chores: 10_000, pingR: 1000, captors: 20 } as const
 
 // ---- the admin panel's Law tab (docs/SIEGE.md §11.3, §11.4) ---------------------------------------------------------------
 

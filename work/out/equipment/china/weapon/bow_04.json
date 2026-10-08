@@ -65,7 +65,7 @@
         512
       ],
       "alphaMode": "OPAQUE",
-      "alphaReason": "equipment: BMT alpha flag but 63% of the surface samples alpha < 128 (2% zero): the alpha is a mask",
+      "alphaReason": "weapon/shield: texture alpha is a specular/env mask (79.1% partial, 9.4% zero)",
       "doubleSided": true,
       "diffuse": [
         0.5879999995231628,

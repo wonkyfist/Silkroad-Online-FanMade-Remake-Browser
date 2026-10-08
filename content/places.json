@@ -289,7 +289,7 @@
         "shore": true
       },
       "y": 113.55,
-      "source": "area 'Western Strait' (10 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (108.6 m), 499 m from its mean centre"
+      "source": "area 'Western Strait' (11 regions): its shore, the lowest open point in it 0.5 m or more above the sea level (108.6 m), 492 m from its mean centre"
     },
     {
       "name": "tiger-camp-1",
@@ -411,6 +411,84 @@
       },
       "y": 70.13,
       "source": "nest 5909 (MOB_CH_TIGERWOMAN): 0.0 m from its centre"
+    },
+    {
+      "name": "trade-south-beach",
+      "group": "other",
+      "x": 470,
+      "z": 1240,
+      "snap": {
+        "near": [
+          470,
+          1240
+        ],
+        "radius": 40
+      },
+      "source": "snapped from 470, 1240: 0.0 m",
+      "y": 8.08
+    },
+    {
+      "name": "trade-tomb-camp",
+      "group": "other",
+      "x": 840,
+      "z": -990,
+      "snap": {
+        "near": [
+          840,
+          -990
+        ],
+        "radius": 30
+      },
+      "source": "snapped from 840, -990: 0.0 m",
+      "y": 0.17
+    },
+    {
+      "name": "trade-ferry-landing",
+      "group": "other",
+      "x": -2249,
+      "z": 338.9,
+      "snap": {
+        "near": [
+          -2250,
+          330
+        ],
+        "radius": 40
+      },
+      "source": "snapped from -2250, 330: 9.0 m",
+      "y": 147.5
+    },
+    {
+      "name": "trade-sea-cliffs",
+      "group": "other",
+      "x": -2030,
+      "z": 990,
+      "snap": {
+        "near": [
+          -2030,
+          990
+        ],
+        "radius": 40
+      },
+      "source": "snapped from -2030, 990: 0.0 m",
+      "y": 63.27
+    },
+    {
+      "name": "bandit-den",
+      "group": "other",
+      "aliases": [
+        "thieves-den"
+      ],
+      "x": -1490,
+      "z": 812,
+      "snap": {
+        "near": [
+          -1490,
+          812
+        ],
+        "radius": 25
+      },
+      "source": "snapped from -1490, 812: 0.0 m",
+      "y": 138.48
     }
   ]
 }
