@@ -64,7 +64,9 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
 
   const art = app.art
   const root = el('div', 'screen login')
-  const logo = anchor(wordmark('small'), 0.5, 0.3)
+  // The wordmark sits just above the login window (it moves with it at every window size), not at a fixed screen height.
+  const logo = wordmark('small')
+  logo.classList.add('login-logo')
 
   // The window art has two 135-px boxes and a narrower third (the retail server row); the third row gets a full
   // 135-px box of the same look, so ID, Password and Confirm line up (docs/UI.md A14).
@@ -87,6 +89,7 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
     box3,
     confirm,
     rememberBox.root,
+    logo,
   )
 
   // Progress and errors: the retail message strip under the window (GDR_STA_CHANNELMESSAGE), shown only with a message.
@@ -107,7 +110,7 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
   reload.hidden = true
   win.append(reload)
 
-  root.append(...bars(art, 'outer/blackbar_up_18', 'outer/blackbar_down_notext'), logo, anchor(win, 0.5, 0.56))
+  root.append(...bars(art, 'outer/blackbar_up_18', 'outer/blackbar_down_notext'), anchor(win, 0.5, 0.56))
   if (app.transport.mock) root.append(el('div', 'mock-badge', t('login.mockBadge')))
   // The 3D background black while this text shows: the browser's graphics stopped (gpu-help.ts), which no page detects.
   const blackHelp = el('button', 'gpu-help-link', t('gpu.help.link'))
