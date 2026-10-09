@@ -89,6 +89,19 @@ describe('hidden body slices', () => {
     expect(hiddenSlices(outfitFromGear({}, 'f'), cov).size).toBe(0)
     expect(SLICE_HIDE_AT).toBeGreaterThan(0.9)
   })
+  it('cut slices (exact): a sub-slice goes only when covered entirely, never the neck', () => {
+    const cut: WardrobeCoverage = {
+      pieces: ['TOP', 'PANTS', 'SHOES', 'GLOVES'],
+      exact: true,
+      slices: {
+        BODY_PART_01_S1: [[1, 10]], // the neck under a collar: kept all the same
+        BODY_PART_04_S1: [[2, 70]], // the thigh in the pants
+        BODY_PART_04_S2: [[2, 20], [4, 10], [0, 5]], // the calf: partly bare between pants and boots
+      },
+    }
+    const h = hiddenSlices(outfitFromGear({ chest: 'ITEM_CH_W_CLOTHES_01_BA_A', legs: 'ITEM_CH_W_CLOTHES_01_LA_A', feet: 'ITEM_CH_W_CLOTHES_01_FA_A' }, 'f'), cut)
+    expect([...h]).toEqual(['BODY_PART_04_S1'])
+  })
 })
 
 describe('palette and effects', () => {

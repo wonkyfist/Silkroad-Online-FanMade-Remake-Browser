@@ -18,6 +18,7 @@ import { pathToFileURL } from 'node:url'
 import { NodeIO, type Document, type Material, type Texture } from '@gltf-transform/core'
 import { REPO_ROOT } from '../node-io.ts'
 import { CLOTH_DYE_FILES, clothDyeMaps, clothWearMap } from './licensed/cloth-dye.ts'
+import { refineBodySlices } from './licensed/body-slices.ts'
 import { buildRetargetSpec, makeRetargeter, qinv, qmul, type Quat, type RestJoint, type Vec3 } from '../../../../apps/game/src/three/retarget.ts'
 
 const args = process.argv.slice(2)
@@ -392,6 +393,9 @@ async function main(): Promise<void> {
     const piecesFile = join(IN, file.replace(/.glb$/, '.pieces.json'))
     const wardrobe = existsSync(piecesFile) ? (JSON.parse(readFileSync(piecesFile, 'utf8')) as { pieces: string[]; slices: Record<string, [number, number][]>; ownerSize: number; owner: string }) : null
     if (wardrobe && !owners.has(g)) owners.set(g, wardrobe)
+    // the slices cut by coverage and their seams welded (licensed/body-slices.ts): the game hides only skin the worn
+    // pieces cover entirely
+    const cut = wardrobe ? refineBodySlices(doc, wardrobe.pieces, g) : null
 
     // 5. write
     const glb = await io.writeBinary(doc)
@@ -410,7 +414,7 @@ async function main(): Promise<void> {
         lods: lodTris.slice(1),
         joints: jointNames.size,
         restRoundTrip: worst,
-        ...(wardrobe ? { wardrobe: { pieces: wardrobe.pieces, slices: wardrobe.slices, dye: CLOTH_DYE_FILES } } : {}),
+        ...(wardrobe && cut ? { wardrobe: { pieces: wardrobe.pieces, slices: cut.slices, exact: true, dye: CLOTH_DYE_FILES } } : {}),
       },
       retarget: spec,
     }

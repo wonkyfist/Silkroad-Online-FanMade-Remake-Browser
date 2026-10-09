@@ -36,6 +36,7 @@ import {
   outfitKey,
   paletteKey,
   paletteLinear,
+  partKeyOf,
   wearKey,
   type ClothWear,
   type GearPiece,
@@ -46,7 +47,7 @@ import {
 import { EMBLEM_COL, EMBLEM_COLOURS, EMBLEM_M_RANGE, EMBLEM_PIECES, EMBLEM_SPOTS, emblemAnchor, writeEmblem, type EmblemAnchor, type EmblemAnchors, type EmblemSide } from './job-look.ts'
 import { exposureScale } from './weapon-glow.ts'
 
-export { outfitFromGear } from './licensed-outfit.ts'
+export { outfitFromGear, partKeyOf } from './licensed-outfit.ts'
 
 /** The sidecar's wardrobe (licensed-char.ts): pieces, slice coverage, the dye files next to the glb. */
 export interface WardrobeSidecar extends WardrobeCoverage {
@@ -731,14 +732,6 @@ export interface AppliedOutfit {
   key: string
   hidden: ReadonlySet<string>
   release(): void
-}
-
-/** The piece / slice a part of the body is (its node name without the LOD and primitive suffixes); null: a fixed part. */
-export function partKeyOf(name: string): string | null {
-  const base = name.replace(/_primitive\d+$/, '').replace(/__LOD\d$/, '')
-  if (/LINGERIE/.test(base)) return /_BRA$/.test(base) ? 'LINGERIE_TOP' : 'LINGERIE_BOTTOM'
-  const m = /_(BODY_PART_\d\d|TOP|SLEEVES|LAYERING|FRONT_CLOTH|SKIRT|TAILS|PANTS|CHAPS|GLOVES|SHOES|BELT(?:_cut)?|ROPE|FLOWERS)$/i.exec(base)
-  return m ? m[1]!.toUpperCase() : null
 }
 
 /**

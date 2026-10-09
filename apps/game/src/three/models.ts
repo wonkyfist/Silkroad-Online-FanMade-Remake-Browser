@@ -820,6 +820,14 @@ export class ModelLibrary {
           const g = (body.sidecar?.licensed as { gender?: string } | undefined)?.gender
           return g === 'f' || g === 'm' ? actor.setLicensedOutfit(outfitFromGear(equip, g, job)) && actor.licensedOutfit!.key : false
         },
+        // §16.8 LOD check: draw this LOD (0..2) and hold it against the crowd budget's plans; null gives it back
+        lod: (level: number | null) => {
+          const own = actor as unknown as { setLicensedLod?: (l: number) => boolean }
+          delete own.setLicensedLod
+          const r = actor.setLicensedLod(level ?? 0)
+          if (level !== null) own.setLicensedLod = () => false
+          return r
+        },
         // §16.9 wear check: dirt / blood levels 0..3 on this body's cloth
         wear: (dirt: number, blood: number) => actor.setLicensedWear({ dirt, blood }),
         // §16.9 bench: every licensed body of the scene wears this gear (client side only), the first `n`
@@ -2353,6 +2361,7 @@ export class CharacterActor {
     // and out of the scene: a body carries every piece at three LODs (≈ 70 meshes); the ones not worn leave the scene's
     // mesh list and their parent (every per-frame pass over the scene's or a root's meshes skips them), kept here
     const scene = this.root.getScene()
+    const receive = this.receivesShadows
     for (const m of this.meshes) {
       if (m.getTotalVertices() <= 0 || m.isDisposed() || !partKeyOf(m.name)) continue
       if (!m.isVisible) {
@@ -2369,6 +2378,10 @@ export class CharacterActor {
         this.outfitStash.delete(m)
         scene.addMesh(m)
       }
+      // the renderer marks a character's parts as shadow receivers once, when it takes the root (WorldShadows
+      // addCharacter): a part out of the scene then (stashed: worn gear hid it) came back without, its shader built
+      // without the sun's shadow, and the bare skin read brighter than its neighbours at every slice border
+      if (m.receiveShadows !== receive) m.receiveShadows = receive
       const atLod = !this.licensedLods || Math.min(2, licensedLodOf(m)) === this.licensedLevel
       if (m.isEnabled(false) !== atLod) m.setEnabled(atLod)
     }
@@ -2376,6 +2389,11 @@ export class CharacterActor {
     this.appliedOutfit?.release()
     this.appliedOutfit = next
     return !!next
+  }
+
+  /** Whether the renderer made the body's parts shadow receivers (the parts the outfit brings back follow them). */
+  private get receivesShadows(): boolean {
+    return this.meshes.some(m => m.receiveShadows && !this.outfitStash.has(m))
   }
 
   /** The outfit worn (its key and hidden body slices; tests, the bench). */
@@ -2390,8 +2408,11 @@ export class CharacterActor {
    * become the actor's own, sorted into its LODs (shown at the LOD drawn now).
    */
   addLicensedParts(parts: readonly AbstractMesh[]): void {
+    const receive = this.receivesShadows
     for (const m of parts) {
       this.meshes.push(m)
+      // (taken after the renderer registered the root: the shadows as the body's own parts)
+      m.receiveShadows = receive
       const l = Math.min(2, licensedLodOf(m))
       this.licensedLods?.[l]!.push(m)
       m.setEnabled(!this.licensedLods || l === this.licensedLevel)

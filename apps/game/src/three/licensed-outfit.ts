@@ -170,6 +170,49 @@ export function wearKey(w: ClothWear | null | undefined): string {
 export interface WardrobeCoverage {
   pieces: readonly string[]
   slices: Readonly<Record<string, readonly (readonly [number, number])[]>>
+  /**
+   * The slices were cut by coverage (packages/convert/src/tools/licensed/body-slices.ts: `BODY_PART_04_S2`, every
+   * triangle of a sub-slice is covered by the same outfits): a sub-slice goes only when the worn pieces cover ALL of
+   * it, so no skin is ever missing between pieces (the ankle between loose pants and short boots). Without it (an
+   * older build) the share thresholds below decide per whole slice.
+   */
+  exact?: boolean
+}
+
+/** A body part's slice key without its sub-slice (`BODY_PART_04_S2` → `BODY_PART_04`). */
+export function sliceBase(key: string): string {
+  return key.replace(/_S\d+$/, '')
+}
+
+/** The piece / slice a part of the body is (its node name without the LOD and primitive suffixes); null: a fixed part. */
+export function partKeyOf(name: string): string | null {
+  const base = name.replace(/_primitive\d+$/, '').replace(/__LOD\d$/, '')
+  if (/LINGERIE/.test(base)) return /_BRA$/.test(base) ? 'LINGERIE_TOP' : 'LINGERIE_BOTTOM'
+  const m = /_(BODY_PART_\d\d(?:_S\d+)?|TOP|SLEEVES|LAYERING|FRONT_CLOTH|SKIRT|TAILS|PANTS|CHAPS|GLOVES|SHOES|BELT(?:_cut)?|ROPE|FLOWERS)$/i.exec(base)
+  return m ? m[1]!.toUpperCase() : null
+}
+
+/**
+ * Every set of pieces a body of `gender` can wear (each outfit slot empty or of each class, the lingerie where chest /
+ * legs are empty; a job suit's fill draws garment pieces, already among them): the converter cuts the slices so that
+ * each of these hides whole sub-slices only.
+ */
+export function wearablePieceSets(gender: 'f' | 'm'): string[][] {
+  const opts: (ArmourClass | null)[] = [null, ...ARMOUR_CLASSES]
+  const part: Record<OutfitSlot, string> = { chest: 'BA', legs: 'LA', hands: 'AA', feet: 'FA', shoulders: 'SA' }
+  const tok: Record<ArmourClass, string> = { garment: 'CLOTHES', protector: 'LIGHT', armour: 'HEAVY' }
+  const seen = new Map<string, string[]>()
+  const walk = (i: number, equip: Partial<Record<EquipSlot, string>>): void => {
+    if (i === OUTFIT_SLOTS.length) {
+      const set = [...new Set(outfitFromGear(equip, gender).pieces.map(p => p.piece))].sort()
+      seen.set(set.join(','), set)
+      return
+    }
+    const slot = OUTFIT_SLOTS[i]!
+    for (const c of opts) walk(i + 1, c ? { ...equip, [slot]: `ITEM_CH_${gender === 'f' ? 'W' : 'M'}_${tok[c]}_01_${part[slot]}_A` } : equip)
+  }
+  walk(0, {})
+  return [...seen.values()]
 }
 
 /** A slice is hidden when the worn pieces cover at least this share of its vertices (the artist's own hid 0.95). */
@@ -202,11 +245,18 @@ export function sliceCover(cov: WardrobeCoverage, worn: Iterable<string>): Map<s
   return out
 }
 
-/** The body slices the outfit hides (covered ≥ SLICE_HIDE_AT, never the neck or the hands): nothing pokes through. */
+/**
+ * The body slices the outfit hides, never the neck or the hands. Cut slices (`exact`): a sub-slice the worn pieces
+ * cover entirely (skin is never missing between pieces). Older builds: covered ≥ SLICE_HIDE_AT (SLICE_HIDE_LOW).
+ */
 export function hiddenSlices(o: Outfit, cov: WardrobeCoverage | null | undefined): Set<string> {
   const out = new Set<string>()
   if (!cov) return out
-  for (const [slice, share] of sliceCover(cov, o.pieces.map(p => p.piece))) if (share >= (SLICE_HIDE_LOW[o.gender][slice] ?? SLICE_HIDE_AT) && !SLICE_KEEP[o.gender].includes(slice)) out.add(slice)
+  for (const [slice, share] of sliceCover(cov, o.pieces.map(p => p.piece))) {
+    const base = sliceBase(slice)
+    if (SLICE_KEEP[o.gender].includes(base)) continue
+    if (cov.exact ? share >= 1 : share >= (SLICE_HIDE_LOW[o.gender][slice] ?? SLICE_HIDE_AT)) out.add(slice)
+  }
   return out
 }
 

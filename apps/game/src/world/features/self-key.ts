@@ -9,7 +9,9 @@
  *   plus a floor that is a share of the sky's own ambient: the face is lit in proportion to how bright the world is,
  *   so it never goes black under a top-down sun and never glows at night;
  * - the fill: from the other side, a little below eye level (the ground's bounce), a share of the key, no specular,
- *   on the head and eyes only: it lifts the sockets, under the nose and the shadow side of the cheeks.
+ *   on the skin (head and body) and the eyes: it lifts the sockets, under the nose and the shadow side of the cheeks.
+ *   It was on the head alone: the head's neck then read brighter than the body's below it, a band around the neck
+ *   where the two meshes meet (worst at night, where the key's floor carries most of the light).
  * The skin's wrap diffuse (three/licensed-materials.ts SkinWrapPlugin) softens the sun's terminator on top.
  *
  * - PBR path only: without the celestial light (Classic / Low) both stay at 0 and touch nothing.
@@ -92,9 +94,12 @@ export function faceFloorIntensity(ambientLuma: number, envIntensity: number, sh
   return Math.PI * share * Math.max(0, ambientLuma) * envIntensity
 }
 
-const isFaceMesh = (m: AbstractMesh): boolean => {
+/** The fill's meshes: the skin, head and body alike (no light seam where they meet at the neck), and the eyes. */
+export const isFillMesh = (m: AbstractMesh): boolean => {
   const mat = m.material
-  return mat instanceof PBRMaterial && (mat.name === 'MAT_HEAD' || licensedMaterialRole(mat.name) === 'eye')
+  if (!(mat instanceof PBRMaterial)) return false
+  const role = licensedMaterialRole(mat.name)
+  return role === 'skin' || role === 'eye'
 }
 const isLicensed = (meshes: readonly AbstractMesh[]): boolean =>
   meshes.some(m => m.material instanceof PBRMaterial && licensedMaterialRole(m.material.name) === 'skin')
@@ -146,7 +151,7 @@ export function selfKeyFeature(ctx: WorldFeatureContext): WorldFeature {
         if (!same(meshes, lastMeshes)) {
           lastMeshes = meshes
           key.includedOnlyMeshes = [anchor, ...meshes]
-          fill.includedOnlyMeshes = [anchor, ...meshes.filter(isFaceMesh)]
+          fill.includedOnlyMeshes = [anchor, ...meshes.filter(isFillMesh)]
         }
       }
       const on = !!celestial && PERF.charLook && lastMeshes.length > 0
