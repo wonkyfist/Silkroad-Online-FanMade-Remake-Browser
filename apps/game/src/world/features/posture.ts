@@ -26,7 +26,25 @@ import { idleOf } from '../idle.ts'
 export const ACTION_ICON = {
   sit: '/out/icon/action/icon_cha_sit.png',
   stand: '/out/icon/action/icon_cha_stand.png',
+  walk: '/out/icon/action/icon_cha_walk.png',
+  run: '/out/icon/action/icon_cha_run.png',
 } as const
+/** The walk / run choice, kept in this browser (re-sent on entering the world; the server's is per session). */
+export const WALK_KEY = 'sro.walk'
+export function walkSaved(): boolean {
+  try {
+    return localStorage.getItem(WALK_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+function saveWalk(on: boolean): void {
+  try {
+    localStorage.setItem(WALK_KEY, on ? '1' : '0')
+  } catch {
+    // private mode: the choice lasts this session
+  }
+}
 export const EMOTE_ICON: Readonly<Record<EmoteKind, string>> = {
   hi: '/out/icon/action/emot_act_greeting.png',
   greeting: '/out/icon/action/emot_act_pokun.png',
@@ -68,6 +86,8 @@ function ensureStyles(): void {
 }
 
 interface ActionHandlers {
+  walk(): void
+  walking(): boolean
   sit(): void
   emote(e: EmoteKind): void
   sitting(): boolean
@@ -76,6 +96,7 @@ interface ActionHandlers {
 /** The Action window: Character control (Sit down / Stand up) and Emotion (the seven emotes). */
 export class ActionWindow extends Window {
   private readonly sitSlot
+  private readonly walkSlot
   private readonly tip: Tooltip
 
   constructor(art: Art, parent: HTMLElement, private readonly handlers: ActionHandlers) {
@@ -92,6 +113,9 @@ export class ActionWindow extends Window {
     for (const s of [...controlGrid.slots, ...emoteGrid.slots]) s.root.classList.add('empty')
     this.sitSlot = controlGrid.slots[0]!
     this.bind(this.sitSlot.root, () => (this.handlers.sitting() ? t('fx.action.stand') : t('fx.action.sit')), () => this.handlers.sit())
+    // retail's Character control: Walk / Run next to the seat (the slot shows what a click switches to)
+    this.walkSlot = controlGrid.slots[1]!
+    this.bind(this.walkSlot.root, () => (this.handlers.walking() ? t('fx.action.run') : t('fx.action.walk')), () => this.handlers.walk())
     EMOTE_ORDER.forEach((e, i) => {
       const s = emoteGrid.slots[i]!
       s.setIcon(EMOTE_ICON[e], { text: t(`fx.emote.${e}` as StringKey).slice(0, 2) })
@@ -113,6 +137,9 @@ export class ActionWindow extends Window {
     const sitting = this.handlers.sitting()
     this.sitSlot.setIcon(sitting ? ACTION_ICON.stand : ACTION_ICON.sit, { text: sitting ? 'St' : 'Si' })
     this.sitSlot.root.classList.toggle('on', sitting)
+    const walking = this.handlers.walking()
+    this.walkSlot.setIcon(walking ? ACTION_ICON.run : ACTION_ICON.walk, { text: walking ? 'Ru' : 'Wa' })
+    this.walkSlot.root.classList.toggle('on', walking)
   }
 
   override close(): void {
@@ -130,6 +157,13 @@ export function postureFeature(ctx: WorldFeatureContext): WorldFeature {
   const { hud, chat } = ctx
   const offs: (() => void)[] = []
   let sittingSelf = false
+  let walkingSelf = walkSaved()
+  const setWalk = (on: boolean) => {
+    walkingSelf = on
+    saveWalk(on)
+    ctx.send({ t: 'walk', on })
+    win.refresh()
+  }
 
   const self = () => {
     const id = ctx.selfId()
@@ -145,12 +179,13 @@ export function postureFeature(ctx: WorldFeatureContext): WorldFeature {
     ctx.send({ t: 'emote', emote: e })
   }
 
-  hud.claimRequests(['sit', 'emote'])
+  hud.claimRequests(['sit', 'emote', 'walk'])
+  offs.push(hud.keys.register({ id: 'action.walk', keys: ['r'], label: 'fx.key.walk', group: 'movement', run: () => setWalk(!walkingSelf) }))
   offs.push(hud.keys.register({ id: 'action.sit', keys: ['n'], label: 'fx.key.sit', group: 'movement', run: () => toggleSit() }))
   offs.push(chat.registerPrefix(SIT_COMMAND, () => toggleSit()))
   for (const [cmd, e] of Object.entries(EMOTE_COMMANDS)) offs.push(chat.registerPrefix(cmd, () => emote(e)))
 
-  const win = new ActionWindow(ctx.app.art, hud.layer, { sit: toggleSit, emote, sitting: () => sittingSelf })
+  const win = new ActionWindow(ctx.app.art, hud.layer, { sit: toggleSit, emote, sitting: () => sittingSelf, walk: () => setWalk(!walkingSelf), walking: () => walkingSelf })
   // D20: the MENU row (UI-H's `icon` field; without it the system-button art is used).
   const entry: MenuBarEntry & { icon?: string } = {
     id: 'action',
@@ -186,6 +221,8 @@ export function postureFeature(ctx: WorldFeatureContext): WorldFeature {
         }
         case 'worldEnter':
           sittingSelf = false
+          // the saved walk / run choice (the server starts every session running)
+          if (walkingSelf) ctx.send({ t: 'walk', on: true })
           win.refresh()
           break
       }

@@ -150,6 +150,7 @@ describe('routing', () => {
       // The Climb (L7, L2): the rewards (titles, sets, Arts), the high country's notices
       'climbRewards',
       'climbPlaces',
+      'walk',
     ])
     expect(HIDDEN_NPCS).not.toContain('NPC_CH_WAREHOUSE_M') // Wangu + the storage chest (docs/SHOPS.md §1.3)
     expect(h.gameplay.storage.enabled).toBe(true) // ST-S landed (storage.test.ts)

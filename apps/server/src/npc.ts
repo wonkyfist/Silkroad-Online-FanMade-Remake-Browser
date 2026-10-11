@@ -1,5 +1,6 @@
 import { GUILD_MANAGER_NPCS, MAX_NPC_DIALOG_LINE, MAX_NPC_DIALOG_LINES, NPC_APPROACH_RANGE, NPC_INTERACT_RANGE, yawTowards, type GameplayRequest, type NpcCloseReason, type NpcDef, type NpcService } from '@sro/shared'
 import type { Gameplay } from './gameplay.ts'
+import { walkFactor } from './walk.ts'
 import { done, fail, type Result } from './inventory.ts'
 import type { Answer, GameplayMessage, GameplayModule } from './modules.ts'
 import type { NavPoint, NavProvider } from './nav.ts'
@@ -246,7 +247,7 @@ export class NpcDialogs implements GameplayModule {
     route.leg++
     if (route.leg >= route.legs.length) return this.gaveUp(p, npc, now)
     const [x, z] = route.legs[route.leg]
-    if (!this.g.world.moveEntity(p, x, z, this.g.world.moveSpeed * p.speedMul, now)) this.gaveUp(p, npc, now)
+    if (!this.g.world.moveEntity(p, x, z, this.g.world.moveSpeed * p.speedMul * walkFactor(p), now)) this.gaveUp(p, npc, now)
   }
 
   playerDied(p: Player): void {

@@ -578,6 +578,8 @@ export type ClientMessage =
   | { t: 'climbArt'; tree: ClimbArtTree; tier: number; art: string }
   /** The Climb (docs/CLIMB.md §7.3): wear title `code` (one the character holds; '' = the newest held). */
   | { t: 'climbTitle'; code: string }
+  /** Walk (true) or run (false; the default): the server moves the player at WALK_SPEED_FACTOR × its run speed. */
+  | { t: 'walk'; on: boolean }
   // ---- wave 8: trade (docs/SYSTEMS_SOCIAL.md §3.4) ----
   /** Ask player entity `target` for an exchange. */
   | { t: 'tradeRequest'; target: number }
@@ -1167,6 +1169,7 @@ export type GameplayRequest =
   | 'mountRide' | 'mountDismount' | 'mountDismiss' | 'repair' | 'alchemyReinforce' | 'alchemyCancel' | 'berserk'
   // the Climb (docs/CLIMB.md §5.1, §7.3)
   | 'climbArt' | 'climbTitle'
+  | 'walk'
   // wave 8: trade, stalls, guilds
   | 'tradeRequest' | 'tradeRespond' | 'tradeOffer' | 'tradeTake' | 'tradeGold' | 'tradeLock' | 'tradeAccept' | 'tradeCancel'
   | 'stallCreate' | 'stallItem' | 'stallItemRemove' | 'stallText' | 'stallOpen' | 'stallClose' | 'stallVisit' | 'stallLeave' | 'stallBuy'
@@ -1223,6 +1226,7 @@ export const GAMEPLAY_REQUESTS: readonly GameplayRequest[] = [
   ...LAW_REQUESTS,
   ...HUNTER_REQUESTS,
   'climbArt', 'climbTitle',
+  'walk',
   ...JOB_REQUESTS,
   ...PVP_REQUESTS,
 ]
@@ -1543,6 +1547,7 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   // the Climb (docs/CLIMB.md §5.1, §7.3): clicks in the skill and character windows
   climbArt: { perSecond: 2, burst: 4 },
   climbTitle: { perSecond: 2, burst: 4 },
+  walk: { perSecond: 4, burst: 6 },
   tradeRequest: { perSecond: 1, burst: 3 },
   stallCreate: { perSecond: 1, burst: 3 },
   stallClose: { perSecond: 1, burst: 3 },
@@ -2039,3 +2044,6 @@ export type GuildEventKind = 'created' | 'joined' | 'left' | 'kicked' | 'master'
 export const GUILD_EVENT_KINDS: readonly GuildEventKind[] = [
   'created', 'joined', 'left', 'kicked', 'master', 'disbanded', 'declined', 'expired', 'online', 'offline', 'notice', 'perms', 'title',
 ]
+
+/** Walking moves at this share of the run speed (the walk toggle, R / the Action window; the server enforces it). */
+export const WALK_SPEED_FACTOR = 0.4

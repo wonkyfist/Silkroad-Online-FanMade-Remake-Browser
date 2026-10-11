@@ -247,6 +247,7 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   berserk: ['t'],
   climbArt: ['t', 'tree', 'tier', 'art'],
   climbTitle: ['t', 'code'],
+  walk: ['t', 'on'],
   tradeRequest: ['t', 'target'],
   tradeRespond: ['t', 'from', 'accept'],
   tradeOffer: ['t', 'bag'],
@@ -774,6 +775,8 @@ function clientMessage(v: unknown): ClientMessage {
     // ---- the Climb (docs/CLIMB.md §5.1, §7.3) ----
     case 'climbArt':
       return { t: 'climbArt', tree: oneOf(v, 'tree', CLIMB_ART_TREES), tier: int(v, 'tier', 1, 100), art: str(v, 'art', 32, 1) }
+    case 'walk':
+      return { t: 'walk', on: bool(v, 'on') }
     case 'climbTitle': {
       const code = str(v, 'code', 32)
       if (code !== '' && !PILOT_HONOR.test(code)) fail('code must be a title code')

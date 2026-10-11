@@ -102,6 +102,7 @@ import { RobberyService } from './jobs/robbery.ts'
 import { CaravanService } from './jobs/caravan.ts'
 import { JailService } from './siege/jail.ts'
 import { MovementService } from './movement.ts'
+import { WalkService, walkFactor } from './walk.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
 import { Pilot } from './pilot/service.ts'
@@ -403,6 +404,7 @@ export class Gameplay implements AiHost {
   readonly penalty: DeathPenalty
   /** The Climb's rewards (docs/CLIMB.md §20 L7): titles, set bonuses, Arts (inert with CLIMB off). */
   readonly climbRewards: ClimbRewards
+  readonly walk: WalkService
   /** The high country's notices (docs/CLIMB.md §2.7, L2). */
   readonly climbPlaces: ClimbPlaces
   /** Every module, in registration order (enter-world order, hook order). */
@@ -479,6 +481,7 @@ export class Gameplay implements AiHost {
     this.penalty = new DeathPenalty(this)
     this.climbRewards = new ClimbRewards(this)
     this.climbPlaces = new ClimbPlaces(this)
+    this.walk = new WalkService(this)
     // Wave 11: a per-mob summon policy (a unique's own summon switch, clip, cap and variants; mob-skills.ts).
     this.mobSkills.summonPolicy = (m) => this.uniques?.summonPolicy(m) ?? null
     if (!this.world.decorators.includes(dropTag)) this.world.decorators.push(dropTag)
@@ -536,6 +539,8 @@ export class Gameplay implements AiHost {
       this.penalty,
       this.climbRewards,
       this.climbPlaces,
+      // overall-pass walk mode (walk.ts)
+      this.walk,
     ]
     this.routes = buildRoutes(this.modules, CORE_REQUESTS)
     // docs/SERVER_ARCHITECTURE.md §3.6 (P2): the global services own their modules' requests (SVC_BUS)
@@ -1633,7 +1638,7 @@ export class Gameplay implements AiHost {
       const stand = Math.max(0, reach * 0.8)
       const x = tp[0] + ((pp[0] - tp[0]) / d) * stand
       const z = tp[2] + ((pp[2] - tp[2]) / d) * stand
-      if (!this.world.moveEntity(p, x, z, this.world.moveSpeed * p.speedMul, now)) p.action = null
+      if (!this.world.moveEntity(p, x, z, this.world.moveSpeed * p.speedMul * walkFactor(p), now)) p.action = null
     }
     return false
   }
