@@ -54,6 +54,8 @@ const codePoints = (s: string) => [...s].length
 
 export class StallService implements GameplayModule {
   readonly name = 'stalls'
+  /** Purchase attempts (each one's transfer key is its own: an idempotency key names one attempt, P2). */
+  private buys = 0
   readonly handles: readonly GameplayRequest[] = STALL_REQUESTS
   readonly whileDead: readonly GameplayRequest[] = ['stallClose', 'stallLeave']
 
@@ -247,7 +249,7 @@ export class StallService implements GameplayModule {
     if (!def) return answer(fail('not_usable', 'The selected item cannot be traded.'))
     // docs/SERVER_ARCHITECTURE.md §3.8 (P2): a transfer of the economy service; with DB_WRITER the buyer's answer and
     // both players' updates go out once the sale is on disk (commit-then-ack)
-    this.g.economy.transfer(`stall:${owner.characterId}:${slot}:${now}`, [p, owner],() => this.sell(p, owner, s, l, slot, def, answer, now))
+    this.g.economy.transfer(`stall:${owner.characterId}:${slot}:${++this.buys}`, [p, owner], () => this.sell(p, owner, s, l, slot, def, answer, now))
   }
 
   /** The sale itself: one pairTx over buyer and owner, then the answer and the updates. */

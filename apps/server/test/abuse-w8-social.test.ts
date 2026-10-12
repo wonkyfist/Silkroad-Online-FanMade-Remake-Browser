@@ -46,6 +46,7 @@ function setup() {
   const req = (x: P, msg: ClientMessage) => {
     const before = x.inbox.length
     h.gameplay.request(x.p, msg as GameplayMessage, h.now())
+    h.store.flush()
     const res = x.inbox.slice(before).filter((m): m is Msg<'actionResult'> => m.t === 'actionResult')
     expect(res.length, msg.t).toBe(1)
     return res[0]!
@@ -328,6 +329,8 @@ describe('conservation under a seeded random interleaving (trade + stall + moves
     const start = census()
     const send = (x: P, msg: ClientMessage) => {
       h.gameplay.request(x.p, msg as GameplayMessage, h.now())
+      // DB_WRITER (docs/SERVER_ARCHITECTURE.md §3.8): a transfer answers once it is on disk; wait for that here
+      h.store.flush()
     }
     let trades = 0
     let sales = 0

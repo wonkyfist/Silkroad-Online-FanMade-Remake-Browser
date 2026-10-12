@@ -133,7 +133,13 @@ export class ServiceHost {
     const rid = this.nextRid++
     this.answers.set(rid, answer)
     const body: ReqBody = { rid, pid: p.id, mod: mod.name, msg, now }
-    this.zone.send({ to: `svc:${svc}`, k: 'request', body })
+    try {
+      this.zone.send({ to: `svc:${svc}`, k: 'request', body })
+    } catch (e) {
+      // the module threw (Gameplay.request answers server_error): no answer will come
+      this.answers.delete(rid)
+      throw e
+    }
   }
 
   private serve(name: ServiceName, t: LocalTransport, e: Envelope): void {

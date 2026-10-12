@@ -122,6 +122,8 @@ export function npcHarness(opts: { validator?: MoveValidator; config?: Partial<S
   const req = (p: Player, inbox: ServerMessage[], msg: GameplayMessage) => {
     const before = inbox.length
     gameplay.request(p, msg, clock)
+    // DB_WRITER (docs/SERVER_ARCHITECTURE.md §3.8): a transfer answers once it is on disk; wait for that here
+    store.flush()
     const r = inbox.slice(before).find((m): m is Msg<'actionResult'> => m.t === 'actionResult' && m.re === msg.t)
     if (!r) throw new Error(`no actionResult for ${msg.t}`)
     return r
