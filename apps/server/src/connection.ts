@@ -381,26 +381,15 @@ export class Connection {
         this.send({ t: 'pong', n: msg.n, clientTime: msg.clientTime, serverTime: Date.now() })
         return
       case 'charList':
-        this.send({ t: 'charList', slots: MAX_CHARACTER_SLOTS, characters: this.game.store.characters(this.accountId).map((r) => this.summary(r)) })
-        return
-      case 'nameCheck': {
-        const reason = this.nameProblem(msg.name)
-        this.send(reason ? { t: 'nameCheck', name: msg.name, available: false, reason } : { t: 'nameCheck', name: msg.name, available: true })
-        return
-      }
+      case 'nameCheck':
       case 'charCreate':
-        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
-        return this.charCreate(msg.name, msg.model, msg.weapon, { height: msg.height ?? msg.look?.height, volume: msg.volume, outfit: msg.outfit, look: msg.look })
       case 'charLook':
-        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
-        return this.charLook(msg.id, msg.look)
-      case 'charDelete':
-        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
-        // a body held for a reconnect (resume.ts) leaves first, so its save cannot land on the deleted row later
-        if (this.game.store.characterOwned(msg.id, this.accountId)) this.game.holds.release(msg.id)
-        if (!this.game.store.softDeleteCharacter(msg.id, this.accountId)) return this.error('not_found', 'no such character', msg.t)
-        this.send({ t: 'charDeleted', id: msg.id })
-        return
+      case 'charDelete': {
+        // docs/SERVER_ARCHITECTURE.md §3.6 (P2): the lobby belongs to the account service (SVC_BUS)
+        const svc = this.game.gameplay.services
+        if (svc && this.game.sockets.get(this.accountId) === this) return svc.call('account', 'lobby', { account: this.accountId, msg })
+        return this.lobby(msg)
+      }
       case 'enterWorld':
         if (this.state !== 'lobby') return this.error('already_in_world', 'already in the world', msg.t)
         return this.enterWorld(msg.id)
@@ -422,7 +411,8 @@ export class Connection {
         // Play the Boss (§3.10): no free chat on any channel while you steer the boss (slash commands still run).
         if (!text.startsWith('/') && this.game.gameplay.pilot?.chatBlocked(this.player)) return this.error('forbidden', 'You cannot chat while you are the boss. Use the taunt wheel (hold Q).', msg.t)
         // Whisper / party lines (chat.ts) are routed before the slash branch: they are never commands.
-        if (routeChat(this, msg, text)) return
+        const svc = this.game.gameplay.services
+        if (svc && this.game.sockets.get(this.accountId) === this ? svc.call<boolean>('chat', 'route', { account: this.accountId, msg, text }) : routeChat(this, msg, text)) return
         if (text.startsWith('/')) {
           // Slash lines are commands, never broadcast. Non-staff still pay the chat budget.
           if (!isStaff(this.role) && !this.chatBucket.take()) return this.error('rate_limited', 'you are chatting too fast', msg.t)
@@ -451,6 +441,33 @@ export class Connection {
         return
       default:
         if (isGameplay(msg)) return this.gameplay(msg)
+    }
+  }
+
+  /** The lobby's requests (the account service's, services/host.ts; or called directly with SVC_BUS off). */
+  lobby(msg: Extract<ClientMessage, { t: 'charList' | 'nameCheck' | 'charCreate' | 'charLook' | 'charDelete' }>): void {
+    switch (msg.t) {
+      case 'charList':
+        this.send({ t: 'charList', slots: MAX_CHARACTER_SLOTS, characters: this.game.store.characters(this.accountId).map((r) => this.summary(r)) })
+        return
+      case 'nameCheck': {
+        const reason = this.nameProblem(msg.name)
+        this.send(reason ? { t: 'nameCheck', name: msg.name, available: false, reason } : { t: 'nameCheck', name: msg.name, available: true })
+        return
+      }
+      case 'charCreate':
+        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
+        return this.charCreate(msg.name, msg.model, msg.weapon, { height: msg.height ?? msg.look?.height, volume: msg.volume, outfit: msg.outfit, look: msg.look })
+      case 'charLook':
+        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
+        return this.charLook(msg.id, msg.look)
+      case 'charDelete':
+        if (this.state !== 'lobby') return this.error('already_in_world', 'leave the world first', msg.t)
+        // a body held for a reconnect (resume.ts) leaves first, so its save cannot land on the deleted row later
+        if (this.game.store.characterOwned(msg.id, this.accountId)) this.game.holds.release(msg.id)
+        if (!this.game.store.softDeleteCharacter(msg.id, this.accountId)) return this.error('not_found', 'no such character', msg.t)
+        this.send({ t: 'charDeleted', id: msg.id })
+        return
     }
   }
 
@@ -680,6 +697,7 @@ export class Connection {
     this.state = 'world'
     this.game.persist([this.player])
     this.game.config.log(`${this.account} entered as ${row.name} at ${x.toFixed(1)},${z.toFixed(1)} (${world.online} online)`)
+    const worldNow = this.game.gameplay.worldSync(Date.now())
     this.send({
       t: 'worldEnter',
       self: world.state(this.player),
@@ -692,11 +710,9 @@ export class Connection {
         alchemyRate: knob(this.game.config, 'alchemyRate'),
         alchemyMaxPlus: knob(this.game.config, 'alchemyMaxPlus'),
         social: { guildCreateGold: knob(this.game.config, 'guildCreateGold'), guildCreateLevel: Math.min(knob(this.game.config, 'guildCreateLevel'), MAX_WIRE_LEVEL_CAP) },
-        // Wave 9 (docs/WAVE_PLAN3.md §3.3): the clock anchor and the late-joiner weather.
-        clock: this.game.gameplay.clock.state,
-        weather: this.game.gameplay.weather.sync(Date.now()),
-        // docs/WINTER.md §5: the snow season and the snow on the ground
-        winter: this.game.gameplay.winter.sync(Date.now()),
+        // Wave 9 (docs/WAVE_PLAN3.md §3.3): the clock anchor and the late-joiner weather; docs/WINTER.md §5: the snow
+        // season and the snow on the ground (the world service's state, P2)
+        ...worldNow,
       },
       entities: world.snapshotFor(this.player),
       role: this.role,

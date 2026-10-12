@@ -565,8 +565,7 @@ export class JobService implements GameplayModule {
   }
 
   playerOf(characterId: number): Player | null {
-    for (const p of this.g.world.players.values()) if (p.characterId === characterId) return p
-    return null
+    return this.g.world.byCharacter(characterId) ?? null
   }
 
   // ---- GM (§9.5) -----------------------------------------------------------------------------------------------------------------

@@ -151,8 +151,7 @@ export class PartyManager implements GameplayModule {
 
   /** The online player of a character (entering the world again gives it a new entity id). */
   private online(characterId: number): Player | undefined {
-    for (const p of this.g.world.players.values()) if (p.characterId === characterId) return p
-    return undefined
+    return this.g.world.byCharacter(characterId)
   }
 
   // ---- requests ------------------------------------------------------------------------------------------

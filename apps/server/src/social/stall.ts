@@ -9,6 +9,7 @@ import {
   STALL_TITLE_MAX,
   STALL_VISITORS_MAX,
   type GameplayRequest,
+  type ItemDef,
   type StallEndReason,
 } from '@sro/shared'
 import { knob } from '../config.ts'
@@ -244,6 +245,13 @@ export class StallService implements GameplayModule {
     if (this.g.world.distance(p, owner, now) > STALL_RANGE) return answer(fail('too_far'))
     const def = this.g.data.item(l.code)
     if (!def) return answer(fail('not_usable', 'The selected item cannot be traded.'))
+    // docs/SERVER_ARCHITECTURE.md §3.8 (P2): a transfer of the economy service; with DB_WRITER the buyer's answer and
+    // both players' updates go out once the sale is on disk (commit-then-ack)
+    this.g.economy.transfer(`stall:${owner.characterId}:${slot}:${now}`, [p, owner],() => this.sell(p, owner, s, l, slot, def, answer, now))
+  }
+
+  /** The sale itself: one pairTx over buyer and owner, then the answer and the updates. */
+  private sell(p: Player, owner: Player, s: Stall, l: NonNullable<Stall['items'][number]>, slot: number, def: ItemDef, answer: Answer, now: number): void {
     // social_log (§7): a = the buyer, who gave the gold; b = the owner, who gave the item. Same transaction as the sale.
     const { result, da, db } = pairTx(this.g.store, p.characterId, owner.characterId, (dBuyer, dOwner) => buyDrafts(l, dBuyer, dOwner, def), (got) =>
       logSocial(this.g.store, { kind: 'stall', aChar: p.characterId, bChar: owner.characterId, aGold: l.price, bGold: 0, aItems: [], bItems: [got] }, Math.round(now)),

@@ -92,10 +92,10 @@ describe('GM end to end with the game client modules', () => {
   let wsUrl: string
   let cliEnv: NodeJS.ProcessEnv
   const sessions: Session[] = []
-  const cli = (...argv: string[]) => {
+  const cli = async (...argv: string[]) => {
     const out: string[] = []
     const err: string[] = []
-    const code = runCli(argv, cliEnv, (l) => out.push(l), (l) => err.push(l))
+    const code = await runCli(argv, cliEnv, (l) => out.push(l), (l) => err.push(l))
     return { code, out: out.join('\n'), err: err.join('\n') }
   }
   const open = (token: string) => {
@@ -160,10 +160,10 @@ describe('GM end to end with the game client modules', () => {
 
     // ---- pnpm gm grant: the connected client learns its new role within the role poll ---------------
     const roleMsg = expectMsg(g, 'role')
-    expect(cli('grant', gmUser)).toMatchObject({ code: 0 })
+    expect(await cli('grant', gmUser)).toMatchObject({ code: 0 })
     expect(await roleMsg).toEqual({ t: 'role', role: 'gm' })
     expect(g.role).toBe('gm')
-    expect(cli('list').out).toContain(gmUser)
+    expect((await cli('list')).out).toContain(gmUser)
 
     // ---- who ------------------------------------------------------------------------------------------
     const who = await run(g, gm.who())
@@ -285,13 +285,13 @@ describe('GM end to end with the game client modules', () => {
       expect(rows.some((r) => r.command === c && r.ok === 1), c).toBe(true)
     }
     expect(rows.some((r) => r.command === 'cli.grant')).toBe(true)
-    const printed = cli('audit', '--limit', '100').out
+    const printed = (await cli('audit', '--limit', '100')).out
     expect(printed).toMatch(new RegExp(`${gmUser}\\s+FAIL who`))
     expect(printed).toMatch(new RegExp(`${gmUser}\\s+ok\\s+kick ${pName} testing the kick`))
 
     // ---- pnpm gm revoke: role message, and the very next command is refused -------------------------
     const revoked = expectMsg(g, 'role')
-    expect(cli('revoke', gmUser)).toMatchObject({ code: 0 })
+    expect(await cli('revoke', gmUser)).toMatchObject({ code: 0 })
     expect(await revoked).toEqual({ t: 'role', role: 'player' })
     expect(g.role).toBe('player')
     await expect(run(g, gm.who())).rejects.toMatchObject({ code: 'forbidden' })

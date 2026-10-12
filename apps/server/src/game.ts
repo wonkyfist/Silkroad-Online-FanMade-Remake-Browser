@@ -36,6 +36,9 @@ import { openStore, type Store } from './db.ts'
 import { layerContentOverrides, layerRepoOverrides } from './editors/overrides.ts'
 import { GM_API_PREFIX, handleGmApi } from './editors/quest-api.ts'
 import { Gameplay } from './gameplay.ts'
+import { claimWriterLock, serveInbox } from './services/account.ts'
+import { holdStats } from './services/hold.ts'
+import { routeChat } from './chat.ts'
 import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
 import { applyClimbContent, convertClimbCharacters, remapClimbNests } from './climb.ts'
@@ -254,6 +257,12 @@ function memoryLine(stages: MemoryStage[]): string {
   return `memory by startup stage (MB): ${parts.join(', ')}; now ${Math.round(last.rssMb)} rss, ${Math.round(last.heapMb)} heap, ${Math.round(last.externalMb)} external${typeof (globalThis as { gc?: unknown }).gc === 'function' ? '' : ' (no --expose-gc: rough)'}`
 }
 
+/** The clock and weather of the world service (P2: svc:world), for serverInfo. */
+function worldNow(g: Gameplay): { clock: ReturnType<Gameplay['worldSync']>['clock']; weather: ReturnType<Gameplay['worldSync']>['weather'] } {
+  const w = g.worldSync(Date.now())
+  return { clock: w.clock, weather: w.weather }
+}
+
 /** GC pauses into the `gc` tick phase (perf_hooks 'gc' entries). */
 function watchGc(timers: PhaseTimers): PerformanceObserver | null {
   try {
@@ -270,7 +279,12 @@ function watchGc(timers: PhaseTimers): PerformanceObserver | null {
 export async function startServer(config: ServerConfig): Promise<GameServer> {
   // docs/SERVER_ARCHITECTURE.md F6 (P0): the memory split by startup stage (content, navmesh, modules, world)
   const memory = [memorySample('start')]
-  const store = openStore(config.dataDir)
+  // docs/SERVER_ARCHITECTURE.md §3.8 (P2, DB_WRITER): the database in memory, one writer thread for the file
+  const wantWriter = config.dbWriter ?? /^(1|on|true|yes)$/i.test(process.env.SRO_TEST_DB_WRITER ?? '')
+  const store = openStore(config.dataDir, { writer: wantWriter ? { log: config.log, onFatal: (why) => config.log(`DB WRITER DOWN: ${why}; the game keeps running from memory and retries`) } : false })
+  // the gm CLI sends role changes to this server's inbox while it owns the file (services/account.ts)
+  const releaseWriterLock = store.writer ? claimWriterLock(config.dataDir) : null
+  if (store.writer) config.log(`db writer: DATA_DIR/game.db in memory (${store.writerStats()?.memDbMb ?? 0} MB), one writer thread with group commit (DB_WRITER)`)
   store.purgeSessions()
   // Admin panel (docs/ADMIN.md §5): its tables, and the settings saved in it applied before any module reads the config.
   const adminStore = openAdminStore(store, join(config.dataDir, 'game.db'))
@@ -360,8 +374,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       // Wave 10 (docs/SCREENS.md §9, lane SCR-P): the running clock anchor and the current weather, so the character
       // screens' sky matches the world's. Feeds both GET /api/servers and the lobby's `welcome` (a snapshot, never
       // the `worldClock` / `weather` messages, which stay world-only).
-      clock: gameplay.clock.state,
-      weather: gameplay.weather.sync(Date.now()),
+      ...worldNow(gameplay),
       // Admin panel switch (docs/ADMIN.md): the login screen hides Register while it is closed.
       registration: config.registrationOpen === false ? 'closed' : 'open',
     }),
@@ -383,6 +396,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       )
     },
     refreshRoles(force = false) {
+      // P2: role changes the gm CLI handed to this server (DB_WRITER: the file is this server's alone)
+      if (store.writer && serveInbox(config.dataDir, store, config.log) > 0) force = true
       const version = store.dataVersion()
       if (!force && version === dataVersion) return
       dataVersion = version
@@ -410,6 +425,20 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     return null
   }
   gameplay.pilot?.connect({ ipOf })
+  // docs/SERVER_ARCHITECTURE.md §3.6 (P2, SVC_BUS): the account and chat services find a connection by its account
+  // (the directory: one socket per account)
+  const services = gameplay.services
+  if (services) {
+    services.on('account', 'lobby', (b) => {
+      const { account, msg } = b as { account: number; msg: Parameters<Connection['lobby']>[0] }
+      sockets.get(account)?.lobby(msg)
+    })
+    services.on('chat', 'route', (b) => {
+      const { account, msg, text } = b as { account: number; msg: Parameters<typeof routeChat>[1]; text: string }
+      const c = sockets.get(account)
+      return c ? routeChat(c, msg, text) : false
+    })
+  }
   // Siege of Jangan layer 5 (docs/SIEGE.md §8.6): the same-IP associates of wall-breakers.
   gameplay.law.connect({ ipOf })
   const adminApi = new AdminApi(ctx, adminStore, settings, startedAt)
@@ -637,6 +666,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         if ((req.url ?? '').includes('reset=1')) {
           ctx.net.reset()
           aoiPool?.reset()
+          store.writer?.resetStats()
+          gameplay.economy.resetStats()
+          gameplay.services?.resetStats()
         }
         // the load test ends its server this way on Windows (no SIGINT there), so a --cpu-prof profile gets written
         if ((req.url ?? '').includes('exit=1')) setTimeout(() => process.exit(0), 200).unref()
@@ -739,8 +771,15 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     const h = hub
     ctx.net.probe = () => ({ sockets: sockets.size, ...h.queue() })
   }
-  ctx.net.extra = () => ({ ...(hub ? { gateways: hub.snapshot() } : {}), ...(aoiPool ? { aoiJobs: aoiPool.snapshot() } : {}) })
-  ctx.net.switches = { ...switches, gateways: hub !== null, aoiJobs: aoiPool !== null }
+  ctx.net.extra = () => ({
+    ...(hub ? { gateways: hub.snapshot() } : {}),
+    ...(aoiPool ? { aoiJobs: aoiPool.snapshot() } : {}),
+    // P2: the DB writer's queue, latency and group commit; the services' requests; the transfers' commit-then-ack
+    ...(store.writer ? { db: store.writerStats() } : {}),
+    ...(gameplay.services ? { services: gameplay.services.stats() } : {}),
+    economy: { ...gameplay.economy.stats(), held: holdStats.holds, heldMessages: holdStats.queued },
+  })
+  ctx.net.switches = { ...switches, gateways: hub !== null, aoiJobs: aoiPool !== null, dbWriter: store.writer !== null, svcBus: gameplay.services !== null }
 
   const http = createServer((req, res) => {
     void handle(req, res)
@@ -888,6 +927,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
           if (hub) setImmediate(resolve)
         })
         store.close()
+        releaseWriterLock?.()
       })()
       return closing
     },

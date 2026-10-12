@@ -49,6 +49,9 @@ export function testConfig(root: string, logs?: string[]): ServerConfig {
     // them with the client sockets in gateway processes / the interest pass on worker threads
     ...(process.env.SRO_TEST_GATEWAYS ? { gateways: Number(process.env.SRO_TEST_GATEWAYS) } : {}),
     ...(process.env.SRO_TEST_AOI_JOBS ? { aoiJobs: Number(process.env.SRO_TEST_AOI_JOBS) } : {}),
+    // P2: SRO_TEST_DB_WRITER=1 (read by openStore itself, so the suites that open a store directly follow it too) and
+    // SRO_TEST_SVC_BUS=1 run them with the DB writer thread / the global services behind the bus
+    ...(process.env.SRO_TEST_SVC_BUS ? { svcBus: process.env.SRO_TEST_SVC_BUS === '1' } : {}),
   }
 }
 

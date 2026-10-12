@@ -3,11 +3,14 @@ import { pathToFileURL } from 'node:url'
 import { ROLES, type Role } from '@sro/shared'
 import { dataDirFrom } from '../config.ts'
 import { openStore } from '../db.ts'
+import { applyRoleChange, liveWriter, sendToInbox } from '../services/account.ts'
 
 /**
  * GM role administration on DATA_DIR/game.db:  pnpm gm <grant|revoke|list|audit> ...
- * Safe while the server runs (SQLite WAL + busy_timeout). A running server notices the change within
- * about a second (it polls PRAGMA data_version) and applies it to a connected account at once:
+ * Safe while the server runs. A server with the DB writer (DB_WRITER, docs/SERVER_ARCHITECTURE.md §3.8) owns the file:
+ * grant/revoke then go through its inbox (services/account.ts) and it applies them itself; otherwise the CLI writes the
+ * file (SQLite WAL + busy_timeout) and the server notices within about a second (it polls PRAGMA data_version). Either
+ * way a connected account gets the change at once:
  * the client receives `role`; a revoked GM loses invisibility and speed. GM commands also re-read
  * the role on every call, so a revoke can never be outrun.
  */
@@ -27,8 +30,8 @@ function fmtTime(ms: number | null): string {
   return ms ? new Date(ms).toISOString().replace('T', ' ').slice(0, 19) : 'never'
 }
 
-/** Runs the CLI; returns the process exit code. */
-export function runCli(argv: string[], env: NodeJS.ProcessEnv = process.env, out: Out = console.log, err: Out = console.error): number {
+/** Runs the CLI; returns the process exit code (a promise when a running server's inbox takes the change). */
+export function runCli(argv: string[], env: NodeJS.ProcessEnv = process.env, out: Out = console.log, err: Out = console.error): number | Promise<number> {
   const positional: string[] = []
   const flags = new Map<string, string>()
   for (let i = 0; i < argv.length; i++) {
@@ -88,6 +91,18 @@ export function runCli(argv: string[], env: NodeJS.ProcessEnv = process.env, out
   }
 
   const dataDir = dataDirFrom(env)
+  if ((command === 'grant' || command === 'revoke') && liveWriter(dataDir) !== null) {
+    // the running server owns the file (DB writer): it applies the change itself
+    return sendToInbox(dataDir, { command, username: username!, role }).then((r) => {
+      if (!r) {
+        err(`the running server (pid ${liveWriter(dataDir)}) did not answer within 10 s; if no server runs, delete ${resolve(dataDir, 'game.db.writer')}`)
+        return 1
+      }
+      for (const l of r.out) out(l)
+      for (const l of r.err) err(l)
+      return r.code
+    })
+  }
   let store: ReturnType<typeof openStore>
   try {
     store = openStore(dataDir, { mustExist: true })
@@ -99,19 +114,10 @@ export function runCli(argv: string[], env: NodeJS.ProcessEnv = process.env, out
     switch (command) {
       case 'grant':
       case 'revoke': {
-        const account = store.accountByName(username!)
-        if (!account) {
-          err(`no account named ${username}`)
-          return 1
-        }
-        if (account.role === role) {
-          out(`${account.username} is already ${role}`)
-          return 0
-        }
-        store.setRole(account.id, role)
-        store.audit({ accountId: account.id, characterId: null, command: `cli.${command}`, args: [account.username, role], result: `role ${account.role} -> ${role}`, ok: true })
-        out(`${account.username}: ${account.role} -> ${role} (a running server applies it within about a second)`)
-        return 0
+        const r = applyRoleChange(store, { command, username: username!, role })
+        for (const l of r.out) out(l)
+        for (const l of r.err) err(l)
+        return r.code
       }
       case 'list': {
         const rows = store.staff()
@@ -138,5 +144,7 @@ export function runCli(argv: string[], env: NodeJS.ProcessEnv = process.env, out
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  process.exitCode = runCli(process.argv.slice(2))
+  void Promise.resolve(runCli(process.argv.slice(2))).then((code) => {
+    process.exitCode = code
+  })
 }

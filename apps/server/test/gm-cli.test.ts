@@ -96,7 +96,8 @@ describe('pnpm gm', () => {
   })
 
   it('works while another connection (the server) holds the database open', () => {
-    const server = openStore(dir)
+    // a server without the DB writer (DB_WRITER=0) shares the file; with the writer the CLI uses its inbox (p2-services.test.ts)
+    const server = openStore(dir, { writer: false })
     try {
       const before = server.dataVersion()
       expect(cli('grant', 'bob').code).toBe(0)

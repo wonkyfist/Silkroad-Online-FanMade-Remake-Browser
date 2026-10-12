@@ -94,6 +94,16 @@ export interface ServerConfig {
    */
   gateways?: number
   aoiJobs?: number
+  /**
+   * docs/SERVER_ARCHITECTURE.md §4 P2 switches. DB_WRITER: the statements run on an in-memory copy of the database and
+   * one writer thread replays their journal on DATA_DIR/game.db with group commit; transfers between players answer only
+   * after the commit (db/mirror.ts); off = every transaction writes the file on the tick thread (the path before P2).
+   * SVC_BUS: the global services (accounts, chat channels, party, guild, economy, law, world, item mall) own their
+   * requests behind the internal bus (services/); off = the modules are called directly. Absent = off (tests and
+   * embedded servers); loadConfig gives the defaults (on).
+   */
+  dbWriter?: boolean
+  svcBus?: boolean
   /** Nests whose monster is above this level stay empty (MOB_LEVEL_MAX, default LEVEL_CAP + 5; 0 = all). */
   mobLevelMax: number
   /** Spawn nest monsters at all (SPAWN_MOBS, default on). */
@@ -538,6 +548,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     encodeOnce: onOff(env, 'ENCODE_ONCE', true),
     aoiFast: onOff(env, 'AOI_FAST', true),
     gateways: count(env, 'GATEWAYS', DEFAULT_GATEWAYS, 16),
+    dbWriter: onOff(env, 'DB_WRITER', true),
+    svcBus: onOff(env, 'SVC_BUS', true),
     aoiJobs: count(env, 'AOI_JOBS', DEFAULT_AOI_JOBS, 16),
     mobLevelMax: Math.floor(num(env, 'MOB_LEVEL_MAX', levelCap + 5, 0, 1000)),
     climb: onOff(env, 'CLIMB', true),

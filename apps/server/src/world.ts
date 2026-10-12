@@ -420,6 +420,13 @@ export class World {
   private readonly watchers: Watchers = new Map()
   /** Players added by add() and not removed yet: the index is complete while this equals players.size. */
   private indexed = 0
+  /**
+   * docs/SERVER_ARCHITECTURE.md §3.6 (P2, SVC_BUS): the directory, character id -> the player in the world, for the
+   * services' lookups that scanned every player. Kept by add/remove; `byCharacter` scans when it is off or when a player
+   * entered world.players without add().
+   */
+  directory = false
+  private readonly byChar = new Map<number, Player>()
   /** Bumped whenever a player's position jumps (warp, add, remove): the monster pass's grid is rebuilt then. */
   private playerEpoch = 0
   /** The monster pass's player grid and its `now` (beginPlayerScan .. endPlayerScan); null outside the pass. */
@@ -528,6 +535,7 @@ export class World {
     for (const v of this.players.values()) this.reveal(v, player, now)
     this.players.set(player.id, player)
     ;(player.known as KnownSet).attach(player, this.watchers)
+    this.byChar.set(player.characterId, player)
     this.indexed++
     this.playerEpoch++
     return player
@@ -638,6 +646,16 @@ export class World {
     const wb = this.watchers.get(b.id)
     // whoever has `a` too got it above
     if (wb) for (const p of wb) if (p !== pa && p !== pb && !p.known.has(a.id) && p.known.has(b.id)) p.send(msg, enc)
+  }
+
+  /** The player of character `characterId` in the world (the directory with SVC_BUS, else a scan; the same answer). */
+  byCharacter(characterId: number): Player | undefined {
+    if (this.directory && this.indexed === this.players.size) {
+      const p = this.byChar.get(characterId)
+      return p && this.players.get(p.id) === p ? p : undefined
+    }
+    for (const p of this.players.values()) if (p.characterId === characterId) return p
+    return undefined
   }
 
   /** Online player by character name (case-insensitive). */
@@ -751,6 +769,7 @@ export class World {
     this.settle(p, now)
     this.despawnAll(id, p)
     this.players.delete(id)
+    if (this.byChar.get(p.characterId) === p) this.byChar.delete(p.characterId)
     // P0: it stops receiving broadcasts (its own `known` keeps what it had)
     if (p.known instanceof KnownSet && p.known.attached) {
       p.known.detach()

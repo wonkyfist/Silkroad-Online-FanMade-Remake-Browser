@@ -100,8 +100,7 @@ export class TradeService implements GameplayModule {
   }
 
   private online(characterId: number): Player | undefined {
-    for (const p of this.g.world.players.values()) if (p.characterId === characterId) return p
-    return undefined
+    return this.g.world.byCharacter(characterId)
   }
 
   // ---- gate and hooks ------------------------------------------------------------------------------------
@@ -295,8 +294,16 @@ export class TradeService implements GameplayModule {
 
   // ---- commit --------------------------------------------------------------------------------------------
 
-  /** Both sides accepted: one SQLite transaction over both inventories (§3.5), then the effects and `tradeEnd`. */
+  /**
+   * Both sides accepted: one transfer of the economy service (docs/SERVER_ARCHITECTURE.md §3.8, P2: escrow, one
+   * transaction, commit-then-ack — with DB_WRITER both players hear the outcome once it is on disk).
+   */
   private commit(l: Live, now: number): void {
+    this.g.economy.transfer(`trade:${l.s.id}`, [l.a, l.b], () => this.commitNow(l, now))
+  }
+
+  /** One SQLite transaction over both inventories (§3.5), then the effects and `tradeEnd`. */
+  private commitNow(l: Live, now: number): void {
     const { s, a, b } = l
     let out: ReturnType<typeof pairTx<{ aGot: InvItem[]; bGot: InvItem[] }>>
     try {
@@ -330,6 +337,17 @@ export class TradeService implements GameplayModule {
     } catch (e) {
       this.g.config.log(`trade: afterInventory for ${p.name} failed: ${(e as Error)?.stack ?? e}`)
     }
+  }
+
+  /**
+   * The economy service restarted (docs/SERVER_ARCHITECTURE.md §3.10, P2): every open exchange ends as failed and the
+   * pending requests are dropped; nothing was moved (a commit is one transaction). Returns the sessions ended.
+   */
+  resetAll(): number {
+    const sessions = new Set(this.live.values())
+    for (const l of sessions) this.end(l, 'failed', undefined, 'The exchange was interrupted.')
+    this.requests.clear()
+    return sessions.size
   }
 
   // ---- messages ------------------------------------------------------------------------------------------

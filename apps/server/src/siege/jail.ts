@@ -230,8 +230,7 @@ export class JailService implements GameplayModule {
   }
 
   private playerOf(characterId: number): Player | null {
-    for (const p of this.g.world.players.values()) if (p.characterId === characterId) return p
-    return null
+    return this.g.world.byCharacter(characterId) ?? null
   }
 
   private nameOf(characterId: number): string {

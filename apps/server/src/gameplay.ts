@@ -32,6 +32,8 @@ import {
 import { mobAggressive, retaliate, thinkMob, type AiHost } from './ai.ts'
 import { Alchemy } from './alchemy.ts'
 import { Rarity } from './rarity.ts'
+import { Economy } from './services/economy.ts'
+import { ServiceHost } from './services/host.ts'
 import { Berserk } from './berserk.ts'
 import { DeathPenalty } from './climb/penalty.ts'
 import { MonsterRoles } from './climb/roles.ts'
@@ -311,6 +313,13 @@ export class Gameplay implements AiHost {
   readonly rarity: Rarity
   readonly berserk: Berserk
   readonly trade: TradeService
+  /**
+   * docs/SERVER_ARCHITECTURE.md §3.6, §3.8 (P2): the economy service's transfer core (escrow, one transaction,
+   * commit-then-ack with DB_WRITER, idempotency keys with SVC_BUS); trade and stall purchases go through it.
+   */
+  readonly economy: Economy
+  /** The global services behind the internal bus (SVC_BUS; null = the modules are called directly). */
+  readonly services: ServiceHost | null
   readonly stalls: StallService
   readonly guilds: GuildService
   // wave 9 (docs/WAVE_PLAN3.md §6.1 W9A-P): the world clock (not a module: GM `time`, worldEnter) and the weather
@@ -433,6 +442,9 @@ export class Gameplay implements AiHost {
     this.rarity = new Rarity(this)
     this.berserk = new Berserk(this)
     this.trade = new TradeService(this)
+    this.economy = new Economy(d.store)
+    this.economy.idempotent = d.config.svcBus === true
+    this.economy.onRestart = () => this.trade.resetAll()
     this.stalls = new StallService(this)
     this.guilds = new GuildService(this)
     this.clock = WorldClock.load(d.config)
@@ -526,6 +538,11 @@ export class Gameplay implements AiHost {
       this.climbPlaces,
     ]
     this.routes = buildRoutes(this.modules, CORE_REQUESTS)
+    // docs/SERVER_ARCHITECTURE.md §3.6 (P2): the global services own their modules' requests (SVC_BUS)
+    this.services = d.config.svcBus ? new ServiceHost((id) => this.world.players.get(id), this.modules) : null
+    this.services?.onRestart('economy', () => this.economy.restart())
+    this.services?.on('world', 'sync', (b) => this.worldSyncNow((b as { now: number }).now))
+    this.world.directory = d.config.svcBus === true
     this.world.onTick = (now) => this.tick(now)
     // docs/NETWORK_AUDIT.md R1: party and guild members are never hidden by the crowd cap
     this.world.alsoMustSee = (v, o) => {
@@ -556,6 +573,19 @@ export class Gameplay implements AiHost {
   }
 
   /** Places NPCs and fills every nest. Returns a log line. */
+  /**
+   * The world service's state for a newcomer (the lobby's `welcome` and `worldEnter`): the clock anchor, the weather, the
+   * snow season. Through svc:world with SVC_BUS (docs/SERVER_ARCHITECTURE.md §3.6: zones see the world's state, they do
+   * not own it).
+   */
+  worldSync(now = Date.now()): { clock: WorldClock['state']; weather: ReturnType<WeatherService['sync']>; winter: ReturnType<WinterService['sync']> } {
+    return this.services ? this.services.call('world', 'sync', { now }) : this.worldSyncNow(now)
+  }
+
+  private worldSyncNow(now: number): ReturnType<Gameplay['worldSync']> {
+    return { clock: this.clock.state, weather: this.weather.sync(now), winter: this.winter.sync(now) }
+  }
+
   /** Daylight 0..1 at server ms `now` from the world clock (1 by day, 0 from 6° below the horizon; docs/WINTER.md §2). */
   daylight(now: number): number {
     const c = this.clock.state
@@ -974,7 +1004,10 @@ export class Gameplay implements AiHost {
       // Wave 8 (docs/SYSTEMS_SOCIAL.md §2.3): the modules' veto (trade/stall locks, mounts, the alchemy soft lock).
       const veto = this.gateFor(p, msg.t, mod, now)
       if (veto) return answer(veto)
-      if (mod) return mod.request!(p, msg, answer, now)
+      if (mod) {
+        const svc = this.services?.ownerOf(mod)
+        return svc ? this.services!.request(svc, mod, p, msg, answer, now) : mod.request!(p, msg, answer, now)
+      }
       switch (msg.t) {
         case 'attack':
           return this.attackRequest(p, msg.target, answer)

@@ -87,6 +87,8 @@ function harness() {
   const req = (x: P, msg: ClientMessage, now = Date.now()) => {
     const before = x.inbox.length
     gameplay.request(x.p, msg as Extract<ClientMessage, { t: GameplayRequest }>, now)
+    // DB_WRITER (docs/SERVER_ARCHITECTURE.md §3.8): a transfer answers once it is on disk; wait for that here
+    store.flush()
     const res = x.inbox.slice(before).filter((m): m is Msg<'actionResult'> => m.t === 'actionResult')
     expect(res.length, msg.t).toBe(1)
     return res[0]!
