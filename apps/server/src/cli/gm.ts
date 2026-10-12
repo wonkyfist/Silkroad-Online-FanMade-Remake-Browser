@@ -2,8 +2,8 @@ import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { ROLES, type Role } from '@sro/shared'
 import { dataDirFrom } from '../config.ts'
-import { openStore } from '../db.ts'
-import { applyRoleChange, liveWriter, sendToInbox } from '../services/account.ts'
+import { openStore, type Store } from '../db.ts'
+import { liveWriter, sendToInbox, type RoleChange, type RoleChangeResult } from '../services/account.ts'
 
 /**
  * GM role administration on DATA_DIR/game.db:  pnpm gm <grant|revoke|list|audit> ...
@@ -28,6 +28,19 @@ type Out = (line: string) => void
 
 function fmtTime(ms: number | null): string {
   return ms ? new Date(ms).toISOString().replace('T', ' ').slice(0, 19) : 'never'
+}
+
+/**
+ * grant / revoke on `store`: the only role change there is (test/role-policy.test.ts). Run by this CLI on the file, or —
+ * when a server with the DB writer owns the file — by that server for this CLI's inbox request (services/account.ts).
+ */
+export function applyRoleChange(store: Store, c: RoleChange): RoleChangeResult {
+  const account = store.accountByName(c.username)
+  if (!account) return { code: 1, out: [], err: [`no account named ${c.username}`] }
+  if (account.role === c.role) return { code: 0, out: [`${account.username} is already ${c.role}`], err: [] }
+  store.setRole(account.id, c.role)
+  store.audit({ accountId: account.id, characterId: null, command: `cli.${c.command}`, args: [account.username, c.role], result: `role ${account.role} -> ${c.role}`, ok: true })
+  return { code: 0, out: [`${account.username}: ${account.role} -> ${c.role} (a running server applies it within about a second)`], err: [] }
 }
 
 /** Runs the CLI; returns the process exit code (a promise when a running server's inbox takes the change). */

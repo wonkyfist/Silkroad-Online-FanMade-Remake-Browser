@@ -1,6 +1,9 @@
 import { monitorEventLoopDelay, type IntervalHistogram } from 'node:perf_hooks'
 import { encodeStats } from './encode.ts'
 import { PhaseTimers, type PhaseSnapshot } from './phases.ts'
+import type { DbWriterStats } from './db/mirror.ts'
+import type { EconomyStats } from './services/economy.ts'
+import type { ServiceStats } from './services/host.ts'
 
 /**
  * Network and tick metrics (docs/NETWORK_AUDIT.md §Measure): message counts and bytes by type in each direction, the
@@ -70,6 +73,10 @@ export interface NetStatsSnapshot {
   switches?: Record<string, boolean>
   /** The startup memory split (main.ts / game.ts stages). */
   memory?: MemoryStage[]
+  /** P2 (game.ts `extra`): the DB writer (DB_WRITER), the services (SVC_BUS), the transfers. */
+  db?: DbWriterStats | null
+  services?: Record<string, ServiceStats>
+  economy?: EconomyStats & { held: number; heldMessages: number }
 }
 
 export class NetStats {

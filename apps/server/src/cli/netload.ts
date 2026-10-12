@@ -7,7 +7,8 @@
  * and pings every 5 s (the client's own cadence; RTT is measured from these).
  *
  *   pnpm netload --bots 100 --scenario town|spread [--duration 60] [--warmup 20] [--port 18900] [--out file.json]
- *   (the server takes GATEWAYS, AOI_JOBS and the P0 switches from the environment; the report splits the CPU by process)
+ *   (the server takes GATEWAYS, AOI_JOBS, DB_WRITER, SVC_BUS and the P0 switches from the environment; the report splits the
+ *   CPU by process and thread and shows the DB writer's queue and latency)
  *
  * town   = everyone stays in Jangan (the crowded-plaza case: every bot sees every other one).
  * spread = a GM bot teleports to the world's GM places in turn and summons an equal share of the bots to each.
@@ -354,6 +355,22 @@ async function main(): Promise<void> {
   })
   const aoi = b.aoiJobs ? { ...b.aoiJobs, workerCpuPct: pctOf(b.aoiJobs.workerCpuMs - (a.aoiJobs?.workerCpuMs ?? 0)) } : undefined
   const totalCpuPct = Math.round((cpuPct + gateways.reduce((x: number, g: { cpuPct: number }) => x + g.cpuPct, 0)) * 10) / 10
+  // docs/SERVER_ARCHITECTURE.md P2: the DB writer thread (queue, latency, group commit, its CPU), the services, the transfers
+  const db = b.db
+    ? {
+        writerCpuPct: pctOf(b.db.writerCpuMs - (a.db?.writerCpuMs ?? 0)),
+        entriesPerS: Math.round(((b.db.entries - (a.db?.entries ?? 0)) / dt) * 10) / 10,
+        opsPerS: Math.round(((b.db.ops - (a.db?.ops ?? 0)) / dt) * 10) / 10,
+        groupsPerS: Math.round(((b.db.groups - (a.db?.groups ?? 0)) / dt) * 10) / 10,
+        latencyMs: `${b.db.latencyP50Ms} / ${b.db.latencyP95Ms} / ${b.db.latencyMaxMs}`,
+        commitMs: `${b.db.commitP50Ms} / ${b.db.commitP95Ms}`,
+        queue: { now: b.db.queued, max: b.db.maxQueued, maxOldestMs: b.db.maxOldestMs },
+        groupOps: b.db.groupOps, walMb: b.db.walMb, memDbMb: b.db.memDbMb, restarts: b.db.restarts, divergences: b.db.divergences,
+      }
+    : undefined
+  const services = b.services
+    ? Object.fromEntries(Object.entries(b.services as Record<string, { requests: number; p95Ms: number }>).filter(([, v]) => v.requests > 0).map(([k, v]) => [k, `${Math.round(((v.requests - (a.services?.[k]?.requests ?? 0)) / dt) * 10) / 10}/s p95 ${v.p95Ms} ms`]))
+    : undefined
   const top = (o: Record<string, { n: number; bytes: number }>) =>
     Object.entries(o).sort((x, y) => y[1].bytes - x[1].bytes).slice(0, 15).map(([t, c]) => ({ t, perS: Math.round((c.n / dt) * 10) / 10, kBps: Math.round(c.bytes / dt / 102.4) / 10 }))
   const report = {
@@ -362,6 +379,9 @@ async function main(): Promise<void> {
     server: { cpuPct, ...(mainThreadPct !== undefined ? { mainThreadPct } : {}), totalCpuPct, rssMbIdle: idle.process.rssMb, rssMbMax: Math.max(...rss, b.process.rssMb), heapMb: b.process.heapMb },
     ...(gateways.length ? { gateways } : {}),
     ...(aoi ? { aoiJobs: aoi } : {}),
+    ...(db ? { db } : {}),
+    ...(services ? { services } : {}),
+    ...(b.economy ? { economy: b.economy } : {}),
     bandwidth: {
       outKBps: Math.round(b.outTotal.bytes / dt / 102.4) / 10,
       inKBps: Math.round(b.inTotal.bytes / dt / 102.4) / 10,

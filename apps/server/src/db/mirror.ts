@@ -40,6 +40,9 @@ export interface DbWriterOptions {
 export interface DbWriterStats {
   /** Entries journaled and not committed yet, their statements, and the oldest one's age (ms). */
   queued: number
+  /** The most entries waiting at once, and the oldest age seen (ms), since the last stats reset. */
+  maxQueued: number
+  maxOldestMs: number
   queuedOps: number
   oldestMs: number
   seq: number
@@ -102,6 +105,9 @@ export class DbMirror {
   private commitN = 0
   private readonly totals = { entries: 0, ops: 0, groups: 0, restarts: 0, resyncs: 0, divergences: 0, external: 0, walBytes: 0, writerCpuMs: 0, fatal: 0 }
   private retry: ReturnType<typeof setTimeout> | null = null
+  private isReady = false
+  private readonly peak = { queued: 0, oldestMs: 0 }
+  private readyWaiters: (() => void)[] = []
   private readonly opts: DbWriterOptions
   /** afterCommit callbacks registered inside a transaction: they wait for its entry. */
   private txWaiters: (() => void)[] = []
@@ -234,6 +240,7 @@ export class DbMirror {
   // ---- the writer ----------------------------------------------------------------------------------------
 
   private spawn(crash: WriterCrash | null): void {
+    this.isReady = false
     const { port1, port2 } = new MessageChannel()
     const init: WriterInit = { file: this.file, port: port2, ctl: this.ctlBuf, maxGroupOps: this.opts.maxGroupOps ?? 500, crash }
     // no loader: the writer is plain erasable TypeScript (Node's own type stripping), whatever the core runs with
@@ -242,7 +249,13 @@ export class DbMirror {
     link.on('ack', (e) => this.onAck(e.body as WriterAck))
     link.on('diverged', (e) => this.onDiverged(e.body as WriterDiverged))
     link.on('fatal', (e) => this.fatal(`writer: ${(e.body as { error: string }).error}`))
-    link.on('ready', () => {})
+    link.on('ready', () => {
+      if (this.worker !== w) return
+      const r = this.readyWaiters
+      this.readyWaiters = []
+      this.isReady = true
+      for (const f of r) f()
+    })
     w.on('error', (e) => this.log(`db writer: ${(e as Error)?.stack ?? e}`))
     w.on('exit', (code) => {
       if (this.worker !== w) return
@@ -296,6 +309,10 @@ export class DbMirror {
     this.outbox = []
     this.outboxOps = 0
     this.link.send({ to: 'db', k: 'batch', body: batch })
+    const q = this.inflight.length
+    if (q > this.peak.queued) this.peak.queued = q
+    const age = Date.now() - this.inflight[0]![1]
+    if (age > this.peak.oldestMs) this.peak.oldestMs = age
   }
 
   /** Replaces the file's content by a snapshot of the memory database (after a writer death or a divergence). */
@@ -360,6 +377,19 @@ export class DbMirror {
   }
 
   // ---- API -----------------------------------------------------------------------------------------------
+
+  /** Resolves once the current writer thread runs (its first message). */
+  whenReady(): Promise<void> {
+    if (this.isReady) return Promise.resolve()
+    // the writer and its port do not hold the process open (unref): this wait does
+    const keep = setInterval(() => {}, 1000)
+    return new Promise((r) =>
+      this.readyWaiters.push(() => {
+        clearInterval(keep)
+        r()
+      }),
+    )
+  }
 
   /** The last journaled entry. */
   get journaled(): number {
@@ -442,6 +472,8 @@ export class DbMirror {
     }
     return {
       queued: this.inflight.length + this.outbox.length,
+      maxQueued: Math.max(this.peak.queued, this.inflight.length + this.outbox.length),
+      maxOldestMs: Math.max(this.peak.oldestMs, now - oldest),
       queuedOps: this.inflightOps + this.outboxOps,
       oldestMs: now - oldest,
       seq: this.seq,
@@ -470,6 +502,8 @@ export class DbMirror {
 
   /** Clears the latency windows (the load test's phases). */
   resetStats(): void {
+    this.peak.queued = 0
+    this.peak.oldestMs = 0
     this.latN = 0
     this.latMax = 0
     this.commitN = 0

@@ -525,6 +525,9 @@ describe('the recipient index (known.ts) and encode-once', () => {
   })
 })
 
+/** P2's switches as the test servers run them (SRO_TEST_DB_WRITER / SRO_TEST_SVC_BUS). */
+const P2_SWITCHES = { dbWriter: process.env.SRO_TEST_DB_WRITER === '1', svcBus: process.env.SRO_TEST_SVC_BUS === '1' }
+
 describe('the tick timers (phases.ts) and the performance tile', () => {
   it('phases add up per tick interval; modules are timed one by one; reset clears', () => {
     const t = new PhaseTimers()
@@ -561,7 +564,7 @@ describe('the tick timers (phases.ts) and the performance tile', () => {
     expect(snap.phases!.intervals).toBeGreaterThan(10)
     expect(Object.keys(snap.phases!.phases).sort()).toEqual([...PHASES].sort())
     expect(snap.phases!.modules.length).toBeGreaterThan(5)
-    expect(snap.switches).toEqual({ tickTimers: true, mobGrid: true, watchers: true, encodeOnce: true, aoiFast: true, gateways: !!process.env.SRO_TEST_GATEWAYS, aoiJobs: !!process.env.SRO_TEST_AOI_JOBS })
+    expect(snap.switches).toEqual({ tickTimers: true, mobGrid: true, watchers: true, encodeOnce: true, aoiFast: true, gateways: !!process.env.SRO_TEST_GATEWAYS, aoiJobs: !!process.env.SRO_TEST_AOI_JOBS, ...P2_SWITCHES })
     expect(snap.queue).toEqual({ sockets: 0, bufferedBytes: 0, maxBufferedBytes: 0 })
     expect(snap.memory!.map((m) => m.stage)).toEqual(['start', 'content', 'navmesh', 'modules', 'world'])
     const tile = perfTile(snap)
@@ -577,7 +580,7 @@ describe('the tick timers (phases.ts) and the performance tile', () => {
     while (s.ctx.world.ticks < 5 && Date.now() < deadline) await new Promise((r) => setTimeout(r, 50))
     const snap = s.ctx.net.snapshot()
     expect(snap.phases).toBeUndefined()
-    expect(snap.switches).toEqual({ tickTimers: false, mobGrid: false, watchers: false, encodeOnce: false, aoiFast: false, gateways: !!process.env.SRO_TEST_GATEWAYS, aoiJobs: false })
+    expect(snap.switches).toEqual({ tickTimers: false, mobGrid: false, watchers: false, encodeOnce: false, aoiFast: false, gateways: !!process.env.SRO_TEST_GATEWAYS, aoiJobs: false, ...P2_SWITCHES })
     expect(s.ctx.world.mobGrid || s.ctx.world.useWatchers || s.ctx.world.encodeOnce || s.ctx.world.aoiFast).toBe(false)
     expect(snap.tick.n).toBeGreaterThan(0)
   })

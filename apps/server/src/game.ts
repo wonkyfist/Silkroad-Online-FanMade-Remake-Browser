@@ -37,6 +37,7 @@ import { layerContentOverrides, layerRepoOverrides } from './editors/overrides.t
 import { GM_API_PREFIX, handleGmApi } from './editors/quest-api.ts'
 import { Gameplay } from './gameplay.ts'
 import { claimWriterLock, serveInbox } from './services/account.ts'
+import { applyRoleChange } from './cli/gm.ts'
 import { holdStats } from './services/hold.ts'
 import { routeChat } from './chat.ts'
 import { GameData } from './gamedata.ts'
@@ -397,7 +398,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     },
     refreshRoles(force = false) {
       // P2: role changes the gm CLI handed to this server (DB_WRITER: the file is this server's alone)
-      if (store.writer && serveInbox(config.dataDir, store, config.log) > 0) force = true
+      if (store.writer && serveInbox(config.dataDir, (c) => applyRoleChange(store, c), config.log) > 0) force = true
       const version = store.dataVersion()
       if (!force && version === dataVersion) return
       dataVersion = version

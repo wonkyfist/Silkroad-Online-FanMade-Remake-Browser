@@ -138,6 +138,19 @@ function perfView(p: AdminDashboard['perf']): Node {
   if (p.rates) rows.push(['Messages', `${fmtNum(p.rates.inPerS)}/s in · ${fmtNum(p.rates.outPerS)}/s out (${fmtNum(p.rates.outKBps)} kB/s) · ${fmtNum(p.rates.encodesPerS)} encodes/s`])
   if (p.queue) rows.push(['Send queue', `${fmtBytes(p.queue.bufferedBytes)} over ${fmtNum(p.queue.sockets)} sockets (worst ${fmtBytes(p.queue.maxBufferedBytes)})`])
   if (p.loop) rows.push(['Event loop', `delay p50 ${ms(p.loop.p50Ms)} · p99 ${ms(p.loop.p99Ms)} · max ${ms(p.loop.maxMs)}`])
+  // docs/SERVER_ARCHITECTURE.md P2: the DB writer's queue (journaled in memory, not yet on disk), the services, the transfers
+  if (p.db) {
+    const d = p.db
+    const qKind = !d.up || d.oldestMs > 500 ? 'bad' : d.queued > 1000 ? 'gold' : 'ok'
+    const trouble = [d.restarts ? `${d.restarts} restart(s)` : '', d.resyncs ? `${d.resyncs} resync(s)` : '', d.divergences ? `${d.divergences} divergence(s)` : '', d.external ? `${d.external} external write(s)` : ''].filter(Boolean)
+    rows.push(['DB writer', [
+      badge(d.up ? `${fmtNum(d.queued)} queued` : 'down', qKind),
+      ` ${fmtNum(d.queuedOps)} statements · oldest ${ms(d.oldestMs)} · commit p95 ${ms(d.commitP95Ms)} · to disk p95 ${ms(d.latencyP95Ms)} · ${fmtNum(d.groupOps)}/group · WAL ${fmtNum(d.walMb)} MB · in memory ${fmtNum(d.memDbMb)} MB`,
+      ...(trouble.length ? [' ', badge(trouble.join(' · '), 'gold')] : []),
+    ]])
+  }
+  if (p.economy) rows.push(['Transfers', `${fmtNum(p.economy.transfers)} · ${fmtNum(p.economy.pending)} waiting for the disk · answered p95 ${ms(p.economy.ackP95Ms)}`])
+  if (p.services?.length) rows.push(['Services', p.services.filter((x) => x.requests > 0).slice(0, 6).map((x) => `${x.name} ${fmtNum(x.requests)} (p95 ${ms(x.p95Ms)})`).join(' · ') || 'idle'])
   const off = Object.entries(p.switches ?? {}).filter(([, on]) => !on).map(([k]) => k)
   if (off.length) rows.push(['Switched off', off.map((k) => badge(k, 'dim'))])
   return kv(rows)

@@ -52,6 +52,23 @@ export function perfTile(s: NetStatsSnapshot): NonNullable<AdminDashboard['perf'
     ...(s.queue ? { queue: s.queue } : {}),
     ...(s.loop ? { loop: s.loop } : {}),
     ...(s.switches ? { switches: s.switches } : {}),
+    // docs/SERVER_ARCHITECTURE.md P2: the DB writer's queue, the services, the transfers
+    ...(s.db
+      ? {
+          db: {
+            up: s.db.up, queued: s.db.queued, queuedOps: s.db.queuedOps, oldestMs: s.db.oldestMs, commitP95Ms: s.db.commitP95Ms, latencyP95Ms: s.db.latencyP95Ms,
+            groupOps: s.db.groupOps, walMb: s.db.walMb, memDbMb: s.db.memDbMb, restarts: s.db.restarts, resyncs: s.db.resyncs, divergences: s.db.divergences, external: s.db.external,
+          },
+        }
+      : {}),
+    ...(s.services
+      ? {
+          services: Object.entries(s.services)
+            .map(([name, v]) => ({ name, requests: v.requests, p95Ms: v.p95Ms, errors: v.errors }))
+            .sort((a, b) => b.requests - a.requests),
+        }
+      : {}),
+    ...(s.economy ? { economy: { transfers: s.economy.transfers, pending: s.economy.pending, ackP95Ms: s.economy.ackP95Ms } } : {}),
   }
 }
 

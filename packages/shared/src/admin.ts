@@ -138,6 +138,30 @@ export interface AdminServerPerf {
   loop?: { p50Ms: number; p99Ms: number; maxMs: number }
   /** The P0 switches (TICK_TIMERS, MOB_GRID, WATCHERS, ENCODE_ONCE, AOI_FAST) as running. */
   switches?: Record<string, boolean>
+  /**
+   * docs/SERVER_ARCHITECTURE.md P2 (DB_WRITER): the DB writer thread's queue — entries journaled in memory and not yet on
+   * disk, their statements, the oldest one's age —, its commit time and the journal-to-disk latency (p95), statements per
+   * group, the WAL and the in-memory database (MB), and its failures (restarts, resyncs, divergences, external writes).
+   */
+  db?: {
+    up: boolean
+    queued: number
+    queuedOps: number
+    oldestMs: number
+    commitP95Ms: number
+    latencyP95Ms: number
+    groupOps: number
+    walMb: number
+    memDbMb: number
+    restarts: number
+    resyncs: number
+    divergences: number
+    external: number
+  }
+  /** P2 (SVC_BUS): each global service's requests since start and its handling time (p95 ms), busiest first. */
+  services?: { name: string; requests: number; p95Ms: number; errors: number }[]
+  /** P2: transfers between players (trade, stall purchases): how many, waiting for the disk now, start-to-answer p95 (ms). */
+  economy?: { transfers: number; pending: number; ackP95Ms: number }
 }
 
 export interface AdminDashboard {
