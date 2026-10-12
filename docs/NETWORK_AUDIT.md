@@ -162,6 +162,13 @@ spawns/s, tick p50 78 ms — a profile showed `pickCrowd` at 15 % and the intere
 without the cap (the crowd pick), and are well inside the 100 ms budget. In the town scenario every bot is within chat
 range, so chat (3 720 lines delivered/s) is unchanged there; spread out, range-limited chat removes the world-wide fan-out.
 
+**Server architecture P0 (2026-10-12, docs/SERVER_ARCHITECTURE.md §4.1).** The monster pass's player grid, the
+recipient index, encode-once and the interest pass's quick path (each with an off switch), measured back to back with
+them off and on: spread 500 tick p50/p95 18.9/24.6 → 5.7/8.3 ms and CPU 24.8 → 11.2 %; town 500 p95 43.0 → 16.6 ms,
+CPU 37.6 → 24 %, RTT p95 42.9 → 16.8 ms; the same messages per client (35/s in town), JSON encodes 17,256/s →
+1,300/s. The server now reports its own per-phase split (`GET /netstats` `phases`, the admin dashboard's Performance
+card): in a crowded town the socket flush between ticks (~15 ms per 100 ms) is the largest cost left.
+
 **What breaks first at 500 (before the cap).** Nothing broke: no disconnects, ticks well inside the budget, RTT p95 ≤ 32 ms. The
 first limit was the crowded-town **fan-out** (now capped, above): every walking player is a message to every other player in view, so the
 bytes grow with N² (500 in one town = 6.25 MB/s ≈ 50 Mbit/s up from the server, 12.5 kB/s and 133 messages/s into each
@@ -201,3 +208,5 @@ also fans out N² (rate-limited to 1 line/s per player, so 500 spammers could pu
 6. Tests: run `apps/server/test/network*.test.ts`, `crowd.test.ts`, the flight and court suites, then
    `pnpm netload --bots 100 --scenario town` (under BENCH.lock). `PROTOCOL_VERSION` is unchanged; `CLOSE_CODE.slow`
    (4011) and the admin `maxVisiblePlayers` field are additive.
+7. Server architecture P0 (docs/SERVER_ARCHITECTURE.md §4.1, 2026-10-12): see the private-build notes there (no
+   conflicts expected; `Player.known` is a `KnownSet`, `Player.send(msg, enc?)`, `World.watchersOf`, `Encoded`).

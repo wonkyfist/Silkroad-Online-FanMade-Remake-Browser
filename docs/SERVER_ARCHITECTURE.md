@@ -1,6 +1,6 @@
 # Server architecture: the multi-core target (2026-10-12)
 
-Status: **design + measurements only, nothing built yet.** Scope: `apps/server` on master and the private branch's
+Status: design + measurements; **P0 built (2026-10-12, §4.1)**, P1–P4 not yet. Scope: `apps/server` on master and the private branch's
 `flight/`, `drowned-court/`, `costume.ts`, `walk.ts`. The user's rule: "having the right architecture from the start
 regardless if you use it or not is the ideal way". Target: **2,000+ concurrent players on a 4–8 core VPS** (and more
 headroom on the live 4-core N100), with **no client change**.
@@ -23,6 +23,8 @@ headroom on the live 4-core N100), with **no client change**.
   today's single-thread path, so the game works at every step and the test suite runs both ways.
 - **Start with P0** (it is also an urgent fix for the live server: spread 500 is over the tick budget today) and the
   P1 gateway, which takes the single biggest slice of CPU off the simulation without touching gameplay code.
+- **P0 is done (2026-10-12, §4.1):** spread 500 tick p95 24.6 → 8.3 ms, town 500 43.0 → 16.6 ms, server CPU −55 % /
+  −35 %, the same messages (a lockstep test proves identical decisions and streams); every change has an off switch.
 
 ## 1. Measurements
 
@@ -370,7 +372,7 @@ switch: `GATEWAYS=0` (in-process connections, today's path), `AOI_JOBS=0`, `DB_W
 
 | Phase | Content | Effort | Main risks | Netload gate |
 |---|---|---|---|---|
-| **P0** measure + O(N²) | Per-phase tick timers in `NetStats`/admin dashboard; one player grid per tick reused by `playersNear`, the wake check and `sayLocal`; `watchers` index (inverse of `known`) for `broadcastAbout*`; encode once per message object per turn; P0 memory split (nav/content/modules) | 2–3 days | Low: behaviour must stay identical (same recipients, same order) — existing tests + a recipient-equivalence test | spread 500 p95 ≤ 30 ms (from 103), town 500 p95 ≤ 40 ms, same msg mix |
+| **P0** measure + O(N²) — **done 2026-10-12** (§4.1) | Per-phase tick timers in `NetStats`/admin dashboard; one player grid per tick reused by `playersNear`, the wake check and `sayLocal`; `watchers` index (inverse of `known`) for `broadcastAbout*`; encode once per message object per turn; P0 memory split (nav/content/modules) | 2–3 days | Low: behaviour must stay identical (same recipients, same order) — existing tests + a recipient-equivalence test | spread 500 p95 ≤ 30 ms (from 103), town 500 p95 ≤ 40 ms, same msg mix |
 | **P1a** gateway processes | `bus/` (Transport, IpcTransport), `gateway/` (lifecycle, auth, validate, budgets, out-batches, fan-out), upgrade-socket passing, director routing table, `/netstats` merge | 6–8 days | Handle passing edge cases (`head` bytes, Windows), duplicate-login across gateways, ack FIFO (answered budgets stay in the zone) | town 500: core CPU −30 % or more, RTT p95 ≤ 40 ms; 1,000 spread + 500 town on the dev PC within budget |
 | **P1b** AoI job workers | SAB snapshot, job pool, apply diffs; incremental pass | 3–4 days | Visibility rules (staff, veil, invisible, Play the Boss anchor, must-see) must match exactly: run old and new pass side by side in tests and diff | town 500 tick p95 ≤ 15 ms; town 1,000 within budget |
 | **P2** DB writer + services | Writer thread, ops/journal/group commit, cached inventories, `transfer` + escrow + commit-then-ack, barriers; services behind bus APIs with zone proxies; global scans → `notifyAll`/grid/directory | 10–15 days | **Economy** (dupes/loss): abuse suites + a new invariant test (total gold + items constant under random trades with crash injection); 46 files on the store | `econ` scenario 0 invariant violations, incl. `kill -9` mid-trade; latency of answered requests p95 ≤ 20 ms |
@@ -383,20 +385,98 @@ scenarios `mixed` (town + spread), `border`, `econ` (trades/stall buys with a be
 `inspector` sessions); the report adds per-zone tick percentiles from the extended `/netstats`. The final gate runs
 on a 4–8 core Linux VPS (not the dev PC: Windows loopback and a shared machine distort socket costs).
 
+### 4.1 P0 as built (2026-10-12)
+
+Each change has its own switch (env, default on; off runs the path from before P0, to compare or roll back;
+`pnpm netload` passes the environment to its server). `GET /netstats` shows which ran (`switches`).
+
+| Switch | What | Code |
+|---|---|---|
+| `TICK_TIMERS` | Always-on phase timers, one sample per tick interval: `arrive`, `players` (actions, tickPlayer hooks), `mobs` (wake check, AI), `items`, `spawner`, `modules` (each module's tick hook timed too), `interest`, `crowd`, `inbound` (client frames between ticks), `flush` (end-of-turn writev), `save`, `gc`; messages/s and JSON encodes/s, the sockets' outbound backlog (`queue`), event-loop delay (`loop`) and the startup memory split. On `GET /netstats` (`phases`, `rates`, `queue`, `loop`, `switches`, `memory`), in the netload report and on the admin dashboard's **Performance** card | `phases.ts`, `netstats.ts`, `admin/api.ts perfTile`, `apps/admin/src/pages/dashboard.ts` |
+| `MOB_GRID` | One player grid per monster pass on **region cells** (192 m on regionAt's axes, `cells.ts`: the cells a zone will own). The wake check reads it (the same arithmetic as the old `active.some`, so the same answer); every `playersNear` inside the pass (AI acquisition, mob skills, Climb roles, uniques…) takes candidates from the cells in reach (+2 m) and applies the old exact test to live positions, in `world.players` order. A warp, login or logout during the pass rebuilds the grid; outside the pass (requests, module hooks) the full scan runs as before. `sayLocal` keeps its scan: chat arrives between ticks, on live positions a tick's grid cannot answer exactly, and it is 0.2 % of the CPU | `cells.ts`, `World.beginPlayerScan/playersNear`, `Gameplay.tick` |
+| `WATCHERS` | The recipient index: the inverse of `Player.known` (`known.ts`; `KnownSet` keeps it in step on every add/delete/clear, whoever calls them). `broadcastAbout`, `broadcastAboutEither` and the despawns of `removeEntity`/`remove` go to the watchers instead of scanning every player; `World.watchersOf(id)` for modules with their own send rules. Falls back to the scan if a player ever enters `world.players` without `World.add` | `known.ts`, `world.ts` |
+| `ENCODE_ONCE` | A broadcast makes one `Encoded` (JSON + UTF-8 Buffer, on first use) that every recipient's connection writes (`Player.send(msg, enc)`); every frame goes to `ws` as a Buffer (text opcode), so a corked socket's writev holds only buffers and copies nothing; one `setImmediate` per turn uncorks every socket corked in it | `encode.ts`, `connection.ts` |
+| `AOI_FAST` | The interest pass with the same spawns and despawns in the same order, minus its overhead: per-cell id/position arrays (no map lookup per candidate), numeric cell keys, no candidate copies, the crowd pick on the same arrays without sorting what it only reads the head of (`pickCrowdCells`, `firstSorted`), the crowd cap asked first in the reveal loop, and `alsoMustSee` as per-player keys (`alsoMustSeeKeys`: party, guild) instead of once per pair | `world.ts` |
+
+**Same behaviour, tested.** `apps/server/test/p0-equivalence.test.ts` runs two worlds in lockstep, every switch on
+against all off, through 300 ticks of fights, deaths, parties, staff viewers, a veiled boss whose pilot views from it,
+warps, logins and logouts, invisibility, foes and chat: after every tick the monster states and every known set are
+identical, and at the end every client's message stream is (each recipient's own order included). A 60-player
+lattice (many equal distances) checks the crowd picks pass by pass. A deliberately broken grid, recipient set or tie
+rule fails them at once. Unit checks pin the grid against full scans (cell edges, huge radii), the index against every
+known set, encode-once (one encode for 12 recipients), the timers and the switches.
+
+**Measurements** (§1.1's method without the profiler: 500 bots, 20 s warm-up, 60 s measured, tick 10 Hz; "off" = the
+same build with `MOB_GRID WATCHERS ENCODE_ONCE AOI_FAST` off, i.e. the code paths of `354b437`; run back to back under
+`C:\dev\BENCH.lock` on 2026-10-12, master `dfca8a2`; no disconnects, no bot errors, the same message mix):
+
+| Run | Tick p50 / p95 / p99 / max (ms) | Server CPU | Out | Msgs / player / s | RTT p50 / p95 (ms) | JSON encodes / s |
+|---|---|---|---|---|---|---|
+| spread 500, P0 off | 18.9 / 24.6 / 28.1 / 34 | 24.8 % | 0.48 MB/s | 9.1 | 0.5 / 24.9 | 4,204 |
+| **spread 500, P0 on** | **5.7 / 8.3 / 9.9 / 11** | **11.2 %** | 0.48 MB/s | 9.1 | 0.3 / 8.8 | 621 |
+| town 500, P0 off | 9.6 / 43.0 / 46.2 / 53 | 37.6 % | 1.86 MB/s | 34.9 | 2.8 / 42.9 | 17,256 |
+| **town 500, P0 on** (2 runs) | **13.0 / 16.9 / 18.4 / 20** and 2.8 / 16.3 / 18.4 / 20 | **23.8–24.9 %** | 1.87 MB/s | 35.0 | 0.7 / 16.8 | 1,300 |
+
+Per phase, from the built-in timers (ms per 100 ms tick interval, mean / p95; `inbound` and `flush` run between ticks):
+
+| Phase | spread off | spread on | town off | town on |
+|---|---|---|---|---|
+| mobs (wake check + AI) | 13.9 / 16.8 | 1.9 / 2.4 | 4.4 / 5.6 | 0.48 / 0.58 |
+| interest | 3.3 / 7.0 | 2.0 / 4.4 | 12.3 / 26.0 | 5.5 / 12.1 |
+| crowd | 0.19 / 0.41 | 0.13 / 0.28 | 5.2 / 11.2 | 1.3 / 2.8 |
+| arrive | 0.92 | 0.54 | 0.81 | 0.47 |
+| players, modules, spawner, items | 0.68 | 0.66 | 0.67 | 0.72 |
+| inbound | 0.86 | 0.63 | 1.76 | 1.14 |
+| flush (socket writes) | 4.9 / 7.0 | 4.7 / 6.7 | 14.6 / 23.7 | 15.4 / 25.1 |
+| gc | 0.29 | 0.08 | 0.24 | 0.14 |
+| **busy** | **25.1** | **10.5** | **39.9** | **25.2** |
+
+- §1.1's spread baseline (43.5 / 103 ms) did not reproduce: the same build with P0 off measures 18.9 / 24.6 ms, and
+  17.9 / 24.9 under `--prof` (as on 2026-10-10: 18 / 23.6), so that run was most likely slowed by other work on the
+  PC. The town baseline does reproduce (43.0 ms p95; 44.3 under the profiler). P0's gate (spread p95 ≤ 30, town ≤ 40)
+  and the targets (spread well under 50, crowded town under 30) hold either way.
+- In town the p50 lands on either side of the interest ticks (every second tick): read the p95.
+- The event-loop delay p99 fell from 39 to 24 ms (spread) and from 58 to 32 ms (town); the RTT p95 follows it.
+- `flush` (one writev per connection and turn) stays about the same with P0 (the system calls cost, not the copies)
+  and is now the largest single cost of a crowded town: P1a's target. The interest pass plus the crowd pick (O(N²)
+  inside one crowd) is the next: P1b.
+
+**Memory split (F6).** Measured at start with `node --expose-gc` (a GC before each sample; `GET /netstats memory`, and
+the `memory by startup stage` log line): content tables +4 MB heap; world manifest + navmesh +10 MB heap and
+75–120 MB of typed arrays (external); the ~45 modules +1 MB; 54 NPCs and 6,082 monsters +10 MB. The idle server holds
+~50 MB of heap and ~80–105 MB external in ~430 MB RSS; the rest is the Node/V8 runtime, compiled code and allocator
+slack. (The 672 MB "RSS idle" of §1.1 was read without a GC.) So the navmesh is the only large data set: zone workers
+that share it through SharedArrayBuffer (§3.5) cost tens of MB each (their entities and module state), not hundreds.
+
+**Private build** (the next merge of master into `C:\dev\jangan-private-wt`). A trial `git merge-file` of world.ts,
+gameplay.ts, connection.ts and game.ts against the private versions merges without conflicts; the other P0 files are
+unchanged on the private side. The private `if (m.sea) continue` stays in the monster loop (now in `Gameplay.tickAll`,
+`tick` wraps it); `walkFactor`, `costumeHidden`, `Mob.sea`, the `flyInput`/`swimInput` cases and the content
+installers are untouched. Kept APIs: `Player.known` is still a `Set<number>` to every reader (a `KnownSet`: its
+`has/add/delete` keep the index right), `Player.send` takes an optional second argument (wrappers that forward only the
+message stay correct, they just lose the shared encoding), `broadcastAbout`, `playersNear`, `positionAt` and
+`world.players` are unchanged. Optional: `flight.ts broadcastFly` and `court.ts sendAbout` scan every player for
+`known.has`; they can walk `world.watchersOf(id)` instead and send one `new Encoded(msg)` per sample
+(`v.send(msg, enc)`). Flight and the Court assign `p.pos` directly, which the monster pass's grid tolerates as long as
+it is not inside the monster loop (today: input handlers, tickPlayer, tick hooks — all outside it); a teleport of a
+live player from inside it must go through `world.warp`. After the merge run `p0-equivalence.test.ts` (it builds the
+private Gameplay, flight and Court included) and the flight and Court suites.
+
 ## 5. Open questions and risks
 
-- **Memory per zone worker** (F6): if content is a large share of the 672 MB, zone workers need shared or lazily
-  loaded content tables, not just the navmesh in SAB. P0 measures it before P3 is sized.
+- **Memory per zone worker** (F6): answered by P0 (§4.1): content tables are a few MB and the world's own heap ~50 MB;
+  the navmesh's ~100 MB of typed arrays is the one thing to share (SAB). The rest of the RSS is the runtime.
 - **One cell, one core:** a single plaza crowd beyond ~1,500 is bounded by one zone thread even with AoI jobs; the
   crowd cap and encode-once are the levers there (and binary encoding R2 in the gateway).
 - **Quests and events spanning cells** (kill counts near a border, siege waves) are covered by "the owner of the
   affected entity decides" plus pinning; each module's border cases need a test in P3.
-- **Spread regression (§1.1)** should be fixed in P0 regardless of the architecture: the live N100 cannot hold 500
-  spread players today.
+- **Spread regression (§1.1)**: did not reproduce in P0's back-to-back runs (§4.1: the same build with the P0
+  switches off measures 18 / 27 ms, as on 2026-10-10); with P0 on, spread 500 costs a few ms per tick.
 
 ## 6. What to start with
 
-P0 now: the per-phase timers (so every later step is measured the same way) and the three O(N²) fixes — they buy the
-largest gain (spread 500: ~34 ms of a 63 ms interval is the monster AI and the wake check, mostly all-player scans), are low risk, and are needed inside every future
-zone anyway. Then P1a (gateway processes, encode-once fan-out): the biggest remaining slice (17–37 %) leaves the
-simulation thread with no gameplay change, and it creates the bus and the director that P2–P4 build on.
+P0 is done (§4.1): the per-phase timers measure every later step the same way, and the O(N²) scans are gone. Next is
+P1a (gateway processes): the largest remaining slice on the simulation thread is now the socket work (`flush` and
+`inbound` in §4.1's split, the biggest phase of a crowded town), which leaves it with no gameplay change; P0's
+encode-once payloads and watcher sets are already the out-batch's "one payload, n recipients" record. Then P1b (AoI
+job workers) for the crowded interest pass, the only O(N²) work left (500 × 500 pairs per pass in one town).
