@@ -153,7 +153,7 @@ describe('SroFogPlugin on materials (NullEngine)', () => {
     const plugin = pbr.pluginManager!.getPlugin<SroFogPlugin>(FOG_PLUGIN_NAME)!
     const defines: Record<string, unknown> = {}
     plugin.prepareDefines(defines as never)
-    expect(defines).toEqual({ SRO_HEIGHTFOG: true, SRO_FOG_RING: false })
+    expect(defines).toEqual({ SRO_HEIGHTFOG: true, SRO_FOG_RING: false, SRO_FOG_TREE: false })
     expect(plugin.isCompatible(ShaderLanguage.WGSL) && plugin.isCompatible(ShaderLanguage.GLSL)).toBe(true)
     expect(Object.keys(plugin.getCustomCode('fragment', ShaderLanguage.WGSL)!)).toEqual(Object.keys(plugin.getCustomCode('fragment', ShaderLanguage.GLSL)!))
     expect(plugin.getCustomCode('vertex', ShaderLanguage.WGSL)).toBeNull()
@@ -217,5 +217,9 @@ describe('SroFogPlugin on materials (NullEngine)', () => {
     const wgsl = Object.values(fogPluginCode(ShaderLanguage.WGSL)).join('\n')
     expect(wgsl).toContain('smoothstep(0.0, uniforms.sroFogUp.w, sroDir.y)')
     expect(wgsl).toContain(`${FOG_SURFACE_MAX.toFixed(2)} * invExposure`)
+    // High+: the sky dome itself (the sky probe cube) in the view direction; the merged trees fade into it near their range
+    expect(wgsl).toContain('var sroFogRing: texture_cube<f32>;')
+    expect(wgsl).toContain('smoothstep(uniforms.sroFogTree.x, uniforms.sroFogTree.y')
+    expect(Object.values(fogPluginCode(ShaderLanguage.GLSL)).join(' ')).toContain('uniform samplerCube sroFogRing;')
   })
 })

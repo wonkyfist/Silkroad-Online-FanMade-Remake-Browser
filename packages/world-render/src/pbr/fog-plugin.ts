@@ -19,8 +19,8 @@
  *   cannot pop out of the fog at the streaming edge. (RENDER §5.5 wrote `(1 − e^(−kh))/(kh)`, which thins the fog
  *   downward; the sign is corrected here.) F → 1 as h → 0: the uniform exponential fog.
  * - colour = mix(horizon, sunColour, strength × max(0, dot(viewDir, sunDir))^8); horizon = SkyState.fogColor, or the
- *   64 × 2 `horizonRing` (row 0) sampled at the view azimuth on High+ (`SRO_FOG_RING`); above the horizon it leans to the
- *   sky FOG_UP_DEG up (the ring's row 1, else SkyState.fogColorUp). The fog colour is an LDR display
+ *   sky dome itself on High+ (`SRO_FOG_RING`: SkySystem's 64² sky probe read in the view direction, so a fogged crown matches
+ *   the sky behind it); on Medium the flat horizon colour, leaning to SkyState.fogColorUp above the horizon. The fog colour is an LDR display
  *   colour the sky designed; it is turned into scene-linear HDR by the exact inverse of the post stack's display
  *   transform (render/display.ts: gamma and tone curve) and ÷ exposure, so it shows as designed after the post's one
  *   tone curve (W9 finish D4: sRGB → linear alone ran it through a second curve). The ring holds that inverse already
@@ -94,6 +94,13 @@ export const FOG_SURFACE_MAX = 0.8
  * keep the horizon colour.
  */
 export const FOG_UP_DEG = 8
+/** The sky probe (High+) is read at least this far up (sine of ≈ 1°: the dome below the horizon is the flat fog). */
+export const FOG_SKY_MIN_SIN = 0.0175
+/** …at this mip (the 64² probe's 16² level): smooth, so the clouds' march noise and the sun disc spread out. */
+export const FOG_SKY_LOD = 2
+/** Trees fade into the fog from TREE_FADE_START × their draw distance to the draw distance + TREE_FADE_PAST_M. */
+export const TREE_FADE_START = 0.85
+export const TREE_FADE_PAST_M = 10
 
 /** Fog density (1/m) for a fog that starts at `startM` and reaches 95% at `endM`. */
 export function fogDensity(startM: number, endM: number): number {
@@ -132,6 +139,8 @@ export class HeightFog {
   readonly sunColor = new Vector4(1, 0.9, 0.7, 0)
   /** The sky FOG_UP_DEG above the horizon (scene-linear, like `color`), sin(FOG_UP_DEG). */
   readonly up = new Vector4(0.5, 0.6, 0.7, Math.sin((FOG_UP_DEG * Math.PI) / 180))
+  /** The trees' draw distance (m; World sets it from the objects' range × their range scale). */
+  treeRangeM = 202
   /** The metres over which the density grows by e going down. */
   heightFalloffM = DEFAULT_HEIGHT_FALLOFF_M
   /** The scatter towards the sun (0 = none). */
@@ -335,35 +344,38 @@ const WGSL_DEFINITIONS = `
 #ifdef SRO_HEIGHTFOG
 #ifdef SRO_FOG_RING
 var sroFogRingSampler: sampler;
-var sroFogRing: texture_2d<f32>;
+var sroFogRing: texture_cube<f32>;
 #endif
 ${HEIGHT_FOG_WGSL}
 #endif
 `
 
 // textureSampleLevel: no implicit derivatives, so it is valid anywhere (WGSL uniformity, WAVE_PLAN3 §4.2).
+// SRO_FOG_RING (High+): the fog colour is the sky dome itself in the view direction (SkySystem's sky probe, a small
+// cube of the dome: clouds, sun glow and all; read at least FOG_SKY_MIN_SIN up, so the ground takes the horizon), so a
+// fogged crown matches the sky behind it. Else (Medium) the flat horizon colour leaning to the flat colour FOG_UP_DEG up.
 const WGSL_APPLY = `
 #ifdef SRO_HEIGHTFOG
 {
   let sroEye = scene.vEyePosition.xyz;
   let sroPos = fragmentInputs.vPositionW;
   let sroDir = normalize(sroPos - sroEye);
-  var sroHorizon = uniforms.sroFogColor.rgb;
-  var sroUp = uniforms.sroFogUp.rgb;
-#ifdef SRO_FOG_RING
-  let sroU = sroFogRingU(sroDir);
-  let sroRing = textureSampleLevel(sroFogRing, sroFogRingSampler, vec2f(sroU, 0.25), 0.0).rgb;
-  let sroRingUp = textureSampleLevel(sroFogRing, sroFogRingSampler, vec2f(sroU, 0.75), 0.0).rgb;
-  sroHorizon = max(sroRing, vec3f(0.0)) * uniforms.sroFogColor.w;
-  sroUp = max(sroRingUp, vec3f(0.0)) * uniforms.sroFogColor.w;
-  // item 16: the ring greys like the flat colour (rain, overcast, the daytime teal; sroFogSunColor.w)
-  sroHorizon = mix(sroHorizon, vec3f(dot(sroHorizon, vec3f(0.2126, 0.7152, 0.0722))) * vec3f(0.96, 1.0, 1.06), uniforms.sroFogSunColor.w);
-  sroUp = mix(sroUp, vec3f(dot(sroUp, vec3f(0.2126, 0.7152, 0.0722))) * vec3f(0.96, 1.0, 1.06), uniforms.sroFogSunColor.w);
+  var sroAmt = sroHeightFogAmount(sroPos, sroEye, uniforms.sroFogA);
+  var sroEdge = sroFogEdge(sroPos, sroEye, uniforms.sroFogA);
+#ifdef SRO_FOG_TREE
+  // trees near their draw distance go over into the fog (the sky behind them) instead of standing as fog-coloured blobs
+  let sroTree = smoothstep(uniforms.sroFogTree.x, uniforms.sroFogTree.y, length(sroPos - sroEye)) * step(0.5, uniforms.sroFogA.w);
+  sroAmt = max(sroAmt, sroTree);
+  sroEdge = max(sroEdge, sroTree);
 #endif
-  // above the horizon the fog leans to the sky behind the surface (FOG_UP_DEG; sroFogUp.w = its sine)
-  sroHorizon = mix(sroHorizon, sroUp, smoothstep(0.0, uniforms.sroFogUp.w, sroDir.y));
-  let sroAmt = sroHeightFogAmount(sroPos, sroEye, uniforms.sroFogA);
-  let sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb), uniforms.sroFogColor.w, sroFogEdge(sroPos, sroEye, uniforms.sroFogA));
+#ifdef SRO_FOG_RING
+  let sroSkyDir = normalize(vec3f(sroDir.x, max(sroDir.y, ${FOG_SKY_MIN_SIN.toFixed(4)}), sroDir.z));
+  let sroSky = max(textureSampleLevel(sroFogRing, sroFogRingSampler, sroSkyDir, ${FOG_SKY_LOD.toFixed(1)}).rgb, vec3f(0.0));
+  let sroCol = sroFogCapped(sroSky, uniforms.sroFogColor.w, sroEdge);
+#else
+  let sroHorizon = mix(uniforms.sroFogColor.rgb, uniforms.sroFogUp.rgb, smoothstep(0.0, uniforms.sroFogUp.w, sroDir.y));
+  let sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb), uniforms.sroFogColor.w, sroEdge);
+#endif
   finalColor = vec4f(mix(finalColor.rgb, sroCol, sroAmt), finalColor.a);
 }
 #endif
@@ -372,7 +384,7 @@ const WGSL_APPLY = `
 const GLSL_DEFINITIONS = `
 #ifdef SRO_HEIGHTFOG
 #ifdef SRO_FOG_RING
-uniform sampler2D sroFogRing;
+uniform samplerCube sroFogRing;
 #endif
 ${HEIGHT_FOG_GLSL}
 #endif
@@ -383,20 +395,20 @@ const GLSL_APPLY = `
 {
   vec3 sroEye = vEyePosition.xyz;
   vec3 sroDir = normalize(vPositionW - sroEye);
-  vec3 sroHorizon = sroFogColor.rgb;
-  vec3 sroUp = sroFogUp.rgb;
-#ifdef SRO_FOG_RING
-  float sroU = sroFogRingU(sroDir);
-  vec3 sroRing = textureLod(sroFogRing, vec2(sroU, 0.25), 0.0).rgb;
-  vec3 sroRingUp = textureLod(sroFogRing, vec2(sroU, 0.75), 0.0).rgb;
-  sroHorizon = max(sroRing, vec3(0.0)) * sroFogColor.w;
-  sroUp = max(sroRingUp, vec3(0.0)) * sroFogColor.w;
-  sroHorizon = mix(sroHorizon, vec3(dot(sroHorizon, vec3(0.2126, 0.7152, 0.0722))) * vec3(0.96, 1.0, 1.06), sroFogSunColor.w);
-  sroUp = mix(sroUp, vec3(dot(sroUp, vec3(0.2126, 0.7152, 0.0722))) * vec3(0.96, 1.0, 1.06), sroFogSunColor.w);
-#endif
-  sroHorizon = mix(sroHorizon, sroUp, smoothstep(0.0, sroFogUp.w, sroDir.y));
   float sroAmt = sroHeightFogAmount(vPositionW, sroEye, sroFogA);
-  vec3 sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, sroFogSun, sroFogSunColor.rgb), sroFogColor.w, sroFogEdge(vPositionW, sroEye, sroFogA));
+  float sroEdge = sroFogEdge(vPositionW, sroEye, sroFogA);
+#ifdef SRO_FOG_TREE
+  float sroTree = smoothstep(sroFogTree.x, sroFogTree.y, length(vPositionW - sroEye)) * step(0.5, sroFogA.w);
+  sroAmt = max(sroAmt, sroTree);
+  sroEdge = max(sroEdge, sroTree);
+#endif
+#ifdef SRO_FOG_RING
+  vec3 sroSkyDir = normalize(vec3(sroDir.x, max(sroDir.y, ${FOG_SKY_MIN_SIN.toFixed(4)}), sroDir.z));
+  vec3 sroCol = sroFogCapped(max(textureLod(sroFogRing, sroSkyDir, ${FOG_SKY_LOD.toFixed(1)}).rgb, vec3(0.0)), sroFogColor.w, sroEdge);
+#else
+  vec3 sroHorizon = mix(sroFogColor.rgb, sroFogUp.rgb, smoothstep(0.0, sroFogUp.w, sroDir.y));
+  vec3 sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, sroFogSun, sroFogSunColor.rgb), sroFogColor.w, sroEdge);
+#endif
   finalColor = vec4(mix(finalColor.rgb, sroCol, sroAmt), finalColor.a);
 }
 #endif
@@ -415,6 +427,7 @@ const FOG_UBO = [
   { name: 'sroFogSun', size: 4, type: 'vec4' },
   { name: 'sroFogSunColor', size: 4, type: 'vec4' },
   { name: 'sroFogUp', size: 4, type: 'vec4' },
+  { name: 'sroFogTree', size: 4, type: 'vec4' },
 ]
 
 /** The height fog on one PBR material (see the file comment). */
@@ -422,7 +435,7 @@ export class SroFogPlugin extends MaterialPluginBase {
   private readonly materialFog: boolean
 
   constructor(material: Material, readonly state: HeightFog) {
-    super(material, FOG_PLUGIN_NAME, 300, { SRO_HEIGHTFOG: false, SRO_FOG_RING: false }, true, true)
+    super(material, FOG_PLUGIN_NAME, 300, { SRO_HEIGHTFOG: false, SRO_FOG_RING: false, SRO_FOG_TREE: false }, true, true)
     this.materialFog = material.fogEnabled
     state.plugins.add(this)
     this.syncMaterialFog()
@@ -449,12 +462,15 @@ export class SroFogPlugin extends MaterialPluginBase {
   override prepareDefines(defines: MaterialDefines): void {
     defines['SRO_HEIGHTFOG'] = this.state.active
     defines['SRO_FOG_RING'] = this.state.active && this.state.ringActive
+    // the region batch's merged tree groups (the foliage plugin's tree flag; by name: no import cycle)
+    const fol = this._material.pluginManager?.getPlugin('SroFoliagePlugin') as { tree?: boolean } | null | undefined
+    defines['SRO_FOG_TREE'] = this.state.active && !!fol?.tree
   }
 
   override getUniforms(): { ubo: typeof FOG_UBO; fragment: string } {
     return {
       ubo: FOG_UBO,
-      fragment: '#ifdef SRO_HEIGHTFOG\nuniform vec4 sroFogA;\nuniform vec4 sroFogColor;\nuniform vec4 sroFogSun;\nuniform vec4 sroFogSunColor;\nuniform vec4 sroFogUp;\n#endif\n',
+      fragment: '#ifdef SRO_HEIGHTFOG\nuniform vec4 sroFogA;\nuniform vec4 sroFogColor;\nuniform vec4 sroFogSun;\nuniform vec4 sroFogSunColor;\nuniform vec4 sroFogUp;\nuniform vec4 sroFogTree;\n#endif\n',
     }
   }
 
@@ -470,6 +486,7 @@ export class SroFogPlugin extends MaterialPluginBase {
     ubo.updateFloat4('sroFogSun', s.sun.x, s.sun.y, s.sun.z, s.sun.w)
     ubo.updateFloat4('sroFogSunColor', s.sunColor.x, s.sunColor.y, s.sunColor.z, s.sunColor.w)
     ubo.updateFloat4('sroFogUp', s.up.x, s.up.y, s.up.z, s.up.w)
+    ubo.updateFloat4('sroFogTree', TREE_FADE_START * s.treeRangeM, s.treeRangeM + TREE_FADE_PAST_M, 0, 0)
     if (s.ringActive && s.ring) ubo.setTexture('sroFogRing', s.ring)
   }
 

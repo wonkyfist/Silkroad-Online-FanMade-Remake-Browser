@@ -19,7 +19,7 @@
  * when the light moved 0.1° or the atmosphere changed; 2 s apart at the default day length), 16 LUT taps for the fog
  * colour, 1–3 noise taps for the sun occlusion; a haze change rebuilds the atmosphere in 40 steps of ~1 ms.
  */
-import { Constants, Observable, RawTexture, Vector3, Vector4, type Camera, type Mesh, type Scene } from '@babylonjs/core'
+import { Constants, Observable, RawTexture, ReflectionProbe, RenderTargetTexture, Vector3, Vector4, type Camera, type Mesh, type Scene } from '@babylonjs/core'
 import { sunBreak } from '../render/atmosphere.ts'
 import { DEFAULT_CLOCK } from '../../../shared/src/world-clock.ts'
 import type { Assets } from '../assets.ts'
@@ -33,8 +33,8 @@ import { ClassicSky } from './classic-sky.ts'
 import { NOON_AMBIENT_LUMINANCE } from './lights.ts'
 import { CLOUD_HEIGHT_KM, CLOUD_SCALE_KM, CloudLayer, cloudThickness, type CloudNoise } from './clouds.ts'
 import { SkyDome } from './dome.ts'
-import { fillHorizonRing, fillSkyCube, skySH, type RGB3, type SkyRadiance } from './ibl.ts'
-import { SkyViewLut, toHalf } from './sky-luts.ts'
+import { fillSkyCube, skySH, type RGB3, type SkyRadiance } from './ibl.ts'
+import { SkyViewLut } from './sky-luts.ts'
 import {
   BAKED_LIGHT_DIR,
   CLEAR_SKY_WEATHER,
@@ -160,7 +160,8 @@ const CLOUD_SKY_WEIGHT = 0.85
 /** SKY §6.4 says 0.3; 0.65 keeps the noon fog within ΔE 10 of the retail FogColor (the §6.6 test). */
 const GRADE_FOG = 0.65
 const STAR_DENSITY = 0.004
-const HORIZON_RING = 64
+/** The sky probe's face size (px). */
+const SKY_PROBE_SIZE = 64
 /** Classic dome vertex colours refresh at most this often unless something changed (s). */
 const CLASSIC_REFRESH_S = 0.25
 /** A time step larger than this (days) is a jump: LUTs build whole, the palette and exposure snap. */
@@ -244,9 +245,10 @@ interface ModernParts {
   retailTex: RawTexture | null
   moonTex: RawTexture | null
   moonIndex: number
-  ring: RawTexture | null
-  ringData: Float32Array
-  ringHalf: Uint16Array
+  /** The sky probe (High+): the dome in a small HDR cube the height fog reads in the view direction. */
+  ring: ReflectionProbe | null
+  /** Probe refreshes done (it is handed out after a few: its first draws may wait for their pipelines). */
+  ringRenders: number
   ringTimer: number
   loading: Promise<void> | null
   json: SkyJson | null
@@ -445,6 +447,7 @@ export class SkySystem {
       if (!q.horizonRing && m.ring) {
         m.ring.dispose()
         m.ring = null
+        m.ringRenders = 0
         this.stateValue.horizonRing = null
       }
     }
@@ -591,8 +594,7 @@ export class SkySystem {
       moonTex: null,
       moonIndex: 0,
       ring: null,
-      ringData: new Float32Array(HORIZON_RING * 2 * 4),
-      ringHalf: new Uint16Array(HORIZON_RING * 2 * 4),
+      ringRenders: 0,
       ringTimer: 0,
       loading: null,
       json: null,
@@ -830,30 +832,26 @@ export class SkySystem {
     for (let c = 0; c < 3; c++) amb.horizon[c] = (toLinear(s.fogColor[c]!) / Math.max(1, s.exposure)) * Math.PI * k
     s.cloudCover = cover
 
-    // Horizon ring (High+): the same colour by azimuth, twice a second.
+    // The sky probe (High+): the dome itself in a 64² HDR cube (scene-linear, the post applies the exposure), twice a
+    // second; the PBR height fog reads it in the view direction, so fogged crowns match the sky behind them.
     m.ringTimer += dt
-    if (q.horizonRing && (changed || m.ringTimer > 0.5 || !m.ring)) {
-      m.ringTimer = 0
-      fillHorizonRing((az, out) => this.fogAt(az, 0, out, pal.fogColor), HORIZON_RING, m.ringData)
-      // row 1: the sky FOG_UP_DEG up (the fog's colour above the horizon)
-      fillHorizonRing((az, out) => this.fogAt(az, 0, out, pal.fogColor, FOG_UP_DEG * DEG), HORIZON_RING, m.ringData.subarray(HORIZON_RING * 4))
-      // Only the PBR height fog reads the ring: store the exposed-linear colour that shows the designed one after the
-      // post's tone curve (the fog shader divides by the exposure; D4).
-      const tm = sceneDisplay(this.scene, s.exposure).toneMap
-      const px: [number, number, number] = [0, 0, 0]
-      for (let i = 0; i < m.ringData.length; i += 4) {
-        displayToExposed(m.ringData.subarray(i, i + 3), tm, px)
-        m.ringData[i] = px[0]; m.ringData[i + 1] = px[1]; m.ringData[i + 2] = px[2]
-      }
-      for (let i = 0; i < m.ringData.length; i++) m.ringHalf[i] = toHalf(m.ringData[i]!)
+    if (q.horizonRing) {
       if (!m.ring) {
-        m.ring = new RawTexture(m.ringHalf, HORIZON_RING, 2, Constants.TEXTUREFORMAT_RGBA, this.scene, false, false,
-          Constants.TEXTURE_BILINEAR_SAMPLINGMODE, Constants.TEXTURETYPE_HALF_FLOAT)
-        m.ring.name = 'skyHorizonRing'
-        m.ring.wrapU = Constants.TEXTURE_WRAP_ADDRESSMODE
-        m.ring.wrapV = Constants.TEXTURE_CLAMP_ADDRESSMODE
-      } else m.ring.update(m.ringHalf)
-      s.horizonRing = m.ring
+        const p = (m.ring = new ReflectionProbe('skyFogProbe', SKY_PROBE_SIZE, this.scene, true, true, true))
+        p.renderList!.push(m.dome.mesh)
+        p.refreshRate = RenderTargetTexture.REFRESHRATE_RENDER_ONCE
+        p.cubeTexture.onAfterRenderObservable.add(face => {
+          if (face === 5) m.ringRenders++
+        })
+        m.ringRenders = 0
+        m.ringTimer = 1
+      }
+      if (camera) m.ring.position.copyFrom(camera.globalPosition)
+      if (changed || m.ringTimer > 0.5) {
+        m.ringTimer = 0
+        m.ring.cubeTexture.resetRefreshCounter()
+      }
+      if (m.ringRenders >= 3) s.horizonRing = m.ring.cubeTexture
     }
 
     // Moon texture by phase.

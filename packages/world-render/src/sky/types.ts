@@ -50,7 +50,7 @@ export interface SkyState {
    * to it above the horizon (a far crown fades into the sky behind it). Absent (classic sky, tests): fogColor.
    */
   fogColorUp?: RGB
-  /** 64 × 2 RGBA16F fog colour by azimuth (High+): row 0 the horizon, row 1 FOG_UP_DEG up; null before SKY-B. */
+  /** The sky probe (High+): the dome in a 64² HDR cube (scene-linear) the height fog reads by direction; null before it is ready. */
   horizonRing: BaseTexture | null
   /**
    * Exposure for the sky's radiance units (SKY §6.5: noon ≈ 8, clamped [2, 160], eased 1/1.5 s). The dome applies it

@@ -60,7 +60,8 @@ import { createOceanPart } from './ocean/index.ts'
 import { PbrFoliage } from './pbr/foliage-plugin.ts'
 import { Minimap } from './minimap.ts'
 import { loadNav, loadNavStreamed, manifestSpawn, pickNav, spawnAt, type NavPick, type NavSource } from './nav.ts'
-import { WORLD_OBJECT_LAYER, WorldObjects, blockingModelsOf } from './objects.ts'
+import { GROUP_RANGE_M, WORLD_OBJECT_LAYER, WorldObjects, blockingModelsOf } from './objects.ts'
+import { heightFogOf } from './pbr/fog-plugin.ts'
 import type { RegionData } from './regions.ts'
 import { WorldRegions } from './regions.ts'
 import { EnabledMeshCandidates } from './render/active-meshes.ts'
@@ -1279,6 +1280,9 @@ export class World {
     this.render.update(camera, this.sky.state)
     this.objects.tickAnimationSpeed()
     if (camera) this.objects.update(camera.globalPosition, false, this.focus)
+    // the height fog fades the merged trees into the sky near their draw distance (pbr/fog-plugin.ts TREE_FADE_START)
+    const hf = heightFogOf(this.scene)
+    if (hf) hf.treeRangeM = GROUP_RANGE_M[2]! * this.objects.drawRangeScale
     // Wave 12 (W12-SA, D2): the trees after the objects (the band refill reads the range scale and the resident slots).
     this.trees?.update(camera, dt)
     // Wave 10 (W10-S, D2): the ocean after the objects, the wildlife after the scatter.

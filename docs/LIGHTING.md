@@ -179,3 +179,14 @@ golden hour toward the sun, the near orange tree's detail (luminance sd) 27.7 �
 left before, right after). **Not solved**: the big trees right at the tree range's end (202 m + radius, inside the fog's
 last fifth) are still mostly fog colour, and the dusk crowns stay lighter than the dome; the next step is the fog colour
 from the dome's own LUT and clouds, or dithering far trees out before the fog end instead of hiding them in it.
+
+**Round 2 (same day): the fog is the sky dome.** On High+ the horizon ring is replaced by a **sky probe**: SkySystem
+renders the dome itself into a 64² half-float cube (a ReflectionProbe with only the dome mesh, scene-linear like the
+dome's PBR output, refreshed twice a second, handed out after three refreshes so its pipelines exist), and the height
+fog reads it in the view direction (mip 2, at least ≈ 1° up so the ground takes the horizon): clouds, sun glow and dusk
+dark all come from the dome, so a fogged crown matches the sky behind it at any time and weather (the separate sun-glow
+tint and the ring's greying are not applied on top). Medium keeps the flat colour leaning to `fogColorUp`.
+**Trees at their draw distance** (`SRO_FOG_TREE`, the region batch's merged tree groups): the fog amount rises to 1
+between `TREE_FADE_START` 0.85 × their range and the range + 10 m (World sets `HeightFog.treeRangeM` from 202 m × the
+range scale), so big edge trees go over into the sky behind them instead of standing as fog-coloured blobs. The haze
+ramp and the far-edge hiding are unchanged. Shots: Dropbox `overall-pass/trees/r2-*` (golden, noon, dusk, rain; High).
