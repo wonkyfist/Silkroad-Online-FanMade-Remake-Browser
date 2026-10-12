@@ -162,7 +162,7 @@ sun glow, the sun shafts and the leaves' translucency off change nothing. Three 
 - **Front-loaded haze.** The exponential haze was half done 23 % of the way from its start (≈ 100 m out by day) to its
   end, so a crown 130–200 m out was 50–82 % fog colour. Its depth now grows with d² over its first 3/density metres
   (pbr/fog-plugin.ts `HAZE_RAMP`): 17 % a quarter of the way, 53 % half way, 95 % at the end as before (the streaming
-  edge and the 202 m object range stay hidden; weather fog keeps its range).
+  edge and the 202 m object range stay hidden; weather fog keeps its far wall but is thinner in its first half).
 - **The horizon colour above the horizon.** Every fogged surface took the horizon band's colour, so a crown seen against
   the sky became a flat cut-out: cream toward a low sun, pale lavender (white on screen) against the dark dusk sky.
   Above the horizon the fog now leans to the sky `FOG_UP_DEG` (8°) up: the horizon ring's second row on High+
