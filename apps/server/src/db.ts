@@ -2,6 +2,7 @@ import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import Database from 'better-sqlite3'
 import { DEFAULT_HEIGHT, DEFAULT_VOLUME, EQUIP_SLOTS, defaultLook, lookBodyOf, lookOrDefault, type CharLook, type EquipSlot, type Role, type StarterOutfit, type StarterWeapon } from '@sro/shared'
+import { DbMirror, type DbWriterOptions, type DbWriterStats } from './db/mirror.ts'
 import { InvDraft, type InvItem, type InvState, type Result } from './inventory.ts'
 import type { Progress } from './progression.ts'
 
@@ -826,16 +827,29 @@ export function migrate(db: Database.Database, upTo = MIGRATIONS.length): number
 
 export type Store = ReturnType<typeof openStore>
 
-/** `mustExist`: fail instead of creating an empty database (the gm CLI). */
-export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
+/** Whether a store opened without an explicit `writer` gets the DB writer (SRO_TEST_DB_WRITER=1 runs every suite with it). */
+function writerByDefault(): boolean {
+  return /^(1|on|true|yes)$/i.test(process.env.SRO_TEST_DB_WRITER ?? '')
+}
+
+/**
+ * `mustExist`: fail instead of creating an empty database (the gm CLI; never with the writer). `writer`
+ * (docs/SERVER_ARCHITECTURE.md §3.8, P2, DB_WRITER): the game's statements run on an in-memory copy and a writer
+ * thread replays their journal on the file (db/mirror.ts); off = the statements run on the file, synchronously.
+ */
+export function openStore(dataDir: string, opts: { mustExist?: boolean; writer?: boolean | DbWriterOptions } = {}) {
   // Owner-only on POSIX: the database holds password hashes and session hashes.
   if (!opts.mustExist) mkdirSync(dataDir, { recursive: true, mode: 0o700 })
-  const db = new Database(join(dataDir, 'game.db'), { fileMustExist: opts.mustExist === true })
+  const file = join(dataDir, 'game.db')
+  let db = new Database(file, { fileMustExist: opts.mustExist === true })
   db.pragma('journal_mode = WAL')
   db.pragma('synchronous = NORMAL')
   db.pragma('foreign_keys = ON')
   db.pragma('busy_timeout = 5000')
   const schemaVersion = migrate(db)
+  const useWriter = opts.mustExist ? false : opts.writer === undefined ? writerByDefault() : opts.writer !== false
+  const mirror = useWriter ? DbMirror.open(db, file, typeof opts.writer === 'object' ? opts.writer : {}) : null
+  if (mirror) db = mirror.mem
 
   const q = {
     accountByName: db.prepare<[string], AccountRow>('SELECT id, username, password_hash, role FROM accounts WHERE username = ?'),
@@ -1102,8 +1116,22 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean } = {}) {
       return { createdAt: r.created_at, mark: r.news_seen_date && r.news_seen_id ? { date: r.news_seen_date, id: r.news_seen_id } : null }
     },
     setNewsMark: (accountId: number, mark: { date: string; id: string }) => q.setNewsMark.run(mark.date, mark.id, accountId).changes > 0,
-    /** Changes whenever another connection (e.g. the gm CLI) commits to the database. */
+    /** Changes whenever another connection (e.g. the gm CLI) commits to the database (never with the DB writer: gm inbox). */
     dataVersion: () => db.pragma('data_version', { simple: true }) as number,
-    close: () => db.close(),
+    /** The DB writer (P2), or null when the statements write the file themselves. */
+    writer: mirror,
+    /**
+     * Commit-then-ack (docs/SERVER_ARCHITECTURE.md §3.8): runs `cb` once every write made so far is committed to the file.
+     * Without the writer every transaction is on the file when it returns, so `cb` runs at once.
+     */
+    afterCommit(cb: () => void): void {
+      if (mirror) mirror.afterCommit(cb)
+      else cb()
+    },
+    /** Barrier: blocks until every write so far is on the file (true without the writer; false on a timeout). */
+    flush: (timeoutMs?: number): boolean => (mirror ? mirror.flushSync(timeoutMs) : true),
+    /** The DB writer's queue, latency and group commit (null without it). */
+    writerStats: (): DbWriterStats | null => mirror?.stats() ?? null,
+    close: () => (mirror ? mirror.close() : db.close()),
   }
 }
