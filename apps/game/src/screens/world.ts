@@ -1253,9 +1253,11 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
       ground?.follow(self.pos.x, self.pos.z)
       const focusY = self !== selfView() && controlled?.focusHeight ? controlled.focusHeight(self) : self.focusHeight
       if (PERF.smoothMotion) {
-        // the drawn position (a correction's glide included), so the camera and the character move as one
-        const fx = self.root.position.x
-        const fz = self.root.position.z
+        // where the character is drawn (a correction's glide included; in the air or the water the flight / swim
+        // sample, not the root, which pivots about the chest), so the camera and the character move as one
+        const fx = self.pos.x + self.correction.x
+        const fz = self.pos.z + self.correction.z
+        const baseY = self.root.position.y
         if (self.id !== follow.id || !(Math.hypot(fx - follow.fx, fz - follow.fz) <= FOLLOW_JUMP_M)) {
           follow.x = camera.target.x - fx
           follow.z = camera.target.z - fz
@@ -1266,7 +1268,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
         const keep = Math.exp(-FOLLOW_RATE * dt)
         follow.x = Math.abs(follow.x * keep) < 1e-3 ? 0 : follow.x * keep
         follow.z = Math.abs(follow.z * keep) < 1e-3 ? 0 : follow.z * keep
-        const y = camera.target.y + (entityY(self, fx, fz) + focusY - camera.target.y) * (1 - keep)
+        const y = camera.target.y + (baseY + focusY - camera.target.y) * (1 - keep)
         // set(), not the x / y / z setters: the dev director's camera hold ignores set and copyFrom
         camera.target.set(fx + follow.x, y, fz + follow.z)
       } else {
