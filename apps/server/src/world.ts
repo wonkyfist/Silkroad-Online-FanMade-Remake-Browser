@@ -24,6 +24,10 @@ import { FlatNav, ValidatorNav, legsLength, pointOnLegs, type NavPoint, type Nav
 import type { Progress } from './progression.ts'
 import { gmTag } from './gm-tag.ts'
 import type { SiegeMob } from './siege/army.ts'
+import { PlayerGrid, cellKey } from './cells.ts'
+import { Encoded } from './encode.ts'
+import { KnownSet, type Watchers } from './known.ts'
+import { PH, PhaseTimers } from './phases.ts'
 
 /**
  * Authoritative world simulation: every entity (players, mobs, NPCs, ground items), straight-line moves, the
@@ -75,7 +79,11 @@ export interface Player extends Mover {
   model: string
   level: number
   weapon: StarterWeapon
-  send: (msg: ServerMessage) => void
+  /**
+   * Delivers a message to this player's client. `enc` (broadcasts, docs/SERVER_ARCHITECTURE.md P0 encode-once): the
+   * message already encoded for every recipient; a connection uses it when it gets that very message object.
+   */
+  send: (msg: ServerMessage, enc?: Encoded) => void
   /** GM or admin: sees invisible players. */
   staff: boolean
   /** GM `invis on`: only staff viewers (and the player itself) receive this entity. Runtime only. */
@@ -335,6 +343,16 @@ const BOUNDS_INSET_M = 0.01
 /** A teleport into a wall or a house lands on the nearest open ground within this distance (metres). */
 export const WARP_SEARCH_M = 10
 
+/** One cell of an AOI_FAST interest pass: its entities with their ids and positions side by side. */
+interface AoiCell {
+  ents: Entity[]
+  ids: number[]
+  xs: number[]
+  zs: number[]
+  /** Whether each entity is a player (the crowd cap's candidates). */
+  pl: boolean[]
+}
+
 export class World {
   readonly players = new Map<number, Player>()
   readonly mobs = new Map<number, Mob>()
@@ -375,6 +393,26 @@ export class World {
   ticks = 0
   /** Each tick's duration (ms), for the metrics (netstats.ts). */
   onTickTimed: ((ms: number) => void) | null = null
+  /** Per-phase tick timers (phases.ts; game.ts installs NetStats' own). The default records nothing. */
+  timers: PhaseTimers = PhaseTimers.off
+  // ---- P0 switches (docs/SERVER_ARCHITECTURE.md §4 P0): each on by default; off runs the old path ----
+  /** MOB_GRID: the monster pass's player grid (playersNear, the wake check). Off: every player is scanned. */
+  mobGrid = true
+  /** WATCHERS: broadcasts go to the watcher index (known.ts). Off: every player is scanned. */
+  useWatchers = true
+  /** ENCODE_ONCE: a broadcast is encoded once for all its recipients (encode.ts). Off: once per recipient. */
+  encodeOnce = true
+  /** AOI_FAST: the interest pass's quick path (the same spawns and despawns). Off: the old pass. */
+  aoiFast = true
+  /** The watcher index (known.ts): entity id -> the players whose client has it. */
+  private readonly watchers: Watchers = new Map()
+  /** Players added by add() and not removed yet: the index is complete while this equals players.size. */
+  private indexed = 0
+  /** Bumped whenever a player's position jumps (warp, add, remove): the monster pass's grid is rebuilt then. */
+  private playerEpoch = 0
+  /** The monster pass's player grid and its `now` (beginPlayerScan .. endPlayerScan); null outside the pass. */
+  private scan: PlayerGrid | null = null
+  private scanNow: number | null = null
 
   constructor(
     readonly name: string,
@@ -413,6 +451,7 @@ export class World {
       ms = performance.now() - t0
       this.ticks++
       if (ms > this.worstTickMs) this.worstTickMs = ms
+      this.timers.interval()
       this.onTickTimed?.(ms)
     }
     return ms
@@ -449,7 +488,7 @@ export class World {
       move: null,
       invisible: false,
       speedMul: 1,
-      known: new Set(),
+      known: new KnownSet(),
       gender: p.gender ?? 'male',
       radius: PLAYER_BASE.radius,
       progress,
@@ -476,7 +515,25 @@ export class World {
     const now = Date.now()
     for (const v of this.players.values()) this.reveal(v, player, now)
     this.players.set(player.id, player)
+    ;(player.known as KnownSet).attach(player, this.watchers)
+    this.indexed++
+    this.playerEpoch++
     return player
+  }
+
+  /** Whether the watcher index answers broadcasts (WATCHERS on, and every player in the world came through add()). */
+  private watching(): boolean {
+    return this.useWatchers && this.indexed === this.players.size
+  }
+
+  /**
+   * The players whose client has entity `id` (docs/SERVER_ARCHITECTURE.md P0: the inverse of Player.known), for modules
+   * that send about an entity with their own rules (e.g. by distance). Without the index: a scan of every player.
+   */
+  watchersOf(id: number): Iterable<Player> {
+    if (!this.watching()) return [...this.players.values()].filter((p) => p.known.has(id))
+    const s = this.watchers.get(id)
+    return s ? [...s].filter((p) => p.known.has(id)) : []
   }
 
   /** Adds a mob, NPC, ground item or horse (id already taken from newId) and spawns it for players in range. */
@@ -496,10 +553,24 @@ export class World {
     this.items.delete(id)
     this.npcs.delete(id)
     this.cos.delete(id)
-    for (const v of this.players.values()) {
-      if (v.known.delete(id)) v.send({ t: 'despawn', id })
-    }
+    this.despawnAll(id)
     return e
+  }
+
+  /** Despawns entity `id` for every player but `except` whose client has it (each forgets it). */
+  private despawnAll(id: number, except?: Player): void {
+    if (!this.watching()) {
+      for (const v of this.players.values()) {
+        if (v !== except && v.known.delete(id)) v.send({ t: 'despawn', id })
+      }
+      return
+    }
+    const ws = this.watchers.get(id)
+    if (!ws) return
+    const msg: ServerMessage = { t: 'despawn', id }
+    const enc = this.encodeOnce ? new Encoded(msg) : undefined
+    // a copy: forgetting the entity takes each viewer out of this very set
+    for (const v of [...ws]) if (v !== except && v.known.delete(id)) v.send(msg, enc)
   }
 
   /**
@@ -520,16 +591,41 @@ export class World {
     for (const c of this.cos.values()) if (c.owner === p.id) this.refreshAround(c, now)
   }
 
-  /** Sends `msg` (about `subject`) to every player whose client has `subject` (and to `subject` itself). */
+  /**
+   * Sends `msg` (about `subject`) to every player whose client has `subject` (and to `subject` itself). P0: through the
+   * watcher index (each recipient's own message order is unchanged) with one encoding for all of them.
+   */
   broadcastAbout(subject: Entity, msg: ServerMessage): void {
-    for (const p of this.players.values()) if (p.id === subject.id || p.known.has(subject.id)) p.send(msg)
+    const enc = this.encodeOnce ? new Encoded(msg) : undefined
+    if (!this.watching()) {
+      for (const p of this.players.values()) if (p.id === subject.id || p.known.has(subject.id)) p.send(msg, enc)
+      return
+    }
+    const self = this.players.get(subject.id)
+    if (self) self.send(msg, enc)
+    const ws = this.watchers.get(subject.id)
+    if (ws) for (const p of ws) if (p !== self && p.known.has(subject.id)) p.send(msg, enc)
   }
 
-  /** Sends to every player whose client has `a` or `b` (combat between two entities). */
+  /** Sends to every player whose client has `a` or `b` (combat between two entities), each once. */
   broadcastAboutEither(a: Entity, b: Entity, msg: ServerMessage): void {
-    for (const p of this.players.values()) {
-      if (p.id === a.id || p.id === b.id || p.known.has(a.id) || p.known.has(b.id)) p.send(msg)
+    const enc = this.encodeOnce ? new Encoded(msg) : undefined
+    if (!this.watching()) {
+      for (const p of this.players.values()) {
+        if (p.id === a.id || p.id === b.id || p.known.has(a.id) || p.known.has(b.id)) p.send(msg, enc)
+      }
+      return
     }
+    const pa = this.players.get(a.id)
+    const pb = b.id === a.id ? undefined : this.players.get(b.id)
+    if (pa) pa.send(msg, enc)
+    if (pb) pb.send(msg, enc)
+    const wa = this.watchers.get(a.id)
+    if (wa) for (const p of wa) if (p !== pa && p !== pb && p.known.has(a.id)) p.send(msg, enc)
+    if (b.id === a.id) return
+    const wb = this.watchers.get(b.id)
+    // whoever has `a` too got it above
+    if (wb) for (const p of wb) if (p !== pa && p !== pb && !p.known.has(a.id) && p.known.has(b.id)) p.send(msg, enc)
   }
 
   /** Online player by character name (case-insensitive). */
@@ -554,6 +650,7 @@ export class World {
     p.path = null
     p.pos = placed ? [placed.x, placed.y, placed.z] : [cx, y, cz]
     p.surface = placed?.surface ?? null
+    if (p.kind === 'player') this.playerEpoch++
     this.broadcastAbout(p, { t: 'warp', id: p.id, pos: wirePos(p.pos), yaw: wireYaw(p.yaw) })
     this.refreshAround(p, now)
     return [...p.pos]
@@ -640,10 +737,14 @@ export class World {
     const p = this.players.get(id)
     if (!p) return null
     this.settle(p, now)
-    for (const v of this.players.values()) {
-      if (v.id !== id && v.known.delete(id)) v.send({ t: 'despawn', id })
-    }
+    this.despawnAll(id, p)
     this.players.delete(id)
+    // P0: it stops receiving broadcasts (its own `known` keeps what it had)
+    if (p.known instanceof KnownSet && p.known.attached) {
+      p.known.detach()
+      this.indexed--
+    }
+    this.playerEpoch++
     return p
   }
 
@@ -665,7 +766,8 @@ export class World {
   }
 
   broadcast(msg: ServerMessage, exceptId?: number): void {
-    for (const p of this.players.values()) if (p.id !== exceptId) p.send(msg)
+    const enc = this.encodeOnce ? new Encoded(msg) : undefined
+    for (const p of this.players.values()) if (p.id !== exceptId) p.send(msg, enc)
   }
 
   *allEntities(): Iterable<Entity> {
@@ -877,10 +979,14 @@ export class World {
 
   /** Finishes arrived moves (broadcasting `stop`), runs gameplay, then updates interest. */
   tick(now: number): void {
+    const T = this.timers
+    const t0 = T.now()
     for (const p of this.players.values()) this.arrive(p, now)
     for (const m of this.mobs.values()) this.arrive(m, now)
     // a walking trade transport (docs/JOBS.md §5.4); a ridden horse shares its rider's move and is never sent one
     for (const c of this.cos.values()) if (c.rider === null) this.arrive(c, now)
+    T.lap(PH.arrive, t0)
+    // gameplay times its own phases
     this.onTick?.(now)
     if (now - this.interestAt >= INTEREST_MS || now < this.interestAt) this.updateInterest(now)
   }
@@ -961,15 +1067,30 @@ export class World {
   updateInterest(now: number): void {
     this.interestAt = now
     if (this.players.size === 0) return
+    const T = this.timers
+    const t0 = T.now()
+    this.crowdMs = 0
     this.posCache = new Map()
+    if (this.aoiFast && this.alsoMustSeeKeys) this.passKeys = new Map()
     try {
       this.interestPass(now, this.posCache)
     } finally {
       this.posCache = null
+      this.passKeys = null
+      this.keysViewer = null
+      this.keysOfViewer = null
+      if (T.enabled) {
+        T.add(PH.crowd, this.crowdMs)
+        T.add(PH.interest, T.now() - t0 - this.crowdMs)
+      }
     }
   }
 
+  /** Time spent in crowd picks during the current interest pass (ms; the `crowd` phase). */
+  private crowdMs = 0
+
   private interestPass(now: number, cache: Map<Entity | Mover, Vec3>): void {
+    if (this.aoiFast) return this.interestPassFast(now, cache)
     this.interestPasses++
     const cell = Math.max(16, this.viewRange)
     const grid = new Map<string, Entity[]>()
@@ -989,8 +1110,97 @@ export class World {
       const cz = Math.floor(z / cell)
       const near: Entity[] = []
       for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) near.push(...(grid.get(key(cx + i, cz + j)) ?? []))
-      if (v.crowd === undefined || (this.interestPasses + v.id) % this.crowdRepickPasses === 0) this.pickCrowd(v, near, now)
+      if (v.crowd === undefined || (this.interestPasses + v.id) % this.crowdRepickPasses === 0) {
+        const c0 = this.timers.now()
+        this.pickCrowd(v, near, now)
+        this.crowdMs += this.timers.now() - c0
+      }
       this.refreshViewer(v, near, now)
+    }
+  }
+
+  /**
+   * AOI_FAST (docs/SERVER_ARCHITECTURE.md P0): interestPass with the same spawns and despawns, sent in the same order,
+   * minus its overhead: numeric cell keys and per-cell id/position arrays (no Map lookup per candidate), no per-viewer
+   * copy of the candidates (the crowd re-pick reads the cells too: pickCrowdCells), the viewer's anchor looked up once,
+   * the despawn check without copying the known set, and alsoMustSee by per-player keys (mustSee, alsoMustSeeKeys).
+   */
+  private interestPassFast(now: number, cache: Map<Entity | Mover, Vec3>): void {
+    this.interestPasses++
+    const cell = Math.max(16, this.viewRange)
+    const grid = new Map<number, AoiCell>()
+    for (const e of this.allEntities()) {
+      const at = this.positionAt(e, now)
+      cache.set(e, at)
+      const k = cellKey(Math.floor(at[0] / cell), Math.floor(at[2] / cell))
+      let c = grid.get(k)
+      if (!c) grid.set(k, (c = { ents: [], ids: [], xs: [], zs: [], pl: [] }))
+      c.ents.push(e)
+      c.ids.push(e.id)
+      c.pl.push(e.kind === 'player')
+      c.xs.push(at[0])
+      c.zs.push(at[2])
+    }
+    const cells: AoiCell[] = []
+    const gone: number[] = []
+    const view = this.viewRange
+    for (const v of this.players.values()) {
+      const anchor = this.viewAnchor(v)
+      const a = cache.get(anchor) ?? this.positionAt(anchor, now)
+      const ax = a[0]
+      const az = a[2]
+      const cx = Math.floor(ax / cell)
+      const cz = Math.floor(az / cell)
+      cells.length = 0
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          const c = grid.get(cellKey(cx + i, cz + j))
+          if (c) cells.push(c)
+        }
+      }
+      if (v.crowd === undefined || (this.interestPasses + v.id) % this.crowdRepickPasses === 0) {
+        const c0 = this.timers.now()
+        this.pickCrowdCells(v, cells, a, now)
+        this.crowdMs += this.timers.now() - c0
+      }
+      // reveal(), inlined: in view range (no hysteresis) of the anchor, visible, not hidden by the crowd cap
+      const vid = v.id
+      const known = v.known
+      for (const c of cells) {
+        const { ents, ids, xs, zs } = c
+        for (let i = 0; i < ids.length; i++) {
+          const id = ids[i]!
+          if (id === vid || known.has(id)) continue
+          const e = ents[i]!
+          if (!this.canSee(v, e)) continue
+          let r = view
+          if (e.kind === 'mob' && e.veil !== undefined && !v.staff && e.pilot?.player !== vid) r = Math.min(r, e.veil)
+          const dx = ax - xs[i]!
+          const dz = az - zs[i]!
+          if (!(dx * dx + dz * dz <= r * r) || this.crowded(v, e, now)) continue
+          known.add(id)
+          v.send({ t: 'spawn', entity: this.state(e) })
+        }
+      }
+      // refreshViewer()'s despawn half: gone, invisible, out of range (with hysteresis) or crowded out
+      gone.length = 0
+      for (const id of known) {
+        const e = this.entity(id)
+        if (!e || !this.canSee(v, e)) {
+          gone.push(id)
+          continue
+        }
+        let r = this.viewRange + VIEW_HYSTERESIS_M
+        if (e.kind === 'mob' && e.veil !== undefined && !v.staff && e.pilot?.player !== v.id) r = Math.min(r, e.veil)
+        const b = cache.get(e) ?? this.positionAt(e, now)
+        const dx = a[0] - b[0]
+        const dz = a[2] - b[2]
+        if (!(dx * dx + dz * dz <= r * r) || this.crowded(v, e, now)) gone.push(id)
+      }
+      for (const id of gone) {
+        known.delete(id)
+        v.send({ t: 'despawn', id })
+      }
     }
   }
 
@@ -1013,7 +1223,47 @@ export class World {
     if (oa && (oa.kind === 'attack' || oa.kind === 'skill') && oa.target === viewer.id) return true
     const t = viewer.foes?.get(other.id)
     if (t !== undefined && now - t < FOE_MEMORY_MS) return true
+    if (this.passKeys) return this.sameKeys(viewer, other)
     return this.alsoMustSee?.(viewer, other) ?? false
+  }
+
+  /**
+   * AOI_FAST: alsoMustSee in a form an interest pass evaluates once per player instead of once per pair (500 players in
+   * one town are 250,000 pairs a pass): keys such that alsoMustSee(v, o) holds exactly when some key of v is set (not
+   * null or undefined) and the same (===) as o's key at that index (gameplay.ts: the party, the guild). Absent: the pass
+   * calls alsoMustSee.
+   */
+  alsoMustSeeKeys: ((p: Player) => readonly unknown[]) | null = null
+  /** An AOI_FAST pass's memo of alsoMustSeeKeys (null: no key set; the map itself is null outside the pass). */
+  private passKeys: Map<Player, readonly unknown[] | null> | null = null
+  private keysViewer: Player | null = null
+  private keysOfViewer: readonly unknown[] | null = null
+
+  /** alsoMustSee through the pass's keys (a player with no key set, no party and no guild, matches nobody). */
+  private sameKeys(viewer: Player, other: Player): boolean {
+    let kv: readonly unknown[] | null
+    if (viewer === this.keysViewer) kv = this.keysOfViewer
+    else {
+      kv = this.passKeysOf(viewer)
+      this.keysViewer = viewer
+      this.keysOfViewer = kv
+    }
+    if (kv === null) return false
+    const ko = this.passKeysOf(other)
+    if (ko === null) return false
+    for (let i = 0; i < kv.length; i++) if (kv[i] != null && kv[i] === ko[i]) return true
+    return false
+  }
+
+  private passKeysOf(p: Player): readonly unknown[] | null {
+    const memo = this.passKeys!
+    let k = memo.get(p)
+    if (k === undefined) {
+      const keys = this.alsoMustSeeKeys!(p)
+      k = keys.some((x) => x != null) ? keys : null
+      memo.set(p, k)
+    }
+    return k
   }
 
   /** A player-vs-player hit: both stay visible to each other for FOE_MEMORY_MS. */
@@ -1066,31 +1316,114 @@ export class World {
   }
 
   /**
+   * AOI_FAST: pickCrowd over an interest pass's cells (`a`: the viewer's anchor position of the pass), the same choice
+   * made the same way: positions from the cell arrays instead of the pass's map, each candidate's `known` looked up once.
+   */
+  private pickCrowdCells(viewer: Player, cells: readonly AoiCell[], a: Vec3, now: number): void {
+    const max = this.maxVisiblePlayers
+    viewer.crowd = null
+    if (max <= 0) return
+    const r = this.viewRange + VIEW_HYSTERESIS_M
+    const known = viewer.known
+    const vid = viewer.id
+    const rest: { id: number; d: number; shown: boolean }[] = []
+    const keep = new Set<number>()
+    for (const c of cells) {
+      const { ents, ids, xs, zs, pl } = c
+      for (let i = 0; i < ids.length; i++) {
+        if (!pl[i] || ids[i] === vid) continue
+        const e = ents[i] as Player
+        if (!this.canSee(viewer, e)) continue
+        const d = Math.hypot(a[0] - xs[i]!, a[2] - zs[i]!)
+        if (d > r) continue
+        if (this.mustSee(viewer, e, now)) keep.add(e.id)
+        else {
+          const shown = known.has(e.id)
+          rest.push({ id: e.id, d: shown ? d - CROWD_SWAP_M : d, shown })
+        }
+      }
+    }
+    if (keep.size + rest.length <= max) return
+    const shown = rest.filter((x) => x.shown).sort((x, y) => x.d - y.d)
+    const fresh = rest.filter((x) => !x.shown).sort((x, y) => x.d - y.d)
+    const slots = Math.max(0, max - keep.size)
+    const take = shown.slice(0, slots)
+    let f = 0
+    while (take.length < slots && f < fresh.length) take.push(fresh[f++]!)
+    for (let swaps = 0; swaps < CROWD_SWAPS_PER_PASS && f < fresh.length; swaps++) {
+      let worst = -1
+      for (let i = 0; i < take.length; i++) if (take[i]!.shown && (worst < 0 || take[i]!.d > take[worst]!.d)) worst = i
+      if (worst < 0 || fresh[f]!.d >= take[worst]!.d) break
+      take[worst] = fresh[f++]!
+    }
+    for (const x of take) keep.add(x.id)
+    viewer.crowd = keep
+  }
+
+  /**
    * Local chat (docs/NETWORK_AUDIT.md R5): to every player within viewRange of the speaker (the crowd cap does not
    * apply: you hear the players you may not be shown). The speaker always gets its own line.
    */
   sayLocal(speaker: Player, msg: ServerMessage, now = Date.now()): void {
+    // A full scan on live positions: chat arrives between ticks, where no pass grid holds (0.2 % of the CPU at 500).
+    const enc = this.encodeOnce ? new Encoded(msg) : undefined
     const at = this.positionAt(speaker, now)
     const r2 = this.viewRange * this.viewRange
     for (const p of this.players.values()) {
       if (p.id === speaker.id) {
-        p.send(msg)
+        p.send(msg, enc)
         continue
       }
       const anchor = this.viewAnchor(p)
       const q = this.positionAt(anchor, now)
-      if ((q[0] - at[0]) ** 2 + (q[2] - at[2]) ** 2 <= r2) p.send(msg)
+      if ((q[0] - at[0]) ** 2 + (q[2] - at[2]) ** 2 <= r2) p.send(msg, enc)
     }
   }
 
-  /** Players within `range` metres of a point (alive or not). */
+  /**
+   * Players within `range` metres of a point (alive or not), in world.players order. Inside the monster pass
+   * (beginPlayerScan .. endPlayerScan, same `now`) the pass's player grid picks the candidates (docs/SERVER_ARCHITECTURE.md
+   * P0, F1: no more every-monster-scans-every-player); the exact test on the live position is the same either way.
+   */
   playersNear(x: number, z: number, range: number, now: number): Player[] {
     const out: Player[] = []
+    if (this.scanNow === now) {
+      let g = this.scan
+      // a teleport, a login or a logout since the grid was built: build it again
+      if (!g || g.epoch !== this.playerEpoch || g.count !== this.players.size) g = this.scan = this.playerGrid(now)
+      for (const p of g.candidates(x, z, range)) {
+        const q = this.positionAt(p, now)
+        if ((q[0] - x) ** 2 + (q[2] - z) ** 2 <= range * range) out.push(p)
+      }
+      return out
+    }
     for (const p of this.players.values()) {
       const q = this.positionAt(p, now)
       if ((q[0] - x) ** 2 + (q[2] - z) ** 2 <= range * range) out.push(p)
     }
     return out
+  }
+
+  /**
+   * Starts the monster pass at `now` (Gameplay.tick): builds the player grid that playersNear and the wake check use
+   * until endPlayerScan. null with MOB_GRID off (full scans, the old path).
+   */
+  beginPlayerScan(now: number): PlayerGrid | null {
+    if (!this.mobGrid) {
+      this.endPlayerScan()
+      return null
+    }
+    this.scanNow = now
+    return (this.scan = this.playerGrid(now))
+  }
+
+  endPlayerScan(): void {
+    this.scanNow = null
+    this.scan = null
+  }
+
+  private playerGrid(now: number): PlayerGrid {
+    return new PlayerGrid(this.players.values(), this.players.size, (p) => this.positionAt(p, now), now, this.playerEpoch)
   }
 }
 

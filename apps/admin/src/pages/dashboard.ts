@@ -8,13 +8,15 @@ export function dashboardPage(root: HTMLElement): () => void {
   const info = h('div', { class: 'stats' }, (['Online', 'Uptime', 'Server tick', 'World', 'Release', 'Database'] as const).map((l, i) => stat(STAT_ICONS[i], l, '—', 'loading…')))
   const health = h('div', null, h('p', { class: 'dim' }, 'Loading…'))
   const players = h('div', null, h('p', { class: 'dim' }, 'Loading…'))
+  const perf = h('div', null, h('p', { class: 'dim' }, 'Loading…'))
   const count = h('span')
   const notice = noticeBox()
   root.append(
     pageHeader('Dashboard', 'The running server and who is on it.'),
     info,
     card(null, cardHead('Players in the world', count), players),
-    h('div', { class: 'grid grid-2' }, card('Server', health), card('Broadcast notice', notice)),
+    h('div', { class: 'grid grid-2' }, card('Server', health), card('Performance', perf)),
+    card('Broadcast notice', notice),
   )
   let stopped = false
   const load = async () => {
@@ -51,6 +53,7 @@ export function dashboardPage(root: HTMLElement): () => void {
       s.pendingRestart.length ? h('div', { class: 'notice warn' }, `Saved settings waiting for a restart: ${s.pendingRestart.join(', ')}.`) : null,
       s.restart ? h('div', { class: 'actions' }, button('Restart server…', () => void restart(d), 'danger')) : null,
     )
+    clear(perf, perfView(d.perf))
     clear(count, badge(`${d.players.length} online`, d.players.length ? 'ok' : 'dim'))
     clear(
       players,
@@ -114,6 +117,31 @@ export function dashboardPage(root: HTMLElement): () => void {
 }
 
 const STAT_ICONS: IconName[] = ['accounts', 'clock', 'pulse', 'globe', 'release', 'database']
+
+/**
+ * The performance tile (docs/SERVER_ARCHITECTURE.md §3.11): tick percentiles against the budget, where the tick time goes
+ * (the server's built-in phase timers, heaviest first), messages per second, the outbound backlog and the event loop.
+ */
+function perfView(p: AdminDashboard['perf']): Node {
+  if (!p) return h('p', { class: 'dim' }, 'This server does not report its tick timers.')
+  const t = p.tick
+  const ms = (v: number) => `${v < 10 ? v.toFixed(1) : Math.round(v)} ms`
+  const tickKind = t.p95 > t.budgetMs ? 'bad' : t.p95 > t.budgetMs / 2 ? 'gold' : 'ok'
+  const rows: [string, Node | string | (Node | string)[]][] = [
+    ['Tick', [badge(`p95 ${ms(t.p95)}`, tickKind), ` p50 ${ms(t.p50)} · max ${ms(t.max)} · budget ${ms(t.budgetMs)}`]],
+  ]
+  if (p.phases) {
+    const busy = p.phases.reduce((s, x) => s + x.avgMs, 0)
+    rows.push(['Per tick', `${ms(busy)} busy: ${p.phases.filter((x) => x.avgMs >= 0.05).slice(0, 6).map((x) => `${x.name} ${ms(x.avgMs)}`).join(' · ') || 'idle'}`])
+  }
+  if (p.modules?.length) rows.push(['Modules', p.modules.slice(0, 4).map((m) => `${m.name} ${ms(m.avgMs)}`).join(' · ')])
+  if (p.rates) rows.push(['Messages', `${fmtNum(p.rates.inPerS)}/s in · ${fmtNum(p.rates.outPerS)}/s out (${fmtNum(p.rates.outKBps)} kB/s) · ${fmtNum(p.rates.encodesPerS)} encodes/s`])
+  if (p.queue) rows.push(['Send queue', `${fmtBytes(p.queue.bufferedBytes)} over ${fmtNum(p.queue.sockets)} sockets (worst ${fmtBytes(p.queue.maxBufferedBytes)})`])
+  if (p.loop) rows.push(['Event loop', `delay p50 ${ms(p.loop.p50Ms)} · p99 ${ms(p.loop.p99Ms)} · max ${ms(p.loop.maxMs)}`])
+  const off = Object.entries(p.switches ?? {}).filter(([, on]) => !on).map(([k]) => k)
+  if (off.length) rows.push(['Switched off', off.map((k) => badge(k, 'dim'))])
+  return kv(rows)
+}
 
 /** A stat card: icon, label, value, a line under it; `kind` tints it (ok / bad). */
 function stat(iconName: IconName, label: string, value: string | Node, sub: string, kind: 'ok' | 'bad' | 'none' = 'none', extra?: Node): HTMLElement {

@@ -44,6 +44,9 @@ import { BodyHolds } from './resume.ts'
 import { acceptedEncodings, serveFile } from './static.ts'
 import type { Updater } from './updater/updater.ts'
 import { World, type Player } from './world.ts'
+import { PerformanceObserver } from 'node:perf_hooks'
+import { memoryStage, type MemoryStage } from './netstats.ts'
+import { PH, type PhaseTimers } from './phases.ts'
 
 /** Hard WebSocket frame cap: larger frames close the socket (1009). Smaller-but-too-big get bad_request. */
 export const WS_MAX_PAYLOAD = 4096
@@ -229,7 +232,40 @@ export function unplacedNestsLine(gameplay: Gameplay, data: GameData, setup: Wor
   return `nests not spawned: ${parts.join('; ')}`
 }
 
+/** One startup stage's memory; with `node --expose-gc` collected first, so the split is not inflated by garbage. */
+function memorySample(stage: string): MemoryStage {
+  const gc = (globalThis as { gc?: () => void }).gc
+  if (typeof gc === 'function') {
+    gc()
+    gc()
+  }
+  return memoryStage(stage)
+}
+
+/** "memory by stage: content +312 MB heap ..." (each stage against the one before it). */
+function memoryLine(stages: MemoryStage[]): string {
+  const d = (v: number) => `${v >= 0 ? '+' : ''}${Math.round(v)}`
+  const parts = stages.slice(1).map((s, i) => `${s.stage} ${d(s.heapMb - stages[i]!.heapMb)} heap / ${d(s.externalMb - stages[i]!.externalMb)} external / ${d(s.rssMb - stages[i]!.rssMb)} rss`)
+  const last = stages[stages.length - 1]!
+  return `memory by startup stage (MB): ${parts.join(', ')}; now ${Math.round(last.rssMb)} rss, ${Math.round(last.heapMb)} heap, ${Math.round(last.externalMb)} external${typeof (globalThis as { gc?: unknown }).gc === 'function' ? '' : ' (no --expose-gc: rough)'}`
+}
+
+/** GC pauses into the `gc` tick phase (perf_hooks 'gc' entries). */
+function watchGc(timers: PhaseTimers): PerformanceObserver | null {
+  try {
+    const obs = new PerformanceObserver((list) => {
+      for (const e of list.getEntries()) timers.add(PH.gc, e.duration)
+    })
+    obs.observe({ entryTypes: ['gc'] })
+    return obs
+  } catch {
+    return null
+  }
+}
+
 export async function startServer(config: ServerConfig): Promise<GameServer> {
+  // docs/SERVER_ARCHITECTURE.md F6 (P0): the memory split by startup stage (content, navmesh, modules, world)
+  const memory = [memorySample('start')]
   const store = openStore(config.dataDir)
   store.purgeSessions()
   // Admin panel (docs/ADMIN.md §5): its tables, and the settings saved in it applied before any module reads the config.
@@ -255,14 +291,28 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   layerContentOverrides(data, config.dataDir, config.world, config.log)
   // Admin item and drop overrides (DATA_DIR/content/{items,drops}.override.json; docs/ADMIN.md §5).
   layerAdminContent(data, config.dataDir, config.outDir, config.log)
+  memory.push(memorySample('content'))
   const worldExport = config.worldExport ?? config.world
   const base = withTownSpawn(resolveWorld(config.outDir, worldExport, config.spawn, config.world), config.world, data.town(config.world))
   // GM teleport places: the manifest's, then CONTENT_DIR/places.json (docs/PLAYTEST.md "Teleport places").
   const setup = withAuthoredPlaces(base, config.contentDir, config.world, config.log)
   const nav = loadNav(config, setup.bounds)
+  memory.push(memorySample('navmesh'))
   const world = new World(config.world, config.moveSpeed, config.tickHz, setup.bounds, nav)
   world.viewRange = config.viewRange
   if (config.maxVisiblePlayers !== undefined) world.maxVisiblePlayers = config.maxVisiblePlayers
+  // docs/SERVER_ARCHITECTURE.md §4 P0: each change behind its own switch (absent = on)
+  const switches = {
+    tickTimers: config.tickTimers !== false,
+    mobGrid: config.mobGrid !== false,
+    watchers: config.watchers !== false,
+    encodeOnce: config.encodeOnce !== false,
+    aoiFast: config.aoiFast !== false,
+  }
+  world.mobGrid = switches.mobGrid
+  world.useWatchers = switches.watchers
+  world.encodeOnce = switches.encodeOnce
+  world.aoiFast = switches.aoiFast
   // Only places a GM can stand on stay in the tp list (the rest are logged and skipped).
   setup.places = checkPlaces(setup.places, world, nav, [config.world.toLowerCase(), 'spawn'], config.log)
   let tickErrors = 0
@@ -271,6 +321,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     if (++tickErrors <= 5 || tickErrors % 100 === 0) config.log(`world tick failed (${tickErrors}): ${(e as Error).stack ?? e}`)
   }
   const gameplay = new Gameplay({ world, data, store, config, setup, nav, rng: config.rng })
+  memory.push(memorySample('modules'))
   const models = new CharacterModels(config.outDir)
   const outOptDir = config.outOptDir ?? join(dirname(config.outDir), 'out-opt')
   const sockets = new Map<number, Connection>()
@@ -288,7 +339,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     nav,
     gameplay,
     sockets,
-    net: new NetStats(config.tickHz),
+    net: new NetStats(config.tickHz, switches.tickTimers),
     holds: new BodyHolds(() => (config.resumeGraceS ?? 0) * 1000, config.log),
     news: NewsStore.open(config),
     serverInfo: () => ({
@@ -332,6 +383,20 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     },
   }
   let dataVersion = store.dataVersion()
+  // docs/SERVER_ARCHITECTURE.md §3.11 (P0): the tick timers, the outbound backlog, the switches in force
+  world.timers = ctx.net.phases
+  ctx.net.switches = switches
+  ctx.net.probe = () => {
+    let bufferedBytes = 0
+    let maxBufferedBytes = 0
+    for (const c of sockets.values()) {
+      const b = c.buffered
+      bufferedBytes += b
+      if (b > maxBufferedBytes) maxBufferedBytes = b
+    }
+    return { sockets: sockets.size, bufferedBytes, maxBufferedBytes }
+  }
+  const gcWatch = switches.tickTimers ? watchGc(ctx.net.phases) : null
   // Play the Boss (docs/PLAY_THE_BOSS.md §3.9): the game socket's IP of a player (the same-IP associates).
   const ipOf = (p: Player): string | null => {
     for (const c of sockets.values()) if (c.player === p) return c.ip
@@ -659,6 +724,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
 
   config.log(`navigation: ${nav.source}`)
   config.log(gameplay.start())
+  memory.push(memorySample('world'))
+  ctx.net.memory = memory
+  config.log(memoryLine(memory))
   const unplaced = unplacedNestsLine(gameplay, data, setup)
   if (unplaced) config.log(unplaced)
   world.onTickTimed = (ms) => ctx.net.tick(ms)
@@ -676,11 +744,13 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     }
   }, HEARTBEAT_MS)
   const saver = setInterval(() => {
+    const t0 = world.timers.now()
     try {
       ctx.persist([...world.players.values()])
     } catch (e) {
       config.log(`periodic save failed: ${(e as Error).message}`)
     }
+    world.timers.lap(PH.save, t0)
   }, config.saveIntervalS * 1000)
   const purger = setInterval(() => {
     store.purgeSessions()
@@ -736,6 +806,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         gameplay.walls.flush()
         for (const ws of wss.clients) ws.terminate()
         wss.close()
+        gcWatch?.disconnect()
+        ctx.net.close()
         await new Promise<void>((resolve) => {
           http.close(() => resolve())
           http.closeAllConnections()

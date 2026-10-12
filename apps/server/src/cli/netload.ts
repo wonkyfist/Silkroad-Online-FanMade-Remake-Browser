@@ -357,6 +357,12 @@ async function main(): Promise<void> {
     outByType: top(b.out),
     inByType: top(b.in),
     rttMs: { p50: pct(clientStats.rtts, 0.5), p95: pct(clientStats.rtts, 0.95), max: pct(clientStats.rtts, 1), n: clientStats.rtts.length },
+    // docs/SERVER_ARCHITECTURE.md P0: the server's own per-phase split, rates, backlog, event loop and switches
+    ...(b.phases ? { phases: Object.fromEntries(Object.entries(b.phases.phases as Record<string, { avgMs: number; p95Ms: number }>).map(([k, v]) => [k, `${v.avgMs} / ${v.p95Ms}`])), busyMs: b.phases.busyMs, modules: (b.phases.modules as { name: string; avgMs: number }[]).slice(0, 6) } : {}),
+    ...(b.rates ? { rates: b.rates } : {}),
+    ...(b.queue ? { queue: b.queue } : {}),
+    ...(b.loop ? { loop: b.loop } : {}),
+    ...(b.switches ? { switches: b.switches } : {}),
     serverDisconnects: b.disconnects,
     serverDropped: b.dropped,
     botCloses: Object.fromEntries(clientStats.closes),

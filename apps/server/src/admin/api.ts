@@ -34,6 +34,26 @@ import { adminEvents, adminRouteGroup } from './routes.ts'
 import type { SettingsState } from './settings.ts'
 import type { AdminStore } from './store.ts'
 import * as world from './world.ts'
+import type { NetStatsSnapshot } from '../netstats.ts'
+
+/** The dashboard's performance tile (docs/SERVER_ARCHITECTURE.md §3.11, P0) from the net/tick metrics. */
+export function perfTile(s: NetStatsSnapshot): NonNullable<AdminDashboard['perf']> {
+  return {
+    tick: { p50: s.tick.p50, p95: s.tick.p95, max: s.tick.windowMax, budgetMs: s.tick.budgetMs },
+    ...(s.phases
+      ? {
+          phases: Object.entries(s.phases.phases)
+            .map(([name, v]) => ({ name, avgMs: v.avgMs, p95Ms: v.p95Ms }))
+            .sort((a, b) => b.avgMs - a.avgMs),
+          modules: s.phases.modules.slice(0, 8).map((m) => ({ name: m.name, avgMs: m.avgMs })),
+        }
+      : {}),
+    ...(s.rates ? { rates: s.rates } : {}),
+    ...(s.queue ? { queue: s.queue } : {}),
+    ...(s.loop ? { loop: s.loop } : {}),
+    ...(s.switches ? { switches: s.switches } : {}),
+  }
+}
 
 /**
  * The admin panel's HTTP API, `/api/admin/*` (docs/ADMIN.md §3, §4). game.ts hands every request under the prefix to
@@ -425,6 +445,7 @@ export class AdminApi {
       },
       players,
       lobby,
+      perf: perfTile(ctx.net.snapshot(now)),
     }
   }
 

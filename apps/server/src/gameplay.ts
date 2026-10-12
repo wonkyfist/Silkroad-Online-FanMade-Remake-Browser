@@ -68,6 +68,7 @@ import { Mounts } from './mounts.ts'
 import type { NavPoint, NavProvider } from './nav.ts'
 import { HIDDEN_NPCS, NpcDialogs } from './npc.ts'
 import { PartyManager } from './party.ts'
+import { PH } from './phases.ts'
 import { Posture } from './posture.ts'
 import { gainExp, setLevel as applySetLevel, type Progress, type SetLevelChange } from './progression.ts'
 import { QuestEngine } from './quests/engine.ts'
@@ -532,6 +533,8 @@ export class Gameplay implements AiHost {
       const g = this.guilds.guildOf(v)
       return g !== null && g === this.guilds.guildOf(o)
     }
+    // the same rule as keys, for the interest pass (World.alsoMustSeeKeys): the party (sameParty), the guild
+    this.world.alsoMustSeeKeys = (p) => [this.party.byChar.get(p.characterId), this.guilds.guildOf(p)]
   }
 
   /** Runs `hook` on every module (a throwing module is logged and skipped). */
@@ -1453,9 +1456,23 @@ export class Gameplay implements AiHost {
   // ---- tick ----------------------------------------------------------------------------------------------
 
   tick(now: number): void {
+    try {
+      this.tickAll(now)
+    } finally {
+      // the monster pass's player grid never outlives the tick (a throwing module included)
+      this.world.endPlayerScan()
+    }
+  }
+
+  private tickAll(now: number): void {
     this.now = now
+    const T = this.world.timers
+    let t0 = T.now()
     for (const p of this.world.players.values()) this.tickPlayer(p, now)
-    const active = [...this.world.players.values()].filter((p) => !p.dead).map((p) => this.world.positionAt(p, now))
+    t0 = T.lap(PH.players, t0)
+    // docs/SERVER_ARCHITECTURE.md P0: one player grid for the wake check and the monsters' scans (null: MOB_GRID off)
+    const grid = this.world.beginPlayerScan(now)
+    const active = grid ? [] : [...this.world.players.values()].filter((p) => !p.dead).map((p) => this.world.positionAt(p, now))
     const wake = (this.world.viewRange + DORMANT_MARGIN_M) ** 2
     for (const m of [...this.world.mobs.values()]) {
       if (m.ai === 'dead') {
@@ -1467,7 +1484,7 @@ export class Gameplay implements AiHost {
       if (m.siege && m.siege.mode !== 'engage') continue
       if (m.ai === 'idle') {
         const pos = this.world.positionAt(m, now)
-        if (!active.some((q) => (q[0] - pos[0]) ** 2 + (q[2] - pos[2]) ** 2 <= wake)) {
+        if (!(grid ? grid.anyAliveWithin(pos[0], pos[2], wake) : active.some((q) => (q[0] - pos[0]) ** 2 + (q[2] - pos[2]) ** 2 <= wake))) {
           this.regenMob(m, now)
           continue
         }
@@ -1484,10 +1501,19 @@ export class Gameplay implements AiHost {
       thinkMob(m, this)
       if (m.ai === 'idle') this.regenMob(m, now)
     }
+
+    this.world.endPlayerScan()
+    t0 = T.lap(PH.mobs, t0)
     for (const it of [...this.world.items.values()]) if (now >= it.expiresAt) this.world.removeEntity(it.id)
+    t0 = T.lap(PH.items, t0)
     if (this.config.spawnMobs) this.spawner.tick(now, (nest) => this.spawnNestMob(nest, now))
-    this.hook('tick', now)
+    T.lap(PH.spawner, t0)
+    // the modules' tick hooks, each timed (the `modules` phase and its per-module split)
+    fanOut(this.modules, 'tick', [now], this.hookError, T.enabled ? this.timeModule : undefined)
   }
+
+  private readonly hookError = (e: unknown, where: string): void => this.config.log(`gameplay module ${where} failed: ${(e as Error)?.stack ?? e}`)
+  private readonly timeModule = (m: GameplayModule, ms: number): void => this.world.timers.module(m.name, ms)
 
   private regenMob(m: Mob, now: number): void {
     // Play the Boss (docs/PLAY_THE_BOSS.md §3.4): hiding never heals the boss during the event.

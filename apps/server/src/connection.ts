@@ -27,6 +27,34 @@ import { parseSlash, runGm } from './gm.ts'
 import { VISIBLE_SLOTS } from './inventory.ts'
 import type { NavPoint } from './nav.ts'
 import { WARP_SEARCH_M, visibleEquipPlus, type Player } from './world.ts'
+import { encodeStats, type Encoded } from './encode.ts'
+import { PH, type PhaseTimers } from './phases.ts'
+
+interface CorkableSocket {
+  cork(): void
+  uncork(): void
+}
+
+/** An encoded message (a Buffer) still goes out as a text frame. */
+const TEXT_FRAME = { binary: false } as const
+
+/** The connections corked in the current event-loop turn, in the order they were corked (Connection.corkTurn). */
+let corkedThisTurn: Connection[] = []
+
+/** The end of a turn: uncorks every socket corked in it (one writev each), timed as the `flush` phase. */
+function uncorkTurn(timers: PhaseTimers): void {
+  const list = corkedThisTurn
+  corkedThisTurn = []
+  const t0 = timers.now()
+  for (const c of list) {
+    try {
+      c.uncork()
+    } catch {
+      // a socket that broke meanwhile: its close/error handlers clean up
+    }
+  }
+  timers.lap(PH.flush, t0)
+}
 
 /**
  * Per-connection flood ceiling over all message types (docs/NETWORK_AUDIT.md N3). Every type also has its own budget
@@ -118,8 +146,8 @@ export class Connection {
   private helloTimer: NodeJS.Timeout | null
   /** Why this connection ended (logged once by dispose): set by close(), the socket close/error, or the heartbeat. */
   private closeReason: string | null = null
-  /** The socket is corked until the end of this event-loop turn (corkTurn). */
-  private corked = false
+  /** The socket corked until the end of this event-loop turn (corkTurn), else null. */
+  private corked: CorkableSocket | null = null
 
   constructor(
     private readonly ws: WebSocket,
@@ -129,7 +157,13 @@ export class Connection {
     this.helloTimer = setTimeout(() => {
       if (this.state === 'hello') this.close(CLOSE_CODE.helloTimeout, 'hello timeout')
     }, game.config.helloTimeoutMs)
-    ws.on('message', (data, isBinary) => this.onFrame(data, isBinary))
+    ws.on('message', (data, isBinary) => {
+      // the `inbound` tick phase (phases.ts): parse, validate, budgets and the request itself
+      const T = game.world.timers
+      const t0 = T.now()
+      this.onFrame(data, isBinary)
+      T.lap(PH.inbound, t0)
+    })
     ws.on('close', (code: number, reason: Buffer) => {
       const timedOut = (ws as WebSocket & { sroTimedOut?: boolean }).sroTimedOut
       this.closeReason ??= timedOut ? 'heartbeat timeout' : `client ${code}${reason.length ? ' ' + reason.toString('utf8').slice(0, 60) : ''}`
@@ -141,34 +175,68 @@ export class Connection {
     })
   }
 
-  send(msg: ServerMessage): void {
+  /**
+   * Sends one message. `enc` (docs/SERVER_ARCHITECTURE.md P0, encode-once): the broadcast's shared encoding, used when it
+   * was made from this very message object; with ENCODE_ONCE on every frame goes out as a UTF-8 Buffer (text opcode),
+   * so a socket's corked writes are all buffers and its writev copies nothing.
+   */
+  send(msg: ServerMessage, enc?: Encoded): void {
     if (this.ws.readyState !== this.ws.OPEN) return
     if (this.ws.bufferedAmount > MAX_BUFFERED) {
       this.close(CLOSE_CODE.slow, 'not reading')
       return
     }
+    if (this.game.world.encodeOnce) {
+      let buf: Buffer
+      if (enc && enc.msg === msg) buf = enc.buf
+      else {
+        buf = Buffer.from(JSON.stringify(msg))
+        encodeStats.n++
+      }
+      this.game.net.sent(msg.t, buf.length)
+      this.corkTurn()
+      this.ws.send(buf, TEXT_FRAME)
+      return
+    }
     const text = JSON.stringify(msg)
+    encodeStats.n++
     this.game.net.sent(msg.t, text.length)
     this.corkTurn()
     this.ws.send(text)
   }
 
+  /** Bytes written to this socket and not yet sent (the outbound backlog; netstats.ts `queue`). */
+  get buffered(): number {
+    return this.ws.bufferedAmount
+  }
+
   /**
    * Coalesces this turn's frames into one socket write (docs/NETWORK_AUDIT.md N1): the first send of an event-loop turn
-   * corks the TCP socket and a setImmediate uncorks it, so a tick that sends a client 30 `move` / `stop` frames costs
+   * corks the TCP socket and the end of the turn uncorks it, so a tick that sends a client 30 `move` / `stop` frames costs
    * one writev instead of 30 (at 500 players in one town the per-frame writes were ~half the server's CPU). The frames
-   * and their order are unchanged; they leave at the end of the turn instead of one by one within it.
+   * and their order are unchanged; they leave at the end of the turn instead of one by one within it. One setImmediate
+   * per turn uncorks every socket corked in it, in the order they were corked (the `flush` tick phase).
    */
   private corkTurn(): void {
     if (this.corked) return
-    const socket = (this.ws as WebSocket & { _socket?: { cork(): void; uncork(): void } })._socket
+    const socket = (this.ws as WebSocket & { _socket?: CorkableSocket })._socket
     if (!socket) return
-    this.corked = true
+    this.corked = socket
     socket.cork()
-    setImmediate(() => {
-      this.corked = false
-      socket.uncork()
-    })
+    if (!this.game.world.encodeOnce) {
+      // ENCODE_ONCE off: the path before P0, one setImmediate per socket
+      setImmediate(() => this.uncork())
+      return
+    }
+    corkedThisTurn.push(this)
+    if (corkedThisTurn.length === 1) setImmediate(uncorkTurn, this.game.world.timers)
+  }
+
+  /** Ends this turn's cork (uncorkTurn). */
+  uncork(): void {
+    const socket = this.corked
+    this.corked = null
+    socket?.uncork()
   }
 
   error(code: ErrorCode, message: string, re?: ClientMessage['t']): void {
@@ -564,7 +632,7 @@ export class Connection {
       volume: row.volume,
       look: this.game.store.characterLook(row),
       yaw: row.yaw,
-      send: (m) => this.send(m),
+      send: (m, enc) => this.send(m, enc),
       staff: isStaff(this.role),
     })
     this.state = 'world'

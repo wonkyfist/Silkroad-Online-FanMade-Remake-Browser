@@ -74,6 +74,18 @@ export interface ServerConfig {
   viewRange: number
   /** Crowd cap (MAX_VISIBLE_PLAYERS, default 100, 0 = off): the nearest this many players are shown (docs/NETWORK_AUDIT.md R1). Absent = the default. */
   maxVisiblePlayers?: number
+  /**
+   * Server architecture phase P0 (docs/SERVER_ARCHITECTURE.md §4): each change has its own switch, on by default (absent
+   * = on); off runs the path from before it, to compare or roll back. TICK_TIMERS: the per-phase tick timers (phases.ts,
+   * GET /netstats, the admin dashboard). MOB_GRID: the monster pass's player grid (cells.ts) for the AI's scans and the
+   * wake check. WATCHERS: broadcasts through the recipient index (known.ts). ENCODE_ONCE: one encoding per broadcast
+   * (encode.ts). AOI_FAST: the interest pass's quick path.
+   */
+  tickTimers?: boolean
+  mobGrid?: boolean
+  watchers?: boolean
+  encodeOnce?: boolean
+  aoiFast?: boolean
   /** Nests whose monster is above this level stay empty (MOB_LEVEL_MAX, default LEVEL_CAP + 5; 0 = all). */
   mobLevelMax: number
   /** Spawn nest monsters at all (SPAWN_MOBS, default on). */
@@ -499,6 +511,12 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     rolePollMs: 1000,
     viewRange: num(env, 'VIEW_RANGE', 120, 20, 2000),
     maxVisiblePlayers: Math.floor(num(env, 'MAX_VISIBLE_PLAYERS', 100, 0, 10_000)),
+    // docs/SERVER_ARCHITECTURE.md §4 P0 switches
+    tickTimers: onOff(env, 'TICK_TIMERS', true),
+    mobGrid: onOff(env, 'MOB_GRID', true),
+    watchers: onOff(env, 'WATCHERS', true),
+    encodeOnce: onOff(env, 'ENCODE_ONCE', true),
+    aoiFast: onOff(env, 'AOI_FAST', true),
     mobLevelMax: Math.floor(num(env, 'MOB_LEVEL_MAX', levelCap + 5, 0, 1000)),
     climb: onOff(env, 'CLIMB', true),
     climbRoles: onOff(env, 'CLIMB_ROLES', true),

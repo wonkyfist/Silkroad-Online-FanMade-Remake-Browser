@@ -108,16 +108,18 @@ export function buildRoutes(modules: readonly GameplayModule[], core: readonly G
 
 /**
  * Calls `hook` on every module that has it, in registration order. A throwing module is reported and skipped, so
- * one module's bug cannot stop the others (or the rest of the tick).
+ * one module's bug cannot stop the others (or the rest of the tick). `time` (the tick timers, phases.ts): each call's ms.
  */
-export function fanOut<K extends ModuleHook>(modules: readonly GameplayModule[], hook: K, args: HookArgs<K>, report: (e: unknown, where: string) => void): void {
+export function fanOut<K extends ModuleHook>(modules: readonly GameplayModule[], hook: K, args: HookArgs<K>, report: (e: unknown, where: string) => void, time?: (m: GameplayModule, ms: number) => void): void {
   for (const m of modules) {
     const fn = m[hook] as ((...a: HookArgs<K>) => void) | undefined
     if (!fn) continue
+    const t0 = time ? performance.now() : 0
     try {
       fn.apply(m, args)
     } catch (e) {
       report(e, `${m.name}.${hook}`)
     }
+    if (time) time(m, performance.now() - t0)
   }
 }

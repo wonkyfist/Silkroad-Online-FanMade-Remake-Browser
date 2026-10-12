@@ -116,11 +116,37 @@ export interface AdminOnlinePlayer {
   invisible: boolean
 }
 
+/**
+ * The dashboard's performance tile (docs/SERVER_ARCHITECTURE.md §3.11, phase P0): the server's built-in tick timers over
+ * the last ~2 minutes. Every part but `tick` is absent when the server runs with TICK_TIMERS=off.
+ */
+export interface AdminServerPerf {
+  /** Tick duration (ms) over the window, and the budget (1000 / tick rate). */
+  tick: { p50: number; p95: number; max: number; budgetMs: number }
+  /**
+   * Mean and p95 ms per tick interval by phase (arrive, players, mobs, items, spawner, modules, interest, crowd, inbound,
+   * flush, save, gc), heaviest first.
+   */
+  phases?: { name: string; avgMs: number; p95Ms: number }[]
+  /** The heaviest module tick hooks: mean ms per tick. */
+  modules?: { name: string; avgMs: number }[]
+  /** Messages per second in and out, the out bandwidth, and JSON encodes per second (fewer than out with encode-once). */
+  rates?: { inPerS: number; outPerS: number; outKBps: number; encodesPerS: number }
+  /** The outbound backlog: bytes queued in the game sockets, in total and the worst one. */
+  queue?: { sockets: number; bufferedBytes: number; maxBufferedBytes: number }
+  /** Event-loop delay (ms). */
+  loop?: { p50Ms: number; p99Ms: number; maxMs: number }
+  /** The P0 switches (TICK_TIMERS, MOB_GRID, WATCHERS, ENCODE_ONCE, AOI_FAST) as running. */
+  switches?: Record<string, boolean>
+}
+
 export interface AdminDashboard {
   server: AdminServerInfo
   players: AdminOnlinePlayer[]
   /** Connected accounts without a character in the world. */
   lobby: { accountId: number; account: string; role: Role }[]
+  /** Optional: older servers send none. */
+  perf?: AdminServerPerf
 }
 
 // ---- accounts and characters -------------------------------------------------------------------------------
