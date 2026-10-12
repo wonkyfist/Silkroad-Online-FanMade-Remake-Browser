@@ -19,7 +19,7 @@ import { Gameplay } from '../src/gameplay.ts'
 import { GameData } from '../src/gamedata.ts'
 import { KnownSet } from '../src/known.ts'
 import { FlatNav } from '../src/nav.ts'
-import { World, type Player } from '../src/world.ts'
+import { World, firstSorted, type Player } from '../src/world.ts'
 import { perfTile } from '../src/admin/api.ts'
 import { PH, PHASES, PhaseTimers } from '../src/phases.ts'
 import { DROPS, ITEMS, LEVELS, MANGNYANG, NPCS, SHOPS, mob, seeded } from './fixtures.ts'
@@ -321,6 +321,51 @@ describe('World.playersNear inside the monster pass', () => {
     const { w, now } = world()
     w.mobGrid = false
     expect(w.beginPlayerScan(now)).toBeNull()
+  })
+})
+
+describe('AOI_FAST crowd picks', () => {
+  it('firstSorted gives the head of the stable sort, ties included', () => {
+    const r = seeded(12)
+    for (let k = 0; k < 400; k++) {
+      const list = Array.from({ length: Math.floor(r() * 60) }, (_, pos) => ({ id: pos + 1, d: Math.floor(r() * 8) - 2, shown: r() < 0.5, pos }))
+      const n = Math.floor(r() * 20)
+      expect(firstSorted(list, n)).toEqual(list.slice().sort((x, y) => x.d - y.d).slice(0, n))
+    }
+  })
+
+  it('crowds of players on a lattice (many equal distances) are the same as pickCrowd picks, pass after pass', () => {
+    const make = (fast: boolean) => {
+      const w = new World('jangan', 5, 20, null)
+      w.aoiFast = fast
+      w.maxVisiblePlayers = 7
+      w.crowdRepickPasses = 1
+      const boxes = new Map<number, string[]>()
+      for (let i = 0; i < 60; i++) {
+        const box: string[] = []
+        const p = w.add({ characterId: i + 1, name: `P${i}`, model: 'CHAR_CH_MAN_ADVENTURER', level: 1, weapon: 'blade', pos: [(i % 8) * 4, 0, Math.floor(i / 8) * 4], yaw: 0, send: (m) => box.push(JSON.stringify(m)) })
+        boxes.set(p.id, box)
+      }
+      return { w, boxes }
+    }
+    const a = make(true)
+    const b = make(false)
+    const ra = seeded(21)
+    const rb = seeded(21)
+    let now = Date.now() + 10_000
+    const crowds = (w: World) => [...w.players.values()].map((p) => `${p.id}:${p.crowd ? [...p.crowd].sort((x, y) => x - y).join(',') : '-'}:${[...p.known].sort((x, y) => x - y).join(',')}`)
+    for (let pass = 0; pass < 60; pass++) {
+      now += 200
+      for (const [s, r] of [[a, ra], [b, rb]] as const) {
+        const ps = [...s.w.players.values()]
+        // jumps on the 4 m lattice keep distances equal; fights make must-see players
+        for (let j = 0; j < 6; j++) ps[Math.floor(r() * ps.length)]!.pos = [Math.floor(r() * 8) * 4, 0, Math.floor(r() * 8) * 4]
+        if (r() < 0.3) s.w.noteFoes(ps[Math.floor(r() * ps.length)]!, ps[Math.floor(r() * ps.length)]!, now)
+        s.w.updateInterest(now)
+      }
+      expect(crowds(a.w), `pass ${pass}`).toEqual(crowds(b.w))
+    }
+    for (const [id, box] of a.boxes) expect(box).toEqual(b.boxes.get(id))
   })
 })
 

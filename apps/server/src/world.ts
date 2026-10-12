@@ -343,6 +343,33 @@ const BOUNDS_INSET_M = 0.01
 /** A teleport into a wall or a house lands on the nearest open ground within this distance (metres). */
 export const WARP_SEARCH_M = 10
 
+/** A crowd-pick candidate (pickCrowdCells): its distance (shown ones CROWD_SWAP_M nearer) and its candidate order. */
+export interface CrowdPick {
+  id: number
+  d: number
+  shown: boolean
+  pos: number
+}
+
+/**
+ * The first `k` of `list` (in candidate order) sorted by distance, as the stable `list.slice().sort(by d).slice(0, k)`
+ * gives them (equal distances keep their order), without sorting all of it when k is small.
+ */
+export function firstSorted(list: CrowdPick[], k: number): CrowdPick[] {
+  if (k <= 0) return []
+  if (k > 16 || k * 4 >= list.length) return list.slice().sort((x, y) => x.d - y.d).slice(0, k)
+  const out: CrowdPick[] = []
+  for (const x of list) {
+    // not nearer than the k-th so far: a stable sort puts it after that one
+    if (out.length === k && x.d >= out[k - 1]!.d) continue
+    let j = out.length
+    while (j > 0 && out[j - 1]!.d > x.d) j--
+    out.splice(j, 0, x)
+    if (out.length > k) out.pop()
+  }
+  return out
+}
+
 /** One cell of an AOI_FAST interest pass: its entities with their ids and positions side by side. */
 interface AoiCell {
   ents: Entity[]
@@ -1163,21 +1190,24 @@ export class World {
         this.pickCrowdCells(v, cells, a, now)
         this.crowdMs += this.timers.now() - c0
       }
-      // reveal(), inlined: in view range (no hysteresis) of the anchor, visible, not hidden by the crowd cap
+      // reveal(), inlined: in view range (no hysteresis) of the anchor, visible, not hidden by the crowd cap. The same
+      // pure conditions, the crowd cap first: in a crowd most candidates are players it hides (one Set lookup, not three).
       const vid = v.id
       const known = v.known
+      const crowd = v.crowd
       for (const c of cells) {
-        const { ents, ids, xs, zs } = c
+        const { ents, ids, xs, zs, pl } = c
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]!
-          if (id === vid || known.has(id)) continue
+          if (id === vid) continue
           const e = ents[i]!
-          if (!this.canSee(v, e)) continue
+          if (crowd && pl[i] && !crowd.has(id) && !this.mustSee(v, e as Player, now)) continue
+          if (known.has(id) || !this.canSee(v, e)) continue
           let r = view
           if (e.kind === 'mob' && e.veil !== undefined && !v.staff && e.pilot?.player !== vid) r = Math.min(r, e.veil)
           const dx = ax - xs[i]!
           const dz = az - zs[i]!
-          if (!(dx * dx + dz * dz <= r * r) || this.crowded(v, e, now)) continue
+          if (!(dx * dx + dz * dz <= r * r)) continue
           known.add(id)
           v.send({ t: 'spawn', entity: this.state(e) })
         }
@@ -1316,8 +1346,12 @@ export class World {
   }
 
   /**
-   * AOI_FAST: pickCrowd over an interest pass's cells (`a`: the viewer's anchor position of the pass), the same choice
-   * made the same way: positions from the cell arrays instead of the pass's map, each candidate's `known` looked up once.
+   * AOI_FAST: pickCrowd over an interest pass's cells (`a`: the viewer's anchor position of the pass), the same crowd:
+   * positions from the cell arrays instead of the pass's map, each candidate's `known` looked up once, and no full
+   * sorts where pickCrowd only reads the head of one. pickCrowd takes the `slots` nearest shown players (all of them
+   * when they fit: no sort needed, the set is the same), fills up with the nearest newcomers and swaps the farthest
+   * shown one (the first of equals in its stable order) for a clearly nearer newcomer; a viewer whose crowd is settled
+   * needs only the few nearest newcomers (firstSorted), not all of them sorted.
    */
   private pickCrowdCells(viewer: Player, cells: readonly AoiCell[], a: Vec3, now: number): void {
     const max = this.maxVisiblePlayers
@@ -1326,7 +1360,9 @@ export class World {
     const r = this.viewRange + VIEW_HYSTERESIS_M
     const known = viewer.known
     const vid = viewer.id
-    const rest: { id: number; d: number; shown: boolean }[] = []
+    const shownAll: CrowdPick[] = []
+    const freshAll: CrowdPick[] = []
+    let n = 0
     const keep = new Set<number>()
     for (const c of cells) {
       const { ents, ids, xs, zs, pl } = c
@@ -1337,22 +1373,23 @@ export class World {
         const d = Math.hypot(a[0] - xs[i]!, a[2] - zs[i]!)
         if (d > r) continue
         if (this.mustSee(viewer, e, now)) keep.add(e.id)
-        else {
-          const shown = known.has(e.id)
-          rest.push({ id: e.id, d: shown ? d - CROWD_SWAP_M : d, shown })
-        }
+        else if (known.has(e.id)) shownAll.push({ id: e.id, d: d - CROWD_SWAP_M, shown: true, pos: n++ })
+        else freshAll.push({ id: e.id, d, shown: false, pos: n++ })
       }
     }
-    if (keep.size + rest.length <= max) return
-    const shown = rest.filter((x) => x.shown).sort((x, y) => x.d - y.d)
-    const fresh = rest.filter((x) => !x.shown).sort((x, y) => x.d - y.d)
+    if (keep.size + n <= max) return
     const slots = Math.max(0, max - keep.size)
-    const take = shown.slice(0, slots)
+    const take = shownAll.length <= slots ? shownAll : firstSorted(shownAll, slots)
+    const fresh = firstSorted(freshAll, slots - take.length + CROWD_SWAPS_PER_PASS)
     let f = 0
     while (take.length < slots && f < fresh.length) take.push(fresh[f++]!)
     for (let swaps = 0; swaps < CROWD_SWAPS_PER_PASS && f < fresh.length; swaps++) {
+      // the farthest shown player taken; of equals the first in pickCrowd's stable order (the earliest candidate)
       let worst = -1
-      for (let i = 0; i < take.length; i++) if (take[i]!.shown && (worst < 0 || take[i]!.d > take[worst]!.d)) worst = i
+      for (let i = 0; i < take.length; i++) {
+        const x = take[i]!
+        if (x.shown && (worst < 0 || x.d > take[worst]!.d || (x.d === take[worst]!.d && x.pos < take[worst]!.pos))) worst = i
+      }
       if (worst < 0 || fresh[f]!.d >= take[worst]!.d) break
       take[worst] = fresh[f++]!
     }

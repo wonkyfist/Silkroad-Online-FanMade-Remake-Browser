@@ -224,8 +224,13 @@ export class Connection {
     this.corked = socket
     socket.cork()
     if (!this.game.world.encodeOnce) {
-      // ENCODE_ONCE off: the path before P0, one setImmediate per socket
-      setImmediate(() => this.uncork())
+      // ENCODE_ONCE off: the path before P0, one setImmediate per socket (timed into `flush` too, for comparisons)
+      setImmediate(() => {
+        const T = this.game.world.timers
+        const t0 = T.now()
+        this.uncork()
+        T.lap(PH.flush, t0)
+      })
       return
     }
     corkedThisTurn.push(this)
