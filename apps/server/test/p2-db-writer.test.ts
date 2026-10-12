@@ -8,6 +8,7 @@ import { addGold, addItem } from '../src/inventory.ts'
 import { openStorageStore } from '../src/storage-db.ts'
 import { goldIn, deposit } from '../src/storage.ts'
 import { logSocial, pairTx } from '../src/social/pair-tx.ts'
+import { dumpDb } from './p2-econ.ts'
 
 /**
  * docs/SERVER_ARCHITECTURE.md §3.8, phase P2: the DB writer thread (db/mirror.ts, db/writer.ts). The same statements
@@ -31,19 +32,6 @@ afterEach(() => {
 })
 
 const DEFS = (code: string) => ({ code, name: code, maxStack: 50, price: 10, sellPrice: 5 }) as never
-
-/** Every row of every table of a database file, ordered (a whole-database comparison). */
-export function dumpDb(file: string): Record<string, unknown[]> {
-  const db = new Database(file, { readonly: true })
-  try {
-    const out: Record<string, unknown[]> = {}
-    const tables = db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").pluck().all() as string[]
-    for (const t of tables) out[t] = db.prepare(`SELECT * FROM "${t}" ORDER BY rowid`).all()
-    return out
-  } finally {
-    db.close()
-  }
-}
 
 /** A scripted workload over the store's own API: accounts, characters, items, gold, storage, a pair transfer. */
 function workload(store: Store, rounds = 30): void {
