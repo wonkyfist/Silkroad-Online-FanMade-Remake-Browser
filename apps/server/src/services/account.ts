@@ -43,13 +43,19 @@ export function claimWriterLock(dataDir: string): () => void {
 
 /** The pid of a live server whose DB writer owns DATA_DIR/game.db, or null. */
 export function liveWriter(dataDir: string): number | null {
+  let pid: number
   try {
-    const { pid } = JSON.parse(readFileSync(join(dataDir, WRITER_LOCK), 'utf8')) as { pid: number }
-    if (!Number.isInteger(pid) || pid <= 0) return null
-    process.kill(pid, 0)
-    return pid
+    pid = (JSON.parse(readFileSync(join(dataDir, WRITER_LOCK), 'utf8')) as { pid: number }).pid
   } catch {
     return null
+  }
+  if (!Number.isInteger(pid) || pid <= 0) return null
+  try {
+    process.kill(pid, 0)
+    return pid
+  } catch (e) {
+    // EPERM: it runs, as another user (the inbox still reaches it if DATA_DIR is writable); ESRCH: a stale mark
+    return (e as { code?: string }).code === 'EPERM' ? pid : null
   }
 }
 
