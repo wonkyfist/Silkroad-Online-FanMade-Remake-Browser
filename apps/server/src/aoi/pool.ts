@@ -1,5 +1,5 @@
 import { MessageChannel, Worker, receiveMessageOnPort, type MessagePort } from 'node:worker_threads'
-import { IntList, buildGrid, buildIndex, runSlice, type AoiLayout, type AoiParams } from './kernel.ts'
+import { IntList, prepare, runSlice, type AoiLayout, type AoiParams, type AoiPrep } from './kernel.ts'
 
 /**
  * The AoI job workers (docs/SERVER_ARCHITECTURE.md §3.5, phase P1b; AOI_JOBS=N, 0 = the pass stays on the tick thread).
@@ -51,6 +51,7 @@ export class AoiPool {
   private F: Float64Array = new Float64Array(new SharedArrayBuffer(8 * 16384))
   private closed = false
   private readonly own = new IntList(1 << 14)
+  private prep: AoiPrep | null = null
   readonly stats = { passes: 0, fallbacks: 0, snapshotMs: 0, ownMs: 0, waitMs: 0, applyMs: 0 }
 
   constructor(
@@ -124,11 +125,10 @@ export class AoiPool {
       s.worker!.postMessage({ gen, I: I.buffer, F: F.buffer, L, p, from: bounds[k]!, to: bounds[k + 1]! })
     }
     const t0 = performance.now()
-    const grid = buildGrid(F, L, p)
-    const index = buildIndex(I, L, p)
+    const prep = (this.prep = prepare(I, F, L, p, this.prep))
     const out: Int32Array[] = new Array(parts)
     this.own.n = 0
-    runSlice(I, F, L, p, grid, index, 0, bounds[1]!, this.own)
+    runSlice(I, F, L, p, prep, 0, bounds[1]!, this.own)
     out[0] = this.own.take()
     const t1 = performance.now()
     this.stats.ownMs += t1 - t0
@@ -161,7 +161,7 @@ export class AoiPool {
         // late or failed: this thread does that slice (the worker's own answer, when it comes, is dropped)
         this.stats.fallbacks++
         const list = new IntList(1 << 12)
-        runSlice(I, F, L, p, grid, index, bounds[k]!, bounds[k + 1]!, list)
+        runSlice(I, F, L, p, prep, bounds[k]!, bounds[k + 1]!, list)
         got = list.take()
       }
       out[k] = got

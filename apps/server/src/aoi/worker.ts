@@ -6,7 +6,7 @@
  */
 import { parentPort, workerData } from 'node:worker_threads'
 import type { MessagePort } from 'node:worker_threads'
-import { IntList, buildGrid, buildIndex, runSlice, type AoiLayout, type AoiParams } from './kernel.ts'
+import { IntList, prepare, runSlice, type AoiLayout, type AoiParams, type AoiPrep } from './kernel.ts'
 
 interface Job {
   gen: number
@@ -21,6 +21,7 @@ interface Job {
 const { slot, ctl, port } = workerData as { slot: number; ctl: SharedArrayBuffer; port: MessagePort }
 const done = new Int32Array(ctl)
 const out = new IntList(1 << 14)
+let prep: AoiPrep | null = null
 const threadCpu = (process as { threadCpuUsage?: () => { user: number; system: number } }).threadCpuUsage
 
 parentPort!.on('message', (job: Job) => {
@@ -31,10 +32,9 @@ parentPort!.on('message', (job: Job) => {
   let res: Int32Array | null = null
   let error: string | null = null
   try {
-    const grid = buildGrid(F, job.L, job.p)
-    const index = buildIndex(I, job.L, job.p)
+    prep = prepare(I, F, job.L, job.p, prep)
     out.n = 0
-    runSlice(I, F, job.L, job.p, grid, index, job.from, job.to, out)
+    runSlice(I, F, job.L, job.p, prep, job.from, job.to, out)
     res = out.take()
   } catch (e) {
     error = (e as Error).stack ?? String(e)

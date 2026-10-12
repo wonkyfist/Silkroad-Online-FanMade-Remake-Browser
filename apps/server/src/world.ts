@@ -1235,12 +1235,28 @@ export class World {
     this.interestPasses++
     const players = [...this.players.values()]
     const P = players.length
-    // the anchors that are monsters (Play the Boss: viewFrom), found while the entities are written
-    let wantMobs: Map<number, number> | null = null
-    for (const v of players) if (v.viewFrom !== undefined && this.mobs.has(v.viewFrom)) (wantMobs ??= new Map()).set(v.viewFrom, -1)
-    // sizes first: the shared arrays are written in one go
     let E = 0
     for (const m of [this.players, this.mobs, this.items, this.npcs, this.cos]) E += m.size
+    // the entities in allEntities order (players first): positions, the pass's grid and id -> index
+    const ents: Entity[] = new Array(E)
+    const xs = new Float64Array(E)
+    const zs = new Float64Array(E)
+    const idx = new Map<number, number>()
+    const cell = Math.max(16, this.viewRange)
+    const grid = new Map<number, number[]>()
+    let n = 0
+    for (const e of this.allEntities()) {
+      const at = this.positionAt(e, now)
+      ents[n] = e
+      xs[n] = at[0]
+      zs[n] = at[2]
+      idx.set(e.id, n)
+      const k = cellKey(Math.floor(at[0] / cell), Math.floor(at[2] / cell))
+      const c = grid.get(k)
+      if (c) c.push(n)
+      else grid.set(k, [n])
+      n++
+    }
     const keysOf = this.alsoMustSeeKeys
     const keyLists: (readonly unknown[])[] = keysOf ? players.map((v) => keysOf(v)) : []
     let K = 0
@@ -1256,16 +1272,14 @@ export class World {
       if (!repick[i] && v.crowd) nCrowd += v.crowd.size
       if (v.foes) nFoes += v.foes.size
     }
-    const L = layout(E, P, K, nKnown, nCrowd, nFoes)
+    const C = grid.size
+    const L = layout(E, P, K, C, nKnown, nCrowd, nFoes)
     const { I, F } = pool.arrays(L.iLen, L.fLen)
-    const ents: Entity[] = new Array(E)
-    let i = 0
-    for (const e of this.allEntities()) {
-      const at = this.positionAt(e, now)
-      ents[i] = e
+    for (let i = 0; i < E; i++) {
+      const e = ents[i]!
       I[L.eid + i] = e.id
-      F[L.ex + i] = at[0]
-      F[L.ez + i] = at[2]
+      F[L.ex + i] = xs[i]!
+      F[L.ez + i] = zs[i]!
       let fl = 0
       let owner = 0
       let pilot = 0
@@ -1280,7 +1294,6 @@ export class World {
           veil = e.veil
           pilot = e.pilot?.player ?? 0
         }
-        if (wantMobs?.has(e.id)) wantMobs.set(e.id, i)
       } else if (e.kind === 'cos') {
         const o = this.players.get(e.owner)
         fl = EF_COS | (o && o.invisible ? EF_HIDDEN : 0)
@@ -1290,26 +1303,40 @@ export class World {
       I[L.eowner + i] = owner
       I[L.epilot + i] = pilot
       F[L.eveil + i] = veil
-      i++
     }
-    // must-see keys as small integers (the same object = the same number; null and undefined = 0)
+    let c = 0
+    let ce = 0
+    for (const [k, list] of grid) {
+      F[L.cellKey + c] = k
+      I[L.cellStart + c] = ce
+      I[L.cellLen + c] = list.length
+      for (const e of list) I[L.cellEnts + ce++] = e
+      c++
+    }
+    // per viewer: anchor, target, flags, must-see keys as small integers (the same object = the same number; unset = 0),
+    // known (ids and indexes), the crowd in force, foes
+    const playerIdx = (id: number): number => {
+      const i = idx.get(id)
+      return i !== undefined && i < P ? i : -1
+    }
     const keyIds = new Map<unknown, number>()
     let ko = 0
     let co = 0
     let fo = 0
     for (let v = 0; v < P; v++) {
       const p = players[v]!
-      const anchor = p.viewFrom === undefined ? -1 : (wantMobs?.get(p.viewFrom) ?? -1)
-      I[L.pAnchor + v] = anchor >= 0 ? anchor : v
+      const anchor = p.viewFrom === undefined || !this.mobs.has(p.viewFrom) ? v : idx.get(p.viewFrom)!
+      I[L.pAnchor + v] = anchor
       const act = p.action
-      I[L.pTarget + v] = act && (act.kind === 'attack' || act.kind === 'skill') ? act.target : 0
+      const target = act && (act.kind === 'attack' || act.kind === 'skill') ? act.target : 0
+      I[L.pTarget + v] = target
+      I[L.pTargetIdx + v] = target !== 0 ? playerIdx(target) : -1
       let meta = p.staff ? PM_STAFF : 0
       if (repick[v]) meta |= PM_REPICK
       else if (!p.crowd) meta |= PM_NULL
       I[L.pMeta + v] = meta
       if (K > 0) {
         const keys = keyLists[v]!
-        // a player whose keys are all unset matches nobody (World.passKeysOf): all zeros
         for (let k = 0; k < K; k++) {
           const key = keys[k]
           let id = 0
@@ -1321,15 +1348,19 @@ export class World {
         }
       }
       I[L.pKnownOff + v] = ko
-      for (const id of p.known) I[L.known + ko++] = id
+      for (const id of p.known) {
+        I[L.knownId + ko] = id
+        I[L.knownIdx + ko] = idx.get(id) ?? -1
+        ko++
+      }
       I[L.pKnownLen + v] = ko - I[L.pKnownOff + v]!
       I[L.pCrowdOff + v] = co
-      if (!repick[v] && p.crowd) for (const id of p.crowd) I[L.crowd + co++] = id
+      if (!repick[v] && p.crowd) for (const id of p.crowd) I[L.crowdIdx + co++] = playerIdx(id)
       I[L.pCrowdLen + v] = co - I[L.pCrowdOff + v]!
       I[L.pFoeOff + v] = fo
       if (p.foes) {
         for (const [id, t] of p.foes) {
-          I[L.foeIds + fo] = id
+          I[L.foeIdx + fo] = playerIdx(id)
           F[L.foeT + fo] = t
           fo++
         }
@@ -1338,7 +1369,7 @@ export class World {
     }
     const params: AoiParams = {
       now, view: this.viewRange, hyst: VIEW_HYSTERESIS_M, maxVisible: this.maxVisiblePlayers, swapM: CROWD_SWAP_M, swaps: CROWD_SWAPS_PER_PASS,
-      foeMs: FOE_MEMORY_MS, nKeys: K, E, P, cell: Math.max(16, this.viewRange),
+      foeMs: FOE_MEMORY_MS, nKeys: K, E, P, C, cell,
     }
     const t1 = T.now()
     const parts = pool.run(L, params)
@@ -1352,9 +1383,9 @@ export class World {
         const mode = r[o++]!
         if (mode === CROWD_NONE) p.crowd = null
         else if (mode === CROWD_SET) {
-          const n = r[o++]!
+          const cn = r[o++]!
           const crowd = new Set<number>()
-          for (let k = 0; k < n; k++) crowd.add(r[o++]!)
+          for (let k = 0; k < cn; k++) crowd.add(r[o++]!)
           p.crowd = crowd
         }
         const ns = r[o++]!

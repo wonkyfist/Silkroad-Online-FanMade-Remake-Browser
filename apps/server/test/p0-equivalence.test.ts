@@ -93,7 +93,15 @@ function sim(sw: Switches) {
     inbox.set(p.id, box)
     return p
   }
-  return { world, gameplay, inbox, enter, badEnc }
+  // player-vs-player targets (World.mustSee: its target, whoever targets it), set after gameplay's tick so the interest
+  // pass of that tick sees them (gameplay drops an attack on a player outside PvP at its next tick)
+  const pvp: [Player, Player][] = []
+  const gameplayTick = world.onTick
+  world.onTick = (now) => {
+    gameplayTick?.(now)
+    for (const [a, b] of pvp.splice(0)) if (world.players.has(a.id) && world.players.has(b.id)) a.action = { kind: 'attack', target: b.id, chaseAt: now, chaseTo: null }
+  }
+  return { world, gameplay, inbox, enter, badEnc, pvp }
 }
 
 type Sim = ReturnType<typeof sim>
@@ -179,6 +187,17 @@ function step(s: Sim, r: () => number, now: number, t: number): void {
   }
   // a player fight: both always see each other for a while, crowd or not (World.mustSee)
   if (players.length > 1 && r() < 0.05) s.world.noteFoes(pick(), pick(), now)
+  // a player targets the player nearest to it (World.mustSee both ways: its target, and whoever targets it)
+  if (players.length > 1 && r() < 0.3) {
+    const p = pick()
+    let q: Player | null = null
+    let best = Infinity
+    for (const o of players) {
+      const d = o === p ? Infinity : (o.pos[0] - p.pos[0]) ** 2 + (o.pos[2] - p.pos[2]) ** 2
+      if (d < best) [q, best] = [o, d]
+    }
+    if (q && r() < 0.5) s.pvp.push([p, q])
+  }
   // players fight monsters they see (combat to both sides' viewers, kills, drops)
   if (players.length && r() < 0.15) {
     const p = pick()
