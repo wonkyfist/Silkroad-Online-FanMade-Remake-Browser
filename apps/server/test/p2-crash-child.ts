@@ -20,6 +20,8 @@ interface Args {
   nowBase: number
   kinds: StepKind[]
   crash?: WriterCrash
+  /** Statements per group commit at most (small: many groups, so a crash in group n is reached whatever the timing). */
+  maxGroupOps?: number
   /** Kill this process right after the n-th (1-based) operation of `kind` ran in memory. */
   dieAt?: { kind: 'trade' | 'stall' | 'storage' | 'storageGold'; n: number }
   /** Restart the economy service before a tradeAccept with this probability (mid-trade). */
@@ -30,7 +32,7 @@ interface Args {
 
 const args = JSON.parse(process.argv[2]!) as Args
 const out = (line: string) => writeSync(1, `${line}\n`)
-const h = econHarness({ root: args.root, writer: { crash: args.crash ?? null, log: (l) => writeSync(2, `${l}\n`) }, svcBus: true, seed: args.seed })
+const h = econHarness({ root: args.root, writer: { crash: args.crash ?? null, maxGroupOps: args.maxGroupOps ?? 500, log: (l) => writeSync(2, `${l}\n`) }, svcBus: true, seed: args.seed })
 joinAll(h)
 let now = args.nowBase
 const counts: Record<string, number> = {}

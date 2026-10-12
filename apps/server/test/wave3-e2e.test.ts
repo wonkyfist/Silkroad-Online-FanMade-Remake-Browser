@@ -503,10 +503,10 @@ for (const worldExport of ['jangan', 'jangan-fields'] as const) {
       // the owner CLI grants and revokes in the database; the running server notices within the role poll
       const quiet = () => {}
       const env = { DATA_DIR: h.s.ctx.config.dataDir }
-      expect(runCli(['grant', a.acc.username], env, quiet, quiet)).toBe(0)
+      expect(await runCli(['grant', a.acc.username], env, quiet, quiet)).toBe(0)
       expect(await b.c.next('entityUpdate', (m) => m.id === a.id && m.gm !== undefined, 3000)).toMatchObject({ gm: true })
       expect(await a.c.next('role', () => true, 3000)).toMatchObject({ role: 'gm' })
-      expect(runCli(['revoke', a.acc.username], env, quiet, quiet)).toBe(0)
+      expect(await runCli(['revoke', a.acc.username], env, quiet, quiet)).toBe(0)
       expect(await b.c.next('entityUpdate', (m) => m.id === a.id && m.gm !== undefined, 3000)).toMatchObject({ gm: false })
       await bye(a, b, c)
     }, 30_000)

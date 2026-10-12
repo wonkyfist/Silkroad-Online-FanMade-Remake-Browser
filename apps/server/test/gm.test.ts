@@ -368,13 +368,13 @@ describe('role changes while connected', () => {
     const p = await player()
     const w = await player()
     const quiet = () => undefined
-    expect(runCli(['grant', p.acc.username], { DATA_DIR: s.ctx.config.dataDir }, quiet, quiet)).toBe(0)
+    expect(await runCli(['grant', p.acc.username], { DATA_DIR: s.ctx.config.dataDir }, quiet, quiet)).toBe(0)
     expect(await p.c.next('role')).toEqual({ t: 'role', role: 'gm' })
     expect((await gm(p.c, 'invis', 'on')).ok).toBe(true)
     await w.c.next('despawn', (m) => m.id === p.id)
     await gm(p.c, 'speed', '3')
 
-    expect(runCli(['revoke', p.acc.username], { DATA_DIR: s.ctx.config.dataDir }, quiet, quiet)).toBe(0)
+    expect(await runCli(['revoke', p.acc.username], { DATA_DIR: s.ctx.config.dataDir }, quiet, quiet)).toBe(0)
     expect(await p.c.next('role')).toEqual({ t: 'role', role: 'player' })
     // demoted: visible again, normal speed
     expect((await w.c.next('spawn', (m) => m.entity.id === p.id)).entity.invisible).toBeUndefined()

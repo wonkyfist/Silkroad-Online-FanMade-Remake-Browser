@@ -129,14 +129,14 @@ describe('P2: crash injection (no duplication, no loss)', () => {
 
   for (const crash of [{ group: 3, afterOps: 2, mode: 'process' }, { group: 9, afterOps: 1, mode: 'process' }, { group: 20, afterOps: 7, mode: 'process' }] as WriterCrash[]) {
     it(`the process killed by its writer inside group commit ${crash.group} (statement ${crash.afterOps})`, async () => {
-      const r = await child({ root, seed: 300 + crash.group, steps: 2000, nowBase: nextBase(), kinds: KINDS, crash })
+      const r = await child({ root, seed: 300 + crash.group, steps: 2000, nowBase: nextBase(), kinds: KINDS, crash, maxGroupOps: 8 })
       expect(r.done, 'it should have died').toBeNull()
       verify(r, `writer kill in group ${crash.group}`)
     }, 60_000)
   }
 
   it('the writer thread exits mid-group and is terminated later: restarted, resynced, nothing lost', async () => {
-    const r = await child({ root, seed: 400, steps: 600, nowBase: nextBase(), kinds: KINDS, crash: { group: 4, afterOps: 3, mode: 'thread' }, killWriterAt: [300] })
+    const r = await child({ root, seed: 400, steps: 600, nowBase: nextBase(), kinds: KINDS, crash: { group: 4, afterOps: 3, mode: 'thread' }, killWriterAt: [300], maxGroupOps: 8 })
     expect(r.code, r.stderr).toBe(0)
     const st = r.done!.writer as { restarts: number; resyncs: number; divergences: number; queued: number }
     expect(st.restarts, r.stderr).toBe(2)

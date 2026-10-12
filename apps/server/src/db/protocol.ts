@@ -57,7 +57,7 @@ export interface WriterDiverged {
   error: string
 }
 
-/** Test hook: the writer dies inside its n-th group (1-based), after `afterOps` statements of it. */
+/** Test hook: the writer dies inside the first group from the n-th on (1-based) that reaches `afterOps` statements. */
 export interface WriterCrash {
   group: number
   afterOps: number

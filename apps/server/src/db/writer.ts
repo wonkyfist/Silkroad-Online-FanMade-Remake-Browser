@@ -85,10 +85,10 @@ function apply(op: Op): void {
   if (op[2] >= 0 && r.changes !== op[2]) throw new Divergence(`statement ${op[0]} changed ${r.changes} rows, ${op[2]} in memory: ${sqls.get(op[0])}`)
 }
 
-/** Test hook (WriterInit.crash): dies inside group `group` after `afterOps` statements. */
+/** Test hook (WriterInit.crash): dies inside the first group from `group` on that reaches `afterOps` statements. */
 function maybeCrash(group: number, ops: number): void {
   const c = init.crash
-  if (!c || c.group !== group || c.afterOps !== ops) return
+  if (!c || group < c.group || c.afterOps !== ops) return
   if (c.mode === 'process') process.kill(process.pid, 'SIGKILL')
   process.exit(1)
 }
