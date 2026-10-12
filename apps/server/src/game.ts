@@ -27,7 +27,7 @@ import { SettingsState } from './admin/settings.ts'
 import { openAdminStore } from './admin/store.ts'
 import { FailureLimiter, HashBusyError, MAX_SESSIONS_PER_ACCOUNT, SESSION_TTL_MS, hashPassword, hashToken, newToken, verifyPassword } from './auth.ts'
 import type { ServerConfig } from './config.ts'
-import { Connection } from './connection.ts'
+import { wsConnection, type Connection } from './connection.ts'
 import { CharacterModels, regionAt, resolveWorld, withAuthoredPlaces, withTownSpawn, type WorldSetup } from './content.ts'
 import { checkPlaces } from './places.ts'
 import { openStore, type Store } from './db.ts'
@@ -718,7 +718,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       ctx.net.opened++
       ctx.net.open++
       ws.once('close', () => ctx.net.open--)
-      new Connection(ws, ctx, ip)
+      wsConnection(ws, ctx, ip)
     })
   })
 

@@ -6,7 +6,6 @@ import {
   MAX_CHARACTER_SLOTS,
   PROTOCOL_VERSION,
   isStaff,
-  parseClientMessage,
   type CharacterSummary,
   type ClientMessage,
   type ErrorCode,
@@ -26,7 +25,8 @@ import type { GameContext } from './game.ts'
 import { parseSlash, runGm } from './gm.ts'
 import { VISIBLE_SLOTS } from './inventory.ts'
 import type { NavPoint } from './nav.ts'
-import { WARP_SEARCH_M, visibleEquipPlus, type Player } from './world.ts'
+import { WARP_SEARCH_M, visibleEquipPlus, type Player, type World } from './world.ts'
+import { FrameGate, SILENT_DROP, socketCloseReason, socketErrorReason, type Verdict } from './gateway/gate.ts'
 import { encodeStats, type Encoded } from './encode.ts'
 import { PH, type PhaseTimers } from './phases.ts'
 
@@ -38,8 +38,24 @@ interface CorkableSocket {
 /** An encoded message (a Buffer) still goes out as a text frame. */
 const TEXT_FRAME = { binary: false } as const
 
-/** The connections corked in the current event-loop turn, in the order they were corked (Connection.corkTurn). */
-let corkedThisTurn: Connection[] = []
+/**
+ * The transport under a Connection (docs/SERVER_ARCHITECTURE.md P1a): a `ws` socket in this process (GATEWAYS=0,
+ * WsConnSocket) or a socket a gateway process owns (gateway/hub.ts RemoteSocket). Connection keeps every rule; this only
+ * carries its frames.
+ */
+export interface ConnSocket {
+  /** Still open for sending. */
+  readonly open: boolean
+  /** Bytes written and not yet sent (behind a gateway 0: the gateway enforces MAX_BUFFERED itself). */
+  readonly buffered: number
+  /** One text frame; frames leave in call order at the end of this event-loop turn (corked here, batched to a gateway). */
+  write(frame: Buffer | string): void
+  /** Closes with `code` after the frames written before. */
+  close(code: number, reason: string): void
+}
+
+/** The sockets corked in the current event-loop turn, in the order they were corked (WsConnSocket.corkTurn). */
+let corkedThisTurn: WsConnSocket[] = []
 
 /** The end of a turn: uncorks every socket corked in it (one writev each), timed as the `flush` phase. */
 function uncorkTurn(timers: PhaseTimers): void {
@@ -56,14 +72,93 @@ function uncorkTurn(timers: PhaseTimers): void {
   timers.lap(PH.flush, t0)
 }
 
+/** A `ws` socket of this process (GATEWAYS=0: the path before P1). */
+export class WsConnSocket implements ConnSocket {
+  /** The socket corked until the end of this event-loop turn (corkTurn), else null. */
+  private corked: CorkableSocket | null = null
+  private readonly ws: WebSocket
+  private readonly world: World
+
+  constructor(ws: WebSocket, world: World) {
+    this.ws = ws
+    this.world = world
+  }
+
+  get open(): boolean {
+    return this.ws.readyState === this.ws.OPEN
+  }
+
+  get buffered(): number {
+    return this.ws.bufferedAmount
+  }
+
+  write(frame: Buffer | string): void {
+    this.corkTurn()
+    if (typeof frame === 'string') this.ws.send(frame)
+    else this.ws.send(frame, TEXT_FRAME)
+  }
+
+  close(code: number, reason: string): void {
+    try {
+      this.ws.close(code, reason)
+    } catch {
+      this.ws.terminate()
+    }
+  }
+
+  /**
+   * Coalesces this turn's frames into one socket write (docs/NETWORK_AUDIT.md N1): the first send of an event-loop turn
+   * corks the TCP socket and the end of the turn uncorks it, so a tick that sends a client 30 `move` / `stop` frames costs
+   * one writev instead of 30 (at 500 players in one town the per-frame writes were ~half the server's CPU). The frames
+   * and their order are unchanged; they leave at the end of the turn instead of one by one within it. One setImmediate
+   * per turn uncorks every socket corked in it, in the order they were corked (the `flush` tick phase).
+   */
+  private corkTurn(): void {
+    if (this.corked) return
+    const socket = (this.ws as WebSocket & { _socket?: CorkableSocket })._socket
+    if (!socket) return
+    this.corked = socket
+    socket.cork()
+    if (!this.world.encodeOnce) {
+      // ENCODE_ONCE off: the path before P0, one setImmediate per socket (timed into `flush` too, for comparisons)
+      setImmediate(() => {
+        const T = this.world.timers
+        const t0 = T.now()
+        this.uncork()
+        T.lap(PH.flush, t0)
+      })
+      return
+    }
+    corkedThisTurn.push(this)
+    if (corkedThisTurn.length === 1) setImmediate(uncorkTurn, this.world.timers)
+  }
+
+  /** Ends this turn's cork (uncorkTurn). */
+  uncork(): void {
+    const socket = this.corked
+    this.corked = null
+    socket?.uncork()
+  }
+}
+
 /**
- * Per-connection flood ceiling over all message types (docs/NETWORK_AUDIT.md N3). Every type also has its own budget
- * (CLIENT_RATE_LIMITS, MESSAGE_RATE_LIMITS below), so this only catches a client sending everything at once: a player
- * walking with the keys (moveTo 10/s), fighting, chatting and pinging stays far below it. An earlier 20/s shared
- * budget let one stream (flight input at 20/s) starve every other message and strike the socket closed.
+ * A Connection over a `ws` socket of this process (GATEWAYS=0): its frames go through the FrameGate here, timed as the
+ * `inbound` phase (parse, validate, budgets and the request itself).
  */
-export const MSG_RATE = 60
-export const MSG_BURST = 120
+export function wsConnection(ws: WebSocket, game: GameContext, ip: string): Connection {
+  const c = new Connection(new WsConnSocket(ws, game.world), game, ip)
+  ws.on('message', (data, isBinary) => {
+    const T = game.world.timers
+    const t0 = T.now()
+    c.frame(data, isBinary)
+    T.lap(PH.inbound, t0)
+  })
+  ws.on('close', (code: number, reason: Buffer) => c.socketClosed(socketCloseReason(code, reason, (ws as WebSocket & { sroTimedOut?: boolean }).sroTimedOut === true)))
+  ws.on('error', (e: Error) => c.socketClosed(socketErrorReason(e)))
+  return c
+}
+
+export { MSG_RATE, MSG_BURST, MESSAGE_RATE_LIMITS } from './gateway/gate.ts'
 /** Chat budget: 1 line/s sustained, bursts of 5. */
 const CHAT_RATE = 1
 const CHAT_BURST = 5
@@ -78,7 +173,7 @@ const MAX_STRIKES = 20
  */
 const STRIKE_FORGIVE_MS = 3000
 /** Stop sending to a client that has this much unsent data (it is not reading). */
-const MAX_BUFFERED = 1 << 20
+export const MAX_BUFFERED = 1 << 20
 /** worldEnter.world.levelCap bound of the client parser (validate.ts worldInfo: 1..300); LEVEL_CAP may be higher. */
 const MAX_WIRE_LEVEL_CAP = 300
 
@@ -91,23 +186,6 @@ const RESERVED_PREFIX = /^(gm|admin|administrator|gamemaster|moderator|mod|staff
 
 const GAMEPLAY_SET = new Set<string>(GAMEPLAY_REQUESTS)
 
-/**
- * Budgets of the non-gameplay messages (gameplay requests use CLIENT_RATE_LIMITS). Over its budget a message is dropped
- * without a strike: moveTo (the WASD stream is 10/s, burst 3; a click walk resends every 250 ms) and ping silently,
- * the lobby requests with error rate_limited. Chat and gm keep their own buckets.
- */
-export const MESSAGE_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { perSecond: number; burst: number }>>> = {
-  moveTo: { perSecond: 15, burst: 15 },
-  ping: { perSecond: 2, burst: 4 },
-  charList: { perSecond: 2, burst: 5 },
-  nameCheck: { perSecond: 5, burst: 10 },
-  charCreate: { perSecond: 5, burst: 20 },
-  charDelete: { perSecond: 2, burst: 10 },
-  enterWorld: { perSecond: 1, burst: 3 },
-  leaveWorld: { perSecond: 1, burst: 3 },
-}
-/** Over budget, these are dropped without any answer (the client sends them on a timer; an answer would be noise). */
-const SILENT_DROP = new Set<string>(['moveTo', 'ping'])
 
 function isGameplay(msg: ClientMessage): msg is Extract<ClientMessage, { t: GameplayRequest }> {
   return GAMEPLAY_SET.has(msg.t)
@@ -138,7 +216,8 @@ export class Connection {
   private strikes = 0
   /** When the last strike was forgiven (or the count was last empty). */
   private strikeClock = Date.now()
-  private readonly bucket = new TokenBucket(MSG_RATE, MSG_BURST)
+  /** The frame front (flood ceiling, decode/validate, silent budgets) when this process decodes the frames (GATEWAYS=0). */
+  private gate: FrameGate | null = null
   private readonly chatBucket = new TokenBucket(CHAT_RATE, CHAT_BURST)
   private readonly gmBucket = new TokenBucket(GM_RATE, GM_BURST)
   /** Per-type budgets of gameplay requests (CLIENT_RATE_LIMITS). */
@@ -146,43 +225,29 @@ export class Connection {
   private helloTimer: NodeJS.Timeout | null
   /** Why this connection ended (logged once by dispose): set by close(), the socket close/error, or the heartbeat. */
   private closeReason: string | null = null
-  /** The socket corked until the end of this event-loop turn (corkTurn), else null. */
-  private corked: CorkableSocket | null = null
+  private readonly sock: ConnSocket
+  readonly game: GameContext
+  readonly ip: string
 
-  constructor(
-    private readonly ws: WebSocket,
-    readonly game: GameContext,
-    readonly ip: string,
-  ) {
+  constructor(sock: ConnSocket, game: GameContext, ip: string) {
+    this.sock = sock
+    this.game = game
+    this.ip = ip
     this.helloTimer = setTimeout(() => {
       if (this.state === 'hello') this.close(CLOSE_CODE.helloTimeout, 'hello timeout')
     }, game.config.helloTimeoutMs)
-    ws.on('message', (data, isBinary) => {
-      // the `inbound` tick phase (phases.ts): parse, validate, budgets and the request itself
-      const T = game.world.timers
-      const t0 = T.now()
-      this.onFrame(data, isBinary)
-      T.lap(PH.inbound, t0)
-    })
-    ws.on('close', (code: number, reason: Buffer) => {
-      const timedOut = (ws as WebSocket & { sroTimedOut?: boolean }).sroTimedOut
-      this.closeReason ??= timedOut ? 'heartbeat timeout' : `client ${code}${reason.length ? ' ' + reason.toString('utf8').slice(0, 60) : ''}`
-      this.dispose()
-    })
-    ws.on('error', (e: Error) => {
-      this.closeReason ??= `socket error ${(e as NodeJS.ErrnoException).code ?? e.message}`
-      this.dispose()
-    })
   }
 
   /**
    * Sends one message. `enc` (docs/SERVER_ARCHITECTURE.md P0, encode-once): the broadcast's shared encoding, used when it
    * was made from this very message object; with ENCODE_ONCE on every frame goes out as a UTF-8 Buffer (text opcode),
-   * so a socket's corked writes are all buffers and its writev copies nothing.
+   * so a socket's corked writes are all buffers and its writev copies nothing (behind a gateway, the same Buffer for
+   * every recipient is one record of the out-batch: gateway/hub.ts).
    */
   send(msg: ServerMessage, enc?: Encoded): void {
-    if (this.ws.readyState !== this.ws.OPEN) return
-    if (this.ws.bufferedAmount > MAX_BUFFERED) {
+    const sock = this.sock
+    if (!sock.open) return
+    if (sock.buffered > MAX_BUFFERED) {
       this.close(CLOSE_CODE.slow, 'not reading')
       return
     }
@@ -194,54 +259,18 @@ export class Connection {
         encodeStats.n++
       }
       this.game.net.sent(msg.t, buf.length)
-      this.corkTurn()
-      this.ws.send(buf, TEXT_FRAME)
+      sock.write(buf)
       return
     }
     const text = JSON.stringify(msg)
     encodeStats.n++
     this.game.net.sent(msg.t, text.length)
-    this.corkTurn()
-    this.ws.send(text)
+    sock.write(text)
   }
 
   /** Bytes written to this socket and not yet sent (the outbound backlog; netstats.ts `queue`). */
   get buffered(): number {
-    return this.ws.bufferedAmount
-  }
-
-  /**
-   * Coalesces this turn's frames into one socket write (docs/NETWORK_AUDIT.md N1): the first send of an event-loop turn
-   * corks the TCP socket and the end of the turn uncorks it, so a tick that sends a client 30 `move` / `stop` frames costs
-   * one writev instead of 30 (at 500 players in one town the per-frame writes were ~half the server's CPU). The frames
-   * and their order are unchanged; they leave at the end of the turn instead of one by one within it. One setImmediate
-   * per turn uncorks every socket corked in it, in the order they were corked (the `flush` tick phase).
-   */
-  private corkTurn(): void {
-    if (this.corked) return
-    const socket = (this.ws as WebSocket & { _socket?: CorkableSocket })._socket
-    if (!socket) return
-    this.corked = socket
-    socket.cork()
-    if (!this.game.world.encodeOnce) {
-      // ENCODE_ONCE off: the path before P0, one setImmediate per socket (timed into `flush` too, for comparisons)
-      setImmediate(() => {
-        const T = this.game.world.timers
-        const t0 = T.now()
-        this.uncork()
-        T.lap(PH.flush, t0)
-      })
-      return
-    }
-    corkedThisTurn.push(this)
-    if (corkedThisTurn.length === 1) setImmediate(uncorkTurn, this.game.world.timers)
-  }
-
-  /** Ends this turn's cork (uncorkTurn). */
-  uncork(): void {
-    const socket = this.corked
-    this.corked = null
-    socket?.uncork()
+    return this.sock.buffered
   }
 
   error(code: ErrorCode, message: string, re?: ClientMessage['t']): void {
@@ -253,11 +282,13 @@ export class Connection {
     if (this.state === 'closed') return
     this.closeReason ??= `server ${code} ${reason}`
     this.dispose()
-    try {
-      this.ws.close(code, reason)
-    } catch {
-      this.ws.terminate()
-    }
+    this.sock.close(code, reason)
+  }
+
+  /** The socket ended (`reason` as socketCloseReason / socketErrorReason give it, or a gateway's exit). */
+  socketClosed(reason: string): void {
+    this.closeReason ??= reason
+    this.dispose()
   }
 
   /** Leaves the world (saving) and unregisters. Idempotent. */
@@ -290,38 +321,44 @@ export class Connection {
     return this.chatBucket.take()
   }
 
-  private onFrame(data: unknown, isBinary: boolean): void {
+  /** One raw frame of a socket of this process (GATEWAYS=0): the FrameGate here, then the verdict. */
+  frame(data: unknown, isBinary: boolean): void {
     if (this.state === 'closed') return
-    if (!this.bucket.take()) {
-      this.error('rate_limited', 'too many messages')
-      this.strike()
-      return
-    }
-    if (isBinary) {
-      this.error('bad_request', 'binary frames are not supported')
-      this.strike()
-      return
-    }
-    const text = Buffer.isBuffer(data) ? data.toString('utf8') : Array.isArray(data) ? Buffer.concat(data).toString('utf8') : Buffer.from(data as ArrayBuffer).toString('utf8')
-    const parsed = parseClientMessage(text)
-    if (!parsed.ok) {
-      this.game.net.recvd('invalid', text.length)
-      this.error('bad_request', parsed.error)
-      this.strike()
-      return
-    }
-    this.game.net.recvd(parsed.msg.t, text.length)
-    const t = parsed.msg.t
-    const limit = MESSAGE_RATE_LIMITS[t]
-    if (limit && !this.budget(t, limit)) {
-      if (!SILENT_DROP.has(t)) this.error('rate_limited', 'too many requests', t)
-      return
-    }
-    try {
-      this.handle(parsed.msg)
-    } catch (e) {
-      this.game.config.log(`error handling ${parsed.msg.t} for ${this.account || this.ip}: ${(e as Error).stack ?? e}`)
-      this.error('server_error', 'internal error', parsed.msg.t)
+    this.verdict((this.gate ??= new FrameGate()).check(data, isBinary))
+  }
+
+  /**
+   * One frame's verdict (gateway/gate.ts), from this process's FrameGate or a gateway's, in the client's frame order:
+   * the errors and strikes of bad frames, the counters, then the request itself.
+   */
+  verdict(v: Verdict): void {
+    if (this.state === 'closed') return
+    switch (v.k) {
+      case 'flood':
+        this.error('rate_limited', 'too many messages')
+        this.strike()
+        return
+      case 'binary':
+        this.error('bad_request', 'binary frames are not supported')
+        this.strike()
+        return
+      case 'invalid':
+        this.game.net.recvd('invalid', v.len)
+        this.error('bad_request', v.error)
+        this.strike()
+        return
+      case 'limited':
+        this.game.net.recvd(v.t, v.len)
+        if (!SILENT_DROP.has(v.t)) this.error('rate_limited', 'too many requests', v.t)
+        return
+      case 'msg':
+        this.game.net.recvd(v.msg.t, v.len)
+        try {
+          this.handle(v.msg)
+        } catch (e) {
+          this.game.config.log(`error handling ${v.msg.t} for ${this.account || this.ip}: ${(e as Error).stack ?? e}`)
+          this.error('server_error', 'internal error', v.msg.t)
+        }
     }
   }
 
