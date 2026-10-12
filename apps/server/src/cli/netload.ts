@@ -7,6 +7,7 @@
  * and pings every 5 s (the client's own cadence; RTT is measured from these).
  *
  *   pnpm netload --bots 100 --scenario town|spread [--duration 60] [--warmup 20] [--port 18900] [--out file.json]
+ *   (the server takes GATEWAYS, AOI_JOBS and the P0 switches from the environment; the report splits the CPU by process)
  *
  * town   = everyone stays in Jangan (the crowded-plaza case: every bot sees every other one).
  * spread = a GM bot teleports to the world's GM places in turn and summons an equal share of the bots to each.
@@ -341,12 +342,26 @@ async function main(): Promise<void> {
   const dt = (b.at - a.at) / 1000
   const online = bots.filter((x) => !x.closed).length
   const cpuPct = Math.round(((b.process.cpuUserMs + b.process.cpuSystemMs - a.process.cpuUserMs - a.process.cpuSystemMs) / (dt * 1000)) * 1000) / 10
+  // docs/SERVER_ARCHITECTURE.md P1: the tick thread alone, each gateway process, the AoI worker threads
+  const pctOf = (ms: number) => Math.round((ms / (dt * 1000)) * 1000) / 10
+  const mainThreadPct = b.process.mainThreadCpuMs !== undefined && a.process.mainThreadCpuMs !== undefined ? pctOf(b.process.mainThreadCpuMs - a.process.mainThreadCpuMs) : undefined
+  type Gw = { index: number; cpuUserMs: number; cpuSystemMs: number; outMs: number; inMs: number; outFrames: number; loop: { p99Ms: number }; rssMb: number; conns: number; slowCloses: number }
+  const gwA: Gw[] = a.gateways?.list ?? []
+  const gateways = (b.gateways?.list ?? []).map((g: Gw) => {
+    const g0 = gwA.find((x) => x.index === g.index)
+    const cpu = g.cpuUserMs + g.cpuSystemMs - (g0 ? g0.cpuUserMs + g0.cpuSystemMs : 0)
+    return { index: g.index, conns: g.conns, cpuPct: pctOf(cpu), writeMsPerS: Math.round(((g.outMs - (g0?.outMs ?? 0)) / dt) * 10) / 10, readMsPerS: Math.round(((g.inMs - (g0?.inMs ?? 0)) / dt) * 10) / 10, framesOutPerS: Math.round((g.outFrames - (g0?.outFrames ?? 0)) / dt), loopP99Ms: g.loop.p99Ms, rssMb: g.rssMb, slowCloses: g.slowCloses }
+  })
+  const aoi = b.aoiJobs ? { ...b.aoiJobs, workerCpuPct: pctOf(b.aoiJobs.workerCpuMs - (a.aoiJobs?.workerCpuMs ?? 0)) } : undefined
+  const totalCpuPct = Math.round((cpuPct + gateways.reduce((x: number, g: { cpuPct: number }) => x + g.cpuPct, 0)) * 10) / 10
   const top = (o: Record<string, { n: number; bytes: number }>) =>
     Object.entries(o).sort((x, y) => y[1].bytes - x[1].bytes).slice(0, 15).map(([t, c]) => ({ t, perS: Math.round((c.n / dt) * 10) / 10, kBps: Math.round(c.bytes / dt / 102.4) / 10 }))
   const report = {
     bots: N, scenario: SCENARIO, online, seconds: Math.round(dt),
     tick: b.tick,
-    server: { cpuPct, rssMbIdle: idle.process.rssMb, rssMbMax: Math.max(...rss, b.process.rssMb), heapMb: b.process.heapMb },
+    server: { cpuPct, ...(mainThreadPct !== undefined ? { mainThreadPct } : {}), totalCpuPct, rssMbIdle: idle.process.rssMb, rssMbMax: Math.max(...rss, b.process.rssMb), heapMb: b.process.heapMb },
+    ...(gateways.length ? { gateways } : {}),
+    ...(aoi ? { aoiJobs: aoi } : {}),
     bandwidth: {
       outKBps: Math.round(b.outTotal.bytes / dt / 102.4) / 10,
       inKBps: Math.round(b.inTotal.bytes / dt / 102.4) / 10,

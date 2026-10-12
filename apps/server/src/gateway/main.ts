@@ -215,3 +215,6 @@ process.on('message', (m: GatewayInit | SocketHandoff, handle?: unknown) => {
 })
 // the core is gone (crash or exit): so are we; the clients reconnect to the next core
 process.on('disconnect', () => process.exit(0))
+// a Ctrl+C or a SIGTERM to the whole group: the core runs the shutdown (saves, notices, then SHUTDOWN to us)
+process.on('SIGINT', () => {})
+process.on('SIGTERM', () => {})
