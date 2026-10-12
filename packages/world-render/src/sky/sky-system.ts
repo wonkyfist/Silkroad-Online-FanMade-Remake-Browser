@@ -28,6 +28,7 @@ import type { SharedUniforms } from '../shader-chunks.ts'
 import { Atmosphere, luminance, mieScaleFor, sampleSkyView, skyIrradianceUp } from './atmosphere.ts'
 import { moonAt, moonFrame, paletteTime, starRotation, sunDir } from './celestial.ts'
 import { displayToExposed, displayToScene, sceneDisplay } from '../render/display.ts'
+import { FOG_UP_DEG } from '../pbr/fog-plugin.ts'
 import { ClassicSky } from './classic-sky.ts'
 import { NOON_AMBIENT_LUMINANCE } from './lights.ts'
 import { CLOUD_HEIGHT_KM, CLOUD_SCALE_KM, CloudLayer, cloudThickness, type CloudNoise } from './clouds.ts'
@@ -590,8 +591,8 @@ export class SkySystem {
       moonTex: null,
       moonIndex: 0,
       ring: null,
-      ringData: new Float32Array(HORIZON_RING * 4),
-      ringHalf: new Uint16Array(HORIZON_RING * 4),
+      ringData: new Float32Array(HORIZON_RING * 2 * 4),
+      ringHalf: new Uint16Array(HORIZON_RING * 2 * 4),
       ringTimer: 0,
       loading: null,
       json: null,
@@ -824,6 +825,8 @@ export class SkySystem {
 
     // Fog colour: the horizon at 1° over the camera's forward azimuth ±60°, exposed, mixed with the retail fog.
     this.fogAt(Math.atan2(this.camFwd.z, this.camFwd.x), 60 * DEG, s.fogColor, pal.fogColor)
+    // …and FOG_UP_DEG up: the height fog leans to it above the horizon (a far crown fades into the sky behind it)
+    this.fogAt(Math.atan2(this.camFwd.z, this.camFwd.x), 60 * DEG, (s.fogColorUp ??= [1, 1, 1]), pal.fogColor, FOG_UP_DEG * DEG)
     for (let c = 0; c < 3; c++) amb.horizon[c] = (toLinear(s.fogColor[c]!) / Math.max(1, s.exposure)) * Math.PI * k
     s.cloudCover = cover
 
@@ -832,6 +835,8 @@ export class SkySystem {
     if (q.horizonRing && (changed || m.ringTimer > 0.5 || !m.ring)) {
       m.ringTimer = 0
       fillHorizonRing((az, out) => this.fogAt(az, 0, out, pal.fogColor), HORIZON_RING, m.ringData)
+      // row 1: the sky FOG_UP_DEG up (the fog's colour above the horizon)
+      fillHorizonRing((az, out) => this.fogAt(az, 0, out, pal.fogColor, FOG_UP_DEG * DEG), HORIZON_RING, m.ringData.subarray(HORIZON_RING * 4))
       // Only the PBR height fog reads the ring: store the exposed-linear colour that shows the designed one after the
       // post's tone curve (the fog shader divides by the exposure; D4).
       const tm = sceneDisplay(this.scene, s.exposure).toneMap
@@ -842,7 +847,7 @@ export class SkySystem {
       }
       for (let i = 0; i < m.ringData.length; i++) m.ringHalf[i] = toHalf(m.ringData[i]!)
       if (!m.ring) {
-        m.ring = new RawTexture(m.ringHalf, HORIZON_RING, 1, Constants.TEXTUREFORMAT_RGBA, this.scene, false, false,
+        m.ring = new RawTexture(m.ringHalf, HORIZON_RING, 2, Constants.TEXTUREFORMAT_RGBA, this.scene, false, false,
           Constants.TEXTURE_BILINEAR_SAMPLINGMODE, Constants.TEXTURETYPE_HALF_FLOAT)
         m.ring.name = 'skyHorizonRing'
         m.ring.wrapU = Constants.TEXTURE_WRAP_ADDRESSMODE
@@ -935,17 +940,17 @@ export class SkySystem {
   }
 
   /**
-   * Fog colour (LDR) toward azimuth `az`, averaged over ±`spread` (16 taps; 1 when spread is 0): the horizon at 1°,
+   * Fog colour (LDR) toward azimuth `az`, averaged over ±`spread` (16 taps; 1 when spread is 0): the sky at `el` (the horizon, 1°),
    * clouds by cover, exposed and tone mapped like the dome, then mixed with the retail FogColor (gradeFog 0.3).
    */
-  private fogAt(az: number, spread: number, out: RGB | RGB3, retailFog: Readonly<RGB>): RGB | RGB3 {
+  private fogAt(az: number, spread: number, out: RGB | RGB3, retailFog: Readonly<RGB>, el = DEG): RGB | RGB3 {
     const n = spread > 0 ? 16 : 1
     const acc: RGB3 = [0, 0, 0]
     const c3: RGB3 = [0, 0, 0]
     const t3: RGB3 = [0, 0, 0]
     for (let i = 0; i < n; i++) {
       const a = n > 1 ? az + ((i + 0.5) / n - 0.5) * 2 * spread : az
-      this.skyAt(a, DEG, c3, t3)
+      this.skyAt(a, el, c3, t3)
       acc[0] += c3[0]; acc[1] += c3[1]; acc[2] += c3[2]
     }
     const s = this.stateValue
@@ -1077,6 +1082,9 @@ export class SkySystem {
     const amb = env.objectAmbient
     s.ambient = { sky: [amb[0], amb[1], amb[2]], horizon: [env.skyBottom[0], env.skyBottom[1], env.skyBottom[2]], ground: [amb[0] * 0.25, amb[1] * 0.25, amb[2] * 0.25] }
     s.fogColor = saturate(env.fogColor) as RGB
+    // the classic sky has no gradient to lean to: the up colour is the fog colour (its own array: the modern path writes it)
+    const up = (s.fogColorUp ??= [1, 1, 1])
+    up[0] = s.fogColor[0]; up[1] = s.fogColor[1]; up[2] = s.fogColor[2]
     s.cloudCover = this.weather.cloudCover
     s.sh = null
     s.exposure = 1

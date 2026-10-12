@@ -151,3 +151,31 @@ its own look (the PCF filter on ANGLE is the first suspect). Before/after sheet:
 - **Flying height**: the fog's sun glow, the horizon colour's saturation and the shafts' in-scatter fade with the eye's
   height above the usual camera (no golden veil toward the sun).
 - Cost (1080p, RX 9060 XT, GPU p50): Medium 2–3.7 ms, High 3.8–4.8, Ultra 5.5–6.5 (Dropbox overall-pass/aaa/v2-*).
+
+## 8. The flat cream trees (2026-10-12)
+
+The report (Ultra, golden hour, clear): trees as flat cream silhouettes; at dusk away from the sun they read white
+against the dark sky. The look lab (`pnpm charbench --steps`, each term switched off on one page; tools and runs in
+`work/tmp/smooth/`) at golden hour toward the sun: only the height fog off brings the crowns back; the ground mist, the
+sun glow, the sun shafts and the leaves' translucency off change nothing. Three parts of the fog:
+
+- **Front-loaded haze.** The exponential haze was half done 23 % of the way from its start (≈ 100 m out by day) to its
+  end, so a crown 130–200 m out was 50–82 % fog colour. Its depth now grows with d² over its first 3/density metres
+  (pbr/fog-plugin.ts `HAZE_RAMP`): 17 % a quarter of the way, 53 % half way, 95 % at the end as before (the streaming
+  edge and the 202 m object range stay hidden; weather fog keeps its range).
+- **The horizon colour above the horizon.** Every fogged surface took the horizon band's colour, so a crown seen against
+  the sky became a flat cut-out: cream toward a low sun, pale lavender (white on screen) against the dark dusk sky.
+  Above the horizon the fog now leans to the sky `FOG_UP_DEG` (8°) up: the horizon ring's second row on High+
+  (sky-system.ts, 64 × 2), `SkyState.fogColorUp` on Medium. (Without the retail FogColor in that row the dusk crowns
+  got brighter: the sky model at 8° is lighter than the dome draws it under dusk clouds; the row keeps the grade.)
+- **HDR in-scatter.** Toward a low sun the High+ ring colour, undone through the tone curve, is several × the exposure's
+  white; the in-scatter a surface is blended toward is capped at `FOG_SURFACE_MAX` 0.8 exposed luminance (hue kept),
+  handed back over the fog's last fifth so the fog end still meets the sky.
+
+Measured (High 1280 × 720, the reporter's spot X 6439 Y 685 and the Grassland GM place; crown regions of the shots):
+golden hour toward the sun, the near orange tree's detail (luminance sd) 27.7 → 32.0 and the big tree behind it
+169,138,94 → 142,121,94 (less washed); dusk away from the sun, the far crowns 112,104,107 → 97,101,121 against a sky of
+45,36,99. Shots: Dropbox `overall-pass/trees/` (`*-before.png` / `*-after.png`, `compare-{golden,noon,dusk}.png`:
+left before, right after). **Not solved**: the big trees right at the tree range's end (202 m + radius, inside the fog's
+last fifth) are still mostly fog colour, and the dusk crowns stay lighter than the dome; the next step is the fog colour
+from the dome's own LUT and clouds, or dithering far trees out before the fog end instead of hiding them in it.

@@ -45,7 +45,12 @@ export interface SkyState {
   sh: Float32Array | null
   /** LDR fog colour (the horizon at the camera's forward azimuth; retail FogColor on the classic sky). */
   fogColor: RGB
-  /** 64 × 1 RGBA16F fog colour by azimuth (High+); null before SKY-B. */
+  /**
+   * LDR sky colour FOG_UP_DEG (pbr/fog-plugin.ts) above the horizon at the camera's forward azimuth: the height fog leans
+   * to it above the horizon (a far crown fades into the sky behind it). Absent (classic sky, tests): fogColor.
+   */
+  fogColorUp?: RGB
+  /** 64 × 2 RGBA16F fog colour by azimuth (High+): row 0 the horizon, row 1 FOG_UP_DEG up; null before SKY-B. */
   horizonRing: BaseTexture | null
   /**
    * Exposure for the sky's radiance units (SKY §6.5: noon ≈ 8, clamped [2, 160], eased 1/1.5 s). The dome applies it

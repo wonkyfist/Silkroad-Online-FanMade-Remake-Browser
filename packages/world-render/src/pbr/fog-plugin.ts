@@ -19,7 +19,8 @@
  *   cannot pop out of the fog at the streaming edge. (RENDER §5.5 wrote `(1 − e^(−kh))/(kh)`, which thins the fog
  *   downward; the sign is corrected here.) F → 1 as h → 0: the uniform exponential fog.
  * - colour = mix(horizon, sunColour, strength × max(0, dot(viewDir, sunDir))^8); horizon = SkyState.fogColor, or the
- *   64 × 1 `horizonRing` sampled at the view azimuth on High+ (`SRO_FOG_RING`). The fog colour is an LDR display
+ *   64 × 2 `horizonRing` (row 0) sampled at the view azimuth on High+ (`SRO_FOG_RING`); above the horizon it leans to the
+ *   sky FOG_UP_DEG up (the ring's row 1, else SkyState.fogColorUp). The fog colour is an LDR display
  *   colour the sky designed; it is turned into scene-linear HDR by the exact inverse of the post stack's display
  *   transform (render/display.ts: gamma and tone curve) and ÷ exposure, so it shows as designed after the post's one
  *   tone curve (W9 finish D4: sRGB → linear alone ran it through a second curve). The ring holds that inverse already
@@ -71,6 +72,28 @@ export const MIST_START_M = 6
 export const ALT_START_K = 1.2
 /** Item 16: the most a surface short of the fog end is fogged (it keeps its shading under the haze). */
 export const FOG_CAP = 0.82
+/**
+ * The haze's ramp (2026-10-12, the flat cream trees): the fog's depth grows with d² over its first HAZE_RAMP × 3/density
+ * metres past its start, then with d. The exponential haze was half done 23 % of the way to its end, so every tree crown
+ * 100–150 m out (and the hills behind) became a flat silhouette in the fog colour, cream toward a low sun; with the
+ * ramp it is 15 % there and still 95 % at the fog end.
+ */
+export const HAZE_RAMP = 1
+/**
+ * The brightest in-scatter (exposed luminance) a surface short of the fog's end is blended toward (2026-10-12). The
+ * horizon toward a low sun is a display colour near white; undone through the tone curve it is several times the
+ * exposure's white, so even a third of it bleached a tree crown cream. Capped (hue kept) up to the fog's last fifth,
+ * where the full colour comes back so the fog end still meets the sky.
+ */
+export const FOG_SURFACE_MAX = 0.8
+/**
+ * Above the horizon the fog colour leans to the sky FOG_UP_DEG up (2026-10-12): a far tree crown or hill seen against
+ * the sky fades into the sky behind it. With the horizon colour alone a fogged crown was a flat cut-out in the horizon
+ * band's colour, glowing white against the dark dusk sky and cream toward a low sun. The sky system's ring has a second
+ * row there (High+) and SkyState.fogColorUp is the flat colour (Medium); level ground and everything below the eye
+ * keep the horizon colour.
+ */
+export const FOG_UP_DEG = 8
 
 /** Fog density (1/m) for a fog that starts at `startM` and reaches 95% at `endM`. */
 export function fogDensity(startM: number, endM: number): number {
@@ -86,7 +109,8 @@ export function heightFactor(h: number, k: number): number {
 /** The fog amount of the shader, in TS (tests, the CPU side of the grass and water). */
 export function heightFogAmount(distM: number, eyeY: number, pointY: number, p: { density: number; startM: number; falloffM: number }): number {
   const d = Math.max(0, distM - p.startM)
-  return 1 - Math.exp(-p.density * d * heightFactor(eyeY - pointY, 1 / p.falloffM))
+  const ramp = Math.min(1, (d * p.density) / (FOG_95 * HAZE_RAMP))
+  return 1 - Math.exp(-p.density * d * heightFactor(eyeY - pointY, 1 / p.falloffM) * ramp)
 }
 
 /** The horizon-ring u of a view direction: the world azimuth atan2(x, z) mapped to 0..1 (SKY-B writes the ring so). */
@@ -106,6 +130,8 @@ export class HeightFog {
   readonly color = new Vector4(0.5, 0.6, 0.7, 1)
   readonly sun = new Vector4(0, 1, 0, 0)
   readonly sunColor = new Vector4(1, 0.9, 0.7, 0)
+  /** The sky FOG_UP_DEG above the horizon (scene-linear, like `color`), sin(FOG_UP_DEG). */
+  readonly up = new Vector4(0.5, 0.6, 0.7, Math.sin((FOG_UP_DEG * Math.PI) / 180))
   /** The metres over which the density grows by e going down. */
   heightFalloffM = DEFAULT_HEIGHT_FALLOFF_M
   /** The scatter towards the sun (0 = none). */
@@ -123,6 +149,7 @@ export class HeightFog {
   desaturate = 0
   private activeValue = false
   private readonly lin: [number, number, number] = [0, 0, 0]
+  private readonly linUp: [number, number, number] = [0, 0, 0]
   private ringValue = false
   /** Plugins created against this state (for define refreshes). */
   readonly plugins = new Set<SroFogPlugin>()
@@ -175,6 +202,10 @@ export class HeightFog {
     const cool = [0.96, 1.0, 1.06] as const
     for (let c = 0; c < 3; c++) f[c] = f[c]! + (y * cool[c]! - f[c]!) * g
     this.color.set(f[0]! * inv, f[1]! * inv, f[2]! * inv, inv)
+    const u = displayToExposed(sky.fogColorUp ?? sky.fogColor, toneMap, this.linUp)
+    const yu = 0.2126 * u[0]! + 0.7152 * u[1]! + 0.0722 * u[2]!
+    for (let c = 0; c < 3; c++) u[c] = u[c]! + (yu * cool[c]! - u[c]!) * g
+    this.up.set(u[0]! * inv, u[1]! * inv, u[2]! * inv, this.up.w)
     const d = sky.sunDir
     const up = Math.max(0, Math.min(1, (sky.sunElevationDeg + 4) / 8))
     this.sun.set(d.x, d.y, d.z, this.sunScatter * up)
@@ -233,7 +264,10 @@ fn sroHeightFogAmount(posW: vec3f, eye: vec3f, a: vec4f) -> f32 {
   // it reaches 1 (the streaming edge stays hidden); a far wall no longer flattens into a solid fog-coloured box
   let fEnd = 3.0 / max(a.x, 1e-6);
   let cap = mix(${FOG_CAP.toFixed(2)}, 1.0, smoothstep(0.8 * fEnd, fEnd, dist - a.z));
-  return min(1.0 - exp(-a.x * d * f - mist), cap) * step(0.5, a.w);
+  // the haze builds up over its first HAZE_RAMP × fEnd metres (its depth grows with d², not d): trees and walls a third
+  // of the way in keep their shading instead of turning into flat haze-coloured shapes; the fog end is as thick as before
+  let ramp = clamp(d / (${HAZE_RAMP.toFixed(2)} * fEnd), 0.0, 1.0);
+  return min(1.0 - exp(-a.x * d * f * ramp - mist), cap) * step(0.5, a.w);
 }
 fn sroHeightFogTint(dir: vec3f, horizon: vec3f, sun: vec4f, sunColor: vec3f) -> vec3f {
   let s = pow(max(dot(dir, sun.xyz), 0.0), 8.0) * sun.w;
@@ -241,6 +275,14 @@ fn sroHeightFogTint(dir: vec3f, horizon: vec3f, sun: vec4f, sunColor: vec3f) -> 
 }
 fn sroFogRingU(dir: vec3f) -> f32 {
   return atan2(dir.x, dir.z) * 0.15915494 + 0.5;
+}
+fn sroFogCapped(col: vec3f, invExposure: f32, edge: f32) -> vec3f {
+  let y = dot(col, vec3f(0.2126, 0.7152, 0.0722));
+  return mix(col * min(1.0, ${FOG_SURFACE_MAX.toFixed(2)} * invExposure / max(y, 1e-6)), col, edge);
+}
+fn sroFogEdge(posW: vec3f, eye: vec3f, a: vec4f) -> f32 {
+  let fEnd = 3.0 / max(a.x, 1e-6);
+  return smoothstep(0.8 * fEnd, fEnd, length(posW - eye) - a.z);
 }
 `
 
@@ -269,7 +311,8 @@ float sroHeightFogAmount(vec3 posW, vec3 eye, vec4 a) {
   }
   float fEnd = 3.0 / max(a.x, 1e-6);
   float cap = mix(${FOG_CAP.toFixed(2)}, 1.0, smoothstep(0.8 * fEnd, fEnd, dist - a.z));
-  return min(1.0 - exp(-a.x * d * f - mist), cap) * step(0.5, a.w);
+  float ramp = clamp(d / (${HAZE_RAMP.toFixed(2)} * fEnd), 0.0, 1.0);
+  return min(1.0 - exp(-a.x * d * f * ramp - mist), cap) * step(0.5, a.w);
 }
 vec3 sroHeightFogTint(vec3 dir, vec3 horizon, vec4 sun, vec3 sunColor) {
   float s = pow(max(dot(dir, sun.xyz), 0.0), 8.0) * sun.w;
@@ -277,6 +320,14 @@ vec3 sroHeightFogTint(vec3 dir, vec3 horizon, vec4 sun, vec3 sunColor) {
 }
 float sroFogRingU(vec3 dir) {
   return atan(dir.x, dir.z) * 0.15915494 + 0.5;
+}
+vec3 sroFogCapped(vec3 col, float invExposure, float edge) {
+  float y = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  return mix(col * min(1.0, ${FOG_SURFACE_MAX.toFixed(2)} * invExposure / max(y, 1e-6)), col, edge);
+}
+float sroFogEdge(vec3 posW, vec3 eye, vec4 a) {
+  float fEnd = 3.0 / max(a.x, 1e-6);
+  return smoothstep(0.8 * fEnd, fEnd, length(posW - eye) - a.z);
 }
 `
 
@@ -298,14 +349,21 @@ const WGSL_APPLY = `
   let sroPos = fragmentInputs.vPositionW;
   let sroDir = normalize(sroPos - sroEye);
   var sroHorizon = uniforms.sroFogColor.rgb;
+  var sroUp = uniforms.sroFogUp.rgb;
 #ifdef SRO_FOG_RING
-  let sroRing = textureSampleLevel(sroFogRing, sroFogRingSampler, vec2f(sroFogRingU(sroDir), 0.5), 0.0).rgb;
+  let sroU = sroFogRingU(sroDir);
+  let sroRing = textureSampleLevel(sroFogRing, sroFogRingSampler, vec2f(sroU, 0.25), 0.0).rgb;
+  let sroRingUp = textureSampleLevel(sroFogRing, sroFogRingSampler, vec2f(sroU, 0.75), 0.0).rgb;
   sroHorizon = max(sroRing, vec3f(0.0)) * uniforms.sroFogColor.w;
+  sroUp = max(sroRingUp, vec3f(0.0)) * uniforms.sroFogColor.w;
   // item 16: the ring greys like the flat colour (rain, overcast, the daytime teal; sroFogSunColor.w)
   sroHorizon = mix(sroHorizon, vec3f(dot(sroHorizon, vec3f(0.2126, 0.7152, 0.0722))) * vec3f(0.96, 1.0, 1.06), uniforms.sroFogSunColor.w);
+  sroUp = mix(sroUp, vec3f(dot(sroUp, vec3f(0.2126, 0.7152, 0.0722))) * vec3f(0.96, 1.0, 1.06), uniforms.sroFogSunColor.w);
 #endif
+  // above the horizon the fog leans to the sky behind the surface (FOG_UP_DEG; sroFogUp.w = its sine)
+  sroHorizon = mix(sroHorizon, sroUp, smoothstep(0.0, uniforms.sroFogUp.w, sroDir.y));
   let sroAmt = sroHeightFogAmount(sroPos, sroEye, uniforms.sroFogA);
-  let sroCol = sroHeightFogTint(sroDir, sroHorizon, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb);
+  let sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb), uniforms.sroFogColor.w, sroFogEdge(sroPos, sroEye, uniforms.sroFogA));
   finalColor = vec4f(mix(finalColor.rgb, sroCol, sroAmt), finalColor.a);
 }
 #endif
@@ -326,13 +384,19 @@ const GLSL_APPLY = `
   vec3 sroEye = vEyePosition.xyz;
   vec3 sroDir = normalize(vPositionW - sroEye);
   vec3 sroHorizon = sroFogColor.rgb;
+  vec3 sroUp = sroFogUp.rgb;
 #ifdef SRO_FOG_RING
-  vec3 sroRing = textureLod(sroFogRing, vec2(sroFogRingU(sroDir), 0.5), 0.0).rgb;
+  float sroU = sroFogRingU(sroDir);
+  vec3 sroRing = textureLod(sroFogRing, vec2(sroU, 0.25), 0.0).rgb;
+  vec3 sroRingUp = textureLod(sroFogRing, vec2(sroU, 0.75), 0.0).rgb;
   sroHorizon = max(sroRing, vec3(0.0)) * sroFogColor.w;
+  sroUp = max(sroRingUp, vec3(0.0)) * sroFogColor.w;
   sroHorizon = mix(sroHorizon, vec3(dot(sroHorizon, vec3(0.2126, 0.7152, 0.0722))) * vec3(0.96, 1.0, 1.06), sroFogSunColor.w);
+  sroUp = mix(sroUp, vec3(dot(sroUp, vec3(0.2126, 0.7152, 0.0722))) * vec3(0.96, 1.0, 1.06), sroFogSunColor.w);
 #endif
+  sroHorizon = mix(sroHorizon, sroUp, smoothstep(0.0, sroFogUp.w, sroDir.y));
   float sroAmt = sroHeightFogAmount(vPositionW, sroEye, sroFogA);
-  vec3 sroCol = sroHeightFogTint(sroDir, sroHorizon, sroFogSun, sroFogSunColor.rgb);
+  vec3 sroCol = sroFogCapped(sroHeightFogTint(sroDir, sroHorizon, sroFogSun, sroFogSunColor.rgb), sroFogColor.w, sroFogEdge(vPositionW, sroEye, sroFogA));
   finalColor = vec4(mix(finalColor.rgb, sroCol, sroAmt), finalColor.a);
 }
 #endif
@@ -350,6 +414,7 @@ const FOG_UBO = [
   { name: 'sroFogColor', size: 4, type: 'vec4' },
   { name: 'sroFogSun', size: 4, type: 'vec4' },
   { name: 'sroFogSunColor', size: 4, type: 'vec4' },
+  { name: 'sroFogUp', size: 4, type: 'vec4' },
 ]
 
 /** The height fog on one PBR material (see the file comment). */
@@ -389,7 +454,7 @@ export class SroFogPlugin extends MaterialPluginBase {
   override getUniforms(): { ubo: typeof FOG_UBO; fragment: string } {
     return {
       ubo: FOG_UBO,
-      fragment: '#ifdef SRO_HEIGHTFOG\nuniform vec4 sroFogA;\nuniform vec4 sroFogColor;\nuniform vec4 sroFogSun;\nuniform vec4 sroFogSunColor;\n#endif\n',
+      fragment: '#ifdef SRO_HEIGHTFOG\nuniform vec4 sroFogA;\nuniform vec4 sroFogColor;\nuniform vec4 sroFogSun;\nuniform vec4 sroFogSunColor;\nuniform vec4 sroFogUp;\n#endif\n',
     }
   }
 
@@ -404,6 +469,7 @@ export class SroFogPlugin extends MaterialPluginBase {
     ubo.updateFloat4('sroFogColor', s.color.x, s.color.y, s.color.z, s.color.w)
     ubo.updateFloat4('sroFogSun', s.sun.x, s.sun.y, s.sun.z, s.sun.w)
     ubo.updateFloat4('sroFogSunColor', s.sunColor.x, s.sunColor.y, s.sunColor.z, s.sunColor.w)
+    ubo.updateFloat4('sroFogUp', s.up.x, s.up.y, s.up.z, s.up.w)
     if (s.ringActive && s.ring) ubo.setTexture('sroFogRing', s.ring)
   }
 

@@ -12,6 +12,8 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { FOG_RANGE_M } from '../src/index.ts'
 import {
   FOG_95,
+  FOG_SURFACE_MAX,
+  FOG_UP_DEG,
   FOG_PLUGIN_NAME,
   HEIGHT_FOG_GLSL,
   HEIGHT_FOG_WGSL,
@@ -51,9 +53,10 @@ describe('height-fog maths', () => {
     expect(fogDensity(start, end) * (end - start)).toBeCloseTo(FOG_95, 9)
   })
 
-  it('is the uniform exponential fog at h → 0 (and clear before the start)', () => {
+  it('is the uniform fog at h → 0, its depth ramping in as d² over 3/density (and clear before the start)', () => {
     for (const d of [0, 100, 190, 200, 230, 260, 400]) {
-      const uniform = 1 - Math.exp(-p.density * Math.max(0, d - start))
+      const x = Math.max(0, d - start)
+      const uniform = 1 - Math.exp(-p.density * x * Math.min(1, (x * p.density) / FOG_95))
       expect(heightFogAmount(d, 10, 10, p)).toBeCloseTo(uniform, 9)
       expect(heightFogAmount(d, 10, 10 - 1e-6, p)).toBeCloseTo(uniform, 6)
     }
@@ -69,6 +72,13 @@ describe('height-fog maths', () => {
     const f = heightFactor(40, 1 / 80)
     expect(f).toBeCloseTo((Math.exp(0.5) - 1) / 0.5, 9)
     expect(Number.isFinite(heightFactor(1e6, 1 / 80))).toBe(true)
+  })
+
+  it('the ramp keeps the near haze light: a quarter of the way in 17 %, not 53 %; half way 53 %, not 78 %', () => {
+    const q = { density: fogDensity(100, 250), startM: 100, falloffM: 80 }
+    expect(heightFogAmount(100 + 150 / 4, 10, 10, q)).toBeCloseTo(1 - Math.exp(-FOG_95 / 16), 6)
+    expect(heightFogAmount(100 + 150 / 4, 10, 10, q)).toBeLessThan(0.18)
+    expect(heightFogAmount(175, 10, 10, q)).toBeCloseTo(1 - Math.exp(-FOG_95 / 4), 6)
   })
 
   it('95% lands at the retail fog end × the weather fog scale', () => {
@@ -184,5 +194,28 @@ describe('SroFogPlugin on materials (NullEngine)', () => {
     s.fogMode = Scene.FOGMODE_NONE
     fog.update(state, 4)
     expect(fog.a.w).toBe(0)
+  })
+
+  it('leans above the horizon to SkyState.fogColorUp (the fog colour without one), up to sin(FOG_UP_DEG)', () => {
+    const s = scene()
+    const fog = new HeightFog(s)
+    cleanups.push(() => fog.dispose())
+    const state = {
+      fogColor: [0.8, 0.75, 0.7], exposure: 4, sunDir: new Vector3(0, 1, 0), sunElevationDeg: 60,
+      keyLight: { dir: new Vector3(0, 1, 0), color: [1, 1, 1], intensity: 1 }, horizonRing: null,
+    } as unknown as SkyState
+    s.fogMode = Scene.FOGMODE_LINEAR
+    fog.update(state, 4)
+    expect([fog.up.x, fog.up.y, fog.up.z]).toEqual([fog.color.x, fog.color.y, fog.color.z])
+    expect(fog.up.w).toBeCloseTo(Math.sin((FOG_UP_DEG * Math.PI) / 180), 9)
+    fog.update({ ...state, fogColorUp: [0.2, 0.2, 0.45] } as SkyState, 4)
+    const lin = displayToExposed([0.2, 0.2, 0.45], 'neutral')
+    expect(fog.up.x).toBeCloseTo(lin[0]! / 4, 6)
+    expect(fog.up.z).toBeCloseTo(lin[2]! / 4, 6)
+    expect(fog.up.x).toBeLessThan(fog.color.x)
+    // the shader blends to it by the view direction's sine and caps the in-scatter a surface is blended toward
+    const wgsl = Object.values(fogPluginCode(ShaderLanguage.WGSL)).join('\n')
+    expect(wgsl).toContain('smoothstep(0.0, uniforms.sroFogUp.w, sroDir.y)')
+    expect(wgsl).toContain(`${FOG_SURFACE_MAX.toFixed(2)} * invExposure`)
   })
 })

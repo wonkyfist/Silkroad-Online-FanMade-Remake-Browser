@@ -146,7 +146,7 @@ const LIGHT_WGSL = /* wgsl */ `#ifdef SRO_HDR
     vertexOutputs.vRgAmb = vec4f(rgAmb, rgFade);
     let rgDir = normalize(p - uniforms.scCamera.xyz);
     let rgFogAmt = sroHeightFogAmount(p, uniforms.scCamera.xyz, uniforms.sroFogA);
-    vertexOutputs.vRgFog = vec4f(sroHeightFogTint(rgDir, uniforms.sroFogColor.rgb, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb), rgFogAmt);
+    vertexOutputs.vRgFog = vec4f(sroFogCapped(sroHeightFogTint(rgDir, uniforms.sroFogColor.rgb, uniforms.sroFogSun, uniforms.sroFogSunColor.rgb), uniforms.sroFogColor.w, 0.0), rgFogAmt);
     vertexOutputs.position = vec4f(vertexOutputs.position.xy + uniforms.rgJitter.xy * vertexOutputs.position.w, vertexOutputs.position.zw);
   }
 #endif
@@ -236,7 +236,7 @@ const LIGHT_GLSL = /* glsl */ `#ifdef SRO_HDR
     vRgAmb = vec4(rgAmb, rgFade);
     vec3 rgDir = normalize(p - scCamera.xyz);
     float rgFogAmt = sroHeightFogAmount(p, scCamera.xyz, sroFogA);
-    vRgFog = vec4(sroHeightFogTint(rgDir, sroFogColor.rgb, sroFogSun, sroFogSunColor.rgb), rgFogAmt);
+    vRgFog = vec4(sroFogCapped(sroHeightFogTint(rgDir, sroFogColor.rgb, sroFogSun, sroFogSunColor.rgb), sroFogColor.w, 0.0), rgFogAmt);
     gl_Position.xy += rgJitter.xy * gl_Position.w;
   }
 #endif
