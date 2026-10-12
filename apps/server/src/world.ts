@@ -28,6 +28,8 @@ import { PlayerGrid, cellKey } from './cells.ts'
 import { Encoded } from './encode.ts'
 import { KnownSet, type Watchers } from './known.ts'
 import { PH, PhaseTimers } from './phases.ts'
+import type { AoiPool } from './aoi/pool.ts'
+import { CROWD_NONE, CROWD_SET, EF_COS, EF_HIDDEN, EF_MOB, EF_PLAYER, EF_VEIL, PM_NULL, PM_REPICK, PM_STAFF, firstSorted, layout, type AoiParams, type CrowdPick } from './aoi/kernel.ts'
 
 /**
  * Authoritative world simulation: every entity (players, mobs, NPCs, ground items), straight-line moves, the
@@ -343,32 +345,7 @@ const BOUNDS_INSET_M = 0.01
 /** A teleport into a wall or a house lands on the nearest open ground within this distance (metres). */
 export const WARP_SEARCH_M = 10
 
-/** A crowd-pick candidate (pickCrowdCells): its distance (shown ones CROWD_SWAP_M nearer) and its candidate order. */
-export interface CrowdPick {
-  id: number
-  d: number
-  shown: boolean
-  pos: number
-}
-
-/**
- * The first `k` of `list` (in candidate order) sorted by distance, as the stable `list.slice().sort(by d).slice(0, k)`
- * gives them (equal distances keep their order), without sorting all of it when k is small.
- */
-export function firstSorted(list: CrowdPick[], k: number): CrowdPick[] {
-  if (k <= 0) return []
-  if (k > 16 || k * 4 >= list.length) return list.slice().sort((x, y) => x.d - y.d).slice(0, k)
-  const out: CrowdPick[] = []
-  for (const x of list) {
-    // not nearer than the k-th so far: a stable sort puts it after that one
-    if (out.length === k && x.d >= out[k - 1]!.d) continue
-    let j = out.length
-    while (j > 0 && out[j - 1]!.d > x.d) j--
-    out.splice(j, 0, x)
-    if (out.length > k) out.pop()
-  }
-  return out
-}
+export { firstSorted, type CrowdPick } from './aoi/kernel.ts'
 
 /** One cell of an AOI_FAST interest pass: its entities with their ids and positions side by side. */
 interface AoiCell {
@@ -431,6 +408,14 @@ export class World {
   encodeOnce = true
   /** AOI_FAST: the interest pass's quick path (the same spawns and despawns). Off: the old pass. */
   aoiFast = true
+  /**
+   * AOI_JOBS (docs/SERVER_ARCHITECTURE.md P1b): the interest pass's per-viewer work on worker threads (aoi/), the same
+   * spawns and despawns in the same order; null = on this thread. Needs AOI_FAST, and alsoMustSeeKeys when alsoMustSee
+   * is set (a worker cannot call gameplay's rule).
+   */
+  aoiJobs: AoiPool | null = null
+  /** Below this many players the pass stays on this thread (a snapshot would cost more than the work it moves). */
+  aoiJobsMin = 48
   /** The watcher index (known.ts): entity id -> the players whose client has it. */
   private readonly watchers: Watchers = new Map()
   /** Players added by add() and not removed yet: the index is complete while this equals players.size. */
@@ -1117,7 +1102,10 @@ export class World {
   private crowdMs = 0
 
   private interestPass(now: number, cache: Map<Entity | Mover, Vec3>): void {
-    if (this.aoiFast) return this.interestPassFast(now, cache)
+    if (this.aoiFast) {
+      if (this.aoiJobs && this.players.size >= this.aoiJobsMin && (this.alsoMustSeeKeys || !this.alsoMustSee)) return this.interestPassJobs(now)
+      return this.interestPassFast(now, cache)
+    }
     this.interestPasses++
     const cell = Math.max(16, this.viewRange)
     const grid = new Map<string, Entity[]>()
@@ -1231,6 +1219,162 @@ export class World {
         known.delete(id)
         v.send({ t: 'despawn', id })
       }
+    }
+  }
+
+  /**
+   * AOI_JOBS (docs/SERVER_ARCHITECTURE.md §3.5, P1b): interestPassFast with its per-viewer work (crowd pick, spawn and
+   * despawn decisions) done by aoi/kernel.ts over a snapshot in shared memory, sliced over the worker threads and this
+   * one; then the decisions are applied here, viewer by viewer in world.players order, exactly as interestPassFast makes
+   * and sends them (the kernel is that pass over arrays: the same tests, arithmetic and order).
+   */
+  private interestPassJobs(now: number): void {
+    const pool = this.aoiJobs!
+    const T = this.timers
+    const t0 = T.now()
+    this.interestPasses++
+    const players = [...this.players.values()]
+    const P = players.length
+    // the anchors that are monsters (Play the Boss: viewFrom), found while the entities are written
+    let wantMobs: Map<number, number> | null = null
+    for (const v of players) if (v.viewFrom !== undefined && this.mobs.has(v.viewFrom)) (wantMobs ??= new Map()).set(v.viewFrom, -1)
+    // sizes first: the shared arrays are written in one go
+    let E = 0
+    for (const m of [this.players, this.mobs, this.items, this.npcs, this.cos]) E += m.size
+    const keysOf = this.alsoMustSeeKeys
+    const keyLists: (readonly unknown[])[] = keysOf ? players.map((v) => keysOf(v)) : []
+    let K = 0
+    for (const k of keyLists) if (k.length > K) K = k.length
+    let nKnown = 0
+    let nCrowd = 0
+    let nFoes = 0
+    const repick: boolean[] = new Array(P)
+    for (let i = 0; i < P; i++) {
+      const v = players[i]!
+      nKnown += v.known.size
+      repick[i] = v.crowd === undefined || (this.interestPasses + v.id) % this.crowdRepickPasses === 0
+      if (!repick[i] && v.crowd) nCrowd += v.crowd.size
+      if (v.foes) nFoes += v.foes.size
+    }
+    const L = layout(E, P, K, nKnown, nCrowd, nFoes)
+    const { I, F } = pool.arrays(L.iLen, L.fLen)
+    const ents: Entity[] = new Array(E)
+    let i = 0
+    for (const e of this.allEntities()) {
+      const at = this.positionAt(e, now)
+      ents[i] = e
+      I[L.eid + i] = e.id
+      F[L.ex + i] = at[0]
+      F[L.ez + i] = at[2]
+      let fl = 0
+      let owner = 0
+      let pilot = 0
+      let veil = 0
+      if (e.kind === 'player') {
+        fl = EF_PLAYER | (e.invisible ? EF_HIDDEN : 0)
+        owner = e.id
+      } else if (e.kind === 'mob') {
+        fl = EF_MOB
+        if (e.veil !== undefined) {
+          fl |= EF_VEIL
+          veil = e.veil
+          pilot = e.pilot?.player ?? 0
+        }
+        if (wantMobs?.has(e.id)) wantMobs.set(e.id, i)
+      } else if (e.kind === 'cos') {
+        const o = this.players.get(e.owner)
+        fl = EF_COS | (o && o.invisible ? EF_HIDDEN : 0)
+        owner = o ? o.id : 0
+      }
+      I[L.eflags + i] = fl
+      I[L.eowner + i] = owner
+      I[L.epilot + i] = pilot
+      F[L.eveil + i] = veil
+      i++
+    }
+    // must-see keys as small integers (the same object = the same number; null and undefined = 0)
+    const keyIds = new Map<unknown, number>()
+    let ko = 0
+    let co = 0
+    let fo = 0
+    for (let v = 0; v < P; v++) {
+      const p = players[v]!
+      const anchor = p.viewFrom === undefined ? -1 : (wantMobs?.get(p.viewFrom) ?? -1)
+      I[L.pAnchor + v] = anchor >= 0 ? anchor : v
+      const act = p.action
+      I[L.pTarget + v] = act && (act.kind === 'attack' || act.kind === 'skill') ? act.target : 0
+      let meta = p.staff ? PM_STAFF : 0
+      if (repick[v]) meta |= PM_REPICK
+      else if (!p.crowd) meta |= PM_NULL
+      I[L.pMeta + v] = meta
+      if (K > 0) {
+        const keys = keyLists[v]!
+        // a player whose keys are all unset matches nobody (World.passKeysOf): all zeros
+        for (let k = 0; k < K; k++) {
+          const key = keys[k]
+          let id = 0
+          if (key != null) {
+            id = keyIds.get(key) ?? 0
+            if (id === 0) keyIds.set(key, (id = keyIds.size + 1))
+          }
+          I[L.pKeys + v * K + k] = id
+        }
+      }
+      I[L.pKnownOff + v] = ko
+      for (const id of p.known) I[L.known + ko++] = id
+      I[L.pKnownLen + v] = ko - I[L.pKnownOff + v]!
+      I[L.pCrowdOff + v] = co
+      if (!repick[v] && p.crowd) for (const id of p.crowd) I[L.crowd + co++] = id
+      I[L.pCrowdLen + v] = co - I[L.pCrowdOff + v]!
+      I[L.pFoeOff + v] = fo
+      if (p.foes) {
+        for (const [id, t] of p.foes) {
+          I[L.foeIds + fo] = id
+          F[L.foeT + fo] = t
+          fo++
+        }
+      }
+      I[L.pFoeLen + v] = fo - I[L.pFoeOff + v]!
+    }
+    const params: AoiParams = {
+      now, view: this.viewRange, hyst: VIEW_HYSTERESIS_M, maxVisible: this.maxVisiblePlayers, swapM: CROWD_SWAP_M, swaps: CROWD_SWAPS_PER_PASS,
+      foeMs: FOE_MEMORY_MS, nKeys: K, E, P, cell: Math.max(16, this.viewRange),
+    }
+    const t1 = T.now()
+    const parts = pool.run(L, params)
+    const t2 = T.now()
+    // apply, viewer by viewer: the crowd, the spawns (in cell order), the despawns (in the known set's order)
+    let v = 0
+    for (const r of parts) {
+      let o = 0
+      while (o < r.length) {
+        const p = players[v++]!
+        const mode = r[o++]!
+        if (mode === CROWD_NONE) p.crowd = null
+        else if (mode === CROWD_SET) {
+          const n = r[o++]!
+          const crowd = new Set<number>()
+          for (let k = 0; k < n; k++) crowd.add(r[o++]!)
+          p.crowd = crowd
+        }
+        const ns = r[o++]!
+        for (let k = 0; k < ns; k++) {
+          const e = ents[r[o++]!]!
+          p.known.add(e.id)
+          p.send({ t: 'spawn', entity: this.state(e) })
+        }
+        const ng = r[o++]!
+        for (let k = 0; k < ng; k++) {
+          const id = r[o++]!
+          p.known.delete(id)
+          p.send({ t: 'despawn', id })
+        }
+      }
+    }
+    if (v !== P) throw new Error(`aoi jobs: ${v} viewer records for ${P} viewers`)
+    if (T.enabled) {
+      pool.stats.snapshotMs += t1 - t0
+      pool.stats.applyMs += T.now() - t2
     }
   }
 

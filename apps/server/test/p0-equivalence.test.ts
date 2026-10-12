@@ -4,6 +4,9 @@
  * run the same seeded script in lockstep, one with every switch on and one with all of them off (the paths from before
  * P0): after every tick the monsters' states and every client's known set match, and at the end every client's whole
  * message stream (each recipient's own order included). Unit checks pin the grid, the scans and the index.
+ *
+ * Phase P1b (AOI_JOBS): the same lockstep with the interest pass's per-viewer work on worker threads (aoi/) against the
+ * tick thread's own pass: the same known sets, crowds and streams.
  */
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -22,6 +25,7 @@ import { FlatNav } from '../src/nav.ts'
 import { World, firstSorted, type Player } from '../src/world.ts'
 import { perfTile } from '../src/admin/api.ts'
 import { PH, PHASES, PhaseTimers } from '../src/phases.ts'
+import { AoiPool } from '../src/aoi/pool.ts'
 import { DROPS, ITEMS, LEVELS, MANGNYANG, NPCS, SHOPS, mob, seeded } from './fixtures.ts'
 import { startTestServer, testConfig } from './helpers.ts'
 
@@ -33,6 +37,8 @@ interface Switches {
   watchers: boolean
   encodeOnce: boolean
   aoiFast: boolean
+  /** P1b: the interest pass on these worker threads (every pass, however few players). */
+  aoiJobs?: AoiPool
 }
 const ON: Switches = { mobGrid: true, watchers: true, encodeOnce: true, aoiFast: true }
 const OFF: Switches = { mobGrid: false, watchers: false, encodeOnce: false, aoiFast: false }
@@ -59,6 +65,10 @@ function sim(sw: Switches) {
   world.useWatchers = sw.watchers
   world.encodeOnce = sw.encodeOnce
   world.aoiFast = sw.aoiFast
+  if (sw.aoiJobs) {
+    world.aoiJobs = sw.aoiJobs
+    world.aoiJobsMin = 0
+  }
   // the crowd cap in play: groups of 7+ players see at most 5 of each other
   world.maxVisiblePlayers = 5
   world.crowdRepickPasses = 2
@@ -180,6 +190,8 @@ function step(s: Sim, r: () => number, now: number, t: number): void {
 
 const mobsOf = (s: Sim) => [...s.world.mobs.values()].map((m) => `${m.id}:${m.ai}:${m.target}:${m.hp}:${m.pos.join(',')}:${m.move ? m.move.to.join(',') : '-'}`)
 const playersOf = (s: Sim) => [...s.world.players.values()].map((p) => `${p.id}:${p.hp}:${p.dead}:${[...p.known].sort((a, b) => a - b).join(',')}`)
+/** Each player's crowd in its own order (null / undefined as such). */
+const crowdsOf = (s: Sim) => [...s.world.players.values()].map((p) => `${p.id}:${p.crowd === undefined ? 'u' : p.crowd === null ? 'n' : [...p.crowd].join(',')}`)
 
 describe('P0 changes no decision and no message (lockstep, every switch on vs off)', () => {
   it('monsters, known sets and every message stream are identical over 300 ticks', () => {
@@ -228,6 +240,84 @@ describe('P0 changes no decision and no message (lockstep, every switch on vs of
     }
     expect(together).toBeGreaterThan(10)
   })
+})
+
+describe('P1b: AOI_JOBS changes no decision and no message (lockstep, worker threads vs the tick thread)', () => {
+  async function readyPool(n: number): Promise<AoiPool> {
+    const logs: string[] = []
+    const pool = new AoiPool(n, (l) => logs.push(l))
+    cleanups.push(() => void pool.close())
+    const end = Date.now() + 10_000
+    while (!pool.ready) {
+      if (Date.now() > end) throw new Error(`no aoi worker ready: ${logs.join('; ')}`)
+      await new Promise((r) => setTimeout(r, 20))
+    }
+    return pool
+  }
+
+  it('known sets, crowds and every message stream are identical over 300 ticks', async () => {
+    const pool = await readyPool(2)
+    const a = sim({ ...ON, aoiJobs: pool })
+    const b = sim(ON)
+    const ra = seeded(99)
+    const rb = seeded(99)
+    const t0 = Date.now() + 60_000
+    vi.useFakeTimers({ toFake: ['Date'], now: t0 })
+    cleanups.push(() => vi.useRealTimers())
+    setupWorld(a, ra, t0)
+    setupWorld(b, rb, t0)
+    for (let t = 1; t <= 300; t++) {
+      const now = t0 + t * 50
+      vi.setSystemTime(now)
+      step(a, ra, now, t)
+      step(b, rb, now, t)
+      expect(playersOf(a), `players after tick ${t}`).toEqual(playersOf(b))
+      expect(crowdsOf(a), `crowds after tick ${t}`).toEqual(crowdsOf(b))
+      expect(mobsOf(a), `monsters after tick ${t}`).toEqual(mobsOf(b))
+    }
+    let total = 0
+    for (const [id, box] of a.inbox) {
+      expect(box, `messages of player ${id}`).toEqual(b.inbox.get(id))
+      total += box.length
+    }
+    expect(total).toBeGreaterThan(2000)
+    // the workers really did the slices (a 50 ms wait covers any slice of this world)
+    const st = pool.snapshot()
+    expect(st.passes).toBeGreaterThan(50)
+    expect(st.workerSliceMs).toBeGreaterThan(0)
+    expect(st.fallbacks).toBeLessThan(st.passes)
+    // crowds were really in force (groups of 7+ see at most 5 of each other)
+    expect([...a.world.players.values()].some((p) => p.crowd && p.crowd.size > 0)).toBe(true)
+  }, 60_000)
+
+  it('a dead worker costs nothing but speed: its slice is computed on the tick thread, and it is started again', async () => {
+    const pool = await readyPool(1)
+    const a = sim({ ...ON, aoiJobs: pool })
+    const b = sim(ON)
+    const ra = seeded(5)
+    const rb = seeded(5)
+    const t0 = Date.now() + 60_000
+    vi.useFakeTimers({ toFake: ['Date'], now: t0 })
+    cleanups.push(() => vi.useRealTimers())
+    setupWorld(a, ra, t0)
+    setupWorld(b, rb, t0)
+    for (let t = 1; t <= 80; t++) {
+      if (t === 20) pool.crash(0)
+      const now = t0 + t * 50
+      vi.setSystemTime(now)
+      step(a, ra, now, t)
+      step(b, rb, now, t)
+      expect(playersOf(a), `players after tick ${t}`).toEqual(playersOf(b))
+      expect(crowdsOf(a), `crowds after tick ${t}`).toEqual(crowdsOf(b))
+    }
+    for (const [id, box] of a.inbox) expect(box, `messages of player ${id}`).toEqual(b.inbox.get(id))
+    vi.useRealTimers()
+    const end = Date.now() + 10_000
+    while (pool.snapshot().restarts < 1 || !pool.ready) {
+      if (Date.now() > end) throw new Error('the worker was not started again')
+      await new Promise((r) => setTimeout(r, 50))
+    }
+  }, 60_000)
 })
 
 describe('the monster pass player grid (cells.ts)', () => {
@@ -452,7 +542,7 @@ describe('the tick timers (phases.ts) and the performance tile', () => {
     expect(snap.phases!.intervals).toBeGreaterThan(10)
     expect(Object.keys(snap.phases!.phases).sort()).toEqual([...PHASES].sort())
     expect(snap.phases!.modules.length).toBeGreaterThan(5)
-    expect(snap.switches).toEqual({ tickTimers: true, mobGrid: true, watchers: true, encodeOnce: true, aoiFast: true })
+    expect(snap.switches).toEqual({ tickTimers: true, mobGrid: true, watchers: true, encodeOnce: true, aoiFast: true, gateways: false, aoiJobs: false })
     expect(snap.queue).toEqual({ sockets: 0, bufferedBytes: 0, maxBufferedBytes: 0 })
     expect(snap.memory!.map((m) => m.stage)).toEqual(['start', 'content', 'navmesh', 'modules', 'world'])
     const tile = perfTile(snap)
@@ -468,7 +558,7 @@ describe('the tick timers (phases.ts) and the performance tile', () => {
     while (s.ctx.world.ticks < 5 && Date.now() < deadline) await new Promise((r) => setTimeout(r, 50))
     const snap = s.ctx.net.snapshot()
     expect(snap.phases).toBeUndefined()
-    expect(snap.switches).toEqual({ tickTimers: false, mobGrid: false, watchers: false, encodeOnce: false, aoiFast: false })
+    expect(snap.switches).toEqual({ tickTimers: false, mobGrid: false, watchers: false, encodeOnce: false, aoiFast: false, gateways: false, aoiJobs: false })
     expect(s.ctx.world.mobGrid || s.ctx.world.useWatchers || s.ctx.world.encodeOnce || s.ctx.world.aoiFast).toBe(false)
     expect(snap.tick.n).toBeGreaterThan(0)
   })

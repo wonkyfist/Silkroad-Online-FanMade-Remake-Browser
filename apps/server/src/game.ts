@@ -29,6 +29,7 @@ import { FailureLimiter, HashBusyError, MAX_SESSIONS_PER_ACCOUNT, SESSION_TTL_MS
 import type { ServerConfig } from './config.ts'
 import { Connection, MAX_BUFFERED, wsConnection } from './connection.ts'
 import { GatewayHub } from './gateway/hub.ts'
+import { AoiPool } from './aoi/pool.ts'
 import { CharacterModels, regionAt, resolveWorld, withAuthoredPlaces, withTownSpawn, type WorldSetup } from './content.ts'
 import { checkPlaces } from './places.ts'
 import { openStore, type Store } from './db.ts'
@@ -316,6 +317,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   world.useWatchers = switches.watchers
   world.encodeOnce = switches.encodeOnce
   world.aoiFast = switches.aoiFast
+  // docs/SERVER_ARCHITECTURE.md P1b: the interest pass's per-viewer work on AOI_JOBS worker threads (needs AOI_FAST)
+  const aoiPool = (config.aoiJobs ?? 0) > 0 && switches.aoiFast ? new AoiPool(config.aoiJobs!, config.log) : null
+  world.aoiJobs = aoiPool
   // Only places a GM can stand on stay in the tp list (the rest are logged and skipped).
   setup.places = checkPlaces(setup.places, world, nav, [config.world.toLowerCase(), 'spawn'], config.log)
   let tickErrors = 0
@@ -630,7 +634,10 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       }
       // The load test (src/cli/netload.ts): counters for a local run only, never on a public port.
       if (rawPath === '/netstats' && process.env.NET_STATS === '1' && isLoopback(req.socket.remoteAddress)) {
-        if ((req.url ?? '').includes('reset=1')) ctx.net.reset()
+        if ((req.url ?? '').includes('reset=1')) {
+          ctx.net.reset()
+          aoiPool?.reset()
+        }
         // the load test ends its server this way on Windows (no SIGINT there), so a --cpu-prof profile gets written
         if ((req.url ?? '').includes('exit=1')) setTimeout(() => process.exit(0), 200).unref()
         return sendJson(res, 200, ctx.net.snapshot())
@@ -732,8 +739,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     const h = hub
     ctx.net.probe = () => ({ sockets: sockets.size, ...h.queue() })
   }
-  ctx.net.extra = () => (hub ? { gateways: hub.snapshot() } : {})
-  ctx.net.switches = { ...switches, gateways: hub !== null }
+  ctx.net.extra = () => ({ ...(hub ? { gateways: hub.snapshot() } : {}), ...(aoiPool ? { aoiJobs: aoiPool.snapshot() } : {}) })
+  ctx.net.switches = { ...switches, gateways: hub !== null, aoiJobs: aoiPool !== null }
 
   const http = createServer((req, res) => {
     void handle(req, res)
@@ -870,6 +877,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         for (const c of [...conns.values()]) c.socketClosed('server shutdown')
         conns.clear()
         gcWatch?.disconnect()
+        await aoiPool?.close()
         ctx.net.close()
         await new Promise<void>((resolve) => {
           http.close(() => resolve())
