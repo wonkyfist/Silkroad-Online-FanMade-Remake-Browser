@@ -1167,7 +1167,9 @@ smallest turn to either side (15° steps up to 60°, bisected to ~2°, then 2.5�
 may lead the server by the walk of half a round trip + 0.25 s + 0.75 m; further (a gate the client does not know, a
 region not loaded) it is pulled back toward the server. After the release it holds the stop point until the server's
 stop there (or, after max(0.5 s, 2 round trips + 0.25 s), takes the server's word: a glide of up to 4 m, else a snap).
-Mounted, buffed and GM speeds come from the own latest `move`.
+Mounted, buffed and GM speeds come from the own latest `move`. An own echo overridden by the prediction leaves the
+drawn character where it is (a view measures a correction against its own state at the current time), and the 100 ms
+timer only sends: the walk is planned on frames (docs/PERF_OVERALL.md round 8, the walking stutter).
 
 **Clicks and keys.** A left click in the world (ground, monster, item, NPC) ends a key walk with no stop of its own
 (the click's request drives; the view goes back to the server's walk). A key press ends a click walk: hold to move,

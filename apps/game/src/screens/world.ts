@@ -40,6 +40,7 @@ import { worldUniqueNotice } from '../hud/unique-notice.ts'
 import { helpHint } from '../hud/keyhelp.ts'
 import { menuItems, type MenuContext } from '../hud/menu-items.ts'
 import { PerfOverlay } from '../hud/perf-overlay.ts'
+import { PERF } from '../world/perf.ts'
 import { spGained, spGainedText } from '../hud/player.ts'
 import { cursorFor } from '../hud/target.ts'
 import { t } from '../i18n/index.ts'
@@ -99,6 +100,15 @@ export function hitKind(hit: CombatHit, selfIsTarget: boolean, victimArt = false
 const HEAL_NUMBER_MIN = 0.05
 /** Same-target attack clicks closer than this are not re-sent (the server auto-attacks anyway). */
 const ATTACK_RESEND_MS = 400
+
+/**
+ * The current frame's begin time in page ms (`document.timeline.currentTime`: the rAF time of this frame, aligned to
+ * the display's vsync), or null where there is none (no document timeline, or not a number).
+ */
+export function frameBegin(): number | null {
+  const t = typeof document !== 'undefined' ? document.timeline?.currentTime : null
+  return typeof t === 'number' && Number.isFinite(t) ? t : null
+}
 
 /** Placeholder look while there is no world (and for the flat fallback ground). */
 function flatFog(scene: Scene): void {
@@ -1182,6 +1192,16 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
   }
   const tmp = new Vector3()
   const want = new Vector3()
+  /**
+   * PERF.smoothMotion: the camera's offset from its focus on the ground plane. It stays 0 while the focus walks (the
+   * camera on the drawn character: no lag that changes with the frame time); a jump of the focus (the switch to the
+   * steered mob and back) glides out at FOLLOW_RATE. A warp moved the camera itself, so it leaves no offset.
+   */
+  const follow = { x: 0, z: 0, fx: NaN, fz: NaN, id: -1 }
+  const FOLLOW_RATE = 10
+  const FOLLOW_JUMP_M = 3
+  /** PERF.frameClock: the previous frame's begin time (page ms). */
+  let frameT = NaN
   let statT = 0
   // Draw calls per frame: the instrumentation resets the engine's counter before each render, so after the render it
   // holds that frame's draws (its lastSecAverage is never computed on WebGPU). Averaged over the stats interval.
@@ -1193,9 +1213,17 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     drawFrames++
   })
   const frameObs: Observer<Scene> | null = scene.onBeforeRenderObservable.add(() => {
-    const dt = Math.min(0.1, app.engine.getDeltaTime() / 1000)
+    // PERF.frameClock: the frame's own begin time (the rAF time, vsync-aligned) for the views and dt, not the clock
+    // read part-way into the frame (after the animations and the camera inputs, which take a varying time).
+    const begin = PERF.frameClock ? frameBegin() : null
+    let dt = Math.min(0.1, app.engine.getDeltaTime() / 1000)
+    let now = session.clock.serverNow()
+    if (begin !== null && begin > frameT) {
+      if (Number.isFinite(frameT)) dt = Math.min(0.1, (begin - frameT) / 1000)
+      frameT = begin
+      now -= Math.max(0, performance.now() - begin)
+    }
     timeline.tick(dt * 1000)
-    const now = session.clock.serverNow()
     for (const e of entities.values()) {
       current = e
       e.update(now, dt)
@@ -1224,9 +1252,28 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     if (self) {
       ground?.follow(self.pos.x, self.pos.z)
       const focusY = self !== selfView() && controlled?.focusHeight ? controlled.focusHeight(self) : self.focusHeight
-      want.set(self.pos.x, entityY(self, self.pos.x, self.pos.z) + focusY, self.pos.z)
-      Vector3.LerpToRef(camera.target, want, Math.min(1, dt * 10), tmp)
-      camera.target.copyFrom(tmp)
+      if (PERF.smoothMotion) {
+        // the drawn position (a correction's glide included), so the camera and the character move as one
+        const fx = self.root.position.x
+        const fz = self.root.position.z
+        if (self.id !== follow.id || !(Math.hypot(fx - follow.fx, fz - follow.fz) <= FOLLOW_JUMP_M)) {
+          follow.x = camera.target.x - fx
+          follow.z = camera.target.z - fz
+          follow.id = self.id
+        }
+        follow.fx = fx
+        follow.fz = fz
+        const keep = Math.exp(-FOLLOW_RATE * dt)
+        follow.x = Math.abs(follow.x * keep) < 1e-3 ? 0 : follow.x * keep
+        follow.z = Math.abs(follow.z * keep) < 1e-3 ? 0 : follow.z * keep
+        const y = camera.target.y + (entityY(self, fx, fz) + focusY - camera.target.y) * (1 - keep)
+        // set(), not the x / y / z setters: the dev director's camera hold ignores set and copyFrom
+        camera.target.set(fx + follow.x, y, fz + follow.z)
+      } else {
+        want.set(self.pos.x, entityY(self, self.pos.x, self.pos.z) + focusY, self.pos.z)
+        Vector3.LerpToRef(camera.target, want, Math.min(1, dt * 10), tmp)
+        camera.target.copyFrom(tmp)
+      }
     }
     if (ground) cameraGround.update(ground)
     const world = jangan?.world

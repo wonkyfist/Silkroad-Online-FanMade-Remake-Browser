@@ -572,6 +572,45 @@ describe('EntityView jump', () => {
   })
 })
 
+describe('EntityView corrections (PERF.smoothMotion, docs/PERF_OVERALL.md round 8)', () => {
+  type V3 = [number, number, number]
+  const walk = (from: V3, startedAt: number) => ({ from, to: [from[0] + 100, 0, 0] as V3, speed: 5, startedAt })
+
+  it('the own echo and the key walk restoring its prediction in the same frame leave the drawn character where it was', () => {
+    const now = { t: 1000 }
+    const v = makeView(null, now)
+    const seg = walk([0, 0, 0], 1000)
+    v.setMove(seg)
+    v.update(1000, 0.016)
+    now.t = 1210
+    v.update(1210, 0.21)
+    expect(v.root.position.x).toBeCloseTo(1.05, 3)
+    // the server is 0.45 m behind the prediction (its walk began one latency later); the world screen applies its move,
+    // then the key walk puts the prediction back: nothing moves (it used to throw the character ahead by the lead)
+    v.setMove(walk([0.55, 0, 0], 1200))
+    v.setMove(seg)
+    now.t = 1220
+    v.update(1220, 0.01)
+    expect(v.root.position.x).toBeCloseTo(1.1, 3)
+    v.dispose()
+  })
+
+  it('a move that begins after the last frame drawn (a re-plan between frames) does not pull the character back', () => {
+    const now = { t: 1000 }
+    const v = makeView(null, now)
+    v.setMove(walk([0, 0, 0], 1000))
+    v.update(1000, 0.016)
+    now.t = 1200
+    v.update(1200, 0.2)
+    now.t = 1215
+    v.setMove(walk([1.075, 0, 0], 1215))
+    now.t = 1231
+    v.update(1231, 0.016)
+    expect(v.root.position.x).toBeCloseTo(1.155, 3)
+    v.dispose()
+  })
+})
+
 // ---- the feature: key, gate, prediction, echo, toasts -----------------------------------------------------------------
 
 interface FakeSelf {

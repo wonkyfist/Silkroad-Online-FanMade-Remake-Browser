@@ -289,6 +289,45 @@ yet measured.
 need ≈ 5.5 GB, the PC had 6–7 GB free with another helper's Blender at 1 GB) or kept waiting for the lock. Runner:
 `work/tmp/routebench-r11.sh` (4 bots, switches off vs on).
 
+## Round 8: the walking stutter was the own character's position, not the frame (2026-10-12)
+
+The report after rounds 1–7: "still a weird stutter when walking and running, more when turning the camera" (Ultra,
+3440 × 1440, 47 fps on a 240 Hz screen, 13 ms ping). Measured per frame instead of per spike: the own character's
+drawn position, the camera, the character's place on screen (`work/tmp/smooth/run4`: `pnpm charbench --steps` built by
+`work/tmp/smooth/tools/mk-steps.cjs`, read by `analyze.cjs`): key walk W held 3 s straight then 8 s with the camera dragged through the camera's own input
+path, 8 ms injected each way ≈ the live ping, the frame rate held at 47 fps on the 240 Hz screen with `engine.maxFPS`,
+two interleaved rounds per arm, `__sroPerf` switches; Low 1280 × 720 because the PC had no RAM for Ultra next to
+another helper's Blender — the cause below does not depend on the preset).
+
+**Cause** (client only; no server change can fix it): `EntityView.setMove` measured a correction against `pos`, the
+position of the *last frame*. (1) During a key walk every own `move` echo is applied by the world screen and then
+overridden by the key walk's prediction in the same handler; the second call read the stale `pos`, so the drawn
+character jumped ahead by the prediction's lead over the server (the corner the server's chord cuts while turning) and
+glided back over ≈ 0.25 s — with the camera dragged an echo arrives up to 10 times a second, so every frame carried an
+offset of up to 30 cm. (2) The key walk's 100 ms timer re-planned between frames: the new segment began after the last
+frame drawn, so the correction pulled the character back by the walk in between (up to 11 cm at 47 fps, every
+200–400 ms even walking straight). The camera followed the logical position, so both showed as the character shaking
+on screen.
+
+| per frame (47 fps, 2 rounds) | before: walk straight | before: walk + turn | after: walk straight | after: walk + turn |
+|---|---|---|---|---|
+| drawn character, step error vs its speed, p95 / max | 6.2 / 11.1 cm | **21.4 / 27.0 cm** | 0.22 / 0.33 cm | **0.22 / 1.6 cm** |
+| frames with a correction offset > 1 cm (max) | 59 of 125 (10.8 cm) | 359 of 360 (30.3 cm) | 0 | 0 |
+| character on screen, frame-to-frame jerk p95 / max (720p) | 2.9 / 5.0 px | 7.9 / 9.8 px | 0.11 / 0.33 px | 0.06 / 0.15 px |
+| drawn speed (median, true 5.5 m/s) | 5.2–5.5 | 4.3–4.7 | 5.5 | 5.5 |
+| frame time p50 / p95 / max | 20.8 / 25.0 / 25.1 | 20.8 / 25.0 / 25.1 | 20.8 / 25.0 / 25.1 | 20.8 / 25.0 / 25.2 |
+
+Fixed (`PERF.smoothMotion`, on): the correction is measured at the current server time against where the view's own
+state has it then (its move, else its standing point); the key walk's timer only sends (`KeyMover.tick`), planning
+stays on frames; the camera target sits on the *drawn* character on the ground plane (no dt-scaled lerp: its lag
+changed with every frame time, ≈ v × Δdt = 2 cm between a 21 and a 25 ms frame), only a jump of the focus (the switch
+to the steered mob) glides out, frame-rate independent; the height still eases (1 − e^(−10·dt)).
+`PERF.frameClock` (on): the world frame reads the frame's own begin time (`document.timeline.currentTime`, equal to the
+rAF time in every frame measured) for the views and dt; at Low the world's frame callback ran 0.4–0.6 ms (sd 0.1–0.3)
+after it, so it made no measurable difference there; it removes the dependence on how much work runs first at Ultra.
+Tests: `apps/game/test/movement.test.ts` (corrections). Not changed: the server clock's offset step at a pong (≤ 1 step
+per arm, sub-cm here).
+
 ## Plan (next)
 
 0. **Prewarm cost** (the 33–50 ms band): compile at most one new effect per frame (an effect compile is the unit, not a

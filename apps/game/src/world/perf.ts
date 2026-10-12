@@ -59,6 +59,20 @@ export const PERF = {
   trimCpuCopies: true,
   /** Bounding refreshes keep no per-vertex Vector3 copy on the mesh (three/positions-trim.ts, round 7). */
   trimPositions: true,
+  /**
+   * Smooth walking (docs/PERF_OVERALL.md, round 8): a view's correction is measured against where its own state has it
+   * now (world/entities.ts; it read the stale position of the last frame, so the own `move` echo during a key walk
+   * threw the drawn character ahead by the prediction's lead, and a move that began after the last frame pulled it
+   * back), the key walk's 100 ms timer only sends (no re-plan between frames), and the camera stays on the drawn
+   * character on the ground plane (screens/world.ts; the dt-scaled lerp's lag changed with every frame time). Off:
+   * the code before.
+   */
+  smoothMotion: true,
+  /**
+   * The world frame's time is the frame's own (vsync-aligned) begin time, `document.timeline.currentTime`, for the
+   * views' server time and dt, instead of `performance.now()` read part-way into the frame (screens/world.ts).
+   */
+  frameClock: true,
 }
 
 export type PerfSwitch = keyof typeof PERF

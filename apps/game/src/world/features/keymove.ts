@@ -47,6 +47,7 @@ import type { EntityView } from '../entities.ts'
 import type { WorldFeature, WorldFeatureContext } from '../features.ts'
 import { intents } from '../intents.ts'
 import { groundMoveVetoed, noteKeyMove } from '../move-feedback.ts'
+import { PERF } from '../perf.ts'
 
 export type MoveKey = 'forward' | 'back' | 'left' | 'right'
 
@@ -549,6 +550,19 @@ export class KeyMover {
     this.flush(now)
   }
 
+  /**
+   * Between frames (the feature's TICK_MS timer): a walk in progress only queues and sends here, so a slow frame does not
+   * hold back a keep-alive. Its prediction is planned on frames, at the frame's time (PERF.smoothMotion: a plan between
+   * frames began a segment after the last frame drawn). A release, a lost focus, death or a settle runs `frame`.
+   */
+  tick(now = this.deps.now()): void {
+    const self = this.deps.self()
+    if (this.mode === 'active' && this.seg && self && !self.dead && this.deps.allowed() && this.direction()) {
+      this.wantSend(now)
+      this.flush(now)
+    } else this.frame(now)
+  }
+
   // ---- internals ------------------------------------------------------------------------------------------------
 
   private rttMs(): number {
@@ -843,7 +857,9 @@ export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
   // The sends also run on a timer while a walk is on: a slow frame (streaming, a GPU stall) does not hold back the
   // keep-alives, so the server's walk does not run out under the others' eyes.
   const timer = setInterval(() => {
-    if (mover.state !== 'idle') mover.frame(ctx.serverNow())
+    if (mover.state === 'idle') return
+    if (PERF.smoothMotion) mover.tick(ctx.serverNow())
+    else mover.frame(ctx.serverNow())
   }, TICK_MS)
   offs.push(() => clearInterval(timer))
 

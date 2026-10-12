@@ -20,6 +20,7 @@ import { DropVisual } from './drops.ts'
 import type { IdleKind } from './fx/types.ts'
 import { LEVEL_BANDS, levelBand } from './level-band.ts'
 import { setLabelAnchor } from './nameplates.ts'
+import { PERF } from './perf.ts'
 import { loadRide, type RideMob } from './ride-mob.ts'
 
 /** The shared shape of the loading stand-in, per scene (EntityView.makeLoadingPlaceholder). */
@@ -368,12 +369,18 @@ export class EntityView {
 
   setMove(move: MoveState): void {
     // a redirect starts where the server had the entity; the gap to where we drew it is blended out (no snap)
-    if (this.lastNow > 0) this.correct(sampleMove(move, this.lastNow).pos)
+    if (PERF.smoothMotion) {
+      if (this.lastNow > 0) {
+        const t = this.correctionTime()
+        this.correctAt(t, sampleMove(move, t).pos)
+      }
+    } else if (this.lastNow > 0) this.correct(sampleMove(move, this.lastNow).pos)
     this.move = move
   }
 
   stop(pos: Vec3, yaw: number): void {
-    this.correct(pos)
+    if (PERF.smoothMotion) this.correctAt(this.correctionTime(), pos)
+    else this.correct(pos)
     this.move = undefined
     this.pos.set(pos[0], pos[1], pos[2])
     this.targetYaw = yaw
@@ -382,6 +389,23 @@ export class EntityView {
   /** docs/NETWORK_AUDIT.md C1: the gap to a server correction glides out instead of snapping. */
   private correct(to: Vec3): void {
     this.correction.set(this.pos.x, this.pos.z, to)
+  }
+
+  /** A correction is measured now on the server clock (never before the last frame drawn). */
+  private correctionTime(): number {
+    return Math.max(this.lastNow, this.ctx.serverNow())
+  }
+
+  /**
+   * The gap between where the view's current state has it at `t` (its move, else where it stands) and `to`, both at
+   * the same time. `pos` is only the last frame's: a second setMove in the same frame (the key walk restoring its
+   * prediction over the own echo) or a move that begins after the last frame must not count the walk in between.
+   */
+  private correctAt(t: number, to: Vec3): void {
+    if (this.move) {
+      const p = sampleMove(this.move, t).pos
+      this.correction.set(p[0], p[2], to)
+    } else this.correction.set(this.pos.x, this.pos.z, to)
   }
 
   /** Warp (teleport, summon, respawn): snap to `pos` and `yaw`, dropping any move in progress. */
