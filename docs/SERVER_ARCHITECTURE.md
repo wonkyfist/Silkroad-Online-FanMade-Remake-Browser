@@ -1,6 +1,6 @@
 # Server architecture: the multi-core target (2026-10-12)
 
-Status: design + measurements; **P0 built (2026-10-12, §4.1)**, P1–P4 not yet. Scope: `apps/server` on master and the private branch's
+Status: design + measurements; **P0 and P1 built (2026-10-12, §4.1, §4.2)**, P2–P4 not yet. Scope: `apps/server` on master and the private branch's
 `flight/`, `drowned-court/`, `costume.ts`, `walk.ts`. The user's rule: "having the right architecture from the start
 regardless if you use it or not is the ideal way". Target: **2,000+ concurrent players on a 4–8 core VPS** (and more
 headroom on the live 4-core N100), with **no client change**.
@@ -25,6 +25,11 @@ headroom on the live 4-core N100), with **no client change**.
   P1 gateway, which takes the single biggest slice of CPU off the simulation without touching gameplay code.
 - **P0 is done (2026-10-12, §4.1):** spread 500 tick p95 24.6 → 8.3 ms, town 500 43.0 → 16.6 ms, server CPU −55 % /
   −35 %, the same messages (a lockstep test proves identical decisions and streams); every change has an off switch.
+- **P1 is done (2026-10-12, §4.2):** the client sockets live in gateway processes (`GATEWAYS`, default 1) and the
+  interest pass's per-viewer work runs on AoI worker threads (`AOI_JOBS`, default 2). Town 500 tick p95 16.6 → 7.5 ms
+  and the tick thread's CPU 24 → 5 % (the socket writes moved to the gateway, 17 % of a core); spread 1,000 p95
+  14.0 → 9.3 ms. The same streams with the switches on and off (a scripted-client test for the gateway, the lockstep
+  test for the workers); a gateway crash comes back through the reconnect grace.
 
 ## 1. Measurements
 
@@ -373,8 +378,8 @@ switch: `GATEWAYS=0` (in-process connections, today's path), `AOI_JOBS=0`, `DB_W
 | Phase | Content | Effort | Main risks | Netload gate |
 |---|---|---|---|---|
 | **P0** measure + O(N²) — **done 2026-10-12** (§4.1) | Per-phase tick timers in `NetStats`/admin dashboard; one player grid per tick reused by `playersNear`, the wake check and `sayLocal`; `watchers` index (inverse of `known`) for `broadcastAbout*`; encode once per message object per turn; P0 memory split (nav/content/modules) | 2–3 days | Low: behaviour must stay identical (same recipients, same order) — existing tests + a recipient-equivalence test | spread 500 p95 ≤ 30 ms (from 103), town 500 p95 ≤ 40 ms, same msg mix |
-| **P1a** gateway processes | `bus/` (Transport, IpcTransport), `gateway/` (lifecycle, auth, validate, budgets, out-batches, fan-out), upgrade-socket passing, director routing table, `/netstats` merge | 6–8 days | Handle passing edge cases (`head` bytes, Windows), duplicate-login across gateways, ack FIFO (answered budgets stay in the zone) | town 500: core CPU −30 % or more, RTT p95 ≤ 40 ms; 1,000 spread + 500 town on the dev PC within budget |
-| **P1b** AoI job workers | SAB snapshot, job pool, apply diffs; incremental pass | 3–4 days | Visibility rules (staff, veil, invisible, Play the Boss anchor, must-see) must match exactly: run old and new pass side by side in tests and diff | town 500 tick p95 ≤ 15 ms; town 1,000 within budget |
+| **P1a** gateway processes — **done 2026-10-12** (§4.2) | `bus/` (Transport, IpcTransport), `gateway/` (lifecycle, auth, validate, budgets, out-batches, fan-out), upgrade-socket passing, director routing table, `/netstats` merge | 6–8 days | Handle passing edge cases (`head` bytes, Windows), duplicate-login across gateways, ack FIFO (answered budgets stay in the zone) | town 500: core CPU −30 % or more, RTT p95 ≤ 40 ms; 1,000 spread + 500 town on the dev PC within budget |
+| **P1b** AoI job workers — **done 2026-10-12** (§4.2) | SAB snapshot, job pool, apply diffs; incremental pass | 3–4 days | Visibility rules (staff, veil, invisible, Play the Boss anchor, must-see) must match exactly: run old and new pass side by side in tests and diff | town 500 tick p95 ≤ 15 ms; town 1,000 within budget |
 | **P2** DB writer + services | Writer thread, ops/journal/group commit, cached inventories, `transfer` + escrow + commit-then-ack, barriers; services behind bus APIs with zone proxies; global scans → `notifyAll`/grid/directory | 10–15 days | **Economy** (dupes/loss): abuse suites + a new invariant test (total gold + items constant under random trades with crash injection); 46 files on the store | `econ` scenario 0 invariant violations, incl. `kill -9` mid-trade; latency of answered requests p95 ≤ 20 ms |
 | **P3** zone sharding | Cells, `ZoneWorld`, id blocks, ghosts, watch/unwatch, `hit`/`take`/`grantExp`, fenced handoff, module `export/import`, layout of §3.4, zone crash restart | 20–30 days | Cross-border combat and quests edge cases, ordering, memory per worker (F6), private-branch merge (flight/court) | `border` scenario (bots walk across borders, fight on them): 0 desyncs (client-side segment check), 0 errors; 2,000 spread + 500 town on 8 cores, every zone p95 ≤ 50 ms; `chaos`: kill a zone → all its bots back ≤ 5 s, invariants hold |
 | **P4** rebalance + multi-machine | Cell migration with hysteresis, pinning; TcpTransport, remote gateways, node registry, clock offset per node; DB stays on the core host | 8–12 days | Migration storms; clock skew across hosts | Hot-spot scenario (bots converge on one field): migration within 1 min, p95 back under 50 %; remote gateway on a 2nd box |
@@ -462,12 +467,119 @@ it is not inside the monster loop (today: input handlers, tickPlayer, tick hooks
 live player from inside it must go through `world.warp`. After the merge run `p0-equivalence.test.ts` (it builds the
 private Gameplay, flight and Court included) and the flight and Court suites.
 
+### 4.2 P1 as built (2026-10-12)
+
+Two switches (env; a count, `off` = 0; `GET /netstats` `switches` shows which ran). Off runs the single-process path
+of P0, unchanged. Tests and embedded servers default to off; `SRO_TEST_GATEWAYS=1 SRO_TEST_AOI_JOBS=2` runs any suite
+with them on (the whole server suite passes both ways: 150 files, 1,691 tests).
+
+| Switch | What | Code |
+|---|---|---|
+| `GATEWAYS` (default 1) | **P1a.** The core's HTTP server keeps static/REST/admin and, on a `/ws` upgrade, the origin check and the per-IP cap, then hands the raw socket (`subprocess.send(msg, socket)`, with the request headers and `head`) to the least loaded gateway process, which completes the handshake. The gateway runs the heartbeat, the flood ceiling, decode + validate and the silent budgets (`FrameGate`, the same code the in-process `Connection` runs) and forwards each frame's **verdict** in frame order; the core's `Connection` answers verdicts exactly as before (hello/auth, strikes, the answered budgets, lobby, every request). Outbound: one OUT frame per gateway and event-loop turn, records `{payload, n recipients}` (encode-once's Buffer merges consecutive sends) and closes in the same ordered stream; the gateway corks each socket for the batch, enforces `slow` 4011 at 1 MiB unsent and counts its own time. Transport: the child's IPC channel for the socket hand-off, two one-way pipes (fd 4 core → gateway, fd 5 back: a Windows pipe's pending read blocks writes on the same handle) with length-prefixed frames | `gateway/gate.ts` (FrameGate, verdicts), `gateway/protocol.ts` (frames, OutBatch), `gateway/hub.ts` (core side, `RemoteSocket`), `gateway/main.ts` (the process), `connection.ts` (`ConnSocket`: `WsConnSocket` in-process, `RemoteSocket` behind a gateway) |
+| `AOI_JOBS` (default 2) | **P1b.** The interest pass (with `AOI_FAST` on, ≥ 48 players) writes a snapshot into SharedArrayBuffers — entities in `allEntities` order with positions, kind, hidden/veil flags, owner/pilot; the pass's grid; per viewer its anchor, staff flag, crowd state, known list (ids and entity indexes), foes, attack target and the must-see keys (party, guild) as small integers — and `aoi/kernel.ts` (interestPassFast's crowd pick, spawn and despawn decisions over typed arrays: the same tests, arithmetic and order; must-see as one stamped mark per viewer) runs on slices of the viewers: the tick thread takes the first, each worker one more; the tick thread waits (Atomics, ≤ 50 ms) and applies the decisions viewer by viewer in `world.players` order, so the spawns/despawns go out exactly as the in-thread pass sends them, in the same tick. A late, busy or dead worker costs only speed: its slice is computed on the tick thread and a dead worker is restarted. The workers load the kernel with Node's own type stripping (no loader) | `aoi/kernel.ts`, `aoi/pool.ts`, `aoi/worker.ts`, `World.interestPassJobs` |
+
+**Same behaviour, tested.** `p1-gateway.test.ts`: the same scripted clients (a stranger refused, a hello timeout,
+lobby, the charList budget, bad frames — not JSON, binary, unknown type, a stray key —, two players entering, seeing
+each other, chatting, a refused gm frame, a 150-frame flood struck out with 4008, leaving) give **identical message
+streams and close codes** with `GATEWAYS=0` and `1`; a killed gateway is restarted, its player is held and resumes
+(same position); a shutdown reaches the clients (notice, then 4009); version and token refusals keep their codes;
+the codec round-trips (records, order, frames split anywhere). `p0-equivalence.test.ts` gained the P1b lockstep:
+worker threads against the tick thread over 300 ticks of fights, deaths, parties, staff, a veiled boss viewed from by
+its pilot, warps, logins/logouts, invisibility, foes and player-vs-player targets — identical known sets, crowds
+(insertion order included), monsters and every message stream; and the same with a worker killed mid-run. Removing any
+must-see rule (target, targeted by, foes, keys) or shifting the crowd hysteresis in the kernel fails it.
+
+**Measurements** (§4.1's method: 20 s warm-up, 60 s measured, tick 10 Hz; master `b8d5aac`, back to back under
+`C:\dev\BENCH.lock` on 2026-10-12; "off" = `GATEWAYS=0 AOI_JOBS=0`, "on" = the defaults `GATEWAYS=1 AOI_JOBS=2`; P0
+switches on in both; CPU in % of one core; no disconnects, no bot errors, the same message mix in every pair):
+
+| Run | Tick p50 / p95 / p99 / max (ms) | Tick thread CPU | Core process CPU (all its threads) | Gateway CPU | All processes | RTT p50 / p95 / max (ms) | Tick-thread busy / 100 ms |
+|---|---|---|---|---|---|---|---|
+| spread 500, off | 6.2 / 7.9 / 8.8 / 9.8 | 9.9 % | 10.5 % | – | 10.5 % | 0.3 / 7.1 / 13 | 10.4 ms |
+| **spread 500, on** | **4.5 / 6.3 / 7.3 / 10.4** | **5.2 %** | 6.7 % | 6.2 % | 12.9 % | 0.5 / 7.1 / 15 | **5.0 ms** |
+| town 500, off | 12.9 / 16.6 / 18.5 / 20.5 | 24.1 % | 24.4 % | – | 24.4 % | 0.9 / 17.1 / 30 | 25.5 ms |
+| **town 500, on** | **5.9 / 7.5 / 8.3 / 8.9** | **5.4 %** | 7.3 % | 16.9 % | 24.2 % | 1.0 / 9.5 / 18 | **5.3 ms** |
+| spread 1,000, off | 11.3 / 14.0 / 17.1 / 19.2 | 21.3 % | 22.1 % | – | 22.1 % | 0.7 / 13.2 / 27 | 22.0 ms |
+| **spread 1,000, on** | **7.1 / 9.3 / 10.6 / 12.2** | **7.3 %** | 9.3 % | 14.4 % | 23.7 % | 0.8 / 11.6 / 32 | **7.2 ms** |
+| town 1,000, off | 36.7 / 43.8 / 46.3 / 48.2 | 55.9 % | 57.0 % | – | 57.0 % | 8.5 / 45.0 / 68 | 59.3 ms |
+| **town 1,000, on** | **11.4 / 15.8 / 16.9 / 17.3** | **9.5 %** | 14.7 % | 40.6 % | 55.3 % | 4.9 / 20.8 / 34 | **10.4 ms** |
+| town 500, `GATEWAYS=2` | 6.0 / 7.6 / 8.3 / 8.8 | 5.3 % | 7.2 % | 9.5 + 9.3 % | 26.0 % | 0.6 / 8.4 / 14 | 5.4 ms |
+
+Per phase on the tick thread (ms per 100 ms interval, mean / p95), town 500 off → on: `flush` 15.6 / 25.5 → 0.16 / 0.22
+(the OUT batches; the writes are the gateway's 152 ms/s), `interest` + `crowd` 6.8 / 14.7 → 2.6 / 5.6 (per pass:
+snapshot 2.6 ms, own slice 1.4, wait 0.4, apply 0.8; each worker's slice 1.5 ms), `inbound` 1.19 → 0.81 (the verdicts;
+decode and validate are the gateway's). Town 1,000: `flush` 34.5 → 0.2, `interest` + `crowd` 19.4 → 5.7 (per pass:
+snapshot 4.4, own 3.9, wait 1.6, apply 1.6).
+
+- **Gates:** town 500 tick p95 7.5 ms (P1b gate ≤ 15) and the tick thread −78 % / the core process −70 % (P1a gate
+  −30 %), RTT p95 9.5 ms (≤ 40); spread 1,000 p95 9.3 ms and town 1,000 p95 15.8 ms (gate: within budget).
+- **The work moved, it did not vanish:** the CPU of all processes together is the same in a crowd (24 %) and a few
+  points higher spread out (the extra hop costs about what it saves when traffic is low). That is the point: the
+  simulation thread keeps ~5–10 % of a core at 500–1,000 players, so P3 starts from a light zone thread.
+- The gateway is the heaviest helper (town 1,000: 41 % of a core here, ~1 core on the N100); a second gateway only
+  splits it (town 500: 2 × 9.5 %, no tick change): add one when a gateway passes ~60 % of a core (`/netstats`
+  `gateways.list[].cpuUserMs/cpuSystemMs`, the netload report's `gateways[].cpuPct`).
+- The RTT (bot pings, answered by the core, two pipe hops) fell because the core's event loop is freer (loop delay
+  p99 town 500 32 → 23 ms, town 1,000 61 → 30 ms).
+- Memory: a gateway process ~105–145 MB RSS; the AoI workers add ~55 MB to the core (idle RSS 660 → 717 MB).
+- netload's report adds `server.mainThreadPct`, `server.totalCpuPct`, `gateways[]` (CPU, write/read ms per s, frames,
+  loop p99, RSS, slow closes) and `aoiJobs` (passes, fallbacks, snapshot/own/wait/apply ms, worker CPU and slice ms).
+
+**Deviations from §3.3** (deliberate, for P1): hello/auth and the lobby stay in the core (rare and cheap; the
+one-socket-per-account map stays where it was, so duplicate logins across gateways need nothing new); the gateway link
+is a purpose-built pipe protocol, not yet the generic `bus/` Transport (P2 introduces `PortTransport` for its threads
+and can wrap this link as the `IpcTransport`); with one core process the "director routing table" is the hub's
+connection map. The AoI pass is not incremental yet (each pass is a full snapshot; at town 1,000 the snapshot is 4.4 ms
+of the tick thread's 10 ms).
+
+**Failure handling as built.** Gateway crash: the hub sees the child's `exit`, ends each of its connections as a
+dropped socket (`socket error gateway exit`: `dropHoldsBody` → held for `RESUME_GRACE_S`, 15 s), restarts the gateway
+with back-off (250 ms doubling to 5 s; reset after a minute up); the clients reconnect (the OS closed their sockets with
+the process) and take their bodies back through the resume path — the world never lived in the gateway. Core crash:
+the gateways see the IPC `disconnect` and exit. Gateways ignore SIGINT/SIGTERM (a Ctrl+C or a group signal): the core
+runs the shutdown — saves, notices and close frames through the gateways, then `SHUTDOWN` (they flush, close every
+socket and exit; killed after 3 s). If no gateway starts within 20 s, the core logs it and keeps the sockets itself.
+AoI worker crash: its slices are computed on the tick thread until it is back (1 s).
+
+**On the VPS (systemd, Ubuntu, 4 vCores).** Nothing changes in the unit's shape: the gateways are `fork`ed children
+of the server process, in its cgroup. Recommended `~/silkroad/silkroad.env` (or `silkroad.local.env`):
+
+```
+GATEWAYS=1        # 2 only when one gateway passes ~60 % of a core (crowds of ~800+ on 4 small cores)
+AOI_JOBS=2        # the workers only run during interest passes (5/s, a few ms each); 1 is enough under ~500 players
+```
+
+That is one core for the tick thread, one for the gateway, and two lightly used worker threads plus SQLite/GC on the
+rest. Keep `KillMode=mixed` (deploy/remote/silkroad.service already has it): SIGTERM reaches the server process only,
+which saves and then stops its gateways; `TimeoutStopSec=20` covers that (the gateways need < 1 s). Add
+`LimitNOFILE=65536` to the `[Service]` section before running more than ~1,000 players: each player is one open socket
+in a gateway, and a user unit's default soft limit is 1,024 descriptors. Rollback without a deploy: `GATEWAYS=0
+AOI_JOBS=0` and `systemctl --user restart silkroad`. The journal shows `gateways: 1 process(es) own the client sockets`
+and `gateway 0: ready (pid …)` at start, and `gateway N: exited …; restarting` on a crash.
+
+**Private build** (the next merge into `C:\dev\jangan-private-wt`). A trial `git merge-file` of world.ts, game.ts,
+config.ts and netstats.ts against the private versions merges cleanly; **connection.ts has one conflict**: the private
+branch added a two-line comment inside the old `onFrame` (the flood ceiling covers `flyInput`/`swimInput`), which is
+now `FrameGate.check` in `gateway/gate.ts` — take master's side (optionally move the comment to `MSG_RATE` in
+gate.ts). Everything the private modules use is kept: `Connection.handle` (the `flyInput`/`swimInput` cases and their
+`this.budget(msg.t, CLIENT_RATE_LIMITS[msg.t])`, `court.steer` in `moveTo`, `flight.land`/`court.land` in
+`leaveWorld`), `Player.send`, `broadcastAbout`, `known`, `positionAt`, `world.players`. With gateways the 20/s
+`flyInput`/`swimInput` are decoded and flood-checked in the gateway (they are not in `MESSAGE_RATE_LIMITS`, so they
+reach the core as verdicts and keep their answered budgets there); `flyAck`/`fly`/`swim` go out through the OUT
+batches like every message. The private branch changes no visibility rule (`canSee`, `inRange`, the crowd): the AoI
+kernel needs nothing; a future private visibility rule (e.g. Court-only entities) must be added to the kernel's flags
+too, and the lockstep test will catch a mismatch. After the merge run `p0-equivalence.test.ts`, `p1-gateway.test.ts`
+and the flight and Court suites, also with `SRO_TEST_GATEWAYS=1 SRO_TEST_AOI_JOBS=2`.
+
 ## 5. Open questions and risks
 
 - **Memory per zone worker** (F6): answered by P0 (§4.1): content tables are a few MB and the world's own heap ~50 MB;
   the navmesh's ~100 MB of typed arrays is the one thing to share (SAB). The rest of the RSS is the runtime.
 - **One cell, one core:** a single plaza crowd beyond ~1,500 is bounded by one zone thread even with AoI jobs; the
-  crowd cap and encode-once are the levers there (and binary encoding R2 in the gateway).
+  crowd cap and encode-once are the levers there (and binary encoding R2 in the gateway). P1 measured town 1,000 at
+  10 ms of the tick thread per 100 ms (§4.2), 4.4 ms of it the AoI snapshot: an incremental pass is the next lever.
+- **Gateway CPU in a crowd** (§4.2): 41 % of a core here at town 1,000, about a whole N100 core; a second gateway
+  splits it. Binary encoding (R2) or larger OUT records would cut the per-socket framing.
 - **Quests and events spanning cells** (kill counts near a border, siege waves) are covered by "the owner of the
   affected entity decides" plus pinning; each module's border cases need a test in P3.
 - **Spread regression (§1.1)**: did not reproduce in P0's back-to-back runs (§4.1: the same build with the P0
@@ -475,8 +587,9 @@ private Gameplay, flight and Court included) and the flight and Court suites.
 
 ## 6. What to start with
 
-P0 is done (§4.1): the per-phase timers measure every later step the same way, and the O(N²) scans are gone. Next is
-P1a (gateway processes): the largest remaining slice on the simulation thread is now the socket work (`flush` and
-`inbound` in §4.1's split, the biggest phase of a crowded town), which leaves it with no gameplay change; P0's
-encode-once payloads and watcher sets are already the out-batch's "one payload, n recipients" record. Then P1b (AoI
-job workers) for the crowded interest pass, the only O(N²) work left (500 × 500 pairs per pass in one town).
+P0 is done (§4.1): the per-phase timers measure every later step the same way, and the O(N²) scans are gone. P1 is
+done (§4.2): the socket work is in gateway processes and the crowded interest pass on worker threads; the simulation
+thread keeps ~5 ms per 100 ms tick at town 500 and ~10 ms at town 1,000. Next is **P2** (DB writer thread + global
+services): it is ready to start — Connection already talks to a transport (`ConnSocket`), the gateway link is the
+first process boundary (wrap it as the `IpcTransport` when `bus/` and its `PortTransport` arrive with the writer
+thread), and nothing in P1 touched persistence, so P2's economy invariants start from today's `inventoryTx`/`pairTx`.
