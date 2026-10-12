@@ -61,6 +61,14 @@ interface Flash {
   ms: number
 }
 
+/** A pool's light: its reach, peak, and whether it may join the cluster (a clustered light lights the ground too). */
+export interface HitLightOptions {
+  range?: number
+  peak?: number
+  /** False: stays a scene light, so its layer mask keeps it off the ground and world objects. */
+  cluster?: boolean
+}
+
 export class HitLights {
   private readonly pool: Flash[] = []
   private enabled = true
@@ -68,11 +76,16 @@ export class HitLights {
   private nextJoin = -Infinity
   private readonly onLight: Observer<Light> | null
 
-  constructor(private readonly scene: Scene, private readonly now: () => number, count = HIT_LIGHTS) {
+  private readonly peak: number
+  private readonly clusterable: boolean
+
+  constructor(private readonly scene: Scene, private readonly now: () => number, count = HIT_LIGHTS, opts: HitLightOptions = {}) {
+    this.peak = opts.peak ?? PEAK
+    this.clusterable = opts.cluster ?? true
     for (let i = 0; i < count; i++) {
       const light = new PointLight(`fx:hitlight${i}`, Vector3.Zero(), scene)
       light.intensity = 0
-      light.range = HIT_LIGHT_RANGE
+      light.range = opts.range ?? HIT_LIGHT_RANGE
       light.specular = Color3.Black()
       // Characters only: never world objects, nor a slot on a 4-light terrain, water or ice material (W9F L3).
       light.excludeWithLayerMask |= WORLD_OBJECT_LAYER | WORLD_GROUND_LAYER
@@ -110,7 +123,7 @@ export class HitLights {
     f.ms = Math.max(50, ms)
     f.light.position.set(at[0], at[1], at[2])
     f.light.diffuse.set(color[0], color[1], color[2])
-    f.light.intensity = PEAK
+    f.light.intensity = this.peak
   }
 
   update(): void {
@@ -118,7 +131,7 @@ export class HitLights {
     const t = this.now()
     for (const f of this.pool) {
       const k = (t - f.start) / (f.ms || 1)
-      f.light.intensity = k >= 1 || k < 0 || !this.enabled ? 0 : PEAK * (1 - k) * (1 - k)
+      f.light.intensity = k >= 1 || k < 0 || !this.enabled ? 0 : this.peak * (1 - k) * (1 - k)
     }
     this.joinCluster(t)
   }
@@ -129,7 +142,7 @@ export class HitLights {
    */
   joinCluster(t = this.now(), now = false): void {
     const c = cluster
-    if (this.disposed || !c || (!now && t < this.nextJoin) || (c.host && c.host.scene !== this.scene)) return
+    if (this.disposed || !c || !this.clusterable || (!now && t < this.nextJoin) || (c.host && c.host.scene !== this.scene)) return
     this.nextJoin = t + CLUSTER_RETRY_MS
     const lit = new Set<AbstractMesh>()
     try {

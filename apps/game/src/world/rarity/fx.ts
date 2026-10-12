@@ -94,6 +94,12 @@ const WHITE: V3 = [1, 1, 1]
 const FLASH_COLOR: Readonly<Record<RarityTier, V3>> = { star: [0.55, 0.35, 1], moon: [0.6, 0.7, 1], sun: [1, 0.6, 0.2] }
 const SUN_GLOW: V3 = [0.75, 0.38, 0.1]
 const MOON_GLOW: V3 = [0.32, 0.38, 0.55]
+/**
+ * Your own rare weapon's light: a faint warm touch on the body near the blade, never on the floor. It joined the
+ * night lights' cluster on the PBR presets and lit the ground in an orange pool (and washed the body at the flash's
+ * full 2.2 over 6 m); now it stays a scene light (its layer mask keeps the ground and world objects out), dim and short.
+ */
+const GLOW_LIGHT = { range: 1.6, peak: 0.45, cluster: false }
 
 /** A worn rare item's per-frame state. */
 interface Carrier {
@@ -260,7 +266,7 @@ export class RarityFx implements RareItemsListener {
     for (let i = 0; i < BURST_POOL; i++) this.bursts.push({ on: false, kind: 'crit', tier: 'star', wkind: 'sword', dx: 0, dy: 0, dz: 1, reach: 2, x: 0, y: 0, z: 0, gy: 0, t0: 0, seed: 0, follow: null, height: 0 })
     for (let i = 0; i < ARROW_POOL; i++) this.arrows.push({ on: false, tier: 'star', at: () => null, done: () => true, doneAt: 0, samples: new Float32Array(SAMPLES * 4), head: 0, n: 0, seed: 0 })
     this.flashes = new HitLights(scene, () => performance.now(), 2)
-    this.glow = new HitLights(scene, () => performance.now(), 1)
+    this.glow = new HitLights(scene, () => performance.now(), 1, GLOW_LIGHT)
     this.t = this.lastT = performance.now() / 1000
     this.obs = scene.onBeforeRenderObservable.add(() => this.frame())
   }
