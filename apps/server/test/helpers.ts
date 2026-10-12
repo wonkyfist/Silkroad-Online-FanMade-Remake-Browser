@@ -45,6 +45,10 @@ export function testConfig(root: string, logs?: string[]): ServerConfig {
     stormsPerDay: 0,
     weather: 'off',
     log: (m) => logs?.push(m),
+    // docs/SERVER_ARCHITECTURE.md P1: the suites run in-process by default; SRO_TEST_GATEWAYS=1 / SRO_TEST_AOI_JOBS=2 run
+    // them with the client sockets in gateway processes / the interest pass on worker threads
+    ...(process.env.SRO_TEST_GATEWAYS ? { gateways: Number(process.env.SRO_TEST_GATEWAYS) } : {}),
+    ...(process.env.SRO_TEST_AOI_JOBS ? { aoiJobs: Number(process.env.SRO_TEST_AOI_JOBS) } : {}),
   }
 }
 

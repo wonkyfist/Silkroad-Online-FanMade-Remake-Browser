@@ -86,6 +86,14 @@ export interface ServerConfig {
   watchers?: boolean
   encodeOnce?: boolean
   aoiFast?: boolean
+  /**
+   * docs/SERVER_ARCHITECTURE.md §4 P1 switches. GATEWAYS: client sockets live in this many gateway processes (handshake,
+   * heartbeat, decode/validate, silent budgets, the out-batch fan-out and socket writes; gateway/); 0 = in this process
+   * (the path before P1). AOI_JOBS: the interest pass's visibility and crowd picks run on this many worker threads
+   * (aoi/); 0 = on the tick thread. Absent = 0 (tests and embedded servers); loadConfig gives the defaults.
+   */
+  gateways?: number
+  aoiJobs?: number
   /** Nests whose monster is above this level stay empty (MOB_LEVEL_MAX, default LEVEL_CAP + 5; 0 = all). */
   mobLevelMax: number
   /** Spawn nest monsters at all (SPAWN_MOBS, default on). */
@@ -453,6 +461,14 @@ function onOff(env: NodeJS.ProcessEnv, key: string, fallback: boolean): boolean 
   throw new Error(`${key} must be on or off, got ${raw}`)
 }
 
+/** A process/thread count switch: a number 0..max, `off` = 0, `on` = the default. */
+function count(env: NodeJS.ProcessEnv, key: string, fallback: number, max: number): number {
+  const raw = (env[key] ?? '').trim()
+  if (/^(off|false|no)$/i.test(raw)) return 0
+  if (/^(on|true|yes)$/i.test(raw)) return fallback
+  return Math.floor(num(env, key, fallback, 0, max))
+}
+
 function navMode(raw: string | undefined): 'auto' | 'off' {
   if (raw === undefined || raw === '' || /^(auto|1|on|true|yes)$/i.test(raw)) return 'auto'
   if (/^(off|0|false|no|flat)$/i.test(raw)) return 'off'
@@ -477,6 +493,10 @@ export const FIELDS_EXPORT = 'jangan-fields'
 export function defaultWorldExport(world: string, outDir: string): string {
   return world === 'jangan' && existsSync(join(outDir, 'world', FIELDS_EXPORT, 'manifest.json')) ? FIELDS_EXPORT : world
 }
+
+/** P1 defaults (docs/SERVER_ARCHITECTURE.md §4.2): one gateway process, two AoI worker threads. */
+export const DEFAULT_GATEWAYS = 1
+export const DEFAULT_AOI_JOBS = 2
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
   const production = env.NODE_ENV === 'production'
@@ -517,6 +537,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     watchers: onOff(env, 'WATCHERS', true),
     encodeOnce: onOff(env, 'ENCODE_ONCE', true),
     aoiFast: onOff(env, 'AOI_FAST', true),
+    gateways: count(env, 'GATEWAYS', DEFAULT_GATEWAYS, 16),
+    aoiJobs: count(env, 'AOI_JOBS', DEFAULT_AOI_JOBS, 16),
     mobLevelMax: Math.floor(num(env, 'MOB_LEVEL_MAX', levelCap + 5, 0, 1000)),
     climb: onOff(env, 'CLIMB', true),
     climbRoles: onOff(env, 'CLIMB_ROLES', true),

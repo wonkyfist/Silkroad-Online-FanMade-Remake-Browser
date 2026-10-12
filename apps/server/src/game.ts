@@ -27,7 +27,8 @@ import { SettingsState } from './admin/settings.ts'
 import { openAdminStore } from './admin/store.ts'
 import { FailureLimiter, HashBusyError, MAX_SESSIONS_PER_ACCOUNT, SESSION_TTL_MS, hashPassword, hashToken, newToken, verifyPassword } from './auth.ts'
 import type { ServerConfig } from './config.ts'
-import { wsConnection, type Connection } from './connection.ts'
+import { Connection, MAX_BUFFERED, wsConnection } from './connection.ts'
+import { GatewayHub } from './gateway/hub.ts'
 import { CharacterModels, regionAt, resolveWorld, withAuthoredPlaces, withTownSpawn, type WorldSetup } from './content.ts'
 import { checkPlaces } from './places.ts'
 import { openStore, type Store } from './db.ts'
@@ -51,7 +52,7 @@ import { PH, type PhaseTimers } from './phases.ts'
 /** Hard WebSocket frame cap: larger frames close the socket (1009). Smaller-but-too-big get bad_request. */
 export const WS_MAX_PAYLOAD = 4096
 const MAX_BODY_BYTES = 4096
-const HEARTBEAT_MS = 30_000
+export const HEARTBEAT_MS = 30_000
 /** Open game sockets per client IP (friends behind one NAT each need one). */
 const MAX_SOCKETS_PER_IP = 16
 
@@ -88,6 +89,8 @@ export interface GameContext {
   requestRestart?: () => void
   /** Self-updates (docs/UPDATES.md): set by main.ts; absent in tests and embedded servers (the Updates page says so). */
   updater?: Updater
+  /** docs/SERVER_ARCHITECTURE.md P1a: the gateway processes owning the client sockets (null: GATEWAYS=0, in this process). */
+  gateways?: GatewayHub | null
 }
 
 export interface GameServer {
@@ -680,6 +683,58 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     }
   }
 
+  // docs/SERVER_ARCHITECTURE.md P1a: the client sockets in GATEWAYS gateway processes (0: in this process, below)
+  const conns = new Map<number, Connection>()
+  let hub: GatewayHub | null = null
+  const socketsPerIp = new Map<string, number>()
+  const ipDone = (ip: string): void => {
+    const n = (socketsPerIp.get(ip) ?? 1) - 1
+    if (n <= 0) socketsPerIp.delete(ip)
+    else socketsPerIp.set(ip, n)
+  }
+  if ((config.gateways ?? 0) > 0) {
+    hub = new GatewayHub(
+      config.gateways!,
+      { maxPayload: WS_MAX_PAYLOAD, heartbeatMs: HEARTBEAT_MS, maxBuffered: MAX_BUFFERED },
+      {
+        opened(id, sock, ip) {
+          ctx.net.opened++
+          ctx.net.open++
+          conns.set(id, new Connection(sock, ctx, ip))
+        },
+        verdict(id, v) {
+          conns.get(id)?.verdict(v)
+        },
+        closed(id, reason, ip, opened) {
+          ipDone(ip)
+          if (!opened) return
+          ctx.net.open--
+          const c = conns.get(id)
+          conns.delete(id)
+          c?.socketClosed(reason)
+        },
+        log: config.log,
+      },
+      () => world.timers,
+    )
+    try {
+      await hub.start()
+      config.log(`gateways: ${config.gateways} process(es) own the client sockets (GATEWAYS)`)
+    } catch (e) {
+      // never a server without sockets: the in-process path takes them
+      config.log(`gateways: ${(e as Error).message}; client sockets stay in this process`)
+      await hub.close(500)
+      hub = null
+    }
+  }
+  ctx.gateways = hub
+  if (hub) {
+    const h = hub
+    ctx.net.probe = () => ({ sockets: sockets.size, ...h.queue() })
+  }
+  ctx.net.extra = () => (hub ? { gateways: hub.snapshot() } : {})
+  ctx.net.switches = { ...switches, gateways: hub !== null }
+
   const http = createServer((req, res) => {
     void handle(req, res)
   })
@@ -688,7 +743,6 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
 
   const wss = new WebSocketServer({ noServer: true, maxPayload: WS_MAX_PAYLOAD, perMessageDeflate: false })
   const alive = new WeakSet<WebSocket>()
-  const socketsPerIp = new Map<string, number>()
   http.on('upgrade', (req, socket, head) => {
     // After 'upgrade' the socket has no error listener; a reset while we reject it must not crash the process.
     socket.on('error', () => socket.destroy())
@@ -706,13 +760,18 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       socket.end('HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\n\r\n')
       return
     }
+    if (hub) {
+      // P1a: the gateway completes the handshake and owns the socket from here
+      socketsPerIp.set(ip, (socketsPerIp.get(ip) ?? 0) + 1)
+      if (!hub.pass(req, socket, head, ip)) {
+        ipDone(ip)
+        socket.end('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n')
+      }
+      return
+    }
     wss.handleUpgrade(req, socket, head, (ws) => {
       socketsPerIp.set(ip, (socketsPerIp.get(ip) ?? 0) + 1)
-      ws.once('close', () => {
-        const n = (socketsPerIp.get(ip) ?? 1) - 1
-        if (n <= 0) socketsPerIp.delete(ip)
-        else socketsPerIp.set(ip, n)
-      })
+      ws.once('close', () => ipDone(ip))
       alive.add(ws)
       ws.on('pong', () => alive.add(ws))
       ctx.net.opened++
@@ -806,11 +865,19 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         gameplay.walls.flush()
         for (const ws of wss.clients) ws.terminate()
         wss.close()
+        // P1a: the gateways send what is queued (the notices and close frames above), close their sockets and exit
+        if (hub) await hub.close()
+        for (const c of [...conns.values()]) c.socketClosed('server shutdown')
+        conns.clear()
         gcWatch?.disconnect()
         ctx.net.close()
         await new Promise<void>((resolve) => {
           http.close(() => resolve())
           http.closeAllConnections()
+          // P1a: a server that handed sockets to child processes polls them in close() for their sockets (Node's net
+          // "workers"); the gateways are gone already (hub.close above) and that poll may never answer: the listening
+          // socket is closed by now, so do not wait for it
+          if (hub) setImmediate(resolve)
         })
         store.close()
       })()

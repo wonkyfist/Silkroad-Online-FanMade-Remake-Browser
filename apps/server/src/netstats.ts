@@ -58,7 +58,8 @@ export interface NetStatsSnapshot {
   tick: { n: number; p50: number; p95: number; p99: number; max: number; windowMax: number; budgetMs: number }
   connections: { opened: number; open: number }
   disconnects: Record<string, number>
-  process: { rssMb: number; heapMb: number; cpuUserMs: number; cpuSystemMs: number }
+  /** cpu*: the whole core process (every thread); mainThreadCpuMs: the tick thread alone (P1: the AoI workers are the rest). */
+  process: { rssMb: number; heapMb: number; cpuUserMs: number; cpuSystemMs: number; mainThreadCpuMs?: number }
   /** P0: the per-phase split of the tick intervals in the window (absent: TICK_TIMERS=off). */
   phases?: PhaseSnapshot
   rates?: NetRates
@@ -96,6 +97,8 @@ export class NetStats {
   switches: Record<string, boolean> | null = null
   /** Set at startup: the memory split. */
   memory: MemoryStage[] = []
+  /** Set by game.ts: more sections of the snapshot (P1: `gateways`, `aoiJobs`). */
+  extra: (() => Record<string, unknown>) | null = null
 
   constructor(
     readonly tickHz = 20,
@@ -208,13 +211,14 @@ export class NetStats {
       tick: { n: this.tickN, p50: pct(0.5), p95: pct(0.95), p99: pct(0.99), max: Math.round(this.tickMax * 100) / 100, windowMax: k ? Math.round(sorted[k - 1]! * 100) / 100 : 0, budgetMs: 1000 / this.tickHz },
       connections: { opened: this.opened, open: this.open },
       disconnects: Object.fromEntries(this.closes),
-      process: { rssMb: Math.round(mem.rss / 1048576), heapMb: Math.round(mem.heapUsed / 1048576), cpuUserMs: Math.round(cpu.user / 1000), cpuSystemMs: Math.round(cpu.system / 1000) },
+      process: { rssMb: Math.round(mem.rss / 1048576), heapMb: Math.round(mem.heapUsed / 1048576), cpuUserMs: Math.round(cpu.user / 1000), cpuSystemMs: Math.round(cpu.system / 1000), ...threadCpu() },
       ...(this.phases.enabled ? { phases: this.phases.snapshot() } : {}),
       ...(rates ? { rates } : {}),
       ...(this.probe ? { queue: this.probe() } : {}),
       ...(loop ? { loop } : {}),
       ...(this.switches ? { switches: this.switches } : {}),
       ...(this.memory.length ? { memory: this.memory } : {}),
+      ...(this.extra ? this.extra() : {}),
     }
   }
 
@@ -222,6 +226,14 @@ export class NetStats {
   close(): void {
     this.loopDelay?.disable()
   }
+}
+
+/** The calling thread's own CPU (process.threadCpuUsage, Node 23.9+), when there is such an API. */
+function threadCpu(): { mainThreadCpuMs?: number } {
+  const f = (process as { threadCpuUsage?: () => { user: number; system: number } }).threadCpuUsage
+  if (typeof f !== 'function') return {}
+  const t = f.call(process)
+  return { mainThreadCpuMs: Math.round((t.user + t.system) / 1000) }
 }
 
 /** 127.0.0.0/8, ::1 and their IPv4-mapped forms. */
