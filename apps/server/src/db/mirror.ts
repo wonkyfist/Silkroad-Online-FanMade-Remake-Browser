@@ -22,6 +22,8 @@ import type { Entry, Op, WriterAck, WriterBatch, WriterCrash, WriterDiverged, Wr
  */
 
 const WRITER = new URL('./writer.ts', import.meta.url)
+/** After a fatal writer error: the next attempt (a new writer if needed, then a resync), ms. */
+const RETRY_MS = 10_000
 /** Latencies kept for the percentiles (journal → commit, ms). */
 const LAT_RING = 2048
 
@@ -58,6 +60,8 @@ export interface DbWriterStats {
   walMb: number
   memDbMb: number
   restarts: number
+  /** Writer failures it could not repair at once (retried every RETRY_MS). */
+  fatal: number
   resyncs: number
   divergences: number
   /** Commits by another program on the file (they never reach the memory database: use the gm inbox). */
@@ -96,7 +100,8 @@ export class DbMirror {
   private latMax = 0
   private readonly commitMs = new Float64Array(256)
   private commitN = 0
-  private readonly totals = { entries: 0, ops: 0, groups: 0, restarts: 0, resyncs: 0, divergences: 0, external: 0, walBytes: 0, writerCpuMs: 0 }
+  private readonly totals = { entries: 0, ops: 0, groups: 0, restarts: 0, resyncs: 0, divergences: 0, external: 0, walBytes: 0, writerCpuMs: 0, fatal: 0 }
+  private retry: ReturnType<typeof setTimeout> | null = null
   private readonly opts: DbWriterOptions
   /** afterCommit callbacks registered inside a transaction: they wait for its entry. */
   private txWaiters: (() => void)[] = []
@@ -248,7 +253,7 @@ export class DbMirror {
       const now = Date.now()
       this.deaths = this.deaths.filter((t) => now - t < 60_000)
       this.deaths.push(now)
-      if (this.deaths.length >= 3) return this.fatal('db writer died 3 times within a minute')
+      if (this.deaths.length >= 3) return this.fatal('the writer died 3 times within a minute')
       this.totals.restarts++
       this.cpuBase = this.totals.writerCpuMs
       this.spawn(null)
@@ -266,7 +271,18 @@ export class DbMirror {
 
   private fatal(why: string): void {
     this.log(`db writer: FATAL ${why}`)
+    this.totals.fatal++
     this.opts.onFatal?.(why)
+    // the memory database still has everything: try again in a while (a full disk freed, a lock gone)
+    if (this.closing || this.retry) return
+    this.retry = setTimeout(() => {
+      this.retry = null
+      if (this.closing) return
+      this.deaths = []
+      if (!this.worker) this.spawn(null)
+      this.resync()
+    }, RETRY_MS)
+    this.retry.unref()
   }
 
   /** Sends the turn's entries to the writer. */
@@ -389,6 +405,7 @@ export class DbMirror {
   /** Commits everything, stops the writer and closes the memory database. */
   close(timeoutMs = 10_000): void {
     if (this.closing) return
+    if (this.retry) clearTimeout(this.retry)
     const ok = this.flushSync(timeoutMs)
     this.closing = true
     if (!ok) this.log(`db writer: close: ${this.seq - Number(Atomics.load(this.ctl, 0))} entr(ies) not committed`)
@@ -442,6 +459,7 @@ export class DbMirror {
       walMb: Math.round(t.walBytes / 104857.6) / 10,
       memDbMb: Math.round(memBytes / 104857.6) / 10,
       restarts: t.restarts,
+      fatal: t.fatal,
       resyncs: t.resyncs,
       divergences: t.divergences,
       external: t.external,
