@@ -45,6 +45,7 @@ export const CATEGORY: Record<string, { check: Check; text: string }> = {
   'hit-count': { check: 'd', text: 'hits per combat differ from the row (mc)' },
   'aoe-single': { check: 'd', text: 'an area attack hit one target' },
   'no-status': { check: 'd', text: "none of the row's statuses applied (one status per hit: the first that sticks)" },
+  'no-dash': { check: 'd', text: 'a movement skill (tele) did not dash the caster' },
   'no-effect': { check: 'd', text: 'a buff/imbue/debuff applied no effect' },
   'no-expire': { check: 'd', text: 'the effect did not expire at its duration' },
   'inert-buff': { check: 'd', text: 'the buff changes nothing the server implements (param tags listed)' },
@@ -318,7 +319,10 @@ export function serverChecks(out: string, rows: readonly SkillDef[], o: { rng?: 
         const seen = new Set(h.all(inbox, 'effectAdd').map((e) => e.effect.status).filter(Boolean))
         if (kinds.size && ![...kinds].some((k) => seen.has(k))) add('no-status', [...kinds].join(','))
       }
-      if (r.kind === 'buff' || r.kind === 'imbue' || (r.kind === 'debuff' && !r.statuses?.length)) {
+      const dash = (r.params ?? []).some((x) => x.tag === 'tele')
+      // Ghost Walk - Phantom (skills/dash.ts): a dash, not an effect
+      if (dash && !h.all(inbox, 'displace').some((d) => d.id === p.id && d.kind === 'dash')) add('no-dash', '')
+      if (!dash && (r.kind === 'buff' || r.kind === 'imbue' || (r.kind === 'debuff' && !r.statuses?.length))) {
         const add0 = h.all(inbox, 'effectAdd').find((e) => mine(e.effect.skill))
         if (!add0) add('no-effect', '')
         else {
