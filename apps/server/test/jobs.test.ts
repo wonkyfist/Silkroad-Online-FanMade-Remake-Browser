@@ -357,7 +357,7 @@ describe('migration 25: the Bounty Hunters become the Hunter job (§2.3, §9.3)'
         (1, 'hunter', 0, 0, 10, NULL, 1),
         (3, 'hunter', 5, 70, 11, 999999, 0),
         (4, 'hunter', 3, 12, 12, NULL, 1);`)
-    expect(migrate(db)).toBe(29)
+    expect(migrate(db)).toBe(30)
     const rows = db.prepare('SELECT character_id, rank, points, on_duty, revoked_until, job_exp FROM char_jobs ORDER BY character_id').all() as {
       character_id: number
       rank: number

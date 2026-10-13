@@ -216,7 +216,7 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
         shown.set(msg.id, { kind: msg.kind, from: msg.from, to: msg.to, at: msg.at, ms: msg.ms, peakM: msg.peakM ?? 0 })
         const v = ctx.view(msg.id)
         // a pulled body slides on its own (no walking clip): the feature carries it instead of the move
-        if (msg.kind === 'pull' && v) v.move = undefined
+        if ((msg.kind === 'pull' || msg.kind === 'push') && v) v.move = undefined
         if (msg.kind === 'throw' && msg.id === (ctx.controlledId?.() ?? ctx.selfId())) {
           ctx.chat.add('system', t('tornado.chat.thrown'))
           if (audio?.bank.get('synth/tornado_whoosh')) audio.playFile('synth/tornado_whoosh', { bus: 'sfx', kind: 'other', self: true, priority: 3, gain: 0.9 })

@@ -528,6 +528,27 @@ describe('mounted archery', () => {
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CALL_A'))).toBeNull()
   })
+
+  it('mounted archery takes arrows from the worn stack, and is refused without them', () => {
+    const { h, g, rider, summon, mob } = setup()
+    ;(g.config as { skillAmmo?: number }).skillAmmo = 1
+    const { p, inbox, horse } = rider()
+    const bow = h.give(p, 'ITEM_CH_BOW_01_A_DEF')
+    expect(h.req(p, inbox, { t: 'itemEquip', bag: bow })).toMatchObject({ ok: true })
+    summon(p, inbox, horse)
+    const m = mob([FIELD[0] + 4, 0, FIELD[2]])
+    h.advance(250)
+    expect(h.req(p, inbox, { t: 'attack', target: m.id })).toMatchObject({ ok: false, reason: 'no_ammo' })
+    h.give(p, 'ITEM_ETC_AMMO_ARROW_01', 3)
+    const from = inbox.length
+    expect(h.req(p, inbox, { t: 'attack', target: m.id })).toMatchObject({ ok: true })
+    for (let i = 0; i < 30; i++) h.advance(100)
+    const shot = inbox.slice(from).filter((x) => x.t === 'combat' && x.attacker === p.id).length
+    expect(shot).toBeGreaterThan(0)
+    expect(g.mounts.ridden(p)).not.toBeNull()
+    expect(h.countOf(p, 'ITEM_ETC_AMMO_ARROW_01') + (h.store.loadInventory(p.characterId).equip.shield?.count ?? 0)).toBe(3 - shot)
+  })
+
 })
 
 describe('persistence', () => {

@@ -31,7 +31,7 @@ export const PILL = item('ITEM_ETC_CURE_ALL_01', { category: 'pill', maxStack: 5
 export const CHEST_21 = item('ITEM_CH_M_HEAVY_03_BA_A', { category: 'armor', slot: 'chest', reqLevel: 21, reqGender: 'male', price: 22750, sellPrice: 8190 })
 export const CHEST_19 = item('ITEM_CH_M_HEAVY_03_CA_A', { category: 'armor', slot: 'head', reqLevel: 19, reqGender: 'male', price: 12250, sellPrice: 4410 })
 export const NO_SELL = item('ITEM_ETC_NOSELL', { category: 'etc', canSell: false })
-export const ARROWS = item('ITEM_ETC_AMMO_ARROW_01', { category: 'ammo', maxStack: 250, price: 2, sellPrice: 1 })
+export const ARROWS = item('ITEM_ETC_AMMO_ARROW_01', { category: 'ammo', typeId: [3, 3, 4, 1], maxStack: 250, price: 2, sellPrice: 1 })
 
 export const NPC_ITEMS: ItemDef[] = [...ITEMS, RETURN_01, RETURN_03, RETURN_NOW, MP_POTION, HP_GRAIN, PILL, CHEST_21, CHEST_19, NO_SELL, ARROWS]
 

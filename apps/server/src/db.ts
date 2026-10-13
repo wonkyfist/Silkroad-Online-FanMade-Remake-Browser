@@ -676,6 +676,13 @@ const MIGRATIONS: string[] = [
   ALTER TABLE char_mount ADD COLUMN out INTEGER NOT NULL DEFAULT 1 CHECK (out IN (0, 1));
   ALTER TABLE char_mount ADD COLUMN bound INTEGER NOT NULL DEFAULT 0 CHECK (bound IN (0, 1));
   `,
+  // 30: arrows (docs/SKILLS.md §1.4; PRIVATE branch, renumber at merge): 1 once a character has had its one-time stack
+  // of starter arrows (Gameplay.grantArrowsOnce at login). New rows start at 1 (a new bow character's kit holds them);
+  // every character of today starts at 0, so a bow character made before arrows counted gets one stack.
+  `
+  ALTER TABLE characters ADD COLUMN arrows_granted INTEGER NOT NULL DEFAULT 1;
+  UPDATE characters SET arrows_granted = 0;
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */
@@ -785,6 +792,9 @@ export interface CharacterRow {
   // migration 24
   /** 1 once the look was chosen in the creator (or its one-time offer skipped); 0 = offer the creator at the next login. */
   look_custom: 0 | 1
+  // migration 30
+  /** 1 once the one-time starter arrows were given (or not needed; Gameplay.grantArrowsOnce). */
+  arrows_granted: 0 | 1
 }
 
 /** Character creation choices (docs/CHARACTER_SCALE.md; protocol charCreate). */
@@ -939,6 +949,9 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean; writer?:
     ),
     setGold: db.prepare<[number, number]>('UPDATE characters SET gold = ? WHERE id = ?'),
     setStarterKit: db.prepare<[number]>('UPDATE characters SET starter_kit = 1 WHERE id = ?'),
+    // migration 30
+    arrowsGranted: db.prepare<[number], { arrows_granted: number }>('SELECT arrows_granted FROM characters WHERE id = ?'),
+    setArrowsGranted:db.prepare<[number]>('UPDATE characters SET arrows_granted = 1 WHERE id = ?'),
     // migration 8 (docs/WAVE_PLAN2.md D34)
     hwanPoints: db.prepare<[number], { hwan_points: number }>('SELECT hwan_points FROM characters WHERE id = ?'),
     setHwanPoints: db.prepare<[number, number]>('UPDATE characters SET hwan_points = ? WHERE id = ?'),
@@ -1004,11 +1017,11 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean; writer?:
   })
 
   /** Equips the starter kit once (no-op when already given or `items` is empty). Returns whether it was given. */
-  const starterKitTx = db.transaction((characterId: number, items: { code: string; slot: EquipSlot }[]): boolean => {
+  const starterKitTx = db.transaction((characterId: number, items: { code: string; slot: EquipSlot; count?: number }[]): boolean => {
     const row = q.characterById.get(characterId)
     if (!row || row.starter_kit || items.length === 0) return false
     const taken = new Set(q.items.all(characterId).map((r) => r.equip_slot))
-    for (const it of items) if (!taken.has(it.slot)) q.insertItem.run(characterId, null, it.slot, it.code, 1, 0, null)
+    for (const it of items) if (!taken.has(it.slot)) q.insertItem.run(characterId, null, it.slot, it.code, it.count ?? 1, 0, null)
     q.setStarterKit.run(characterId)
     return true
   })
@@ -1118,7 +1131,10 @@ export function openStore(dataDir: string, opts: { mustExist?: boolean; writer?:
     /** Writes a draft's touched slots and gold (no transaction of its own: call it inside one, e.g. storage-db.ts storageTx). */
     writeDraft,
     inventoryTx,
-    grantStarterKit: (characterId: number, items: { code: string; slot: EquipSlot }[]) => starterKitTx(characterId, items),
+    grantStarterKit: (characterId: number, items: { code: string; slot: EquipSlot; count?: number }[]) => starterKitTx(characterId, items),
+    /** Whether the character had its one-time starter arrows (migration 30; true for unknown ids, so nothing is given). */
+    arrowsGranted: (characterId: number): boolean => (q.arrowsGranted.get(characterId)?.arrows_granted ?? 1) === 1,
+    setArrowsGranted: (characterId: number) => q.setArrowsGranted.run(characterId).changes > 0,
     /**
      * Berserk points of a character (0..5; 0 when unknown). The source of the Berserk module's per-character cache
      * (docs/WAVE_PLAN2.md D34): `stats` goes out before the modules' `enter`, so the module reads through this.

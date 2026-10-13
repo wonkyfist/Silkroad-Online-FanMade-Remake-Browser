@@ -70,8 +70,8 @@ describe('validation (docs/SKILLS.md §10.1 order)', () => {
     h.gameplay.gmItem(archer, h.data.item('ITEM_ETC_AMMO_ARROW_01')!, 'ITEM_ETC_AMMO_ARROW_01', 5)
     h.req(archer, { t: 'useSkill', skill: 'SKILL_CH_BOW_CRITICAL_A_01', target: m.id })
     expect(h.result(ain, 'useSkill'), JSON.stringify(h.result(ain, 'useSkill'))).toMatchObject({ ok: true })
-    const bag = h.store.loadInventory(archer.characterId).bag.find((i) => i?.code === 'ITEM_ETC_AMMO_ARROW_01')
-    expect(bag?.count).toBe(4)
+    // the bag stack was loaded into the shield slot (retail: arrows are worn) and the cast took one
+    expect(h.store.loadInventory(archer.characterId).equip.shield).toMatchObject({ code: 'ITEM_ETC_AMMO_ARROW_01', count: 4 })
   })
 
   it('a dead player gets dead (the Gameplay dead check); unlearned rows of a learned line run the learned level', () => {
@@ -398,7 +398,7 @@ describe('basic attacks', () => {
     h.runTo(h.now + 2000)
     expect(h.all(inbox, 'combat').filter((x) => x.attacker === p.id)).toHaveLength(1)
     expect(p.action).toBeNull()
-    expect(h.all(inbox, 'chat').some((c) => /no arrows/.test(c.text))).toBe(true)
+    expect(h.all(inbox, 'chat').some((c) => /No arrows equipped/.test(c.text))).toBe(true)
   })
 })
 

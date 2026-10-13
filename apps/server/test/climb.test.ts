@@ -285,7 +285,7 @@ describe('migration 21 on a copy of a schema-20 database', () => {
 
     const store = openStore(dir)
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(29)
+    expect(store.schemaVersion).toBe(30)
     const before = store.db.prepare('SELECT name, level, exp, sp, sp_exp, curve_version FROM characters ORDER BY id').all()
     expect(before.map((r: any) => r.curve_version)).toEqual([0, 0, 0, 0])
     const retail: Record<number, number> = { 1: 118, 15: 96_938, 19: 238_878, 20: 282_000 }
@@ -309,7 +309,7 @@ describe('migration 21 on a copy of a schema-20 database', () => {
   it('a fresh database is at schema 21 and new characters start at curve 0 until the server sets the curve', () => {
     const store = openStore(tmp())
     cleanups.push(() => store.close())
-    expect(store.schemaVersion).toBe(29)
+    expect(store.schemaVersion).toBe(30)
     const acc = store.createAccount('a1', 'x')!
     const c = store.createCharacter(acc, 'Zero', 'CHAR_CH_MAN_ADVENTURER', 'sword', 'jangan', 4)
     expect(typeof c === 'object' && c.curve_version).toBe(0)

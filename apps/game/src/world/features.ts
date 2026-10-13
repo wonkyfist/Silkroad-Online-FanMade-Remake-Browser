@@ -20,6 +20,7 @@ import { autoPotionFeature } from './features/auto-potion.ts'
 import { berserkFeature } from './features/berserk.ts'
 import { coastFeature } from './features/coast.ts'
 import { durabilityFeature } from './features/durability.ts'
+import { arrowsFeature } from './features/arrows.ts'
 import { editorsFeature } from './features/editors.ts'
 import { gmToolboxFeature } from './features/gm-toolbox.ts'
 import { fxWorldFeature } from './features/fx-world.ts'
@@ -173,6 +174,7 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   mountFeature, // world/features/mount.ts (MR-C)
   berserkFeature, // world/features/berserk.ts (BZ)
   durabilityFeature, // world/features/durability.ts (DR)
+  arrowsFeature, // world/features/arrows.ts (bow arrows on the HUD)
   alchemyFeature, // world/features/alchemy.ts (AL)
   tradeFeature, // world/features/trade.ts (TR-C)
   stallFeature, // world/features/stall.ts (ST-C)

@@ -4,6 +4,7 @@ import {
   MAX_GOLD,
   armorClassesClash,
   equipSlotsFor,
+  itemSlotKind,
   type ActionFailReason,
   type BagSlotUpdate,
   type EquipSlot,
@@ -271,10 +272,11 @@ export function equipItem(d: InvDraft, bag: number, slot: EquipSlot | undefined,
   const it = d.bag[bag]
   if (!it) return fail('invalid_slot', 'that slot is empty')
   const def = defs(it.code)
-  if (!def || !def.slot) return fail('invalid_slot', 'not equipment')
+  const kind = itemSlotKind(def)
+  if (!def || !kind) return fail('invalid_slot', 'not equipment')
   // Wave 8 (docs/SYSTEMS_COMBAT.md §3.2, D48): a broken item cannot be worn (unequipping is always allowed).
   if (it.durability === 0) return fail('broken', 'Cannot equip a broken item.')
-  const allowed = equipSlotsFor(def.slot)
+  const allowed = equipSlotsFor(kind)
   let target: EquipSlot
   if (slot !== undefined) {
     if (!allowed.includes(slot)) return fail('invalid_slot', `goes in ${allowed.join(' or ')}`)
@@ -283,18 +285,73 @@ export function equipItem(d: InvDraft, bag: number, slot: EquipSlot | undefined,
   const problem = wearProblem(def, who)
   if (problem) return fail('requirements', problem)
   const weaponDef = d.equip.weapon ? defs(d.equip.weapon.code) : undefined
-  if (target === 'shield' && weaponDef?.twoHanded) return fail('requirements', 'a two-handed weapon is worn')
+  const ammo = def.category === 'ammo'
+  // retail: arrows go with a bow only; a shield never goes with a two-handed weapon (bow, spear, glaive)
+  if (ammo && weaponDef?.weaponType !== 'bow') return fail('requirements', 'Arrows need a bow.')
+  if (target === 'shield' && !ammo && weaponDef?.twoHanded) return fail('requirements', 'a two-handed weapon is worn')
   if (armorClash(d, def, target, defs)) return fail('armor_mix', ARMOR_MIX_MESSAGE)
   const old = d.equip[target] ?? null
+  // arrows onto worn arrows of the same kind top the worn stack up (the rest stays in the bag)
+  if (ammo && old && stackable(old, it, def) && old.count < def.maxStack) {
+    const n = Math.min(it.count, def.maxStack - old.count)
+    d.setEquip(target, { ...old, count: old.count + n })
+    d.setBag(bag, it.count - n > 0 ? { ...it, count: it.count - n } : null)
+    return done(target)
+  }
   d.setBag(bag, old)
   d.setEquip(target, it)
-  if (target === 'weapon' && def.twoHanded && d.equip.shield) {
-    const free = d.firstFree()
-    if (free < 0) return fail('inventory_full', 'no room for the shield')
-    d.setBag(free, d.equip.shield)
-    d.setEquip('shield', null)
+  if (target === 'weapon') {
+    // the left hand: a two-handed weapon sends a shield to the bag, a weapon other than a bow sends the arrows
+    const left = d.equip.shield
+    const leftDef = left ? defs(left.code) : undefined
+    const off = left && (leftDef?.category === 'ammo' ? def.weaponType !== 'bow' : def.twoHanded)
+    if (left && off) {
+      const free = d.firstFree()
+      if (free < 0) return fail('inventory_full', leftDef?.category === 'ammo' ? 'no room for the arrows' : 'no room for the shield')
+      d.setBag(free, left)
+      d.setEquip('shield', null)
+    }
+    if (def.weaponType === 'bow' && !d.equip.shield) loadArrows(d, defs)
   }
   return done(target)
+}
+
+/** Whether `def` is ammunition of TypeID 3/3/t3/t4 (arrows: 4/1). */
+export function isAmmo(def: ItemDef | undefined, t3 = 4, t4 = 1): boolean {
+  return !!def && def.category === 'ammo' && def.typeId[1] === 3 && def.typeId[2] === t3 && def.typeId[3] === t4
+}
+
+/**
+ * Retail auto-load: with a bow worn and the left hand empty, the first arrow stack in the bag moves into the shield
+ * slot. Returns whether one moved.
+ */
+export function loadArrows(d: InvDraft, defs: Defs): boolean {
+  if (d.equip.shield) return false
+  const w = d.equip.weapon ? defs(d.equip.weapon.code) : undefined
+  if (w?.weaponType !== 'bow') return false
+  for (let i = 0; i < d.bagSize; i++) {
+    const it = d.bag[i]
+    if (it && isAmmo(defs(it.code))) {
+      d.setEquip('shield', it)
+      d.setBag(i, null)
+      return true
+    }
+  }
+  return false
+}
+
+/**
+ * Takes `n` arrows from the worn stack (retail: one per bow shot). A stack that runs out is refilled from the bag
+ * (loadArrows), as in retail. Fails `no_ammo` when fewer than `n` are worn (and none could be loaded).
+ */
+export function takeArrows(d: InvDraft, n: number, defs: Defs): Result<number> {
+  if (!d.equip.shield) loadArrows(d, defs)
+  const worn = d.equip.shield
+  if (!worn || !isAmmo(defs(worn.code)) || worn.count < n) return fail('no_ammo', 'No arrows equipped.')
+  const left = worn.count - n
+  d.setEquip('shield', left > 0 ? { ...worn, count: left } : null)
+  if (left <= 0) loadArrows(d, defs)
+  return done(d.equip.shield?.count ?? 0)
 }
 
 /** Unequips `slot` into bag slot `bag` (must be empty) or the first free slot. */

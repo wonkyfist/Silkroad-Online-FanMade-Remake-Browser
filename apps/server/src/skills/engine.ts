@@ -17,7 +17,7 @@ import {
 } from '@sro/shared'
 import { BASIC_ATTACK, imbueDamage, mobCombatStats, reductionMul, rollSkillHit, type CombatStats } from '../formulas.ts'
 import type { Gameplay } from '../gameplay.ts'
-import { fail, takeFromBag, type Fail, type Result } from '../inventory.ts'
+import { fail, isAmmo, takeArrows, toStack, type Fail, type Result } from '../inventory.ts'
 import type { Answer, GameplayMessage, GameplayModule, WarpReason } from '../modules.ts'
 import type { Cos, Mob, Player } from '../world.ts'
 import { SkillBook, groupOf } from './book.ts'
@@ -56,6 +56,14 @@ const RELEASE_SLACK_M = 10
 const DEFAULT_BUFF_MS = 60_000
 /** Rule: a projectile pierce line is this long when the skill has no own range (metres). */
 const PROJECTILE_LINE_M = 15
+/**
+ * Knockback push (the `kb` status): its retail row holds only [level, chance %], no distance, so the push is our rule:
+ * 3 m (the Drowned Court's knockback drift is the same) at 10 m/s (the Fear Roar's push speed).
+ */
+export const KNOCKBACK_M = 3
+export const KNOCKBACK_SPEED = 10
+/** A bow shot without its `_BASE_01` row in the data: retail SKILL_CH_BOW_BASE_01's cnsm, 1 arrow (TypeID 3/3/4/1). */
+const BOW_SHOT = { consumes: { typeId3: 4, typeId4: 1, count: 1 } } as SkillDef
 
 /** A running action (docs/SKILLS.md §10.1 "Runtime state"). */
 interface Cast {
@@ -273,7 +281,7 @@ export class SkillEngine implements GameplayModule {
     const gear = this.gear(p, row)
     if (gear) return gear
     if ((row.reqStr ?? 0) > p.progress.str || (row.reqInt ?? 0) > p.progress.int) return fail('requirements', 'Not enough STR or INT.')
-    if (this.ammoNeeded(row) && this.ammoSlot(p, row.consumes!) === null) return fail('no_ammo')
+    if (this.ammoNeeded(row) && !this.hasAmmo(p, row.consumes!)) return fail('no_ammo', 'No arrows equipped.')
     return null
   }
 
@@ -293,7 +301,8 @@ export class SkillEngine implements GameplayModule {
   private wears(p: Player, typeId3: number, typeId4: number): boolean {
     for (const st of Object.values(p.equip)) {
       const t = st ? this.g.data.item(st.code)?.typeId : undefined
-      if (t && t[2] === typeId3 && t[3] === typeId4) return true
+      // equipment only (TypeID2 1): arrows (3/3/4/1) share a shield's TypeID3/4 and are no shield
+      if (t && t[1] === 1 && t[2] === typeId3 && t[3] === typeId4) return true
     }
     return false
   }
@@ -302,24 +311,35 @@ export class SkillEngine implements GameplayModule {
     return (this.g.config.skillAmmo ?? 0) === 1 && !!row?.consumes && row.consumes.count > 0
   }
 
-  /** Lowest bag slot holding enough of the ammunition, or null. */
-  private ammoSlot(p: Player, c: NonNullable<SkillDef['consumes']>): number | null {
+  /**
+   * Arrows on hand for `c` (retail: worn in the shield slot; a bag stack counts too, it is loaded at the shot): the
+   * worn stack when it holds `c.count`, else whether the bag has a matching stack.
+   */
+  private hasAmmo(p: Player, c: NonNullable<SkillDef['consumes']>): boolean {
+    const defs = (code: string) => this.g.data.item(code)
+    const worn = p.equip.shield
+    if (worn && isAmmo(defs(worn.code), c.typeId3, c.typeId4) && worn.count >= c.count) return true
+    if (worn && !isAmmo(defs(worn.code), c.typeId3, c.typeId4)) return false
     const inv = this.g.store.loadInventory(p.characterId)
-    for (let i = 0; i < inv.bag.length; i++) {
-      const it = inv.bag[i]
-      const t = it ? this.g.data.item(it.code)?.typeId : undefined
-      if (it && t && t[2] === c.typeId3 && t[3] === c.typeId4 && it.count >= c.count) return i
-    }
-    return null
+    return inv.bag.some((it) => !!it && isAmmo(defs(it.code), c.typeId3, c.typeId4) && it.count >= c.count)
   }
 
+  /**
+   * Takes the row's arrows from the worn stack (refilled from the bag when it runs out; inventory.ts takeArrows).
+   * A count-only change sends just the inventoryUpdate; a refill or an empty slot goes through afterInventory.
+   */
   private takeAmmo(p: Player, row: SkillDef): boolean {
     if (!this.ammoNeeded(row)) return true
-    const slot = this.ammoSlot(p, row.consumes!)
-    if (slot === null) return false
-    const { result, draft } = this.g.store.inventoryTx(p.characterId, (d) => takeFromBag(d, slot, row.consumes!.count))
-    if (result.ok) this.g.afterInventory(p, draft)
-    return result.ok
+    const defs = (code: string) => this.g.data.item(code)
+    const before = p.equip.shield?.code
+    const { result, draft } = this.g.store.inventoryTx(p.characterId, (d) => takeArrows(d, row.consumes!.count, defs))
+    if (!result.ok) return false
+    const after = draft.equip.shield
+    if (after && after.code === before && draft.touchedBag.size === 0) {
+      p.equip.shield = toStack(after)
+      p.send({ t: 'inventoryUpdate', ...draft.updates() })
+    } else this.g.afterInventory(p, draft)
+    return true
   }
 
   /** The target of a use (docs/SKILLS.md §10.1 step 5; decision 13: friendly skills may target any visible player). */
@@ -613,12 +633,24 @@ export class SkillEngine implements GameplayModule {
     return { hits: b.hits, pct: b.pct, intervalMs: b.intervalMs, row: null }
   }
 
+  /** The row whose cnsm a basic attack pays: the weapon's basic row, else a bow's 1 arrow. */
+  private shotRow(p: Player, row: SkillDef | null): SkillDef | null {
+    return row ?? (p.combat.weapon === 'bow' ? BOW_SHOT : null)
+  }
+
+  /** The attack request's refusal for a bow with no arrows on hand (null: none needed, or some are there). */
+  ammoRefusal(p: Player): Fail | null {
+    const row = this.shotRow(p, this.basicFor(p).row)
+    return row && this.ammoNeeded(row) && !this.hasAmmo(p, row.consumes!) ? fail('no_ammo', 'No arrows equipped.') : null
+  }
+
   /** One basic attack of a player (all its hits), with the imbue's component and statuses. */
   basicAttack(p: Player, t: Player | Mob, now: number): void {
     const b = this.basicFor(p)
-    if (b.row && this.ammoNeeded(b.row) && !this.takeAmmo(p, b.row)) {
+    const shot = this.shotRow(p, b.row)
+    if (shot && this.ammoNeeded(shot) && !this.takeAmmo(p, shot)) {
       p.action = null
-      p.send({ t: 'chat', channel: 'system', text: 'You have no arrows.' })
+      p.send({ t: 'chat', channel: 'system', text: 'No arrows equipped.' })
       return
     }
     const hits: CombatHit[] = []
@@ -718,7 +750,10 @@ export class SkillEngine implements GameplayModule {
     if (r.killed) return
     for (let i = 0; i < r.hits.length; i++) {
       const st = statuses[i]
-      if (st && r.hits[i].outcome !== 'miss' && r.hits[i].outcome !== 'block') this.applyStatus(a, t, st, now)
+      if (st && r.hits[i].outcome !== 'miss' && r.hits[i].outcome !== 'block') {
+        this.applyStatus(a, t, st, now)
+        if (st.status.status === 'knockback' && this.effects.status(t.id, 'knockback', now)) this.knockback(a, t, now)
+      }
     }
     // A debuff with stat mods (Vital Spot: parry, hit rate, defence down) sticks on the victim when its hit lands.
     const row = code === undefined || a.kind !== 'player' ? undefined : this.book.skill(code)
@@ -726,6 +761,26 @@ export class SkillEngine implements GameplayModule {
       const cspd = PARAM(row, 'cspd')
       if (!cspd || this.g.rng() * 100 < (cspd[1] ?? 100)) this.applyBuff(a as Player, cspd ? { ...row, durationMs: cspd[0] || row.durationMs } : row, t, now, extra.instance ?? this.instanceId())
     }
+  }
+
+  /**
+   * Knockback (the `kb` status, Ghost Spear - Prince): the target is pushed KNOCKBACK_M straight away from the hitter
+   * at KNOCKBACK_SPEED, along the dash path (dash.ts dashEnd: clipped by the navmesh and the world bounds, never into
+   * water), then `displace {kind: 'push'}` so viewers slide it without a walking clip. Riders are not pushed (the
+   * horse shares the rider's move), like the Fear Roar.
+   */
+  knockback(a: Player | Mob, t: Player | Mob, now: number): void {
+    const w = this.g.world
+    if (t.kind === 'player' && this.g.mounts.ridden(t)) return
+    const from = w.livePoint(t, now)
+    const src = w.livePoint(a, now)
+    const yaw = Math.atan2(from.x - src.x, from.z - src.z)
+    const end = dashEnd(w.nav, from, Number.isFinite(yaw) && (from.x !== src.x || from.z !== src.z) ? yaw : a.yaw, undefined, KNOCKBACK_M, (x, z) => w.clamp(x, z), (x, z, y) => this.g.tornado.wet(x, z, y))
+    const len = Math.hypot(end.x - from.x, end.z - from.z)
+    if (len < 0.3 || !w.walkEntity(t, end.x, end.z, KNOCKBACK_SPEED, now) || !t.move) return
+    t.yaw = Math.atan2(src.x - from.x, src.z - from.z)
+    const r2 = (v: number) => Math.round(v * 100) / 100
+    w.broadcastAbout(t, { t: 'displace', id: t.id, kind: 'push', from: [r2(from.x), r2(Number.isFinite(from.y) ? from.y : 0), r2(from.z)], to: [...t.move.to], at: Math.round(now), ms: Math.round((len / KNOCKBACK_SPEED) * 1000) })
   }
 
   private xz(e: Player | Mob | Cos, now: number): { x: number; z: number } {

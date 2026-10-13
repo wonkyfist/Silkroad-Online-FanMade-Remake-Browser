@@ -117,7 +117,7 @@ export const SETTINGS: readonly SettingSpec[] = [
   num('hwanKillPct', 'HWAN_KILL_PCT', 'Berserk point chance per kill (%)', COMBAT, 0, 100, W8.hwanKillPct, 'live'),
   int('hwanDurationMs', 'HWAN_DURATION_MS', 'Berserk duration (ms)', COMBAT, 1000, 600000, W8.hwanDurationMs, 'live'),
   num('storageFee', 'STORAGE_FEE', 'Storage fee multiplier (0 = free)', COMBAT, 0, 1000, 1, 'live'),
-  bool('skillAmmo', 'SKILL_AMMO', 'Bow skills use arrows', COMBAT, false, 'live', undefined, true),
+  bool('skillAmmo', 'SKILL_AMMO', 'Bows use arrows', COMBAT, true, 'live', undefined, true),
   int('cosCombatLockMs', 'COS_COMBAT_LOCK_MS', 'Horse lockout after combat (ms)', COMBAT, 0, 600000, W8.cosCombatLockMs, 'live'),
 
   // docs/RARITY.md §4: an ordinary weapon drop may come as a Seal of Star / Moon / Sun (one roll, the rarest first)

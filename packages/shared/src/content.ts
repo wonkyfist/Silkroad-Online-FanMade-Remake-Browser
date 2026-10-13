@@ -286,6 +286,21 @@ export const EQUIP_SLOTS: readonly EquipSlot[] = [
 /** Where an item can be worn: an EquipSlot, except rings which fit ring1 or ring2. */
 export type ItemSlotKind = Exclude<EquipSlot, 'ring1' | 'ring2'> | 'ring'
 
+/**
+ * Where an item is worn: its `slot`, or the shield (left-hand) slot for ammunition (retail: arrows are worn in the
+ * shield slot with a bow and stack there). undefined = not worn.
+ */
+export function itemSlotKind(def: Pick<ItemDef, 'slot' | 'category'> | undefined): ItemSlotKind | undefined {
+  if (!def) return undefined
+  return def.slot ?? (def.category === 'ammo' ? 'shield' : undefined)
+}
+
+/** Arrows (ammunition TypeID 3/3/4/1): what bows shoot. Sold by the blacksmith; `_DEF` = the free starter stack. */
+export const ARROW_CODE = 'ITEM_ETC_AMMO_ARROW_01'
+export const STARTER_ARROW_CODE = 'ITEM_ETC_AMMO_ARROW_01_DEF'
+/** Arrows in a starter kit and in the one-time grant to bow characters made before arrows counted (a full stack). */
+export const STARTER_ARROWS = 250
+
 /** Which equip slots accept an item of a slot kind. */
 export function equipSlotsFor(kind: ItemSlotKind): EquipSlot[] {
   return kind === 'ring' ? ['ring1', 'ring2'] : [kind]

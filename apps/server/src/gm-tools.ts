@@ -6,7 +6,9 @@ import {
   RARITY,
   RARITY_TIERS,
   codePointLength,
+  ARROW_CODE,
   equipSlotsFor,
+  itemSlotKind,
   rareCodeOf,
   rarityOf,
   type ArmorType,
@@ -185,6 +187,12 @@ export function pickGearSet(items: Iterable<ItemDef>, get: (code: string) => Ite
         if (s) pieces.push(s)
         else missing.push('shield')
       }
+      // a bow comes with a stack of arrows (worn in the shield slot)
+      if (w.weaponType === 'bow') {
+        const a = get(ARROW_CODE)
+        if (a) pieces.push(a)
+        else missing.push('arrows')
+      }
     } else missing.push(o.weapon)
   }
   let sealed = 0
@@ -202,22 +210,37 @@ export function grantPieces(d: InvDraft, pieces: ItemDef[], plus: number, wear: 
   const placed: Record<string, number> = {}
   for (const def of pieces) {
     const p = def.maxStack > 1 ? 0 : plus
-    if (wear && def.slot) {
-      const slots = equipSlotsFor(def.slot)
-      const used = placed[def.slot] ?? 0
+    // ammunition comes as a full stack
+    const n = def.category === 'ammo' ? def.maxStack : 1
+    const kind = itemSlotKind(def)
+    if (wear && kind) {
+      const slots = equipSlotsFor(kind)
+      const used = placed[kind] ?? 0
       const slot = slots[Math.min(used, slots.length - 1)]!
-      placed[def.slot] = used + 1
+      placed[kind] = used + 1
       const old = d.equip[slot]
       if (old) {
         const free = d.firstFree()
         if (free < 0) return { ok: false, reason: 'inventory_full' }
         d.setBag(free, old)
       }
-      d.setEquip(slot, newItem(def.code, 1, p))
+      d.setEquip(slot, newItem(def.code, n, p))
       continue
     }
-    const r = addItem(d, def, 1, p)
+    const r = addItem(d, def, n, p)
     if (!r.ok) return r
+  }
+  if (wear) {
+    // the left hand follows the weapon rule (inventory.ts equipItem): no shield with a two-handed weapon, arrows with a bow only
+    const w = d.equip.weapon ? pieces.find((x) => x.code === d.equip.weapon!.code) : undefined
+    const left = d.equip.shield ? pieces.find((x) => x.code === d.equip.shield!.code) : undefined
+    const keep = !w || !d.equip.shield || (left?.category === 'ammo' ? w.weaponType === 'bow' : !w.twoHanded)
+    if (!keep) {
+      const free = d.firstFree()
+      if (free < 0) return { ok: false, reason: 'inventory_full' }
+      d.setBag(free, d.equip.shield!)
+      d.setEquip('shield', null)
+    }
   }
   return { ok: true, value: pieces.length }
 }
@@ -379,7 +402,7 @@ export function endBoost(ctx: GameContext, silent = false): boolean {
 export const TOOL_COMMANDS: Record<string, Command> = {
   gearset: {
     usage: GEARSET_USAGE,
-    about: 'Give a whole gear set in one go: 6 armour pieces of a type, earring/necklace/2 rings, the weapon (+ shield for sword/blade) of a degree, optionally sealed (star/moon/sun), at +N, worn at once (wear), to yourself or a player.',
+    about: 'Give a whole gear set in one go: 6 armour pieces of a type, earring/necklace/2 rings, the weapon (+ shield for sword/blade, + a stack of arrows for a bow) of a degree, optionally sealed (star/moon/sun), at +N, worn at once (wear), to yourself or a player.',
     run: (g) => {
       const a = parseGearArgs(g.args)
       if (typeof a === 'string') return fail(a)
@@ -390,7 +413,7 @@ export const TOOL_COMMANDS: Record<string, Command> = {
   },
   starter: {
     usage: 'starter [player]',
-    about: "A starter kit by level: the best protector set, accessories and weapon (+ shield) of the player's weapon family for its level, 50 HP and 50 MP potions.",
+    about: "A starter kit by level: the best protector set, accessories and weapon (+ shield, or arrows for a bow) of the player's weapon family for its level, 50 HP and 50 MP potions.",
     run: (g) => {
       if (g.args.length > 1) return fail('Usage: starter [player]')
       const t = target(g, g.args[0])

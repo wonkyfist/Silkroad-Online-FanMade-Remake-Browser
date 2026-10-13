@@ -132,7 +132,7 @@ export interface ServerConfig {
   nestCountScale?: number
   /** Storage deposit fee on (STORAGE_FEE, default 1 = keepFee x count; 0 = free; docs/SHOPS.md §5.1). */
   storageFee?: number
-  /** Bow skills and bow basic attacks take 1 arrow (SKILL_AMMO, default 0 = off; docs/WAVE_PLAN.md decision 12). */
+  /** Bow skills and bow basic attacks take arrows from the worn stack (SKILL_AMMO, default 1 = on, retail; 0 = off). */
   skillAmmo?: number
   /** Multiplies dropped gold amounts (GOLD_RATE, default 1, 0..1000; applied in rollDrops). Quest gold is unchanged. */
   goldRate?: number
@@ -578,7 +578,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     worldExport,
     nestCountScale: Math.min(1, Math.max(0.1, num(env, 'NEST_COUNT_SCALE', 1, 0, 1000))),
     storageFee: num(env, 'STORAGE_FEE', 1, 0, 1000),
-    skillAmmo: num(env, 'SKILL_AMMO', 0, 0, 1),
+    skillAmmo: num(env, 'SKILL_AMMO', 1, 0, 1),
     goldRate: num(env, 'GOLD_RATE', 1, 0, 1000),
     expRate: num(env, 'EXP_RATE', 1, 0, 1000),
     spRate: num(env, 'SP_RATE', 1, 0, 1000),

@@ -1,5 +1,7 @@
 import {
   EQUIP_SLOTS,
+  STARTER_ARROWS,
+  STARTER_ARROW_CODE,
   GOLD_ITEM_CODES,
   clockAt,
   levelDiffExpMul,
@@ -49,10 +51,12 @@ import { ItemUses } from './item-use.ts'
 import {
   addGold,
   addItem,
+  done,
   equipItem,
   fail,
   fits,
   moveItem,
+  newItem,
   putBack,
   splitItem,
   takeFromBag,
@@ -902,14 +906,45 @@ export class Gameplay implements AiHost {
    * Given once; when items.json is missing it waits for the first entry after it appears.
    */
   grantStarterKit(characterId: number, weapon: StarterWeapon, model: string, outfit: StarterOutfit = 'clothes'): boolean {
-    const items: { code: string; slot: EquipSlot }[] = []
+    const items: { code: string; slot: EquipSlot; count?: number }[] = []
     const w = this.data.starterWeapon(weapon)
     if (w) items.push({ code: w.code, slot: 'weapon' })
+    // a bow comes with a stack of starter arrows in the left hand (retail: bows shoot arrows)
+    if (w?.weaponType === 'bow' && this.data.item(STARTER_ARROW_CODE)) items.push({ code: STARTER_ARROW_CODE, slot: 'shield', count: STARTER_ARROWS })
     for (const g of this.data.starterOutfit(genderOf(model), outfit)) {
       const slot = g.slot === 'ring' ? 'ring1' : g.slot!
       if (!items.some((i) => i.slot === slot)) items.push({ code: g.code, slot })
     }
     return this.store.grantStarterKit(characterId, items)
+  }
+
+  /**
+   * Once per character made before arrows counted (characters.arrows_granted 0, migration 30): a character wearing a
+   * bow gets a stack of starter arrows (into the empty left hand, else the bag), so nobody is suddenly stuck. The mark
+   * is set in the same transaction; a bag with no room leaves it unset for the next login. Returns whether arrows went in.
+   */
+  grantArrowsOnce(characterId: number): boolean {
+    if (this.store.arrowsGranted(characterId)) return false
+    const def = this.data.item(STARTER_ARROW_CODE)
+    if (!def) return false
+    const defs = (c: string) => this.data.item(c)
+    let given = false
+    const { result } = this.store.inventoryTx(
+      characterId,
+      (d) => {
+        const w = d.equip.weapon ? defs(d.equip.weapon.code) : undefined
+        if (w?.weaponType !== 'bow') return done(undefined)
+        if (!d.equip.shield) d.setEquip('shield', newItem(def.code, STARTER_ARROWS))
+        else {
+          const r = addItem(d, def, STARTER_ARROWS)
+          if (!r.ok) return r
+        }
+        given = true
+        return done(undefined)
+      },
+      () => this.store.setArrowsGranted(characterId),
+    )
+    return result.ok && given
   }
 
   /** Recomputes derived stats after a level/stat/equipment change. Returns whether max HP/MP changed. */
@@ -1048,7 +1083,7 @@ export class Gameplay implements AiHost {
 
   private attackRequest(p: Player, targetId: number, answer: (r: Result<unknown> | true) => void): void {
     // Wave 8: 'mounted' (mounts.ts; a bow shoots from the saddle), 'broken' weapon (durability.ts).
-    const refused = this.mounts.refuseCombat(p, 'attack') ?? this.durability.refuse(p, 'attack')
+    const refused = this.mounts.refuseCombat(p, 'attack') ?? this.durability.refuse(p, 'attack') ?? this.skills.ammoRefusal(p)
     if (refused) return answer(refused)
     const e = this.world.entity(targetId)
     if (!e || !p.known.has(targetId)) return answer(fail('not_found'))

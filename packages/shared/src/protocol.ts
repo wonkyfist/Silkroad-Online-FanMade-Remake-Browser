@@ -447,7 +447,8 @@ export interface TornadoState {
 
 /** What moved a body without its say (docs/WEATHER.md §13; the `displace` message). */
 /** `dash`: a movement skill (Ghost Walk - Phantom, the `tele` param): the caster glides with its skill clip, no run. */
-export type DisplaceKind = 'pull' | 'throw' | 'dash'
+/** `push`: a knockback (Ghost Spear - Prince): the target slides back from the hitter without a walking clip. */
+export type DisplaceKind = 'pull' | 'throw' | 'dash' | 'push'
 
 // ---- client -> server ---------------------------------------------------------------------------
 
@@ -1302,7 +1303,7 @@ export type ActionFailReason =
   | 'not_enough_mp'
   /** The equipped weapon (or shield) does not fit the skill. */
   | 'wrong_weapon'
-  /** No ammunition in the bag (bow skills when SKILL_AMMO is on). */
+  /** No arrows worn or in the bag (bow attacks and skills when SKILL_AMMO is on). */
   | 'no_ammo'
   /** Stunned, frozen, knocked down or otherwise unable to act. */
   | 'cant_act'

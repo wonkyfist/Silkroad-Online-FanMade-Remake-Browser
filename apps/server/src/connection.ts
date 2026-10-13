@@ -675,6 +675,8 @@ export class Connection {
     if (!row) return this.error('not_found', 'no such character', 'enterWorld')
     // Characters created before items.json existed get their starter kit now.
     if (!row.starter_kit && this.game.gameplay.grantStarterKit(row.id, row.weapon, row.model, row.outfit)) row = this.game.store.characterOwned(id, this.accountId)!
+    // Bow characters made before arrows counted get one stack, once (migration 30).
+    this.game.gameplay.grantArrowsOnce(row.id)
     this.applyRole(this.game.store.accountRole(this.accountId))
     const { world } = this.game
     // docs/NETWORK_AUDIT.md N5: a reconnect takes back the body its dropped connection left (held, or lingering in a

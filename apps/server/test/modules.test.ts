@@ -394,7 +394,7 @@ describe('config (wave 3)', () => {
   it('reads the wave-3 settings with their defaults and bounds', async () => {
     const { loadConfig } = await import('../src/config.ts')
     // WORLD_EXPORT's default depends on the exports on disk (fields.test.ts); pin it here
-    expect(loadConfig({ WORLD_EXPORT: 'jangan' })).toMatchObject({ worldExport: 'jangan', nestCountScale: 1, storageFee: 1, skillAmmo: 0, goldRate: 1 })
+    expect(loadConfig({ WORLD_EXPORT: 'jangan' })).toMatchObject({ worldExport: 'jangan', nestCountScale: 1, storageFee: 1, skillAmmo: 1, goldRate: 1 })
     expect(loadConfig({ WORLD_EXPORT: 'jangan-fields', NEST_COUNT_SCALE: '0.01', STORAGE_FEE: '0', SKILL_AMMO: '1', GOLD_RATE: '2' })).toMatchObject({
       world: 'jangan',
       worldExport: 'jangan-fields',
@@ -427,9 +427,9 @@ describe('migrations v5 (skills) and v6 (storage)', () => {
 
     const store = openStore(copyDir)
     try {
-      expect(SCHEMA_VERSION).toBe(29)
-      expect(store.schemaVersion).toBe(29)
-      expect(store.db.pragma('user_version', { simple: true })).toBe(29)
+      expect(SCHEMA_VERSION).toBe(30)
+      expect(store.schemaVersion).toBe(30)
+      expect(store.db.pragma('user_version', { simple: true })).toBe(30)
       // old data intact
       expect(store.characterById(1)).toMatchObject({ name: 'Ryu', level: 7, gold: 1234, height: 3, nav_surface: 't' })
       expect(store.loadInventory(1).bag[0]).toMatchObject({ code: 'ITEM_ETC_HP_POTION_01', count: 7 })

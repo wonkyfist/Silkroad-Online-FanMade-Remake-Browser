@@ -4,7 +4,7 @@
  * items.json the names come from the game text (SN_<code>) or the code itself, the slot kind is guessed from
  * the CodeName128 pattern, and the tooltip says the data is missing. No DOM here (unit-tested).
  */
-import { applyClimbItemLevels, climbSetBonus, climbSetLineFor, contentEntries, equipSlotsFor, rarityOf, type EquipSlot, type ItemDef, type ItemSlotKind, type ItemStack, type PlayerStats } from '@sro/shared'
+import { applyClimbItemLevels, climbSetBonus, climbSetLineFor, contentEntries, equipSlotsFor, itemSlotKind, rarityOf, type EquipSlot, type ItemDef, type ItemSlotKind, type ItemStack, type PlayerStats } from '@sro/shared'
 import { genderOf, weaponLabel } from '../content/catalog.ts'
 import { authoredItemIcon } from '../content/item-icons.ts'
 import { gameText, t, type StringKey } from '../i18n/index.ts'
@@ -131,7 +131,7 @@ export class ItemCatalog {
 
   slotKind(code: string): ItemSlotKind | undefined {
     const d = this.defs.get(code)
-    if (d) return d.slot
+    if (d) return itemSlotKind(d)
     return guessSlotKind(code)
   }
 
