@@ -99,9 +99,9 @@ export const BASIC_ATTACK: Record<WeaponType | 'fist', { hits: number; pct: numb
   fist: { hits: 1, pct: 100, intervalMs: 1000 },
   sword: { hits: 2, pct: 60, intervalMs: 1200 },
   blade: { hits: 2, pct: 60, intervalMs: 1200 },
-  spear: { hits: 1, pct: 100, intervalMs: 1300 },
-  glaive: { hits: 1, pct: 100, intervalMs: 1300 },
-  bow: { hits: 1, pct: 100, intervalMs: 1300 },
+  spear: { hits: 1, pct: 100, intervalMs: 1166 },
+  glaive: { hits: 1, pct: 100, intervalMs: 1166 },
+  bow: { hits: 1, pct: 100, intervalMs: 840 },
 }
 
 const mid = (r: Range | undefined): number => (r ? (r[0] + r[1]) / 2 : 0)
