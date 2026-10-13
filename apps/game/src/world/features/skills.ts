@@ -314,12 +314,8 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
     const hostile = tv?.kind === 'player' && !!st && ((st.wanted ?? 0) > 0 || st.hunter !== undefined || st.robber === true || !!st.job || (st.pvp === true && self?.state.pvp === true))
     const selected = tv && tv.kind !== 'item' && tv.kind !== 'cos' ? { id: tv.id, kind: tv.kind, dead: tv.dead || tv.dying, hostile } : null
     const def = r.entry.kind === 'skill' ? catalog.get(r.code) : undefined
-    if (isDashSkill(def)) {
-      // a second press while aiming dashes straight ahead; the first arms the ground cursor
-      if (aimed() === r.code) return fireDash(r.code)
-      setAim({ code: r.code, until: performance.now() + DASH_AIM_MS })
-      return hud.toast(t('skills.dash.aim'), 'info')
-    }
+    // Ghost Walk dashes straight ahead the moment it is pressed (owner, 2026-10-13: a catch-up skill, WASD play)
+    if (isDashSkill(def)) return fireDash(r.code)
     const msg = slotMessage(r, def, selected, ctx.selfId())
     if (msg === 'need_target') return hud.toast(t('skills.needTarget'), 'error')
     send(msg)
