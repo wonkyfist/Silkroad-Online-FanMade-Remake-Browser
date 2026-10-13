@@ -125,6 +125,8 @@ export class EntityView {
    * Girl's Stalk walks at the rate that matches her speed (world/features/tiger-moves.ts sets it). null = the default.
    */
   gait: ((speed: number) => { clip: 'WALK' | 'RUN'; rate: number }) | null = null
+  /** Server ms a dash (`displace {kind: 'dash'}`) ends: until then a move plays no walk or run clip. */
+  dashUntil = 0
   placeholder: Mesh | null = null
   drop: DropVisual | null = null
   /** Invisible pick proxy (metadata.entityId); disabled for yourself, corpses and fading entities. */
@@ -722,7 +724,9 @@ export class EntityView {
       const body = this.ride?.actor ?? this.actor
       body.setYaw(this.yaw)
       if (!this.dead) {
-        if (this.moving) {
+        if (this.moving && now < this.dashUntil) {
+          // a dash (Ghost Walk): the skill clip keeps playing while the body glides
+        } else if (this.moving) {
           this.actor.cancelAction(this.moveCancels)
           const speed = this.move?.speed ?? 0
           const g = this.gait?.(speed)

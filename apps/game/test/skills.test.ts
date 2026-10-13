@@ -377,6 +377,11 @@ describe('ActionPlayer', () => {
     expect(planPhases(cast(chain(1).code, 1, [0, 0, 428]), chain(1, 'x'), () => ({ durationMs: 2033, hits: [211, 428, 1038] }))).toEqual([{ phase: 'SHOT', type: 'SKILL_2', ms: 2033, loop: false }])
     // Zero-length buffs (Castle Shield) play nothing.
     expect(planPhases({ prepareMs: 0, castMs: 0, actionMs: 0 }, { ...GANGGI, animation: {} }, () => null)).toEqual([])
+    // A WAIT-only row without prepare time (Ghost Walk - Phantom: SKILL_7) plays its clip over the dash.
+    expect(planPhases({ prepareMs: 0, castMs: 0, actionMs: 500 }, { ...GANGGI, animation: { wait: 'SKILL_7' } }, () => ({ durationMs: 900, hits: [] }))).toEqual([{ phase: 'WAIT', type: 'SKILL_7', ms: 900, loop: false }])
+    // the ground point rides along on useSkill (and survives the server parser)
+    const dash = intent.useSkill('SKILL_CH_LIGHTNING_GYEONGGONG_B_01', undefined, [12.5, -3])!
+    expect(parseClientMessage(JSON.stringify(dash))).toEqual({ ok: true, msg: { t: 'useSkill', skill: 'SKILL_CH_LIGHTNING_GYEONGGONG_B_01', pos: [12.5, -3] } })
   })
 
   it('plays the phases with their durations and faces the target', () => {

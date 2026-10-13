@@ -150,7 +150,7 @@ export interface WorldFeature {
    * Before a ground click or a hold-to-move step sends `moveTo` (the only two senders: screens/world.ts and
    * world/move-feedback.ts; docs/WAVE_PLAN2.md §4.3). true = consumed: nothing is sent (a stall owner's click).
    */
-  beforeGroundMove?(): boolean
+  beforeGroundMove?(at?: { x: number; y: number; z: number }): boolean
   dispose?(): void
 }
 

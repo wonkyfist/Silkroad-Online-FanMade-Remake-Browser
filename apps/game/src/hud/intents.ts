@@ -86,10 +86,15 @@ export const intent = {
     if ((entry.kind !== 'skill' && entry.kind !== 'item') || !code(entry.code)) return null
     return { t: 'hotbarSet', slot, entry: { kind: entry.kind, code: entry.code } }
   },
-  useSkill(skill: string, target?: number): Msg<'useSkill'> | null {
+  /** `pos` [x, z]: the clicked ground point of a ground-target skill (Ghost Walk - Phantom). */
+  useSkill(skill: string, target?: number, pos?: [number, number]): Msg<'useSkill'> | null {
     if (!code(skill)) return null
-    if (target === undefined) return { t: 'useSkill', skill }
-    return entityId(target) ? { t: 'useSkill', skill, target } : null
+    if (pos && !(Number.isFinite(pos[0]) && Number.isFinite(pos[1]))) return null
+    if (target !== undefined && !entityId(target)) return null
+    const m: Msg<'useSkill'> = { t: 'useSkill', skill }
+    if (target !== undefined) m.target = target
+    if (pos) m.pos = [pos[0], pos[1]]
+    return m
   },
 
   // ---- NPC dialog, storage, shops (docs/SHOPS.md) -------------------------------------------------

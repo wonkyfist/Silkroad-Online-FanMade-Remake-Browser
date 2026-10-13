@@ -136,6 +136,11 @@ export function skillTarget(def: SkillDef | undefined, selected: TargetRef | nul
   return selfId !== null ? { target: selfId } : {}
 }
 
+/** A movement skill (the retail `tele` param: Ghost Walk - Phantom): it aims at a ground point instead of a target. */
+export function isDashSkill(def: SkillDef | undefined): boolean {
+  return !!def?.params?.some(p => p.tag === 'tele')
+}
+
 /** The message pressing a resolved slot sends (null: nothing to send, e.g. no item left). */
 export function slotMessage(r: ResolvedSlot, def: SkillDef | undefined, selected: TargetRef | null, selfId: number | null): ClientMessage | 'need_target' | null {
   if (r.entry.kind === 'item') return r.bag === undefined ? null : intent.itemUse(r.bag)

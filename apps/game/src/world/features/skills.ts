@@ -20,7 +20,7 @@ import { SkillCatalog, SkillState } from '../../content/skills.ts'
 import { BuffBar, EffectBook, targetIcons } from '../../hud/buffs.ts'
 import { cooldownNow, itemCooldownKey, skillCooldownKey } from '../../hud/cooldowns.ts'
 import { Hotbar } from '../../hud/hotbar.ts'
-import { HOTBAR_KEYS, HOTBAR_PAGE_KEYS, slotMessage, type HotbarContext, type ResolvedSlot } from '../../hud/hotbar-model.ts'
+import { HOTBAR_KEYS, HOTBAR_PAGE_KEYS, isDashSkill, slotMessage, type HotbarContext, type ResolvedSlot } from '../../hud/hotbar-model.ts'
 import { intent } from '../../hud/intents.ts'
 import { browserMouseSlotStorage, isMiddlePress, MouseSlotStore } from '../../hud/mouse-slot.ts'
 import { SkillWindow } from '../../hud/skills.ts'
@@ -39,6 +39,8 @@ import { ActionPlayer, clipTypeOf, mobSkillDef, type ActionPort, type PhasePlan,
 const SKILL_REQUESTS = ['useSkill', 'skillLearn', 'masteryUp', 'buffCancel', 'hotbarSet'] as const
 /** A hotbar key pressed while this much cooldown is left does nothing (no request, no toast). */
 const COOLDOWN_SLACK_MS = 120
+/** A dash skill's ground aim lapses after this long without a click (ms). */
+const DASH_AIM_MS = 10_000
 /** Knockdown lasts this long without an effect saying otherwise (SKILLS.md §10.1). */
 const DOWN_MS = 2000
 /** Skill kinds whose ACT_S plays on the target at the release (they send no effectAdd; docs/EFFECTS.md M6). */
@@ -281,6 +283,24 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
     return id === null ? undefined : ctx.view(id)
   }
 
+  // ---- ground-target dashes (Ghost Walk - Phantom): the press arms a crosshair, the next ground click sends the point ----
+  /** The armed dash skill and when the aim lapses (local ms), or null. */
+  let aiming: { code: string; until: number } | null = null
+  const aimCanvas = ctx.scene?.getEngine?.()?.getRenderingCanvas?.() ?? null
+  const setAim = (a: typeof aiming) => {
+    aiming = a
+    if (aimCanvas) aimCanvas.style.cursor = a ? 'crosshair' : ''
+  }
+  const aimed = (): string | null => {
+    if (aiming && performance.now() > aiming.until) setAim(null)
+    return aiming?.code ?? null
+  }
+  /** Sends the armed dash toward x/z (none: straight ahead along the facing); the server picks the end. */
+  const fireDash = (code: string, at?: { x: number; z: number }) => {
+    setAim(null)
+    send(intent.useSkill(code, undefined, at ? [at.x, at.z] : undefined))
+  }
+
   /** A hotbar slot pressed: useSkill with the fitting target, or itemUse of the lowest bag slot (decision 7). */
   const useSlot = (r: ResolvedSlot) => {
     const self = selfView()
@@ -294,6 +314,12 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
     const hostile = tv?.kind === 'player' && !!st && ((st.wanted ?? 0) > 0 || st.hunter !== undefined || st.robber === true || !!st.job || (st.pvp === true && self?.state.pvp === true))
     const selected = tv && tv.kind !== 'item' && tv.kind !== 'cos' ? { id: tv.id, kind: tv.kind, dead: tv.dead || tv.dying, hostile } : null
     const def = r.entry.kind === 'skill' ? catalog.get(r.code) : undefined
+    if (isDashSkill(def)) {
+      // a second press while aiming dashes straight ahead; the first arms the ground cursor
+      if (aimed() === r.code) return fireDash(r.code)
+      setAim({ code: r.code, until: performance.now() + DASH_AIM_MS })
+      return hud.toast(t('skills.dash.aim'), 'info')
+    }
     const msg = slotMessage(r, def, selected, ctx.selfId())
     if (msg === 'need_target') return hud.toast(t('skills.needTarget'), 'error')
     send(msg)
@@ -675,7 +701,28 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
   }
 
   return {
-    onMessage,
+    onMessage(msg: ServerMessage) {
+      // a dash glides with the skill clip (EntityView.dashUntil), not a run
+      if (msg.t === 'displace' && msg.kind === 'dash') {
+        const v = ctx.view(msg.id)
+        if (v) v.dashUntil = msg.at + msg.ms
+        return
+      }
+      return onMessage(msg)
+    },
+    beforeGroundMove(at) {
+      const code = aimed()
+      if (!code || !at) return false
+      fireDash(code, at)
+      return true
+    },
+    clickEntity(v) {
+      // aiming: a clicked monster or player is the point to dash toward
+      const code = aimed()
+      if (!code) return false
+      fireDash(code, { x: v.pos.x, z: v.pos.z })
+      return true
+    },
     combat(msg) {
       const target = ctx.view(msg.target)
       if (target && isDown(target)) downWhen.set(msg, true)
@@ -775,6 +822,7 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
       return true
     },
     dispose() {
+      setAim(null)
       for (const off of offs.splice(0)) off()
       player.clear()
       fx.dispose()

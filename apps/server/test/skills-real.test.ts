@@ -107,6 +107,12 @@ describe.skipIf(!HAVE)('skills on the real export', () => {
         }
         case 'buff':
         case 'imbue': {
+          // a dash row (Ghost Walk - Phantom, `tele`) moves the caster instead of leaving a buff
+          if (row.params?.some((x) => x.tag === 'tele')) {
+            expect(h.all(inbox, 'displace').some((d) => d.id === p.id && d.kind === 'dash'), group).toBe(true)
+            report.push(`${group}: dash`)
+            break
+          }
           const add = h.all(inbox, 'effectAdd').find((e) => mine(e.effect.skill))
           expect(add, group).toBeTruthy()
           report.push(`${group}: effect ${add!.effect.remainingMs} ms`)

@@ -212,7 +212,7 @@ export function tornadoFeature(ctx: WorldFeatureContext, opts: TornadoFeatureOpt
           if (!lifted) ctx.chat.add('system', t('tornado.chat.lift'))
           clear()
         }
-      } else if (msg.t === 'displace') {
+      } else if (msg.t === 'displace' && msg.kind !== 'dash') {
         shown.set(msg.id, { kind: msg.kind, from: msg.from, to: msg.to, at: msg.at, ms: msg.ms, peakM: msg.peakM ?? 0 })
         const v = ctx.view(msg.id)
         // a pulled body slides on its own (no walking clip): the feature carries it instead of the move

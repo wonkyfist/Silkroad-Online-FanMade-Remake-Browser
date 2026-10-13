@@ -84,6 +84,8 @@ export const SKILLS: SkillDef[] = [
   // Lightning: chain imbue, instant move-speed buff
   skill('SKILL_CH_LIGHTNING_GIGONGTA_A_01', { kind: 'imbue', category: 'buff', mastery: 'LIGHTNING', masteryLevel: 1, mp: 50, instant: true, cooldownMs: 5000, durationMs: 5000, overlap: 1, damage: att(0, [30, 30], 1, 100), area: { shape: 'chain', distance: 3.5, maxTargets: 2, reductionPct: 80, targetMask: 24, raw: [1, 6, 35, 2, 80, 24] } }),
   skill('SKILL_CH_LIGHTNING_GYEONGGONG_A_01', { kind: 'buff', category: 'buff', mastery: 'LIGHTNING', masteryLevel: 1, mp: 50, instant: true, cooldownMs: 2000, durationMs: 300000, overlap: 6, params: [{ tag: 'hste', args: [20] }] }),
+  // Ghost Walk - Phantom (retail row 114): glides to a ground point, tele [500 ms, 100 dm]
+  skill('SKILL_CH_LIGHTNING_GYEONGGONG_B_01', { kind: 'buff', category: 'buff', mastery: 'LIGHTNING', masteryLevel: 1, mp: 50, castMs: 0, actionMs: 0, cooldownMs: 5000, overlap: 989855744, targets: { required: true, groups: [] }, animation: { wait: 'SKILL_7' }, params: [{ tag: 'tele', args: [500, 100] }] }),
   // Fire: burn imbue (5 damage per tick)
   skill('SKILL_CH_FIRE_GIGONGTA_A_01', { kind: 'imbue', category: 'buff', mastery: 'FIRE', masteryLevel: 1, mp: 50, instant: true, cooldownMs: 5000, durationMs: 5000, overlap: 1, damage: att(0, [30, 30], 1, 100), statuses: [{ status: 'burn', level: 30, chancePct: 100, extra: [5] }] }),
   // Force (Water): heal another player, resurrect a corpse

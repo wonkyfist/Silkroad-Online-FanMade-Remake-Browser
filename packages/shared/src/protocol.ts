@@ -446,7 +446,8 @@ export interface TornadoState {
 }
 
 /** What moved a body without its say (docs/WEATHER.md §13; the `displace` message). */
-export type DisplaceKind = 'pull' | 'throw'
+/** `dash`: a movement skill (Ghost Walk - Phantom, the `tele` param): the caster glides with its skill clip, no run. */
+export type DisplaceKind = 'pull' | 'throw' | 'dash'
 
 // ---- client -> server ---------------------------------------------------------------------------
 
@@ -491,7 +492,8 @@ export type ClientMessage =
   /** Stop auto-attack / the current action. `moveTo` also stops it. */
   | { t: 'stopAction' }
   /** Use a skill row (docs/SKILLS.md §10.1); `target` = entity id when the skill needs one. Using a toggle that is on turns it off. */
-  | { t: 'useSkill'; skill: string; target?: number }
+  /** `pos` [x, z]: the clicked ground point of a ground-target skill (Ghost Walk - Phantom); the server picks the end. */
+  | { t: 'useSkill'; skill: string; target?: number; pos?: [number, number] }
   /** Pick up a ground item (walks there first when out of reach). */
   | { t: 'pickup'; id: number }
   /** While dead: come back to life at the town return point (full HP/MP). */
@@ -994,7 +996,7 @@ export type ServerMessage =
    * `from` to `to` over `ms` from server ms `at` with its apex `peakM` above the line (spinning). The `stop` at the end
    * comes as usual.
    */
-  | { t: 'displace'; id: number; kind: DisplaceKind; from: Vec3; to: Vec3; at: number; ms: number; peakM?: number; tornado?: number }
+  | { t: 'displace'; id: number; kind: DisplaceKind; from: Vec3; to: Vec3; at: number; ms: number; peakM?: number; tornado?: number; skill?: string }
   // ---- wave 10 (docs/MOVEMENT.md §5, docs/WAVE_PLAN6.md §3.2) ----
   /**
    * Entity `id` jumped at server ms `at`; viewers (the jumper included) play JUMP, or JUMP_RUN while moving. Reuses the

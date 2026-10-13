@@ -971,6 +971,11 @@ export class Gameplay implements AiHost {
     this.hook('forget', p)
   }
 
+  /** The modules' veto on a move of `p` that is not a client moveTo (a dash skill): the moveTo locks (stall, trade, flight, ...). */
+  moveGate(p: Player, now = Date.now()): Fail | null {
+    return this.gateFor(p, 'moveTo', null, now)
+  }
+
   /** A client `moveTo`: cancels the current action (auto-attack, pickup walk). */
   onMoveTo(p: Player, now = Date.now()): boolean {
     if (p.dead) return false

@@ -1184,7 +1184,7 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     const p = groundAt(scene.pointerX, scene.pointerY)
     if (!p) return
     // WorldFeature.beforeGroundMove (docs/WAVE_PLAN2.md §4.3): a feature may consume the click (a stall owner's).
-    if (features?.some(f => f.beforeGroundMove?.())) return
+    if (features?.some(f => f.beforeGroundMove?.(p))) return
     if (send(intents.moveTo(p.x, p.z))) {
       cancelPickups()
       lastAttack = { id: -1, at: -Infinity }

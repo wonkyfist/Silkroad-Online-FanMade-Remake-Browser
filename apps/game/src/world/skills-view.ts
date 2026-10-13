@@ -134,6 +134,8 @@ export function planPhases(msg: Pick<CastMessage, 'prepareMs' | 'castMs' | 'acti
     if (def?.chainNext) ms = Math.max(ms, clip(shot)?.durationMs ?? 0)
     if (ms > 0 || !out.length) out.push({ phase: 'SHOT', type: shot, ms: Math.max(ms, 1), loop: false })
   }
+  // only a WAIT clip and no prepare time (Ghost Walk - Phantom: SKILL_7): it is the action's clip
+  if (!out.length && wait) out.push({ phase: 'WAIT', type: wait, ms: Math.max(cast + msg.actionMs, clip(wait)?.durationMs ?? 0, 1), loop: false })
   return out
 }
 

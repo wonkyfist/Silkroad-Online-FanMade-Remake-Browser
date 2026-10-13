@@ -324,7 +324,7 @@ const CLIENT_OPTIONAL_KEYS: Partial<Record<ClientMessage['t'], readonly string[]
   charCreate: ['height', 'volume', 'outfit', 'look'],
   charLook: ['look'],
   chat: ['to', 'channel'],
-  useSkill: ['target'],
+  useSkill: ['target', 'pos'],
   itemEquip: ['slot'],
   itemUnequip: ['bag'],
   itemDrop: ['count'],
@@ -538,6 +538,11 @@ function clientMessage(v: unknown): ClientMessage {
     case 'useSkill': {
       const m: ClientMessage = { t: 'useSkill', skill: codeName(v, 'skill') }
       if (has(v, 'target')) m.target = int(v, 'target', 0, MAX_ID)
+      if (has(v, 'pos')) {
+        const a = v.pos
+        if (!Array.isArray(a) || a.length !== 2) fail('pos must be [x, z]')
+        m.pos = [num({ x: a[0] }, 'x', -MAX_COORD, MAX_COORD), num({ z: a[1] }, 'z', -MAX_COORD, MAX_COORD)]
+      }
       return m
     }
     case 'pickup':
@@ -2074,7 +2079,7 @@ function serverMessage(v: unknown): ServerMessage {
       const m: Extract<ServerMessage, { t: 'displace' }> = {
         t: 'displace',
         id: int(o, 'id', 1, MAX_ID),
-        kind: oneOf(o, 'kind', ['pull', 'throw'] as const),
+        kind: oneOf(o, 'kind', ['pull', 'throw', 'dash'] as const),
         from: tornadoPoint(o, 'from'),
         to: tornadoPoint(o, 'to'),
         at: num(o, 'at', 0, BIG),
@@ -2082,6 +2087,7 @@ function serverMessage(v: unknown): ServerMessage {
       }
       if (o.peakM !== undefined) m.peakM = num(o, 'peakM', 0, TORNADO_LIMITS.peakM)
       if (o.tornado !== undefined) m.tornado = int(o, 'tornado', 1, 0xffffffff)
+      if (o.skill !== undefined) m.skill = str(o, 'skill', 64, 1)
       return m
     }
     // wave 10 (docs/MOVEMENT.md §5)

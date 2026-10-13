@@ -17,7 +17,7 @@ import {
 } from '@sro/shared'
 import { BASIC_ATTACK, imbueDamage, mobCombatStats, reductionMul, rollSkillHit, type CombatStats } from '../formulas.ts'
 import type { Gameplay } from '../gameplay.ts'
-import { fail, takeFromBag, type Result } from '../inventory.ts'
+import { fail, takeFromBag, type Fail, type Result } from '../inventory.ts'
 import type { Answer, GameplayMessage, GameplayModule, WarpReason } from '../modules.ts'
 import type { Cos, Mob, Player } from '../world.ts'
 import { SkillBook, groupOf } from './book.ts'
@@ -27,6 +27,7 @@ import { applyMods, modsFromParams, sumMods, type ModTotals, type StatMod } from
 import { SkillStore, emptyMasteries, type SkillSave } from './store.ts'
 import { selectTargets, type Candidate } from './targeting.ts'
 import { arrivalAt, projectileOf, timeline, type Timeline } from './timing.ts'
+import { dashEnd, teleParams } from './dash.ts'
 
 /**
  * Skills engine (docs/SKILLS.md §1-§5, §10.1; docs/WAVE_PLAN.md §4.3, decisions 7-15; lane SK-S).
@@ -80,7 +81,7 @@ interface Cast {
 interface CasterState {
   save: SkillSave
   cast: Cast | null
-  queued: { skill: string; target?: number } | null
+  queued: { skill: string; target?: number; pos?: [number, number] } | null
 }
 
 /** A validated use: what start() needs. */
@@ -92,6 +93,8 @@ interface Plan {
   target: Player | Mob | Cos
   mp: number
   hp: number
+  /** A dash row's (`tele`) clicked ground point [x, z]; none: straight ahead. */
+  aim?: [number, number]
 }
 
 /** A status a hit will inflict once it lands. */
@@ -133,6 +136,8 @@ export class SkillEngine implements GameplayModule {
   /** characterId -> HP/MP when it left (world.add clamps them to the maxima without passives; enter restores). */
   private readonly lastVitals = new Map<number, { hp: number; mp: number }>()
   private nextInstance = 1
+  /** Player id -> server ms a dash (Ghost Walk) ends: its own moves and jumps wait (the gate). */
+  private readonly dashing = new Map<number, number>()
   private db: SkillStore | null = null
 
   constructor(readonly g: Gameplay) {
@@ -172,7 +177,7 @@ export class SkillEngine implements GameplayModule {
   request(p: Player, msg: GameplayMessage, answer: Answer, now: number): void {
     switch (msg.t) {
       case 'useSkill':
-        return this.use(p, msg.skill, msg.target, answer, now)
+        return this.use(p, msg.skill, msg.target, answer, now, msg.pos)
       case 'skillLearn':
         return this.learn(p, msg.skill, answer, now)
       case 'masteryUp':
@@ -185,7 +190,7 @@ export class SkillEngine implements GameplayModule {
     answer(fail('not_found'))
   }
 
-  private use(p: Player, code: string, targetId: number | undefined, answer: Answer, now: number): void {
+  private use(p: Player, code: string, targetId: number | undefined, answer: Answer, now: number, pos?: [number, number]): void {
     const s = this.state(p)
     // Using a toggle that is on turns it off (docs/SKILLS.md §10.2), before the cost and cooldown checks.
     const any = this.book.skill(code)
@@ -196,12 +201,13 @@ export class SkillEngine implements GameplayModule {
         return this.removeEffect(on, 'cancelled', now)
       }
     }
-    const r = this.plan(p, code, targetId, now)
+    const r = this.plan(p, code, targetId, now, pos)
     if (!r.ok) return answer(r)
     const plan = r.value
     if (!plan.row.instant && s.cast) {
       // Busy: queue one skill (a newer request replaces it); it starts when the current action ends.
       s.queued = targetId === undefined ? { skill: plan.row.code } : { skill: plan.row.code, target: targetId }
+      if (pos) s.queued.pos = pos
       return answer(true)
     }
     answer(true)
@@ -209,7 +215,7 @@ export class SkillEngine implements GameplayModule {
   }
 
   /** SKILLS §10.1 validation, in order. The target is the caster itself for self skills. */
-  plan(p: Player, code: string, targetId: number | undefined, now: number): Result<Plan> {
+  plan(p: Player, code: string, targetId: number | undefined, now: number, pos?: [number, number]): Result<Plan> {
     // Wave 8: no skills while mounted (mounts.ts).
     const mounted = this.g.mounts.refuse(p, 'skill')
     if (mounted) return mounted
@@ -229,6 +235,12 @@ export class SkillEngine implements GameplayModule {
     const broken = this.g.durability.refuse(p, row)
     if (broken) return broken
     if (this.effects.blocked(p.id, now)) return fail('cant_act')
+    // a dash (Ghost Walk) is a move: not under a moveTo lock (stall, trade, tornado, ...)
+    const tele = teleParams(row)
+    if (tele) {
+      const locked = this.g.moveGate(p, now)
+      if (locked) return locked
+    }
     const req = this.requirement(p, row)
     if (req) return req
     if ((this.cooldownsOf(p.characterId).get(group) ?? 0) > now) return fail('cooldown')
@@ -243,7 +255,9 @@ export class SkillEngine implements GameplayModule {
       const [x, , z] = this.g.world.positionAt(p, now)
       if (this.g.data.inSafeArea(this.g.config.world, x, z)) return fail('safe_zone', 'no fighting in town')
     }
-    return { ok: true, value: { row, head, group, target: t.value, mp, hp } }
+    const value: Plan = { row, head, group, target: t.value, mp, hp }
+    if (tele && pos) value.aim = pos
+    return { ok: true, value }
   }
 
   private hostile(row: SkillDef): boolean {
@@ -403,7 +417,10 @@ export class SkillEngine implements GameplayModule {
     const s = this.state(p)
     if (!chain && !this.arm(p, plan, now)) return
     const t = plan.target
-    const tl = timeline(plan.row, now)
+    const tele = teleParams(plan.row)
+    let tl = timeline(plan.row, now)
+    // a dash: the action lasts the travel time (the clip plays while the caster glides; nothing else starts)
+    if (tele) tl = { ...tl, actionMs: tl.actionMs + tele.ms, endAt: tl.endAt + tele.ms }
     const prev = p.action
     const resume = plan.row.kind === 'attack' && t.kind === 'mob' ? t.id : prev?.kind === 'attack' ? prev.target : (chain?.resume ?? null)
     const c: Cast = { instance: chain?.instance ?? this.instanceId(), row: plan.row, head: plan.head, target: t.id, tl, released: false, resume, swingAt: p.nextSwingAt, stopped: false }
@@ -418,6 +435,7 @@ export class SkillEngine implements GameplayModule {
     p.nextSwingAt = Math.max(p.nextSwingAt, tl.endAt)
     w.broadcastAbout(p, this.castMsg(p, plan.row, c.instance, t.id, tl))
     if (!chain) this.pay(p, plan)
+    if (tele) this.dash(p, plan, tele, now)
     this.advance(p, s, now)
   }
 
@@ -473,6 +491,8 @@ export class SkillEngine implements GameplayModule {
         this.cureStates(t, PARAM(row, 'curt')?.[1] ?? 0, PARAM(row, 'rcur')?.[0] ?? 2, now)
         return
       default:
+        // a dash row (Ghost Walk) moved the caster at t0 (dash()); it carries no buff
+        if (teleParams(row)) return
         return this.applyBuff(p, row, t, now, c.instance)
     }
   }
@@ -506,7 +526,7 @@ export class SkillEngine implements GameplayModule {
     const q = s.queued
     s.queued = null
     if (q) {
-      const r = this.plan(p, q.skill, q.target, now)
+      const r = this.plan(p, q.skill, q.target, now, q.pos)
       if (r.ok) return this.begin(p, r.value, now)
     }
     if (resume !== null && p.action === null) {
@@ -544,6 +564,34 @@ export class SkillEngine implements GameplayModule {
    */
   busy(p: Player, _now = this.g.now): boolean {
     return !!this.casters.get(p.id)?.cast
+  }
+
+  /**
+   * Ghost Walk - Phantom (the `tele` param, skills/dash.ts): the server picks the end (toward the clicked point, at
+   * most the reach, else straight ahead; clipped by the navmesh, never into water) and moves the caster there over the
+   * travel time: a `move` (the own client predicts it as any server move) then `displace {kind: 'dash'}` so every
+   * viewer plays the skill clip instead of a run.
+   */
+  private dash(p: Player, plan: Plan, tele: { ms: number; maxM: number }, now: number): void {
+    const w = this.g.world
+    const from = w.livePoint(p, now)
+    const end = dashEnd(w.nav, from, p.yaw, plan.aim, tele.maxM, (x, z) => w.clamp(x, z), (x, z, y) => this.g.tornado.wet(x, z, y))
+    const len = Math.hypot(end.x - from.x, end.z - from.z)
+    if (len < 0.3 || !w.walkEntity(p, end.x, end.z, len / (tele.ms / 1000), now) || !p.move) return
+    const r2 = (v: number) => Math.round(v * 100) / 100
+    this.dashing.set(p.id, now + tele.ms)
+    w.broadcastAbout(p, { t: 'displace', id: p.id, kind: 'dash', from: [r2(from.x), r2(Number.isFinite(from.y) ? from.y : 0), r2(from.z)], to: [...p.move.to], at: Math.round(now), ms: tele.ms, skill: plan.row.code })
+  }
+
+  /** While a dash runs, the caster's own moves and jumps wait (the server's move is the one that counts). */
+  gate(p: Player, t: GameplayRequest | 'moveTo', now: number): Fail | null {
+    const until = this.dashing.get(p.id)
+    if (until === undefined) return null
+    if (until <= now) {
+      this.dashing.delete(p.id)
+      return null
+    }
+    return t === 'moveTo' || t === 'jump' ? fail('busy', 'dashing') : null
   }
 
   /** Stunned, frozen or knocked down: no actions (mobs skip their AI; players cannot use skills). */
@@ -1219,6 +1267,7 @@ export class SkillEngine implements GameplayModule {
   forget(p: Player): void {
     if (!p.dead) this.lastVitals.set(p.characterId, { hp: p.hp, mp: p.mp })
     this.casters.delete(p.id)
+    this.dashing.delete(p.id)
     this.speeds.delete(p.id)
     this.effects.drop(p.id)
     this.flights = this.flights.filter((f) => f.caster !== p.id && f.target !== p.id)

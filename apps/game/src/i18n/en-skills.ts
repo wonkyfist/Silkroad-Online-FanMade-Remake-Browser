@@ -108,6 +108,7 @@ export const enSkills = {
   'skills.block.weapon': 'Needs a different weapon.',
   'skills.block.requirements': 'Needs a shield (or the right item) equipped.',
   'skills.needTarget': 'Select a target first.',
+  'skills.dash.aim': 'Click where to go (press the skill again to dash straight ahead).',
 
   // ---- buffs ----
   'skills.buff.left': 'Time left: {time}',

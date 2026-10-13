@@ -209,6 +209,11 @@ export class TornadoService implements GameplayModule {
       })
   }
 
+  /** Water at x/z/y (the loaded planes; nothing is water before they load). Ghost Walk asks too (skills/dash.ts). */
+  wet(x: number, z: number, y: number): boolean {
+    return !!this.water?.wet(x, z, y)
+  }
+
   /** Tests: the water planes as given. */
   setWater(w: WaterIndex | null): void {
     this.water = w
