@@ -19,7 +19,64 @@ export function pick<T>(list: readonly T[] | undefined, rng: Rng = Math.random):
 export function skillGroupOf(code: string | undefined | null): string | null {
   if (!code) return null
   if (code.startsWith('MSKILL_')) return code
-  return code.replace(/_\d+$/, '')
+  // chain segments (SKILL_CH_SPEAR_CHAIN_C_2S_01) and second variants (SKILL_CH_SWORD_SMASH_C2_01) share their
+  // root's effectsound row (SKILL_CH_SPEAR_CHAIN_C, SKILL_CH_SWORD_SMASH_C)
+  return code.replace(/_\d+$/, '').replace(/_\d+S$/, '').replace(/(_[A-Z])\d+$/, '$1')
+}
+
+/** Skill family in a player group code (SKILL_CH_<FAMILY>_...): SWORD, SPEAR, BOW, COLD, LIGHTNING, FIRE, WATER. */
+export function skillFamilyOf(group: string | null | undefined): string | null {
+  return group ? (/^SKILL_(?:CH|EU)_([A-Z]+)_/.exec(group)?.[1] ?? null) : null
+}
+
+/**
+ * Cast sound of a group with no stage sound, no clip swing and no SND_ACTIVATE row (docs/SOUND.md §2.3), by family:
+ * a blade slash, a spear thrust, a bow release, the cold / fire / lightning ready sounds, the force chime.
+ */
+export const SKILL_CAST_FALLBACK: Readonly<Record<string, string>> = {
+  SWORD: 'skill/csk_sword_swing_a',
+  SPEAR: 'skill/csk_spear_swing_a',
+  BOW: 'skill/csk_bow_swing',
+  COLD: 'skill/csk_cold_ready',
+  FIRE: 'skill/csk_fire_ready',
+  LIGHTNING: 'skill/csk_light_ready',
+  WATER: 'skill/csk_heal_ready',
+}
+
+/**
+ * Impact of a force skill whose own row has no SND_DMG (Lion Shout, Frost Nova, Vital Spot): the cold shatter, the
+ * fire burst, the lightning crack, the force chime. Weapon skills fall back to the weapon's hit rows instead.
+ */
+export const SKILL_HIT_FALLBACK: Readonly<Record<string, string>> = {
+  COLD: 'skill/csk_cold_gigong_hit',
+  FIRE: 'skill/csk_fire_gigong_hit',
+  LIGHTNING: 'skill/csk_light_bolt_hit',
+  WATER: 'skill/csk_heal_mind',
+}
+
+/** Where a group's cast sound comes from: its stage rows, its clip's swing tracks, SND_ACTIVATE, or the fallback. */
+export type CastSource = 'stage' | 'clip' | 'activate' | 'fallback'
+
+/** The cast sound of a player skill group (null: none at all). 'clip' plays through the animation's swing tracks. */
+export function castSoundOf(index: SoundIndex, group: string, rng: Rng = Math.random): { source: CastSource; file: string | null } | null {
+  const s = index.skills[group]
+  if (s?.stages?.some(x => x.begin && index.files[x.begin])) return { source: 'stage', file: null }
+  if (Object.entries(s?.swing ?? {}).some(([k, f]) => /^snd_swing/.test(k) && f.some(x => index.files[x]))) return { source: 'clip', file: null }
+  const act = pick(s?.swing?.snd_activate?.filter(f => index.files[f]), rng)
+  if (act) return { source: 'activate', file: act }
+  const fb = SKILL_CAST_FALLBACK[skillFamilyOf(group) ?? '']
+  return fb && index.files[fb] ? { source: 'fallback', file: fb } : null
+}
+
+/** The impact a skill group's own data gives (SND_DMG), else the force family fallback; null for weapon skills without one. */
+export function skillHitFile(index: SoundIndex, group: string, strong = false, cls: HitClass = 'n', rng: Rng = Math.random): { file: string; gain: number } | null {
+  const dmg = index.skills[group]?.dmg
+  if (dmg) {
+    const file = Array.isArray(dmg) ? pick(dmg, rng) : fromHitSet(dmg, strong, cls)
+    if (file) return { file, gain: Array.isArray(dmg) ? 1 : dmg.gain }
+  }
+  const fb = SKILL_HIT_FALLBACK[skillFamilyOf(group) ?? '']
+  return fb && index.files[fb] ? { file: fb, gain: 1 } : null
 }
 
 /** effectsound families of the basic attacks (SKILL_CH_<FAMILY>_BASE) and the generic hit rows (hits.<KIND>). */
@@ -162,7 +219,7 @@ export function hitSound(index: SoundIndex, q: HitQuery): HitSound | null {
     const hwan = q.hwan && isBasicGroup(group) ? index.cues['hit.hwan'] : undefined
     const hwanFile = pick(hwan?.files, rng)
     impact = (hwanFile ? { file: hwanFile, gain: hwan!.gain } : null) ??
-      (group ? fromDmg(index.skills[group]?.dmg) : null) ??
+      (group ? (fromDmg(index.skills[group]?.dmg) ?? skillHitFile(index, group, strong, cls, rng)) : null) ??
       (family ? fromDmg(index.skills[`SKILL_CH_${WEAPON_BASE[family]}_BASE`]?.dmg) ?? fromDmg(index.hits[WEAPON_HITS[family]]) : null) ??
       fromDmg(index.hits.PUNCH)
   }

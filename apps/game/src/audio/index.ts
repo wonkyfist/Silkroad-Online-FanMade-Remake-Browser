@@ -15,7 +15,7 @@ import { WEATHER_CUES, type AreaSound, type ItemDef, type SoundCategory, type So
 import { AmbientPlayer, type AmbientOutput } from './ambient.ts'
 import { WebAudioBackend, type AudioBackend, type Vec3Like, type VoiceHandle } from './backend.ts'
 import { SoundBank, type BankOptions } from './bank.ts'
-import { dropCue, equipKind, hitSound, pick, type HitQuery } from './cues.ts'
+import { castSoundOf, dropCue, equipKind, hitSound, pick, type HitQuery } from './cues.ts'
 import { EntitySound, type EntityPlay, type EntitySoundHost, type SoundView } from './entity.ts'
 import { Music } from './music.ts'
 import { AudioSettings, browserStorage } from './settings.ts'
@@ -472,6 +472,18 @@ export class GameAudio implements EntitySoundHost {
     const hit = stages?.find(s => s.phase === phase && s.begin)
     if (!hit?.begin) return false
     this.playFile(hit.begin, { entity: at.entity, kind: 'other', pos: at.self ? undefined : at.pos, self: at.self, priority: at.priority, unique: true })
+    return true
+  }
+
+  /**
+   * The cast sound of a group with no stage row and no clip swing (docs/SOUND.md §2.3): its SND_ACTIVATE row, else the
+   * family fallback (cues.ts SKILL_CAST_FALLBACK). False when the stages or the clip already sound the cast.
+   */
+  skillCastFallback(group: string, at: { entity?: number; pos?: Vec3Like; self: boolean; priority?: number }): boolean {
+    const index = this.index
+    const c = index ? castSoundOf(index, group, this.random) : null
+    if (!c?.file) return false
+    this.playFile(c.file, { entity: at.entity, kind: 'other', pos: at.self ? undefined : at.pos, self: at.self, priority: at.priority, unique: true })
     return true
   }
 

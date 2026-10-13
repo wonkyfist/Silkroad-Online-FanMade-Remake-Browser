@@ -680,7 +680,8 @@ export class SkillEngine implements GameplayModule {
    */
   private imbue(a: Player | Mob, t: Player | Mob, hits: CombatHit[], mul: number, now: number): (StatusRoll | null)[] {
     const out: (StatusRoll | null)[] = hits.map(() => null)
-    if (a.kind !== 'player' || t.kind !== 'mob') return out
+    // docs/PVP.md: on a player too (the PvP rule already let this hit through), so Thunder Force chains off a player
+    if (a.kind !== 'player' || (t.kind === 'player' && (t === a || !this.g.hunters.allowed(a, t, now)))) return out
     const e = this.effects.imbue(a.id)
     const row = e?.skill
     if (!e || !row?.damage || (e.until !== 0 && e.until <= now)) return out

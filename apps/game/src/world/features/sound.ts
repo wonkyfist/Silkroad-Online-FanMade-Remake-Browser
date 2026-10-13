@@ -134,13 +134,18 @@ export const soundFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => {
     casts.set(v.id, { group, at: now(), until: now() + total + CAST_STAGE_MEMORY_MS })
     audio.skillStage(group, 'READY', at(v))
     if (msg.prepareMs > 0) later(msg.prepareMs, () => stage(msg.id, group, ['WAIT']), msg.id)
-    later(msg.prepareMs + msg.castMs, () => stage(msg.id, group, ['ACT_S', 'ACT_L', 'SHOT']), msg.id)
+    // a heal or cure on someone else sounds its action stage where it lands (the soft heal on them)
+    const kind = ctx.app.catalog.content.skills.get(msg.skill)?.kind
+    const on = msg.target !== undefined && msg.target !== msg.id && (kind === 'heal' || kind === 'cure') ? msg.target : msg.id
+    later(msg.prepareMs + msg.castMs, () => stage(on, group, ['ACT_S', 'ACT_L', 'SHOT'], true), msg.id)
   }
 
-  const stage = (id: number, group: string, phases: readonly string[]) => {
+  /** Stage sounds of `group` on `id`; `action`: with none, the SND_ACTIVATE row or the family's fallback cast sound. */
+  const stage = (id: number, group: string, phases: readonly string[], action = false) => {
     const v = ctx.view(id)
     if (!v || v.dead) return
     for (const p of phases) if (audio.skillStage(group, p, at(v))) return
+    if (action) audio.skillCastFallback(group, at(v))
   }
 
   /** A buff landing (effectAdd) sounds its action stage unless its own cast just did. */
