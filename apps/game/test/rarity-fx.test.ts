@@ -324,7 +324,7 @@ describe('round 3', () => {
     const it = rare.light(ownerOf(s.owner), { meshes: [s.mesh], root: s.root, dummies: new Map(), slot: 'shield' }, 'moon')!
     expect(scene.meshes.length).toBe(before)
     expect(rare.stateOf(s.mesh)?.item).toBe(it)
-    expect(rarityValues(rare.stateOf(s.mesh)!, 1, false)[0]).toBe(RARITY_LOOKS_T.moon.tintAmount)
+    expect(rarityValues(rare.stateOf(s.mesh)!, 1, false)[0]).toBeCloseTo(RARITY_LOOKS_T.moon.tintAmount, 6)
   })
 })
 

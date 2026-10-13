@@ -92,8 +92,8 @@ const SUN_R: V3 = [1, 0.32, 0.06]
 const WHITE: V3 = [1, 1, 1]
 /** Light colours (× the hit light's peak): a crit's flash per tier, your own weapon's glow. */
 const FLASH_COLOR: Readonly<Record<RarityTier, V3>> = { star: [0.55, 0.35, 1], moon: [0.6, 0.7, 1], sun: [1, 0.6, 0.2] }
-const SUN_GLOW: V3 = [0.75, 0.38, 0.1]
-const MOON_GLOW: V3 = [0.32, 0.38, 0.55]
+const SUN_GLOW: V3 = [0.26, 0.13, 0.04]
+const MOON_GLOW: V3 = [0.2, 0.24, 0.34]
 /**
  * Your own rare weapon's light: a faint warm touch on the body near the blade, never on the floor. It joined the
  * night lights' cluster on the PBR presets and lit the ground in an orange pool (and washed the body at the flash's
@@ -637,8 +637,8 @@ export class RarityFx implements RareItemsListener {
           const x = mx + wDir.x * Math.cos(a) * A + qx * Math.sin(a) * Bw
           const y = my + wDir.y * Math.cos(a) * A + qy * Math.sin(a) * Bw
           const z = mz + wDir.z * Math.cos(a) * A + qz * Math.sin(a) * Bw
-          if (i) p.line(px, py, pz, x, y, z, 0.006, p.rgb(STAR_W[0], STAR_W[1], STAR_W[2], 1.6 * (1 - i / segs) * vis))
-          if (i === 0) p.billboard(x, y, z, 0.05, t * 2, 'flare', p.rgb(WHITE[0], WHITE[1], WHITE[2], 3.5 * vis))
+          if (i) p.line(px, py, pz, x, y, z, 0.006, p.rgb(STAR_W[0], STAR_W[1], STAR_W[2], 0.8 * (1 - i / segs) * vis))
+          if (i === 0) p.billboard(x, y, z, 0.04, t * 2, 'flare', p.rgb(WHITE[0], WHITE[1], WHITE[2], 2 * vis))
           px = x
           py = y
           pz = z
@@ -647,11 +647,11 @@ export class RarityFx implements RareItemsListener {
     }
     // stars orbiting the blade (sized for the default camera: a few pixels at least)
     const camD = Math.max(1, Vector3.Distance(wTip, p.eye))
-    const n = Math.round(16 * c.profile.motes * (k < 1 ? 0.6 : 1))
+    const n = Math.round(9 * c.profile.motes * (k < 1 ? 0.6 : 1))
     for (let i = 0; i < n; i++) {
       const h = hash2(i, 77)
       const tt = 0.12 + 0.9 * ((i + 0.5) / n) + 0.04 * Math.sin(t * 0.7 + i)
-      const a = t * (1.3 + 0.8 * h) + i * 2.399 + ph
+      const a = t * (0.6 + 0.4 * h) + i * 2.399 + ph
       const rad = Math.max(0.06, len * 0.1) * (0.8 + 1.2 * hash2(i, 13))
       this.bladeAt(Math.min(1.05, tt), v1)
       const ca = Math.cos(a) * rad
@@ -660,14 +660,14 @@ export class RarityFx implements RareItemsListener {
       v1.y += wAcross.y * ca + wNormal.y * sa
       v1.z += wAcross.z * ca + wNormal.z * sa
       const tw = 0.35 + 0.65 * Math.max(0, Math.sin(t * (3 + 3 * h) + i * 5.1)) ** 3
-      const sz = Math.max(0.05, 0.016 * camD, len * (0.08 + 0.06 * h)) * (0.7 + 0.6 * tw)
-      p.billboard(v1.x, v1.y, v1.z, sz, t * 0.8 + i, 'flare', p.rgb(STAR_W[0], STAR_W[1], STAR_W[2], 5 * tw * vis))
-      p.billboard(v1.x, v1.y, v1.z, sz * 0.5, 0, 'orb', p.rgb(STAR_V[0], STAR_V[1], STAR_V[2], 1.6 * tw * vis))
+      const sz = Math.max(0.035, 0.012 * camD, len * (0.05 + 0.035 * h)) * (0.7 + 0.6 * tw)
+      p.billboard(v1.x, v1.y, v1.z, sz, t * 0.8 + i, 'flare', p.rgb(STAR_W[0], STAR_W[1], STAR_W[2], 2.4 * tw * vis))
+      p.billboard(v1.x, v1.y, v1.z, sz * 0.5, 0, 'orb', p.rgb(STAR_V[0], STAR_V[1], STAR_V[2], 0.6 * tw * vis))
     }
     // a trail of twinkling stardust: more the faster the blade moves
     const fast = swinging && speed > SWING_MIN_SPEED
     // idle: a steady drift of stardust off the blade; moving: more; swinging: a dense trail
-    const rate = (34 + Math.min(40, speed * 8) + (fast ? 650 : 0)) * k
+    const rate = (12 + Math.min(30, speed * 6) + (fast ? 650 : 0)) * k
     c.emit += rate * dt
     while (c.emit >= 1) {
       c.emit -= 1
@@ -688,16 +688,37 @@ export class RarityFx implements RareItemsListener {
     // the moonstone glow along the blade
     for (let i = 0; i < 3; i++) {
       this.bladeAt(0.3 + i * 0.3, v1)
-      p.billboard(v1.x, v1.y, v1.z, len * 0.22, 0, 'orb', p.rgb(MOON_B[0], MOON_B[1], MOON_B[2], 0.38 * vis * nb))
+      p.billboard(v1.x, v1.y, v1.z, len * 0.16, 0, 'orb', p.rgb(MOON_B[0], MOON_B[1], MOON_B[2], 0.08 * vis * nb))
+    }
+    // silver motes circling the blade slowly, each breathing in and out
+    {
+      const camD = Math.max(1, Vector3.Distance(wTip, p.eye))
+      const n = Math.round(6 * c.profile.motes * (k < 1 ? 0.6 : 1))
+      for (let i = 0; i < n; i++) {
+        const h = hash2(i, 41)
+        const tt = 0.15 + 0.85 * ((i + 0.5) / n) + 0.05 * Math.sin(t * 0.4 + i)
+        const a = t * (0.45 + 0.25 * h) + i * 2.399 + c.item.phase * 21
+        const rad = Math.max(0.07, len * 0.13) * (0.85 + 0.5 * hash2(i, 9))
+        this.bladeAt(Math.min(1.04, tt), v1)
+        const ca = Math.cos(a) * rad
+        const sa = Math.sin(a) * rad
+        v1.x += wAcross.x * ca + wNormal.x * sa
+        v1.y += wAcross.y * ca + wNormal.y * sa
+        v1.z += wAcross.z * ca + wNormal.z * sa
+        const br = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * (0.9 + h) + i * 3.7))
+        const sz = Math.max(0.018, 0.006 * camD, len * 0.025) * (0.8 + 0.4 * br)
+        p.billboard(v1.x, v1.y, v1.z, sz, 0, 'orb', p.rgb(MOON_S[0], MOON_S[1], MOON_S[2], 0.9 * br * vis * nb))
+        p.billboard(v1.x, v1.y, v1.z, sz * 2.2, 0, 'mist', p.rgb(MOON_B[0], MOON_B[1], MOON_B[2], 0.07 * br * vis * nb))
+      }
     }
     // silver mist pouring off the blade
-    const rate = (22 + Math.min(30, speed * 6) + (swinging ? 40 : 0)) * k
+    const rate = (9 + Math.min(20, speed * 4) + (swinging ? 40 : 0)) * k
     c.emit += rate * dt
     while (c.emit >= 1) {
       c.emit -= 1
       this.bladeAt(0.2 + 0.85 * Math.random(), v1)
       const s = (Math.random() - 0.5) * 0.25
-      parts.emit(v1.x, v1.y, v1.z, wAcross.x * s + (Math.random() - 0.5) * 0.08, -0.08 - Math.random() * 0.1, wAcross.z * s + (Math.random() - 0.5) * 0.08, 1.4 + Math.random() * 1.1, len * (0.06 + Math.random() * 0.05), 2.4, Math.random() < 0.6 ? P_MIST : P_SMOKE, MOON_S, MOON_B, 0.45 * nb, Math.random() * 6)
+      parts.emit(v1.x, v1.y, v1.z, wAcross.x * s + (Math.random() - 0.5) * 0.08, -0.08 - Math.random() * 0.1, wAcross.z * s + (Math.random() - 0.5) * 0.08, 1.4 + Math.random() * 1.1, len * (0.06 + Math.random() * 0.05), 2.4, Math.random() < 0.6 ? P_MIST : P_SMOKE, MOON_S, MOON_B, 0.3 * nb, Math.random() * 6)
     }
     // the swing throws moonlight mist off the tip
     if (swinging && speed > SWING_MIN_SPEED) {
@@ -724,10 +745,37 @@ export class RarityFx implements RareItemsListener {
     for (let i = 0; i < 3; i++) {
       this.bladeAt(0.3 + i * 0.3, v1)
       const fl = 0.85 + 0.15 * Math.sin(t * 9 + i * 2)
-      p.billboard(v1.x, v1.y, v1.z, len * 0.24, 0, 'orb', p.rgb(SUN_O[0], SUN_O[1], SUN_O[2], 0.32 * fl * vis))
+      p.billboard(v1.x, v1.y, v1.z, len * 0.18, 0, 'orb', p.rgb(SUN_O[0], SUN_O[1], SUN_O[2], 0.08 * fl * vis))
+    }
+    {
+      const camD = Math.max(1, Vector3.Distance(wTip, p.eye))
+      // gold wisps circling the blade, a heat waver in their path
+      const n = Math.round(5 * c.profile.motes * (k < 1 ? 0.6 : 1))
+      for (let i = 0; i < n; i++) {
+        const h = hash2(i, 57)
+        const tt = 0.15 + 0.85 * ((i + 0.5) / n) + 0.04 * Math.sin(t * 1.3 + i * 2)
+        const a = t * (0.7 + 0.3 * h) + i * 2.399 + c.item.phase * 13
+        const rad = Math.max(0.07, len * 0.12) * (0.9 + 0.3 * Math.sin(t * 2.1 + i))
+        this.bladeAt(Math.min(1.04, tt), v1)
+        const ca = Math.cos(a) * rad
+        const sa = Math.sin(a) * rad
+        v1.x += wAcross.x * ca + wNormal.x * sa
+        v1.y += wAcross.y * ca + wNormal.y * sa
+        v1.z += wAcross.z * ca + wNormal.z * sa
+        const fl = 0.6 + 0.4 * Math.sin(t * 5 + i * 1.7)
+        const sz = Math.max(0.022, 0.007 * camD, len * 0.03) * (0.8 + 0.4 * fl)
+        p.billboard(v1.x, v1.y, v1.z, sz, t + i, 'flare', p.rgb(SUN_W[0], SUN_W[1], SUN_W[2], 1.8 * fl * vis))
+        p.billboard(v1.x, v1.y, v1.z, sz * 1.8, 0, 'orb', p.rgb(SUN_O[0], SUN_O[1], SUN_O[2], 0.35 * fl * vis))
+      }
+      // a rare solar flare: every ~20 s a star of light runs up the blade
+      const fz = Math.pow(0.5 + 0.5 * Math.sin(t * 0.31 + c.item.phase * 7), 40)
+      if (fz > 0.02) {
+        this.bladeAt(0.25 + 0.75 * ((t * 0.31 + c.item.phase * 7) / (Math.PI * 2) % 1), v1)
+        p.billboard(v1.x, v1.y, v1.z, Math.max(0.08, len * 0.16), t * 0.5, 'flare', p.rgb(SUN_W[0], SUN_W[1], SUN_W[2], 3 * fz * vis))
+      }
     }
     // flames licking off the blade
-    const rate = (110 + Math.min(60, speed * 10) + (swinging ? 40 : 0)) * k
+    const rate = (28 + Math.min(40, speed * 8) + (swinging ? 40 : 0)) * k
     c.emit += rate * dt
     const hw = Math.max(0.012, it0(c).halfWidth)
     while (c.emit >= 1) {
@@ -735,11 +783,11 @@ export class RarityFx implements RareItemsListener {
       // fire from points on the blade's surface (anywhere across its width, both faces), rising and curling;
       // small soft camera-facing puffs of varied size, turn and life (a white-hot core puff now and then)
       this.bladeAt(0.04 + 0.98 * Math.random(), v1)
-      const e = (Math.random() * 2 - 1) * hw
+      const e = (Math.random() < 0.5 ? -1 : 1) * hw * (0.8 + 0.2 * Math.random())
       const d = (Math.random() - 0.5) * hw * 0.4
       v1.addInPlaceFromFloats(wAcross.x * e + wNormal.x * d, wAcross.y * e + wNormal.y * d, wAcross.z * e + wNormal.z * d)
       const core = Math.random() < 0.3
-      const sz = Math.max(0.018, len * (core ? 0.025 : 0.035 + Math.random() * 0.045))
+      const sz = Math.max(0.014, len * (core ? 0.018 : 0.022 + Math.random() * 0.028))
       parts.emit(v1.x, v1.y, v1.z, wAcross.x * e * 2 + (Math.random() - 0.5) * 0.12, 0.25 + Math.random() * 0.5, wAcross.z * e * 2 + (Math.random() - 0.5) * 0.12, 0.22 + Math.random() * 0.35, sz, core ? -0.3 : 0.6 + Math.random() * 0.8, core ? P_ORB : P_FLAME, SUN_W, core ? SUN_G : SUN_O, core ? 2.6 : 1.7, Math.random() * 6.28)
     }
     // the swing's fire arc: flames torn off the outer edge
@@ -752,7 +800,7 @@ export class RarityFx implements RareItemsListener {
       }
     }
     // rising embers (falling as a rain while swinging)
-    c.emit2 += (40 + (swinging ? 90 : 0)) * k * dt
+    c.emit2 += (16 + (swinging ? 90 : 0)) * k * dt
     while (c.emit2 >= 1) {
       c.emit2 -= 1
       this.bladeAt(0.4 + 0.7 * Math.random(), v1)

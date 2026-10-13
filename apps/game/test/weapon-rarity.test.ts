@@ -393,3 +393,25 @@ describe('HUD', () => {
     expect(n.name).toBe('Sharp Sword')
   })
 })
+
+describe('the weapon stays readable (owner pass: edges and fuller, restrained, never blown out)', () => {
+  it('the tint only colours the albedo a little and the gains stay restrained; Sun still the boldest', () => {
+    for (const t of RARITY_TIERS) {
+      const L = RARITY_LOOKS[t]
+      expect(L.tintAmount).toBeLessThanOrEqual(0.25)
+      expect(L.rimGain).toBeLessThanOrEqual(1)
+      expect(L.pattern).toBeLessThanOrEqual(1.25)
+      expect(L.speed).toBeLessThanOrEqual(1)
+    }
+    expect(RARITY_LOOKS.sun.pattern).toBeGreaterThan(RARITY_LOOKS.star.pattern)
+  })
+
+  it('the full shader masks the effect to the edges and the fuller, flows, glints, and ends with a soft knee', () => {
+    for (const lang of ['wgsl', 'glsl'] as const) {
+      const code = rarityCode(lang).CUSTOM_FRAGMENT_BEFORE_FINALCOLORCOMPOSITION!
+      const full = code.slice(code.indexOf('#else'))
+      for (const n of ['rrEdge', 'rrFull', 'rrFlow', 'rrGlint', 'rrRune', 'rrHeat', 'rrFlare']) expect(full.includes(n), `${lang} ${n}`).toBe(true)
+      expect(full).toMatch(/rrE = rrE \/ \(1\.0 \+ max\(max\(rrE\.r, rrE\.g\), rrE\.b\) \* 0\.45\)/)
+    }
+  })
+})

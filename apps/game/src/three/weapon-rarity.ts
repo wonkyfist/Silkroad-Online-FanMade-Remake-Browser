@@ -5,11 +5,12 @@
  *    mesh defines (SRORARE, SRORARE_LITE) and per-draw uniforms, no clone, no per-frame allocation, priority 310 after
  *    the glow's 300 (both add to the emissive). The blade gets a frame (along: ai_start → ai_end; across: its widest
  *    side; and its face normal) and each tier draws in it:
- *      Star: dark glass with deep space inside: two nebula layers at different depths (parallax with the view), twinkling
- *            stars, etched constellation lines that breathe, a white-violet razor edge;
- *      Moon: pale moonstone: a soft inner light with a blue adularescent sheen, a band of light flowing up the blade,
- *            bright silver edges, stronger at night;
- *      Sun:  molten gold: a white-hot core along the blade's spine, fire cracks that flow and pulse with heat.
+ *    The weapon keeps its own albedo, metal and engraving (a light tint only, a soft knee on the emissive so bloom
+ *    never blows it out); the tier lives on the edges (fresnel rim, slow energy flowing base to tip, a glint now and
+ *    then) and in the fuller (breathing runes):
+ *      Star: a violet shimmer with twinkling stars along the edges;
+ *      Moon: cool silver-blue flowing light, a faint adularescent sheen in the fuller, stronger at night;
+ *      Sun:  warm gold radiant flow with a heat shimmer and a rare flare;
  *    The art is generated (world/rarity/atlas.ts: blade-nebula, blade-masks);
  *  - the tier's motes (RarityMotes): the light near-blade layer of the rare weapons farther away (world/rarity/fx.ts
  *    draws the full effects of your own and the nearest);
@@ -82,20 +83,20 @@ const hex = (h: string): Rgb => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.s
 /** docs/RARITY.md §5 [decision]: one look per tier, each a clear step up (values set on the plaza at noon and night). */
 export const RARITY_LOOKS: Readonly<Record<RarityTier, RarityLook>> = {
   star: {
-    kind: 1, tint: hex('#0b0816'), tintAmount: 1, rim: hex('#7a3cff'), rimPower: 3.2, rimGain: 0.9,
-    accent: hex('#9a62ff'), pattern: 2.3, speed: 1,
+    kind: 1, tint: hex('#4a3f78'), tintAmount: 0.14, rim: hex('#9a6cff'), rimPower: 3.6, rimGain: 0.4,
+    accent: hex('#a985ff'), pattern: 1, speed: 0.9,
     motes: 7, moteCore: hex('#ffffff'), moteEdge: hex('#a77dff'), sprite: 0,
     trail: hex('#b892ff'), trailAlpha: 0.45, trailLength: 1.2, trailBlend: 'add',
   },
   moon: {
-    kind: 2, tint: hex('#5e6c8a'), tintAmount: 1, rim: hex('#d8e8ff'), rimPower: 2.4, rimGain: 1.3,
-    accent: hex('#a9c4ff'), pattern: 0.95, speed: 1.2,
+    kind: 2, tint: hex('#9fb0d4'), tintAmount: 0.16, rim: hex('#d8e8ff'), rimPower: 3, rimGain: 0.62,
+    accent: hex('#b4ccff'), pattern: 1.05, speed: 0.85,
     motes: 8, moteCore: hex('#ffffff'), moteEdge: hex('#9fc0ff'), sprite: 1,
     trail: hex('#d6e6ff'), trailAlpha: 0.45, trailLength: 1.35, trailBlend: 'add',
   },
   sun: {
-    kind: 3, tint: hex('#e39a30'), tintAmount: 1, rim: hex('#ffbe4a'), rimPower: 1.5, rimGain: 2.4,
-    accent: hex('#ffd27a'), pattern: 1.9, speed: 1,
+    kind: 3, tint: hex('#e8a848'), tintAmount: 0.2, rim: hex('#ffc35a'), rimPower: 2.8, rimGain: 0.75,
+    accent: hex('#ffd27a'), pattern: 1.15, speed: 0.8,
     motes: 9, moteCore: hex('#fff2b8'), moteEdge: hex('#ff5a0a'), sprite: 2,
     trail: hex('#ffb347'), trailAlpha: 0.5, trailLength: 1.5, trailBlend: 'add',
   },
@@ -157,17 +158,16 @@ const EMISSIVE_GLSL = `
 {
   float rrTime = sroRareR.w;
 #ifdef SRORARE_LITE
-  float rrPulse = 0.75 + 0.25 * sin(rrTime * 2.2 * sroRareP.w);
-  vec3 rrLite = sroRareR.rgb * sroRareA.z + sroRareP.rgb * (sroRareA.w * rrPulse * 0.4);
+  float rrPulse = 0.75 + 0.25 * sin(rrTime * 1.4 * sroRareP.w);
+  vec3 rrLite = sroRareR.rgb * (sroRareA.z * 0.6);
 #ifdef ALBEDO
-  vec3 rrLn = texture2D(sroRareNeb, vAlbedoUV * 2.0 + vec2(rrTime * 0.01, 0.0)).rgb;
   vec4 rrLm = texture2D(sroRareMask, vAlbedoUV * 2.0);
   if (sroRareT.w < 1.5) {
-    rrLite += (rrLn + sroRareP.rgb * rrLm.r) * sroRareA.w;
+    rrLite += sroRareP.rgb * (rrLm.r * 0.5 * rrPulse) * sroRareA.w;
   } else if (sroRareT.w < 2.5) {
-    rrLite += sroRareP.rgb * (rrLm.b * 0.4 + rrLm.a * 0.6) * sroRareA.w;
+    rrLite += sroRareP.rgb * ((rrLm.r * 0.4 + rrLm.a * 0.15) * rrPulse) * sroRareA.w;
   } else {
-    rrLite += vec3(1.0, 0.55, 0.12) * rrLm.g * (1.2 + 0.4 * sin(rrTime * 3.0)) * sroRareA.w;
+    rrLite += vec3(1.0, 0.62, 0.2) * (rrLm.g * 0.45 * rrPulse) * sroRareA.w;
   }
 #endif
   finalEmissive += rrLite;
@@ -175,7 +175,6 @@ const EMISSIVE_GLSL = `
   vec3 rrO = (world * vec4(sroRareO.xyz, 1.0)).xyz;
   vec3 rrA = (world * vec4(sroRareD.xyz, 0.0)).xyz;
   vec3 rrWa = (world * vec4(sroRareW.xyz, 0.0)).xyz;
-  vec3 rrNa = (world * vec4(sroRareN.xyz, 0.0)).xyz;
   vec3 rrP = vPositionW - rrO;
   float rrT = dot(rrP, rrA) / max(dot(rrA, rrA), 1e-8);
   float rrWm = dot(rrP, rrWa) / max(dot(rrWa, rrWa), 1e-8);
@@ -183,46 +182,50 @@ const EMISSIVE_GLSL = `
   float rrMask = smoothstep(sroRareM.x, sroRareM.y, rrT) * (1.0 - smoothstep(sroRareM.z, sroRareM.w, rrT));
   float rrNdV = clamp(abs(dot(normalW, viewDirectionW)), 0.0, 1.0);
   float rrF = pow(1.0 - rrNdV, sroRareA.y);
-  vec3 rrAn = normalize(rrA);
-  vec3 rrWn = normalize(rrWa);
-  vec3 rrNn = normalize(rrNa);
-  vec2 rrV = vec2(dot(viewDirectionW, rrAn), dot(viewDirectionW, rrWn)) / max(abs(dot(viewDirectionW, rrNn)), 0.3);
   vec2 rrUV = vec2(rrT * sroRareS.x, rrWm) * 1.6;
-  vec3 rrN1 = texture2D(sroRareNeb, rrUV * 0.7 - rrV * 0.07 + vec2(rrTime * 0.012, 0.0)).rgb;
-  vec3 rrN2 = texture2D(sroRareNeb, rrUV * 1.7 - rrV * 0.025 + vec2(0.31, 0.57 + rrTime * 0.007)).rgb;
   vec4 rrM1 = texture2D(sroRareMask, rrUV * 1.2);
-  vec4 rrM2 = texture2D(sroRareMask, rrUV * vec2(0.55, 1.4) + vec2(rrTime * 0.06 * sroRareP.w, 0.13));
-  vec3 rrE = sroRareR.rgb * (rrF * sroRareA.z);
+  // where the effect lives: the cutting edges and the silhouette (rim), the fuller / spine (runes); the faces keep
+  // the weapon's own albedo, metal and engraving
+  float rrAw = abs(rrW);
+  float rrEdge = smoothstep(0.75, 0.99, rrAw);
+  float rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
+  float rrSpd = sroRareP.w;
+  // slow energy flowing base -> tip along the edges: two staggered pulses
+  float rrFlow = pow(0.5 + 0.5 * sin(rrT * 6.5 - rrTime * 1.2 * rrSpd), 10.0) + 0.6 * pow(0.5 + 0.5 * sin(rrT * 3.5 - rrTime * 0.75 * rrSpd + 2.1), 14.0);
+  // now and then a glint runs up an edge
+  float rrGate = pow(0.5 + 0.5 * sin(rrTime * 0.5), 16.0);
+  float rrGd = (rrT - fract(rrTime * 0.25)) * 16.0;
+  float rrGlint = rrGate * exp(-rrGd * rrGd);
+  // runes etched in the fuller, breathing slowly
+  float rrRune = rrM1.r * rrFull * (0.55 + 0.45 * sin(rrTime * 0.9 + rrT * 4.0));
+  vec3 rrE = vec3(0.0);
   if (sroRareT.w < 1.5) {
-    float rrTw = 0.55 + 0.45 * sin(rrTime * 2.7 + rrT * 31.0 + rrW * 7.0);
-    float rrLines = rrM1.r * (0.65 + 0.35 * sin(rrTime * 1.9 + rrT * 5.0));
-    rrE += (rrN1 * rrN1 * 1.4 + rrN2 * rrN2 * rrN2 * 4.0 * rrTw + sroRareP.rgb * (rrLines * 1.7)) * sroRareA.w;
+    vec3 rrN2 = texture2D(sroRareNeb, rrUV * 1.7 + vec2(0.31, 0.57 + rrTime * 0.007)).rgb;
+    float rrTw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(rrTime * 2.3 + rrT * 37.0 + rrW * 5.0), 4.0);
+    float rrStars = rrN2.b * rrN2.b * rrN2.b * rrTw;
+    rrE = sroRareP.rgb * (rrEdge * (0.08 + 0.7 * rrFlow) + rrRune * 0.55) + vec3(0.92, 0.88, 1.0) * (rrStars * rrEdge * 1.8 + rrGlint * rrEdge * 1.6);
   } else if (sroRareT.w < 2.5) {
-    float rrBand = pow(0.5 + 0.5 * sin(rrT * 9.0 - rrTime * 1.8 * sroRareP.w), 6.0);
-    vec3 rrSheen = vec3(0.35, 0.55, 1.0) * rrM1.a * (1.0 - rrNdV * 0.5);
-    rrE += (sroRareT.rgb * (0.1 + 0.3 * rrM1.b) + rrSheen * 0.8 + vec3(0.85, 0.9, 1.0) * rrM1.r * 0.6 + sroRareP.rgb * (rrBand * 0.35)) * sroRareA.w * (1.0 + sroRareS.w * 0.6);
+    vec3 rrSheen = vec3(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.18 * (1.0 - rrNdV * 0.5));
+    rrE = (sroRareP.rgb * (rrEdge * (0.08 + 0.85 * rrFlow) + rrRune * 0.5) + rrSheen + vec3(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + sroRareS.w * 0.5);
   } else {
-    float rrCore = 1.0 - smoothstep(0.0, 0.55, abs(rrW));
-    float rrHeat = 0.78 + 0.22 * sin(rrTime * 4.1 - rrT * 9.0) * sin(rrTime * 2.3 + rrT * 3.0);
-    float rrCr = max(rrM1.g, rrM2.g * 0.85);
-    vec3 rrFire = mix(vec3(1.0, 0.22, 0.02), vec3(1.0, 0.86, 0.4), clamp(rrCr * 1.3, 0.0, 1.0));
-    rrE += (rrFire * rrCr * 4.0 + vec3(1.0, 0.9, 0.65) * rrCore * rrCore * 2.2 + sroRareP.rgb * 0.12) * rrHeat * sroRareA.w;
+    float rrHeat = 0.82 + 0.18 * sin(rrTime * 3.1 - rrT * 11.0 + 1.5 * sin(rrTime * 1.7 + rrT * 5.0));
+    float rrFlare = pow(0.5 + 0.5 * sin(rrTime * 0.29 + 1.3), 48.0);
+    vec3 rrGold = vec3(1.0, 0.7, 0.26);
+    rrE = rrGold * (rrEdge * (0.1 + 0.9 * rrFlow) * rrHeat) + vec3(1.0, 0.55, 0.16) * (rrRune * 0.55 * rrHeat) + vec3(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
   }
 
-  // a seal shield (D.w = 1): the face reads as the tier's emblem: radial from its centre, a tier-coloured rim line
+  // a seal shield (D.w = 1): the tier's light runs round the rim and the emblem lines glow faintly; the face stays
   if (sroRareD.w > 0.5) {
     float rrR = length(vec2((rrT - 0.5) * 2.0, rrW));
-    float rrRim = smoothstep(0.78, 0.97, rrR) * (1.0 - smoothstep(0.97, 1.08, rrR));
-    if (sroRareT.w < 1.5) {
-      rrE = rrE + (sroRareP.rgb * rrM1.r * 2.2 + rrN2 * rrN2 * rrN2 * 3.0 * (1.0 - rrR * 0.5) + sroRareR.rgb * rrRim * 1.6) * sroRareA.w;
-    } else if (sroRareT.w < 2.5) {
-      vec3 rrIr = vec3(0.5) + vec3(0.5) * cos(6.2832 * (vec3(rrNdV * 1.4 + rrR * 0.6) + vec3(0.0, 0.33, 0.67)));
-      rrE = sroRareR.rgb * (rrF * sroRareA.z * 0.35) + (vec3(0.32, 0.34, 0.55) * (0.3 + 0.7 * rrM1.b) + mix(vec3(0.6, 0.55, 0.85), rrIr, 0.45) * rrM1.a * 0.3 + vec3(0.62, 0.7, 0.95) * rrM1.r * 0.9 + sroRareR.rgb * rrRim * 1.0) * sroRareA.w * (1.0 - 0.45 * sroRareS.w);
-    } else {
-      float rrSc = (1.0 - smoothstep(0.0, 0.75, rrR));
-      rrE = sroRareR.rgb * (rrF * sroRareA.z * 0.35) + (vec3(0.85, 0.42, 0.08) * (0.25 + rrSc * rrSc * 0.6) + vec3(1.0, 0.5, 0.1) * max(rrM1.g, rrM2.g) * 2.2 + sroRareR.rgb * rrRim * 1.3) * sroRareA.w * (1.0 - 0.45 * sroRareS.w);
-    }
+    float rrRim = smoothstep(0.8, 0.96, rrR) * (1.0 - smoothstep(0.98, 1.08, rrR));
+    float rrAng = atan(rrW, (rrT - 0.5) * 2.0);
+    float rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 8.0);
+    float rrInner = 1.0 - smoothstep(0.55, 0.85, rrR);
+    rrE = sroRareP.rgb * (rrRim * (0.3 + 0.9 * rrRun) + rrM1.r * rrInner * 0.3 * (0.6 + 0.4 * sin(rrTime * 0.9))) + vec3(1.0) * (rrGlint * rrRim);
   }
+  // a soft knee: bright, never blown out (the weapon stays readable under bloom)
+  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.45);
+  rrE = sroRareR.rgb * (rrF * (0.2 + 0.8 * max(rrEdge, step(0.5, sroRareD.w))) * sroRareA.z) + rrE * sroRareA.w;
   finalEmissive += rrE * rrMask * (1.0 + sroRareS.z * 2.5);
 #endif
 }
@@ -234,17 +237,16 @@ const EMISSIVE_WGSL = `
 {
   let rrTime = uniforms.sroRareR.w;
 #ifdef SRORARE_LITE
-  let rrPulse = 0.75 + 0.25 * sin(rrTime * 2.2 * uniforms.sroRareP.w);
-  var rrLite = uniforms.sroRareR.rgb * uniforms.sroRareA.z + uniforms.sroRareP.rgb * (uniforms.sroRareA.w * rrPulse * 0.4);
+  let rrPulse = 0.75 + 0.25 * sin(rrTime * 1.4 * uniforms.sroRareP.w);
+  var rrLite = uniforms.sroRareR.rgb * (uniforms.sroRareA.z * 0.6);
 #ifdef ALBEDO
-  let rrLn = textureSample(sroRareNeb, sroRareNebSampler, fragmentInputs.vAlbedoUV * 2.0 + vec2f(rrTime * 0.01, 0.0)).rgb;
   let rrLm = textureSample(sroRareMask, sroRareMaskSampler, fragmentInputs.vAlbedoUV * 2.0);
   if (uniforms.sroRareT.w < 1.5) {
-    rrLite = rrLite + (rrLn + uniforms.sroRareP.rgb * rrLm.r) * uniforms.sroRareA.w;
+    rrLite = rrLite + uniforms.sroRareP.rgb * (rrLm.r * 0.5 * rrPulse) * uniforms.sroRareA.w;
   } else if (uniforms.sroRareT.w < 2.5) {
-    rrLite = rrLite + uniforms.sroRareP.rgb * (rrLm.b * 0.4 + rrLm.a * 0.6) * uniforms.sroRareA.w;
+    rrLite = rrLite + uniforms.sroRareP.rgb * ((rrLm.r * 0.4 + rrLm.a * 0.15) * rrPulse) * uniforms.sroRareA.w;
   } else {
-    rrLite = rrLite + vec3f(1.0, 0.55, 0.12) * rrLm.g * (1.2 + 0.4 * sin(rrTime * 3.0)) * uniforms.sroRareA.w;
+    rrLite = rrLite + vec3f(1.0, 0.62, 0.2) * (rrLm.g * 0.45 * rrPulse) * uniforms.sroRareA.w;
   }
 #endif
   finalEmissive = finalEmissive + rrLite;
@@ -252,7 +254,6 @@ const EMISSIVE_WGSL = `
   let rrO = (mesh.world * vec4f(uniforms.sroRareO.xyz, 1.0)).xyz;
   let rrA = (mesh.world * vec4f(uniforms.sroRareD.xyz, 0.0)).xyz;
   let rrWa = (mesh.world * vec4f(uniforms.sroRareW.xyz, 0.0)).xyz;
-  let rrNa = (mesh.world * vec4f(uniforms.sroRareN.xyz, 0.0)).xyz;
   let rrP = fragmentInputs.vPositionW - rrO;
   let rrT = dot(rrP, rrA) / max(dot(rrA, rrA), 1e-8);
   let rrWm = dot(rrP, rrWa) / max(dot(rrWa, rrWa), 1e-8);
@@ -260,46 +261,50 @@ const EMISSIVE_WGSL = `
   let rrMask = smoothstep(uniforms.sroRareM.x, uniforms.sroRareM.y, rrT) * (1.0 - smoothstep(uniforms.sroRareM.z, uniforms.sroRareM.w, rrT));
   let rrNdV = clamp(abs(dot(normalW, viewDirectionW)), 0.0, 1.0);
   let rrF = pow(1.0 - rrNdV, uniforms.sroRareA.y);
-  let rrAn = normalize(rrA);
-  let rrWn = normalize(rrWa);
-  let rrNn = normalize(rrNa);
-  let rrV = vec2f(dot(viewDirectionW, rrAn), dot(viewDirectionW, rrWn)) / max(abs(dot(viewDirectionW, rrNn)), 0.3);
   let rrUV = vec2f(rrT * uniforms.sroRareS.x, rrWm) * 1.6;
-  let rrN1 = textureSample(sroRareNeb, sroRareNebSampler, rrUV * 0.7 - rrV * 0.07 + vec2f(rrTime * 0.012, 0.0)).rgb;
-  let rrN2 = textureSample(sroRareNeb, sroRareNebSampler, rrUV * 1.7 - rrV * 0.025 + vec2f(0.31, 0.57 + rrTime * 0.007)).rgb;
   let rrM1 = textureSample(sroRareMask, sroRareMaskSampler, rrUV * 1.2);
-  let rrM2 = textureSample(sroRareMask, sroRareMaskSampler, rrUV * vec2f(0.55, 1.4) + vec2f(rrTime * 0.06 * uniforms.sroRareP.w, 0.13));
-  var rrE = uniforms.sroRareR.rgb * (rrF * uniforms.sroRareA.z);
+  let rrN2 = textureSample(sroRareNeb, sroRareNebSampler, rrUV * 1.7 + vec2f(0.31, 0.57 + rrTime * 0.007)).rgb;
+  // where the effect lives: the cutting edges and the silhouette (rim), the fuller / spine (runes); the faces keep
+  // the weapon's own albedo, metal and engraving
+  let rrAw = abs(rrW);
+  let rrEdge = smoothstep(0.75, 0.99, rrAw);
+  let rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
+  let rrSpd = uniforms.sroRareP.w;
+  // slow energy flowing base -> tip along the edges: two staggered pulses
+  let rrFlow = pow(0.5 + 0.5 * sin(rrT * 6.5 - rrTime * 1.2 * rrSpd), 10.0) + 0.6 * pow(0.5 + 0.5 * sin(rrT * 3.5 - rrTime * 0.75 * rrSpd + 2.1), 14.0);
+  // now and then a glint runs up an edge
+  let rrGate = pow(0.5 + 0.5 * sin(rrTime * 0.5), 16.0);
+  let rrGd = (rrT - fract(rrTime * 0.25)) * 16.0;
+  let rrGlint = rrGate * exp(-rrGd * rrGd);
+  // runes etched in the fuller, breathing slowly
+  let rrRune = rrM1.r * rrFull * (0.55 + 0.45 * sin(rrTime * 0.9 + rrT * 4.0));
+  var rrE = vec3f(0.0);
   if (uniforms.sroRareT.w < 1.5) {
-    let rrTw = 0.55 + 0.45 * sin(rrTime * 2.7 + rrT * 31.0 + rrW * 7.0);
-    let rrLines = rrM1.r * (0.65 + 0.35 * sin(rrTime * 1.9 + rrT * 5.0));
-    rrE = rrE + (rrN1 * rrN1 * 1.4 + rrN2 * rrN2 * rrN2 * 4.0 * rrTw + uniforms.sroRareP.rgb * (rrLines * 1.7)) * uniforms.sroRareA.w;
+    let rrTw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(rrTime * 2.3 + rrT * 37.0 + rrW * 5.0), 4.0);
+    let rrStars = rrN2.b * rrN2.b * rrN2.b * rrTw;
+    rrE = uniforms.sroRareP.rgb * (rrEdge * (0.08 + 0.7 * rrFlow) + rrRune * 0.55) + vec3f(0.92, 0.88, 1.0) * (rrStars * rrEdge * 1.8 + rrGlint * rrEdge * 1.6);
   } else if (uniforms.sroRareT.w < 2.5) {
-    let rrBand = pow(0.5 + 0.5 * sin(rrT * 9.0 - rrTime * 1.8 * uniforms.sroRareP.w), 6.0);
-    let rrSheen = vec3f(0.35, 0.55, 1.0) * rrM1.a * (1.0 - rrNdV * 0.5);
-    rrE = rrE + (uniforms.sroRareT.rgb * (0.1 + 0.3 * rrM1.b) + rrSheen * 0.8 + vec3f(0.85, 0.9, 1.0) * rrM1.r * 0.6 + uniforms.sroRareP.rgb * (rrBand * 0.35)) * uniforms.sroRareA.w * (1.0 + uniforms.sroRareS.w * 0.6);
+    let rrSheen = vec3f(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.18 * (1.0 - rrNdV * 0.5));
+    rrE = (uniforms.sroRareP.rgb * (rrEdge * (0.08 + 0.85 * rrFlow) + rrRune * 0.5) + rrSheen + vec3f(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + uniforms.sroRareS.w * 0.5);
   } else {
-    let rrCore = 1.0 - smoothstep(0.0, 0.55, abs(rrW));
-    let rrHeat = 0.78 + 0.22 * sin(rrTime * 4.1 - rrT * 9.0) * sin(rrTime * 2.3 + rrT * 3.0);
-    let rrCr = max(rrM1.g, rrM2.g * 0.85);
-    let rrFire = mix(vec3f(1.0, 0.22, 0.02), vec3f(1.0, 0.86, 0.4), clamp(rrCr * 1.3, 0.0, 1.0));
-    rrE = rrE + (rrFire * rrCr * 4.0 + vec3f(1.0, 0.9, 0.65) * rrCore * rrCore * 2.2 + uniforms.sroRareP.rgb * 0.12) * rrHeat * uniforms.sroRareA.w;
+    let rrHeat = 0.82 + 0.18 * sin(rrTime * 3.1 - rrT * 11.0 + 1.5 * sin(rrTime * 1.7 + rrT * 5.0));
+    let rrFlare = pow(0.5 + 0.5 * sin(rrTime * 0.29 + 1.3), 48.0);
+    let rrGold = vec3f(1.0, 0.7, 0.26);
+    rrE = rrGold * (rrEdge * (0.1 + 0.9 * rrFlow) * rrHeat) + vec3f(1.0, 0.55, 0.16) * (rrRune * 0.55 * rrHeat) + vec3f(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
   }
 
-  // a seal shield (D.w = 1): the face reads as the tier's emblem: radial from its centre, a tier-coloured rim line
+  // a seal shield (D.w = 1): the tier's light runs round the rim and the emblem lines glow faintly; the face stays
   if (uniforms.sroRareD.w > 0.5) {
     let rrR = length(vec2f((rrT - 0.5) * 2.0, rrW));
-    let rrRim = smoothstep(0.78, 0.97, rrR) * (1.0 - smoothstep(0.97, 1.08, rrR));
-    if (uniforms.sroRareT.w < 1.5) {
-      rrE = rrE + (uniforms.sroRareP.rgb * rrM1.r * 2.2 + rrN2 * rrN2 * rrN2 * 3.0 * (1.0 - rrR * 0.5) + uniforms.sroRareR.rgb * rrRim * 1.6) * uniforms.sroRareA.w;
-    } else if (uniforms.sroRareT.w < 2.5) {
-      let rrIr = vec3f(0.5) + vec3f(0.5) * cos(6.2832 * (vec3f(rrNdV * 1.4 + rrR * 0.6) + vec3f(0.0, 0.33, 0.67)));
-      rrE = uniforms.sroRareR.rgb * (rrF * uniforms.sroRareA.z * 0.35) + (vec3f(0.32, 0.34, 0.55) * (0.3 + 0.7 * rrM1.b) + mix(vec3f(0.6, 0.55, 0.85), rrIr, 0.45) * rrM1.a * 0.3 + vec3f(0.62, 0.7, 0.95) * rrM1.r * 0.9 + uniforms.sroRareR.rgb * rrRim * 1.0) * uniforms.sroRareA.w * (1.0 - 0.45 * uniforms.sroRareS.w);
-    } else {
-      let rrSc = (1.0 - smoothstep(0.0, 0.75, rrR));
-      rrE = uniforms.sroRareR.rgb * (rrF * uniforms.sroRareA.z * 0.35) + (vec3f(0.85, 0.42, 0.08) * (0.25 + rrSc * rrSc * 0.6) + vec3f(1.0, 0.5, 0.1) * max(rrM1.g, rrM2.g) * 2.2 + uniforms.sroRareR.rgb * rrRim * 1.3) * uniforms.sroRareA.w * (1.0 - 0.45 * uniforms.sroRareS.w);
-    }
+    let rrRim = smoothstep(0.8, 0.96, rrR) * (1.0 - smoothstep(0.98, 1.08, rrR));
+    let rrAng = atan2(rrW, (rrT - 0.5) * 2.0);
+    let rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 8.0);
+    let rrInner = 1.0 - smoothstep(0.55, 0.85, rrR);
+    rrE = uniforms.sroRareP.rgb * (rrRim * (0.3 + 0.9 * rrRun) + rrM1.r * rrInner * 0.3 * (0.6 + 0.4 * sin(rrTime * 0.9))) + vec3f(1.0) * (rrGlint * rrRim);
   }
+  // a soft knee: bright, never blown out (the weapon stays readable under bloom)
+  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.45);
+  rrE = uniforms.sroRareR.rgb * (rrF * (0.2 + 0.8 * max(rrEdge, step(0.5, uniforms.sroRareD.w))) * uniforms.sroRareA.z) + rrE * uniforms.sroRareA.w;
   finalEmissive = finalEmissive + rrE * rrMask * (1.0 + uniforms.sroRareS.z * 2.5);
 #endif
 }
