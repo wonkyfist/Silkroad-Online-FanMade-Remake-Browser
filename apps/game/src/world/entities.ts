@@ -22,6 +22,7 @@ import { LEVEL_BANDS, levelBand } from './level-band.ts'
 import { setLabelAnchor } from './nameplates.ts'
 import { PERF } from './perf.ts'
 import { loadRide, type RideMob } from './ride-mob.ts'
+import { wrapAngle } from '../three/upper-aim.ts'
 
 /** The shared shape of the loading stand-in, per scene (EntityView.makeLoadingPlaceholder). */
 const loadingShapes = new WeakMap<Scene, Mesh>()
@@ -419,8 +420,27 @@ export class EntityView {
     this.yaw = this.targetYaw = yaw
   }
 
+  /** The last combat facing point: an upper-body action (riding, flying) aims its spine at it (three/upper-aim.ts). */
+  private aimPoint: { x: number; z: number } | null = null
+
+  /** While an upper-body action plays, the turn from the facing to the aim point (the hips may not follow: a running horse). */
+  private aimUpper(): void {
+    const a = this.actor
+    if (!a) return
+    const p = this.aimPoint
+    if (!a.upperActive || !p) {
+      a.aimYaw = 0
+      if (!a.upperActive) this.aimPoint = null
+      return
+    }
+    const dx = p.x - this.pos.x
+    const dz = p.z - this.pos.z
+    a.aimYaw = dx * dx + dz * dz > 1e-4 ? wrapAngle(Math.atan2(dx, dz) - this.yaw) : 0
+  }
+
   /** Turns towards a world point (combat facing). */
   face(x: number, z: number): void {
+    this.aimPoint = { x, z }
     const dx = x - this.pos.x
     const dz = z - this.pos.z
     if (dx * dx + dz * dz > 1e-4) this.targetYaw = Math.atan2(dx, dz)
@@ -714,6 +734,7 @@ export class EntityView {
       this.moving = false
     }
     if (!this.dead) this.yaw = angleLerp(this.yaw, this.targetYaw, Math.min(1, dt * TURN_RATE))
+    this.aimUpper()
     const rx = this.pos.x + this.correction.x
     const rz = this.pos.z + this.correction.z
     this.root.position.set(rx, this.ctx.heightAt(rx, rz), rz)

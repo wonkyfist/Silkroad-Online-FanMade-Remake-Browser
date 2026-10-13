@@ -69,7 +69,16 @@ export function rootScale(view: AnchorView): number {
   return typeof s === 'number' && Number.isFinite(s) && s > 0 ? s : 1
 }
 
+/**
+ * The view's feet: its root, or, while its model sits elsewhere (a rider on the saddle: CharacterActor.attachTo), the
+ * model's root, so effects start at the rider's real height and not on the ground under the horse.
+ */
 export function rootPoint(view: AnchorView): V3 {
+  const seated = view.actor?.attachedTo ? view.actor.root : null
+  if (seated) {
+    const m = seated.computeWorldMatrix(true).m
+    return [m[12]!, m[13]!, m[14]!]
+  }
   const r = view.root.position
   return [r.x, r.y, r.z]
 }
@@ -94,9 +103,17 @@ export function anchorPoint(view: AnchorView, bone: string | null | undefined, o
 
 /** The hit position on a body without characterInfo: about chest height. */
 export function bodyPoint(view: AnchorView): V3 {
+  if (view.actor?.attachedTo) {
+    // a rider: chest height above the saddle (its seated height, RideLink's lifted getters, is measured from the ground)
+    const [x, y, z] = rootPoint(view)
+    return [x, y + SEATED_CHEST_M * rootScale(view), z]
+  }
   const r = view.root.position
   return [r.x, r.y + view.height * 0.55, r.z]
 }
+
+/** A seated rider's chest above its root (the saddle), metres at scale 1. */
+export const SEATED_CHEST_M = 0.45
 
 /** CodeName128 -> characterInfo row. */
 export type CharacterIndex = ReadonlyMap<string, FxCharacterInfo>

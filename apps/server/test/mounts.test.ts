@@ -167,7 +167,8 @@ describe('mounted', () => {
     const m = mob([FIELD[0] + 3, 0, FIELD[2]])
     h.advance(250)
     expect(h.req(p, inbox, { t: 'attack', target: m.id })).toMatchObject({ ok: false, reason: 'mounted' })
-    expect(h.req(p, inbox, { t: 'useSkill', skill: 'SKILL_CH_SWORD_SMASH_A_01', target: m.id })).toMatchObject({ ok: false, reason: 'mounted' })
+    // skills are judged by their row (element imbues work with any weapon): this book has no such row
+    expect(h.req(p, inbox, { t: 'useSkill', skill: 'SKILL_CH_SWORD_SMASH_A_01', target: m.id })).toMatchObject({ ok: false, reason: 'not_found' })
   })
 
   it('the gate refuses sit, emote, stallCreate, alchemyReinforce and berserk while mounted, not on foot; trade is allowed (D43)', () => {
@@ -490,11 +491,11 @@ describe('mounted archery', () => {
   const ROWS = JSON.parse(readFileSync(new URL('../../../work/out/data/skills.json', import.meta.url), 'utf8')).entries as SkillDef[]
   const row = (group: string) => ROWS.find((s) => (s.group ?? s.code) === group)!
 
-  it('mountedSkillOk: bow attacks and Soul Arrow buffs yes; hawk summons and non-bow rows no', () => {
-    for (const g of ['SKILL_CH_BOW_CHAIN_A', 'SKILL_CH_BOW_CRITICAL_A', 'SKILL_CH_BOW_POWER_A', 'SKILL_CH_BOW_PIERCE_A', 'SKILL_CH_BOW_AREA_A', 'SKILL_CH_BOW_SPECIAL_A', 'SKILL_CH_BOW_NORMAL_A']) {
+  it('mountedSkillOk: bow attacks, Soul Arrow buffs and element imbues yes; hawk summons, melee and other element rows no', () => {
+    for (const g of ['SKILL_CH_BOW_CHAIN_A', 'SKILL_CH_BOW_CRITICAL_A', 'SKILL_CH_BOW_POWER_A', 'SKILL_CH_BOW_PIERCE_A', 'SKILL_CH_BOW_AREA_A', 'SKILL_CH_BOW_SPECIAL_A', 'SKILL_CH_BOW_NORMAL_A', 'SKILL_CH_COLD_GIGONGTA_A', 'SKILL_CH_FIRE_GIGONGTA_B', 'SKILL_CH_LIGHTNING_GIGONGTA_C']) {
       expect([g, mountedSkillOk(row(g))]).toEqual([g, true])
     }
-    for (const g of ['SKILL_CH_BOW_CALL_A', 'SKILL_CH_BOW_CALL_B', 'SKILL_CH_BOW_CALL_C', 'SKILL_CH_SWORD_SMASH_A']) {
+    for (const g of ['SKILL_CH_BOW_CALL_A', 'SKILL_CH_BOW_CALL_B', 'SKILL_CH_BOW_CALL_C', 'SKILL_CH_SWORD_SMASH_A', 'SKILL_CH_COLD_GIGONGSUL_A', 'SKILL_CH_LIGHTNING_STORM_A', 'SKILL_CH_FIRE_SHIELD_A', 'SKILL_CH_COLD_BINGPAN_A', 'SKILL_CH_WATER_HEAL_A', 'SKILL_CH_WATER_RESURRECTION_A']) {
       expect([g, mountedSkillOk(row(g))]).toEqual([g, false])
     }
   })
@@ -511,6 +512,17 @@ describe('mounted archery', () => {
     expect(g.mounts.ridden(p)).not.toBeNull()
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CRITICAL_A'))).toBeNull()
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CALL_A'))).toMatchObject({ reason: 'mounted' })
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_FIRE_GIGONGTA_A'))).toBeNull()
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_FIRE_GIGONGSUL_A'))).toMatchObject({ reason: 'mounted' })
+    // a sword: no basic attack and no bow rows, but the element imbues still work
+    p.combat = { ...p.combat, weapon: 'sword' }
+    expect(g.mounts.refuseCombat(p, 'attack')).toMatchObject({ reason: 'mounted' })
+    expect(g.mounts.refuseCombat(p, 'skill')).toBeNull()
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CRITICAL_A'))).toMatchObject({ reason: 'mounted' })
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_SWORD_SMASH_A'))).toMatchObject({ reason: 'mounted' })
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_COLD_GIGONGTA_A'))).toBeNull()
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_WATER_HEAL_A'))).toMatchObject({ reason: 'mounted' })
+    p.combat = { ...p.combat, weapon: 'bow' }
     // on foot nothing changes
     expect(h.req(p, inbox, { t: 'stopAction' })).toMatchObject({ ok: true })
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })

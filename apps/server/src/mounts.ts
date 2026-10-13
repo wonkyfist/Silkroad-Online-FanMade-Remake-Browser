@@ -24,8 +24,8 @@ import { wirePos, wireYaw, type Cos, type Mob, type Npc, type Player } from './w
  *   goes home (checked on inventoryChanged and every ITEM_CHECK_MS).
  * - **Mounted**: speed x runSpeed / PLAYER_RETAIL_RUN (1.8 for the Red Horse) through the SkillEngine mod provider
  *   (`mountSpeed`, which replaces buff speed), radius max(player, horse). Attacks and skills are refused `mounted`
- *   (the `refuse` seam), except mounted archery: with a bow, basic attacks and the bow rows mountedSkillOk allows
- *   (`refuseCombat`); the `gate` refuses sit, emote, stallCreate, alchemyReinforce and berserk with `mounted` (D43).
+ *   (the `refuse` seam), except: with a bow, basic attacks and the bow rows; with any weapon, the element imbues
+ *   (mountedSkillOk, `refuseCombat`); the `gate` refuses sit, emote, stallCreate, alchemyReinforce and berserk with `mounted` (D43).
  *   Hits on the rider land on the horse (the `redirect` seam), except DoT ticks; statuses stay on the rider.
  * - A ridden horse shares its rider's MoveState and is never sent `move`s: `tick` copies the rider's move/pos, and a
  *   warp of the rider carries the horse along. A dismounted horse FOLLOWS its owner like a pet (followStep, every
@@ -90,16 +90,27 @@ interface MountRow {
 }
 
 /**
- * Mounted archery: whether skill row `row` may be used from the saddle (with a bow; the weapon check is the row's own).
- * Bow attack rows (single shots, the arrow combos, the line and area arrows, Mind Bow) and the self buffs (Soul Arrow)
- * work; the hawk summons (`_BOW_CALL_`: a planted, arm-raised call for the bird to land) do not. Every non-bow row is
- * refused, as before.
+ * Mounted combat (owner, 2026-10-13): whether skill row `row` may be used on horseback.
+ * - Bow rows (single shots, the arrow combos, the line and area arrows, Mind Bow, Soul Arrow buffs) with a bow in hand,
+ *   except the hawk summons (`_BOW_CALL_`: a planted, arm-raised call for the bird to land). See mountedNeedsBow.
+ * - The element imbues (Cold, Fire, Lightning, Force = SKILL_CH_WATER; kind 'imbue') with any weapon or none.
+ * - Everything else is refused `mounted`: melee weapon rows, and the other element rows (nukes, buffs, heals, debuffs:
+ *   they have their own on-foot animations, so the player steps down first).
  */
 export const MOUNTED_EXCLUDED = /_BOW_CALL_/
+export const MOUNTED_ELEMENT = /^SKILL_CH_(COLD|FIRE|LIGHTNING|WATER)_/
 export function mountedSkillOk(row: Pick<SkillDef, 'code' | 'group' | 'weapons' | 'kind'>): boolean {
-  if (!row.weapons.includes('bow')) return false
-  if (MOUNTED_EXCLUDED.test(row.group ?? row.code)) return false
-  return row.kind === 'attack' || row.kind === 'buff' || row.kind === 'imbue'
+  const group = row.group ?? row.code
+  if (row.weapons.includes('bow')) {
+    if (MOUNTED_EXCLUDED.test(group)) return false
+    return row.kind === 'attack' || row.kind === 'buff' || row.kind === 'imbue'
+  }
+  return row.weapons.length === 0 && row.kind === 'imbue' && MOUNTED_ELEMENT.test(group)
+}
+
+/** Whether a row mountedSkillOk allows also needs the bow in hand (bow rows do; the element imbues do not). */
+export function mountedNeedsBow(row: Pick<SkillDef, 'weapons'>): boolean {
+  return row.weapons.length > 0
 }
 
 /** Runtime state of a live horse beyond the Cos entity (keyed by the horse's entity id). */
@@ -254,15 +265,19 @@ export class Mounts implements GameplayModule {
   }
 
   /**
-   * attack / useSkill of `p` (gameplay.ts, the SkillEngine's plan): `refuse`, except mounted archery on a horse (never a
-   * trade transport): with a bow equipped, basic attacks and the rows mountedSkillOk allows go through. Melee weapons
-   * are still refused `mounted` (the client steps down first). A skill asked without its row: an archer's answer waits
-   * for the row (null now; the SkillEngine asks again with it).
+   * attack / useSkill of `p` (gameplay.ts, the SkillEngine's plan): `refuse`, except on a horse (never a trade
+   * transport): basic attacks go through with a bow equipped; skills go through when mountedSkillOk allows the row
+   * (bow rows with the bow in hand, element imbues with any weapon). Melee attacks and every other row stay refused
+   * `mounted` (the client steps down first). A skill asked without its row waits for the row (null now; the
+   * SkillEngine asks again with it).
    */
   refuseCombat(p: Player, what: 'attack' | 'skill', row?: SkillDef): Fail | null {
     const no = this.refuse(p, what)
-    if (!no || !this.ridden(p) || p.combat.weapon !== 'bow') return no
-    if (what === 'attack' || !row || mountedSkillOk(row)) return null
+    if (!no || !this.ridden(p)) return no
+    const bow = p.combat.weapon === 'bow'
+    if (what === 'attack') return bow ? null : no
+    if (!row) return null
+    if (mountedSkillOk(row) && (bow || !mountedNeedsBow(row))) return null
     return fail('mounted', 'That skill cannot be used on horseback.')
   }
 

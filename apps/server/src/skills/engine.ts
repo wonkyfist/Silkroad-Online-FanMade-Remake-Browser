@@ -216,7 +216,7 @@ export class SkillEngine implements GameplayModule {
 
   /** SKILLS §10.1 validation, in order. The target is the caster itself for self skills. */
   plan(p: Player, code: string, targetId: number | undefined, now: number, pos?: [number, number]): Result<Plan> {
-    // Wave 8: no skills while mounted (mounts.ts), except mounted archery (asked again below with the row).
+    // Wave 8: no skills while mounted (mounts.ts), except bow rows and element imbues (asked again below with the row).
     const riding = this.g.mounts.refuseCombat(p, 'skill')
     if (riding) return riding
     const s = this.state(p)
@@ -229,7 +229,7 @@ export class SkillEngine implements GameplayModule {
     // The client may send any learned level: the highest learned one runs. The Climb's Arts (docs/CLIMB.md §5.1,
     // S-ARTS) change the row's numbers for this caster (a copy; climb/rewards.ts).
     const row = this.artRow(p, this.book.row(group, have) ?? head)
-    // mounted archery: only the bow rows mountedSkillOk allows
+    // mounted: only the rows mountedSkillOk allows (bow rows, element imbues)
     const mounted = this.g.mounts.refuseCombat(p, 'skill', row)
     if (mounted) return mounted
     if (row.kind === 'passive') return fail('not_usable', 'Passive skills work on their own.')

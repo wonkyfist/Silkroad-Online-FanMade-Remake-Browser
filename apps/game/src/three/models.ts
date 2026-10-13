@@ -57,6 +57,7 @@ import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
 import { solidifyWeapon } from './weapon-solid.ts'
+import { UPPER_FADE_S, blendSpeedFor, spreadTurn, turnJoint, upperTurn, yawBetween } from './upper-aim.ts'
 import { newLook, settings } from '../settings.ts'
 import { actorGraphics, actorTexturesFor } from './actor-textures.ts'
 import { GLOW_SLOTS, SHIELD_STRENGTH, WeaponGlow, glowModeFor, type GlowMode } from './weapon-glow.ts'
@@ -253,6 +254,9 @@ export function isArmJoint(name: string | undefined, sides: readonly ('L' | 'R')
   const e = name ? /^(?:clavicle|upperarm|lowerarm|hand|thumb|index|middle|ring|pinky)(?:_\w+)?_([lr])$/.exec(name) : null
   return !!e && sides.includes(e[1]!.toUpperCase() as 'L' | 'R')
 }
+
+/** The spine joints the upper-body aim turns (upper-aim.ts AIM_SPREAD), hips up. */
+export const UPPER_AIM_JOINTS: readonly string[] = ['Bip01 Spine', 'Bip01 Spine1', 'Bip01 Neck']
 
 /** The arms the weapon layer holds for a family (sword/blade: the sword arm, plus the left with a shield; else both). */
 export function armLayerSides(family: StarterWeapon | null, shield: boolean): ('L' | 'R')[] {
@@ -3134,9 +3138,121 @@ export class CharacterActor {
       this.upperLayers.set(key, layer)
     }
     layer.stop()
-    // started after the riding base, so it wins on the joints it animates (the overlay rule)
+    // started after the riding base, so it wins on the joints it animates (the overlay rule); it fades in from the
+    // riding pose over UPPER_FADE_S (Babylon's blend, a step per evaluation)
+    layer.blendingSpeed = blendSpeedFor(UPPER_FADE_S)
     layer.start(false, speed, src.from, src.to)
+    this.beginUpperAim(layer, src)
+    const serial = ++this.upperSerial
+    layer.onAnimationGroupEndObservable.addOnce(() => {
+      if (serial !== this.upperSerial || this.disposed) return
+      if (this.upper) this.upper.ended = performance.now()
+      // fade back to the riding pose instead of snapping: the base restarts where it is, blended
+      this.resumeBaseBlended()
+    })
     return true
+  }
+
+  // ---- upper-body aim (three/upper-aim.ts): the clip's hip turn and the aim at the target put back on the spine ----
+
+  /** Turn towards the target, radians about up from the facing (EntityView, while an upper-body action plays). */
+  aimYaw = 0
+  private upperSerial = 0
+  private upper: {
+    layer: AnimationGroup
+    /** The clip's own root and pelvis rotation tracks (not played: the base keeps the hips). */
+    root: Animation | null
+    pelvis: Animation | null
+    start: number
+    ended: number | null
+    hipYaw: number
+  } | null = null
+  private upperObs: Observer<Scene>[] = []
+  /** The spine joints' rotations as the animations left them, put back before the next evaluation. */
+  private readonly upperSaved: Array<[TransformNode, Quaternion]> = []
+
+  /** An upper-body action plays (or fades out): EntityView aims it. */
+  get upperActive(): boolean {
+    return this.upper !== null
+  }
+
+  private beginUpperAim(layer: AnimationGroup, src: AnimationGroup): void {
+    // licensed bodies have their own spine (retarget.ts): the aim is for the retail Bip01 skeleton
+    if (this.retargeter || !this.joints.get('Bip01 Pelvis') || !this.joints.get('Bip01 Spine')) return
+    const track = (joint: string): Animation | null =>
+      src.targetedAnimations.find(ta => (ta.target as { name?: string } | null)?.name === joint && ta.animation.targetProperty === 'rotationQuaternion')?.animation ?? null
+    this.upper = { layer, root: track('Bip01'), pelvis: track('Bip01 Pelvis'), start: performance.now(), ended: null, hipYaw: 0 }
+    if (this.upperObs.length) return
+    this.upperObs = [
+      this.scene.onBeforeAnimationsObservable.add(() => this.restoreUpperAim()),
+      this.scene.onAfterAnimationsObservable.add(() => this.applyUpperAim()),
+    ]
+    this.root.onDisposeObservable.addOnce(() => this.endUpperAim())
+  }
+
+  private endUpperAim(): void {
+    this.restoreUpperAim()
+    this.upper = null
+    this.aimYaw = 0
+    for (const o of this.upperObs) {
+      this.scene.onBeforeAnimationsObservable.remove(o)
+      this.scene.onAfterAnimationsObservable.remove(o)
+    }
+    this.upperObs = []
+  }
+
+  private restoreUpperAim(): void {
+    for (const [n, q] of this.upperSaved) n.rotationQuaternion?.copyFrom(q)
+    this.upperSaved.length = 0
+  }
+
+  private applyUpperAim(): void {
+    const u = this.upper
+    if (!u) return
+    if (this.disposed || this.dead || !this.upperOnly || (this.action && !u.ended)) return this.endUpperAim()
+    const now = performance.now()
+    const w = u.ended !== null ? Math.max(0, 1 - (now - u.ended) / 1000 / UPPER_FADE_S) : Math.min(1, (now - u.start) / 1000 / UPPER_FADE_S)
+    if (u.ended !== null && w <= 0) return this.endUpperAim()
+    const bip = this.joints.get('Bip01')
+    const pel = this.joints.get('Bip01 Pelvis')
+    if (!bip || !pel) return
+    const rot = (n: TransformNode): Quaternion => n.rotationQuaternion ?? Quaternion.Identity()
+    if (u.ended === null && u.layer.isPlaying) {
+      // the clip's hips at this frame against the base's: the turn the on-foot pose made with them
+      const f = u.layer.animatables[0]?.masterFrame
+      if (f !== undefined) {
+        const cRoot = (u.root?.evaluate(f) as Quaternion | undefined) ?? rot(bip)
+        const cPel = (u.pelvis?.evaluate(f) as Quaternion | undefined) ?? rot(pel)
+        u.hipYaw = yawBetween(rot(bip).multiply(rot(pel)), cRoot.multiply(cPel))
+      }
+    }
+    const turn = upperTurn(u.hipYaw, this.aimYaw) * w
+    if (Math.abs(turn) < 1e-4) return
+    const chain = UPPER_AIM_JOINTS.map(n => this.joints.get(n)).filter((n): n is TransformNode => !!n?.rotationQuaternion)
+    const parts = spreadTurn(turn, chain.length)
+    const out = new Quaternion()
+    chain.forEach((n, i) => {
+      // the parent's orientation in the model frame (Bip01's parent): every local rotation from Bip01 down
+      let parentWorld = Quaternion.Identity()
+      for (let p = n.parent as TransformNode | null; p; p = p.parent as TransformNode | null) {
+        parentWorld = rot(p).multiply(parentWorld)
+        if (p === bip) break
+      }
+      const local = n.rotationQuaternion!
+      this.upperSaved.push([n, local.clone()])
+      turnJoint(local, parentWorld, parts[i]!, out)
+      local.copyFrom(out)
+    })
+  }
+
+  /** The base restarts where it is and blends in over UPPER_FADE_S (after an upper-body action). */
+  private resumeBaseBlended(): void {
+    const g = this.current
+    if (!g || this.action || this.dead || this.debugHold) return
+    const f = g.animatables[0]?.masterFrame
+    g.stop()
+    this.startUnblended(g, false, true, this.currentSpeed, f)
+    this.blendBaseOut()
   }
 
   private armLayerOf(src: AnimationGroup, sides: readonly ('L' | 'R')[]): AnimationGroup | null {
