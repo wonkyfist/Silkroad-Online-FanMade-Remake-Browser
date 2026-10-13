@@ -98,6 +98,8 @@ export function hitKind(hit: CombatHit, selfIsTarget: boolean, victimArt = false
 
 /** Own-HP rises at least this fraction of max HP show a heal number (potions; not regeneration ticks). */
 const HEAL_NUMBER_MIN = 0.05
+/** Two clicks on the same monster within this many ms are a double click (auto attack). */
+const DOUBLE_CLICK_MS = 450
 /** Same-target attack clicks closer than this are not re-sent (the server auto-attacks anyway). */
 const ATTACK_RESEND_MS = 400
 
@@ -1127,7 +1129,21 @@ export function worldScreen(app: App, params: ScreenParams['world']): Screen {
     marker.show(x, y, z)
   }
 
+  /**
+   * Monsters: a single click only selects (so a skill can be picked first); a double click (a second click on the same
+   * monster within DOUBLE_CLICK_MS) starts the auto attack (owner, 2026-10-13).
+   */
+  let lastMobClick = { id: -1, at: -Infinity }
   const clickEntity = (v: EntityView) => {
+    if (v.kind === 'mob') {
+      const now = performance.now()
+      const double = lastMobClick.id === v.id && now - lastMobClick.at < DOUBLE_CLICK_MS
+      lastMobClick = double ? { id: -1, at: -Infinity } : { id: v.id, at: now }
+      if (!double) {
+        setTarget(v)
+        return
+      }
+    }
     if (features?.some(f => f.clickEntity?.(v))) return
     if (v.kind === 'item') {
       // Older pickups we supersede stay quiet when they fail; send() queues this one (autoloot's go there too).
