@@ -140,7 +140,7 @@ export function skillHarness(opts: { rng?: () => number; skillAmmo?: number; dat
   let clock = T0
 
   /** A character in the world (starter weapon equipped, `extra` items worn), entered (skills sent). */
-  const hero = (o: { pos?: Vec3; weapon?: 'sword' | 'spear' | 'bow' | 'blade'; level?: number; sp?: number; wear?: string[]; name?: string; characterId?: number } = {}) => {
+  const hero = (o: { pos?: Vec3; weapon?: 'sword' | 'spear' | 'bow' | 'blade'; level?: number; sp?: number; wear?: string[]; name?: string; characterId?: number; /** INT (default: 20 + level - 1, no points spent). */ int?: number } = {}) => {
     let id = o.characterId
     if (id === undefined) {
       const acc = store.createAccount(`acc${++n}`, 'x')!
@@ -157,7 +157,7 @@ export function skillHarness(opts: { rng?: () => number; skillAmmo?: number; dat
       }
       if (o.level || o.sp) {
         const r = store.characterById(id)!
-        store.saveProgress(id, { level: o.level ?? r.level, exp: 0, sp: o.sp ?? 0, spExp: 0, str: 20 + (o.level ?? 1) - 1, int: 20 + (o.level ?? 1) - 1, statPoints: 0 })
+        store.saveProgress(id, { level: o.level ?? r.level, exp: 0, sp: o.sp ?? 0, spExp: 0, str: 20 + (o.level ?? 1) - 1, int: o.int ?? 20 + (o.level ?? 1) - 1, statPoints: 0 })
       }
     }
     const row = store.characterById(id)!

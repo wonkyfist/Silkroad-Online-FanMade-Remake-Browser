@@ -717,6 +717,12 @@ export class SkillEngine implements GameplayModule {
       const st = statuses[i]
       if (st && r.hits[i].outcome !== 'miss' && r.hits[i].outcome !== 'block') this.applyStatus(a, t, st, now)
     }
+    // A debuff with stat mods (Vital Spot: parry, hit rate, defence down) sticks on the victim when its hit lands.
+    const row = code === undefined || a.kind !== 'player' ? undefined : this.book.skill(code)
+    if (row?.kind === 'debuff' && r.hits.some((h) => h.outcome !== 'miss' && h.outcome !== 'block') && modsFromParams(row.params).length) {
+      const cspd = PARAM(row, 'cspd')
+      if (!cspd || this.g.rng() * 100 < (cspd[1] ?? 100)) this.applyBuff(a as Player, cspd ? { ...row, durationMs: cspd[0] || row.durationMs } : row, t, now, extra.instance ?? this.instanceId())
+    }
   }
 
   private xz(e: Player | Mob | Cos, now: number): { x: number; z: number } {

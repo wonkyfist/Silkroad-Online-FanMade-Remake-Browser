@@ -18,6 +18,8 @@ export type ModStat =
   | 'physDamagePct'
   | 'magDamagePct'
   | 'hitRate'
+  /** 'thrd' (Vital Spot - Spirit): hit rate -percent. */
+  | 'hitRatePct'
   | 'parryRate'
   | 'parryPct'
   | 'blockRate'
@@ -33,6 +35,9 @@ export type ModStat =
   | 'damageToMpPct'
   /** 'bgra': incoming abnormal-state chance -percent. */
   | 'statusResistPct'
+  /** 'irgc' (Harmony Therapy): natural HP recovery +percent (MP: 'mpRegenPct'). */
+  | 'hpRegenPct'
+  | 'mpRegenPct'
   /**
    * Wave 8 (docs/SYSTEMS_COMBAT.md §1.3): a mount's move-speed factor (CosDef.runSpeed / PLAYER_RETAIL_RUN, e.g. 1.8),
    * from the mounts module's mod provider. Multiplicative: while it is above 0 it replaces the buff speed (`speedPct`,
@@ -58,6 +63,7 @@ const zero = (): ModTotals => ({
   physDamagePct: 0,
   magDamagePct: 0,
   hitRate: 0,
+  hitRatePct: 0,
   parryRate: 0,
   parryPct: 0,
   blockRate: 0,
@@ -69,6 +75,8 @@ const zero = (): ModTotals => ({
   shieldDefencePct: 0,
   damageToMpPct: 0,
   statusResistPct: 0,
+  hpRegenPct: 0,
+  mpRegenPct: 0,
   mountSpeed: 0,
 })
 
@@ -121,6 +129,22 @@ export function modsFromParams(params: readonly SkillParamRecord[] | undefined):
       case 'bgra':
         add('statusResistPct', args[1])
         break
+      // Vital Spot (debuffs on an enemy, "Decreases the enemy's dodge ability / hitting ratios / physical defense"):
+      // 'terd' parry -%, 'thrd' hit rate -%, 'cspd' [duration, chance %, ?, value] physical defence -value [likely].
+      case 'terd':
+        add('parryPct', -(args[0] ?? 0))
+        break
+      case 'thrd':
+        add('hitRatePct', -(args[0] ?? 0))
+        break
+      case 'cspd':
+        add('physDefence', -(args[3] ?? 0))
+        break
+      // Harmony Therapy ("Increases the speed of recovery"): 'irgc' [HP %, MP %].
+      case 'irgc':
+        add('hpRegenPct', args[0])
+        add('mpRegenPct', args[1])
+        break
     }
   }
   return out
@@ -139,7 +163,7 @@ export function applyMods<T extends CombatStats & { range: number }>(c: T, t: Mo
     ...c,
     physDefence: Math.max(0, Math.round((c.physDefence + t.physDefence + (shieldPd * t.shieldDefencePct) / 100) * pct(t.physDefencePct))),
     magDefence: Math.max(0, Math.round((c.magDefence + t.magDefence) * pct(t.magDefencePct))),
-    hitRate: Math.max(0, Math.round(c.hitRate + t.hitRate)),
+    hitRate: Math.max(0, Math.round((c.hitRate + t.hitRate) * pct(t.hitRatePct))),
     parryRate: Math.max(0, Math.round((c.parryRate + t.parryRate) * pct(t.parryPct))),
     blockRate: Math.max(0, Math.round(c.blockRate + t.blockRate)),
     range: Math.max(0, c.range + t.range),

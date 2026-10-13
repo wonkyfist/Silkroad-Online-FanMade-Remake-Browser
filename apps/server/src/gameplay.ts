@@ -1655,8 +1655,10 @@ export class Gameplay implements AiHost {
     p.nextRegenAt = now + REGEN.intervalMs
     // docs/WINTER.md §13.1: the cold slows the regeneration (1 when warm, outside the season and in towns)
     const mul = this.winterPlay.regenMul(p)
-    const hp = Math.min(p.maxHp, p.hp + Math.max(1, p.maxHp * REGEN.playerPct) * mul)
-    const mp = Math.min(p.maxMp, p.mp + Math.max(1, p.maxMp * REGEN.playerPct) * mul)
+    // Harmony Therapy ('irgc'): faster recovery
+    const t = this.skills.modsFor(p)
+    const hp = Math.min(p.maxHp, p.hp + Math.max(1, p.maxHp * REGEN.playerPct) * mul * (1 + t.hpRegenPct / 100))
+    const mp = Math.min(p.maxMp, p.mp + Math.max(1, p.maxMp * REGEN.playerPct) * mul * (1 + t.mpRegenPct / 100))
     this.setVitals(p, hp, mp)
   }
 
