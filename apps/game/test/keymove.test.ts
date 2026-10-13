@@ -622,6 +622,19 @@ describe('clicks, actions and the keyboard owner', () => {
     expect(s.mover.state).toBe('idle')
   })
 
+  it('a dash (Ghost Walk) takes over, and a key still held walks on by itself when the dash ends', () => {
+    const s = sim({ latencyMs: 40 })
+    s.press('forward')
+    s.run(500)
+    s.mover.accepted('useSkill', s.clock.t)
+    expect(s.mover.state).toBe('idle')
+    s.mover.resumeAfter(s.clock.t + 500)
+    s.run(300)
+    expect(s.mover.state).toBe('idle')
+    s.run(300)
+    expect(s.mover.state).toBe('active')
+  })
+
   it('focus taken (a text field, a modal, the option off) stops the walk with a stop where we stand', () => {
     const s = sim()
     s.press('forward')

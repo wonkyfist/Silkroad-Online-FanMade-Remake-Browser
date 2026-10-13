@@ -337,6 +337,8 @@ export class KeyMover {
   private mode: Mode = 'idle'
   /** A press since the last take-over: a walk (re)starts while a direction is held. */
   private wanted = false
+  /** Server ms an own dash (Ghost Walk) ends: then a still-held direction walks on without a new press (0: none). */
+  private resumeAt = 0
   /** The predicted walk (from the predicted point at `startedAt`, server ms). */
   private seg: MoveState | null = null
   /** Where the prediction stands when `seg` is null (a start, a correction). */
@@ -457,6 +459,7 @@ export class KeyMover {
   reset(): void {
     this.keys.clear()
     this.wanted = false
+    this.resumeAt = 0
     this.pending = null
     this.mode = 'idle'
     this.seg = null
@@ -473,6 +476,11 @@ export class KeyMover {
   seen(pos: Vec3, move: MoveState | undefined): void {
     this.server = { move: move ?? null, pos: [...pos] }
     if (move && move.speed > 0) this.speed = move.speed
+  }
+
+  /** An own dash ends at `at` (server ms): keys still held then walk on at once (owner, 2026-10-13). */
+  resumeAfter(at: number): void {
+    this.resumeAt = at
   }
 
   /** Accepted request `re` (actionResult ok): an action that walks, chases or casts takes over from the keys. */
@@ -546,6 +554,10 @@ export class KeyMover {
         this.wantSend(now)
       }
     } else if (this.mode === 'settling' && now >= this.settleUntil) this.settled(now)
+    if (this.resumeAt && now >= this.resumeAt) {
+      this.resumeAt = 0
+      if (this.keys.size) this.wanted = true
+    }
     if (this.mode !== 'active' && this.wanted && this.keys.size && this.direction() && this.deps.allowed()) this.tryStart(now)
     this.flush(now)
   }
@@ -889,6 +901,9 @@ export function keyMoveFeature(ctx: WorldFeatureContext): KeyMoveFeature {
           break
         case 'actionResult':
           if (msg.ok) mover.accepted(msg.re)
+          break
+        case 'displace':
+          if (msg.kind === 'dash' && msg.id === id) mover.resumeAfter(msg.at + msg.ms)
           break
       }
     },
