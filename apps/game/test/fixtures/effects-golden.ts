@@ -169,6 +169,11 @@ export function buildGolden(skills: readonly SkillRow[], groups: readonly GroupR
         }
       }
       if (shot) add('SHOT', shot, t, Math.max(1, prep > 0 ? s.actionMs : cast + s.actionMs), false)
+      // only a WAIT clip and no prepare time (Ghost Walk - Phantom: SKILL_7, the dash): it is the action's clip
+      if (!phases.length && wait) {
+        const c = resolveClip(clips, s.aniGroup, wait)
+        add('WAIT', wait, t, Math.max(1, cast + s.actionMs, c ? c.durationMs : 0), false)
+      }
     }
     const phaseOf = (p: string) => phases.find(x => x.phase === p)
     const cues = (s.hitCues ?? []).map(c => {
