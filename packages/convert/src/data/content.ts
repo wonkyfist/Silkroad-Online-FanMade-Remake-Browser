@@ -38,7 +38,7 @@ import { modelSource, type OutExists } from './models.ts'
 import { buildNests, DEFAULT_ZONE, portFrameAnchors, terrainEvidence, type NestRecord, type TerrainEvidence, type TerrainProbe } from './nests.ts'
 import { buildNpcs, JANGAN_CONTINENT, regionsOfContinent, shopChain, type NpcRecord } from './npcs.ts'
 import { PORT_FILES, type PortData } from './port-source.ts'
-import { buildMobSkills, buildSkills, MAX_SKILL_MASTERY_LEVEL } from './skills.ts'
+import { buildMobSkills, buildSkills, cueOffsets, MAX_SKILL_MASTERY_LEVEL } from './skills.ts'
 
 /** Extra files next to the CONTENT_FILES. */
 export const EXTRA_FILES = { allNests: 'all-nests.json', towns: 'towns.json' } as const
@@ -56,6 +56,8 @@ export interface ContentInput {
    * against it). Absent: rides are left out with a warning.
    */
   jointsOf?: (sidecarUrl: string) => readonly string[] | null
+  /** Sorted hit-event times (ms) of the reference body's clip of a pack group (skill cue offsets). Absent: none. */
+  clipHits?: (aniGroup: string | undefined, type: string) => readonly number[] | null
   /** Navmesh probe for the frame evidence (optional; the tool reads the client NVMs). */
   terrain?: TerrainProbe
   generatedAt: string
@@ -161,6 +163,7 @@ export function buildContent(input: ContentInput): ContentOutput {
     input.maxMasteryLevel ?? MAX_SKILL_MASTERY_LEVEL,
     input.hasIcon,
   )
+  if (input.clipHits) cueOffsets(skills, input.clipHits)
   const itemCtx = { strings: client.strings, exists: input.exists, basicAttacks, ...(input.hasIcon ? { hasIcon: input.hasIcon } : {}) }
   const items = buildItems(client.items, itemCtx, input.maxItemDegree ?? MAX_ITEM_DEGREE)
   const itemCodes = new Set(items.map(i => i.code))

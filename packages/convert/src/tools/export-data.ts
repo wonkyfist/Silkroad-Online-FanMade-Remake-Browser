@@ -158,7 +158,21 @@ const jointsOf = (sidecarUrl: string): string[] | null => {
     return null
   }
 }
-const { files, report } = buildContent({ client, port, world, exists, hasData, hasIcon, jointsOf, terrain, generatedAt: new Date().toISOString() })
+/** The reference body's clip hit events (chinaman_adventurer sidecar) by pack group and TYPE_NAME: skill cue offsets. */
+const clipHits = (() => {
+  const m = new Map<string, number[]>()
+  try {
+    const j = JSON.parse(readFileSync(outFile('/out/char/china/chinaman_adventurer.json'), 'utf8')) as { animations?: { group: string; typeName: string; events?: { timeMs: number; type: number }[] }[] }
+    for (const a of j.animations ?? []) {
+      const key = `${a.group.toLowerCase()}:${a.typeName}`
+      if (!m.has(key)) m.set(key, (a.events ?? []).filter(e => e.type === 1).map(e => e.timeMs).sort((x, y) => x - y))
+    }
+  } catch {
+    console.warn('no chinaman_adventurer sidecar: skill cues get no clip offsets')
+  }
+  return (group: string | undefined, type: string) => m.get(`${(group ?? 'default').toLowerCase()}:${type}`) ?? m.get(`default:${type}`) ?? null
+})()
+const { files, report } = buildContent({ client, port, world, exists, hasData, hasIcon, jointsOf, clipHits, terrain, generatedAt: new Date().toISOString() })
 for (const [name, contents] of Object.entries(serializeContent(files))) write(name, contents)
 writeZones()
 

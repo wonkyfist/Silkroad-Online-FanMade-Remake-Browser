@@ -9,15 +9,17 @@
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import type { LevelDef, MasteryDef, SkillDef } from '@sro/shared'
+import { arrivalGroups, hitArrivalsMs, type LevelDef, type MasteryDef, type SkillDef } from '@sro/shared'
 import { SkillCatalog } from '../src/content/skills.ts'
 import { recoilAt, RECOIL_PEAK_S, RECOIL_RAD, upperPitch } from '../src/three/upper-aim.ts'
 import { aimPitchTo, AIM_PITCH_MAX, airStance, HOVER_ATTACK_PITCH, HOVER_ATTACK_RATE, SWOOP_SPEED } from '../src/world/air-stance.ts'
-import { ActionPlayer, type ActionPort, type CastMessage, type ClipFacts, type PhasePlan, type SkillCombat } from '../src/world/skills-view.ts'
+import { isFlight, scheduleStages, type FxSkill } from '../src/world/skill-fx.ts'
+import { ActionPlayer, segmentEvents, type ActionPort, type CastMessage, type ClipFacts, type PhasePlan, type SkillCombat } from '../src/world/skills-view.ts'
 
 const SKILLS_JSON = 'work/out/data/skills.json'
 const MASTERIES_JSON = 'work/out/data/masteries.json'
 const BODY_JSON = 'work/out/char/china/chinaman_adventurer.json'
+const FX_JSON = 'work/out/fx/skills.json'
 const LEVELS: LevelDef[] = Array.from({ length: 30 }, (_, i) => ({ level: i + 1, exp: 100, masterySp: 10 }))
 
 interface Anim { group: string; typeName: string; durationMs: number; events?: { timeMs: number; type: number }[] }
@@ -86,13 +88,17 @@ describe.skipIf(!have)('skill timing: impact >= release + travel (real export, r
         const row2 = seg
         const cues = row2.hitCues ?? []
         const n = Math.max(1, row2.damage?.hits ?? cues.length)
-        // the server (skills/engine.ts + timing.ts arrivalAt): one combat with every hit, `at` = the first projectile
-        // cue's arrival counted from its release (zero clock offset here)
-        const first = cues.find(c => c.projectile)!.projectile!
-        const at = Math.round(a.release + first.delayMs + (d / (first.speed / 10)) * 1000)
-        const combat: SkillCombat = { t: 'combat', attacker: 1, target: 50, skill: row2.code, instance: msg.instance, at, hits: Array.from({ length: n }, () => ({ outcome: 'hit' as const, damage: 1, hp: 1 })) }
-        const shown = player.hitTimes(a, combat, 0, 0)
+        // the server (skills/engine.ts fly): hit i lands at release + its cue's offset + travel (shared hitArrivalsMs),
+        // one combat per arrival group (zero clock offset here)
+        const arrivals = hitArrivalsMs(row2, n, d)!
+        const serverAt: number[] = arrivals.map(ms => Math.round(a.release + ms))
+        const shown: number[] = []
+        for (const g of arrivalGroups(arrivals)) {
+          const combat: SkillCombat = { t: 'combat', attacker: 1, target: 50, skill: row2.code, instance: msg.instance, at: Math.round(a.release + g.ms), hits: Array.from({ length: g.count }, () => ({ outcome: 'hit' as const, damage: 1, hp: 1 })) }
+          shown.push(...player.hitTimes(a, combat, 0, 0, g.from))
+        }
         for (let i = 0; i < n; i++) {
+          const at = serverAt[i]!
           const cue = cues[i] ?? cues[cues.length - 1]!
           const proj = cue.projectile
           if (!proj) continue
@@ -107,12 +113,77 @@ describe.skipIf(!have)('skill timing: impact >= release + travel (real export, r
           if (shown[i]! < lands - 1) bad.push(`${row2.code} hit ${i} @${d} m: shown ${shown[i]!.toFixed(0)} < lands ${lands.toFixed(0)} (event ${ev}, release ${a.release})`)
           // the server cannot land it before its own release + travel (a clip that throws before the release: the
           // projectile waits at the victim for the damage, SkillFx HOLD_MS)
+          // server / client agreement: the server's damage lands with the client's arrow (one frame or two)
+          // (a clip that throws before the server release, Spear Shoot B: the arrow waits; no agreement to check)
+          else if (phase.start + ev >= a.release - 1 && Math.abs(at - lands) > 34) bad.push(`${row2.code} hit ${i} @${d} m: server ${at} vs client arrow ${lands.toFixed(0)}`)
           else if (shown[i]! > Math.max(lands, at) + spread + 34) bad.push(`${row2.code} hit ${i} @${d} m: shown ${shown[i]!.toFixed(0)} waits past landing ${lands.toFixed(0)} / server ${at}`)
         }
        }
       }
     }
     expect(checked).toBeGreaterThan(60)
+    expect(bad).toEqual([])
+  })
+})
+
+describe.skipIf(!have || !existsSync(FX_JSON))('bow rows: one arrow per hit, each released at its own clip event', () => {
+  const skills = have ? (JSON.parse(readFileSync(SKILLS_JSON, 'utf8')) as { entries: SkillDef[] }).entries : []
+  const fx = existsSync(FX_JSON) ? (JSON.parse(readFileSync(FX_JSON, 'utf8')) as { skills: FxSkill[] }).skills : []
+  const byCode = new Map(skills.map(s => [s.code, s]))
+  const clips = have ? bodyClips() : new Map<string, ClipFacts>()
+
+  /** The arrows (damage flights) a row's cast puts in the air, head and segments, with their clip-time launch. */
+  function arrows(head: SkillDef): { count: number; hits: number; launches: number[] } {
+    const g = fx.find(x => x.group === head.group)!
+    const shot = clips.get(`bow:${(head.animation?.shot ?? '').split(',')[0]!.replace(/^ANI_/, '')}`)
+    let count = 0
+    let hits = 0
+    const launches: number[] = []
+    for (let seg: SkillDef | undefined = head; seg; seg = seg.chainNext ? byCode.get(seg.chainNext) : undefined) {
+      hits += Math.max(1, seg.damage?.hits ?? 1)
+      const events = segmentEvents(seg, c => byCode.get(c))
+      for (const st of scheduleStages(g, 'SHOT', 0, shot?.hits ?? [], events)) {
+        if (!st.stage.dmg || !isFlight(st.stage.actType)) continue
+        count++
+        launches.push(st.at)
+      }
+    }
+    return { count, hits, launches }
+  }
+
+  it('2, 3 and 4 Arrow Combo fly 2, 3 and 4 arrows, one per clip event, in order', () => {
+    const got = ['SKILL_CH_BOW_CHAIN_A_01', 'SKILL_CH_BOW_CHAIN_B_01', 'SKILL_CH_BOW_CHAIN_C_01'].map(c => arrows(byCode.get(c)!))
+    expect(got.map(a => a.count)).toEqual([2, 3, 4])
+    expect(got.map(a => a.hits)).toEqual([2, 3, 4])
+    expect(got[2]!.launches).toEqual([522, 809, 1083, 1340])
+    // the 4 Arrow Combo: 2 + 2 hits, cues 1-2 then 3-4, each segment's later arrow offset from its own release
+    const c1 = byCode.get('SKILL_CH_BOW_CHAIN_C_01')!
+    const c2 = byCode.get(c1.chainNext!)!
+    expect(c1.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[1, 0], [2, 287]])
+    expect(c2.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[3, 0], [4, 257]])
+  })
+
+  it('every Pacheon attack row flies at least one arrow per hit cue and the server lands each hit at release + offset + travel', () => {
+    const bad: string[] = []
+    const rows = skills.filter(s => s.code.startsWith('SKILL_CH_BOW_') && (s.kind ?? 'attack') === 'attack' && !s.basicAttack && (s.chainIndex ?? 1) <= 1 && fx.some(x => x.group === s.group))
+    expect(rows.length).toBeGreaterThan(20)
+    for (const r of rows) {
+      const a = arrows(r)
+      const cues = (r.hitCues ?? []).length
+      if (a.count < Math.min(cues, a.hits)) bad.push(`${r.code}: ${a.count} arrows for ${a.hits} hits`)
+      for (let seg: SkillDef | undefined = r; seg; seg = seg.chainNext ? byCode.get(seg.chainNext) : undefined) {
+        const n = Math.max(1, seg.damage?.hits ?? 1)
+        const at = hitArrivalsMs(seg, n, 10)
+        if (!at) continue
+        at.forEach((ms, i) => {
+          const cue = seg!.hitCues![i] ?? seg!.hitCues![seg!.hitCues!.length - 1]!
+          const p = cue.projectile ?? seg!.hitCues!.find(c => c.projectile)!.projectile!
+          const min = (cue.offsetMs ?? 0) + p.delayMs + (10 / (p.speed / 10)) * 1000
+          if (ms < min - 1) bad.push(`${seg!.code} hit ${i}: ${ms} < ${min}`)
+          if (i > 0 && ms < at[i - 1]!) bad.push(`${seg!.code} hit ${i} lands before hit ${i - 1}`)
+        })
+      }
+    }
     expect(bad).toEqual([])
   })
 })

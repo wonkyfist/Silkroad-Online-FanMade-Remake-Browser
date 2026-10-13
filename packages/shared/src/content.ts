@@ -683,6 +683,12 @@ export interface SkillHitCue {
   phase: string
   event: number
   projectile?: { move: string; delayMs: number; speed: number }
+  /**
+   * ms after the row's release at which this cue's clip event fires (the retail body's clip; a chain segment counts
+   * from its own release inside the head's clip). A multi-arrow row releases one arrow per event: the server lands
+   * hit i at release + offsetMs + delay + travel (skill-timing.ts). Absent = 0.
+   */
+  offsetMs?: number
 }
 
 /** One FourCC parameter record of skilldata ('' tag for values before the first tag). */

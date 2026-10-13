@@ -488,7 +488,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -923,7 +924,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -1204,7 +1206,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -1482,7 +1485,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -2225,7 +2229,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -2550,7 +2555,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -2658,7 +2664,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -3200,7 +3207,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -3762,7 +3770,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -4087,7 +4096,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -4195,7 +4205,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -4802,7 +4813,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 200
-          }
+          },
+          "offsetMs": 96
         }
       ],
       "statuses": [
@@ -5036,7 +5048,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -5266,7 +5279,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -5700,7 +5714,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -5808,7 +5823,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -6473,7 +6489,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -6587,7 +6604,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -7052,7 +7070,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -7377,7 +7396,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -7485,7 +7505,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -7666,7 +7687,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 200
-          }
+          },
+          "offsetMs": 96
         }
       ],
       "statuses": [
@@ -8227,7 +8249,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -8479,7 +8502,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -8758,7 +8782,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 107
         }
       ],
       "area": {
@@ -9053,7 +9078,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -9378,7 +9404,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -9486,7 +9513,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -10126,7 +10154,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -10325,7 +10354,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -10485,7 +10515,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 200
-          }
+          },
+          "offsetMs": 96
         }
       ],
       "statuses": [
@@ -10896,7 +10927,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 250
         }
       ],
       "area": {
@@ -11134,7 +11166,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -11568,7 +11601,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -11676,7 +11710,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -12025,7 +12060,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 107
         }
       ],
       "area": {
@@ -12444,7 +12480,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -12681,7 +12718,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -13532,7 +13570,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -14027,7 +14066,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 250
         }
       ],
       "area": {
@@ -14135,7 +14175,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "consumes": {
@@ -14243,7 +14284,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -14424,7 +14466,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 200
-          }
+          },
+          "offsetMs": 96
         }
       ],
       "statuses": [
@@ -14658,7 +14701,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 107
         }
       ],
       "area": {
@@ -15136,7 +15180,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -15388,7 +15433,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -15909,7 +15955,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 211
         }
       ],
       "autoAttack": 1,
@@ -16303,7 +16350,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 250
         }
       ],
       "area": {
@@ -16417,7 +16465,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 500
-          }
+          },
+          "offsetMs": 350
         }
       ],
       "consumes": {
@@ -16630,7 +16679,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 107
         }
       ],
       "area": {
@@ -17088,7 +17138,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 355
         }
       ],
       "autoAttack": 1,
@@ -17229,7 +17280,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 3
+          "event": 3,
+          "offsetMs": 1
         }
       ],
       "autoAttack": 1,
@@ -17385,7 +17437,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 1
         }
       ],
       "area": {
@@ -17584,7 +17637,8 @@
             "move": "MOV_PIERCE",
             "delayMs": 0,
             "speed": 400
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -17744,7 +17798,8 @@
             "move": "MOV_STRAIGHT",
             "delayMs": 0,
             "speed": 200
-          }
+          },
+          "offsetMs": 96
         }
       ],
       "statuses": [
@@ -17985,7 +18040,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 450
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {
@@ -18755,7 +18811,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 250
         }
       ],
       "area": {
@@ -18906,7 +18963,8 @@
       "hitCues": [
         {
           "phase": "SHOT",
-          "event": 1
+          "event": 1,
+          "offsetMs": 107
         }
       ],
       "area": {
@@ -19067,7 +19125,8 @@
             "move": "MOV_UPR",
             "delayMs": 0,
             "speed": 450
-          }
+          },
+          "offsetMs": 32
         }
       ],
       "area": {

@@ -64,6 +64,10 @@ export interface SkillAction {
   ended: boolean
   /** The planned end passed without an early end (onFinish ran). */
   done?: boolean
+  /** Local release of each row cast in this action (a chain: one per segment). */
+  releases?: Map<string, number>
+  /** Hits already received per victim and row: the next combat's first hit is cue `seen` (one combat per arrow). */
+  seen?: Map<string, number>
 }
 
 export interface ActionPlayerOptions {
@@ -95,14 +99,15 @@ const MAX_LAUNCH_LAG = 600
  * How much later than the release the client launches a projectile cue (ms, 0 for other cues). The server times a
  * projectile's landing (`combat.at`) from the release, while the client launches it at its clip event (skilleffect's
  * SHOT@eN rows); on rows whose cast time ends before that event (Cold wave - Arrest: about 96 ms) the hit is shown
- * this much later, so the bolt, its impact and the damage number arrive together (FX lab H2).
+ * this much later, so the bolt, its impact and the damage number arrive together (FX lab H2). The server already
+ * counts the cue's own clip offset (`offsetMs`, a multi-arrow row's later arrows): only the rest is lag.
  */
-function launchLag(a: SkillAction, cue: NonNullable<SkillDef['hitCues']>[number] | undefined): number {
+function launchLag(a: SkillAction, cue: NonNullable<SkillDef['hitCues']>[number] | undefined, release = a.release): number {
   if (!cue?.projectile || cue.event <= 0) return 0
   const phase = a.phases.find(p => p.plan.phase === cue.phase)
   const ev = phase?.clip?.hits[cue.event - 1]
   if (!phase || ev === undefined) return 0
-  return Math.max(0, Math.min(MAX_LAUNCH_LAG, phase.start + ev - a.release))
+  return Math.max(0, Math.min(MAX_LAUNCH_LAG, phase.start + ev - release - (cue.offsetMs ?? 0)))
 }
 
 /** Clip TYPE_NAMEs of an `animation` phase ('SKILL_1'; basic attacks list several, the first is used). */
@@ -176,6 +181,7 @@ export class ActionPlayer {
       prev.def = def
       prev.skill = msg.skill
       prev.release = now + msg.castMs
+      ;(prev.releases ??= new Map()).set(msg.skill, prev.release)
       prev.end = Math.max(prev.end, now + msg.castMs + msg.actionMs)
       if (msg.target !== undefined) prev.target = msg.target
       this.byInstance.set(msg.instance, prev)
@@ -206,6 +212,7 @@ export class ActionPlayer {
       t += plan.ms
     }
     a.end = Math.max(a.end, t)
+    a.releases = new Map([[msg.skill, a.release]])
     if (msg.target !== undefined && msg.target !== msg.id) port?.face(msg.target)
     a.token = plans.length && port ? port.play(aniGroup, plans) : null
     this.byInstance.set(msg.instance, a)
@@ -250,13 +257,18 @@ export class ActionPlayer {
     if (msg.instance === undefined) return false
     const a = this.byInstance.get(msg.instance)
     if (!a) return false
-    const times = this.hitTimes(a, msg, now, serverNow)
+    // the server sends one combat per arrow (shared arrivalGroups): later combats of a row continue its cue list
+    const key = `${msg.target}:${msg.skill ?? ''}`
+    const seen = (a.seen ??= new Map())
+    const base = seen.get(key) ?? 0
+    seen.set(key, base + msg.hits.length)
+    const times = this.hitTimes(a, msg, now, serverNow, base)
     times.forEach((at, i) => this.at(Math.max(now, at), () => show(i)))
     return true
   }
 
   /** Local times of each hit of `msg` (exported for tests through `combat`). */
-  hitTimes(a: SkillAction | undefined, msg: Pick<SkillCombat, 'hits' | 'at' | 'skill'>, now: number, serverNow: number): number[] {
+  hitTimes(a: SkillAction | undefined, msg: Pick<SkillCombat, 'hits' | 'at' | 'skill'>, now: number, serverNow: number, base = 0): number[] {
     const hits: readonly CombatHit[] = msg.hits
     const def = a ? ((msg.skill ? this.catalog.get(msg.skill) : undefined) ?? a.def) : undefined
     const cues = def?.hitCues ?? []
@@ -264,7 +276,12 @@ export class ActionPlayer {
       const land = now + (msg.at - serverNow)
       // hits with a cue of their own (a multi-arrow fan: one arrow per clip event) land at their own arrow's lag; only
       // hits past the cue list (or a single cue's extra hits) are spaced HIT_GAP apart
-      return hits.map((_, i) => land + (a ? launchLag(a, cues[i] ?? cues[cues.length - 1]) : 0) + (cues.length ? Math.max(0, i - cues.length + 1) : i) * HIT_GAP)
+      const release = (msg.skill ? a?.releases?.get(msg.skill) : undefined) ?? a?.release
+      return hits.map((_, k) => {
+        const i = base + k
+        const gap = (cues.length ? Math.max(0, i - cues.length + 1) : k) * HIT_GAP
+        return land + (a ? launchLag(a, cues[i] ?? cues[cues.length - 1], release) : 0) + gap
+      })
     }
     if (!a) return hits.map((_, i) => now + i * HIT_GAP)
     return hits.map((_, i) => {
@@ -433,4 +450,25 @@ export function clipSkillDef(skill: string, clip: string): SkillDef | undefined 
 /** The clip TYPE_NAME of an animation cell ('ANI_ATTACK1,ANI_ATTACK2' -> 'ATTACK1'). */
 export function clipTypeOf(v: string | null | undefined): string | null {
   return clipType(v ?? undefined)
+}
+
+/**
+ * The clip hit events whose stages a chain segment plays (M21): the head from the phase start (event 0) to its own last
+ * cue, each later segment from the event after the previous segment's last cue to its own, the last one to the clip's
+ * end. A 4 Arrow Combo (2 + 2 arrows): head {0, 1, 2}, second segment {3, 4, ...}. Undefined for a row outside a chain.
+ */
+export function segmentEvents(def: SkillDef | undefined, get: (code: string) => SkillDef | undefined): Set<number> | undefined {
+  if (!def?.chainRoot || def.chainIndex === undefined) return undefined
+  let from = 0
+  for (let cur = get(def.chainRoot), n = 0; cur && n < 16; cur = cur.chainNext ? get(cur.chainNext) : undefined, n++) {
+    const last = Math.max(from === 0 ? 1 : from, ...(cur.hitCues ?? []).map(c => c.event))
+    if (cur.code === def.code) {
+      const to = cur.chainNext ? last : 32
+      const out = new Set<number>()
+      for (let e = from; e <= to; e++) out.add(e)
+      return out
+    }
+    from = last + 1
+  }
+  return undefined
 }

@@ -11,6 +11,7 @@ import type { SkillDef } from '../../shared/src/content.ts'
 import { loadClientSources } from '../src/data/client-source.ts'
 import {
   buildSkills,
+  cueOffsets,
   linkChains,
   skillAniGroups,
   skillArea,
@@ -193,5 +194,32 @@ describe.skipIf(!hasConfig)('skills export (vSRO 1.188 client)', () => {
     expect(Math.abs(clip('BOW', bow.animation!.ready!)!.durationMs - bow.preparingMs!)).toBeLessThanOrEqual(12)
     expect(Math.abs(clip('BOW', bow.animation!.shot!)!.durationMs - bow.actionMs)).toBeLessThanOrEqual(12)
     expect(checked).toHaveLength(7)
+  })
+})
+
+describe('arrow combo segments (linkChains by hits, cueOffsets)', () => {
+  const cue = (event: number) => ({ phase: 'SHOT', event, projectile: { move: 'MOV_UPR', delayMs: 0, speed: 600 } })
+  const row = (code: string, o: Partial<SkillDef>): SkillDef & Record<string, unknown> =>
+    ({ code, id: 1, name: null, mastery: 'PACHEON', masteryLevel: 1, skillLevel: 1, sp: 0, mp: 0, category: 'ranged', castMs: 0, actionMs: 0, cooldownMs: 0, range: 0, weapons: ['bow'], icon: null, group: 'G', aniGroup: 'BOW', animation: { shot: 'SKILL_16' }, ...o }) as SkillDef & Record<string, unknown>
+
+  it('a 2 + 2 hit chain keeps cues 1-2 and 3-4, each offset from its own release in the head clip', () => {
+    const all = [cue(1), cue(2), cue(3), cue(4)]
+    const c1 = row('C1', { castMs: 522, actionMs: 561, chainNext: 'C2', damage: { physPct: 50, magPct: 0, flat: [1, 2], hits: 2 }, hitCues: all })
+    const c2 = row('C2', { castMs: 0, actionMs: 917, damage: { physPct: 50, magPct: 0, flat: [1, 2], hits: 2 }, hitCues: all })
+    linkChains([c1, c2])
+    cueOffsets([c1, c2], () => [522, 809, 1083, 1340])
+    expect(c1.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[1, 0], [2, 287]])
+    expect(c2.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[3, 0], [4, 257]])
+    // one-hit segments keep cue i (Blood Chain)
+    const s1 = row('S1', { chainNext: 'S2', damage: { physPct: 1, magPct: 0, flat: [1, 2], hits: 1 }, hitCues: [cue(1), cue(2)] })
+    const s2 = row('S2', { damage: { physPct: 1, magPct: 0, flat: [1, 2], hits: 1 }, hitCues: [cue(1), cue(2)] })
+    linkChains([s1, s2])
+    expect([s1.hitCues!.map(c => c.event), s2.hitCues!.map(c => c.event)]).toEqual([[1], [2]])
+  })
+
+  it('a row with a prepare time releases at the SHOT start (Strong Bow: the arrow leaves 32 ms in)', () => {
+    const r = row('P', { preparingMs: 670, castMs: 800, actionMs: 530, animation: { ready: 'READY01', wait: 'WAIT01', shot: 'SKILL_40' }, hitCues: [cue(1)] })
+    cueOffsets([r], () => [32])
+    expect(r.hitCues![0]!.offsetMs).toBe(32)
   })
 })

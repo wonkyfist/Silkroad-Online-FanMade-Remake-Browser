@@ -131,6 +131,49 @@ describe.skipIf(!HAVE)('skills on the real export', () => {
     expect(report).toHaveLength(52)
   })
 
+  it('arrow combos: one combat per arrow, each at its release + clip offset + travel (2 / 3 / 4 arrows)', () => {
+    const want: Record<string, number[]> = { SKILL_CH_BOW_CHAIN_A: [0, 350], SKILL_CH_BOW_CHAIN_B: [0, 285, 562], SKILL_CH_BOW_CHAIN_C: [0, 287, 0, 257] }
+    for (const [group, offsets] of Object.entries(want)) {
+      h = skillHarness({ data, book, rng: () => 0.3, config: { levelCap: 30 } })
+      const { p, inbox } = h.hero({ level: 30, weapon: 'bow' })
+      expect(runSkillCommand(h.gameplay.skills, p, ['all', '30'], 30, h.now).ok).toBe(true)
+      h.gameplay.setVitals(p, p.maxHp, p.maxMp)
+      const mob = data.mob('MOB_CH_MANGNYANG') ?? [...data.mobs.values()][0]
+      const m = h.dummy(0, 10, { ...mob!, hp: 1_000_000, walkSpeed: 0, runSpeed: 0, attackIntervalMs: 1_000_000 })
+      const row = book.byGroup.get(group)![0]!
+      inbox.length = 0
+      const t0 = h.now
+      h.req(p, { t: 'useSkill', skill: row.code, target: m.id })
+      expect(h.result(inbox, 'useSkill'), group).toMatchObject({ ok: true })
+      h.runTo(h.now + 6000)
+      const casts = h.all(inbox, 'cast').filter((c) => c.id === p.id)
+      const combats = h.all(inbox, 'combat').filter((c) => c.attacker === p.id && c.target === m.id && c.skill !== undefined && book.skill(c.skill)?.group === group)
+      expect(combats.length, group).toBe(offsets.length)
+      expect(combats.every((c) => c.hits.length === 1), group).toBe(true)
+      // each segment's release (server time), then the travel of 10 m at the row's speed
+      let t = t0
+      const releases = casts.map((c) => {
+        const r = t + c.prepareMs + c.castMs
+        t = r + c.actionMs
+        return { skill: c.skill, at: r }
+      })
+      const dist = h.world.distance(p, m, h.now)
+      combats.forEach((c, i) => {
+        const seg = book.skill(c.skill!)!
+        const rel = releases.find((r) => r.skill === c.skill)!.at
+        const speed = seg.hitCues!.find((q) => q.projectile)!.projectile!.speed
+        const expected = rel + offsets[i]! + (dist / (speed / 10)) * 1000
+        // the release runs on the 20 Hz tick: never early, at most one tick late; the arrows of a segment keep their spacing
+        expect(c.at! - expected, `${group} arrow ${i}`).toBeGreaterThanOrEqual(-1)
+        expect(c.at! - expected, `${group} arrow ${i}`).toBeLessThanOrEqual(50)
+        if (i > 0 && offsets[i]! > 0) expect(Math.abs(c.at! - combats[i - 1]!.at! - (offsets[i]! - offsets[i - 1]!)), `${group} arrow ${i} spacing`).toBeLessThanOrEqual(1)
+      })
+      h.cleanup()
+      h = null
+    }
+  })
+  })
+
   it('basic attacks use the weapon rows (spear 1 hit at the row cadence, sword 2 hits)', () => {
     h = skillHarness({ data, book })
     const { p } = h.hero({ weapon: 'spear' })

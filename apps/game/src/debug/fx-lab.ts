@@ -18,7 +18,7 @@
  */
 import { CreateScreenshotAsync, Matrix, Vector3, type ArcRotateCamera, type Scene } from '@babylonjs/core'
 import { FxInstance, FxLibrary, type FxEffect, type FxRootPose } from '@sro/fx'
-import { DEFAULT_LEVEL_CAP, type CombatHit, type EffectState, type ServerMessage, type SkillDef, type SkillStatusKind } from '@sro/shared'
+import { arrivalGroups, DEFAULT_LEVEL_CAP, hitArrivalsMs, type CombatHit, type EffectState, type ServerMessage, type SkillDef, type SkillStatusKind } from '@sro/shared'
 import type { App } from '../app.ts'
 import { STARTER_WEAPON_ITEMS } from '../content/builtin.ts'
 import { OUT } from '../content/catalog.ts'
@@ -713,20 +713,20 @@ class FxLab {
       const proj = (row.hitCues ?? []).find(c => c.projectile)?.projectile
       const n = Math.max(1, row.damage?.hits ?? 1)
       const down = (row.statuses ?? []).some(s => s.status === 'knockdown')
-      const send = (v: EntityView, i: number) => {
-        const msg: CombatMessage = { t: 'combat', attacker: self.id, target: v.id, skill: row.code, hits: this.hits(v, n, false, { ...(down ? { down: true as const } : {}), ...(row.damage ? {} : { damage: 0 }) }), instance }
+      const send = (v: EntityView, i: number, count = n) => {
+        const msg: CombatMessage = { t: 'combat', attacker: self.id, target: v.id, skill: row.code, hits: this.hits(v, count, false, { ...(down ? { down: true as const } : {}), ...(row.damage ? {} : { damage: 0 }) }), instance }
         if (proj) msg.at = Math.round(this.need().serverNow())
         if (i > 0) msg.aoe = true
         this.deliver(msg)
       }
       if (proj) {
-        // The server sends the combat when the projectile arrives (engine.ts `arrive`).
+        // The server sends one combat per arrow when it arrives (engine.ts `fly` / `arrive`): release + the cue's
+        // clip offset + travel (shared hitArrivalsMs).
         victims.forEach((v, i) => {
           const d = Math.hypot(v.pos.x - self.pos.x, v.pos.z - self.pos.z)
-          const at = proj.delayMs + (d / (proj.speed / 10)) * 1000
-          setTimeout(() => send(v, i), at)
+          for (const g of arrivalGroups(hitArrivalsMs(row, n, d) ?? [proj.delayMs + (d / (proj.speed / 10)) * 1000])) setTimeout(() => send(v, i, g.count), g.ms)
         })
-      } else victims.forEach(send)
+      } else victims.forEach((v, i) => send(v, i))
       const st = row.statuses?.find(s => s.status !== 'knockdown' && s.status !== 'knockback')
       if (st) {
         const cue = row.hitCues?.[0]

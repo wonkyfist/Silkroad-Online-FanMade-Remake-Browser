@@ -33,7 +33,7 @@ import type { EntityView } from '../entities.ts'
 import type { CombatMessage, WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
 import { isPiloting } from '../pilot-model.ts'
 import { damageFlight, isFlight, parseMove, FX_BATCH_POOL, SkillFx, type FxSkill, type StatusParticle } from '../skill-fx.ts'
-import { ActionPlayer, clipTypeOf, mobSkillDef, type ActionPort, type PhasePlan, type SkillAction } from '../skills-view.ts'
+import { ActionPlayer, clipTypeOf, mobSkillDef, segmentEvents, type ActionPort, type PhasePlan, type SkillAction } from '../skills-view.ts'
 
 /** Requests whose refusals the HUD toasts for us. */
 const SKILL_REQUESTS = ['useSkill', 'skillLearn', 'masteryUp', 'buffCancel', 'hotbarSet'] as const
@@ -156,9 +156,9 @@ export function createSkillPresenter(catalog: SkillCatalog, fx: SkillFx, view: (
       const waitOnly = phase.phase === 'WAIT' && !shot && a.release <= start
       const loopUntil = phase.phase === 'SHOT' || waitOnly ? start + phase.ms : shot ? shot.start : a.release
       const target = a.target !== undefined ? view(a.target) : undefined
-      // A chain head plays its first slash; each segment's cast plays its own (M21).
+      // A chain head plays its own slashes / arrows; each segment's cast plays its own (M21, segmentEvents).
       const chainHead = phase.phase === 'SHOT' && !!a.def?.chainNext && (a.def.chainIndex ?? 1) <= 1
-      const events = chainHead ? new Set([0, 1]) : undefined
+      const events = chainHead ? segmentEvents(a.def, c => catalog.get(c)) : undefined
       fx.stages(a.group, phase.phase, { caster, ...(target ? { target } : {}), start, hits: clip?.hits ?? [], loopUntil, imbue: fx.imbueOf(a.caster), ...(events ? { events } : {}) })
       // M6: heal / cure / resurrect play their ACT_S on the target at the release (they send no effectAdd). The
       // server applies the HP / cure / revival at the release too (engine.ts release), so the effect and the target's
@@ -177,7 +177,7 @@ export function createSkillPresenter(catalog: SkillCatalog, fx: SkillFx, view: (
       const shot = a.phases.find(p => p.plan.phase === 'SHOT')
       if (!caster || !shot) return
       const target = a.target !== undefined ? view(a.target) : undefined
-      fx.stages(a.group, 'SHOT', { caster, ...(target ? { target } : {}), start: shot.start, hits: shot.clip?.hits ?? [], loopUntil: Math.max(now, shot.start + shot.plan.ms), imbue: fx.imbueOf(a.caster), events: new Set([index]) })
+      fx.stages(a.group, 'SHOT', { caster, ...(target ? { target } : {}), start: shot.start, hits: shot.clip?.hits ?? [], loopUntil: Math.max(now, shot.start + shot.plan.ms), imbue: fx.imbueOf(a.caster), events: segmentEvents(a.def, c => catalog.get(c)) ?? new Set([index]) })
     },
     onEnd(a) {
       fx.stopCasterLoops(a.caster)

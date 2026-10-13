@@ -325,7 +325,8 @@ export function skillExtras(r: SkillDataRow, d: SkillDetail, ctx: { strings: Rea
  * Sets chainRoot / chainIndex on every segment reachable from a chain head (a skill nobody chains into). The
  * segments share one Basic_Group, so skilleffect lists the damage cues of the whole clip on each of them; segment
  * i keeps cue i (the last segment keeps the rest when the clip has more cues than segments). Research report §5.5:
- * Blood Chain's segment i lands on hit event i and the clip plays once.
+ * Blood Chain's segment i lands on hit event i and the clip plays once. When the segments' hit counts add up to the
+ * cues, each segment keeps as many cues as it has hits, in order (4 Arrow Combo: 2 + 2 arrows on events 1-2, 3-4).
  */
 export function linkChains(skills: ReadonlyArray<SkillDef & Record<string, unknown>>): void {
   const byCode = new Map(skills.map(s => [s.code, s]))
@@ -336,12 +337,55 @@ export function linkChains(skills: ReadonlyArray<SkillDef & Record<string, unkno
     for (let cur: (SkillDef & Record<string, unknown>) | undefined = head; cur && segments.length < 16; cur = cur.chainNext ? byCode.get(cur.chainNext) : undefined) {
       segments.push(cur)
     }
+    const all = head.hitCues as SkillHitCue[] | undefined
+    const counts = segments.map(s => Math.max(1, s.damage?.hits ?? 1))
+    const byHits = !!all && counts.some(n => n > 1) && counts.reduce((a, b) => a + b, 0) === all.length
+    let from = 0
     segments.forEach((s, i) => {
       s.chainRoot = head.code
       s.chainIndex = i + 1
       const cues = s.hitCues as SkillHitCue[] | undefined
-      if (cues && cues.length > 1 && i < cues.length) s.hitCues = i === segments.length - 1 ? cues.slice(i) : [cues[i]!]
+      if (byHits && cues) {
+        s.hitCues = cues.slice(from, from + counts[i]!)
+        from += counts[i]!
+      } else if (cues && cues.length > 1 && i < cues.length) s.hitCues = i === segments.length - 1 ? cues.slice(i) : [cues[i]!]
     })
+  }
+}
+
+/**
+ * Sets each SHOT cue's `offsetMs` (shared SkillHitCue): its clip event (`clipHits`: the reference body's sorted
+ * type-1 event times of a pack group's clip) minus the clip time of the row's release. SHOT starts at t0 without a
+ * prepare time (the cast plays in it) and at the release with one (READY / WAIT hold the cast); a chain segment
+ * continues its head's clip, starting where the previous segments' prepare + cast + action left it.
+ */
+export function cueOffsets(skills: ReadonlyArray<SkillDef>, clipHits: (aniGroup: string | undefined, type: string) => readonly number[] | null): void {
+  const byCode = new Map(skills.map(s => [s.code, s]))
+  const clipType = (v: string | undefined) => v?.split(',')[0]?.trim().replace(/^ANI_/, '') || null
+  for (const s of skills) {
+    const cues = s.hitCues
+    const type = clipType(s.animation?.shot)
+    if (!cues?.length || !type) continue
+    const hits = clipHits(s.aniGroup, type)
+    if (!hits?.length) continue
+    // a chain segment: the previous segments' time in the head's clip
+    let base = 0
+    if ((s.chainIndex ?? 1) > 1 && s.chainRoot) {
+      for (let cur = byCode.get(s.chainRoot); cur && cur.code !== s.code; cur = cur.chainNext ? byCode.get(cur.chainNext) : undefined) {
+        base += Math.max(0, cur.preparingMs ?? 0) + Math.max(0, cur.castMs) + Math.max(0, cur.actionMs)
+      }
+    }
+    const release = base + ((s.preparingMs ?? 0) > 0 ? 0 : s.castMs > 1 ? s.castMs : 0)
+    // the cue objects are shared by every level of a group: each row gets its own
+    s.hitCues = cues.map(c => ({ ...c }))
+    for (const c of s.hitCues) {
+      if (c.phase !== 'SHOT' || c.event <= 0) continue
+      const ev = hits[c.event - 1]
+      if (ev === undefined) continue
+      const off = Math.round(ev - release)
+      if (off > 0) c.offsetMs = off
+      else delete c.offsetMs
+    }
   }
 }
 

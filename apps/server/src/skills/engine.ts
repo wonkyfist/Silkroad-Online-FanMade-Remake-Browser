@@ -1,5 +1,7 @@
 import {
   MAX_COMBAT_HITS,
+  arrivalGroups,
+  hitArrivalsMs,
   MAX_EFFECTS_PER_ENTITY,
   MOUSE_SLOT,
   yawTowards,
@@ -864,18 +866,27 @@ export class SkillEngine implements GameplayModule {
       if (cos) {
         const hits = this.rollCosHits(p, cos, row, aoe && area ? reductionMul(area.reductionPct) : 1)
         if (hits.length === 0) return
-        if (proj) this.flights.push({ at: arrivalAt(now, this.g.world.distance(p, cos, now), proj), caster: p.id, target: cos.id, code: row.code, instance, aoe, hits, statuses: hits.map(() => null) })
+        if (proj) this.fly(row, now, this.g.world.distance(p, cos, now), { caster: p.id, target: cos.id, code: row.code, instance, aoe }, hits, hits.map(() => null))
         else this.g.dealHits(p, cos, hits, aoe ? { skill: row.code, instance, aoe } : { skill: row.code, instance }, now)
         return
       }
       const t = c.id === primary.id ? (primary as Player | Mob) : (this.g.world.mobs.get(c.id) ?? this.g.world.players.get(c.id))
       if (!t) return
       const { hits, statuses } = this.rollHits(p, t, row, aoe && area ? reductionMul(area.reductionPct) : 1, now)
-      if (proj) {
-        const at = arrivalAt(now, this.g.world.distance(p, t, now), proj)
-        this.flights.push({ at, caster: p.id, target: t.id, code: row.code, instance, aoe, hits, statuses })
-      } else this.land(p, t, row.code, hits, statuses, aoe ? { instance, aoe } : { instance }, now)
+      if (proj) this.fly(row, now, this.g.world.distance(p, t, now), { caster: p.id, target: t.id, code: row.code, instance, aoe }, hits, statuses)
+      else this.land(p, t, row.code, hits, statuses, aoe ? { instance, aoe } : { instance }, now)
     })
+  }
+
+  /**
+   * Projectile hits in flight: hit i leaves at its cue's clip event (offsetMs after the release) and lands after its
+   * travel (shared hitArrivalsMs); hits landing together go as one combat (a 4 Arrow Combo: one per arrow).
+   */
+  private fly(row: SkillDef, releaseAt: number, distance: number, f: Omit<Flight, 'at' | 'hits' | 'statuses'>, hits: CombatHit[], statuses: (StatusRoll | null)[]): void {
+    const arrivals = hitArrivalsMs(row, hits.length, distance) ?? hits.map(() => arrivalAt(releaseAt, distance, projectileOf(row)!) - releaseAt)
+    for (const g of arrivalGroups(arrivals)) {
+      this.flights.push({ ...f, at: Math.round(releaseAt + g.ms), hits: hits.slice(g.from, g.from + g.count), statuses: statuses.slice(g.from, g.from + g.count) })
+    }
   }
 
   // ---- heal, resurrect, cure -----------------------------------------------------------------------------
