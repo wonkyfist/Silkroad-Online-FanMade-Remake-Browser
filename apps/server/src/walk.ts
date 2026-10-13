@@ -16,6 +16,14 @@ export function walkFactor(p: object): number {
   return walking.has(p) ? WALK_SPEED_FACTOR : 1
 }
 
+/**
+ * The player's move multiplier: running uses `speedMul` (speed scrolls, buffs, slows); walking is a fixed pace that
+ * speed boosts never raise (owner, 2026-10-13), while slows still apply.
+ */
+export function moveMul(p: { speedMul: number }): number {
+  return walking.has(p) ? WALK_SPEED_FACTOR * Math.min(1, p.speedMul) : p.speedMul
+}
+
 export class WalkService implements GameplayModule {
   readonly name = 'walk'
   readonly handles: readonly GameplayRequest[] = ['walk']

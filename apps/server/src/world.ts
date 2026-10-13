@@ -17,7 +17,7 @@ import {
   type CharLook,
 } from '@sro/shared'
 import type { NavLeg, NavSurface } from '@sro/nav'
-import { walkFactor } from './walk.ts'
+import { moveMul } from './walk.ts'
 import type { Bounds } from './content.ts'
 import { PLAYER_BASE, maxHpFor, maxMpFor, playerCombatStats, type CombatStats } from './formulas.ts'
 import { VISIBLE_SLOTS } from './inventory.ts'
@@ -947,7 +947,7 @@ export class World {
 
   /** Starts a straight-line player move from the current authoritative position. */
   moveTo(p: Player, x: number, z: number, now = Date.now()): void {
-    this.moveEntity(p, x, z, this.moveSpeed * p.speedMul * walkFactor(p), now)
+    this.moveEntity(p, x, z, this.moveSpeed * moveMul(p), now)
   }
 
   /**

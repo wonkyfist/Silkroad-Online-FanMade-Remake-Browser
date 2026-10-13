@@ -102,7 +102,7 @@ import { RobberyService } from './jobs/robbery.ts'
 import { CaravanService } from './jobs/caravan.ts'
 import { JailService } from './siege/jail.ts'
 import { MovementService } from './movement.ts'
-import { WalkService, walkFactor } from './walk.ts'
+import { WalkService, moveMul } from './walk.ts'
 import { WinterPlay } from './winter-play/service.ts'
 import { Uniques } from './uniques.ts'
 import { Pilot } from './pilot/service.ts'
@@ -1638,7 +1638,7 @@ export class Gameplay implements AiHost {
       const stand = Math.max(0, reach * 0.8)
       const x = tp[0] + ((pp[0] - tp[0]) / d) * stand
       const z = tp[2] + ((pp[2] - tp[2]) / d) * stand
-      if (!this.world.moveEntity(p, x, z, this.world.moveSpeed * p.speedMul * walkFactor(p), now)) p.action = null
+      if (!this.world.moveEntity(p, x, z, this.world.moveSpeed * moveMul(p), now)) p.action = null
     }
     return false
   }
