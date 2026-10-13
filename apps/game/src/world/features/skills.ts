@@ -151,7 +151,10 @@ export function createSkillPresenter(catalog: SkillCatalog, fx: SkillFx, view: (
         hideWeapon(a, true)
       }
       const shot = a.phases.find(p => p.plan.phase === 'SHOT')
-      const loopUntil = phase.phase === 'SHOT' ? start + phase.ms : shot ? shot.start : a.release
+      // A WAIT-only action (Ghost Walk - Phantom: SKILL_7 = skill_china_lightning_bobeop, the dash) is its own action:
+      // its WAIT loop (lightning_bobeop_move) runs for the phase, not until the release (t0, which ended it at once).
+      const waitOnly = phase.phase === 'WAIT' && !shot && a.release <= start
+      const loopUntil = phase.phase === 'SHOT' || waitOnly ? start + phase.ms : shot ? shot.start : a.release
       const target = a.target !== undefined ? view(a.target) : undefined
       // A chain head plays its first slash; each segment's cast plays its own (M21).
       const chainHead = phase.phase === 'SHOT' && !!a.def?.chainNext && (a.def.chainIndex ?? 1) <= 1
