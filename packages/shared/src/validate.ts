@@ -2079,7 +2079,7 @@ function serverMessage(v: unknown): ServerMessage {
       const m: Extract<ServerMessage, { t: 'displace' }> = {
         t: 'displace',
         id: int(o, 'id', 1, MAX_ID),
-        kind: oneOf(o, 'kind', ['pull', 'throw', 'dash'] as const),
+        kind: oneOf(o, 'kind', ['pull', 'throw', 'dash', 'push'] as const),
         from: tornadoPoint(o, 'from'),
         to: tornadoPoint(o, 'to'),
         at: num(o, 'at', 0, BIG),
