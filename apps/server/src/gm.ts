@@ -50,6 +50,7 @@ import { AMBUSH_USAGE, BAG_USAGE, TRANSPORT_USAGE } from './jobs/transport.ts'
 import { SIEGE_USAGE } from './siege/event.ts'
 import { TIME_USAGE } from './world-clock.ts'
 import { UNIQUE_USAGE } from './uniques.ts'
+import { TOOL_COMMANDS } from './gm-tools.ts'
 
 /**
  * Game Master commands. Every call is authorized against the account's role as stored in the
@@ -230,11 +231,16 @@ function clip(message: string): string {
 
 export const COMMANDS: Record<string, Command> = {
   help: {
-    usage: 'help',
-    about: 'List the GM commands.',
-    run: () => {
-      const commands = Object.entries(COMMANDS).map(([name, c]) => ({ name, usage: c.usage, about: c.about }))
-      return ok(['GM commands (also typed in chat as /command):', ...commands.map((c) => `${c.usage} - ${c.about}`)].join('\n'), { commands })
+    usage: 'help [gm | word]',
+    about: 'List the GM commands (help gm: all; help <word>: the commands about it).',
+    run: ({ args }) => {
+      const word = (args[0] ?? '').toLowerCase()
+      const filter = word && word !== 'gm' ? word : ''
+      const commands = Object.entries(COMMANDS)
+        .map(([name, c]) => ({ name, usage: c.usage, about: c.about }))
+        .filter((c) => !filter || c.name.includes(filter) || c.about.toLowerCase().includes(filter))
+      if (commands.length === 0) return fail(`No GM command about "${filter}".`)
+      return ok([filter ? `GM commands about "${filter}":` : 'GM commands (also typed in chat as /command):', ...commands.map((c) => `${c.usage} - ${c.about}`)].join('\n'), { commands })
     },
   },
   who: {
@@ -657,6 +663,8 @@ export const COMMANDS: Record<string, Command> = {
       return ok(`Killed ${e.name}.`, { id })
     },
   },
+  // the GM toolbox (gm-tools.ts): gear sets, inventory tools, moderation, announcements, boosts and events
+  ...TOOL_COMMANDS,
 }
 
 /** `worldClock` to every socket with a player in the world (lobby sockets have no clock to update; docs/SKY.md §2.2). */

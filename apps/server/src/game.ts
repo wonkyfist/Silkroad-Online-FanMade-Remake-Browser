@@ -73,6 +73,8 @@ export interface GameContext {
   gameplay: Gameplay
   /** One live socket per account. */
   sockets: Map<number, Connection>
+  /** Account bans (the admin panel's table; GM ban/unban in gm-tools.ts). Absent in bare test contexts. */
+  bans?: { ban(accountId: number, reason: string, by: string): unknown; unban(accountId: number): boolean }
   /** Message, byte, tick and disconnect counters (netstats.ts; GET /netstats with NET_STATS=1, loopback only). */
   net: NetStats
   /** Characters of dropped connections held in the world for a reconnect (resume.ts). */
@@ -361,6 +363,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     nav,
     gameplay,
     sockets,
+    bans: adminStore,
     net: new NetStats(config.tickHz, switches.tickTimers),
     holds: new BodyHolds(() => (config.resumeGraceS ?? 0) * 1000, config.log),
     news: NewsStore.open(config),

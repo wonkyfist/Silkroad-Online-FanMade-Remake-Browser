@@ -91,6 +91,8 @@ export interface Player extends Mover {
   staff: boolean
   /** GM `invis on`: only staff viewers (and the player itself) receive this entity. Runtime only. */
   invisible: boolean
+  /** GM `god`: takes no damage (gm-tools.ts). Runtime only. */
+  godMode?: boolean
   /** GM `speed`: multiplies the world move speed for this player. Runtime only. */
   speedMul: number
   /** Entity ids this player's client has spawned (interest management). */

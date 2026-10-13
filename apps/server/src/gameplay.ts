@@ -1277,6 +1277,7 @@ export class Gameplay implements AiHost {
     for (const h of rolled.slice(0, MAX_COMBAT_HITS)) {
       let damage = Math.max(0, h.damage)
       if (pvp) damage = this.hunters.pvpDamage(damage, a, t as Player)
+      if (t.kind === 'player' && t.godMode) damage = 0
       if (damage > 0 && t.kind === 'player') damage = this.skills.absorb(t, damage, now)
       damage = Math.min(damage, Math.ceil(t.hp))
       if (pvp && damage > 0 && damage >= t.hp && this.hunters.subdues(a, t as Player)) {
@@ -1332,6 +1333,7 @@ export class Gameplay implements AiHost {
     if (t.kind === 'player' ? t.dead || t.trance : t.ai === 'dead') return { dealt: 0, killed: false }
     // Storms (docs/WEATHER.md §12.2): a wet player takes more from lightning.
     let dealt = Math.max(0, Math.round(damage * this.storm.hazardMul(t, cause)))
+    if (t.kind === 'player' && t.godMode) dealt = 0
     if (dealt > 0 && t.kind === 'player') dealt = this.skills.absorb(t, dealt, now)
     dealt = Math.min(dealt, nonLethal ? Math.max(0, Math.ceil(t.hp) - 1) : Math.ceil(t.hp))
     t.hp = Math.max(0, t.hp - dealt)

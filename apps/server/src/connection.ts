@@ -23,6 +23,7 @@ import { knob } from './config.ts'
 import type { Appearance, CharacterRow } from './db.ts'
 import type { GameContext } from './game.ts'
 import { parseSlash, runGm } from './gm.ts'
+import { muteOf, noteChat } from './gm-tools.ts'
 import { VISIBLE_SLOTS } from './inventory.ts'
 import type { NavPoint } from './nav.ts'
 import { WARP_SEARCH_M, visibleEquipPlus, type Player, type World } from './world.ts'
@@ -408,6 +409,12 @@ export class Connection {
         if (!this.player) return this.error('not_in_world', 'not in the world', msg.t)
         const text = cleanChat(msg.text)
         if (!text) return this.error('bad_request', 'empty chat message', msg.t)
+        // GM toolbox (gm-tools.ts): a muted account has no free chat; free lines are kept for the GM chatlog.
+        if (!text.startsWith('/')) {
+          const mute = muteOf(this.game, this.accountId)
+          if (mute) return this.error('forbidden', `You are muted for ${Math.ceil((mute.until - Date.now()) / 60_000)} more minute(s)${mute.reason ? `: ${mute.reason}` : '.'}`, msg.t)
+          noteChat(this.game, this.accountId, msg.channel ?? 'local', text)
+        }
         // Play the Boss (§3.10): no free chat on any channel while you steer the boss (slash commands still run).
         if (!text.startsWith('/') && this.game.gameplay.pilot?.chatBlocked(this.player)) return this.error('forbidden', 'You cannot chat while you are the boss. Use the taunt wheel (hold Q).', msg.t)
         // Whisper / party lines (chat.ts) are routed before the slash branch: they are never commands.
