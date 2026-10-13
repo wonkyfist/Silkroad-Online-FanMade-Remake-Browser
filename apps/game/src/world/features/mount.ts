@@ -21,7 +21,7 @@ import { kitArt } from '../../ui/kit/host.ts'
 import { MessageBox } from '../../ui/kit/dialog.ts'
 import type { EntityView } from '../entities.ts'
 import type { CombatMessage, WorldFeature, WorldFeatureContext, WorldFeatureFactory } from '../features.ts'
-import { systemFxFor } from '../fx/system-fx.ts'
+import { systemFxFor, type FxHandle } from '../fx/system-fx.ts'
 import { HorseView, registerHorseView, RideLink } from '../mount-view.ts'
 
 /** Chat commands (retail UIIT_KEY_COS_DISMOUNT / UIIT_KEY_COS_RETURN). */
@@ -100,6 +100,8 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
   let frameT = 0
   let frameKey = ''
   const timers = new Set<ReturnType<typeof setTimeout>>()
+  /** The summon pillar playing on a horse (one cycle; stopped early when the horse goes). */
+  const appearFx = new Map<number, FxHandle>()
   const wall = () => performance.now()
 
   const selfView = (): EntityView | undefined => {
@@ -210,10 +212,17 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
     else cue('ui.cos_summon', h)
     cue('cos.horse.stand', h)
     try {
-      systemFxFor(ctx.scene).play('SYSTEM_PET_APPEAR', 'start', h)
+      // The row is AT_LOOP (retail reuses the return scroll's pillar) and nothing stops it: play one cycle only, and
+      // drop it with the horse (despawn = send home / release / out of view).
+      appearFx.get(h.id)?.stop()
+      appearFx.set(h.id, systemFxFor(ctx.scene).play('SYSTEM_PET_APPEAR', 'start', h, { once: true }))
     } catch (err) {
       console.warn('[mount] appear effect failed', err)
     }
+  }
+  const endAppear = (id: number) => {
+    appearFx.get(id)?.stop()
+    appearFx.delete(id)
   }
   const died = (h: HorseView) => {
     cue('cos.horse.die', h)
@@ -277,6 +286,7 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
           break
         }
         case 'despawn':
+          endAppear(msg.id)
           spawned.delete(msg.id)
           seated.delete(msg.id)
           break
@@ -356,6 +366,7 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
       if (v instanceof HorseView) {
         horses.delete(v)
         endLink(v.id)
+        endAppear(v.id)
       }
       for (const [id, link] of links) if (link.rider === v) endLink(id)
     },
@@ -378,6 +389,7 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
 
     dispose() {
       for (const id of [...links.keys()]) endLink(id)
+      for (const id of [...appearFx.keys()]) endAppear(id)
       for (const id of timers) clearTimeout(id)
       timers.clear()
       for (const off of offs) off()

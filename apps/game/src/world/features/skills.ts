@@ -94,7 +94,7 @@ export function portOf(v: EntityView | undefined, view: (id: number) => EntityVi
     playing: token => !!v.actor?.isSkillPlaying(token),
     face(targetId) {
       const tv = view(targetId)
-      if (tv && tv !== v) v.face(tv.pos.x, tv.pos.z)
+      if (tv && tv !== v) v.face(tv.pos.x, tv.pos.z, tv.aimHeight)
     },
   }
 }
@@ -726,11 +726,19 @@ export const skillsFeature: WorldFeatureFactory = (ctx: WorldFeatureContext) => 
       const target = ctx.view(msg.target)
       if (target && isDown(target)) downWhen.set(msg, true)
       if (msg.instance !== undefined) {
-        const shown = player.combat(msg, cooldownNow(), ctx.serverNow(), i => {
+        const present = (i: number) => {
           const victim = ctx.view(msg.target)
           const attacker = ctx.view(msg.attacker)
           if (victim && attacker && victim !== attacker && victim.kind === 'mob') victim.face(attacker.pos.x, attacker.pos.z)
           ctx.presentHit(msg, i)
+        }
+        const shown = player.combat(msg, cooldownNow(), ctx.serverNow(), i => {
+          // The damage number and the impact come when the projectile ARRIVES: a hit due while its arrow (bolt) is still
+          // in the air waits for it instead of snapping the arrow onto the victim (the server times `at` from its own
+          // release; the client launched later, at the clip's release event, and the cast came in a ping late).
+          const wait = fx.arrivalIn(msg.attacker, msg.target)
+          if (wait > 0) player.schedule(cooldownNow() + wait, () => present(i))
+          else present(i)
         })
         if (shown) return true
       }

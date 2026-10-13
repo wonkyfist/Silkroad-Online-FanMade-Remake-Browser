@@ -14,6 +14,7 @@ import { Art } from '../src/ui/art.ts'
 import { createEntityView, EntityView, type EntityContext } from '../src/world/entities.ts'
 import type { WorldFeature, WorldFeatureContext } from '../src/world/features.ts'
 import { applyMountUpdate, DISMOUNT_COMMAND, dismountThenAttack, mountFailText, mountFeature, STOP_HOLD_S, UNSUMMON_COMMAND } from '../src/world/features/mount.ts'
+import { SystemFx, systemFxFor } from '../src/world/fx/system-fx.ts'
 import { ease, HorseView, horseCatalog, MOUNT_TWEEN_MS, registerHorseView, RideLink, SEAT_OFFSET } from '../src/world/mount-view.ts'
 
 // ---- a DOM stub (the game tests run in node) ------------------------------------------------------------------------
@@ -556,6 +557,56 @@ describe('mount feature (MR-C)', () => {
     h.f.onFrame?.(48, 0.2)
     expect(h.host.children).toEqual([])
     h.f.dispose?.()
+  })
+
+  it('the summon effect plays once (not its AT_LOOP pillar for ever) and stops when the horse goes (send home, release)', () => {
+    const sys = systemFxFor(scene)
+    const handles: { stopped: boolean }[] = []
+    const play = vi.spyOn(sys, 'play').mockImplementation(() => {
+      const hd = { stopped: false, stop() { hd.stopped = true }, get done() { return hd.stopped } }
+      handles.push(hd)
+      return hd
+    })
+    try {
+      const h = harness()
+      addView(h, new EntityView(playerState({ mount: 40 }), entityCtx()))
+      // summoned: the horse spawns parked and gets its rider at once
+      h.msg({ t: 'spawn', entity: cosState() })
+      const horse = addView(h, new HorseView(cosState(), entityCtx())) as HorseView
+      h.msg({ t: 'entityUpdate', id: 40, rider: SELF })
+      expect(play).toHaveBeenCalledTimes(1)
+      expect(play.mock.calls[0]![0]).toBe('SYSTEM_PET_APPEAR')
+      expect(play.mock.calls[0]![3]).toEqual({ once: true })
+      expect(handles[0]!.stopped).toBe(false)
+      // Send home: the server despawns the horse
+      h.msg({ t: 'despawn', id: 40 })
+      expect(handles[0]!.stopped).toBe(true)
+      // summoned again, then released (the view goes): stopped too
+      h.msg({ t: 'spawn', entity: cosState() })
+      h.msg({ t: 'entityUpdate', id: 40, rider: SELF })
+      expect(handles.length).toBe(2)
+      h.views.delete(40)
+      h.f.onEntityRemoved?.(horse)
+      expect(handles[1]!.stopped).toBe(true)
+      // and the feature's end drops whatever still plays
+      h.msg({ t: 'spawn', entity: cosState({ id: 41 }) })
+      addView(h, new HorseView(cosState({ id: 41 }), entityCtx()))
+      h.msg({ t: 'entityUpdate', id: 41, rider: SELF })
+      h.f.dispose?.()
+      expect(handles[2]!.stopped).toBe(true)
+    } finally {
+      play.mockRestore()
+    }
+  })
+
+  it('SYSTEM_PET_APPEAR with once: its AT_LOOP row plays one cycle (no loop), so nothing keeps it alive', () => {
+    const sys = new SystemFx(scene, { groups: new Map([['SYSTEM_PET_APPEAR', { group: 'SYSTEM_PET_APPEAR', kind: 'system', stages: [{ phase: 'ACT_S', startEvent: 0, actType: 'AT_LOOP', effect: 'system/item_returnscroll.efp', startBone: null, startOffset: '0,0,0', scale: null }] } as never]]) })
+    const runPlay = vi.spyOn(sys.runner, 'play').mockReturnValue({ stop() {}, done: false })
+    sys.play('SYSTEM_PET_APPEAR', 'start', new EntityView(playerState(), entityCtx()), { once: true })
+    expect(runPlay.mock.calls[0]![1].loop).toBe(false)
+    sys.play('SYSTEM_PET_APPEAR', 'start', new EntityView(playerState(), entityCtx()))
+    expect(runPlay.mock.calls[1]![1].loop).toBe(true)
+    sys.dispose()
   })
 
   it('starts nothing on a bare context', () => {

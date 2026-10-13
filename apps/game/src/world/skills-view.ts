@@ -262,7 +262,9 @@ export class ActionPlayer {
     const cues = def?.hitCues ?? []
     if (msg.at !== undefined) {
       const land = now + (msg.at - serverNow)
-      return hits.map((_, i) => land + (a ? launchLag(a, cues[i] ?? cues[cues.length - 1]) : 0) + i * HIT_GAP)
+      // hits with a cue of their own (a multi-arrow fan: one arrow per clip event) land at their own arrow's lag; only
+      // hits past the cue list (or a single cue's extra hits) are spaced HIT_GAP apart
+      return hits.map((_, i) => land + (a ? launchLag(a, cues[i] ?? cues[cues.length - 1]) : 0) + (cues.length ? Math.max(0, i - cues.length + 1) : i) * HIT_GAP)
     }
     if (!a) return hits.map((_, i) => now + i * HIT_GAP)
     return hits.map((_, i) => {

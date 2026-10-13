@@ -151,7 +151,8 @@ export class IdleDriver implements EntityAttachment {
       return
     }
     if (!this.variants) return
-    const standing = !v.moving && this.kind === 'stand' && !!v.actor
+    // no fidget in the saddle or in the air: it would take the upper body from a cast (models.ts upperOnly)
+    const standing = !v.moving && this.kind === 'stand' && !!v.actor && !v.actor.upperOnly
     const clip = this.variants.tick(ms, standing)
     if (clip && v.actor?.playOverlay(clip)) this.onVariant?.(clip)
   }

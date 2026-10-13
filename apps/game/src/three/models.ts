@@ -57,7 +57,7 @@ import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
 import { solidifyWeapon } from './weapon-solid.ts'
-import { UPPER_FADE_S, blendSpeedFor, spreadTurn, turnJoint, upperTurn, yawBetween } from './upper-aim.ts'
+import { UPPER_FADE_S, bendJoint, blendSpeedFor, spreadTurn, turnJoint, upperPitch, upperTurn, yawBetween } from './upper-aim.ts'
 import { newLook, settings } from '../settings.ts'
 import { actorGraphics, actorTexturesFor } from './actor-textures.ts'
 import { GLOW_SLOTS, SHIELD_STRENGTH, WeaponGlow, glowModeFor, type GlowMode } from './weapon-glow.ts'
@@ -1470,6 +1470,8 @@ export class CharacterActor {
   private readonly baseNodes = new Map<string, Node[]>()
   private readonly joints = new Map<string, TransformNode>()
   private readonly packGroups = new Set<string>()
+  /** The loaded packs' source clips (pack group → animation name → group): clips KEEP_CLIPS left out are made on demand. */
+  private readonly packSources = new Map<string, Map<string, AnimationGroup>>()
   private worn: WornItem[] = []
   private hidden: Node[] = []
   private dressToken = 0
@@ -1525,6 +1527,21 @@ export class CharacterActor {
   private blendRestore: { g: AnimationGroup; left: number } | null = null
   /** The action serial of the playing skill action (playSkill), for `skillActing`. */
   private skillToken = -1
+  /**
+   * A pack clip KEEP_CLIPS left out at load, made now (once): the higher skill tiers' own clips (Pacheon's chain_b /
+   * chain_c / critical_c ...: reachable since the level cap went up, they played no clip at all before).
+   */
+  private packClip(name: string): AnimationGroup | undefined {
+    const entry = this.packs?.clips[name]
+    if (!entry || this.disposed) return undefined
+    const src = this.packSources.get(entry[0])?.get(entry[1])
+    if (!src) return undefined
+    const copy = this.clipCopy(src, name, entry[0])
+    this.prepareGroup(copy)
+    this.groups.push(copy)
+    return copy
+  }
+
   /** The clip group base clips come from (useClipGroup). */
   private clipGroupName: ClipGroup = 'default'
   /** Pack loads started by useClipGroup, one per group. */
@@ -2604,6 +2621,7 @@ export class CharacterActor {
     if (this.disposed || this.packGroups.has(group) || !this.packs) return
     this.packGroups.add(group)
     const byAnim = new Map(pack.animationGroups.map(g => [g.name, g]))
+    this.packSources.set(group, byAnim)
     for (const [clip, [g, anim]] of Object.entries(this.packs.clips)) {
       if (g !== group || !KEEP_CLIPS.test(clip) || this.groups.some(x => x.name === clip)) continue
       const src = byAnim.get(anim)
@@ -2874,6 +2892,27 @@ export class CharacterActor {
     // while the page does not render) as a T. The first pose snaps; later changes blend as before.
     this.startUnblended(next, !this.posedOnce, true, speed, fromFrame)
     this.posedOnce = true
+    this.liftUpper()
+  }
+
+  /**
+   * Keeps an upper-body action on top of a base clip that (re)started under it (riding: the horse stops or runs off;
+   * flying: glide → hover as the hover lock starts). Babylon evaluates the active animatables in start order and the
+   * last write wins, so a base restarted after the layer would hide the whole skill clip; the layer's animatables move
+   * back to the end of the list (no restart, no new fade).
+   */
+  private liftUpper(): void {
+    const u = this.upper
+    if (!u || u.ended !== null || !u.layer.isPlaying) return
+    const list = (this.scene as unknown as { _activeAnimatables?: unknown[] })._activeAnimatables
+    if (!Array.isArray(list)) return
+    for (const an of u.layer.animatables) {
+      const i = list.indexOf(an)
+      if (i >= 0 && i !== list.length - 1) {
+        list.splice(i, 1)
+        list.push(an)
+      }
+    }
   }
 
   /**
@@ -3134,29 +3173,44 @@ export class CharacterActor {
   }
   private readonly upperLayers = new Map<string, AnimationGroup>()
 
-  /** Plays `src` once on the upper-body joints only (a masked clone, made once per clip). False when it has none. */
-  playUpper(src: AnimationGroup, speed = 1): boolean {
-    if (this.dead || /^(FLY_|SWIM_)/.test(src.name)) return false
+  /** The masked upper-body clone of `src` (made once per clip); null when the clip moves no upper-body joint. */
+  private upperLayerOf(src: AnimationGroup): AnimationGroup | null {
+    if (/^(FLY_|SWIM_)/.test(src.name)) return null
     const key = `UPPER:${src.name}`
     let layer = this.upperLayers.get(key)
     if (!layer) {
       const kept = src.targetedAnimations.filter(ta => isUpperJoint((ta.target as { name?: string } | null)?.name))
-      if (!kept.length) return false
+      if (!kept.length) return null
       layer = new AnimationGroup(key, this.scene)
       for (const ta of kept) layer.addTargetedAnimation(ta.animation, ta.target)
       this.prepareGroup(layer)
       this.groups.push(layer)
       this.upperLayers.set(key, layer)
     }
-    layer.stop()
-    // started after the riding base, so it wins on the joints it animates (the overlay rule); it fades in from the
-    // riding pose over UPPER_FADE_S (Babylon's blend, a step per evaluation)
-    layer.blendingSpeed = blendSpeedFor(UPPER_FADE_S)
-    layer.start(false, speed, src.from, src.to)
-    this.beginUpperAim(layer, src)
+    return layer
+  }
+
+  /**
+   * Plays `src` on the upper-body joints only (once, or looping: a skill's WAIT phase). False when it has none. The
+   * upper-body layer playing before (a READY phase) is stopped without handing the base back.
+   */
+  playUpper(src: AnimationGroup, speed = 1, loop = false, hold = false): boolean {
+    if (this.dead) return false
+    const layer = this.upperLayerOf(src)
+    if (!layer) return false
+    // a new serial first: the end observers of the layers stopped here must not resume the base
     const serial = ++this.upperSerial
+    const prev = this.upper?.layer
+    if (prev && prev !== layer) prev.stop()
+    layer.stop()
+    // started after the riding base, so it wins on the joints it animates (the overlay rule; `liftUpper` keeps it on
+    // top when the base changes under it); it fades in from the riding pose over UPPER_FADE_S (Babylon's blend)
+    layer.blendingSpeed = blendSpeedFor(UPPER_FADE_S)
+    layer.start(loop, speed, src.from, src.to)
+    this.beginUpperAim(layer, src)
     layer.onAnimationGroupEndObservable.addOnce(() => {
-      if (serial !== this.upperSerial || this.disposed) return
+      // `hold`: a cast's READY that ends a frame before its WAIT starts keeps the riding base out of the way
+      if (serial !== this.upperSerial || this.disposed || hold) return
       if (this.upper) this.upper.ended = performance.now()
       // fade back to the riding pose instead of snapping: the base restarts where it is, blended
       this.resumeBaseBlended()
@@ -3178,7 +3232,11 @@ export class CharacterActor {
     start: number
     ended: number | null
     hipYaw: number
+    /** performance.now() of the clip's release (first hit event), null without one. */
+    release: number | null
   } | null = null
+  /** Bend of the chest towards the target, radians (+ = up; EntityView, riding or flying). */
+  aimPitch = 0
   private upperObs: Observer<Scene>[] = []
   /** The spine joints' rotations as the animations left them, put back before the next evaluation. */
   private readonly upperSaved: Array<[TransformNode, Quaternion]> = []
@@ -3193,7 +3251,13 @@ export class CharacterActor {
     if (!rig) return
     const track = (joint: string): Animation | null =>
       src.targetedAnimations.find(ta => (ta.target as { name?: string } | null)?.name === joint && ta.animation.targetProperty === 'rotationQuaternion')?.animation ?? null
-    this.upper = { rig, layer, root: track(rig.top), pelvis: track(rig.hips), start: performance.now(), ended: null, hipYaw: 0 }
+    // the next phase of the same cast (READY → WAIT → SHOT) keeps the aim's fade-in where it is
+    const prev = this.upper
+    const start = prev && prev.ended === null ? prev.start : performance.now()
+    // the release: the clip's first hit event (in the air the body settles back after it, applyUpperAim)
+    const hits = this.clips.get(src.name)?.hits
+    const release = hits?.length ? performance.now() + hits[0]! / Math.max(0.05, layer.speedRatio || 1) : null
+    this.upper = { rig, layer, root: track(rig.top), pelvis: track(rig.hips), start, ended: null, hipYaw: 0, release }
     if (this.upperObs.length) return
     this.upperObs = [
       this.scene.onBeforeAnimationsObservable.add(() => this.restoreUpperAim()),
@@ -3206,6 +3270,7 @@ export class CharacterActor {
     this.restoreUpperAim()
     this.upper = null
     this.aimYaw = 0
+    this.aimPitch = 0
     for (const o of this.upperObs) {
       this.scene.onBeforeAnimationsObservable.remove(o)
       this.scene.onAfterAnimationsObservable.remove(o)
@@ -3239,9 +3304,12 @@ export class CharacterActor {
       }
     }
     const turn = upperTurn(u.hipYaw, this.aimYaw) * w
-    if (Math.abs(turn) < 1e-4) return
+    // the chest towards a target above or below, and (in the air) the settle after the release
+    const bend = upperPitch(this.aimPitch, w, null)
+    if (Math.abs(turn) < 1e-4 && Math.abs(bend) < 1e-4) return
     const chain = u.rig.spine.map(n => this.joints.get(n)).filter((n): n is TransformNode => !!n?.rotationQuaternion)
     const parts = spreadTurn(turn, chain.length)
+    const bends = spreadTurn(bend, chain.length)
     const out = new Quaternion()
     chain.forEach((n, i) => {
       // the parent's orientation in the model frame (Bip01's parent): every local rotation from Bip01 down
@@ -3254,6 +3322,10 @@ export class CharacterActor {
       this.upperSaved.push([n, local.clone()])
       turnJoint(local, parentWorld, parts[i]!, out)
       local.copyFrom(out)
+      if (bends[i]) {
+        bendJoint(local, parentWorld, bends[i]!, out)
+        local.copyFrom(out)
+      }
     })
   }
 
@@ -3380,7 +3452,7 @@ export class CharacterActor {
     const find = (g: string): AnimationGroup | undefined => {
       for (const [name, info] of this.clips) {
         if (info.group !== g || info.type !== type) continue
-        const clip = this.group(name)
+        const clip = this.group(name) ?? this.packClip(name)
         if (clip) return clip
       }
       return undefined
@@ -3509,11 +3581,70 @@ export class CharacterActor {
    * held for its `ms`, then the base resumes. A newer action, death or stopSkill(token) ends it. Returns the token.
    */
   playSkill(phases: readonly SkillPhase[]): number {
+    return this.playSkillPhases(phases)
+  }
+
+  /** Ends the upper-body action now: the aim fades out and the riding base comes back, blended. */
+  private releaseUpper(): void {
+    if (this.upper && this.upper.ended === null) this.upper.ended = performance.now()
+    this.resumeBaseBlended()
+  }
+
+  /** The skill action playing on the upper body (riding), by token; null when none. */
+  private upperSkillToken: number | null = null
+
+  /**
+   * The phases of a skill on the upper body (riding): each in turn for its `ms` (a looping WAIT loops), the
+   * same clips at the same times as on foot, so the draw, the release and the clip's hit events line up with the cast
+   * effects and projectiles exactly as on the ground. The last phase plays out and hands the base back (blended).
+   * -1 when no phase has upper-body joints (the caller plays it on the whole body).
+   */
+  private playUpperSkill(phases: readonly SkillPhase[]): number {
+    if (!phases.some(p => this.upperLayerOf(p.clip))) return -1
+    const token = ++this.actionSerial
+    this.skillToken = token
+    this.upperSkillToken = token
+    let i = -1
+    let until = 0
+    let shown: AnimationGroup | null = null
+    let serial = -1
+    const next = (): boolean => {
+      const p = phases[++i]
+      if (!p) return false
+      if (p.clip !== shown && this.playUpper(p.clip, p.speed ?? 1, !!p.loop, i < phases.length - 1)) {
+        shown = p.clip
+        serial = this.upperSerial
+      }
+      until = performance.now() + Math.max(0, p.ms)
+      return true
+    }
+    next()
+    const obs = this.scene.onBeforeRenderObservable.add(() => {
+      // replaced (a newer action or upper-body clip), stopped, dead or gone
+      const over = token !== this.actionSerial || this.disposed || this.dead || (serial >= 0 && serial !== this.upperSerial)
+      if (!over) {
+        while (performance.now() >= until) {
+          if (next()) continue
+          // the last phase's time is up: a looping one stops (its end hands the base back); a one-shot plays out
+          const last = phases[phases.length - 1]
+          if (last?.loop && serial === this.upperSerial) this.upper?.layer.stop()
+          break
+        }
+        if (i < phases.length) return
+      }
+      this.scene.onBeforeRenderObservable.remove(obs)
+      if (this.upperSkillToken === token) this.upperSkillToken = null
+    })
+    return token
+  }
+
+  private playSkillPhases(phases: readonly SkillPhase[]): number {
     if (this.dead || !phases.length) return -1
     if (this.upperOnly) {
-      // in the saddle (mounted archery) the cast's release (its last phase) plays on the upper body; the riding base stays
-      const last = phases[phases.length - 1]!
-      if (this.playUpper(last.clip, last.speed ?? 1)) return ++this.actionSerial
+      // in the saddle (mounted archery) the cast plays on the upper body, every phase at its own time like on foot
+      // (READY draw, WAIT loop, SHOT release); the riding base stays
+      const token = this.playUpperSkill(phases)
+      if (token >= 0) return token
     }
     const token = ++this.actionSerial
     this.skillToken = token
@@ -3575,6 +3706,14 @@ export class CharacterActor {
 
   /** Ends the skill action `token` early (castEnd, target lost): back to the base clip. */
   stopSkill(token: number): void {
+    if (token === this.upperSkillToken && token === this.actionSerial && !this.dead) {
+      this.actionSerial++
+      this.upperSkillToken = null
+      this.upperSerial++
+      this.upper?.layer.stop()
+      this.releaseUpper()
+      return
+    }
     if (token !== this.actionSerial || !this.action || this.dead) return
     this.actionSerial++
     this.action.stop()
@@ -3602,7 +3741,7 @@ export class CharacterActor {
 
   /** The skill action `token` is still playing. */
   isSkillPlaying(token: number): boolean {
-    return token === this.actionSerial && !!this.action && !this.dead
+    return token === this.actionSerial && !this.dead && (!!this.action || token === this.upperSkillToken)
   }
 
   /** Hit reaction: a partial clip plays on top; a full one only while idle. */

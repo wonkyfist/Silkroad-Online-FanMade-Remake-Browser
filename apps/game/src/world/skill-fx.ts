@@ -1219,6 +1219,16 @@ export class SkillFx {
     else this.pending.push({ at, owner, run })
   }
 
+  /**
+   * Ms until the damage projectile `caster` has in the air at `target` lands (the one `hit` would land), 0 when none is
+   * on its way. A piercing arrow is not waited for (it passes its victims).
+   */
+  arrivalIn(caster: number, target: number): number {
+    const now = this.now()
+    const f = this.flights.find(x => x.caster === caster && x.target === target && x.arrivedAt === null && x.waitHit && !x.pierce)
+    return f ? Math.max(0, f.t1 - now) : 0
+  }
+
   /** Lands the oldest projectile from `caster` at `target` still in the air (a damage one first). */
   private land(caster: number, target: number): boolean {
     const mine = this.flights.filter(f => f.caster === caster && f.arrivedAt === null && (f.target === target || f.pierce))

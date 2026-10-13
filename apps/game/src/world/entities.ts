@@ -23,6 +23,7 @@ import { setLabelAnchor } from './nameplates.ts'
 import { PERF } from './perf.ts'
 import { loadRide, type RideMob } from './ride-mob.ts'
 import { wrapAngle } from '../three/upper-aim.ts'
+import { aimPitchTo, CHEST_Y } from './air-stance.ts'
 
 /** The shared shape of the loading stand-in, per scene (EntityView.makeLoadingPlaceholder). */
 const loadingShapes = new WeakMap<Scene, Mesh>()
@@ -421,7 +422,7 @@ export class EntityView {
   }
 
   /** The last combat facing point: an upper-body action (riding, flying) aims its spine at it (three/upper-aim.ts). */
-  private aimPoint: { x: number; z: number } | null = null
+  private aimPoint: { x: number; z: number; y?: number } | null = null
 
   /** While an upper-body action plays, the turn from the facing to the aim point (the hips may not follow: a running horse). */
   private aimUpper(): void {
@@ -430,17 +431,20 @@ export class EntityView {
     const p = this.aimPoint
     if (!a.upperActive || !p) {
       a.aimYaw = 0
+      a.aimPitch = 0
       if (!a.upperActive) this.aimPoint = null
       return
     }
     const dx = p.x - this.pos.x
     const dz = p.z - this.pos.z
     a.aimYaw = dx * dx + dz * dz > 1e-4 ? wrapAngle(Math.atan2(dx, dz) - this.yaw) : 0
+    // in 3D (riding, flying): the chest bends up / down towards a target above or below (a bird, a rider on foot)
+    a.aimPitch = p.y !== undefined ? aimPitchTo(p.y - (this.root.position.y + CHEST_Y * this.scale), Math.hypot(dx, dz)) : 0
   }
 
-  /** Turns towards a world point (combat facing). */
-  face(x: number, z: number): void {
-    this.aimPoint = { x, z }
+  /** Turns towards a world point (combat facing); `y`: the point's height (the upper body aims at it in 3D). */
+  face(x: number, z: number, y?: number): void {
+    this.aimPoint = y !== undefined && Number.isFinite(y) ? { x, z, y } : { x, z }
     const dx = x - this.pos.x
     const dz = z - this.pos.z
     if (dx * dx + dz * dz > 1e-4) this.targetYaw = Math.atan2(dx, dz)
@@ -640,7 +644,7 @@ export class EntityView {
    * playback speed.
    */
   attack(target: EntityView | undefined, hits: number, nowMs: number, opts?: AttackOptions): number[] {
-    if (target) this.face(target.pos.x, target.pos.z)
+    if (target) this.face(target.pos.x, target.pos.z, target.aimHeight)
     const named = opts?.clip ? this.actor?.group(opts.clip) : undefined
     const clip = this.dead ? undefined : named ?? this.actor?.nextAttackClip()
     if (!this.actor || !clip) return Array.from({ length: hits }, (_, i) => 200 + i * 180)
@@ -704,6 +708,11 @@ export class EntityView {
     if (this.placeholder) this.placeholder.rotation.z = 0
     this.sizePick()
     this.refreshLabel()
+  }
+
+  /** The height a shot or a swing aims at on this entity (world y of its chest). */
+  get aimHeight(): number {
+    return this.root.position.y + CHEST_Y * (this.scale || 1)
   }
 
   /** Despawned corpse: fade out, then the owner disposes it (update() returns false). */

@@ -79,3 +79,36 @@ export function turnJoint(local: Quaternion, parentWorld: Quaternion, angle: num
   inv.multiply(r).multiply(parentWorld).multiply(local).normalizeToRef(out)
   return out
 }
+
+/** The model frame's side axis: a bend about it tips the chest up or down (BEND_SIGN: + = up). */
+const SIDE = new Vector3(1, 0, 0)
+/** The sign that makes a positive bend lean the chest back (aim up) in the model frame (checked on the frame strips). */
+export const BEND_SIGN = -1
+/** The settle after a release in the air: the chest kicks back by RECOIL_RAD, peaking RECOIL_PEAK_S after it, then eases. */
+export const RECOIL_RAD = 0.12
+export const RECOIL_PEAK_S = 0.08
+
+/** The settle's bend `t` seconds after the release (0 before it, RECOIL_RAD at the peak, fading out within ≈ 0.6 s). */
+export function recoilAt(t: number): number {
+  if (!(t > 0)) return 0
+  const x = t / RECOIL_PEAK_S
+  const r = RECOIL_RAD * x * Math.exp(1 - x)
+  return r < 1e-3 && x > 1 ? 0 : r
+}
+
+/**
+ * The chest's total bend (rad, + = up): the aim at the target (±AIM_MAX) times the layer's weight `w`, plus the settle
+ * `sinceRelease` seconds after the release (null: none; only in the air).
+ */
+export function upperPitch(aimPitch: number, w: number, sinceRelease: number | null): number {
+  const aim = Math.max(-AIM_MAX, Math.min(AIM_MAX, Number.isFinite(aimPitch) ? aimPitch : 0)) * w
+  return aim + (sinceRelease === null ? 0 : recoilAt(sinceRelease) * w)
+}
+
+/** Bends joint `local` by `angle` (+ = chest up) about the model's side axis (as turnJoint does about up). */
+export function bendJoint(local: Quaternion, parentWorld: Quaternion, angle: number, out: Quaternion): Quaternion {
+  const r = Quaternion.RotationAxis(SIDE, angle * BEND_SIGN)
+  const inv = Quaternion.Inverse(parentWorld)
+  inv.multiply(r).multiply(parentWorld).multiply(local).normalizeToRef(out)
+  return out
+}
