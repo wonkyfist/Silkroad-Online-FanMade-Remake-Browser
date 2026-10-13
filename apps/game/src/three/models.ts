@@ -255,8 +255,16 @@ export function isArmJoint(name: string | undefined, sides: readonly ('L' | 'R')
   return !!e && sides.includes(e[1]!.toUpperCase() as 'L' | 'R')
 }
 
-/** The spine joints the upper-body aim turns (upper-aim.ts AIM_SPREAD), hips up. */
-export const UPPER_AIM_JOINTS: readonly string[] = ['Bip01 Spine', 'Bip01 Spine1', 'Bip01 Neck']
+/**
+ * The joints of the upper-body aim (upper-aim.ts) per skeleton: the top joint (the model frame above it), the hips
+ * whose clip turn is carried over, and the spine joints the turn is spread over (AIM_SPREAD shares, hips up).
+ * Retail biped, and the licensed bodies' Epic rig (CHARACTERS §16; their clips are rebuilt onto these joints).
+ */
+export const UPPER_AIM_RIGS: readonly { top: string; hips: string; spine: readonly string[] }[] = [
+  // the Epic rig first: a licensed body also carries stand-ins named after the retail joints (weapon sockets)
+  { top: 'root', hips: 'pelvis', spine: ['spine_01', 'spine_03', 'neck_01'] },
+  { top: 'Bip01', hips: 'Bip01 Pelvis', spine: ['Bip01 Spine', 'Bip01 Spine1', 'Bip01 Neck'] },
+]
 
 /** The arms the weapon layer holds for a family (sword/blade: the sword arm, plus the left with a shield; else both). */
 export function armLayerSides(family: StarterWeapon | null, shield: boolean): ('L' | 'R')[] {
@@ -2309,6 +2317,9 @@ export class CharacterActor {
     })
     const after = this.scene.onAfterAnimationsObservable.add(() => {
       if (this.disposed || !this.root.isEnabled()) return
+      // seated (a rider: the root is the saddle, the legs hang below it) there is no floor to clamp to:
+      // the lift pushed a rider up onto the horse's back
+      if (this.home !== undefined) return
       this.root.computeWorldMatrix(true).invertToRef(inv)
       for (const n of chain) n.computeWorldMatrix(true)
       let low = 0
@@ -3159,6 +3170,7 @@ export class CharacterActor {
   aimYaw = 0
   private upperSerial = 0
   private upper: {
+    rig: (typeof UPPER_AIM_RIGS)[number]
     layer: AnimationGroup
     /** The clip's own root and pelvis rotation tracks (not played: the base keeps the hips). */
     root: Animation | null
@@ -3177,11 +3189,11 @@ export class CharacterActor {
   }
 
   private beginUpperAim(layer: AnimationGroup, src: AnimationGroup): void {
-    // licensed bodies have their own spine (retarget.ts): the aim is for the retail Bip01 skeleton
-    if (this.retargeter || !this.joints.get('Bip01 Pelvis') || !this.joints.get('Bip01 Spine')) return
+    const rig = UPPER_AIM_RIGS.find(r => this.joints.get(r.top) && this.joints.get(r.hips) && this.joints.get(r.spine[0]!))
+    if (!rig) return
     const track = (joint: string): Animation | null =>
       src.targetedAnimations.find(ta => (ta.target as { name?: string } | null)?.name === joint && ta.animation.targetProperty === 'rotationQuaternion')?.animation ?? null
-    this.upper = { layer, root: track('Bip01'), pelvis: track('Bip01 Pelvis'), start: performance.now(), ended: null, hipYaw: 0 }
+    this.upper = { rig, layer, root: track(rig.top), pelvis: track(rig.hips), start: performance.now(), ended: null, hipYaw: 0 }
     if (this.upperObs.length) return
     this.upperObs = [
       this.scene.onBeforeAnimationsObservable.add(() => this.restoreUpperAim()),
@@ -3213,8 +3225,8 @@ export class CharacterActor {
     const now = performance.now()
     const w = u.ended !== null ? Math.max(0, 1 - (now - u.ended) / 1000 / UPPER_FADE_S) : Math.min(1, (now - u.start) / 1000 / UPPER_FADE_S)
     if (u.ended !== null && w <= 0) return this.endUpperAim()
-    const bip = this.joints.get('Bip01')
-    const pel = this.joints.get('Bip01 Pelvis')
+    const bip = this.joints.get(u.rig.top)
+    const pel = this.joints.get(u.rig.hips)
     if (!bip || !pel) return
     const rot = (n: TransformNode): Quaternion => n.rotationQuaternion ?? Quaternion.Identity()
     if (u.ended === null && u.layer.isPlaying) {
@@ -3228,7 +3240,7 @@ export class CharacterActor {
     }
     const turn = upperTurn(u.hipYaw, this.aimYaw) * w
     if (Math.abs(turn) < 1e-4) return
-    const chain = UPPER_AIM_JOINTS.map(n => this.joints.get(n)).filter((n): n is TransformNode => !!n?.rotationQuaternion)
+    const chain = u.rig.spine.map(n => this.joints.get(n)).filter((n): n is TransformNode => !!n?.rotationQuaternion)
     const parts = spreadTurn(turn, chain.length)
     const out = new Quaternion()
     chain.forEach((n, i) => {
