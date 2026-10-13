@@ -12,8 +12,9 @@ import type { ModelLibrary } from '../three/models.ts'
 import type { EntityView } from '../world/entities.ts'
 import { WORLD_FEATURES, type WorldFeature, type WorldFeatureContext, type WorldFeatureFactory } from '../world/features.ts'
 import { rarityFxOf } from '../world/rarity/fx.ts'
+import { setWeaponWind, swayInfoOf, weaponSwayFor } from '../three/weapon-sway.ts'
 
-const CONTROL = 'http://127.0.0.1:7271'
+const CONTROL = 'http://127.0.0.1:' + (new URLSearchParams(location.search).get('ctl') ?? '7271')
 
 export class RarityLab {
   ctx: WorldFeatureContext | null = null
@@ -99,6 +100,26 @@ export class RarityLab {
   }
 
   private lookObs: import('@babylonjs/core').Observer<import('@babylonjs/core').Camera> | null = null
+
+  /** Holds the orbit camera on the own shield's centre (close-ups); null releases it. */
+  lookAtShield(radius: number | null): void {
+    const scene = this.ctx?.scene
+    const c = this.ctx?.camera
+    if (!scene || !c) return
+    if (this.lookObs) scene.onBeforeCameraRenderObservable.remove(this.lookObs)
+    this.lookObs = null
+    if (radius === null) return
+    c.lowerRadiusLimit = Math.min(c.lowerRadiusLimit ?? radius, radius)
+    this.lookObs = scene.onBeforeCameraRenderObservable.add(() => {
+      const worn = (this.me()?.actor as unknown as { worn?: { slot: string; meshes: import('@babylonjs/core').AbstractMesh[] }[] } | null)?.worn
+      const m = worn?.find(w => w.slot === 'shield')?.meshes[0]
+      if (!m) return
+      c.targetScreenOffset.set(0, 0)
+      c.target.copyFrom(m.getBoundingInfo().boundingSphere.centerWorld)
+      c.radius = radius
+      c.getViewMatrix(true)
+    })
+  }
 
   /** Holds the orbit camera on the own weapon's blade middle (close-ups); null releases it to the follow. */
   lookAtWeapon(radius: number | null): void {
@@ -299,6 +320,32 @@ export class RarityLab {
   fx(on: boolean): void {
     const fx = this.ctx ? rarityFxOf(this.ctx.scene) : null
     if (fx) fx.enabled = on
+  }
+
+  /** Overrides the weapons' wind until the weather's next frame (gust m/s); with `hold` the sway clock stops too. */
+  wind(x: number, z: number, gustMs: number, hold: number | null = null): void {
+    setWeaponWind(x, z, gustMs, { hold: gustMs >= 0 })
+    if (this.ctx) weaponSwayFor(this.ctx.scene).held = hold
+  }
+
+  /** The swaying parts of the worn weapon meshes (the lab's detection check). */
+  swayInfo(): unknown {
+    const out: unknown[] = []
+    for (const m of this.ctx?.scene.meshes ?? []) {
+      const i = swayInfoOf(m)
+      if (i) out.push({ mesh: m.name, model: i.model, parts: i.parts.map(p => ({ i: p.index, r: p.reason, L: +p.length.toFixed(3), W: +p.width.toFixed(3), T: +p.thickness.toFixed(4), pin: p.pin.map(v => +v.toFixed(2)), free: p.free.map(v => +v.toFixed(2)) })) })
+    }
+    return out
+  }
+
+  /** The scene's weapon sway (debug). */
+  get sway(): unknown {
+    return this.ctx ? weaponSwayFor(this.ctx.scene) : null
+  }
+
+  /** The effects layer itself (debug). */
+  get fxLayer(): unknown {
+    return this.ctx ? rarityFxOf(this.ctx.scene) : null
   }
 
   stats(): unknown {

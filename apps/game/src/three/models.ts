@@ -57,6 +57,7 @@ import type { WeaponModel } from '../content/catalog.ts'
 import { characterGender, equipmentLookup } from './equipment.ts'
 import { remasterFor } from './remaster.ts'
 import { solidifyWeapon } from './weapon-solid.ts'
+import { dressWeaponSway, weaponSwayFor } from './weapon-sway.ts'
 import { UPPER_FADE_S, bendJoint, blendSpeedFor, spreadTurn, turnJoint, upperPitch, upperTurn, yawBetween } from './upper-aim.ts'
 import { newLook, settings } from '../settings.ts'
 import { actorGraphics, actorTexturesFor } from './actor-textures.ts'
@@ -735,6 +736,8 @@ export class ModelLibrary {
     }
     // Weapons and shields are solid: their texture alpha is a specular mask, not coverage (weapon-solid.ts).
     solidifyWeapon(container, glb, sidecarData)
+    // Tassels, ribbons, banners and plumes sway (weapon-sway.ts): marked once on the shared geometry.
+    dressWeaponSway(container, glb)
     // Remastered textures (test switch): swaps this glb's materials for PBR twins while the switch is on.
     remasterFor(this.scene).track(container, glb)
     // Wave 9B (TX-R): the texture tier's sets swap in a moment after the glb appears (three/actor-textures.ts).
@@ -2766,6 +2769,7 @@ export class CharacterActor {
     // The glow plugin goes on before the first draw, so a later +N changes defines only (weapon-glow.ts).
     if (this.glow && WEAPON_SLOTS.has(slot)) this.glow.prepare(worn.meshes)
     if (this.rarityFx && WEAPON_SLOTS.has(slot)) this.rarityFx.prepare(worn.meshes)
+    if (WEAPON_SLOTS.has(slot)) weaponSwayFor(this.scene).prepare(worn.meshes)
     this.worn.push(worn)
   }
 

@@ -187,7 +187,7 @@ describe('the plugin on a NullEngine PBRMaterial', () => {
     expect(rare.live.size).toBe(1)
     b.mesh.dispose()
     expect(rare.live.size).toBe(0)
-    expect(Object.keys(RARITY_DEFINES)).toEqual(['SRORARE', 'SRORARE_LITE'])
+    expect(Object.keys(RARITY_DEFINES)).toEqual(['SRORARE', 'SRORARE_LITE', 'SRORARE_SW'])
   })
 
   it('lite values are smaller than the full ones; the exposure divides them', () => {
@@ -400,7 +400,10 @@ describe('the weapon stays readable (owner pass: edges and fuller, restrained, n
       const L = RARITY_LOOKS[t]
       expect(L.tintAmount).toBeLessThanOrEqual(0.25)
       expect(L.rimGain).toBeLessThanOrEqual(1)
-      expect(L.pattern).toBeLessThanOrEqual(1.25)
+      expect(L.pattern).toBeLessThanOrEqual(1.5)
+      // v3: the rim is a thin fresnel (the aura shell carries the outline) and the metal stays at least 60 % bright
+      expect(L.rimGain).toBeLessThanOrEqual(0.25)
+      expect(L.dim).toBeGreaterThanOrEqual(0.6)
       expect(L.speed).toBeLessThanOrEqual(1)
     }
     expect(RARITY_LOOKS.sun.pattern).toBeGreaterThan(RARITY_LOOKS.star.pattern)
@@ -411,7 +414,9 @@ describe('the weapon stays readable (owner pass: edges and fuller, restrained, n
       const code = rarityCode(lang).CUSTOM_FRAGMENT_BEFORE_FINALCOLORCOMPOSITION!
       const full = code.slice(code.indexOf('#else'))
       for (const n of ['rrEdge', 'rrFull', 'rrFlow', 'rrGlint', 'rrRune', 'rrHeat', 'rrFlare']) expect(full.includes(n), `${lang} ${n}`).toBe(true)
-      expect(full).toMatch(/rrE = rrE \/ \(1\.0 \+ max\(max\(rrE\.r, rrE\.g\), rrE\.b\) \* 0\.45\)/)
+      expect(full).toMatch(/rrE = rrE \/ \(1\.0 \+ max\(max\(rrE\.r, rrE\.g\), rrE\.b\) \* 0\.3\)/)
+      // v3: veins from the engraving, the breath and its flash, the heart the pulse runs out from
+      for (const n of ['rrVein', 'rrBreath', 'rrFlash', 'rrVw', 'sroRareS2']) expect(full.includes(n), `${lang} ${n}`).toBe(true)
     }
   })
 })

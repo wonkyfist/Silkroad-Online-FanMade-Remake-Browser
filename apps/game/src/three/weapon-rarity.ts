@@ -47,6 +47,7 @@ import { rareKindOf, type RareKind } from '../world/rarity/kinds.ts'
 import { Painter } from '../world/rarity/paint.ts'
 import { isCrowdDrawn } from './crowd-vat.ts'
 import { regionKindOf, weaponRegion, type WeaponRegion } from '../world/rarity/region.ts'
+import { SWAY_KIND } from './weapon-sway-parts.ts'
 import { LITE_GAIN, bladeSpace, exposureScale, itemToMesh, phaseOf, type GlowItemSpec, type GlowOwner, type Rgb } from './weapon-glow.ts'
 
 // ---- the looks --------------------------------------------------------------------------------------------------
@@ -76,6 +77,10 @@ export interface RarityLook {
   readonly trailLength: number
   /** 'add' glows; 'alpha' lays the colour over. */
   readonly trailBlend: 'add' | 'alpha'
+  /** The veins' strength in the weapon's own engraving (display-relative, × the breath). */
+  readonly veins: number
+  /** The metal's albedo between the veins (1 = untouched): a little darker so the veins read. */
+  readonly dim: number
 }
 
 const hex = (h: string): Rgb => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255]
@@ -83,20 +88,20 @@ const hex = (h: string): Rgb => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.s
 /** docs/RARITY.md §5 [decision]: one look per tier, each a clear step up (values set on the plaza at noon and night). */
 export const RARITY_LOOKS: Readonly<Record<RarityTier, RarityLook>> = {
   star: {
-    kind: 1, tint: hex('#4a3f78'), tintAmount: 0.14, rim: hex('#9a6cff'), rimPower: 3.6, rimGain: 0.4,
-    accent: hex('#a985ff'), pattern: 1, speed: 0.9,
+    kind: 1, tint: hex('#4a3f78'), tintAmount: 0.06, rim: hex('#8a5cff'), rimPower: 5, rimGain: 0.12,
+    accent: hex('#9a70ff'), pattern: 1.35, speed: 0.9, veins: 4.5, dim: 0.8,
     motes: 7, moteCore: hex('#ffffff'), moteEdge: hex('#a77dff'), sprite: 0,
     trail: hex('#b892ff'), trailAlpha: 0.45, trailLength: 1.2, trailBlend: 'add',
   },
   moon: {
-    kind: 2, tint: hex('#9fb0d4'), tintAmount: 0.16, rim: hex('#d8e8ff'), rimPower: 3, rimGain: 0.62,
-    accent: hex('#b4ccff'), pattern: 1.05, speed: 0.85,
+    kind: 2, tint: hex('#9fb0d4'), tintAmount: 0.06, rim: hex('#8fbaff'), rimPower: 5, rimGain: 0.1,
+    accent: hex('#6fa8ff'), pattern: 1.2, speed: 0.85, veins: 4, dim: 0.82,
     motes: 8, moteCore: hex('#ffffff'), moteEdge: hex('#9fc0ff'), sprite: 1,
     trail: hex('#d6e6ff'), trailAlpha: 0.45, trailLength: 1.35, trailBlend: 'add',
   },
   sun: {
-    kind: 3, tint: hex('#e8a848'), tintAmount: 0.2, rim: hex('#ffc35a'), rimPower: 2.8, rimGain: 0.75,
-    accent: hex('#ffd27a'), pattern: 1.15, speed: 0.8,
+    kind: 3, tint: hex('#e8a848'), tintAmount: 0.05, rim: hex('#ffc35a'), rimPower: 5, rimGain: 0.14,
+    accent: hex('#ffcf6a'), pattern: 1.45, speed: 0.8, veins: 4.2, dim: 0.88,
     motes: 9, moteCore: hex('#fff2b8'), moteEdge: hex('#ff5a0a'), sprite: 2,
     trail: hex('#ffb347'), trailAlpha: 0.5, trailLength: 1.5, trailBlend: 'add',
   },
@@ -111,9 +116,11 @@ export const RARITY_PLUGIN = 'SroRarity'
  * sroRareT tint (linear), w kind; sroRareR rim colour (linear), w seconds; sroRareP accent (linear), w speed;
  * sroRareO blade origin, sroRareD blade axis, sroRareW its across axis, sroRareN its face normal (mesh space; across
  * and normal scaled to one item-root unit); sroRareM blade mask edges along t; sroRareS x blade length (m), y 1 / the
- * blade's half width, z the equip flare (0..1), w the night (0..1).
+ * blade's half width, z the equip flare (0..1), w the night (0..1); sroRareQ x the breath (0..1), y its peak flash
+ * (0..1), z the veins' gain, w the metal's dimming between the veins (pulseOf); sroRareS2 x the heart (blade units: the
+ * veins' pulse runs out from there).
  */
-export const RARITY_UNIFORMS = ['sroRareA', 'sroRareT', 'sroRareR', 'sroRareP', 'sroRareO', 'sroRareD', 'sroRareM', 'sroRareW', 'sroRareN', 'sroRareS'] as const
+export const RARITY_UNIFORMS = ['sroRareA', 'sroRareT', 'sroRareR', 'sroRareP', 'sroRareO', 'sroRareD', 'sroRareM', 'sroRareW', 'sroRareN', 'sroRareS', 'sroRareQ', 'sroRareS2'] as const
 export const RARITY_SAMPLERS = ['sroRareNeb', 'sroRareMask'] as const
 
 const LUMA_GLSL = 'vec3(0.2126, 0.7152, 0.0722)'
@@ -124,6 +131,9 @@ const DEFS_GLSL = `
 uniform sampler2D sroRareNeb;
 uniform sampler2D sroRareMask;
 #endif
+#ifdef SRORARE_SW
+varying float vSroSw;
+#endif
 `
 const DEFS_WGSL = `
 #ifdef SRORARE
@@ -132,10 +142,22 @@ var sroRareNeb: texture_2d<f32>;
 var sroRareMaskSampler: sampler;
 var sroRareMask: texture_2d<f32>;
 #endif
+#ifdef SRORARE_SW
+varying vSroSw: f32;
+#endif
 `
 
 const ALBEDO_GLSL = `
 #ifdef SRORARE
+#if defined(ALBEDO) && !defined(SRORARE_LITE)
+  // the engraving: where the texel is brighter than its neighbourhood runs a vein of the tier's light (Sun also
+  // fills the dark grooves, molten metal in the cracks); the metal around the veins is dimmed so they pop
+  vec2 rrPx = 1.5 / vec2(textureSize(albedoSampler, 0));
+  float rrLx = dot(texture2D(albedoSampler, vAlbedoUV + vec2(rrPx.x, 0.0)).rgb - texture2D(albedoSampler, vAlbedoUV - vec2(rrPx.x, 0.0)).rgb, ${LUMA_GLSL});
+  float rrLy = dot(texture2D(albedoSampler, vAlbedoUV + vec2(0.0, rrPx.y)).rgb - texture2D(albedoSampler, vAlbedoUV - vec2(0.0, rrPx.y)).rgb, ${LUMA_GLSL});
+  float rrVeinA = smoothstep(0.12, 0.3, length(vec2(rrLx, rrLy)));
+  surfaceAlbedo *= mix(sroRareQ.w, 1.0, clamp(rrVeinA, 0.0, 1.0));
+#endif
 {
   float rrL = dot(surfaceAlbedo, ${LUMA_GLSL});
   vec3 rrC = sroRareT.rgb * clamp(rrL * 2.4, 0.08, 1.5);
@@ -145,6 +167,14 @@ const ALBEDO_GLSL = `
 `
 const ALBEDO_WGSL = `
 #ifdef SRORARE
+#if defined(ALBEDO) && !defined(SRORARE_LITE)
+  let rrPx = 1.5 / vec2f(textureDimensions(albedoSampler, 0));
+  let rrUv0 = fragmentInputs.vAlbedoUV;
+  let rrLx = dot(textureSample(albedoSampler, albedoSamplerSampler, rrUv0 + vec2f(rrPx.x, 0.0)).rgb - textureSample(albedoSampler, albedoSamplerSampler, rrUv0 - vec2f(rrPx.x, 0.0)).rgb, ${LUMA_WGSL});
+  let rrLy = dot(textureSample(albedoSampler, albedoSamplerSampler, rrUv0 + vec2f(0.0, rrPx.y)).rgb - textureSample(albedoSampler, albedoSamplerSampler, rrUv0 - vec2f(0.0, rrPx.y)).rgb, ${LUMA_WGSL});
+  let rrVeinA = smoothstep(0.12, 0.3, length(vec2f(rrLx, rrLy)));
+  surfaceAlbedo = surfaceAlbedo * mix(uniforms.sroRareQ.w, 1.0, clamp(rrVeinA, 0.0, 1.0));
+#endif
 {
   let rrL = dot(surfaceAlbedo, ${LUMA_WGSL});
   let rrC = uniforms.sroRareT.rgb * clamp(rrL * 2.4, 0.08, 1.5);
@@ -180,52 +210,67 @@ const EMISSIVE_GLSL = `
   float rrWm = dot(rrP, rrWa) / max(dot(rrWa, rrWa), 1e-8);
   float rrW = rrWm * sroRareS.y;
   float rrMask = smoothstep(sroRareM.x, sroRareM.y, rrT) * (1.0 - smoothstep(sroRareM.z, sroRareM.w, rrT));
+#ifdef SRORARE_SW
+  rrMask *= 1.0 - step(0.001, vSroSw);
+#endif
   float rrNdV = clamp(abs(dot(normalW, viewDirectionW)), 0.0, 1.0);
   float rrF = pow(1.0 - rrNdV, sroRareA.y);
   vec2 rrUV = vec2(rrT * sroRareS.x, rrWm) * 1.6;
   vec4 rrM1 = texture2D(sroRareMask, rrUV * 1.2);
-  // where the effect lives: the cutting edges and the silhouette (rim), the fuller / spine (runes); the faces keep
-  // the weapon's own albedo, metal and engraving
+  vec3 rrN2 = texture2D(sroRareNeb, rrUV * 1.7 + vec2(0.31, 0.57 + rrTime * 0.007)).rgb;
+  float rrBreath = sroRareQ.x;
+  float rrFlash = sroRareQ.y;
+  float rrVein = 0.0;
+#ifdef ALBEDO
+  rrVein = rrVeinA;
+#endif
   float rrAw = abs(rrW);
-  float rrEdge = smoothstep(0.75, 0.99, rrAw);
+  float rrEdge = smoothstep(0.72, 0.98, rrAw);
   float rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
   float rrSpd = sroRareP.w;
-  // slow energy flowing base -> tip along the edges: two staggered pulses
-  float rrFlow = pow(0.5 + 0.5 * sin(rrT * 6.5 - rrTime * 1.2 * rrSpd), 10.0) + 0.6 * pow(0.5 + 0.5 * sin(rrT * 3.5 - rrTime * 0.75 * rrSpd + 2.1), 14.0);
-  // now and then a glint runs up an edge
+  // energy running base -> tip through the veins and along the edges, swelling with the breath, flashing at its peak
+  float rrWave = pow(0.5 + 0.5 * sin(rrT * 6.0 - rrTime * 2.6 * rrSpd), 3.0);
+  float rrWave2 = pow(0.5 + 0.5 * sin(rrT * 2.6 - rrTime * 1.1 * rrSpd + 1.7), 6.0);
+  float rrPulse = 0.5 + 0.6 * rrBreath + 1.6 * rrFlash;
+  float rrFlow = rrWave * 0.8 + rrWave2 * 0.6;
   float rrGate = pow(0.5 + 0.5 * sin(rrTime * 0.5), 16.0);
   float rrGd = (rrT - fract(rrTime * 0.25)) * 16.0;
   float rrGlint = rrGate * exp(-rrGd * rrGd);
-  // runes etched in the fuller, breathing slowly
   float rrRune = rrM1.r * rrFull * (0.55 + 0.45 * sin(rrTime * 0.9 + rrT * 4.0));
   vec3 rrE = vec3(0.0);
+  vec3 rrVc = sroRareP.rgb;
   if (sroRareT.w < 1.5) {
-    vec3 rrN2 = texture2D(sroRareNeb, rrUV * 1.7 + vec2(0.31, 0.57 + rrTime * 0.007)).rgb;
     float rrTw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(rrTime * 2.3 + rrT * 37.0 + rrW * 5.0), 4.0);
     float rrStars = rrN2.b * rrN2.b * rrN2.b * rrTw;
-    rrE = sroRareP.rgb * (rrEdge * (0.08 + 0.7 * rrFlow) + rrRune * 0.55) + vec3(0.92, 0.88, 1.0) * (rrStars * rrEdge * 1.8 + rrGlint * rrEdge * 1.6);
+    rrE = sroRareP.rgb * (rrEdge * (0.55 * rrWave) * rrPulse + rrRune * 0.4) + vec3(0.92, 0.88, 1.0) * (rrStars * (rrEdge + 0.25) * 1.6 + rrGlint * rrEdge * 1.6);
   } else if (sroRareT.w < 2.5) {
-    vec3 rrSheen = vec3(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.18 * (1.0 - rrNdV * 0.5));
-    rrE = (sroRareP.rgb * (rrEdge * (0.08 + 0.85 * rrFlow) + rrRune * 0.5) + rrSheen + vec3(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + sroRareS.w * 0.5);
+    vec3 rrSheen = vec3(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.16 * (1.0 - rrNdV * 0.5));
+    rrE = (sroRareP.rgb * (rrEdge * (0.55 * rrWave) * rrPulse + rrRune * 0.35) + rrSheen + vec3(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + sroRareS.w * 0.4);
   } else {
     float rrHeat = 0.82 + 0.18 * sin(rrTime * 3.1 - rrT * 11.0 + 1.5 * sin(rrTime * 1.7 + rrT * 5.0));
     float rrFlare = pow(0.5 + 0.5 * sin(rrTime * 0.29 + 1.3), 48.0);
-    vec3 rrGold = vec3(1.0, 0.7, 0.26);
-    rrE = rrGold * (rrEdge * (0.1 + 0.9 * rrFlow) * rrHeat) + vec3(1.0, 0.55, 0.16) * (rrRune * 0.55 * rrHeat) + vec3(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
+    rrVc = vec3(1.0, 0.62, 0.2);
+    rrE = vec3(1.0, 0.7, 0.26) * (rrEdge * (0.55 * rrWave) * rrHeat * rrPulse) + vec3(1.0, 0.55, 0.16) * (rrRune * 0.35 * rrHeat) + vec3(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
   }
+  // the veins (every tier): the tier's colour with a white-hot core where they are strongest
+  float rrVw = pow(0.5 + 0.5 * sin(abs(rrT - sroRareS2.x) * 9.0 - rrTime * 3.2 * rrSpd), 4.0);
+  float rrV = rrVein * (0.35 + 1.1 * rrVw) * rrPulse * sroRareQ.z;
+  rrE += rrVc * (rrV * 1.3) + vec3(1.0) * min(rrV * rrV * 0.08, 0.2);
 
-  // a seal shield (D.w = 1): the tier's light runs round the rim and the emblem lines glow faintly; the face stays
+  // a seal shield (D.w = 1): the tier's light runs round the rim, the emblem breathes, veins in the engraving
   if (sroRareD.w > 0.5) {
-    float rrR = length(vec2((rrT - 0.5) * 2.0, rrW));
-    float rrRim = smoothstep(0.8, 0.96, rrR) * (1.0 - smoothstep(0.98, 1.08, rrR));
-    float rrAng = atan(rrW, (rrT - 0.5) * 2.0);
-    float rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 8.0);
-    float rrInner = 1.0 - smoothstep(0.55, 0.85, rrR);
-    rrE = sroRareP.rgb * (rrRim * (0.3 + 0.9 * rrRun) + rrM1.r * rrInner * 0.3 * (0.6 + 0.4 * sin(rrTime * 0.9))) + vec3(1.0) * (rrGlint * rrRim);
+    // a shield is round: across measured against half its height (not the median width)
+    float rrWs = rrWm / max(0.5 * length(rrA) / max(length(rrWa), 1e-6), 1e-6);
+    float rrR = length(vec2((rrT - 0.5) * 2.0, rrWs));
+    float rrRim = smoothstep(0.9, 0.97, rrR) * (1.0 - smoothstep(0.99, 1.06, rrR));
+    float rrAng = atan(rrWs, (rrT - 0.5) * 2.0);
+    float rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 6.0);
+    float rrCore = 1.0 - smoothstep(0.0, 0.22, rrR);
+    rrE = sroRareP.rgb * (rrRim * (0.05 + 0.7 * rrRun) * rrPulse + rrCore * (0.4 + 0.9 * rrBreath + 1.5 * rrFlash)) + rrVc * rrV + vec3(1.0) * (rrGlint * rrRim + rrCore * rrFlash * 0.6);
   }
   // a soft knee: bright, never blown out (the weapon stays readable under bloom)
-  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.45);
-  rrE = sroRareR.rgb * (rrF * (0.2 + 0.8 * max(rrEdge, step(0.5, sroRareD.w))) * sroRareA.z) + rrE * sroRareA.w;
+  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.3);
+  rrE = sroRareR.rgb * (rrF * (0.3 + 0.7 * rrEdge) * sroRareA.z * (0.8 + 0.5 * rrBreath)) + rrE * sroRareA.w;
   finalEmissive += rrE * rrMask * (1.0 + sroRareS.z * 2.5);
 #endif
 }
@@ -258,58 +303,108 @@ const EMISSIVE_WGSL = `
   let rrT = dot(rrP, rrA) / max(dot(rrA, rrA), 1e-8);
   let rrWm = dot(rrP, rrWa) / max(dot(rrWa, rrWa), 1e-8);
   let rrW = rrWm * uniforms.sroRareS.y;
-  let rrMask = smoothstep(uniforms.sroRareM.x, uniforms.sroRareM.y, rrT) * (1.0 - smoothstep(uniforms.sroRareM.z, uniforms.sroRareM.w, rrT));
+  var rrMask = smoothstep(uniforms.sroRareM.x, uniforms.sroRareM.y, rrT) * (1.0 - smoothstep(uniforms.sroRareM.z, uniforms.sroRareM.w, rrT));
+#ifdef SRORARE_SW
+  rrMask = rrMask * (1.0 - step(0.001, fragmentInputs.vSroSw));
+#endif
   let rrNdV = clamp(abs(dot(normalW, viewDirectionW)), 0.0, 1.0);
   let rrF = pow(1.0 - rrNdV, uniforms.sroRareA.y);
   let rrUV = vec2f(rrT * uniforms.sroRareS.x, rrWm) * 1.6;
   let rrM1 = textureSample(sroRareMask, sroRareMaskSampler, rrUV * 1.2);
   let rrN2 = textureSample(sroRareNeb, sroRareNebSampler, rrUV * 1.7 + vec2f(0.31, 0.57 + rrTime * 0.007)).rgb;
-  // where the effect lives: the cutting edges and the silhouette (rim), the fuller / spine (runes); the faces keep
-  // the weapon's own albedo, metal and engraving
+  let rrBreath = uniforms.sroRareQ.x;
+  let rrFlash = uniforms.sroRareQ.y;
+  var rrVein = 0.0;
+#ifdef ALBEDO
+  rrVein = rrVeinA;
+#endif
   let rrAw = abs(rrW);
-  let rrEdge = smoothstep(0.75, 0.99, rrAw);
+  let rrEdge = smoothstep(0.72, 0.98, rrAw);
   let rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
   let rrSpd = uniforms.sroRareP.w;
-  // slow energy flowing base -> tip along the edges: two staggered pulses
-  let rrFlow = pow(0.5 + 0.5 * sin(rrT * 6.5 - rrTime * 1.2 * rrSpd), 10.0) + 0.6 * pow(0.5 + 0.5 * sin(rrT * 3.5 - rrTime * 0.75 * rrSpd + 2.1), 14.0);
-  // now and then a glint runs up an edge
+  // energy running base -> tip through the veins and along the edges, swelling with the breath, flashing at its peak
+  let rrWave = pow(0.5 + 0.5 * sin(rrT * 6.0 - rrTime * 2.6 * rrSpd), 3.0);
+  let rrWave2 = pow(0.5 + 0.5 * sin(rrT * 2.6 - rrTime * 1.1 * rrSpd + 1.7), 6.0);
+  let rrPulse = 0.5 + 0.6 * rrBreath + 1.6 * rrFlash;
+  let rrFlow = rrWave * 0.8 + rrWave2 * 0.6;
   let rrGate = pow(0.5 + 0.5 * sin(rrTime * 0.5), 16.0);
   let rrGd = (rrT - fract(rrTime * 0.25)) * 16.0;
   let rrGlint = rrGate * exp(-rrGd * rrGd);
-  // runes etched in the fuller, breathing slowly
   let rrRune = rrM1.r * rrFull * (0.55 + 0.45 * sin(rrTime * 0.9 + rrT * 4.0));
   var rrE = vec3f(0.0);
+  var rrVc = uniforms.sroRareP.rgb;
   if (uniforms.sroRareT.w < 1.5) {
     let rrTw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(rrTime * 2.3 + rrT * 37.0 + rrW * 5.0), 4.0);
     let rrStars = rrN2.b * rrN2.b * rrN2.b * rrTw;
-    rrE = uniforms.sroRareP.rgb * (rrEdge * (0.08 + 0.7 * rrFlow) + rrRune * 0.55) + vec3f(0.92, 0.88, 1.0) * (rrStars * rrEdge * 1.8 + rrGlint * rrEdge * 1.6);
+    rrE = uniforms.sroRareP.rgb * (rrEdge * (0.55 * rrWave) * rrPulse + rrRune * 0.4) + vec3f(0.92, 0.88, 1.0) * (rrStars * (rrEdge + 0.25) * 1.6 + rrGlint * rrEdge * 1.6);
   } else if (uniforms.sroRareT.w < 2.5) {
-    let rrSheen = vec3f(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.18 * (1.0 - rrNdV * 0.5));
-    rrE = (uniforms.sroRareP.rgb * (rrEdge * (0.08 + 0.85 * rrFlow) + rrRune * 0.5) + rrSheen + vec3f(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + uniforms.sroRareS.w * 0.5);
+    let rrSheen = vec3f(0.45, 0.62, 1.0) * (rrM1.a * rrFull * 0.16 * (1.0 - rrNdV * 0.5));
+    rrE = (uniforms.sroRareP.rgb * (rrEdge * (0.55 * rrWave) * rrPulse + rrRune * 0.35) + rrSheen + vec3f(0.9, 0.95, 1.0) * (rrGlint * rrEdge * 1.8)) * (1.0 + uniforms.sroRareS.w * 0.4);
   } else {
     let rrHeat = 0.82 + 0.18 * sin(rrTime * 3.1 - rrT * 11.0 + 1.5 * sin(rrTime * 1.7 + rrT * 5.0));
     let rrFlare = pow(0.5 + 0.5 * sin(rrTime * 0.29 + 1.3), 48.0);
-    let rrGold = vec3f(1.0, 0.7, 0.26);
-    rrE = rrGold * (rrEdge * (0.1 + 0.9 * rrFlow) * rrHeat) + vec3f(1.0, 0.55, 0.16) * (rrRune * 0.55 * rrHeat) + vec3f(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
+    rrVc = vec3f(1.0, 0.62, 0.2);
+    rrE = vec3f(1.0, 0.7, 0.26) * (rrEdge * (0.55 * rrWave) * rrHeat * rrPulse) + vec3f(1.0, 0.55, 0.16) * (rrRune * 0.35 * rrHeat) + vec3f(1.0, 0.9, 0.66) * (rrGlint * rrEdge * 1.8 + rrFlare * (0.2 + 0.9 * rrEdge));
   }
+  // the veins (every tier): the tier's colour with a white-hot core where they are strongest
+  let rrVw = pow(0.5 + 0.5 * sin(abs(rrT - uniforms.sroRareS2.x) * 9.0 - rrTime * 3.2 * rrSpd), 4.0);
+  let rrV = rrVein * (0.35 + 1.1 * rrVw) * rrPulse * uniforms.sroRareQ.z;
+  rrE = rrE + rrVc * (rrV * 1.3) + vec3f(1.0) * min(rrV * rrV * 0.08, 0.2);
 
-  // a seal shield (D.w = 1): the tier's light runs round the rim and the emblem lines glow faintly; the face stays
+  // a seal shield (D.w = 1): the tier's light runs round the rim, the emblem breathes, veins in the engraving
   if (uniforms.sroRareD.w > 0.5) {
-    let rrR = length(vec2f((rrT - 0.5) * 2.0, rrW));
-    let rrRim = smoothstep(0.8, 0.96, rrR) * (1.0 - smoothstep(0.98, 1.08, rrR));
-    let rrAng = atan2(rrW, (rrT - 0.5) * 2.0);
-    let rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 8.0);
-    let rrInner = 1.0 - smoothstep(0.55, 0.85, rrR);
-    rrE = uniforms.sroRareP.rgb * (rrRim * (0.3 + 0.9 * rrRun) + rrM1.r * rrInner * 0.3 * (0.6 + 0.4 * sin(rrTime * 0.9))) + vec3f(1.0) * (rrGlint * rrRim);
+    // a shield is round: across measured against half its height (not the median width)
+    let rrWs = rrWm / max(0.5 * length(rrA) / max(length(rrWa), 1e-6), 1e-6);
+    let rrR = length(vec2f((rrT - 0.5) * 2.0, rrWs));
+    let rrRim = smoothstep(0.9, 0.97, rrR) * (1.0 - smoothstep(0.99, 1.06, rrR));
+    let rrAng = atan2(rrWs, (rrT - 0.5) * 2.0);
+    let rrRun = pow(0.5 + 0.5 * sin(rrAng * 2.0 - rrTime * 0.9 * rrSpd), 6.0);
+    let rrCore = 1.0 - smoothstep(0.0, 0.22, rrR);
+    rrE = uniforms.sroRareP.rgb * (rrRim * (0.05 + 0.7 * rrRun) * rrPulse + rrCore * (0.4 + 0.9 * rrBreath + 1.5 * rrFlash)) + rrVc * rrV + vec3f(1.0) * (rrGlint * rrRim + rrCore * rrFlash * 0.6);
   }
   // a soft knee: bright, never blown out (the weapon stays readable under bloom)
-  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.45);
-  rrE = uniforms.sroRareR.rgb * (rrF * (0.2 + 0.8 * max(rrEdge, step(0.5, uniforms.sroRareD.w))) * uniforms.sroRareA.z) + rrE * uniforms.sroRareA.w;
+  rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.3);
+  rrE = uniforms.sroRareR.rgb * (rrF * (0.3 + 0.7 * rrEdge) * uniforms.sroRareA.z * (0.8 + 0.5 * rrBreath)) + rrE * uniforms.sroRareA.w;
   finalEmissive = finalEmissive + rrE * rrMask * (1.0 + uniforms.sroRareS.z * 2.5);
 #endif
 }
 #endif
 `
+
+/** The vertex side: the swaying parts' weight as a varying (SRORARE_SW); the sway plugin may declare the attribute. */
+export function rarityVertexCode(lang: 'glsl' | 'wgsl'): Readonly<Record<string, string>> {
+  return lang === 'wgsl'
+    ? {
+        CUSTOM_VERTEX_DEFINITIONS: `
+#ifdef SRORARE_SW
+#ifndef SROSWAY
+attribute ${SWAY_KIND}: vec4f;
+#endif
+varying vSroSw: f32;
+#endif
+`,
+        CUSTOM_VERTEX_MAIN_END: `
+#ifdef SRORARE_SW
+vertexOutputs.vSroSw = vertexInputs.${SWAY_KIND}.x;
+#endif
+`,
+      }
+    : {
+        CUSTOM_VERTEX_DEFINITIONS: `
+#ifdef SRORARE_SW
+#ifndef SROSWAY
+attribute vec4 ${SWAY_KIND};
+#endif
+varying float vSroSw;
+#endif
+`,
+        CUSTOM_VERTEX_MAIN_END: `
+#ifdef SRORARE_SW
+vSroSw = ${SWAY_KIND}.x;
+#endif
+`,
+      }
+}
 
 /** The injections per language (tests read them). */
 export function rarityCode(lang: 'glsl' | 'wgsl'): Readonly<Record<string, string>> {
@@ -320,7 +415,7 @@ export function rarityCode(lang: 'glsl' | 'wgsl'): Readonly<Record<string, strin
   }
 }
 
-export const RARITY_DEFINES = { SRORARE: false, SRORARE_LITE: false }
+export const RARITY_DEFINES = { SRORARE: false, SRORARE_LITE: false, SRORARE_SW: false }
 
 /** What the plugin asks of its manager. */
 export interface RaritySource {
@@ -351,11 +446,17 @@ export class RarityPlugin extends MaterialPluginBase {
     const d = defines as MaterialDefines & Record<string, unknown>
     const on = !!mesh && this.source.stateOf(mesh) !== null
     const lite = on && (this.source.lite || d.INSTANCES === true || d.THIN_INSTANCES === true)
-    if (d.SRORARE !== on || d.SRORARE_LITE !== lite) {
+    const sw = on && !lite && !!mesh && mesh.isVerticesDataPresent(SWAY_KIND)
+    if (d.SRORARE !== on || d.SRORARE_LITE !== lite || d.SRORARE_SW !== sw) {
       d.SRORARE = on
       d.SRORARE_LITE = lite
+      d.SRORARE_SW = sw
       defines.markAsUnprocessed()
     }
+  }
+
+  override getAttributes(attributes: string[], _scene: Scene, mesh: AbstractMesh): void {
+    if (this.source.stateOf(mesh) && mesh.isVerticesDataPresent(SWAY_KIND) && !attributes.includes(SWAY_KIND)) attributes.push(SWAY_KIND)
   }
 
   override getUniforms(shaderLanguage?: ShaderLanguage): { ubo: Array<{ name: string; size: number; type: string }>; fragment: string } {
@@ -383,8 +484,10 @@ export class RarityPlugin extends MaterialPluginBase {
   }
 
   override getCustomCode(shaderType: string, shaderLanguage?: ShaderLanguage): Record<string, string> | null {
+    const w = shaderLanguage === ShaderLanguage.WGSL
+    if (shaderType === 'vertex') return { ...rarityVertexCode(w ? 'wgsl' : 'glsl') }
     if (shaderType !== 'fragment') return null
-    return { ...rarityCode(shaderLanguage === ShaderLanguage.WGSL ? 'wgsl' : 'glsl') }
+    return { ...rarityCode(w ? 'wgsl' : 'glsl') }
   }
 }
 
@@ -416,6 +519,14 @@ export interface RareItem {
   readonly span: readonly [number, number]
   /** The far end of the model on its own centre line (first mesh space; null: none, e.g. a shield). */
   readonly butt: Vector3 | null
+  /**
+   * The silhouette in the first mesh's space: OUTLINE_BINS bins along the blade (0 base .. 1 tip), each the outermost
+   * vertex on the − side then the + side across (x, y, z, 6 floats per bin; NaN where a bin is empty). Flames,
+   * stars, glints and mist streams sit on it, so they hug the weapon's real shape.
+   */
+  readonly outline: Float32Array
+  /** Where the head is widest (blade units, from the outline): a glaive head's heart, its core and rune ring. */
+  readonly heart: number
   /** The look's colours in linear space (the uniforms). */
   readonly tint: Color3
   readonly rim: Color3
@@ -457,6 +568,79 @@ const linear = (c: Rgb): Color3 => new Color3(c[0], c[1], c[2]).toLinearSpace()
 /** The equip flare's length (s). */
 export const EQUIP_FLARE_S = 1.6
 
+/** The idle cycle's length (s): the breath swells and flashes once per cycle. */
+export const PULSE_S = 4.2
+const PULSE_SCRATCH = { breath: 0, flash: 0 }
+
+/**
+ * The idle pulse of a rare item at `s` seconds (pure): `breath` 0..1 (a slow swell, 0 at the start of the cycle, 1 at
+ * its middle) and `flash` 0..1, a short peak at the top of the breath. The per-owner phase keeps two weapons apart.
+ */
+export function pulseOf(s: number, phase: number, out: { breath: number; flash: number } = { breath: 0, flash: 0 }): { breath: number; flash: number } {
+  const c = (((s / PULSE_S + phase * 3.7) % 1) + 1) % 1
+  const breath = 0.5 - 0.5 * Math.cos(c * Math.PI * 2)
+  const d = (c - 0.5) / 0.05
+  out.breath = breath
+  out.flash = Math.exp(-d * d)
+  return out
+}
+
+/** Bins of a rare item's outline (RareItem.outline). */
+export const OUTLINE_BINS = 20
+
+/**
+ * The outline of a weapon mesh (pure, tests): per bin along base → tip, the vertex farthest on each side across the
+ * blade (`across` need not be unit). Vertices of swaying parts (`sway` weight > 0) and outside 0..1 are skipped.
+ */
+export function outlineOf(pos: ArrayLike<number>, sway: ArrayLike<number> | null, base: { x: number; y: number; z: number }, tip: { x: number; y: number; z: number }, across: { x: number; y: number; z: number }): Float32Array {
+  const out = new Float32Array(OUTLINE_BINS * 6).fill(NaN)
+  const dx = tip.x - base.x, dy = tip.y - base.y, dz = tip.z - base.z
+  const L2 = dx * dx + dy * dy + dz * dz
+  const al = Math.hypot(across.x, across.y, across.z) || 1
+  const ax = across.x / al, ay = across.y / al, az = across.z / al
+  if (L2 < 1e-10) return out
+  const best = new Float32Array(OUTLINE_BINS * 2).fill(0)
+  const n = Math.floor(pos.length / 3)
+  for (let i = 0; i < n; i++) {
+    if (sway && sway[i * 4]! > 0) continue
+    const px = pos[i * 3]! - base.x, py = pos[i * 3 + 1]! - base.y, pz = pos[i * 3 + 2]! - base.z
+    const t = (px * dx + py * dy + pz * dz) / L2
+    if (t < 0 || t > 1) continue
+    const b = Math.min(OUTLINE_BINS - 1, Math.floor(t * OUTLINE_BINS))
+    const a = px * ax + py * ay + pz * az
+    const side = a < 0 ? 0 : 1
+    const k = b * 2 + side
+    if (Math.abs(a) <= best[k]! && !isNaN(out[k * 3]!)) continue
+    best[k] = Math.abs(a)
+    out[k * 3] = pos[i * 3]!
+    out[k * 3 + 1] = pos[i * 3 + 1]!
+    out[k * 3 + 2] = pos[i * 3 + 2]!
+  }
+  return out
+}
+
+/**
+ * Where an outline is widest (pure): the bin centre (blade units) with the largest span across; 0.5 when empty.
+ */
+export function heartOf(outline: Float32Array, base: { x: number; y: number; z: number }, tip: { x: number; y: number; z: number }, across: { x: number; y: number; z: number }): number {
+  const al = Math.hypot(across.x, across.y, across.z) || 1
+  let best = -1
+  let at = 0.5
+  for (let b = 0; b < OUTLINE_BINS; b++) {
+    const k0 = b * 6
+    const k1 = k0 + 3
+    if (outline[k0] !== outline[k0] || outline[k1] !== outline[k1]) continue
+    const w = Math.abs(((outline[k1]! - outline[k0]!) * across.x + (outline[k1 + 1]! - outline[k0 + 1]!) * across.y + (outline[k1 + 2]! - outline[k0 + 2]!) * across.z) / al)
+    if (w > best * 1.04) {
+      best = w
+      at = (b + 0.5) / OUTLINE_BINS
+    }
+  }
+  void base
+  void tip
+  return at
+}
+
 /** The night (0 noon .. 1 deep night) from the scene exposure (≈1 at noon, ~10 and more at night). */
 export function nightOf(exposure: number): number {
   if (!(exposure > 0)) return 0
@@ -464,7 +648,7 @@ export function nightOf(exposure: number): number {
 }
 
 /** The uniform values of a rare mesh at `s` seconds: [A, T, R, P, O, D, M, W, N, S], 4 floats each. */
-export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1, out = new Float32Array(40), night = 0): Float32Array {
+export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1, out = new Float32Array(48), night = 0): Float32Array {
   const it = r.item
   const L = it.look
   const k = scale * (lite ? LITE_GAIN : 1)
@@ -510,6 +694,16 @@ export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1,
   const since = s - (it.litAt ?? -1e9)
   out[38] = it.flare && since >= 0 && since < EQUIP_FLARE_S ? Math.sin(Math.PI * Math.min(1, since / EQUIP_FLARE_S)) ** 0.7 : 0
   out[39] = night
+  const q = pulseOf(s, it.phase, PULSE_SCRATCH)
+  out[40] = q.breath
+  out[41] = q.flash
+  out[42] = (L.veins ?? 0) * k * (lite ? 0 : 1)
+  out[43] = lite ? 1 : L.dim
+  // the heart of the item (blade units): the veins' pulse runs out from it
+  out[44] = it.kind === 'glaive' ? it.heart ?? 0.5 : it.kind === 'spear' ? 0.1 : it.kind === 'shield' ? 0.5 : 0
+  out[45] = 0
+  out[46] = 0
+  out[47] = 0
   return out
 }
 
@@ -563,7 +757,7 @@ export class WeaponRarity implements RaritySource {
   private seconds = 0
   private scale = 1
   private night = 0
-  private readonly values = new Float32Array(40)
+  private readonly values = new Float32Array(48)
   private motesPart: RarityMotes | null = null
   private tex: { nebula: Texture; masks: Texture } | null = null
   /** The effects layer (world/rarity/fx.ts) told of every lit item. */
@@ -662,6 +856,8 @@ export class WeaponRarity implements RaritySource {
       halfWidth: frame.halfWidth,
       span: frame.span,
       butt: region ? Vector3.TransformCoordinates(v3(region.butt), toFirst) : null,
+      heart: 0.5,
+      outline: outlineOf(first.getVerticesData(VertexBuffer.PositionKind) ?? [], first.getVerticesData(SWAY_KIND), Vector3.TransformCoordinates(space.base, toFirst), Vector3.TransformCoordinates(space.tip, toFirst), Vector3.TransformNormal(frame.across, toFirst)),
       tint: linear(look.tint),
       rim: linear(look.rim),
       accent: linear(look.accent),
@@ -686,6 +882,7 @@ export class WeaponRarity implements RaritySource {
         m.onDisposeObservable.addOnce(() => this.clear([m]))
       }
     }
+    ;(item as { heart: number }).heart = heartOf(item.outline, item.base, item.tip, item.across)
     this.items.add(item)
     this.listener?.lit(item)
     return item

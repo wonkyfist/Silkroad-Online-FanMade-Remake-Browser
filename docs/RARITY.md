@@ -230,3 +230,35 @@ Unchanged from v1: the name in the tier colour with its banner, the slot frame a
 - `apps/game/test/weapon-rarity.test.ts`: the looks, the plugin code in both languages and on a NullEngine material,
   values, motes (caps, order, Low), the actor plumbing, trail, beam, chimes, tooltip, slot signs, the notice text.
 - `packages/convert/test/data-rare.test.ts`, `data-builders.test.ts`: the weapon seals of every degree are exported.
+
+### 5.10 v3: majestic and alive (owner pass, concepts `overall-pass/rarity/v3-concepts`)
+
+- **Owner verdict on v2** [decision]: "boring as hell". Target: the weapon's own art fully readable and the rarity
+  unmistakable, animated and unique per tier (concepts approved by the owner, built with the dream-loop critic: 4.2 → 5.7/10
+  over 12 rounds; in-game shots and sheets in `overall-pass/rarity/v3-after`).
+- **Material** (`three/weapon-rarity.ts`): energy veins in the engraving (the albedo's luminance edges, 1.5 texels; the
+  metal between them dimmed to `dim`), a pulse running out from the weapon's heart (`sroRareS2.x`); the idle cycle
+  `pulseOf` (4.2 s: a breath and a short peak flash, per-owner phase) drives veins, rim, cores and shells; a thin
+  fresnel only (the outline is the shell's). Swaying parts get no rarity light (`SRORARE_SW`).
+- **Aura outline** (`world/rarity/shell.ts`): three copies of the weapon mesh pushed out in the blade plane and away
+  from the eye in view space, additive, depth-tested: only the band past the silhouette shows (a white-hot line, then
+  softer tier-coloured bands). Full LOD only: 3 draws per weapon.
+- **Effects** (`world/rarity/fx.ts`), all hugging the real silhouette (`RareItem.outline`, 20 bins per side, and
+  `heart`, where the head is widest): a breathing core (Star a violet star, Moon a crescent, Sun a white-hot disc with a
+  solar flare at the peak); Star a constellation loop round the weapon; Moon a crescent rune ring and moonlight ribbons;
+  Sun a fire fringe along both edges, flame tongues, gold embers, a faint haze; shields a rim glow, the tier's ring and
+  emblem core. The wearer gets a tier-coloured body light (every tier; never the floor).
+- **Perf** [measured, lab, own Sun glaive]: the layer 0.06 ms CPU, 150–255 quads in its one batch, + 3 shell draws.
+
+## 6. Cloth in the wind (every weapon, every degree)
+
+- `three/weapon-sway-parts.ts` finds the parts at load (`dressWeaponSway`, in the glTF's own space): islands of the mesh
+  that are flat cards (≤ 4 mm, ≥ 2:1) or thin strips (≤ 3 cm, ≥ 3:1, ≥ 12 cm), not the body, pinned at the end nearest
+  the rest of the weapon; `SWAY_OVERRIDES` (by island centre, so the optimized glbs match) adds the solid tassels and
+  drops metal fins and ornaments. Chinese weapons D1–D8: 17 of 40 models, 44 parts (spear banners and tassels, glaive
+  streamers, sword plumes and cords, blade ribbons, bow strings and pennants). Test: `apps/game/test/weapon-sway.test.ts`.
+- `three/weapon-sway.ts` (SroSway vertex plugin): the weight grows from the pin to the free end (w^1.6), pushed by the
+  weather's wind (`setWeaponWind` from the weather frame; a breeze always, storms up to 1.4×), fluttering across the
+  wind, and trailing the weapon's own motion through a damped spring per worn weapon (runs and swings throw the cloth
+  back, it swings past and settles). Cost: two vec4 uniforms, a few ALU per vertex, one spring per worn weapon; no
+  define (no cost) on weapons without parts. Lab: `__sroRareLab.wind(x, z, gust, holdClock)`, `swayInfo()`.

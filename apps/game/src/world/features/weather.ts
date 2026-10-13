@@ -26,6 +26,7 @@
  *   `?winter=<0..1>` holds a look offline.
  */
 import type { Material, Scene } from '@babylonjs/core'
+import { setWeaponWind } from '../../three/weapon-sway.ts'
 import {
   WEATHER_KINDS,
   NEUTRAL_CLIMATE,
@@ -309,6 +310,8 @@ export class WeatherClient {
       time: ((now / 1000) % 3600 + 3600) % 3600,
     }
     this.last = frame
+    // weapon tassels and ribbons sway in the same wind (three/weapon-sway.ts)
+    setWeaponWind(frame.windX, frame.windZ, frame.gustMs)
     return frame
   }
 
