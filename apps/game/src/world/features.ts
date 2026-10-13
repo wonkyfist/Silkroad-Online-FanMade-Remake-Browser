@@ -21,6 +21,7 @@ import { berserkFeature } from './features/berserk.ts'
 import { coastFeature } from './features/coast.ts'
 import { durabilityFeature } from './features/durability.ts'
 import { editorsFeature } from './features/editors.ts'
+import { gmToolboxFeature } from './features/gm-toolbox.ts'
 import { fxWorldFeature } from './features/fx-world.ts'
 import { guildFeature } from './features/guild.ts'
 import { mapFeature } from './features/map.ts'
@@ -165,6 +166,7 @@ export const WORLD_FEATURES: readonly WorldFeatureFactory[] = [
   questsFeature, // world/features/quests.ts (QS-C)
   partyFeature, // world/features/party.ts (PT-C)
   editorsFeature, // world/features/editors.ts (ED-C)
+  gmToolboxFeature, // world/features/gm-toolbox.ts (GM toolbox tab)
   fxWorldFeature, // world/features/fx-world.ts (FX-C2)
   postureFeature, // world/features/posture.ts (FX-C2)
   // Wave 8 (docs/WAVE_PLAN2.md §4.3; W8-FC writes these lines, append-only):

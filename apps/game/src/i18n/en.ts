@@ -6,6 +6,7 @@
  * Wave lanes keep their strings in their own en-<lane>.ts files, spread in below (docs/WAVE_PLAN.md decision 39).
  */
 import { enEditors } from './en-editors.ts'
+import { enGmTools } from './en-gm-tools.ts'
 import { enFields } from './en-fields.ts'
 import { enParty } from './en-party.ts'
 import { enQuests } from './en-quests.ts'
@@ -62,6 +63,7 @@ export const en = {
   ...enQuests,
   ...enParty,
   ...enEditors,
+  ...enGmTools,
   ...enScatter,
   ...enRemaster,
   ...enUi,
