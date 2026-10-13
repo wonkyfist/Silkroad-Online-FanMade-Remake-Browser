@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { CODE_NAME, CONTENT_FILES, MAX_COMBAT_HITS, checkCosDef, contentEntries, isTransportCos, type CombatHit, type CosDef, type GameplayRequest, type ItemDef, type ServerMessage } from '@sro/shared'
+import { CODE_NAME, CONTENT_FILES, MAX_COMBAT_HITS, checkCosDef, contentEntries, isTransportCos, type CombatHit, type CosDef, type GameplayRequest, type ItemDef, type ServerMessage, type SkillDef } from '@sro/shared'
 import { knob } from './config.ts'
 import type { Store } from './db.ts'
 import { CORPSE_MS, PLAYER_BASE, POTION_COOLDOWN_MS } from './formulas.ts'
 import type { Gameplay, HitExtra } from './gameplay.ts'
 import type { GmResult } from './gm.ts'
-import { fail, takeFromBag, type Fail } from './inventory.ts'
+import { fail, takeFromBag, type Fail, type InvDraft, type InvItem, type Result } from './inventory.ts'
 import type { Answer, GameplayMessage, GameplayModule, WarpReason } from './modules.ts'
+import { moveMul } from './walk.ts'
 import { wirePos, wireYaw, type Cos, type Mob, type Npc, type Player } from './world.ts'
 
 /**
@@ -15,24 +16,31 @@ import { wirePos, wireYaw, type Cos, type Mob, type Npc, type Player } from './w
  *
  * - **Summon**: `itemUse` of an item with `use.summon` (ItemUses dispatches it here, D52). Checks in order: alive,
  *   the item's level (`requirements`), no horse yet (`cos_active`), no combat for COS_COMBAT_LOCK_MS (`in_combat`),
- *   no skill action or return-scroll cast (`busy`), not berserk (`berserk_active`, D49). One item is consumed, the
- *   horse appears under the player with full HP and the player is mounted at once:
- *   actionResult -> inventoryUpdate -> spawn {cos} -> entityUpdate {p.mount} + entityUpdate {cos.rider}.
+ *   no skill action or return-scroll cast (`busy`), not berserk (`berserk_active`, D49). The item STAYS in the bag (it
+ *   is the horse: releasing the horse or its death deletes one); the horse appears under the player (with the HP it had
+ *   when it was sent home, else full) and the player is mounted at once:
+ *   actionResult -> (itemCooldown) -> spawn {cos} -> entityUpdate {p.mount} + entityUpdate {cos.rider}.
+ *   While a bound horse is out its item must stay in the bag: when it leaves (sold, traded, stored, dropped) the horse
+ *   goes home (checked on inventoryChanged and every ITEM_CHECK_MS).
  * - **Mounted**: speed x runSpeed / PLAYER_RETAIL_RUN (1.8 for the Red Horse) through the SkillEngine mod provider
  *   (`mountSpeed`, which replaces buff speed), radius max(player, horse). Attacks and skills are refused `mounted`
- *   (the `refuse` seam); the `gate` refuses sit, emote, stallCreate, alchemyReinforce and berserk with `mounted` (D43).
+ *   (the `refuse` seam), except mounted archery: with a bow, basic attacks and the bow rows mountedSkillOk allows
+ *   (`refuseCombat`); the `gate` refuses sit, emote, stallCreate, alchemyReinforce and berserk with `mounted` (D43).
  *   Hits on the rider land on the horse (the `redirect` seam), except DoT ticks; statuses stay on the rider.
  * - A ridden horse shares its rider's MoveState and is never sent `move`s: `tick` copies the rider's move/pos, and a
- *   warp of the rider carries the horse along. A parked horse stays put; it is dismissed when its owner goes farther
- *   than COS_PARK_RANGE_M, warps, or leaves the world.
- * - `mountDismount` (not while moving) parks the horse and puts the rider 1.2 m to its left; `mountRide` walks to the
- *   own parked horse (the 'board' action) and mounts within COS_BOARD_RANGE; `mountDismiss` removes the horse.
- * - The horse dies at 0 HP: the rider lands on its feet, the corpse leaves after CORPSE_MS, the saved row is deleted.
+ *   warp of the rider carries the horse along. A dismounted horse FOLLOWS its owner like a pet (followStep, every
+ *   FOLLOW_STEP_MS): it walks to FOLLOW_GAP_M behind the owner, runs when farther, and is put beside the owner when
+ *   farther than COS_PARK_RANGE_M (the knob), stuck for FOLLOW_STUCK_MS, or when the owner warps.
+ * - `mountDismount` (not while moving) sets the rider 1.2 m to the horse's left; `mountRide` walks to the own horse
+ *   (the 'board' action) and mounts within COS_BOARD_RANGE; `mountDismiss` sends the horse home (despawn, the item and
+ *   the horse's HP are kept); `mountRelease` releases it for good: despawn + one summoning item deleted, one transaction.
+ * - The horse dies at 0 HP: the rider lands on its feet, the corpse leaves after CORPSE_MS, the saved row and (bound)
+ *   one summoning item are deleted: a dead horse is gone like a released one.
  *   Horses do not regenerate; Recovery Kits (`use.target === 'mount'`) heal the own horse (ridden, or parked within
  *   KIT_RANGE_M): actionResult -> inventoryUpdate -> itemCooldown -> entityUpdate {cos.hp} -> itemEffect {id: cos}.
- * - Persistence: `char_mount` (migration 8), written on summon, ride, dismount, heal, damage (at most every
- *   SAVE_EVERY_MS) and logout. Enter-world re-creates the saved horse (mounted or parked) with its HP; a logout while
- *   parked dismisses it.
+ * - Persistence: `char_mount` (migrations 8 and 29), written on summon, ride, dismount, heal, damage (at most every
+ *   SAVE_EVERY_MS), send-home and logout. A logout despawns the horse and keeps it out: enter-world re-creates it
+ *   (ridden or following) with its HP. A sent-home row (`out` 0) only keeps the HP for the next summon.
  * - GM `/horse [cos code]` summons without an item (level, lockout and berserk ignored), `/horse off` dismisses.
  */
 
@@ -50,6 +58,18 @@ export const KIT_RANGE_M = 30
 export const DISMOUNT_SIDE_M = 1.2
 /** Rule (§1.3): horse HP is saved at most this often while it takes damage (and on logout). */
 export const SAVE_EVERY_MS = 5000
+/** A dismounted horse takes a follow step this often (ms). */
+export const FOLLOW_STEP_MS = 250
+/** It stands this far behind its owner (metres). */
+export const FOLLOW_GAP_M = 2.5
+/** Closer than this it walks (WALK clip speed); farther it runs (metres). */
+export const FOLLOW_WALK_M = 5
+/** Walking speed of a following horse (m/s; under the clients' 3.2 m/s run threshold, so it plays its walk). */
+export const FOLLOW_WALK_SPEED = 2.5
+/** No closer for this long while it should move: it is put beside its owner (ms). */
+export const FOLLOW_STUCK_MS = 3000
+/** A bound horse's item is looked for in the bag at least this often (ms; trade, stall and storage moves). */
+export const ITEM_CHECK_MS = 2000
 /** The protocol's bound on cooldown times (validate.ts MAX_ACTION_MS). */
 const MAX_WIRE_MS = 600_000
 
@@ -63,6 +83,23 @@ interface MountRow {
   code: string
   hp: number
   mounted: number
+  /** 1 = in the world with its owner; 0 = sent home (the row keeps its HP). */
+  out: number
+  /** 1 = tied to a summoning item in the bag. */
+  bound: number
+}
+
+/**
+ * Mounted archery: whether skill row `row` may be used from the saddle (with a bow; the weapon check is the row's own).
+ * Bow attack rows (single shots, the arrow combos, the line and area arrows, Mind Bow) and the self buffs (Soul Arrow)
+ * work; the hawk summons (`_BOW_CALL_`: a planted, arm-raised call for the bird to land) do not. Every non-bow row is
+ * refused, as before.
+ */
+export const MOUNTED_EXCLUDED = /_BOW_CALL_/
+export function mountedSkillOk(row: Pick<SkillDef, 'code' | 'group' | 'weapons' | 'kind'>): boolean {
+  if (!row.weapons.includes('bow')) return false
+  if (MOUNTED_EXCLUDED.test(row.group ?? row.code)) return false
+  return row.kind === 'attack' || row.kind === 'buff' || row.kind === 'imbue'
 }
 
 /** Runtime state of a live horse beyond the Cos entity (keyed by the horse's entity id). */
@@ -71,21 +108,30 @@ interface HorseState {
   /** Unsaved HP change (damage is saved at most every SAVE_EVERY_MS). */
   dirty: boolean
   savedAt: number
+  /** Summoned from an item that stays in the bag (MountRow.bound). */
+  bound: boolean
+  /** Next item presence check (server ms). */
+  checkAt: number
+  /** Next follow step, and the closest it got to its owner since `closerAt` (stuck detection). */
+  stepAt: number
+  best: number
+  closerAt: number
 }
 
 /** char_mount statements (migration 8). */
 function openMountStore(store: Store) {
   const db = store.db
   const q = {
-    get: db.prepare<[number], MountRow>('SELECT code, hp, mounted FROM char_mount WHERE character_id = ?'),
-    put: db.prepare<[number, string, number, number]>(
-      'INSERT INTO char_mount (character_id, code, hp, mounted) VALUES (?, ?, ?, ?) ON CONFLICT(character_id) DO UPDATE SET code = excluded.code, hp = excluded.hp, mounted = excluded.mounted',
+    get: db.prepare<[number], MountRow>('SELECT code, hp, mounted, out, bound FROM char_mount WHERE character_id = ?'),
+    put: db.prepare<[number, string, number, number, number, number]>(
+      'INSERT INTO char_mount (character_id, code, hp, mounted, out, bound) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(character_id) DO UPDATE SET code = excluded.code, hp = excluded.hp, mounted = excluded.mounted, out = excluded.out, bound = excluded.bound',
     ),
     del: db.prepare<[number]>('DELETE FROM char_mount WHERE character_id = ?'),
   }
   return {
     load: (characterId: number): MountRow | undefined => q.get.get(characterId),
-    save: (characterId: number, code: string, hp: number, mounted: boolean): void => void q.put.run(characterId, code, Math.max(1, Math.round(hp)), mounted ? 1 : 0),
+    save: (characterId: number, code: string, hp: number, mounted: boolean, out = true, bound = false): void =>
+      void q.put.run(characterId, code, Math.max(1, Math.round(hp)), mounted ? 1 : 0, out ? 1 : 0, bound ? 1 : 0),
     remove: (characterId: number): void => void q.del.run(characterId),
   }
 }
@@ -118,7 +164,7 @@ export function loadCosDefs(outDir: string, log: (m: string) => void = () => {})
 
 export class Mounts implements GameplayModule {
   readonly name = 'mounts'
-  readonly handles: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss']
+  readonly handles: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss', 'mountRelease']
   readonly whileDead: readonly GameplayRequest[] = ['mountDismiss']
   /** cos.json by code (tests may add records). */
   readonly defs: Map<string, CosDef>
@@ -207,6 +253,19 @@ export class Mounts implements GameplayModule {
     return fail('mounted', what === 'skill' ? 'Cannot use the skill while on the vehicle.' : 'Cannot attack while riding.')
   }
 
+  /**
+   * attack / useSkill of `p` (gameplay.ts, the SkillEngine's plan): `refuse`, except mounted archery on a horse (never a
+   * trade transport): with a bow equipped, basic attacks and the rows mountedSkillOk allows go through. Melee weapons
+   * are still refused `mounted` (the client steps down first). A skill asked without its row: an archer's answer waits
+   * for the row (null now; the SkillEngine asks again with it).
+   */
+  refuseCombat(p: Player, what: 'attack' | 'skill', row?: SkillDef): Fail | null {
+    const no = this.refuse(p, what)
+    if (!no || !this.ridden(p) || p.combat.weapon !== 'bow') return no
+    if (what === 'attack' || !row || mountedSkillOk(row)) return null
+    return fail('mounted', 'That skill cannot be used on horseback.')
+  }
+
   /** D43: while mounted, sit, emote, stallCreate, alchemyReinforce and berserk are refused `mounted`. */
   gate(p: Player, t: GameplayRequest | 'moveTo', _now: number): Fail | null {
     if (t === 'moveTo' || !MOUNTED_REFUSED.includes(t)) return null
@@ -226,6 +285,7 @@ export class Mounts implements GameplayModule {
     if (msg.t === 'mountRide') return this.ride(p, msg.cos, answer, now)
     if (msg.t === 'mountDismount') return this.dismount(p, answer, now)
     if (msg.t === 'mountDismiss') return this.dismissRequest(p, answer, now)
+    if (msg.t === 'mountRelease') return this.release(p, answer, now)
     answer(fail('not_found'))
   }
 
@@ -238,9 +298,16 @@ export class Mounts implements GameplayModule {
     if (this.horseOf(p) || this.g.transports?.of(p.characterId)) return answer(fail('cos_active', 'Cannot summon more than one transport.'))
     const why = this.boardProblem(p, now)
     if (why) return answer(why)
+    // The item stays in the bag (it is the horse); a horse sent home earlier comes back with the HP it had.
+    const row = this.store.load(p.characterId)
+    const hp = row && row.out === 0 && row.code === cos.code ? Math.min(cos.hp, Math.max(1, row.hp)) : cos.hp
+    const ms = Math.min(MAX_WIRE_MS, Math.max(0, Math.round(def.use!.cooldownMs ?? 0)))
     const group = def.use!.cooldownGroup ?? def.code
-    if (!this.take(p, bag, group, def.use!.cooldownMs ?? 0, answer, now)) return
-    this.summon(p, cos, cos.hp, true, now)
+    if (ms > 0) p.cooldowns.set(group, now + ms)
+    answer(true)
+    if (ms > 0) p.send({ t: 'itemCooldown', group, readyInMs: ms, totalMs: ms })
+    this.summon(p, cos, hp, true, now, true)
+    this.g.config.log(`mounts: ${p.name} (#${p.characterId}) summoned ${cos.code} from ${def.code} (bag ${bag})`)
   }
 
   /** Recovery Kit: heals the own horse, ridden or parked within KIT_RANGE_M. */
@@ -301,19 +368,69 @@ export class Mounts implements GameplayModule {
     this.save(c, now)
   }
 
-  private dismissRequest(p: Player, answer: Answer, now: number): void {
+  /** mountDismiss ("Send home"): the horse despawns; its item stays in the bag and its HP is kept for the next summon. */
+  private dismissRequest(p: Player, answer: Answer, _now: number): void {
     const c = this.horseOf(p)
     if (!c) return answer(fail('not_found', 'You have no horse.'))
     answer(true)
-    this.dismiss(p, c)
+    this.sendHome(p, c)
+  }
+
+  /**
+   * mountRelease ("Release for good"): one transaction deletes one summoning item of a bound horse and the saved row;
+   * then the horse despawns. Only the own live horse (horseOf); a second release finds none (`not_found`), so one
+   * horse never costs less or more than one item.
+   */
+  private release(p: Player, answer: Answer, _now: number): void {
+    const c = this.horseOf(p)
+    if (!c) return answer(fail('not_found', 'You have no horse.'))
+    const bound = this.state.get(c.id)?.bound ?? false
+    const { result, draft } = this.g.store.inventoryTx(
+      p.characterId,
+      (d): Result<InvItem | null> => (bound ? this.takeHorseItem(d, c.code) : { ok: true, value: null }),
+      () => this.store.remove(p.characterId),
+    )
+    if (!result.ok) return answer(result)
+    answer(true)
+    this.unseat(p, c)
+    this.removeHorse(c)
+    const item = result.value?.code ?? 'no item'
+    this.g.config.log(`mounts: ${p.name} (#${p.characterId}) released ${c.code} for good (${item} deleted)`)
+    if (draft.changed) this.g.afterInventory(p, draft)
+    p.send({ t: 'chat', channel: 'system', text: `${c.name} has been released for good.` })
+  }
+
+  /** Takes one summoning item of horse `code` from the bag (lowest slot), or not_found. */
+  private takeHorseItem(d: InvDraft, code: string): Result<InvItem> {
+    for (let i = 0; i < d.bagSize; i++) {
+      const it = d.bag[i]
+      if (it && this.g.data.item(it.code)?.use?.summon === code) return takeFromBag(d, i, 1)
+    }
+    return fail('not_found', "Your horse's item is not in your bag.")
+  }
+
+  /** Whether `p`'s bag holds a summoning item of horse `code` (a bag read). */
+  private hasHorseItem(p: Player, code: string): boolean {
+    return this.g.store.loadInventory(p.characterId).bag.some((it) => !!it && this.g.data.item(it.code)?.use?.summon === code)
+  }
+
+  /** A bound horse whose item left the bag goes home (sold, traded, stored, dropped). False when it went. */
+  private checkItem(p: Player, c: Cos, now: number): boolean {
+    const st = this.state.get(c.id)
+    if (!st?.bound) return true
+    st.checkAt = now + ITEM_CHECK_MS
+    if (this.hasHorseItem(p, c.code)) return true
+    this.sendHome(p, c)
+    p.send({ t: 'chat', channel: 'system', text: `${c.name} went home: its item left your bag.` })
+    return false
   }
 
   // ---- lifecycle -----------------------------------------------------------------------------------------
 
-  /** Enter-world (D35): re-creates the saved horse beside the player, mounted when it was (and the player is alive). */
+  /** Enter-world (D35): re-creates the horse that was out at logout, ridden when it was (and the player is alive). */
   enter(p: Player, now: number): void {
     const row = this.store.load(p.characterId)
-    if (!row) return
+    if (!row || row.out === 0) return
     const def = this.defs.get(row.code)
     if (!def) {
       // cos.json lacks the code (a partial export): keep the row for when it returns.
@@ -322,10 +439,15 @@ export class Mounts implements GameplayModule {
     }
     const old = this.horses.get(p.characterId)
     if (old) this.removeHorse(old)
-    this.summon(p, def, Math.min(def.hp, Math.max(1, row.hp)), row.mounted === 1 && !p.dead, now)
+    const hp = Math.min(def.hp, Math.max(1, row.hp))
+    if (row.bound === 1 && !this.hasHorseItem(p, def.code)) {
+      this.store.save(p.characterId, def.code, hp, false, false, true)
+      return
+    }
+    this.summon(p, def, hp, row.mounted === 1 && !p.dead, now, row.bound === 1)
   }
 
-  /** A walk to the own parked horse (the 'board' PlayerAction) mounts on arrival. */
+  /** A walk to the own horse (the 'board' PlayerAction) mounts on arrival. */
   tickPlayer(p: Player, now: number): void {
     const a = p.action
     if (a?.kind !== 'board') return
@@ -334,8 +456,8 @@ export class Mounts implements GameplayModule {
       p.action = null
       return
     }
-    // Gameplay.approach reads only the position of its target; a parked horse stands still.
-    const spot: Npc = { kind: 'npc', id: c.id, code: c.code, name: c.name, pos: c.pos, yaw: c.yaw }
+    // Gameplay.approach reads only the position of its target (a following horse: where it is now).
+    const spot: Npc = { kind: 'npc', id: c.id, code: c.code, name: c.name, pos: this.g.world.positionAt(c, now), yaw: c.yaw }
     if (!this.g.approach(p, spot, COS_BOARD_RANGE, a, now)) return
     p.action = null
     const why = this.boardProblem(p, now)
@@ -347,9 +469,8 @@ export class Mounts implements GameplayModule {
     this.board(p, c, now)
   }
 
-  /** Ridden horses follow their riders; parked ones leave past the park range; corpses despawn; damage is saved. */
+  /** Ridden horses carry their riders; the others follow them like pets; corpses despawn; damage is saved. */
   tick(now: number): void {
-    const range = knob(this.g.config, 'cosParkRangeM')
     for (const c of [...this.horses.values()]) {
       if (c.diedAt !== 0) {
         if (now - c.diedAt >= CORPSE_MS) this.removeHorse(c)
@@ -361,28 +482,34 @@ export class Mounts implements GameplayModule {
         this.removeHorse(c)
         continue
       }
-      if (c.rider !== null) this.follow(c, owner)
-      else if (this.g.world.distance(owner, c, now) > range) {
-        this.dismiss(owner, c)
-        owner.send({ t: 'chat', channel: 'system', text: 'Your horse went home.' })
-        continue
-      }
       const st = this.state.get(c.id)
+      if (st?.bound && now >= st.checkAt && !this.checkItem(owner, c, now)) continue
+      if (c.rider !== null) this.follow(c, owner)
+      else if (st && now >= st.stepAt) {
+        st.stepAt = now + FOLLOW_STEP_MS
+        this.followStep(c, owner, st, now)
+      }
       if (st?.dirty && now - st.savedAt >= SAVE_EVERY_MS) this.save(c, now)
     }
   }
 
-  /** A ridden horse travels with its rider; a parked one is dismissed (§1.3). */
+  /** End of Gameplay.afterInventory: a bound horse whose item just left the bag goes home. */
+  inventoryChanged(p: Player): void {
+    const c = this.horseOf(p)
+    if (c) this.checkItem(p, c, this.g.now)
+  }
+
+  /** A ridden horse travels with its rider; a following one is put beside its owner (§1.3). */
   warped(p: Player, _reason: WarpReason, now: number): void {
     const c = this.horseOf(p)
     if (!c) return
     if (c.rider === p.id) {
       this.follow(c, p)
       this.g.world.refreshAround(c, now)
-    } else this.dismiss(p, c)
+    } else this.catchUp(c, p, now)
   }
 
-  /** Only DoT can kill a rider: it lands on its feet first; the parked horse is dismissed at the respawn warp. */
+  /** Only DoT can kill a rider: it lands on its feet first; the horse waits and is put beside it at the respawn warp. */
   playerDied(p: Player, now: number): void {
     const c = this.ridden(p)
     if (!c) return
@@ -390,23 +517,76 @@ export class Mounts implements GameplayModule {
     this.save(c, now)
   }
 
-  /** Logout: a ridden horse is saved (mounted, with its HP) and leaves with its rider; a parked one is dismissed. */
+  /** Logout: the horse despawns and is saved out (ridden or following) with its HP; it comes back at enter-world. */
   forget(p: Player): void {
     const c = this.horses.get(p.characterId)
     if (!c || c.owner !== p.id) return
-    if (c.diedAt === 0 && c.rider === p.id) {
-      this.store.save(p.characterId, c.code, c.hp, true)
-      this.removeHorse(c)
-    } else {
-      if (c.diedAt === 0) this.store.remove(p.characterId)
-      this.removeHorse(c)
+    if (c.diedAt === 0) this.store.save(p.characterId, c.code, c.hp, c.rider === p.id, true, this.state.get(c.id)?.bound ?? false)
+    this.removeHorse(c)
+  }
+
+  // ---- following -----------------------------------------------------------------------------------------
+
+  /**
+   * One follow step of a dismounted horse: it stands within FOLLOW_GAP_M of its owner, walks there when close and runs
+   * (at least as fast as the owner) when farther; it is put beside the owner when farther than the park range knob or
+   * stuck for FOLLOW_STUCK_MS. A dead owner is waited for.
+   */
+  private followStep(c: Cos, owner: Player, st: HorseState, now: number): void {
+    const w = this.g.world
+    if (owner.dead) {
+      if (c.move) w.halt(c, now)
+      return
     }
+    const o = w.positionAt(owner, now)
+    const h = w.positionAt(c, now)
+    const d = Math.hypot(o[0] - h[0], o[2] - h[2])
+    if (d > knob(this.g.config, 'cosParkRangeM')) return this.catchUp(c, owner, now)
+    if (d <= FOLLOW_GAP_M + 0.5) {
+      if (c.move) w.halt(c, now)
+      st.best = d
+      st.closerAt = now
+      return
+    }
+    if (d < st.best - 0.5) {
+      st.best = d
+      st.closerAt = now
+    } else if (now - st.closerAt >= FOLLOW_STUCK_MS) return this.catchUp(c, owner, now)
+    const k = (d - FOLLOW_GAP_M) / d
+    const gx = h[0] + (o[0] - h[0]) * k
+    const gz = h[2] + (o[2] - h[2]) * k
+    const ownerSpeed = owner.move ? owner.move.speed : w.moveSpeed * moveMul(owner)
+    const speed = d <= FOLLOW_WALK_M ? FOLLOW_WALK_SPEED : Math.max(st.def.runSpeed > 0 ? st.def.runSpeed : ownerSpeed, ownerSpeed * 1.2)
+    const m = c.move
+    if (m && m.speed === speed && Math.hypot(m.to[0] - gx, m.to[2] - gz) < 1 && w.arrivalTime(m) > now) return
+    // blocked at once: it stands, and the stuck timer puts it beside the owner
+    w.moveEntity(c, gx, gz, speed, now)
+  }
+
+  /** Puts the horse FOLLOW_GAP_M behind its owner (a wall in between: as far as the walk goes) and refreshes interest. */
+  private catchUp(c: Cos, owner: Player, now: number): void {
+    const w = this.g.world
+    const here = w.livePoint(owner, now)
+    const walk = this.g.nav.walk(here, here.x - Math.sin(owner.yaw) * FOLLOW_GAP_M, here.z - Math.cos(owner.yaw) * FOLLOW_GAP_M)
+    const to = walk?.end ?? here
+    c.pos = [to.x, Number.isFinite(to.y) ? to.y : here.y, to.z]
+    c.surface = to.surface ?? here.surface
+    c.move = null
+    c.path = null
+    c.yaw = owner.yaw
+    const st = this.state.get(c.id)
+    if (st) {
+      st.best = Infinity
+      st.closerAt = now
+    }
+    w.broadcastAbout(c, { t: 'stop', id: c.id, pos: wirePos(c.pos), yaw: wireYaw(c.yaw) })
+    w.refreshAround(c, now)
   }
 
   // ---- actions -------------------------------------------------------------------------------------------
 
   /** Creates `p`'s horse at its feet (spawn to viewers) and, when `mount`, boards it at once. Saves the row. */
-  private summon(p: Player, def: CosDef, hp: number, mount: boolean, now: number): Cos {
+  private summon(p: Player, def: CosDef, hp: number, mount: boolean, now: number, bound = false): Cos {
     // A corpse still lying there (COS_COMBAT_LOCK_MS below CORPSE_MS) goes first: `horses` holds one horse per
     // character and tick() walks only that map, so an overwritten corpse would never despawn.
     const old = this.horses.get(p.characterId)
@@ -432,7 +612,7 @@ export class Mounts implements GameplayModule {
       path: null,
     }
     this.horses.set(p.characterId, c)
-    this.state.set(c.id, { def, dirty: false, savedAt: now })
+    this.state.set(c.id, { def, dirty: false, savedAt: now, bound, checkAt: now + ITEM_CHECK_MS, stepAt: now, best: Infinity, closerAt: now })
     this.g.world.addEntity(c, now)
     if (mount) this.board(p, c, now)
     else this.save(c, now)
@@ -444,6 +624,8 @@ export class Mounts implements GameplayModule {
     p.action = null
     this.g.posture.standUp(p)
     this.g.world.halt(p, now)
+    // a following horse stops where it is now
+    if (c.move) this.g.world.halt(c, now)
     if (Math.hypot(p.pos[0] - c.pos[0], p.pos[2] - c.pos[2]) > 0.01) {
       p.pos = [...c.pos]
       p.surface = c.surface ?? null
@@ -493,15 +675,21 @@ export class Mounts implements GameplayModule {
     w.broadcastAbout(c, { t: 'entityUpdate', id: c.id, rider: null })
   }
 
-  /** Removes `p`'s horse (ridden or parked) and its saved row. A rider is set down where it is. */
-  private dismiss(p: Player, c: Cos): void {
-    if (c.rider === p.id) {
-      c.rider = null
-      p.radius = PLAYER_BASE.radius
-      this.g.refresh(p)
-      this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, mount: null })
-    }
-    this.store.remove(p.characterId)
+  /** A rider of `c` is set down where it is (no step aside). */
+  private unseat(p: Player, c: Cos): void {
+    if (c.rider !== p.id) return
+    c.rider = null
+    p.radius = PLAYER_BASE.radius
+    this.g.refresh(p)
+    this.g.world.broadcastAbout(p, { t: 'entityUpdate', id: p.id, mount: null })
+  }
+
+  /** Sends `p`'s horse home (ridden or following): it despawns, the row keeps its HP (`out` 0) and the item stays. */
+  private sendHome(p: Player, c: Cos): void {
+    this.unseat(p, c)
+    const bound = this.state.get(c.id)?.bound ?? false
+    if (c.diedAt === 0 && c.hp >= 1) this.store.save(p.characterId, c.code, c.hp, false, false, bound)
+    else this.store.remove(p.characterId)
     this.removeHorse(c)
   }
 
@@ -526,9 +714,18 @@ export class Mounts implements GameplayModule {
       w.broadcastAbout(rider, { t: 'entityUpdate', id: rider.id, mount: null })
       w.broadcastAbout(c, { t: 'entityUpdate', id: c.id, rider: null })
     }
-    this.store.remove(c.ownerChar)
+    // A dead horse is gone like a released one: the row and (bound) one summoning item go in one transaction.
     const owner = w.players.get(c.owner)
-    if (owner && owner.characterId === c.ownerChar) owner.send({ t: 'chat', channel: 'system', text: 'Your horse has died.' })
+    const live = owner && owner.characterId === c.ownerChar ? owner : null
+    if (live && this.state.get(c.id)?.bound) {
+      const { result, draft } = this.g.store.inventoryTx(c.ownerChar, (d) => this.takeHorseItem(d, c.code), () => this.store.remove(c.ownerChar))
+      if (!result.ok) this.store.remove(c.ownerChar)
+      else {
+        this.g.config.log(`mounts: ${live.name} (#${c.ownerChar}) lost ${c.code} (died; ${result.value.code} deleted)`)
+        this.g.afterInventory(live, draft)
+      }
+    } else this.store.remove(c.ownerChar)
+    if (live) live.send({ t: 'chat', channel: 'system', text: 'Your horse has died.' })
   }
 
   /** A ridden horse shares its rider's move and position (world.ts Cos). */
@@ -549,7 +746,7 @@ export class Mounts implements GameplayModule {
 
   private save(c: Cos, now: number): void {
     if (c.diedAt !== 0 || c.hp < 1 || this.horses.get(c.ownerChar) !== c) return
-    this.store.save(c.ownerChar, c.code, c.hp, c.rider !== null)
+    this.store.save(c.ownerChar, c.code, c.hp, c.rider !== null, true, this.state.get(c.id)?.bound ?? false)
     const st = this.state.get(c.id)
     if (st) {
       st.dirty = false
@@ -574,15 +771,15 @@ export class Mounts implements GameplayModule {
 
   // ---- GM ------------------------------------------------------------------------------------------------
 
-  /** GM `horse [cos code]`: summons (and mounts) without an item, replacing a horse it has; `horse off` dismisses. */
+  /** GM `horse [cos code]`: summons (and mounts) without an item (not bound), replacing a horse it has; `horse off` sends it home. */
   gm(self: Player, args: string[]): GmResult {
     const now = this.g.now
     const arg = args[0]
     if (arg !== undefined && arg.toLowerCase() === 'off') {
       const c = this.horseOf(self)
       if (!c) return { ok: false, message: 'You have no horse.' }
-      this.dismiss(self, c)
-      return { ok: true, message: `${c.name} dismissed.` }
+      this.sendHome(self, c)
+      return { ok: true, message: `${c.name} sent home.` }
     }
     if (self.dead) return { ok: false, message: 'You are dead.' }
     const code = arg !== undefined ? arg.toUpperCase() : this.defs.has(DEFAULT_HORSE) ? DEFAULT_HORSE : [...this.defs.keys()].find((k) => !isTransportCos(k))
@@ -591,8 +788,8 @@ export class Mounts implements GameplayModule {
     if (!def) return { ok: false, message: code === undefined ? 'No horses in cos.json.' : `No horse ${code} in cos.json.` }
     const old = this.horses.get(self.characterId)
     if (old) {
-      if (old.diedAt === 0) this.dismiss(self, old)
-      else this.removeHorse(old)
+      this.unseat(self, old)
+      this.removeHorse(old)
     }
     const c = this.summon(self, def, def.hp, true, now)
     return { ok: true, message: `${c.name} summoned (${c.hp} HP).` }

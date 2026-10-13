@@ -31,7 +31,10 @@ export interface MountFrameInfo {
 export interface MountFrameActions {
   ride(): void
   dismount(): void
+  /** Send the horse home (the item stays). */
   dismiss(): void
+  /** Release the horse for good (the item is deleted); absent = no Release button. */
+  release?(): void
 }
 
 type Rect = [number, number, number, number]
@@ -84,6 +87,7 @@ export class MountFrame {
   private readonly hp: Gauge
   readonly toggle: KitButton
   readonly dismiss: KitButton
+  readonly release: KitButton | null
   private info: MountFrameInfo | null = null
   private host: HTMLElement | null = null
   private icon: string | null | undefined
@@ -100,7 +104,8 @@ export class MountFrame {
     place(this.hp.root, PET_FRAME.hp)
     this.toggle = button(art, { label: t('mount.frame.ride'), skin: 'tiny' }, () => (this.info?.mounted ? this.actions.dismount() : this.actions.ride()))
     this.dismiss = button(art, { label: t('mount.frame.dismiss'), skin: 'tiny', title: t('mount.frame.dismissTip') }, () => this.actions.dismiss())
-    const row = el('div', 'mr-pet-buttons', this.toggle, this.dismiss)
+    this.release = actions.release ? button(art, { label: t('mount.frame.release'), skin: 'tiny', title: t('mount.frame.releaseTip') }, () => this.actions.release?.()) : null
+    const row = el('div', 'mr-pet-buttons', this.toggle, this.dismiss, ...(this.release ? [this.release] : []))
     Object.assign(row.style, { left: `${PET_FRAME.buttons[0]}px`, top: `${PET_FRAME.buttons[1]}px` })
     this.root.append(this.face, this.nameEl, this.levelEl, this.hp.root, row)
     // The player frame already keeps presses away from the world; the frame can also live elsewhere (the gallery).

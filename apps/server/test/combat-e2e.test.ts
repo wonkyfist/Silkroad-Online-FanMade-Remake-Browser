@@ -47,8 +47,9 @@ describe.skipIf(!HAVE_W8)('wave 8 combat flows on WORLD_EXPORT=jangan-fields', (
     await a.c.next('entityUpdate', (m) => m.id === a.id && m.mount === horse)
     await a.c.next('entityUpdate', (m) => m.id === horse && m.rider === a.id)
     const order = a.c.log.slice(from).map((m) => (m.t === 'entityUpdate' ? `eu:${m.id === a.id ? 'mount' : 'rider'}` : m.t)).filter((t) => ['actionResult', 'inventoryUpdate', 'spawn', 'eu:mount', 'eu:rider'].includes(t))
-    expect(order).toEqual(['actionResult', 'inventoryUpdate', 'spawn', 'eu:mount', 'eu:rider'])
-    expect(h.count(a.characterId, CODES.horse)).toBe(1)
+    expect(order).toEqual(['actionResult', 'spawn', 'eu:mount', 'eu:rider'])
+    // the horse item stays in the bag while its horse is out
+    expect(h.count(a.characterId, CODES.horse)).toBe(2)
     // A second horse while one is out.
     expect(await h.act(a.c, { t: 'itemUse', bag: h.slotOf(a.characterId, CODES.horse) })).toMatchObject({ ok: false, reason: 'cos_active' })
 

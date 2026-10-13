@@ -4,14 +4,14 @@
  * Kits, the mounts gate and GM `/horse`. A synthetic flat world with a controlled clock (npc-harness.ts, world speed
  * 5 m/s); the Red Horse numbers are the retail ones (cos.json).
  */
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { CONTENT_SCHEMA_VERSION, type CosDef, type GameplayRequest, type ServerMessage } from '@sro/shared'
+import { CONTENT_SCHEMA_VERSION, type CosDef, type GameplayRequest, type ServerMessage, type SkillDef } from '@sro/shared'
 import { afterEach, describe, expect, it } from 'vitest'
 import { CORPSE_MS, PLAYER_BASE } from '../src/formulas.ts'
 import { GameData } from '../src/gamedata.ts'
-import { MOUNTED_REFUSED, loadCosDefs } from '../src/mounts.ts'
+import { FOLLOW_GAP_M, FOLLOW_STUCK_MS, MOUNTED_REFUSED, loadCosDefs, mountedSkillOk } from '../src/mounts.ts'
 import type { Cos, Player } from '../src/world.ts'
 import { LEVELS, MANGNYANG, item } from './fixtures.ts'
 import { NPC_DEFS, NPC_ITEMS, SHOP_DEFS, npcHarness, type NpcHarness } from './npc-harness.ts'
@@ -77,20 +77,20 @@ function setup() {
 const types = (inbox: ServerMessage[], from = 0) => inbox.slice(from).map((m) => m.t)
 
 describe('summon', () => {
-  it('consumes one Red Horse and mounts at once: ok -> inventoryUpdate -> spawn {cos} -> the entityUpdate pair', () => {
+  it('keeps the Red Horse item and mounts at once: ok -> spawn {cos} -> the entityUpdate pair', () => {
     const { h, g, rider, horseOf } = setup()
     const { p, inbox, horse } = rider()
     const viewer = h.enter([FIELD[0] + 5, 0, FIELD[2]])
     const from = inbox.length
     expect(h.req(p, inbox, { t: 'itemUse', bag: horse })).toMatchObject({ ok: true })
     const c = horseOf(p)
-    expect(types(inbox, from)).toEqual(['actionResult', 'inventoryUpdate', 'spawn', 'entityUpdate', 'entityUpdate'])
+    expect(types(inbox, from)).toEqual(['actionResult', 'spawn', 'entityUpdate', 'entityUpdate'])
     expect(h.of(inbox, 'spawn').at(-1)!.entity).toMatchObject({ id: c.id, kind: 'cos', model: 'COS_C_HORSE1', name: 'Red Horse', level: 20, hp: 983, maxHp: 983, owner: p.id })
     expect(h.of(inbox, 'entityUpdate').slice(-2)).toEqual([
       { t: 'entityUpdate', id: p.id, mount: c.id },
       { t: 'entityUpdate', id: c.id, rider: p.id },
     ])
-    expect(h.countOf(p, HORSE.code)).toBe(1)
+    expect(h.countOf(p, HORSE.code)).toBe(2)
     expect(c).toMatchObject({ owner: p.id, ownerChar: p.characterId, rider: p.id, hp: 983 })
     // Anyone who sees the rider later gets EntityState.mount / rider.
     expect(g.world.state(p).mount).toBe(c.id)
@@ -128,7 +128,7 @@ describe('summon', () => {
     expect(h.req(p, inbox, { t: 'itemUse', bag: horse })).toMatchObject({ ok: false, reason: 'cos_active' })
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
     expect(h.req(p, inbox, { t: 'itemUse', bag: horse })).toMatchObject({ ok: false, reason: 'cos_active' })
-    expect(h.countOf(p, HORSE.code)).toBe(1)
+    expect(h.countOf(p, HORSE.code)).toBe(2)
   })
 
   it('berserk -> berserk_active for summon and ride (D49)', () => {
@@ -229,7 +229,7 @@ describe('mounted', () => {
     expect(c.hp).toBe(883)
   })
 
-  it('the horse dies at 0: the rider lands on its feet, the corpse leaves after CORPSE_MS, the saved row is deleted', () => {
+  it('the horse dies at 0: the rider lands on its feet, the corpse leaves after CORPSE_MS, the row and one item are deleted', () => {
     const { h, g, rider, summon, mob, hit, saved } = setup()
     const { p, inbox, horse } = rider()
     const c = summon(p, inbox, horse)
@@ -238,7 +238,8 @@ describe('mounted', () => {
     h.advance(250)
     const from = inbox.length
     expect(hit(m, p, 5000)).toMatchObject({ dealt: 983, killed: true })
-    expect(types(inbox, from)).toEqual(['combat', 'entityUpdate', 'entityUpdate', 'entityUpdate', 'chat'])
+    expect(types(inbox, from)).toEqual(['combat', 'entityUpdate', 'entityUpdate', 'entityUpdate', 'inventoryUpdate', 'chat'])
+    expect(h.countOf(p, HORSE.code)).toBe(1)
     expect(inbox.slice(from + 1, from + 4)).toEqual([
       { t: 'entityUpdate', id: c.id, hp: 0, state: 'dead' },
       { t: 'entityUpdate', id: p.id, mount: null },
@@ -263,7 +264,7 @@ describe('mounted', () => {
     expect(h.req(p, inbox, { t: 'itemUse', bag: horse })).toMatchObject({ ok: true })
   })
 
-  it('a DoT death of the rider sets it down; the parked horse is dismissed at the respawn warp', () => {
+  it('a DoT death of the rider sets it down; the horse waits and is put beside it at the respawn warp', () => {
     const { h, g, rider, summon, mob, hit, saved } = setup()
     const { p, inbox, horse } = rider()
     const c = summon(p, inbox, horse)
@@ -273,9 +274,9 @@ describe('mounted', () => {
     expect(c.rider).toBeNull()
     expect(g.mounts.horseOf(p)).toBe(c)
     expect(h.req(p, inbox, { t: 'respawn' })).toMatchObject({ ok: true })
-    expect(g.mounts.horseOf(p)).toBeNull()
-    expect(g.world.cos.has(c.id)).toBe(false)
-    expect(saved(p)).toBeUndefined()
+    expect(g.mounts.horseOf(p)).toBe(c)
+    expect(Math.hypot(c.pos[0] - p.pos[0], c.pos[2] - p.pos[2])).toBeLessThanOrEqual(FOLLOW_GAP_M + 0.01)
+    expect(saved(p)).toMatchObject({ mounted: 0 })
   })
 })
 
@@ -352,56 +353,168 @@ describe('dismount, ride, dismiss', () => {
     expect(g.mounts.ridden(a.p)).toBeNull()
   })
 
-  it('mountDismiss removes the horse (ridden or parked) and its row; also while dead; not_found without one', () => {
-    const { h, g, rider, summon, saved } = setup()
+  it('mountDismiss sends the horse home: it despawns, the item stays, the HP is kept for the next summon; also while dead', () => {
+    const { h, g, rider, summon, saved, mob, hit } = setup()
     const { p, inbox, horse } = rider()
     expect(h.req(p, inbox, { t: 'mountDismiss' })).toMatchObject({ ok: false, reason: 'not_found' })
     const c = summon(p, inbox, horse)
+    hit(mob([FIELD[0] + 2, 0, FIELD[2]]), p, 300)
     const from = inbox.length
     expect(h.req(p, inbox, { t: 'mountDismiss' })).toMatchObject({ ok: true })
     expect(types(inbox, from)).toEqual(['actionResult', 'entityUpdate', 'despawn'])
     expect(g.world.cos.has(c.id)).toBe(false)
     expect(p.speedMul).toBeCloseTo(1)
-    expect(saved(p)).toBeUndefined()
+    expect(saved(p)).toMatchObject({ hp: 683, mounted: 0 })
+    expect(h.countOf(p, HORSE.code)).toBe(2)
+    h.advance(LOCK_MS)
     const c2 = summon(p, inbox, horse)
+    expect(c2.hp).toBe(683)
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
     g.gmKill(p, h.now())
     expect(h.req(p, inbox, { t: 'mountDismiss' })).toMatchObject({ ok: true })
     expect(g.world.cos.has(c2.id)).toBe(false)
+    expect(h.countOf(p, HORSE.code)).toBe(2)
   })
 })
 
-describe('parked horses', () => {
-  it('are dismissed once the owner is farther than 60 m (59 m is fine)', () => {
-    const { h, g, rider, summon, saved } = setup()
+describe('following like a pet', () => {
+  it('a dismounted horse walks, then runs after its owner, stops FOLLOW_GAP_M behind; others see it move', () => {
+    const { h, g, rider, summon } = setup()
     const { p, inbox, horse } = rider()
+    const viewer = h.enter([FIELD[0] + 5, 0, FIELD[2] + 5])
     const c = summon(p, inbox, horse)
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
-    const x0 = c.pos[0]
-    g.world.warp(p, x0 + 59, 0, c.pos[2], h.now())
-    h.advance(100)
-    expect(g.world.cos.has(c.id)).toBe(true)
-    g.world.warp(p, x0 + 61, 0, c.pos[2], h.now())
-    h.advance(100)
-    expect(g.world.cos.has(c.id)).toBe(false)
-    expect(g.mounts.horseOf(p)).toBeNull()
-    expect(saved(p)).toBeUndefined()
-    expect(h.of(inbox, 'chat').at(-1)).toMatchObject({ channel: 'system', text: 'Your horse went home.' })
+    const from = viewer.inbox.length
+    g.world.moveTo(p, FIELD[0] + 15, FIELD[2], h.now())
+    for (let i = 0; i < 40; i++) h.advance(250)
+    const moves = viewer.inbox.slice(from).filter((m) => m.t === 'move' && m.id === c.id)
+    expect(moves.length).toBeGreaterThan(0)
+    // farther than FOLLOW_WALK_M it runs (at least the horse's run speed); the last leg is a walk
+    expect(moves.some((m) => m.t === 'move' && m.move.speed >= 9)).toBe(true)
+    const d = g.world.distance(p, c, h.now())
+    expect(d).toBeLessThanOrEqual(FOLLOW_GAP_M + 0.6)
+    expect(d).toBeGreaterThan(1)
+    expect(c.rider).toBeNull()
   })
 
-  it('a warp takes a ridden horse along and dismisses a parked one', () => {
+  it('is put beside its owner when farther than the park range, when stuck, and at a warp', () => {
     const { h, g, rider, summon } = setup()
     const { p, inbox, horse } = rider()
     const c = summon(p, inbox, horse)
+    expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
+    g.world.warp(p, FIELD[0] + 40, 0, FIELD[2], h.now())
+    h.advance(300)
+    expect(g.world.cos.has(c.id)).toBe(true)
+    expect(g.world.distance(p, c, h.now())).toBeLessThanOrEqual(FOLLOW_GAP_M + 0.01)
+    expect(p.known.has(c.id)).toBe(true)
+    // stuck: its moves go nowhere (a wall): after FOLLOW_STUCK_MS it is put beside the owner
+    const walk = g.world.moveEntity.bind(g.world)
+    g.world.moveEntity = (e, x, z, speed, now) => (e.id === c.id ? false : walk(e, x, z, speed, now))
+    g.world.warp(p, FIELD[0] + 52, 0, FIELD[2], h.now())
+    h.advance(FOLLOW_STUCK_MS / 2)
+    expect(g.world.distance(p, c, h.now())).toBeGreaterThan(8)
+    h.advance(FOLLOW_STUCK_MS)
+    expect(g.world.distance(p, c, h.now())).toBeLessThanOrEqual(FOLLOW_GAP_M + 0.01)
+    g.world.moveEntity = walk
+    // a warp (return scroll, GM tp): beside the owner at once
     g.world.warp(p, 400, 0, 400, h.now())
     g.warped(p, 'gm', h.now())
-    expect(c.pos).toEqual(p.pos)
-    expect(p.known.has(c.id)).toBe(true)
-    expect(g.mounts.ridden(p)).toBe(c)
+    expect(g.world.distance(p, c, h.now())).toBeLessThanOrEqual(FOLLOW_GAP_M + 0.01)
+    expect(g.mounts.horseOf(p)).toBe(c)
+  })
+
+  it('remount at any time: a click (mountRide) walks to the following horse and mounts within 2 m', () => {
+    const { h, g, rider, summon } = setup()
+    const { p, inbox, horse } = rider()
+    const c = summon(p, inbox, horse)
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
-    g.world.warp(p, 402, 0, 400, h.now())
-    g.warped(p, 'gm', h.now())
+    g.world.moveTo(p, FIELD[0] + 12, FIELD[2], h.now())
+    h.advance(500)
+    expect(h.req(p, inbox, { t: 'mountRide', cos: c.id })).toMatchObject({ ok: true })
+    for (let i = 0; i < 30 && !g.mounts.ridden(p); i++) h.advance(100)
+    expect(g.mounts.ridden(p)).toBe(c)
+    expect(c.move).toBe(p.move)
+    expect(p.speedMul).toBeCloseTo(1.8)
+  })
+})
+
+describe('release for good', () => {
+  it('mountRelease despawns the horse and deletes one horse item in one go; a second release finds nothing', () => {
+    const { h, g, rider, summon, saved } = setup()
+    const { p, inbox, horse } = rider()
+    expect(h.req(p, inbox, { t: 'mountRelease' })).toMatchObject({ ok: false, reason: 'not_found' })
+    const c = summon(p, inbox, horse)
+    const from = inbox.length
+    expect(h.req(p, inbox, { t: 'mountRelease' })).toMatchObject({ ok: true })
+    expect(types(inbox, from)).toEqual(['actionResult', 'entityUpdate', 'despawn', 'inventoryUpdate', 'chat'])
     expect(g.world.cos.has(c.id)).toBe(false)
+    expect(g.mounts.horseOf(p)).toBeNull()
+    expect(saved(p)).toBeUndefined()
+    expect(h.countOf(p, HORSE.code)).toBe(1)
+    expect(p.speedMul).toBeCloseTo(1)
+    // no double spend: nothing left to release, the bag keeps its last horse
+    expect(h.req(p, inbox, { t: 'mountRelease' })).toMatchObject({ ok: false, reason: 'not_found' })
+    expect(h.countOf(p, HORSE.code)).toBe(1)
+    // the last item summons a fresh horse (full HP)
+    expect(summon(p, inbox, horse).hp).toBe(983)
+  })
+
+  it("another player's release never touches your horse or your items", () => {
+    const { h, g, rider, summon } = setup()
+    const a = rider()
+    const b = rider([FIELD[0] + 3, 0, FIELD[2]])
+    const c = summon(a.p, a.inbox, a.horse)
+    expect(h.req(b.p, b.inbox, { t: 'mountRelease' })).toMatchObject({ ok: false, reason: 'not_found' })
+    expect(h.req(b.p, b.inbox, { t: 'mountRide', cos: c.id })).toMatchObject({ ok: false, reason: 'not_found' })
+    expect(g.mounts.horseOf(a.p)).toBe(c)
+    expect(h.countOf(a.p, HORSE.code)).toBe(2)
+    expect(h.countOf(b.p, HORSE.code)).toBe(2)
+  })
+
+  it('no dupe: when the horse item leaves the bag the horse goes home, and there is nothing to release', () => {
+    const { h, g, rider, summon } = setup()
+    const { p, inbox, horse } = rider()
+    const c = summon(p, inbox, horse)
+    // one of two dropped: the horse stays
+    expect(h.req(p, inbox, { t: 'itemDrop', bag: horse, count: 1 })).toMatchObject({ ok: true })
+    expect(g.mounts.horseOf(p)).toBe(c)
+    expect(h.req(p, inbox, { t: 'itemDrop', bag: horse })).toMatchObject({ ok: true })
+    expect(g.mounts.horseOf(p)).toBeNull()
+    expect(g.world.cos.has(c.id)).toBe(false)
+    expect(h.of(inbox, 'chat').at(-1)).toMatchObject({ text: 'Red Horse went home: its item left your bag.' })
+    expect(h.req(p, inbox, { t: 'mountRelease' })).toMatchObject({ ok: false, reason: 'not_found' })
+  })
+})
+
+describe('mounted archery', () => {
+  const ROWS = JSON.parse(readFileSync(new URL('../../../work/out/data/skills.json', import.meta.url), 'utf8')).entries as SkillDef[]
+  const row = (group: string) => ROWS.find((s) => (s.group ?? s.code) === group)!
+
+  it('mountedSkillOk: bow attacks and Soul Arrow buffs yes; hawk summons and non-bow rows no', () => {
+    for (const g of ['SKILL_CH_BOW_CHAIN_A', 'SKILL_CH_BOW_CRITICAL_A', 'SKILL_CH_BOW_POWER_A', 'SKILL_CH_BOW_PIERCE_A', 'SKILL_CH_BOW_AREA_A', 'SKILL_CH_BOW_SPECIAL_A', 'SKILL_CH_BOW_NORMAL_A']) {
+      expect([g, mountedSkillOk(row(g))]).toEqual([g, true])
+    }
+    for (const g of ['SKILL_CH_BOW_CALL_A', 'SKILL_CH_BOW_CALL_B', 'SKILL_CH_BOW_CALL_C', 'SKILL_CH_SWORD_SMASH_A']) {
+      expect([g, mountedSkillOk(row(g))]).toEqual([g, false])
+    }
+  })
+
+  it('with a bow the rider attacks from the saddle; melee stays refused; skills by row', () => {
+    const { h, g, rider, summon, mob } = setup()
+    const { p, inbox, horse } = rider()
+    summon(p, inbox, horse)
+    const m = mob([FIELD[0] + 3, 0, FIELD[2]])
+    h.advance(250)
+    expect(h.req(p, inbox, { t: 'attack', target: m.id })).toMatchObject({ ok: false, reason: 'mounted' })
+    p.combat = { ...p.combat, weapon: 'bow' }
+    expect(h.req(p, inbox, { t: 'attack', target: m.id })).toMatchObject({ ok: true })
+    expect(g.mounts.ridden(p)).not.toBeNull()
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CRITICAL_A'))).toBeNull()
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CALL_A'))).toMatchObject({ reason: 'mounted' })
+    // on foot nothing changes
+    expect(h.req(p, inbox, { t: 'stopAction' })).toMatchObject({ ok: true })
+    expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CALL_A'))).toBeNull()
   })
 })
 
@@ -446,19 +559,21 @@ describe('persistence', () => {
     expect(saved(q.p)).toEqual({ code: 'COS_C_HORSE1', hp: 600, mounted: 1 })
   })
 
-  it('a logout while parked dismisses the horse; a saved parked row (a crash) comes back parked', () => {
+  it('a logout while following despawns the horse and it comes back following; a sent-home row spawns nothing', () => {
     const { h, g, rider, summon, saved } = setup()
     const { p, inbox, horse } = rider()
-    summon(p, inbox, horse)
+    const c = summon(p, inbox, horse)
     expect(h.req(p, inbox, { t: 'mountDismount' })).toMatchObject({ ok: true })
     const q = relog(h, p)
-    expect(saved(q.p)).toBeUndefined()
-    expect(g.mounts.horseOf(q.p)).toBeNull()
-    h.store.db.prepare('INSERT INTO char_mount (character_id, code, hp, mounted) VALUES (?, ?, ?, 0)').run(q.p.characterId, 'COS_C_HORSE1', 500)
+    expect(g.world.cos.has(c.id)).toBe(false)
+    const c2 = g.mounts.horseOf(q.p)!
+    expect(c2).toMatchObject({ rider: null, hp: 983 })
+    expect(q.inbox.some((m) => m.t === 'spawn' && m.entity.id === c2.id && m.entity.rider === undefined)).toBe(true)
+    expect(saved(q.p)).toMatchObject({ mounted: 0 })
+    expect(h.req(q.p, q.inbox, { t: 'mountDismiss' })).toMatchObject({ ok: true })
     const r = relog(h, q.p)
-    const c = g.mounts.horseOf(r.p)!
-    expect(c).toMatchObject({ rider: null, hp: 500 })
-    expect(r.inbox.some((m) => m.t === 'spawn' && m.entity.id === c.id && m.entity.rider === undefined)).toBe(true)
+    expect(g.mounts.horseOf(r.p)).toBeNull()
+    expect(h.countOf(r.p, HORSE.code)).toBe(2)
   })
 
   it('a saved horse whose code cos.json lacks keeps its row and spawns nothing', () => {

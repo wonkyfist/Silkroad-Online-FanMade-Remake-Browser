@@ -234,6 +234,17 @@ export function movementTracksOf(info: MoveClipInfo): ClipTrack[] {
   return out.sort((a, b) => a.ms - b.ms)
 }
 
+/**
+ * The upper-body joints (spine and up: neck, head, both arms; not the pelvis or the legs) of the rider's attack layer:
+ * a mounted attack plays on the upper body while the riding pose keeps the legs.
+ */
+export function isUpperJoint(name: string | undefined): boolean {
+  if (!name) return false
+  if (/^Bip01 (Spine|Neck|Head)/.test(name)) return true
+  if (/^Bip01 [LR] (Clavicle|UpperArm|Forearm|Hand|Finger)/.test(name)) return true
+  return /^(spine_\d+|neck_\d+|head|clavicle_[lr]|upperarm\w*_[lr]|lowerarm\w*_[lr]|hand_[lr]|(thumb|index|middle|ring|pinky)_\d+_[lr])$/.test(name)
+}
+
 /** The weapon-arm joints (clavicle → hand and fingers) of side `L` or `R` (the masked arm layer, MOVEMENT §6.2). */
 export function isArmJoint(name: string | undefined, sides: readonly ('L' | 'R')[]): boolean {
   const m = name ? /^Bip01 ([LR]) (Clavicle|UpperArm|Forearm|Hand|Finger)/.exec(name) : null
@@ -2892,6 +2903,7 @@ export class CharacterActor {
   playAction(group: AnimationGroup, speed = 1, resumeBaseFrame?: number, resumeFor?: AnimationGroup): void {
     if (this.debugHold) return
     if (this.dead) return
+    if (this.upperOnly && this.playUpper(group, speed)) return
     const token = ++this.actionSerial
     const prev = this.action
     this.action = group
@@ -3096,6 +3108,35 @@ export class CharacterActor {
       const f = (((((info?.enterPhaseS ?? 0) + seekS) * frameRate(src)) % span) + span) % span
       if (f > 0) layer.goToFrame(src.from + f)
     }
+  }
+
+  /**
+   * One-shot actions play on the upper body only while riding (the `cart` clip group; mounted archery: retail has
+   * no mounted attack clips, so the on-foot bow shot plays over the rider pose).
+   */
+  get upperOnly(): boolean {
+    return this.isPlayer && this.clipGroupName === 'cart'
+  }
+  private readonly upperLayers = new Map<string, AnimationGroup>()
+
+  /** Plays `src` once on the upper-body joints only (a masked clone, made once per clip). False when it has none. */
+  playUpper(src: AnimationGroup, speed = 1): boolean {
+    if (this.dead || /^(FLY_|SWIM_)/.test(src.name)) return false
+    const key = `UPPER:${src.name}`
+    let layer = this.upperLayers.get(key)
+    if (!layer) {
+      const kept = src.targetedAnimations.filter(ta => isUpperJoint((ta.target as { name?: string } | null)?.name))
+      if (!kept.length) return false
+      layer = new AnimationGroup(key, this.scene)
+      for (const ta of kept) layer.addTargetedAnimation(ta.animation, ta.target)
+      this.prepareGroup(layer)
+      this.groups.push(layer)
+      this.upperLayers.set(key, layer)
+    }
+    layer.stop()
+    // started after the riding base, so it wins on the joints it animates (the overlay rule)
+    layer.start(false, speed, src.from, src.to)
+    return true
   }
 
   private armLayerOf(src: AnimationGroup, sides: readonly ('L' | 'R')[]): AnimationGroup | null {
@@ -3341,6 +3382,11 @@ export class CharacterActor {
    */
   playSkill(phases: readonly SkillPhase[]): number {
     if (this.dead || !phases.length) return -1
+    if (this.upperOnly) {
+      // in the saddle (mounted archery) the cast's release (its last phase) plays on the upper body; the riding base stays
+      const last = phases[phases.length - 1]!
+      if (this.playUpper(last.clip, last.speed ?? 1)) return ++this.actionSerial
+    }
     const token = ++this.actionSerial
     this.skillToken = token
     this.stopArmLayer()

@@ -348,7 +348,7 @@ function bool(env: NodeJS.ProcessEnv, key: string, fallback: boolean): boolean {
  */
 export const W8_DEFAULTS = {
   cosCombatLockMs: 20000,
-  cosParkRangeM: 60,
+  cosParkRangeM: 25,
   mobSkillDamage: 'relative',
   mobDamageRate: 1,
   mobSummons: 0,

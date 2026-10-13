@@ -241,6 +241,7 @@ const CLIENT_KEYS: Record<ClientMessage['t'], readonly string[]> = {
   mountRide: ['t', 'cos'],
   mountDismount: ['t'],
   mountDismiss: ['t'],
+  mountRelease: ['t'],
   repair: ['t', 'npc'],
   alchemyReinforce: ['t', 'item', 'elixir'],
   alchemyCancel: ['t'],
@@ -757,6 +758,8 @@ function clientMessage(v: unknown): ClientMessage {
       return { t: 'mountDismount' }
     case 'mountDismiss':
       return { t: 'mountDismiss' }
+    case 'mountRelease':
+      return { t: 'mountRelease' }
     case 'repair': {
       const m: ClientMessage = { t: 'repair', npc: npcId(v) }
       if (has(v, 'items')) {

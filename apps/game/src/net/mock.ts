@@ -1512,6 +1512,7 @@ export class MockServer implements Api {
       case 'mountRide':
       case 'mountDismount':
       case 'mountDismiss':
+      case 'mountRelease':
       case 'repair':
       case 'alchemyReinforce':
       case 'alchemyCancel':

@@ -92,6 +92,7 @@ const FRAMES: Record<string, ClientMessage> = {
   mountRide: { t: 'mountRide', cos: 1 },
   mountDismount: { t: 'mountDismount' },
   mountDismiss: { t: 'mountDismiss' },
+  mountRelease: { t: 'mountRelease' },
   repair: { t: 'repair', npc: 1 },
   alchemyReinforce: { t: 'alchemyReinforce', item: 0, elixir: 1 },
   alchemyCancel: { t: 'alchemyCancel' },
@@ -218,11 +219,11 @@ describe('the wave-8 modules', () => {
   it('register in the §2.5 order and route every new request type', () => {
     const h = harness()
     expect(h.gameplay.modules.map((m) => m.name).slice(8)).toEqual(['mobSkills', 'mounts', 'durability', 'repairs', 'alchemy', 'berserk', 'trade', 'stalls', 'guilds', 'weather', 'winter', 'lightning', 'storm', 'tornado', 'walls', 'wallRepair', 'wallLooters', 'siege', 'kegs', 'law', 'hunters', 'jail', 'pvp', 'jobs', 'market', 'transports', 'robbery', 'caravan', 'movement', 'winterPlay', 'warmth', 'snowballs', 'snowSpirits', 'iceYeti', 'gifts', 'uniques', 'pilot', 'roles', 'penalty', 'climbRewards', 'climbPlaces', 'walk'])
-    expect(W8).toHaveLength(34)
+    expect(W8).toHaveLength(35)
     expect(new Set(Object.keys(FRAMES))).toEqual(new Set(W8))
     for (const t of W8) expect(GAMEPLAY_REQUESTS).toContain(t)
     const route = (t: GameplayRequest) => h.gameplay.routes.get(t)?.name
-    for (const t of ['mountRide', 'mountDismount', 'mountDismiss'] as const) expect(route(t)).toBe('mounts')
+    for (const t of ['mountRide', 'mountDismount', 'mountDismiss', 'mountRelease'] as const) expect(route(t)).toBe('mounts')
     expect(route('repair')).toBe('repairs')
     expect(route('alchemyReinforce')).toBe('alchemy')
     expect(route('berserk')).toBe('berserk')

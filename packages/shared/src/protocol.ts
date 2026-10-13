@@ -581,8 +581,13 @@ export type ClientMessage =
   | { t: 'mountRide'; cos: number }
   /** Get off the horse; it stays parked where it stands. Refused 'not_mounted', or 'moving' while moving. */
   | { t: 'mountDismount' }
-  /** Dismiss your horse, ridden or parked (also `/unsummon`). */
+  /** Send your horse home, ridden or following (also `/unsummon`): it despawns, its item stays in the bag (summon it again). */
   | { t: 'mountDismiss' }
+  /**
+   * Release your horse for good: it despawns and one of its summoning items is deleted from the bag (one transaction).
+   * Refused 'not_found' without a live horse of your own.
+   */
+  | { t: 'mountRelease' }
   /** Repair at a repairing NPC `npc`: `items` (1..16 refs, each {equip} xor {bag}); absent = repair everything damaged. */
   | { t: 'repair'; npc: number; items?: RepairRef[] }
   /** Enhance the bag item at `item` with the elixir at `elixir` and, optionally, a Lucky Powder at `powder` (all distinct bag slots). */
@@ -1183,7 +1188,7 @@ export type GameplayRequest =
   // wave 7B
   | 'sit' | 'emote'
   // wave 8: combat and items
-  | 'mountRide' | 'mountDismount' | 'mountDismiss' | 'repair' | 'alchemyReinforce' | 'alchemyCancel' | 'berserk'
+  | 'mountRide' | 'mountDismount' | 'mountDismiss' | 'mountRelease' | 'repair' | 'alchemyReinforce' | 'alchemyCancel' | 'berserk'
   // the Climb (docs/CLIMB.md §5.1, §7.3)
   | 'climbArt' | 'climbTitle'
   | 'walk'
@@ -1215,7 +1220,7 @@ export type WinterRequest = 'snowball' | 'winterBoard'
 export const WINTER_REQUESTS: readonly WinterRequest[] = ['snowball', 'winterBoard']
 
 /** Wave 8 combat and item requests (docs/SYSTEMS_COMBAT.md §7.2). */
-export const COMBAT_W8_REQUESTS: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss', 'repair', 'alchemyReinforce', 'alchemyCancel', 'berserk']
+export const COMBAT_W8_REQUESTS: readonly GameplayRequest[] = ['mountRide', 'mountDismount', 'mountDismiss', 'mountRelease', 'repair', 'alchemyReinforce', 'alchemyCancel', 'berserk']
 export const TRADE_REQUESTS: readonly GameplayRequest[] = ['tradeRequest', 'tradeRespond', 'tradeOffer', 'tradeTake', 'tradeGold', 'tradeLock', 'tradeAccept', 'tradeCancel']
 export const STALL_REQUESTS: readonly GameplayRequest[] = ['stallCreate', 'stallItem', 'stallItemRemove', 'stallText', 'stallOpen', 'stallClose', 'stallVisit', 'stallLeave', 'stallBuy']
 export const GUILD_REQUESTS: readonly GameplayRequest[] = [
@@ -1557,6 +1562,7 @@ export const CLIENT_RATE_LIMITS: Readonly<Partial<Record<ClientMessage['t'], { p
   mountRide: { perSecond: 2, burst: 5 },
   mountDismount: { perSecond: 2, burst: 5 },
   mountDismiss: { perSecond: 2, burst: 5 },
+  mountRelease: { perSecond: 1, burst: 2 },
   repair: { perSecond: 2, burst: 5 },
   alchemyReinforce: { perSecond: 2, burst: 5 },
   alchemyCancel: { perSecond: 2, burst: 5 },

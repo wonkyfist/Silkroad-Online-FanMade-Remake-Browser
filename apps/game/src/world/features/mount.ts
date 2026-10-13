@@ -3,13 +3,13 @@
  *  - the horse view (world/mount-view.ts, registered for the `cos` kind) and the ride links: each frame, after every
  *    view has moved, a ridden horse is put under its rider and the rider's actor on its saddle (`cart` clips);
  *  - `EntityState.mount` / `rider` kept on the views from `entityUpdate` (the world screen does not apply them);
- *  - clicking your own parked horse sends `mountRide` (the server walks you there first); another player's horse
- *    does nothing;
- *  - clicking a monster while mounted steps down, then attacks: `stopAction`, then `mountDismount` and `attack` (at
+ *  - a dismounted horse follows its owner like a pet (server side); clicking your own horse sends `mountRide` (the
+ *    server walks you there first); another player's horse does nothing;
+ *  - clicking a monster while mounted with a bow shoots from the saddle (`attack`); with any other weapon it steps down, then attacks: `stopAction`, then `mountDismount` and `attack` (at
  *    once when standing, on the own `stop` when moving: the server refuses a dismount while moving);
  *  - `/dismount` and `/unsummon` (ChatBox.registerPrefix, D9);
  *  - the horse frame (hud/mount-frame.ts) in `PlayerFrame.petHost` while you own a horse: face, name, level, HP,
- *    Ride / Dismount and Dismiss (asks first);
+ *    Ride / Dismount, Send home (the item stays) and Release (for good: the item is deleted; asks first);
  *  - sounds (cos.horse.* cues: run while ridden and moving, moan on a hit, die and thud) and, on a summon, the
  *    `ui.cos_summon` cue and the SYSTEM_PET_APPEAR effect;
  *  - refusals of the three mount requests toasted with the retail line where there is one.
@@ -42,7 +42,7 @@ const THUD_DELAY_MS = 900
 /** The frame is refreshed at most this often (ms). */
 const FRAME_REFRESH_MS = 100
 /** The mount requests whose refusals this feature toasts (the HUD does not). */
-const MOUNT_REQUESTS: ReadonlySet<string> = new Set(['mountRide', 'mountDismount', 'mountDismiss'])
+const MOUNT_REQUESTS: ReadonlySet<string> = new Set(['mountRide', 'mountDismount', 'mountDismiss', 'mountRelease'])
 
 /**
  * Stepping down: `stopAction` (it also drops a chase or an action in progress), then `mountDismount` and `then` (an
@@ -140,15 +140,24 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
     pending = null
     ctx.send({ t: 'mountDismiss' })
   }
-  const dismissAsk = () => {
+  /** Release for good (the item is deleted): asks first, with the warning. */
+  const releaseAsk = () => {
     const h = ownHorse()
-    void MessageBox.confirm({ title: t('mount.dismiss.title'), text: t('mount.dismiss.confirm', { name: h?.displayName() ?? '' }) }).then(ok => {
-      if (ok) dismissNow()
+    if (!h) return
+    void MessageBox.confirm({ title: t('mount.release.title'), text: t('mount.release.confirm', { name: h.displayName() }) }).then(ok => {
+      if (!ok) return
+      pending = null
+      ctx.send({ t: 'mountRelease' })
     })
+  }
+  /** Mounted archery (mounts.ts refuseCombat): a bow shoots from the saddle; any other weapon steps down first. */
+  const bowInHand = (): boolean => {
+    const code = selfView()?.state.equip?.weapon
+    return !!code && ctx.app?.catalog?.item(code)?.weaponType === 'bow'
   }
 
   // ---- frame ---------------------------------------------------------------------------------------------------------
-  const frame = new MountFrame(kitArt(), { ride, dismount, dismiss: dismissAsk })
+  const frame = new MountFrame(kitArt(), { ride, dismount, dismiss: dismissNow, release: releaseAsk })
   frame.attach(ctx.hud.playerFrame?.petHost ?? null)
   const frameInfo = (): MountFrameInfo | null => {
     const h = ownHorse()
@@ -321,6 +330,12 @@ export const mountFeature: WorldFeatureFactory = (ctx: WorldFeatureContext): Wor
         return true
       }
       if (v.kind !== 'mob' || v.dead || !mounted() || selfView()?.dead) return false
+      if (bowInHand()) {
+        // Mounted archery: shoot from the saddle (the server checks range and the weapon, as on foot).
+        ctx.setTarget(v)
+        ctx.send({ t: 'attack', target: v.id })
+        return true
+      }
       // Mounted: step down, then attack (docs/SYSTEMS_COMBAT.md §1.5).
       ctx.setTarget(v)
       stepDown([{ t: 'attack', target: v.id }])

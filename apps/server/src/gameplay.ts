@@ -1047,8 +1047,8 @@ export class Gameplay implements AiHost {
   }
 
   private attackRequest(p: Player, targetId: number, answer: (r: Result<unknown> | true) => void): void {
-    // Wave 8: 'mounted' (mounts.ts), 'broken' weapon (durability.ts).
-    const refused = this.mounts.refuse(p, 'attack') ?? this.durability.refuse(p, 'attack')
+    // Wave 8: 'mounted' (mounts.ts; a bow shoots from the saddle), 'broken' weapon (durability.ts).
+    const refused = this.mounts.refuseCombat(p, 'attack') ?? this.durability.refuse(p, 'attack')
     if (refused) return answer(refused)
     const e = this.world.entity(targetId)
     if (!e || !p.known.has(targetId)) return answer(fail('not_found'))
@@ -1605,7 +1605,7 @@ export class Gameplay implements AiHost {
           this.world.halt(p, now, yawTowards(tp[0] - pp[0], tp[2] - pp[2]))
           if (now >= p.nextSwingAt) {
             // Wave 8: an auto-attack started before the weapon broke (or before mounting) stops here.
-            const refused = this.mounts.refuse(p, 'attack') ?? this.durability.refuse(p, 'attack')
+            const refused = this.mounts.refuseCombat(p, 'attack') ?? this.durability.refuse(p, 'attack')
             if (refused) {
               p.action = null
               if (refused.message) p.send({ t: 'chat', channel: 'system', text: refused.message })

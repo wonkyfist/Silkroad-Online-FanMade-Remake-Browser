@@ -658,6 +658,24 @@ const MIGRATIONS: string[] = [
   ALTER TABLE law_records ADD COLUMN robberies INTEGER NOT NULL DEFAULT 0;
   ALTER TABLE law_records ADD COLUMN last_robbery_at INTEGER;
   `,
+  // 28: wings and flight (docs/FLIGHT.md §9; flight/flight-store.ts; PRIVATE branch, renumber at merge). flight_settings:
+  // the sparse settings patch. Wings are items (the back slot is stored by name) and flight stamina is not saved.
+  `
+  CREATE TABLE flight_settings (
+    code TEXT PRIMARY KEY,
+    json TEXT NOT NULL,
+    rev INTEGER NOT NULL DEFAULT 1,
+    updated_at INTEGER NOT NULL,
+    updated_by INTEGER
+  );
+  `,
+  // 29: horses that follow and are released for good (mounts.ts; PRIVATE branch, renumber at merge). `out` 0 = sent home
+  // (the row keeps its HP for the next summon), 1 = in the world with its owner. `bound` 1 = summoned from a horse item that
+  // stays in the bag (released or dead: the item goes); 0 = no item (GM /horse, horses summoned before this migration).
+  `
+  ALTER TABLE char_mount ADD COLUMN out INTEGER NOT NULL DEFAULT 1 CHECK (out IN (0, 1));
+  ALTER TABLE char_mount ADD COLUMN bound INTEGER NOT NULL DEFAULT 0 CHECK (bound IN (0, 1));
+  `,
 ]
 
 /** A row of the `uniques` table (migration 10; read and written by uniques.ts). */

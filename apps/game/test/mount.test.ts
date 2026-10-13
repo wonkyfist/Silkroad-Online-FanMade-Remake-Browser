@@ -477,6 +477,22 @@ describe('mount feature (MR-C)', () => {
     h.f.dispose?.()
   })
 
+  it('mounted archery: with a bow, clicking a monster shoots from the saddle (attack only, no step down)', () => {
+    const item = catalog.item.bind(catalog)
+    catalog.item = (code: string) => (code === 'ITEM_CH_BOW_01_A' ? ({ code, weaponType: 'bow' } as ReturnType<typeof item>) : item(code))
+    try {
+      const h = harness()
+      addView(h, new EntityView(playerState({ mount: 40, equip: { weapon: 'ITEM_CH_BOW_01_A' } }), entityCtx()))
+      const mob = addView(h, new EntityView({ id: 9, kind: 'mob', name: 'Mangyang', model: 'MOB_CH_MANGNYANG', level: 3, pos: [8, 0, 5], yaw: 0 }, entityCtx()))
+      expect(h.f.clickEntity?.(mob)).toBe(true)
+      expect(h.sent).toEqual([{ t: 'attack', target: 9 }])
+      expect(h.target()).toBe(mob)
+      h.f.dispose?.()
+    } finally {
+      catalog.item = item
+    }
+  })
+
   it('clicking your own parked horse rides it; a ridden one or someone else’s does nothing', () => {
     const h = harness()
     addView(h, new EntityView(playerState(), entityCtx()))
