@@ -198,8 +198,8 @@ export function staticChecks(out: string, rows: readonly SkillDef[]): Map<string
   return res
 }
 
-/** Param tags the server engine turns into something (mods, statuses, mechanics) for a buff/imbue/debuff. */
-const MECHANIC_TAGS = new Set(['pw', 'onff', 'summ', 'tele', 'heal'])
+/** Param tags of buffs whose mechanic lives outside the effect (Ghost Walk's teleport: the movement lane). */
+const MECHANIC_TAGS = new Set(['tele'])
 
 /** (d) on the real engine, one harness per row. */
 export function serverChecks(out: string, rows: readonly SkillDef[], o: { rng?: () => number } = {}): Map<string, { cat: string; detail: string }[]> {
