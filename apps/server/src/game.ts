@@ -25,8 +25,13 @@ import { layerAdminContent, mergedItemsJson } from './admin/content.ts'
 import { ADMIN_ICON_PATH, iconRoots } from './admin/icons.ts'
 import { SettingsState } from './admin/settings.ts'
 import { openAdminStore } from './admin/store.ts'
+import { registerAntiAltAdmin } from './antialt/admin.ts'
+import { AntiAlt, type Refusal } from './antialt/guard.ts'
+import { loadLists } from './antialt/lists.ts'
+import { parseCidrList, resolveClientIp, type ProxyTrust } from './antialt/net.ts'
+import { CachedLookup, providerFromEnv, turnstileFromEnv } from './antialt/providers.ts'
 import { FailureLimiter, HashBusyError, MAX_SESSIONS_PER_ACCOUNT, SESSION_TTL_MS, hashPassword, hashToken, newToken, verifyPassword } from './auth.ts'
-import type { ServerConfig } from './config.ts'
+import { REPO_ROOT, type ServerConfig } from './config.ts'
 import { Connection, MAX_BUFFERED, wsConnection } from './connection.ts'
 import { GatewayHub } from './gateway/hub.ts'
 import { AoiPool } from './aoi/pool.ts'
@@ -75,6 +80,8 @@ export interface GameContext {
   sockets: Map<number, Connection>
   /** Account bans (the admin panel's table; GM ban/unban in gm-tools.ts). Absent in bare test contexts. */
   bans?: { ban(accountId: number, reason: string, by: string): unknown; unban(accountId: number): boolean }
+  /** Registration & anti-alt (docs/ANTI_ALT.md): limits, detection, allowlist, linked accounts. Absent in bare test contexts. */
+  antiAlt?: AntiAlt
   /** Message, byte, tick and disconnect counters (netstats.ts; GET /netstats with NET_STATS=1, loopback only). */
   net: NetStats
   /** Characters of dropped connections held in the world for a reconnect (resume.ts). */
@@ -185,15 +192,20 @@ async function readJson(req: IncomingMessage, limit = MAX_BODY_BYTES, emptyOk = 
   }
 }
 
-function credentials(body: unknown): { username: string; password: string } {
+/** The optional anti-alt fields of register / login (docs/ANTI_ALT.md §5); `captcha` only on register. */
+const SIGNAL_FIELDS = new Set(['device', 'fp', 'captcha'])
+
+function credentials(body: unknown): { username: string; password: string; device?: string; fp?: string; captcha?: string } {
   if (typeof body !== 'object' || body === null || Array.isArray(body)) throw new HttpError(400, 'bad_request', 'body must be an object')
   const o = body as Record<string, unknown>
   const keys = Object.keys(o)
-  if (keys.some((k) => k !== 'username' && k !== 'password')) throw new HttpError(400, 'bad_request', 'unexpected field')
+  if (keys.some((k) => k !== 'username' && k !== 'password' && !SIGNAL_FIELDS.has(k))) throw new HttpError(400, 'bad_request', 'unexpected field')
   if (typeof o.username !== 'string' || typeof o.password !== 'string') {
     throw new HttpError(400, 'bad_request', 'username and password must be strings')
   }
-  return { username: o.username, password: o.password }
+  // a malformed signal is dropped (the guard treats it as absent), never an error: an old or odd browser still registers
+  const opt = (k: string, max: number) => (typeof o[k] === 'string' && (o[k] as string).length <= max ? (o[k] as string) : undefined)
+  return { username: o.username, password: o.password, device: opt('device', 64), fp: opt('fp', 64), captcha: opt('captcha', 2048) }
 }
 
 function checkPasswordRule(password: string): void {
@@ -291,6 +303,17 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   store.purgeSessions()
   // Admin panel (docs/ADMIN.md §5): its tables, and the settings saved in it applied before any module reads the config.
   const adminStore = openAdminStore(store, join(config.dataDir, 'game.db'))
+  // docs/ANTI_ALT.md: before the settings load, so the old "Registrations per IP per hour" row moves into its policy first
+  const lookupProvider = providerFromEnv(process.env)
+  const antiAlt = new AntiAlt(store.db, {
+    lists: loadLists(config.contentDir ?? join(REPO_ROOT, 'content'), config.log),
+    log: config.log,
+    lookup: lookupProvider ? new CachedLookup(lookupProvider, config.log) : null,
+    captcha: turnstileFromEnv(process.env),
+    registerPerHour: config.registerPerHour,
+  })
+  antiAlt.purge()
+  registerAntiAltAdmin()
   const settings = SettingsState.load(config, adminStore)
   const data = GameData.load(config.outDir)
   for (const line of data.summary()) config.log(line)
@@ -364,6 +387,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     gameplay,
     sockets,
     bans: adminStore,
+    antiAlt,
     net: new NetStats(config.tickHz, switches.tickTimers),
     holds: new BodyHolds(() => (config.resumeGraceS ?? 0) * 1000, config.log),
     news: NewsStore.open(config),
@@ -381,6 +405,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       ...worldNow(gameplay),
       // Admin panel switch (docs/ADMIN.md): the login screen hides Register while it is closed.
       registration: config.registrationOpen === false ? 'closed' : 'open',
+      // docs/ANTI_ALT.md §6: the robot check's site key while it is on and configured
+      ...(antiAlt.captchaSiteKey() ? { captchaSiteKey: antiAlt.captchaSiteKey()! } : {}),
     }),
     persist(players, now = Date.now()) {
       if (players.length === 0) return
@@ -449,15 +475,17 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
 
   const loginFailures = new FailureLimiter(5, 15 * 60_000)
   const ipLoginFailures = new FailureLimiter(50, 15 * 60_000)
-  const registrations = new FailureLimiter(config.registerPerHour, 3600_000)
 
-  const clientIp = (req: IncomingMessage): string => {
-    if (config.trustProxy) {
-      const fwd = req.headers['x-forwarded-for']
-      const first = (Array.isArray(fwd) ? fwd[0] : fwd)?.split(',')[0]?.trim()
-      if (first) return first
-    }
-    return req.socket.remoteAddress ?? 'unknown'
+  // docs/ANTI_ALT.md §3.2: the forwarding header only from the trusted proxies (TRUST_PROXY + TRUSTED_PROXIES)
+  const proxyTrust: ProxyTrust | null = (() => {
+    if (!config.trustProxy) return null
+    const { ranges, bad } = parseCidrList(config.trustedProxies ?? '127.0.0.1/32, ::1/128')
+    if (bad.length) config.log(`TRUSTED_PROXIES: ignored ${bad.join(', ')} (not CIDRs)`)
+    return { trusted: ranges, header: config.clientIpHeader ?? 'x-forwarded-for' }
+  })()
+  const clientIp = (req: IncomingMessage): string => resolveClientIp(req.socket.remoteAddress, req.headers, proxyTrust)
+  const refused = (r: Refusal): never => {
+    throw new HttpError(r.status, r.code, r.message)
   }
 
   const issueSession = (accountId: number): ApiLoginResponse => {
@@ -494,20 +522,27 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     if (path === '/api/register' && method === 'POST') {
       // The admin panel's switch (docs/ADMIN.md): authoritative here, whatever the client shows.
       if (config.registrationOpen === false) throw new HttpError(403, 'forbidden', 'Registration is closed on this server.')
-      if (registrations.blocked(ip)) throw new HttpError(429, 'rate_limited', 'too many registrations, try later')
-      const { username, password } = credentials(await readJson(req))
+      const { username, password, device, fp, captcha } = credentials(await readJson(req))
       if (!ACCOUNT_NAME.test(username)) throw new HttpError(400, 'bad_request', 'username must be 3-16 letters, digits or _')
       checkPasswordRule(password)
-      registrations.fail(ip)
-      // Cheap pre-check so a taken name does not cost a hash (the insert below still decides races).
+      // Cheap pre-check so a taken name does not cost a hash or a limit slot (the insert below still decides races).
       if (store.accountByName(username)) throw new HttpError(409, 'name_taken', 'username is taken')
-      const id = store.createAccount(username, await hashPassword(password))
+      // docs/ANTI_ALT.md: the robot check, VPN/hosting detection and the account limits; a pass reserves a slot
+      const verdict = await antiAlt.checkRegister({ ip, device, fp, captcha, account: username })
+      if (!('ticket' in verdict)) return refused(verdict)
+      let id: number | null = null
+      try {
+        id = store.createAccount(username, await hashPassword(password))
+      } finally {
+        if (id === null) antiAlt.cancelRegister(verdict.ticket)
+      }
       if (id === null) throw new HttpError(409, 'name_taken', 'username is taken')
+      antiAlt.confirmRegister(verdict.ticket, id)
       config.log(`account ${username} registered from ${ip}`)
       return sendJson(res, 201, issueSession(id))
     }
     if (path === '/api/login' && method === 'POST') {
-      const { username, password } = credentials(await readJson(req))
+      const { username, password, device, fp } = credentials(await readJson(req))
       const key = `${ip}|${username.toLowerCase()}`
       if (loginFailures.blocked(key) || ipLoginFailures.blocked(ip)) {
         throw new HttpError(429, 'rate_limited', 'too many failed logins, try again later')
@@ -532,6 +567,11 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       // Admin panel bans (docs/ADMIN.md): the right password of a banned account gets the reason, no session.
       const ban = adminStore.banOf(account.id)
       if (ban) throw new HttpError(403, 'forbidden', `This account is banned${ban.reason ? `: ${ban.reason}` : '.'}`)
+      // docs/ANTI_ALT.md §4: a detection set to block_login refuses players (never staff); the login is recorded
+      if (account.role === 'player') {
+        const refusal = await antiAlt.checkLogin(account.id, { ip, device, fp, account: account.username })
+        if (refusal) refused(refusal)
+      } else antiAlt.recordLogin(account.id, { ip, device, fp })
       store.touchLogin(account.id)
       return sendJson(res, 200, issueSession(account.id))
     }
@@ -864,6 +904,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
   const purger = setInterval(() => {
     store.purgeSessions()
     adminStore.purgeSessions(Date.now(), ADMIN_IDLE_MS)
+    antiAlt.purge()
   }, 3600_000)
   const rolePoll = setInterval(() => {
     try {

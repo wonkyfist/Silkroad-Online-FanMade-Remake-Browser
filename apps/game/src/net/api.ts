@@ -1,5 +1,6 @@
 import type { ApiError, ApiLoginRequest, ApiLoginResponse, ApiRegisterRequest, ApiRegisterResponse, ErrorCode, ServerInfo } from '@sro/shared'
 import { t } from '../i18n/index.ts'
+import { deviceSignals } from './device.ts'
 
 /** A failed API call or a server `error` message. `code` is a protocol ErrorCode or 'network'. */
 export class GameError extends Error {
@@ -66,12 +67,13 @@ export class HttpApi implements Api {
     return data as T
   }
 
-  register(req: ApiRegisterRequest): Promise<ApiRegisterResponse> {
-    return this.call('POST', '/register', req)
+  // docs/ANTI_ALT.md §5: the device ID and fingerprint go with register and login
+  async register(req: ApiRegisterRequest): Promise<ApiRegisterResponse> {
+    return this.call('POST', '/register', { ...(await deviceSignals()), ...req })
   }
 
-  login(req: ApiLoginRequest): Promise<ApiLoginResponse> {
-    return this.call('POST', '/login', req)
+  async login(req: ApiLoginRequest): Promise<ApiLoginResponse> {
+    return this.call('POST', '/login', { ...(await deviceSignals()), ...req })
   }
 
   async logout(token: string): Promise<void> {

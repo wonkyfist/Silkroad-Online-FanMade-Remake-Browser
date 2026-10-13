@@ -2,6 +2,7 @@ import { ADMIN_BAN_REASON_MAX, type AdminAccountDetail, type AdminAccountRow, ty
 import { get, post, qs } from '../api.ts'
 import { attempt, badge, button, card, clear, confirmDialog, dataTable, errorText, fmtAgo, fmtNum, fmtTime, formDialog, h, kv, navigate, pageHeader } from '../ui.ts'
 import { storageCard } from './characters.ts'
+import { linkedCard } from './antialt.ts'
 import { svgIcon } from '../icons.ts'
 
 /** Accounts: search, create (also while registration is closed), password, ban / unban, kick, characters, storage. */
@@ -119,6 +120,7 @@ export function accountPage(root: HTMLElement, args: string[]): void {
       ),
       storageCard(a.id, a.storage, load),
       h('p', { class: 'dim small' }, `Storage gold: ${fmtNum(a.storage.gold)}.`),
+      linkedCard(a.id),
     )
   }
   void load()

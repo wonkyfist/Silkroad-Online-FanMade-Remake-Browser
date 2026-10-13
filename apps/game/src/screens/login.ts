@@ -9,6 +9,7 @@ import type { App, Screen, ScreenParams } from '../app.ts'
 import { openGpuHelp } from '../gpu-loss.ts'
 import { t } from '../i18n/index.ts'
 import { GameError, registrationOpen } from '../net/api.ts'
+import { mountCaptcha, type CaptchaWidget } from '../net/captcha.ts'
 import { prefetchStage } from '../stage/prefetch.ts'
 import { anchor, bars } from '../ui/chrome.ts'
 import { el, input, Listeners, place } from '../ui/dom.ts'
@@ -128,6 +129,12 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
     message.classList.toggle('error', kind === 'error')
     reload.hidden = !stale
   }
+  // docs/ANTI_ALT.md §6: the robot check under the window, on the register form only, when the server asks for it
+  const captchaBox = el('div', 'login-captcha')
+  captchaBox.style.cssText = 'position:absolute;left:50%;bottom:14%;transform:translateX(-50%);min-height:65px;z-index:5'
+  captchaBox.hidden = true
+  root.append(captchaBox)
+  let captcha: CaptchaWidget | null = null
   const setMode = (m: typeof mode) => {
     mode = m
     const reg = m === 'register'
@@ -138,6 +145,7 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
     caption.textContent = reg ? t('login.registerHint') : ''
     primary.setLabel(reg ? t('login.create') : t('login.connect'))
     secondary.setLabel(reg ? t('login.back') : t('login.register'))
+    captchaBox.hidden = !reg || !captcha
     setMessage('')
     ;(user.value ? pass : user).focus()
   }
@@ -157,7 +165,13 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
   void app.transport.api
     .servers()
     .then(list => {
-      if (!disposed && !registrationOpen(list)) closeRegistration()
+      if (disposed) return
+      if (!registrationOpen(list)) closeRegistration()
+      const siteKey = list.find((s) => s.captchaSiteKey)?.captchaSiteKey
+      if (siteKey && !captcha) {
+        captcha = mountCaptcha(captchaBox, siteKey)
+        captchaBox.hidden = mode !== 'register'
+      }
     })
     .catch(() => {})
   if (params?.error) setMessage(params.error, 'error', params.error === t('net.versionMismatch'))
@@ -205,7 +219,11 @@ export function loginScreen(app: App, params: ScreenParams['login']): Screen {
     setBusy(true)
     setMessage(mode === 'register' ? t('login.creating') : t('login.connecting'))
     try {
-      if (mode === 'register') await enter(username, await app.transport.api.register({ username, password }))
+      if (mode === 'register') {
+        const token = captcha?.token() ?? undefined
+        captcha?.reset()
+        await enter(username, await app.transport.api.register({ username, password, ...(token ? { captcha: token } : {}) }))
+      }
       else await doLogin(username, password)
     } catch (err) {
       // Registration was closed meanwhile: back to the login form, with the server's message.

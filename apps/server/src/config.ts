@@ -36,13 +36,20 @@ export interface ServerConfig {
    */
   allowedOrigins: string[]
   capacity: number
-  /** Registrations allowed per IP per hour. */
+  /** The default of the per-IP registration limit (1 hour window; docs/ANTI_ALT.md: the admin panel's policy takes over after the first start). */
   registerPerHour: number
   /** Seconds between periodic position saves. */
   saveIntervalS: number
   helloTimeoutMs: number
   /** Trust X-Forwarded-For for rate limiting (only behind a reverse proxy you control). */
   trustProxy: boolean
+  /**
+   * docs/ANTI_ALT.md §3.2: the proxies whose forwarding header is believed (CIDRs, comma separated; TRUSTED_PROXIES).
+   * Default with TRUST_PROXY: this host only (Caddy). Behind Cloudflare add its ranges and set CLIENT_IP_HEADER.
+   */
+  trustedProxies?: string
+  /** docs/ANTI_ALT.md §3.2: x-forwarded-for (default) or cf-connecting-ip (CLIENT_IP_HEADER). */
+  clientIpHeader?: 'x-forwarded-for' | 'cf-connecting-ip'
   /** The level cap: EXP stops, shops, quests and GM `setlevel` follow (LEVEL_CAP, default 25 since the Climb; was 20). */
   levelCap: number
   /**
@@ -537,6 +544,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     saveIntervalS: num(env, 'SAVE_INTERVAL', 30, 1, 3600),
     helloTimeoutMs: 5000,
     trustProxy: bool(env, 'TRUST_PROXY', false),
+    trustedProxies: env.TRUSTED_PROXIES || '127.0.0.1/32, ::1/128',
+    clientIpHeader: (env.CLIENT_IP_HEADER ?? '').toLowerCase() === 'cf-connecting-ip' ? 'cf-connecting-ip' : 'x-forwarded-for',
     levelCap,
     rolePollMs: 1000,
     viewRange: num(env, 'VIEW_RANGE', 120, 20, 2000),

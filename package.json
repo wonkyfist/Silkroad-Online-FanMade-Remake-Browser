@@ -17,6 +17,7 @@
     "gm": "pnpm --filter @sro/server gm",
     "verify-install": "tsx apps/server/src/cli/verify-install.ts",
     "changelog": "tsx apps/server/src/cli/changelog-md.ts",
+    "antialt:update": "tsx apps/server/src/cli/antialt-update.ts",
     "netload": "tsx apps/server/src/cli/netload.ts",
     "charbench": "tsx apps/server/src/cli/charbench.ts",
     "deploy": "tsx deploy/run.ts deploy.sh",

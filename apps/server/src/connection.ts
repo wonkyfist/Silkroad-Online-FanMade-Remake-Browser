@@ -572,9 +572,14 @@ export class Connection {
       this.error('bad_request', `look.body ${look.look.body} does not match ${model}`, 'charCreate')
       return
     }
+    // docs/ANTI_ALT.md §2.3: creations per account / device / network per window (staff are never limited)
+    const aa = this.game.antiAlt
+    const refusal = aa && this.role === 'player' ? aa.checkCharacter(this.accountId, this.ip, String(this.account ?? '')) : null
+    if (refusal) return this.error(refusal.code, refusal.message, 'charCreate')
     const r = this.game.store.createCharacter(this.accountId, name, model, weapon, this.game.config.world, MAX_CHARACTER_SLOTS, look)
     if (r === 'slots_full') return this.error('slots_full', `at most ${MAX_CHARACTER_SLOTS} characters`, 'charCreate')
     if (r === 'name_taken') return this.error('name_taken', 'That name is taken.', 'charCreate')
+    aa?.recordCharacter(this.accountId, r.id, this.ip)
     this.game.gameplay.grantStarterKit(r.id, r.weapon, r.model, r.outfit)
     this.game.config.log(`character ${r.name} (${r.model}, height ${r.height}, volume ${r.volume}, ${r.outfit}) created by ${this.account}`)
     this.send({ t: 'charCreated', character: this.summary(r) })

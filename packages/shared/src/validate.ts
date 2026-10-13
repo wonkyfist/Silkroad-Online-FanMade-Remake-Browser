@@ -1009,6 +1009,7 @@ function serverInfo(v: unknown): ServerInfo {
   if (o.weather !== undefined) optionalField('server.weather', () => (s.weather = weatherSync(o.weather)))
   // admin addition (docs/ADMIN.md): a bad value drops only this field
   if (o.registration !== undefined) optionalField('server.registration', () => (s.registration = oneOf(o, 'registration', ['open', 'closed'] as const)))
+  if (o.captchaSiteKey !== undefined) optionalField('server.captchaSiteKey', () => (s.captchaSiteKey = str(o, 'captchaSiteKey', 128, 1)))
   return s
 }
 

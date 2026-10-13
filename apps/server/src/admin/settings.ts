@@ -63,7 +63,7 @@ const W = WALL_DEFAULTS
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
   int('capacity', 'CAPACITY', 'Capacity (players in the world)', ACCESS, 1, 10000, 50, 'live'),
-  int('registerPerHour', 'REGISTER_LIMIT', 'Registrations per IP per hour', ACCESS, 1, 100000, 10, 'restart'),
+  // 'Registrations per IP per hour' (registerPerHour) moved to the Registration & anti-alt page (docs/ANTI_ALT.md): any count per any window
 
   {
     ...int('levelCap', 'LEVEL_CAP', 'Level cap', RATES, 1, 300, DEFAULT_LEVEL_CAP, 'live', 'EXP, shops, quests and setlevel follow at once; players see the new cap after re-entering the world; unique gear pools and the default monster level limit at the next restart. The EXP per level is content/climb/levels.json (the Climb curve, levels 1-25).'),

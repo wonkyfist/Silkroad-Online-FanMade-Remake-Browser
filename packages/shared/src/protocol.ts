@@ -69,12 +69,25 @@ export type Role = 'player' | 'gm' | 'admin'
 export interface ApiRegisterRequest {
   username: string
   password: string
+  /** docs/ANTI_ALT.md: the browser's random device ID (localStorage + IndexedDB + cookie); the server keeps only a salted hash. */
+  device?: string
+  /** docs/ANTI_ALT.md: SHA-256 hex of a light browser fingerprint (a soft signal; the server keeps only a salted hash). */
+  fp?: string
+  /** docs/ANTI_ALT.md: the Cloudflare Turnstile token, when the server asks for one (ServerInfo.captchaSiteKey). */
+  captcha?: string
 }
+
+/** docs/ANTI_ALT.md: a device ID the client makes (random, URL-safe). */
+export const DEVICE_ID_RE = /^[A-Za-z0-9_-]{16,64}$/
+/** docs/ANTI_ALT.md: the fingerprint the client sends (SHA-256, lower-case hex). */
+export const FINGERPRINT_RE = /^[0-9a-f]{64}$/
 
 /** POST /api/login */
 export interface ApiLoginRequest {
   username: string
   password: string
+  device?: string
+  fp?: string
 }
 
 export interface ApiLoginResponse {
@@ -113,6 +126,8 @@ export interface ServerInfo {
    * login screen hides Register when it is 'closed'. Absent (older servers, the mock) = 'open'.
    */
   registration?: 'open' | 'closed'
+  /** docs/ANTI_ALT.md: the Cloudflare Turnstile site key when registering needs the robot check; absent = none. */
+  captchaSiteKey?: string
 }
 
 // ---- data shared by several messages ------------------------------------------------------------

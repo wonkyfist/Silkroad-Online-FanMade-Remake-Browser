@@ -46,6 +46,55 @@ const ADMIN_MIGRATIONS: string[] = [
     banned_by TEXT NOT NULL
   );
   `,
+  // 2: registration & anti-alt (docs/ANTI_ALT.md §7): the per-server salt and the policy, what each account did from
+  // where (device and fingerprint as salted hashes only), the blocked/flagged log and the allowlist
+  `
+  CREATE TABLE IF NOT EXISTS antialt_meta (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    salt TEXT NOT NULL,
+    policy TEXT                       -- JSON (antialt/policy.ts); NULL = the defaults
+  );
+  CREATE TABLE IF NOT EXISTS antialt_events (
+    id INTEGER PRIMARY KEY,
+    at INTEGER NOT NULL,
+    kind TEXT NOT NULL,               -- register | login | char
+    account_id INTEGER,
+    character_id INTEGER,
+    ip TEXT NOT NULL DEFAULT '',
+    subnet TEXT NOT NULL DEFAULT '',
+    device TEXT NOT NULL DEFAULT '',  -- salted hash of the device ID ('' = none sent)
+    fp TEXT NOT NULL DEFAULT '',      -- salted hash of the fingerprint ('' = none sent)
+    waived INTEGER NOT NULL DEFAULT 0 -- 1: an admin lifted the block; no longer counted
+  );
+  CREATE INDEX IF NOT EXISTS antialt_events_ip ON antialt_events(kind, ip, at);
+  CREATE INDEX IF NOT EXISTS antialt_events_subnet ON antialt_events(kind, subnet, at);
+  CREATE INDEX IF NOT EXISTS antialt_events_device ON antialt_events(kind, device, at);
+  CREATE INDEX IF NOT EXISTS antialt_events_fp ON antialt_events(fp);
+  CREATE INDEX IF NOT EXISTS antialt_events_account ON antialt_events(account_id, at);
+  CREATE TABLE IF NOT EXISTS antialt_log (
+    id INTEGER PRIMARY KEY,
+    at INTEGER NOT NULL,
+    action TEXT NOT NULL,             -- register | login | character
+    outcome TEXT NOT NULL,            -- blocked | flagged
+    reason TEXT NOT NULL,             -- e.g. account.perSubnet, detect.hosting
+    detail TEXT NOT NULL DEFAULT '',
+    ip TEXT NOT NULL DEFAULT '',
+    subnet TEXT NOT NULL DEFAULT '',
+    device TEXT NOT NULL DEFAULT '',
+    account TEXT NOT NULL DEFAULT '', -- the account name tried or used
+    lifted INTEGER NOT NULL DEFAULT 0
+  );
+  CREATE INDEX IF NOT EXISTS antialt_log_at ON antialt_log(at);
+  CREATE TABLE IF NOT EXISTS antialt_allow (
+    id INTEGER PRIMARY KEY,
+    kind TEXT NOT NULL,               -- ip | subnet | device
+    value TEXT NOT NULL,              -- an address, a CIDR, or a device hash
+    note TEXT NOT NULL DEFAULT '',
+    added_at INTEGER NOT NULL,
+    added_by TEXT NOT NULL,
+    UNIQUE (kind, value)
+  );
+  `,
 ]
 
 export const ADMIN_SCHEMA_VERSION = ADMIN_MIGRATIONS.length

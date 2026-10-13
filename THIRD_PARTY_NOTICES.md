@@ -62,3 +62,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## ipcat (data)
+
+- Project: ipcat, https://github.com/client9/ipcat
+- Licence: MIT, Copyright (c) 2023 Nick Galbreath (the MIT text is the same as Tidewater's above)
+- What is used (docs/ANTI_ALT.md §4): the datacenter ranges of `datacenters.csv`, merged into
+  `content/antialt/hosting-ranges.txt` by `pnpm antialt:update`. No code.
+- The same file also holds the IP ranges AWS, Google Cloud, Oracle Cloud, DigitalOcean and Linode publish for public
+  use, and `content/antialt/tor-exits.txt` the Tor Project's public exit list.

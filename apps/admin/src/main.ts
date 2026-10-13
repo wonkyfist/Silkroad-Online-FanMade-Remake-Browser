@@ -17,6 +17,7 @@ import { jobsPage } from './pages/jobs.ts' // Jobs & Trade, and EVENT_PAGES 'job
 import { auditPage } from './pages/audit.ts'
 import { opsPage } from './pages/ops.ts'
 import { lawTab } from './pages/siege-law.ts'
+import { antiAltPage } from './pages/antialt.ts'
 import { serversPage } from './pages/servers.ts'
 import { updatesPage } from './pages/updates.ts'
 import { svgIcon, type IconName } from './icons.ts'
@@ -53,7 +54,10 @@ const SECTIONS: { label: string; items: Route[] }[] = [
   },
   {
     label: 'Moderation & Jail',
-    items: [{ path: 'law', label: 'Law & Stockade', icon: 'shield', page: lawPage }],
+    items: [
+      { path: 'law', label: 'Law & Stockade', icon: 'shield', page: lawPage },
+      { path: 'antialt', label: 'Registration & anti-alt', icon: 'shield', page: antiAltPage },
+    ],
   },
   {
     label: 'World & Events',
