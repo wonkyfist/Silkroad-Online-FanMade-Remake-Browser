@@ -61,6 +61,7 @@ window (press **J** in game). It is generated from `content/changelog/` by `pnpm
 
 - Sealed weapons keep the **natural look** of the weapon. The rarity now shows on the **edges**: living veins of light, a core that breathes, and a soft glow around the weapon's outline. Upgrades (+N) no longer wash the weapon out.
 - **Weapon cloth moves:** tassels, ribbons and banners on weapons now sway in the wind, ripple as you run and swing, and react to storms.
+- **Openwork weapons look right:** the cut-out patterns on weapons and shields now show as real holes instead of dark panels with lines on them, and the rarity glow follows the true outline.
 
 ## Registration limits
 
