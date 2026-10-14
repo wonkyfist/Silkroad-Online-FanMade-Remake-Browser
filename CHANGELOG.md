@@ -34,7 +34,7 @@ window (press **J** in game). It is generated from `content/changelog/` by `pnpm
 ## Bows and arrows
 
 - **Bows shoot arrows.** Every bow attack uses **one arrow** from the stack in your shield slot. Run out and you can't shoot until you equip more. Archers made before this update get one free stack of arrows at their next login.
-- **Arrow combos fly every arrow:** 2, 3 and 4 Arrow Combo now fire 2, 3 and 4 arrows, each on its own release. Each arrow does its damage when it hits, not all at once.
+- **Arrow Combo flies every arrow:** each arrow leaves the bow on its own release and does its damage when it hits, not all at once.
 - Knockback skills now **push** the target back smoothly.
 - Spears and glaives attack at the retail speed again, and so do bows.
 
