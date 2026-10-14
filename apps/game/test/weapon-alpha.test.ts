@@ -35,7 +35,7 @@ describe('weapon cut-outs', () => {
 
   it('every weapon and shield material with the alpha bit and alpha-0 texels is alpha-tested', () => {
     const all = sidecars()
-    expect(all.length).toBeGreaterThan(40)
+    expect(all.length).toBeGreaterThan(20)
     let cut = 0
     for (const { file, m } of all) {
       const how = weaponAlphaOf(m)
@@ -45,9 +45,9 @@ describe('weapon cut-outs', () => {
         cut++
       } else expect(how, `${file} ${m.name}`).toBe('opaque')
     }
-    // degree 8 spear (the owner's report), glaive, blade, sword, bow; shields 07 and 08
+    // the spear and the bow (degrees 1-4 in this build; the degree 8 spear of the owner's report is above its level cap)
     const of = (name: string) => weaponAlphaOf(all.find(a => a.m.name === name)!.m)
-    for (const name of ['spear_8_12', 'tblade_8_12', 'blade6_10', 'sword_8_12', 'bow_8_12', 'spear_1_5', 'bow_1_5', 'shield_07', 'Material #416']) {
+    for (const name of ['spear_1_5', 'bow_1_5', 'tblade_1_5', 'sword1_2_3']) {
       expect(of(name), name).toBe('cutout')
     }
     expect(of('blade1_5')).toBe('opaque') // no alpha bit

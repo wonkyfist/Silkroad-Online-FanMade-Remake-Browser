@@ -15,11 +15,12 @@ const HAVE = ['data/skills.json', 'data/mobs.json', 'fx/skills.json', 'fx/index.
 describe.skipIf(!HAVE)('skill audit (all learnable rows)', () => {
   it('every row: clips, VFX, spawned objects, server effect and hit timing check out', () => {
     const rep = runSkillAudit(OUT)
-    expect(rep.total).toBeGreaterThanOrEqual(1100)
+    expect(rep.total).toBeGreaterThanOrEqual(230) // every learnable row of this build (1,141 at cap 30)
     const unexpected = rep.rows.flatMap((r) => r.fails.filter((f) => !AUDIT_EXCEPTIONS[`${f.cat}:${r.group}`]).map((f) => `${r.code} ${f.cat} ${f.detail}`))
     expect(unexpected, formatAudit(rep, { exceptions: AUDIT_EXCEPTIONS })).toEqual([])
-    // every exception is still needed
+    // every exception whose row is in this build is still needed (some are above the level cap)
     const used = new Set(rep.rows.flatMap((r) => r.fails.map((f) => `${f.cat}:${r.group}`)))
-    expect(Object.keys(AUDIT_EXCEPTIONS).filter((k) => !used.has(k))).toEqual([])
+    const groups = new Set(rep.rows.map((r) => r.group))
+    expect(Object.keys(AUDIT_EXCEPTIONS).filter((k) => groups.has(k.slice(k.indexOf(':') + 1)) && !used.has(k))).toEqual([])
   })
 })

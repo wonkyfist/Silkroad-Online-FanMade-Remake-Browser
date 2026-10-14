@@ -62,8 +62,8 @@ describe.skipIf(!have)('skill timing: impact >= release + travel (real export, r
   it('covers every Pacheon attack row', () => {
     const bow = rows.filter(s => s.code.startsWith('SKILL_CH_BOW_'))
     expect(bow.length).toBeGreaterThan(20)
-    // multi-arrow fans, piercing lines, area rain and the straight power shots all fly
-    for (const g of ['CHAIN', 'PIERCE', 'AREA', 'POWER', 'CRITICAL']) expect(bow.some(s => s.code.includes(`_BOW_${g}_`))).toBe(true)
+    // multi-arrow fans, piercing lines, area rain and the critical shots all fly (the power shots are above this build's level cap)
+    for (const g of ['CHAIN', 'PIERCE', 'AREA', 'CRITICAL']) expect(bow.some(s => s.code.includes(`_BOW_${g}_`))).toBe(true)
   })
 
   it('shows every projectile hit no earlier than the client-launched projectile lands, and no later than 2 frames after', () => {
@@ -151,16 +151,11 @@ describe.skipIf(!have || !existsSync(FX_JSON))('bow rows: one arrow per hit, eac
     return { count, hits, launches }
   }
 
-  it('2, 3 and 4 Arrow Combo fly 2, 3 and 4 arrows, one per clip event, in order', () => {
-    const got = ['SKILL_CH_BOW_CHAIN_A_01', 'SKILL_CH_BOW_CHAIN_B_01', 'SKILL_CH_BOW_CHAIN_C_01'].map(c => arrows(byCode.get(c)!))
-    expect(got.map(a => a.count)).toEqual([2, 3, 4])
-    expect(got.map(a => a.hits)).toEqual([2, 3, 4])
-    expect(got[2]!.launches).toEqual([522, 809, 1083, 1340])
-    // the 4 Arrow Combo: 2 + 2 hits, cues 1-2 then 3-4, each segment's later arrow offset from its own release
-    const c1 = byCode.get('SKILL_CH_BOW_CHAIN_C_01')!
-    const c2 = byCode.get(c1.chainNext!)!
-    expect(c1.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[1, 0], [2, 287]])
-    expect(c2.hitCues!.map(c => [c.event, c.offsetMs ?? 0])).toEqual([[3, 0], [4, 257]])
+  it('2 Arrow Combo flies 2 arrows, one per clip event, in order (the 3 and 4 Arrow Combos are above the level cap)', () => {
+    const got = arrows(byCode.get('SKILL_CH_BOW_CHAIN_A_01')!)
+    expect(got.count).toBe(2)
+    expect(got.hits).toBe(2)
+    expect(got.launches).toEqual([440, 790])
   })
 
   it('every Pacheon attack row flies at least one arrow per hit cue and the server lands each hit at release + offset + travel', () => {

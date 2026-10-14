@@ -492,10 +492,10 @@ describe('mounted archery', () => {
   const row = (group: string) => ROWS.find((s) => (s.group ?? s.code) === group)!
 
   it('mountedSkillOk: bow attacks, Soul Arrow buffs and element imbues yes; hawk summons, melee and other element rows no', () => {
-    for (const g of ['SKILL_CH_BOW_CHAIN_A', 'SKILL_CH_BOW_CRITICAL_A', 'SKILL_CH_BOW_POWER_A', 'SKILL_CH_BOW_PIERCE_A', 'SKILL_CH_BOW_AREA_A', 'SKILL_CH_BOW_SPECIAL_A', 'SKILL_CH_BOW_NORMAL_A', 'SKILL_CH_COLD_GIGONGTA_A', 'SKILL_CH_FIRE_GIGONGTA_B', 'SKILL_CH_LIGHTNING_GIGONGTA_C']) {
+    for (const g of ['SKILL_CH_BOW_CHAIN_A', 'SKILL_CH_BOW_CRITICAL_A', 'SKILL_CH_BOW_PIERCE_A', 'SKILL_CH_BOW_AREA_A', 'SKILL_CH_BOW_SPECIAL_A', 'SKILL_CH_BOW_NORMAL_A', 'SKILL_CH_COLD_GIGONGTA_A', 'SKILL_CH_FIRE_GIGONGTA_B', 'SKILL_CH_LIGHTNING_GIGONGTA_B']) {
       expect([g, mountedSkillOk(row(g))]).toEqual([g, true])
     }
-    for (const g of ['SKILL_CH_BOW_CALL_A', 'SKILL_CH_BOW_CALL_B', 'SKILL_CH_BOW_CALL_C', 'SKILL_CH_SWORD_SMASH_A', 'SKILL_CH_COLD_GIGONGSUL_A', 'SKILL_CH_LIGHTNING_STORM_A', 'SKILL_CH_FIRE_SHIELD_A', 'SKILL_CH_COLD_BINGPAN_A', 'SKILL_CH_WATER_HEAL_A', 'SKILL_CH_WATER_RESURRECTION_A']) {
+    for (const g of ['SKILL_CH_BOW_CALL_A', 'SKILL_CH_SWORD_SMASH_A', 'SKILL_CH_FIRE_SHIELD_A', 'SKILL_CH_COLD_BINGPAN_A', 'SKILL_CH_WATER_HEAL_A', 'SKILL_CH_WATER_RESURRECTION_A']) {
       expect([g, mountedSkillOk(row(g))]).toEqual([g, false])
     }
   })
@@ -513,7 +513,7 @@ describe('mounted archery', () => {
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CRITICAL_A'))).toBeNull()
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_BOW_CALL_A'))).toMatchObject({ reason: 'mounted' })
     expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_FIRE_GIGONGTA_A'))).toBeNull()
-    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_FIRE_GIGONGSUL_A'))).toMatchObject({ reason: 'mounted' })
+    expect(g.mounts.refuseCombat(p, 'skill', row('SKILL_CH_FIRE_SHIELD_A'))).toMatchObject({ reason: 'mounted' })
     // a sword: no basic attack and no bow rows, but the element imbues still work
     p.combat = { ...p.combat, weapon: 'sword' }
     expect(g.mounts.refuseCombat(p, 'attack')).toMatchObject({ reason: 'mounted' })

@@ -27,7 +27,7 @@ describe.skipIf(!HAVE)('skill sound audit (real data)', () => {
 
   it('every learnable row has a cast sound and an impact of its own; every named file exists', () => {
     const a = auditSkillSounds(rows, index)
-    expect(a.rows).toBeGreaterThan(1000)
+    expect(a.rows).toBeGreaterThan(200) // every learnable row of this build (over 1,000 at cap 30)
     expect(a.missingCast).toEqual([])
     expect(a.missingHit).toEqual([])
     expect(a.weaponHit).toEqual([])

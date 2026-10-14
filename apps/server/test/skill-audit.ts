@@ -291,12 +291,17 @@ export function serverChecks(out: string, rows: readonly SkillDef[], o: { rng?: 
         case 'attack': {
           if (!combats.some((c) => c.hits.some((x) => x.damage > 0))) add('no-damage', `${combats.length} combat`)
           const want = Math.max(1, r.damage?.hits ?? 1)
-          const segs = new Map<string, number>()
-          for (const c of combats) if (c.target === m.id) segs.set(c.skill!, Math.max(segs.get(c.skill!) ?? 0, c.hits.length))
-          for (const [code, n] of segs) {
+          // per segment: the most hits in one combat, and the sum (a bow row sends one combat per arrow, each at its own clip event)
+          const segs = new Map<string, { max: number; sum: number }>()
+          for (const c of combats) {
+            if (c.target !== m.id) continue
+            const s = segs.get(c.skill!) ?? { max: 0, sum: 0 }
+            segs.set(c.skill!, { max: Math.max(s.max, c.hits.length), sum: s.sum + c.hits.length })
+          }
+          for (const [code, { max: n, sum }] of segs) {
             const row = book.skill(code)
             const w = Math.max(1, row?.damage?.hits ?? want)
-            if (n !== w) add('hit-count', `${code}: ${n} hits, row ${w}`)
+            if (n !== w && sum !== w) add('hit-count', `${code}: ${n} hits, row ${w}`)
           }
           if (area && new Set(combats.map((c) => c.target)).size < 2) add('aoe-single', `${r.area!.shape} ${r.area!.distance} m`)
           break

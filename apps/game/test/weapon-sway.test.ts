@@ -228,7 +228,7 @@ const { NodeIO } = createRequire(join(__dirname, '../../../packages/texpipe/pack
 const has = existsSync(DIR)
 
 describe.skipIf(!has)('the converted weapons', () => {
-  it('17 Chinese weapons carry swaying parts (44 parts); the D8 spear banner, the glaive streamers', async () => {
+  it('3 Chinese weapons carry swaying parts (4 parts): the degree 2-4 spear tassels (degrees 5-8 are above the level cap)', async () => {
     const io = new NodeIO()
     let models = 0
     let parts = 0
@@ -245,10 +245,9 @@ describe.skipIf(!has)('the converted weapons', () => {
         expect(p.length).toBeLessThan(1.4)
       }
     }
-    expect(models).toBe(17)
-    expect(parts).toBe(44)
-    expect(byModel['spear_08']!.some(L => L > 1.2)).toBe(true)
-    expect(byModel['tblade_08']!.length).toBe(6)
-    expect(byModel['bow_08']).toEqual([])
+    expect(models).toBe(3)
+    expect(parts).toBe(4)
+    expect(byModel['spear_04']!.length).toBe(2)
+    expect(byModel['bow_04']).toEqual([])
   })
 })

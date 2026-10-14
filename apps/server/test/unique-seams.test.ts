@@ -108,9 +108,9 @@ describe('UNIQUES and the module slot', () => {
     cleanups.push(on.cleanup)
     expect(on.gameplay.uniques).toBeInstanceOf(Uniques)
     // Play the Boss (docs/PLAY_THE_BOSS.md §3.1) registers right after it; then only the Climb's roles and penalty.
-    expect(on.gameplay.modules.at(-6)).toBe(on.gameplay.uniques)
-    expect(on.gameplay.modules.at(-5)).toBe(on.gameplay.pilot)
-    expect(on.gameplay.modules.slice(-4)).toEqual([on.gameplay.roles, on.gameplay.penalty, on.gameplay.climbRewards, on.gameplay.climbPlaces])
+    expect(on.gameplay.modules.at(-7)).toBe(on.gameplay.uniques)
+    expect(on.gameplay.modules.at(-6)).toBe(on.gameplay.pilot)
+    expect(on.gameplay.modules.slice(-5)).toEqual([on.gameplay.roles, on.gameplay.penalty, on.gameplay.climbRewards, on.gameplay.climbPlaces, on.gameplay.walk])
     expect(on.gameplay.spawner.opts.skipUniqueGroups).toBe(true)
     // The stub is a no-op: nothing to start, normal loot, no summon policy.
     expect(on.gameplay.uniques!.start(on.now)).toBeNull()

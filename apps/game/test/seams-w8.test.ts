@@ -88,13 +88,13 @@ describe('wave-8 lines (W8-FC)', () => {
   const SEVEN = ['mountFeature', 'berserkFeature', 'durabilityFeature', 'alchemyFeature', 'tradeFeature', 'stallFeature', 'guildFeature']
 
   it('appends the seven wave-8 features after wave 7B, in order', () => {
-    expect(WORLD_FEATURES.map(f => f.name).slice(8, 10)).toEqual(['fxWorldFeature', 'postureFeature'])
-    expect(WORLD_FEATURES.map(f => f.name).slice(10, 17)).toEqual(SEVEN)
+    expect(WORLD_FEATURES.map(f => f.name).slice(9, 11)).toEqual(['fxWorldFeature', 'postureFeature'])
+    expect(WORLD_FEATURES.map(f => f.name).filter(n => n !== 'arrowsFeature').slice(11, 18)).toEqual(SEVEN)
   })
 
   // I8: the lanes filled the stubs, so the W8-FC "empty stub" checks became order checks.
   it('the lane features are factories; a feature with no beforeGroundMove never consumes a ground move', () => {
-    for (const make of WORLD_FEATURES.slice(10)) expect(typeof make, make.name).toBe('function')
+    for (const make of WORLD_FEATURES.slice(11)) expect(typeof make, make.name).toBe('function')
     const empty = () => ({})
     const fs = new WorldFeatures({} as WorldFeatureContext, [empty, empty])
     expect(fs.some(f => f.beforeGroundMove?.())).toBe(false)

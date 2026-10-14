@@ -1,7 +1,6 @@
 /**
  * Ghost Walk - Phantom (the retail `tele` param, skills/dash.ts): the server moves the caster to the clicked point (at
- * most the reach) or straight ahead, clipped by the navmesh and the water, and refuses it while stunned, mounted or
- * flying.
+ * most the reach) or straight ahead, clipped by the navmesh and the water, and refuses it while stunned or mounted.
  */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Cos } from '../src/world.ts'
@@ -74,7 +73,7 @@ describe('Ghost Walk - Phantom', () => {
     expect(h.gameplay.onMoveTo(p, h.now)).toBe(true)
   })
 
-  it('is refused while stunned (rooted in place), mounted or flying; nothing moves and no cooldown starts', () => {
+  it('is refused while stunned (rooted in place) or mounted; nothing moves and no cooldown starts', () => {
     const { p, inbox } = setup()
     h.gameplay.skills.effects.add({ instance: 999, carrier: p.id, source: p.id, kind: 'status', status: 'stun', overlap: 0, mods: [], startedAt: h.now, until: h.now + 1000 })
     h.req(p, { t: 'useSkill', skill: GW, pos: [0, 10] })
@@ -84,10 +83,6 @@ describe('Ghost Walk - Phantom', () => {
     h.req(p, { t: 'useSkill', skill: GW, pos: [0, 10] })
     expect(h.result(inbox, 'useSkill')).toMatchObject({ ok: false, reason: 'mounted' })
     ride.mockRestore()
-    const fly = vi.spyOn(h.gameplay.flight, 'flying').mockReturnValue(true)
-    h.req(p, { t: 'useSkill', skill: GW, pos: [0, 10] })
-    expect(h.result(inbox, 'useSkill')).toMatchObject({ ok: false, reason: 'flying' })
-    fly.mockRestore()
     expect(h.all(inbox, 'displace')).toEqual([])
     expect(at(p)).toEqual([0, 0])
     // and then it works

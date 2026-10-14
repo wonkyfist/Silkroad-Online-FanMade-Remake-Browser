@@ -56,7 +56,7 @@ describe('wave-4 lane lines', () => {
   })
 
   it('wave 7B (FX-C2) appends the world effects and posture features after them', () => {
-    expect(WORLD_FEATURES.map(f => f.name).slice(8, 10)).toEqual(['fxWorldFeature', 'postureFeature'])
+    expect(WORLD_FEATURES.map(f => f.name).slice(9, 11)).toEqual(['fxWorldFeature', 'postureFeature'])
   })
 
   it('appends the quest and party mocks to the default mock extensions', () => {
