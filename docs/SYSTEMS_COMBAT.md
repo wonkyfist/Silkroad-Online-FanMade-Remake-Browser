@@ -539,7 +539,16 @@ Also parryRate (col 70) and hitRate (col 115) where non-zero.
 
 Rule: a worn item at +N adds `perPlus[k] × N` to its stat k. Attacks add to both ends of the range. The addition happens in `playerCombatStats` from `stack.plus`, which today ignores plus [confirmed code: `worn` passes `stack` but the loop reads only `def.stats`].
 
-`ItemDef.reinforcePct` (attack or defence reinforcement from STR/INT, cols 82–85, 105–112) is a separate retail mechanic. It stays unused [decision].
+#### 4.2a STR/INT reinforce (stats audit 2026-10-13) [decision: the user]
+
+`ItemDef.reinforcePct` (cols 82–85, 105–112; percent [min, max], the server uses the midpoint) is now applied, as in
+retail: the weapon's physical attack ends get STR × `physAttackMin` / `physAttackMax` %, its magical ends INT ×
+`magAttackMin` / `magAttackMax` %; every worn armour piece, garment, protector and shield adds STR × `physDefence` %
+to physical defence and INT × `magDefence` % to magical defence (`formulas.ts` `playerCombatStats`). A broken piece
+gives nothing; bare hands (or a weapon without the data) keep 0.2 attack a point; the old flat 0.15 defence a point is
+gone. The Climb keeps each row's retail percents (only the required level moves). Broken pieces also stop counting
+towards a degree or seal set bonus (`climb/rewards.ts`). The item tooltip shows the percents ("Phy. reinforce 52.8 % ~
+60.7 % (of STR)" on a D4 blade).
 
 ### 4.3 Success rate
 

@@ -466,7 +466,16 @@ export interface ItemDef {
   perPlus?: Partial<Record<PerPlusStat, number>>
   /** Alchemy materials (category 'alchemy'): what they fit and their per-plus success percents. */
   reinforce?: ItemReinforce
+  /**
+   * Retail STR/INT reinforcement, percent [min, max] (itemdata cols 82–85, 105–112; docs/SYSTEMS_COMBAT.md §4.2a): a
+   * weapon adds STR × physAttackMin/Max % to its physical attack ends and INT × magAttackMin/Max % to its magical ones;
+   * an armour piece or shield adds STR × physDefence % and INT × magDefence % (formulas.ts playerCombatStats).
+   */
+  reinforcePct?: Partial<Record<ReinforceStat, Range>>
 }
+
+/** The keys of ItemDef.reinforcePct. */
+export type ReinforceStat = 'physAttackMin' | 'physAttackMax' | 'magAttackMin' | 'magAttackMax' | 'physDefence' | 'magDefence'
 
 /** One item in a bag or equipment slot (also what the server stores). */
 export interface ItemStack {

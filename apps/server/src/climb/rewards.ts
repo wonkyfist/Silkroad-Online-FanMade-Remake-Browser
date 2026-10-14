@@ -33,6 +33,7 @@ import {
   type GameplayRequest,
   type ItemDef,
 } from '@sro/shared'
+import { isBroken } from '../formulas.ts'
 import { addGold } from '../inventory.ts'
 import type { Gameplay } from '../gameplay.ts'
 import type { Answer, GameplayMessage, GameplayModule, KillOwner } from '../modules.ts'
@@ -184,7 +185,8 @@ export class ClimbRewards implements GameplayModule {
     if (!this.on) return []
     const worn: ItemDef[] = []
     for (const st of Object.values(p.equip)) {
-      const def = st ? this.g.data.item(st.code) : undefined
+      // A broken piece (durability 0) gives no stats, so it does not count towards a set either (stats audit).
+      const def = st && !isBroken(st) ? this.g.data.item(st.code) : undefined
       if (def) worn.push(def)
     }
     const set = climbSetBonus(worn).mods

@@ -109,6 +109,17 @@ describe('set bonuses (§4.2)', () => {
     expect(six.maxHp).toBe(Math.round(bare.maxHp * 1.05))
     expect(h.gameplay.skills.modsFor(six).physDefencePct).toBe(3)
   })
+
+  it('a broken piece (durability 0) does not count towards the set (stats audit)', () => {
+    const { h } = boot()
+    const bare = h.hero({ level: 10 }).p
+    const six = h.hero({ level: 10, wear: ARMOUR.map((a) => a.code) }).p
+    six.equip.chest = { ...six.equip.chest!, durability: 0 }
+    for (const p of [bare, six]) h.gameplay.refresh(p)
+    // five whole pieces: the 4-piece step only
+    expect(six.maxHp).toBe(Math.round(bare.maxHp * 1.03))
+    expect(h.gameplay.skills.modsFor(six).physDefencePct ?? 0).toBe(0)
+  })
 })
 
 describe('Arts (§5.1)', () => {

@@ -432,6 +432,11 @@ export const en = {
   'item.magAbsorb': 'Mag. absorption {min} ~ {max}%',
   'item.hitRate': 'Attack rate {min} ~ {max}',
   'item.critRate': 'Critical {min} ~ {max}',
+  // stats audit (docs/SYSTEMS_COMBAT.md §4.2a): the retail STR/INT reinforcement, per point of STR / INT
+  'item.physReinforce': 'Phy. reinforce {min} % ~ {max} % (of STR)',
+  'item.magReinforce': 'Mag. reinforce {min} % ~ {max} % (of INT)',
+  'item.physDefReinforce': 'Phy. reinforce {pct} % (of STR)',
+  'item.magDefReinforce': 'Mag. reinforce {pct} % (of INT)',
   'item.durability': 'Durability {cur} / {max}',
   'item.durabilityRange': 'Durability {min} ~ {max}',
   'item.value': '{min}',

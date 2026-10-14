@@ -1,4 +1,4 @@
-import type { HitOutcome, ItemDef, ItemStack, MobDef, MobVariant, PerPlusStat, Range, WeaponType } from '@sro/shared'
+import type { HitOutcome, ItemDef, ItemStack, MobDef, MobVariant, PerPlusStat, Range, ReinforceStat, WeaponType } from '@sro/shared'
 
 /**
  * Every combat and growth number the server uses, in one place. Sources:
@@ -82,10 +82,12 @@ export function levelDiffBonus(attackerLevel: number, targetLevel: number): numb
 export const PLAYER_BASE = {
   fist: [3, 5] as Range,
   fistRange: 1,
-  /** Attack gained per point of STR (physical) / INT (magical), added to both ends of the range. */
+  /**
+   * Attack gained per point of STR (physical) / INT (magical) with bare hands or a weapon without reinforce data. An
+   * armed player uses the weapon's reinforce percent instead; defence comes only from the worn pieces' reinforce
+   * (playerCombatStats; was a flat 0.15 a point before the stats audit).
+   */
   attackPerStat: 0.2,
-  /** Defence gained per point of STR (physical) / INT (magical). */
-  defencePerStat: 0.15,
   /** Hit and parry rate: base + perLevel x level. */
   rateBase: 20,
   ratePerLevel: 2,
@@ -121,6 +123,13 @@ export function plusBonus(def: ItemDef, stack: ItemStack, k: PerPlusStat): numbe
  * Derived combat stats of a player from level, STR/INT and worn items (the item roll is the def's range).
  * Wave 8: a worn item at +N adds perPlus x N to each of its stats (attacks: both ends of the range); a broken worn item
  * (durability 0) gives no stats and no perPlus. A broken weapon still decides the reach and the weapon family.
+ *
+ * STR and INT (docs/SYSTEMS_COMBAT.md §4.2a, the retail reinforcement; stats audit 2026-10-13): the weapon adds
+ * STR × its physical reinforce % to its physical attack (min and max ends each with their own percent) and INT × its
+ * magical reinforce % to its magical attack; every worn armour piece and shield adds STR × its physical-defence
+ * reinforce % and INT × its magical-defence reinforce %. Bare hands (or a broken weapon, or an authored weapon without
+ * reinforce data) fall back to PLAYER_BASE.attackPerStat. A hybrid gets each half in proportion to its STR and INT,
+ * and its damage is then scaled by the matching balance (STR for physical, INT for magical: damageRoll).
  */
 export function playerCombatStats(level: number, str: number, int: number, worn: { def: ItemDef; stack: ItemStack }[]): CombatStats & { range: number; weapon: WeaponType | 'fist' } {
   const wielded = worn.find((w) => w.def.category === 'weapon')
@@ -128,6 +137,13 @@ export function playerCombatStats(level: number, str: number, int: number, worn:
   const armed = wielded && !isBroken(wielded.stack) ? wielded : undefined
   const phys: Range = armed?.def.stats?.physAttack ? [...armed.def.stats.physAttack] : [...PLAYER_BASE.fist]
   const mag: Range = armed?.def.stats?.magAttack ? [...armed.def.stats.magAttack] : [0, 0]
+  const rp = armed?.def.reinforcePct
+  // Percent per point of STR/INT on each end of the attack ranges (the weapon's reinforce, else the bare-hand rule).
+  const perStat = (k: ReinforceStat) => (rp?.[k] ? mid(rp[k]) / 100 : PLAYER_BASE.attackPerStat)
+  phys[0] += str * perStat('physAttackMin')
+  phys[1] += str * perStat('physAttackMax')
+  mag[0] += int * perStat('magAttackMin')
+  mag[1] += int * perStat('magAttackMax')
   if (armed) {
     const pa = plusBonus(armed.def, armed.stack, 'physAttack')
     const ma = plusBonus(armed.def, armed.stack, 'magAttack')
@@ -149,6 +165,11 @@ export function playerCombatStats(level: number, str: number, int: number, worn:
     if (!s || isBroken(stack)) continue
     physDefence += mid(s.physDefence) + plusBonus(def, stack, 'physDefence')
     magDefence += mid(s.magDefence) + plusBonus(def, stack, 'magDefence')
+    // Armour, garments, protectors and shields: STR and INT reinforce their defences (weapons carry attack reinforce).
+    if (def.category !== 'weapon' && def.reinforcePct) {
+      physDefence += (str * mid(def.reinforcePct.physDefence)) / 100
+      magDefence += (int * mid(def.reinforcePct.magDefence)) / 100
+    }
     parry += mid(s.parryRate) + plusBonus(def, stack, 'parryRate')
     block += mid(s.blockRate)
     physAbsorb += mid(s.physAbsorb) + plusBonus(def, stack, 'physAbsorb')
@@ -157,14 +178,12 @@ export function playerCombatStats(level: number, str: number, int: number, worn:
     crit += mid(s.critRate)
   }
   const rate = PLAYER_BASE.rateBase + PLAYER_BASE.ratePerLevel * level
-  const sa = Math.round(str * PLAYER_BASE.attackPerStat)
-  const ia = Math.round(int * PLAYER_BASE.attackPerStat)
   return {
     level,
-    physAttack: [Math.round(phys[0]) + sa, Math.round(phys[1]) + sa],
-    magAttack: [Math.round(mag[0]) + ia, Math.round(mag[1]) + ia],
-    physDefence: Math.round(physDefence + str * PLAYER_BASE.defencePerStat),
-    magDefence: Math.round(magDefence + int * PLAYER_BASE.defencePerStat),
+    physAttack: [Math.round(phys[0]), Math.round(phys[1])],
+    magAttack: [Math.round(mag[0]), Math.round(mag[1])],
+    physDefence: Math.round(physDefence),
+    magDefence: Math.round(magDefence),
     physAbsorb: Math.round(physAbsorb),
     magAbsorb: Math.round(magAbsorb),
     hitRate: Math.round(rate + hit),

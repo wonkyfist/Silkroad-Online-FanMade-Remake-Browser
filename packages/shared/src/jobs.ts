@@ -453,7 +453,7 @@ export const JOB_SETTINGS_DEFAULTS: Readonly<JobSettings> = Object.freeze({
   exp: { traderProfitDiv: 10, traderStarMul: [1, 1.1, 1.2, 1.35, 1.5], hunterEscortPct: 40, hunterThiefKill: 300, hunterWallCapture: 2000, thiefDenDiv: 8, thiefTransportKill: 200 },
   storm: { tornadoScatterPct: 20, snowSpeedPct: -10 },
   event: { enabled: false, durationMin: 60, slots: [{ weekday: 6, time: '20:00' }], tz: '', demand: 1.4, expMul: 1.25, escortMul: 1.5, ambushMul: 1.5, denMul: 1.2, rewardGold: 5000, rewardRuns: 3, busyWaitMin: 30 },
-  transport: { leashM: 25, waitM: 60, lingerS: 60, ownerDeathS: 30, ringM: 20, gapM: 3, thiefDefence: [15, 15, 20, 45], thiefMul: 0.5 },
+  transport: { leashM: 25, waitM: 60, lingerS: 60, ownerDeathS: 30, ringM: 20, gapM: 3, thiefDefence: [15, 15, 20, 45], thiefMul: 0.4 },
   ambush: { perStar: [0, 0.5, 1, 1.5, 2.5], groupMin: 3, groupMax: 5, fromPct: 30, toPct: 80, offRoadM: 30, farKm: 1.6, lifeMin: 5 },
 } satisfies JobSettings)
 

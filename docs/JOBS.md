@@ -765,7 +765,7 @@ The 2026-10-08 look: `Dropbox/.../jobs/admin.png` (all six tabs, sample data).
   attacks only). Before: the transports' fixed defence 60 against `hunter.pvpMul` 0.5 left a level-20 Thief at 87-159 s
   on a Donkey (level 15: 222-716 s) and a Bounty Hunter at 100-293 s on a robber. New settings (Settings tab, live):
   `transport.thiefDefence` [15, 15, 20, 45] per tier (players only; monsters keep TRANSPORT_COMBAT's 60),
-  `transport.thiefMul` 0.5 (instead of pvpMul), `robbery.hunterMul` 3 (an on-duty Bounty Hunter's hits on a robber;
+  `transport.thiefMul` 0.4 (instead of pvpMul; 0.5 until the 2026-10-13 stats audit made STR count through the weapon reinforce), `robbery.hunterMul` 3 (an on-duty Bounty Hunter's hits on a robber;
   the siege's Wanted keep pvpMul; the robber's hits back stay × pvpMul).
 
   | Level (attack, HP) | Donkey 2,500 | Horse 3,800 | Thoroughbred 5,000 | Ironclad 7,000 | Robber subdued |

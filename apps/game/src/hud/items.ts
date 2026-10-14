@@ -207,6 +207,21 @@ export class ItemCatalog {
       const r = fmtRange(s[k], (stack.plus ?? 0) * (perPlus[k] ?? 0))
       if (r) stats.push({ text: t(key, r), cls: dur === 'broken' ? 'struck' : 'stat' })
     }
+    // The STR/INT reinforcement the server adds (formulas.ts playerCombatStats): weapons per attack end, armour per defence.
+    const rp = d.reinforcePct
+    if (rp) {
+      const cls = dur === 'broken' ? 'struck' : 'stat'
+      const m = (r: [number, number] | undefined) => (r ? String(Math.round(((r[0] + r[1]) / 2) * 10) / 10) : null)
+      if (d.category === 'weapon') {
+        const pMin = m(rp.physAttackMin), pMax = m(rp.physAttackMax), mMin = m(rp.magAttackMin), mMax = m(rp.magAttackMax)
+        if (pMin && pMax) stats.push({ text: t('item.physReinforce', { min: pMin, max: pMax }), cls })
+        if (mMin && mMax) stats.push({ text: t('item.magReinforce', { min: mMin, max: mMax }), cls })
+      } else {
+        const pd = m(rp.physDefence), md = m(rp.magDefence)
+        if (pd) stats.push({ text: t('item.physDefReinforce', { pct: pd }), cls })
+        if (md) stats.push({ text: t('item.magDefReinforce', { pct: md }), cls })
+      }
+    }
     const max = maxDurability(d)
     if (max !== null && dur) {
       // Wave 8 DR (D11): "cur / max" (a full stack is "max / max"), yellow at <= DUR_WARN_PCT, red "(broken)" at 0.
