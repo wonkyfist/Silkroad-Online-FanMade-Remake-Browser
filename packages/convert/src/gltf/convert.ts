@@ -464,16 +464,24 @@ export function isWeaponPath(path: string): boolean {
   return /(^|[\\/])item[\\/][^\\/]+[\\/](weapon|shield)[\\/]/i.test(path)
 }
 
+/**
+ * Alpha-test cutoff of a weapon's or shield's cut-outs (apps/game three/weapon-solid.ts WEAPON_ALPHA_CUTOFF): the
+ * openwork is alpha 0 exactly, the specular mask starts at 17/255 (DXT3's smallest step).
+ */
+export const WEAPON_ALPHA_CUTOFF = 8 / 255
+
 interface AlphaDecision {
   mode: 'OPAQUE' | 'MASK' | 'BLEND'
   reason: string
+  /** MASK only: a cutoff of its own (weapon cut-outs); absent: the conversion's. */
+  cutoff?: number
 }
 
 /**
  * BMT has a single alpha bit (0x200) and no test/blend distinction, so the texture decides: alpha-tested
  * cut-outs (hair, fur) are mostly 0 or 255, true translucency is mostly in between.
  */
-function decideAlpha(material: BmtMaterial, rgba: Uint8Array | null, weapon = false): AlphaDecision {
+export function decideAlpha(material: Pick<BmtMaterial, 'flags'>, rgba: Uint8Array | null, weapon = false): AlphaDecision {
   if (!(material.flags & BMT_FLAG.alpha)) {
     return { mode: 'OPAQUE', reason: 'no BMT alpha flag (0x200); texture alpha, if any, is a specular/env mask' }
   }
@@ -491,7 +499,11 @@ function decideAlpha(material: BmtMaterial, rgba: Uint8Array | null, weapon = fa
   if (partial > 2 * zero) {
     // A weapon's or shield's partial alpha is its specular/env mask (sword1_2_3, spear_1_5, tblade_1_5, bow_1_5,
     // Shield_04: 79-94 % partial), not coverage: drawn as coverage the blade went see-through in the middle
-    // (docs/RARITY.md §5.8). They stay opaque; the mask stays in the texture's alpha.
+    // (docs/RARITY.md §5.8). They stay opaque; the mask stays in the texture's alpha. Their openwork (the gaps between
+    // a degree 8 spear's star blades) is alpha 0 exactly: alpha-tested just above 0, it is cut out (§5.11).
+    if (weapon && zero > 0) {
+      return { mode: 'MASK', cutoff: WEAPON_ALPHA_CUTOFF, reason: `weapon/shield: alpha-0 cut-outs alpha-tested at 8/255; the rest is a specular/env mask (${pct(partial)}% partial, ${pct(zero)}% zero)` }
+    }
     if (weapon) return { mode: 'OPAQUE', reason: `weapon/shield: texture alpha is a specular/env mask (${pct(partial)}% partial, ${pct(zero)}% zero)` }
     return { mode: 'BLEND', reason: `BMT alpha flag; texture alpha mostly partial (${pct(partial)}% partial, ${pct(zero)}% zero)` }
   }
@@ -715,7 +727,7 @@ export function convertResource(bsrPath: string, options: ConvertOptions): Conve
     const alpha = decideAlpha(src, tex?.rgba ?? null, isWeaponPath(bsrPath))
     const doubleSided = (src.flags & BMT_FLAG.twoSided) !== 0
     material.setAlphaMode(alpha.mode).setDoubleSided(doubleSided)
-    if (alpha.mode === 'MASK') material.setAlphaCutoff(alphaCutoff)
+    if (alpha.mode === 'MASK') material.setAlphaCutoff(alpha.cutoff ?? alphaCutoff)
     const emissive = src.emissive.slice(0, 3).map(c => Math.min(1, Math.max(0, c))) as Vec3
     if (emissive.some(c => c > 0)) material.setEmissiveFactor(emissive)
     if (tex?.texture) {
@@ -732,7 +744,7 @@ export function convertResource(bsrPath: string, options: ConvertOptions): Conve
       texture: texPath || null,
       ...(tex?.format ? { textureFormat: tex.format, textureSize: tex.size } : {}),
       alphaMode: alpha.mode,
-      ...(alpha.mode === 'MASK' ? { alphaCutoff } : {}),
+      ...(alpha.mode === 'MASK' ? { alphaCutoff: alpha.cutoff ?? alphaCutoff } : {}),
       alphaReason: alpha.reason,
       doubleSided,
       ...(lightmap ? { lightmap } : {}),

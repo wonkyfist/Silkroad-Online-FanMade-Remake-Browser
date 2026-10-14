@@ -211,6 +211,16 @@ Unchanged from v1: the name in the tier colour with its banner, the slot frame a
 - **Shields**: no added model. The tier material goes on the shield's own mesh at full strength (its region is the
   whole plate); light particles around it. shield-face.ts and its textures are deleted.
 
+### 5.11 Weapon openwork is cut out
+
+- **Cut-outs** [confirmed]: the weapon/shield texture alpha (DXT3) is a specular/env mask in its partial values *and*,
+  on a BMT alpha-bit material (0x200), cut-outs at exactly alpha 0 (the gaps between the degree 8 spear's star blades, the
+  glaive/blade/bow openwork, shield_07/08). §5.8 made them opaque, so the holes drew as dark panels with line patterns.
+  Now a flagged material is alpha-tested at 8/255 (below DXT3's smallest step 17/255): the openwork goes, the masked metal
+  stays (`three/weapon-solid.ts` at load, `gltf/convert.ts decideAlpha` for re-exports). Shadow/depth passes use the same
+  alpha test; the +N glow and rarity colour run after the discard; the rarity shells (`world/rarity/shell.ts`) discard on
+  the weapon's alpha-test texture so the aura follows the true silhouette. Shots: `overall-pass/rarity/alpha-fix/`.
+
 ## 6. GM
 
 - `/item ITEM_CH_SWORD_03_C_RARE` gives any seal.

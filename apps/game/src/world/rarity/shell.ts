@@ -8,13 +8,17 @@
  * (tassels) get no shell: they move in their own shader. Only your own and the nearest rare weapons (the effects layer's full LOD) carry shells:
  * three draws each.
  */
-import { Constants, Mesh, Quaternion, ShaderLanguage, ShaderMaterial, ShaderStore, Vector4, type AbstractMesh, type Scene } from '@babylonjs/core'
+import { Constants, Mesh, Quaternion, ShaderLanguage, ShaderMaterial, ShaderStore, VertexBuffer, Vector4, type AbstractMesh, type BaseTexture, type Scene } from '@babylonjs/core'
 import { SWAY_KIND } from '../../three/weapon-sway-parts.ts'
 
 const VS_WGSL = /* wgsl */ `
 attribute position: vec3f;
 #ifdef SWAY
 attribute ${SWAY_KIND}: vec4f;
+#endif
+#ifdef CUT
+attribute uv: vec2f;
+varying vUV: vec2f;
 #endif
 uniform world: mat4x4f;
 uniform view: mat4x4f;
@@ -52,14 +56,29 @@ fn main(input: VertexInputs) -> FragmentInputs {
 #endif
   vertexOutputs.position = uniforms.projection * vec4f(vp, 1.0);
   vertexOutputs.vT = t;
+#ifdef CUT
+  vertexOutputs.vUV = vertexInputs.uv;
+#endif
 }
 `
 const FS_WGSL = /* wgsl */ `
 uniform shC: vec4f;
 uniform shF: vec4f;
 varying vT: f32;
+#ifdef CUT
+uniform shK: vec4f;
+varying vUV: vec2f;
+var shTexSampler: sampler;
+var shTex: texture_2d<f32>;
+#endif
 @fragment
 fn main(input: FragmentInputs) -> FragmentOutputs {
+#ifdef CUT
+  // the weapon's own cut-outs (weapon-solid.ts): no shell where the weapon has no surface
+  if (textureSample(shTex, shTexSampler, fragmentInputs.vUV).a < uniforms.shK.x) {
+    discard;
+  }
+#endif
   let t = fragmentInputs.vT;
   let run = 0.55 + 0.45 * sin(t * uniforms.shF.y - uniforms.shF.x * 3.2);
   let run2 = pow(0.5 + 0.5 * sin(t * 4.0 - uniforms.shF.x * 1.3), 4.0);
@@ -72,6 +91,10 @@ precision highp float;
 attribute vec3 position;
 #ifdef SWAY
 attribute vec4 ${SWAY_KIND};
+#endif
+#ifdef CUT
+attribute vec2 uv;
+varying vec2 vUV;
 #endif
 uniform mat4 world;
 uniform mat4 view;
@@ -101,6 +124,9 @@ void main(void) {
 #endif
   gl_Position = projection * vec4(vp, 1.0);
   vT = t;
+#ifdef CUT
+  vUV = uv;
+#endif
 }
 `
 const FS_GLSL = /* glsl */ `
@@ -108,7 +134,15 @@ precision highp float;
 uniform vec4 shC;
 uniform vec4 shF;
 varying float vT;
+#ifdef CUT
+uniform vec4 shK;
+uniform sampler2D shTex;
+varying vec2 vUV;
+#endif
 void main(void) {
+#ifdef CUT
+  if (texture2D(shTex, vUV).a < shK.x) discard;
+#endif
   float run = 0.55 + 0.45 * sin(vT * shF.y - shF.x * 3.2);
   float run2 = pow(0.5 + 0.5 * sin(vT * 4.0 - shF.x * 1.3), 4.0);
   float k = shC.w * (run * 0.7 + run2 * 0.6) * shF.z;
@@ -156,15 +190,32 @@ interface Layer {
   f: Vector4
 }
 
+/**
+ * The texture that cuts `mesh`'s material (its alpha test: a weapon's openwork, weapon-solid.ts) and the cutoff, or
+ * null when it is not alpha-tested. Read every frame: a texture-tier swap may move the mask to the opacity texture.
+ */
+export function cutOf(mesh: AbstractMesh): { texture: BaseTexture; cutoff: number } | null {
+  const m = mesh.material
+  if (!m || !m.needAlphaTesting()) return null
+  const texture = m.getAlphaTestTexture()
+  return texture ? { texture, cutoff: (m as { alphaCutOff?: number }).alphaCutOff ?? 0.5 } : null
+}
+
 /** The two shells of one weapon mesh. */
 export class RareShell {
   private readonly layers: Layer[] = []
   private readonly eye = new Vector4()
+  private readonly cutK = new Vector4()
+  /** The shells discard where the weapon is cut out (its alpha test), so they follow its true silhouette. */
+  private readonly cut: boolean
   private disposed = false
 
   constructor(readonly source: AbstractMesh, frame: ShellFrame, scene: Scene) {
     register()
     const sway = source.isVerticesDataPresent(SWAY_KIND)
+    this.cut = !!cutOf(source) && source.isVerticesDataPresent(VertexBuffer.UVKind)
+    const attributes = ['position', ...(sway ? [SWAY_KIND] : []), ...(this.cut ? [VertexBuffer.UVKind] : [])]
+    const defines = [...(sway ? ['#define SWAY'] : []), ...(this.cut ? ['#define CUT'] : [])]
     for (const layer of SHELL_LAYERS) {
       const outer = layer.margin > 1
       const mesh = new Mesh(`rareShell${outer ? 'O' : 'I'}`, scene, null, source as Mesh, true, false)
@@ -177,9 +228,10 @@ export class RareShell {
       mesh.alphaIndex = 899
       mesh.metadata = { sroWorld: 'fx' }
       const mat = new ShaderMaterial(`rareShellMat${outer ? 'O' : 'I'}`, scene, 'sroRareShell', {
-        attributes: sway ? ['position', SWAY_KIND] : ['position'],
-        uniforms: ['world', 'view', 'projection', 'shO', 'shA', 'shN', 'shP', 'shE', 'shC', 'shF'],
-        defines: sway ? ['#define SWAY'] : [],
+        attributes,
+        uniforms: ['world', 'view', 'projection', 'shO', 'shA', 'shN', 'shP', 'shE', 'shC', 'shF', 'shK'],
+        samplers: this.cut ? ['shTex'] : [],
+        defines,
         needAlphaBlending: true,
         shaderLanguage: scene.getEngine().isWebGPU ? ShaderLanguage.WGSL : ShaderLanguage.GLSL,
       })
@@ -196,6 +248,7 @@ export class RareShell {
       mat.setVector4('shC', c)
       mat.setVector4('shF', f)
       mat.setVector4('shE', this.eye)
+      if (this.cut) this.bindCut(mat)
       mesh.material = mat
       this.layers.push({ mesh, mat, c, f })
     }
@@ -220,7 +273,16 @@ export class RareShell {
       L.mat.setVector4('shC', L.c)
       L.mat.setVector4('shF', L.f)
       L.mat.setVector4('shE', this.eye)
+      if (this.cut) this.bindCut(L.mat)
     }
+  }
+
+  private bindCut(mat: ShaderMaterial): void {
+    const c = cutOf(this.source)
+    // No longer alpha-tested (a test switch): nothing is cut.
+    this.cutK.set(c ? c.cutoff : -1, 0, 0, 0)
+    mat.setVector4('shK', this.cutK)
+    if (c) mat.setTexture('shTex', c.texture)
   }
 
   dispose(): void {

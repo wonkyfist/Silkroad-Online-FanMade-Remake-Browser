@@ -11,7 +11,7 @@
  */
 import type { Document, Material } from '@gltf-transform/core'
 import { decodeDds, parseDdj } from '@sro/formats'
-import type { ReadFile, Sidecar } from '../gltf/convert.ts'
+import { WEAPON_ALPHA_CUTOFF, type ReadFile, type Sidecar } from '../gltf/convert.ts'
 
 export const MASK_SURFACE_LIMIT = 0.5
 const BARYCENTRIC_SAMPLES: ReadonlyArray<readonly [number, number]> = [[1 / 3, 1 / 3], [2 / 3, 1 / 6], [1 / 6, 2 / 3], [1 / 6, 1 / 6], [0.5, 0.25], [0.25, 0.5]]
@@ -82,6 +82,8 @@ export function fixEquipmentAlpha(doc: Document, sidecar: Sidecar, read: ReadFil
       if (!material || material.getAlphaMode() === 'OPAQUE') continue
       const info = sidecar.materials.find(m => m.name === material.getName())
       if (!info?.texture) continue
+      // A weapon's alpha-0 cut-outs (decideAlpha): the rest of its alpha is a specular mask, never below-128 coverage.
+      if (info.alphaCutoff === WEAPON_ALPHA_CUTOFF) continue
       let image = images.get(info.texture)
       if (!image) {
         image = decodeDds(parseDdj(read(info.texture)).dds)
