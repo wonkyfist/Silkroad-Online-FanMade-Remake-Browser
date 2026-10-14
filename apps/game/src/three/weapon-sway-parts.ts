@@ -237,7 +237,7 @@ export function swayParts(positions: ArrayLike<number>, indices: ArrayLike<numbe
     const pinLow = nearest(l0) <= nearest(l1)
     const pinD = pinLow ? l0 : l1
     const dir = pinLow ? 1 : -1
-    const stiff = reason === 'card' && W > 0.08 ? 0.45 : T > 0.01 ? 0.9 : 0.7
+    const stiff = reason === 'card' ? (W > 0.08 ? 0.45 : 0.55) : T > 0.01 ? 0.9 : 0.7
     const phase = hash01(k * 7.13 + isl.c[0] * 31 + isl.c[2] * 17)
     for (const i of isl.vs) {
       const d = (positions[3 * i]! - isl.c[0]) * a0[0]! + (positions[3 * i + 1]! - isl.c[1]) * a0[1]! + (positions[3 * i + 2]! - isl.c[2]) * a0[2]!
@@ -262,17 +262,72 @@ export function swayStrength(gustMs: number): number {
 }
 
 /**
- * The TS mirror of the vertex sway (tests): the offset (world xz, y) of a vertex of weight `w`, phase `ph`, part
- * length `L`, stiffness `k`, at `t` s in wind (dirX, dirZ) of strength `s`, plus the inertia lag `lag` (m).
+ * The TS mirror of the vertex sway (tests): the world offset of a vertex of weight `w`, phase `ph`, part length `L`,
+ * stiffness `k`, at `t` s in wind (dirX, dirZ) of strength `s`, on a card facing `normal`, plus the inertia lag.
  */
-export function swayOffset(w: number, ph: number, L: number, k: number, t: number, dirX: number, dirZ: number, s: number, lag: readonly [number, number, number] = [0, 0, 0]): [number, number, number] {
+export function swayOffset(w: number, ph: number, L: number, k: number, t: number, dirX: number, dirZ: number, s: number, lag: readonly [number, number, number] = [0, 0, 0], normal: readonly [number, number, number] = [-dirZ, 0, dirX]): [number, number, number] {
   if (w <= 0) return [0, 0, 0]
-  const f = Math.pow(w, 1.6) * L / Math.max(0.3, k)
+  const l = L / Math.max(0.3, k)
   const a = ph * 6.2831853
-  const gust = 0.55 + 0.3 * Math.sin(t * 1.3 + a) + 0.15 * Math.sin(t * 3.7 + a * 2 + w * 2)
-  const flut = Math.sin(t * (6 + 3 * s) + a * 3 - w * 4) * (0.1 + 0.22 * s)
-  const push = 0.35 * s * gust
-  const px = -dirZ, pz = dirX
+  const gust = 0.6 + 0.25 * Math.sin(t * 1.3 + a) + 0.15 * Math.sin(t * 3.7 + a * 2)
+  const rip = (Math.sin(t * (4 + 4 * s) + a - w * 7) + 0.45 * Math.sin(t * (7 + 5 * s) + a * 3 - w * 12)) * (0.13 + 0.12 * s) * gust
+  const push = (0.12 + 0.3 * s) * gust
   const g = Math.pow(w, 1.6)
-  return [f * (dirX * push + px * flut) + g * L * lag[0], f * (0.12 * s * gust) + g * L * lag[1], f * (dirZ * push + pz * flut) + g * L * lag[2]]
+  const r = Math.pow(w, 1.2)
+  return [
+    l * (normal[0] * rip * r + dirX * push * g) + g * L * lag[0],
+    l * (normal[1] * rip * r + 0.08 * s * gust * g) + g * L * lag[1],
+    l * (normal[2] * rip * r + dirZ * push * g) + g * L * lag[2],
+  ]
+}
+
+/** One vertex stream: its values and floats per vertex. */
+export interface Stream {
+  data: ArrayLike<number>
+  stride: number
+}
+
+/**
+ * Splits the triangles of the swaying parts so they bend along their length (pure, tests): a retail tassel or streamer
+ * is a card of 4-6 vertices, which can only tilt; each pass cuts every triangle whose three vertices are all in a part
+ * (`member(i)`) into four at its edge midpoints (shared per edge: no cracks). Every stream is interpolated (integer
+ * streams such as skin indices take the first end's value); the rest of the mesh is untouched.
+ */
+export function subdivideParts(streams: Record<string, Stream>, indices: ArrayLike<number>, member: (i: number) => boolean, passes = 2, integer: (kind: string) => boolean = k => /indices/i.test(k)): { streams: Record<string, number[]>; indices: number[] } {
+  const kinds = Object.keys(streams)
+  const out: Record<string, number[]> = {}
+  for (const k of kinds) out[k] = Array.from(streams[k]!.data)
+  let idx = Array.from(indices)
+  let count = out[kinds[0]!]!.length / streams[kinds[0]!]!.stride
+  const isMember: boolean[] = []
+  for (let i = 0; i < count; i++) isMember.push(member(i))
+  for (let p = 0; p < passes; p++) {
+    const mid = new Map<string, number>()
+    const midOf = (a: number, b: number): number => {
+      const key = a < b ? `${a},${b}` : `${b},${a}`
+      let m = mid.get(key)
+      if (m !== undefined) return m
+      m = count++
+      for (const k of kinds) {
+        const s = streams[k]!.stride
+        const d = out[k]!
+        for (let c = 0; c < s; c++) d.push(integer(k) ? d[a * s + c]! : (d[a * s + c]! + d[b * s + c]!) / 2)
+      }
+      isMember.push(true)
+      mid.set(key, m)
+      return m
+    }
+    const next: number[] = []
+    for (let t = 0; t + 2 < idx.length; t += 3) {
+      const a = idx[t]!, b = idx[t + 1]!, c = idx[t + 2]!
+      if (!(isMember[a] && isMember[b] && isMember[c])) {
+        next.push(a, b, c)
+        continue
+      }
+      const ab = midOf(a, b), bc = midOf(b, c), ca = midOf(c, a)
+      next.push(a, ab, ca, ab, b, bc, ca, bc, c, ab, bc, ca)
+    }
+    idx = next
+  }
+  return { streams: out, indices: idx }
 }

@@ -5,7 +5,7 @@
  * a copy lies behind the weapon the weapon hides it; only the band that sticks out past the silhouette shows: a thin
  * white-hot line, then softer, wider ones in the tier's colour (a stepped falloff), with energy running along them and
  * swelling with the breath. Nothing is drawn over the weapon's face, so its art stays readable. Swaying parts
- * (tassels) get no margin. Only your own and the nearest rare weapons (the effects layer's full LOD) carry shells:
+ * (tassels) get no shell: they move in their own shader. Only your own and the nearest rare weapons (the effects layer's full LOD) carry shells:
  * three draws each.
  */
 import { Constants, Mesh, Quaternion, ShaderLanguage, ShaderMaterial, ShaderStore, Vector4, type AbstractMesh, type Scene } from '@babylonjs/core'
@@ -40,13 +40,16 @@ fn main(input: VertexInputs) -> FragmentInputs {
     dir = r / rl;
   }
   var m = uniforms.shP.x * mix(uniforms.shP.w, 1.0, smoothstep(uniforms.shP.z - 0.08, uniforms.shP.z + 0.04, t));
-#ifdef SWAY
-  m = m * (1.0 - step(0.001, vertexInputs.${SWAY_KIND}.x));
-#endif
   p = p + dir * m + normalize(a) * (m * smoothstep(0.9, 1.0, t));
   // pushed away from the eye along its own view ray (view space: exact for the camera that draws it)
   var vp = (uniforms.view * (uniforms.world * vec4f(p, 1.0))).xyz;
   vp = vp + normalize(vp) * uniforms.shP.y;
+#ifdef SWAY
+  // the swaying parts move in their own shader: no shell for them (all their vertices meet in one point)
+  if (vertexInputs.sroSway.z > 0.0) {
+    vp = vec3f(0.0, 0.0, -1.0);
+  }
+#endif
   vertexOutputs.position = uniforms.projection * vec4f(vp, 1.0);
   vertexOutputs.vT = t;
 }
@@ -90,12 +93,12 @@ void main(void) {
   float rl = length(r);
   vec3 dir = rl > 1e-5 ? r / rl : vec3(0.0);
   float m = shP.x * mix(shP.w, 1.0, smoothstep(shP.z - 0.08, shP.z + 0.04, t));
-#ifdef SWAY
-  m *= 1.0 - step(0.001, ${SWAY_KIND}.x);
-#endif
   p += dir * m + normalize(a) * (m * smoothstep(0.9, 1.0, t));
   vec3 vp = (view * (world * vec4(p, 1.0))).xyz;
   vp += normalize(vp) * shP.y;
+#ifdef SWAY
+  if (sroSway.z > 0.0) vp = vec3(0.0, 0.0, -1.0);
+#endif
   gl_Position = projection * vec4(vp, 1.0);
   vT = t;
 }

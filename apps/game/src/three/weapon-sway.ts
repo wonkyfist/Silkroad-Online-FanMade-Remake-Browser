@@ -19,6 +19,7 @@ import {
   type AssetContainer,
   type Material,
   type MaterialDefines,
+  type Mesh,
   type Node,
   type Nullable,
   type Observer,
@@ -26,19 +27,23 @@ import {
   type SubMesh,
   type UniformBuffer,
 } from '@babylonjs/core'
-import { SWAY_KIND, swayModelName, swayParts, swayStrength, type SwayPart } from './weapon-sway-parts.ts'
+import { SWAY_KIND, subdivideParts, swayModelName, swayParts, swayStrength, type Stream, type SwayPart } from './weapon-sway-parts.ts'
+
+/** Subdivision passes on the swaying parts (each × 4 triangles). */
+export const SWAY_PASSES = 2
 import { isWeaponGlb } from './weapon-solid.ts'
 
 export const SWAY_PLUGIN = 'SroSway'
 export const SWAY_UNIFORMS = ['sroSwayA', 'sroSwayB'] as const
 
 /*
- * sroSwayA: wind dir x, z (unit), strength (0.22..1.4), time (s); sroSwayB: the inertia lag (world m, at the free end
- * of a 1 m part), w unused. Offset (world): f = w^1.6 × L / max(0.3, stiffness);
- *   gust = 0.55 + 0.3 sin(1.3 t + a) + 0.15 sin(3.7 t + 2a + 2w)      (a = phase × 2π)
- *   flutter = sin((6 + 3 s) t + 3a − 4w) × (0.1 + 0.22 s)              across the wind
- *   offset = f × (dir × 0.35 s gust + perp × flutter, y 0.12 s gust) + w^1.6 × L × lag
- * (weapon-sway-parts.ts swayOffset is the TS mirror).
+ * sroSwayA: wind dir x, z (unit), strength (0.22..1.4), time (s); sroSwayB: the inertia lag (world m per metre of part).
+ * Per vertex (w the weight, 0 at the pin .. 1 at the free end; l = length / stiffness; a its phase; s the strength):
+ *   gust   = 0.6 + 0.25 sin(1.3 t + a) + 0.15 sin(3.7 t + 2a)
+ *   ripple = (sin((4 + 4s) t + a - 7w) + 0.45 sin((7 + 5s) t + 3a - 12w)) * (0.13 + 0.12 s) * gust   (a wave down the strip)
+ *   offset = l * (normal * ripple * w^1.2 + wind * (0.12 + 0.3 s) gust * w^1.6 + up * 0.08 s gust * w^1.6) + lag * w^1.6 L
+ * The ripple moves the card along its own normal, so a streamer bends and flaps like cloth (the parts are subdivided at
+ * load, subdivideParts). weapon-sway-parts.ts swayOffset is the TS mirror.
  */
 const VDEFS_GLSL = `
 #ifdef SROSWAY
@@ -55,15 +60,21 @@ const WORLD_GLSL = `
 {
   vec4 swV = ${SWAY_KIND};
   if (swV.x > 0.0) {
-    float swG = pow(swV.x, 1.6);
-    float swF = swG * swV.z / max(0.3, swV.w);
+    float swW = swV.x;
+    float swL = swV.z / max(0.3, swV.w);
     float swA = swV.y * 6.2831853;
     float swT = sroSwayA.w;
     float swS = sroSwayA.z;
-    float swGust = 0.55 + 0.3 * sin(swT * 1.3 + swA) + 0.15 * sin(swT * 3.7 + swA * 2.0 + swV.x * 2.0);
-    float swFl = sin(swT * (6.0 + 3.0 * swS) + swA * 3.0 - swV.x * 4.0) * (0.1 + 0.22 * swS);
-    float swP = 0.35 * swS * swGust;
-    vec3 swO = vec3(sroSwayA.x * swP - sroSwayA.y * swFl, 0.12 * swS * swGust, sroSwayA.y * swP + sroSwayA.x * swFl) * swF;
+    float swGust = 0.6 + 0.25 * sin(swT * 1.3 + swA) + 0.15 * sin(swT * 3.7 + swA * 2.0);
+    // the ripple: a wave running down the strip, growing toward the free end
+    float swR = (sin(swT * (4.0 + 4.0 * swS) + swA - swW * 7.0) + 0.45 * sin(swT * (7.0 + 5.0 * swS) + swA * 3.0 - swW * 12.0)) * (0.13 + 0.12 * swS) * swGust;
+    vec3 swN = vec3(-sroSwayA.y, 0.0, sroSwayA.x);
+#ifdef NORMAL
+    swN = vNormalW;
+#endif
+    float swP = (0.12 + 0.3 * swS) * swGust;
+    float swG = pow(swW, 1.6);
+    vec3 swO = (swN * (swR * pow(swW, 1.2)) + vec3(sroSwayA.x, 0.08 * swS * swGust / max(swP, 1e-3), sroSwayA.y) * (swP * swG)) * swL;
     swO += sroSwayB.xyz * (swG * swV.z);
     worldPos.xyz += swO;
     vPositionW = worldPos.xyz;
@@ -76,15 +87,21 @@ const WORLD_WGSL = `
 {
   let swV = vertexInputs.${SWAY_KIND};
   if (swV.x > 0.0) {
-    let swG = pow(swV.x, 1.6);
-    let swF = swG * swV.z / max(0.3, swV.w);
+    let swW = swV.x;
+    let swL = swV.z / max(0.3, swV.w);
     let swA = swV.y * 6.2831853;
     let swT = uniforms.sroSwayA.w;
     let swS = uniforms.sroSwayA.z;
-    let swGust = 0.55 + 0.3 * sin(swT * 1.3 + swA) + 0.15 * sin(swT * 3.7 + swA * 2.0 + swV.x * 2.0);
-    let swFl = sin(swT * (6.0 + 3.0 * swS) + swA * 3.0 - swV.x * 4.0) * (0.1 + 0.22 * swS);
-    let swP = 0.35 * swS * swGust;
-    var swO = vec3f(uniforms.sroSwayA.x * swP - uniforms.sroSwayA.y * swFl, 0.12 * swS * swGust, uniforms.sroSwayA.y * swP + uniforms.sroSwayA.x * swFl) * swF;
+    let swGust = 0.6 + 0.25 * sin(swT * 1.3 + swA) + 0.15 * sin(swT * 3.7 + swA * 2.0);
+    // the ripple: a wave running down the strip, growing toward the free end
+    let swR = (sin(swT * (4.0 + 4.0 * swS) + swA - swW * 7.0) + 0.45 * sin(swT * (7.0 + 5.0 * swS) + swA * 3.0 - swW * 12.0)) * (0.13 + 0.12 * swS) * swGust;
+    var swN = vec3f(-uniforms.sroSwayA.y, 0.0, uniforms.sroSwayA.x);
+#ifdef NORMAL
+    swN = vertexOutputs.vNormalW;
+#endif
+    let swP = (0.12 + 0.3 * swS) * swGust;
+    let swG = pow(swW, 1.6);
+    var swO = (swN * (swR * pow(swW, 1.2)) + vec3f(uniforms.sroSwayA.x, 0.08 * swS * swGust / max(swP, 1e-3), uniforms.sroSwayA.y) * (swP * swG)) * swL;
     swO = swO + uniforms.sroSwayB.xyz * (swG * swV.z);
     worldPos = vec4f(worldPos.xyz + swO, worldPos.w);
     vertexOutputs.vPositionW = worldPos.xyz;
@@ -195,7 +212,17 @@ export function dressWeaponSway(container: AssetContainer, glb: string): number 
     r.centre[0] = tmpP.x
     r.centre[1] = tmpP.y
     r.centre[2] = tmpP.z
-    ;(m as unknown as { setVerticesData(kind: string, data: Float32Array, updatable: boolean, stride: number): void }).setVerticesData(SWAY_KIND, r.data, false, 4)
+    // the cards bend along their length: cut their triangles (SWAY_PASSES × 4) and carry every stream with them
+    const mm = m as unknown as Mesh
+    const streams: Record<string, Stream> = { [SWAY_KIND]: { data: r.data, stride: 4 } }
+    for (const k of mm.getVerticesDataKinds()) {
+      const d = mm.getVerticesData(k)
+      const vb = mm.getVertexBuffer(k)
+      if (d && vb && k !== SWAY_KIND) streams[k] = { data: d, stride: vb.getSize() }
+    }
+    const sub = subdivideParts(streams, idx, i => r.data![i * 4 + 2]! > 0, (mm.subMeshes?.length ?? 1) <= 1 ? SWAY_PASSES : 0)
+    for (const [k, d] of Object.entries(sub.streams)) mm.setVerticesData(k, new Float32Array(d), false, streams[k]!.stride)
+    mm.setIndices(sub.indices)
     SWAY_INFO.set(g, { centre: new Vector3(r.centre[0], r.centre[1], r.centre[2]), parts: r.parts, model })
     total += r.parts.length
     swayStats.models++

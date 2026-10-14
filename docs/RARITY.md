@@ -257,7 +257,9 @@ Unchanged from v1: the name in the tier colour with its banner, the slot frame a
   the rest of the weapon; `SWAY_OVERRIDES` (by island centre, so the optimized glbs match) adds the solid tassels and
   drops metal fins and ornaments. Chinese weapons D1–D8: 17 of 40 models, 44 parts (spear banners and tassels, glaive
   streamers, sword plumes and cords, blade ribbons, bow strings and pennants). Test: `apps/game/test/weapon-sway.test.ts`.
-- `three/weapon-sway.ts` (SroSway vertex plugin): the weight grows from the pin to the free end (w^1.6), pushed by the
+- `three/weapon-sway.ts` (SroSway vertex plugin; the parts are subdivided at load, 16 triangles each, so they bend):
+  a ripple runs down each strip along its own normal (a ribbon flap, even in calm air), the weight grows from the pin
+  to the free end, pushed by the
   weather's wind (`setWeaponWind` from the weather frame; a breeze always, storms up to 1.4×), fluttering across the
   wind, and trailing the weapon's own motion through a damped spring per worn weapon (runs and swings throw the cloth
   back, it swings past and settles). Cost: two vec4 uniforms, a few ALU per vertex, one spring per worn weapon; no
