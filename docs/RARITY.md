@@ -264,3 +264,22 @@ Unchanged from v1: the name in the tier colour with its banner, the slot frame a
   wind, and trailing the weapon's own motion through a damped spring per worn weapon (runs and swings throw the cloth
   back, it swings past and settles). Cost: two vec4 uniforms, a few ALU per vertex, one spring per worn weapon; no
   define (no cost) on weapons without parts. Lab: `__sroRareLab.wind(x, z, gust, holdClock)`, `swayInfo()`.
+- **Real cloth near the camera** (`three/weapon-cloth.ts`, run by `WeaponSway`): the shader ripple around the modelled
+  pose (which sticks out stiffly) never read as fabric, so weapons on screen within 18 m (left again past 21 m, at most
+  12, 2 starting per frame after 45 settling steps) run a verlet + PBD particle sim per part: the subdivided vertices
+  welded into particles, the attachment edge pinned to the weapon (interpolated across substeps, so swings whip it),
+  edge + weak bending constraints and a tether to the nearest pin (no stretch), gravity (it hangs and drapes), the
+  weather's wind with gusts and travelling turbulence, a pressure force per triangle from its normal against the
+  relative wind (it streams when running, flaps in storms), damping, the shaft capsule, the owner's torso capsule and
+  the ground under the owner. Fixed 60 Hz steps (≤ 3 a frame), rest lengths × the world matrix's scale (a worn weapon
+  is ×1.84), positions and normals written back into the mesh's own (made unique once) updatable buffers; the shader
+  sway is gated off for that mesh (`sroSwayB.w`). Farther weapons keep the shader sway; off screen the sim is frozen,
+  a pause over 0.5 s re-hangs it. Cost: ≈ 0.03-0.07 ms a frame for one near weapon in the client; the 10 heaviest
+  models together ≈ 0.33 ms per 60 Hz step (node). Debug: `window.__sroWeaponSway` (`stats`, `clothOf(mesh)`,
+  `clothOff`). Tests: `apps/game/test/weapon-cloth.test.ts`. Real-client strips: `overall-pass/rarity/cloth-sim/`.
+- **The local edge** (`weapon-rarity.ts` `edgeTable`, `sroRareE`): the tier's edge light measured against the weapon's
+  own width per bin along it, not one median width (a spear's star head, a curved blade and a bow's limbs were all
+  "edge" and washed out). **The +N on a seal weapon** (`weapon-glow.ts` `RARE_GLOW`, `weapon-rarity.ts` `plusBoost`):
+  the flat glow and band damp to a rim shimmer in the tier's hue and the rarity runs up to 42 % stronger at +12; the
+  plus, imbue and rarity emissive share a soft knee in display units. Glow rows now run +1 … +12 with a low flat glow
+  (≤ 0.16) and the level carried by the rim, the band and the pulse.

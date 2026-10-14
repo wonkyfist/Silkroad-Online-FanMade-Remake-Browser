@@ -2808,7 +2808,7 @@ export class CharacterActor {
       // The fallback weapon is not the worn one: it never shows a seal.
       const tier = w.slot === 'fallback' ? null : this.rarityBySlot[slot] ?? null
       const look = tier ? RARITY_LOOKS[tier] : null
-      const spec = { meshes: w.meshes, root, dummies, slot: slot as 'weapon' | 'shield', strength: slot === 'shield' ? SHIELD_STRENGTH : 1, ...(look ? { tint: { color: look.rim, shimmer: look.accent } } : {}) }
+      const spec = { meshes: w.meshes, root, dummies, slot: slot as 'weapon' | 'shield', strength: slot === 'shield' ? SHIELD_STRENGTH : 1, plus: this.plusBySlot[slot] ?? 0, ...(look ? { tint: { color: look.rim, shimmer: look.accent } } : {}) }
       glow?.light(this, spec, this.plusBySlot[slot])
       rare?.light(this, spec, tier)
     }

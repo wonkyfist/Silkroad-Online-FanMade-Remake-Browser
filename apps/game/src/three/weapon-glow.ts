@@ -94,13 +94,20 @@ export const RETAIL_BRIGHT: Rgb = [(RETAIL_BLUE[0] + RETAIL_PALE[0]) / 2, (RETAI
  * rise. The values were set against the Jangan plaza at noon and dusk on Medium (docs: work/tmp/weapon-glow/).
  */
 export const WEAPON_GLOW_TIERS: readonly WeaponGlowTier[] = [
-  { plus: 1, color: RETAIL_PALE, shimmerColor: RETAIL_PALE, glow: 0, rim: 0, shimmer: 0.45, sweepS: 3.4, pulse: 0, pulseS: 3, glints: 0 },
-  { plus: 2, color: RETAIL_PALE, shimmerColor: RETAIL_PALE, glow: 0.02, rim: 0.06, shimmer: 0.6, sweepS: 3, pulse: 0, pulseS: 3, glints: 0 },
-  { plus: 3, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.06, rim: 0.15, shimmer: 0.75, sweepS: 2.6, pulse: 0, pulseS: 3, glints: 0 },
-  { plus: 4, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.11, rim: 0.3, shimmer: 0.9, sweepS: 2.3, pulse: 0, pulseS: 3, glints: 0 },
-  { plus: 5, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.18, rim: 0.48, shimmer: 1.05, sweepS: 2.1, pulse: 0.3, pulseS: 2.6, glints: 0 },
-  { plus: 6, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.27, rim: 0.7, shimmer: 1.25, sweepS: 1.9, pulse: 0.35, pulseS: 2.2, glints: 0 },
-  { plus: 7, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.39, rim: 0.95, shimmer: 1.5, sweepS: 1.7, pulse: 0.4, pulseS: 1.8, glints: 1 },
+  // the flat glow over the whole face stays low at every level (it is what bleached a pale texture to white at +7 and
+  // up); the levels climb in the rim at the silhouette, the sweeping band and the pulse, so +1 … +12 stay readable
+  { plus: 1, color: RETAIL_PALE, shimmerColor: RETAIL_PALE, glow: 0, rim: 0, shimmer: 0.3, sweepS: 3.4, pulse: 0, pulseS: 3, glints: 0 },
+  { plus: 2, color: RETAIL_PALE, shimmerColor: RETAIL_PALE, glow: 0.01, rim: 0.06, shimmer: 0.36, sweepS: 3, pulse: 0, pulseS: 3, glints: 0 },
+  { plus: 3, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.03, rim: 0.14, shimmer: 0.42, sweepS: 2.6, pulse: 0, pulseS: 3, glints: 0 },
+  { plus: 4, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.05, rim: 0.25, shimmer: 0.47, sweepS: 2.3, pulse: 0, pulseS: 3, glints: 0 },
+  { plus: 5, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.07, rim: 0.37, shimmer: 0.52, sweepS: 2.1, pulse: 0.3, pulseS: 2.6, glints: 0 },
+  { plus: 6, color: RETAIL_BLUE, shimmerColor: RETAIL_PALE, glow: 0.09, rim: 0.5, shimmer: 0.56, sweepS: 1.9, pulse: 0.35, pulseS: 2.2, glints: 0 },
+  { plus: 7, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.11, rim: 0.62, shimmer: 0.6, sweepS: 1.7, pulse: 0.4, pulseS: 1.8, glints: 1 },
+  { plus: 8, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.12, rim: 0.7, shimmer: 0.63, sweepS: 1.6, pulse: 0.4, pulseS: 1.7, glints: 1 },
+  { plus: 9, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.13, rim: 0.78, shimmer: 0.66, sweepS: 1.5, pulse: 0.42, pulseS: 1.6, glints: 1 },
+  { plus: 10, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.14, rim: 0.86, shimmer: 0.69, sweepS: 1.4, pulse: 0.44, pulseS: 1.5, glints: 1 },
+  { plus: 11, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.15, rim: 0.94, shimmer: 0.72, sweepS: 1.3, pulse: 0.46, pulseS: 1.4, glints: 1 },
+  { plus: 12, color: RETAIL_BRIGHT, shimmerColor: RETAIL_PALE, glow: 0.16, rim: 1, shimmer: 0.75, sweepS: 1.2, pulse: 0.48, pulseS: 1.3, glints: 1 },
 ]
 
 /** The tier of `plus` (null below the first row, i.e. +0). */
@@ -165,7 +172,7 @@ const GLSL_CODE = `
   float sgRim = 1.0 - abs(dot(normalW, viewDirectionW));
   sgRim = sgRim * sgRim * sgRim;
   float sgTex = clamp(1.0 - 0.8 * dot(surfaceAlbedo.rgb, vec3(0.2126, 0.7152, 0.0722)), 0.6, 1.0);
-  finalEmissive += (sroGlowC.rgb * ((sroGlowK.x + sroGlowK.w * sgRim) * sgTex) + sroGlowS.rgb * (sroGlowK.y * sgBand)) * sgMask;
+  finalEmissive += (sroGlowC.rgb * ((sroGlowK.x + sroGlowK.w * sgRim) * sgTex) + sroGlowS.rgb * (sroGlowK.y * sgBand * sgTex)) * sgMask;
 #endif
 }
 #endif
@@ -186,7 +193,7 @@ const WGSL_CODE = `
   var sgRim = 1.0 - abs(dot(normalW, viewDirectionW));
   sgRim = sgRim * sgRim * sgRim;
   let sgTex = clamp(1.0 - 0.8 * dot(surfaceAlbedo.rgb, vec3f(0.2126, 0.7152, 0.0722)), 0.6, 1.0);
-  finalEmissive = finalEmissive + (uniforms.sroGlowC.rgb * ((uniforms.sroGlowK.x + uniforms.sroGlowK.w * sgRim) * sgTex) + uniforms.sroGlowS.rgb * (uniforms.sroGlowK.y * sgBand)) * sgMask;
+  finalEmissive = finalEmissive + (uniforms.sroGlowC.rgb * ((uniforms.sroGlowK.x + uniforms.sroGlowK.w * sgRim) * sgTex) + uniforms.sroGlowS.rgb * (uniforms.sroGlowK.y * sgBand * sgTex)) * sgMask;
 #endif
 }
 #endif
@@ -287,6 +294,8 @@ export interface GlowItemSpec {
    * of retail's blue, so a +7 Seal of Sun glows gold rather than washing out to white.
    */
   tint?: { color: Rgb; shimmer: Rgb }
+  /** The item's +N (a seal weapon's rarity runs stronger with it: weapon-rarity.ts plusBoost). */
+  plus?: number
 }
 
 /** Shields glow at this share of a weapon: their whole face catches the glow and the rim. */
@@ -304,6 +313,10 @@ export const LITE_FLASH = 0.35
  * blade that is already ≈ 0.35 there, so the full values clip to white (+7) and flat blue (+5).
  */
 export const LITE_GAIN = 0.5
+
+/** A seal weapon's +N (× the tier): the rarity is its look, the +N adds a rim shimmer in the tier's hue (and the rarity
+ * itself runs a little stronger: weapon-rarity.ts plusBoost). */
+export const RARE_GLOW = { glow: 0.2, shimmer: 0.4, rim: 0.7 } as const
 
 /** One glowing item (a weapon or shield on one actor). */
 export interface ItemGlow {
@@ -327,6 +340,8 @@ export interface ItemGlow {
   /** The glint run's aura and core (linear); absent = retail's blue and pale (a seal's hue: GlowItemSpec.tint). */
   readonly glint?: Color3
   readonly glintCore?: Color3
+  /** A seal weapon: the rarity draws the look; the +N only adds a rim shimmer and a faint band (RARE_GLOW). */
+  readonly rare?: boolean
 }
 
 /** The glow of one mesh: its item, the blade in the mesh's own space and the mask edges. */
@@ -395,18 +410,20 @@ export function glowValues(g: MeshGlow, s: number, lite: boolean, scale = 1, out
   out[15] = BAND_SHARPNESS
   for (let i = 0; i < 4; i++) out[16 + i] = g.mask[i]!
   const k = it.strength * scale
+  // a seal weapon: the flat glow and the band would bleach its art and its rarity (a +12 Sun went white-gold)
+  const kg = it.rare ? RARE_GLOW.glow : 1, ks = it.rare ? RARE_GLOW.shimmer : 1, kr = it.rare ? RARE_GLOW.rim : 1
   if (lite) {
     // A short whole-weapon flash while the band would cross the blade.
     const flash = band >= 0 && band <= 1 ? Math.sin(Math.PI * band) : 0
-    out[20] = (t.glow + t.rim * LITE_RIM) * p * k * LITE_GAIN
-    out[21] = t.shimmer * LITE_FLASH * flash * k * LITE_GAIN
+    out[20] = (t.glow * kg + t.rim * kr * LITE_RIM) * p * k * LITE_GAIN
+    out[21] = t.shimmer * ks * LITE_FLASH * flash * k * LITE_GAIN
     out[22] = 0
     out[23] = 0
   } else {
-    out[20] = t.glow * p * k
-    out[21] = t.shimmer * k
+    out[20] = t.glow * kg * p * k
+    out[21] = t.shimmer * ks * k
     out[22] = band
-    out[23] = t.rim * p * k
+    out[23] = t.rim * kr * p * k
   }
   return out
 }
@@ -520,7 +537,7 @@ export class WeaponGlow implements GlowSource {
       tier,
       color: linear(spec.tint?.color ?? tier.color),
       shimmerColor: linear(spec.tint?.shimmer ?? tier.shimmerColor),
-      ...(spec.tint ? { glint: linear(spec.tint.color), glintCore: linear(spec.tint.shimmer) } : {}),
+      ...(spec.tint ? { glint: linear(spec.tint.color), glintCore: linear(spec.tint.shimmer), rare: true } : {}),
       meshes,
       phase: phaseOf(owner.root.uniqueId),
       strength: spec.strength ?? 1,

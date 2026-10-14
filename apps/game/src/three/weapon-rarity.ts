@@ -47,7 +47,7 @@ import { rareKindOf, type RareKind } from '../world/rarity/kinds.ts'
 import { Painter } from '../world/rarity/paint.ts'
 import { isCrowdDrawn } from './crowd-vat.ts'
 import { regionKindOf, weaponRegion, type WeaponRegion } from '../world/rarity/region.ts'
-import { SWAY_KIND } from './weapon-sway-parts.ts'
+import { SWAY_KIND, geometryKey } from './weapon-sway-parts.ts'
 import { LITE_GAIN, bladeSpace, exposureScale, itemToMesh, phaseOf, type GlowItemSpec, type GlowOwner, type Rgb } from './weapon-glow.ts'
 
 // ---- the looks --------------------------------------------------------------------------------------------------
@@ -122,6 +122,10 @@ export const RARITY_PLUGIN = 'SroRarity'
  */
 export const RARITY_UNIFORMS = ['sroRareA', 'sroRareT', 'sroRareR', 'sroRareP', 'sroRareO', 'sroRareD', 'sroRareM', 'sroRareW', 'sroRareN', 'sroRareS', 'sroRareQ', 'sroRareS2'] as const
 export const RARITY_SAMPLERS = ['sroRareNeb', 'sroRareMask'] as const
+/** Bins along a rare weapon (its outline, RareItem.outline, and its width table, sroRareE: 2 bins per vec4). */
+const EDGE_BINS = 20
+export const RARITY_EDGE_UNIFORM = 'sroRareE'
+export const RARITY_EDGE_VEC4 = EDGE_BINS / 2
 
 const LUMA_GLSL = 'vec3(0.2126, 0.7152, 0.0722)'
 const LUMA_WGSL = 'vec3f(0.2126, 0.7152, 0.0722)'
@@ -224,9 +228,20 @@ const EMISSIVE_GLSL = `
 #ifdef ALBEDO
   rrVein = rrVeinA;
 #endif
+  // the edge is local: how far out this point sits within the weapon's own width at this place along it (its
+  // silhouette per bin, sroRareE: edgeTable), not against one median width; a spear's star head, a curved blade and a
+  // bow's limbs are far wider than their median, so their whole face read as edge and washed out
+  float rrBt = clamp(rrT, 0.0, 1.0) * ${EDGE_BINS}.0 - 0.5;
+  int rrI0 = int(clamp(floor(rrBt), 0.0, ${EDGE_BINS}.0 - 1.0));
+  int rrI1 = min(rrI0 + 1, int(${EDGE_BINS}.0) - 1);
+  float rrBf = clamp(rrBt - float(rrI0), 0.0, 1.0);
+  vec4 rrE0 = sroRareE[rrI0 / 2];
+  vec4 rrE1 = sroRareE[rrI1 / 2];
+  vec2 rrLh = mix(rrI0 % 2 == 0 ? rrE0.xy : rrE0.zw, rrI1 % 2 == 0 ? rrE1.xy : rrE1.zw, rrBf);
+  float rrLoc = abs(rrWm - 0.5 * (rrLh.x + rrLh.y)) / max(0.5 * (rrLh.y - rrLh.x), 1e-4);
   float rrAw = abs(rrW);
-  float rrEdge = smoothstep(0.72, 0.98, rrAw);
-  float rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
+  float rrEdge = smoothstep(0.72, 0.98, rrLoc);
+  float rrFull = 1.0 - smoothstep(0.08, 0.3, rrLoc);
   float rrSpd = sroRareP.w;
   // energy running base -> tip through the veins and along the edges, swelling with the breath, flashing at its peak
   float rrWave = pow(0.5 + 0.5 * sin(rrT * 6.0 - rrTime * 2.6 * rrSpd), 3.0);
@@ -272,6 +287,11 @@ const EMISSIVE_GLSL = `
   rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.3);
   rrE = sroRareR.rgb * (rrF * (0.3 + 0.7 * rrEdge) * sroRareA.z * (0.8 + 0.5 * rrBreath)) + rrE * sroRareA.w;
   finalEmissive += rrE * rrMask * (1.0 + sroRareS.z * 2.5);
+  // the +N glow, the imbue and the rarity together never bleach the weapon: a soft knee on the display emissive
+  {
+    float rrMx = max(max(finalEmissive.r, finalEmissive.g), finalEmissive.b) / max(sroRareS2.y, 1e-6);
+    if (rrMx > 0.8) finalEmissive *= (0.8 + (rrMx - 0.8) / (1.0 + (rrMx - 0.8))) / rrMx;
+  }
 #endif
 }
 #endif
@@ -318,9 +338,18 @@ const EMISSIVE_WGSL = `
 #ifdef ALBEDO
   rrVein = rrVeinA;
 #endif
+  // the edge is local (see the GLSL): within the weapon's own width at this place along it
+  let rrBt = clamp(rrT, 0.0, 1.0) * ${EDGE_BINS}.0 - 0.5;
+  let rrI0 = i32(clamp(floor(rrBt), 0.0, ${EDGE_BINS}.0 - 1.0));
+  let rrI1 = min(rrI0 + 1, i32(${EDGE_BINS}.0) - 1);
+  let rrBf = clamp(rrBt - f32(rrI0), 0.0, 1.0);
+  let rrE0 = uniforms.sroRareE[rrI0 / 2];
+  let rrE1 = uniforms.sroRareE[rrI1 / 2];
+  let rrLh = mix(select(rrE0.zw, rrE0.xy, rrI0 % 2 == 0), select(rrE1.zw, rrE1.xy, rrI1 % 2 == 0), rrBf);
+  let rrLoc = abs(rrWm - 0.5 * (rrLh.x + rrLh.y)) / max(0.5 * (rrLh.y - rrLh.x), 1e-4);
   let rrAw = abs(rrW);
-  let rrEdge = smoothstep(0.72, 0.98, rrAw);
-  let rrFull = 1.0 - smoothstep(0.08, 0.3, rrAw);
+  let rrEdge = smoothstep(0.72, 0.98, rrLoc);
+  let rrFull = 1.0 - smoothstep(0.08, 0.3, rrLoc);
   let rrSpd = uniforms.sroRareP.w;
   // energy running base -> tip through the veins and along the edges, swelling with the breath, flashing at its peak
   let rrWave = pow(0.5 + 0.5 * sin(rrT * 6.0 - rrTime * 2.6 * rrSpd), 3.0);
@@ -366,6 +395,13 @@ const EMISSIVE_WGSL = `
   rrE = rrE / (1.0 + max(max(rrE.r, rrE.g), rrE.b) * 0.3);
   rrE = uniforms.sroRareR.rgb * (rrF * (0.3 + 0.7 * rrEdge) * uniforms.sroRareA.z * (0.8 + 0.5 * rrBreath)) + rrE * uniforms.sroRareA.w;
   finalEmissive = finalEmissive + rrE * rrMask * (1.0 + uniforms.sroRareS.z * 2.5);
+  // the +N glow, the imbue and the rarity together never bleach the weapon: a soft knee on the display emissive
+  {
+    let rrMx = max(max(finalEmissive.r, finalEmissive.g), finalEmissive.b) / max(uniforms.sroRareS2.y, 1e-6);
+    if (rrMx > 0.8) {
+      finalEmissive = finalEmissive * ((0.8 + (rrMx - 0.8) / (1.0 + (rrMx - 0.8))) / rrMx);
+    }
+  }
 #endif
 }
 #endif
@@ -459,10 +495,10 @@ export class RarityPlugin extends MaterialPluginBase {
     if (this.source.stateOf(mesh) && mesh.isVerticesDataPresent(SWAY_KIND) && !attributes.includes(SWAY_KIND)) attributes.push(SWAY_KIND)
   }
 
-  override getUniforms(shaderLanguage?: ShaderLanguage): { ubo: Array<{ name: string; size: number; type: string }>; fragment: string } {
+  override getUniforms(shaderLanguage?: ShaderLanguage): { ubo: Array<{ name: string; size: number; type: string; arraySize?: number }>; fragment: string } {
     return {
-      ubo: RARITY_UNIFORMS.map(name => ({ name, size: 4, type: 'vec4' })),
-      fragment: shaderLanguage === ShaderLanguage.WGSL ? '' : RARITY_UNIFORMS.map(n => `uniform vec4 ${n};`).join('\n'),
+      ubo: [...RARITY_UNIFORMS.map(name => ({ name, size: 4, type: 'vec4' })), { name: RARITY_EDGE_UNIFORM, size: 4, type: 'vec4', arraySize: RARITY_EDGE_VEC4 }],
+      fragment: shaderLanguage === ShaderLanguage.WGSL ? '' : [...RARITY_UNIFORMS.map(n => `uniform vec4 ${n};`), `uniform vec4 ${RARITY_EDGE_UNIFORM}[${RARITY_EDGE_VEC4}];`].join('\n'),
     }
   }
 
@@ -527,6 +563,10 @@ export interface RareItem {
   readonly outline: Float32Array
   /** Where the head is widest (blade units, from the outline): a glaive head's heart, its core and rune ring. */
   readonly heart: number
+  /** The weapon's width per bin along it (item-root units across: lo, hi per bin; edgeTable): the shader's local edge. */
+  readonly edges: Float32Array
+  /** Its +N (plusBoost). */
+  readonly plus?: number
   /** The look's colours in linear space (the uniforms). */
   readonly tint: Color3
   readonly rim: Color3
@@ -586,7 +626,7 @@ export function pulseOf(s: number, phase: number, out: { breath: number; flash: 
 }
 
 /** Bins of a rare item's outline (RareItem.outline). */
-export const OUTLINE_BINS = 20
+export const OUTLINE_BINS = EDGE_BINS
 
 /**
  * The outline of a weapon mesh (pure, tests): per bin along base → tip, the vertex farthest on each side across the
@@ -620,6 +660,52 @@ export function outlineOf(pos: ArrayLike<number>, sway: ArrayLike<number> | null
 }
 
 /**
+ * The weapon's width along it (pure, tests): per bin of t (0 base .. 1 tip, OUTLINE_BINS), the lowest and highest
+ * across coordinate (`across` unit, from `base`) of its vertices, 2 floats per bin; vertices of swaying parts skipped,
+ * those beyond the ends counted in the end bins; empty bins take the nearest filled one (none: ±halfWidth). The
+ * shader measures its edge against this local width (sroRareE), so a wide star head or a curved limb has a rim, not a
+ * face that is all edge.
+ */
+export function edgeTable(pts: ArrayLike<number>, sway: ArrayLike<number> | null, base: { x: number; y: number; z: number }, tip: { x: number; y: number; z: number }, across: { x: number; y: number; z: number }, halfWidth: number, out = new Float32Array(OUTLINE_BINS * 2)): Float32Array {
+  const B = OUTLINE_BINS
+  const lo = new Float64Array(B).fill(Infinity)
+  const hi = new Float64Array(B).fill(-Infinity)
+  const dx = tip.x - base.x, dy = tip.y - base.y, dz = tip.z - base.z
+  const L2 = dx * dx + dy * dy + dz * dz
+  const al = Math.hypot(across.x, across.y, across.z) || 1
+  const ax = across.x / al, ay = across.y / al, az = across.z / al
+  const n = Math.floor(pts.length / 3)
+  for (let i = 0; i < n && L2 > 1e-10; i++) {
+    if (sway && sway[i * 4]! > 0) continue
+    const px = pts[i * 3]! - base.x, py = pts[i * 3 + 1]! - base.y, pz = pts[i * 3 + 2]! - base.z
+    const t = (px * dx + py * dy + pz * dz) / L2
+    if (t < -0.05 || t > 1.05) continue
+    const b = Math.max(0, Math.min(B - 1, Math.floor(t * B)))
+    const a = px * ax + py * ay + pz * az
+    if (a < lo[b]!) lo[b] = a
+    if (a > hi[b]!) hi[b] = a
+  }
+  for (let b = 0; b < B; b++) {
+    let k = -1
+    for (let d = 0; d < B && k < 0; d++) {
+      if (b - d >= 0 && lo[b - d]! <= hi[b - d]!) k = b - d
+      else if (b + d < B && lo[b + d]! <= hi[b + d]!) k = b + d
+    }
+    let l = k < 0 ? -halfWidth : lo[k]!
+    let h = k < 0 ? halfWidth : hi[k]!
+    // never thinner than a few mm (a single vertex in a bin)
+    if (h - l < 0.006) {
+      const m = (h + l) / 2
+      l = m - 0.003
+      h = m + 0.003
+    }
+    out[b * 2] = l
+    out[b * 2 + 1] = h
+  }
+  return out
+}
+
+/**
  * Where an outline is widest (pure): the bin centre (blade units) with the largest span across; 0.5 when empty.
  */
 export function heartOf(outline: Float32Array, base: { x: number; y: number; z: number }, tip: { x: number; y: number; z: number }, across: { x: number; y: number; z: number }): number {
@@ -648,6 +734,11 @@ export function nightOf(exposure: number): number {
 }
 
 /** The uniform values of a rare mesh at `s` seconds: [A, T, R, P, O, D, M, W, N, S], 4 floats each. */
+/** A seal weapon's +N adds to its rarity (its rim, pattern and veins up to +42 % at +12), not a glow of its own. */
+export function plusBoost(plus: number | undefined): number {
+  return 1 + 0.035 * Math.max(0, Math.min(12, plus ?? 0))
+}
+
 export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1, out = new Float32Array(48), night = 0): Float32Array {
   const it = r.item
   const L = it.look
@@ -655,8 +746,8 @@ export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1,
   out[0] = L.tintAmount
   out[1] = L.rimPower
   // Lite: the rim is a steady share folded into the emissive (no per-pixel fresnel).
-  out[2] = L.rimGain * k * (lite ? 0.3 : 1)
-  out[3] = L.pattern * k * (lite ? 0.45 : 1)
+  out[2] = L.rimGain * k * (lite ? 0.3 : 1) * plusBoost(it.plus)
+  out[3] = L.pattern * k * (lite ? 0.45 : 1) * plusBoost(it.plus)
   out[4] = it.tint.r
   out[5] = it.tint.g
   out[6] = it.tint.b
@@ -697,11 +788,12 @@ export function rarityValues(r: MeshRarity, s: number, lite: boolean, scale = 1,
   const q = pulseOf(s, it.phase, PULSE_SCRATCH)
   out[40] = q.breath
   out[41] = q.flash
-  out[42] = (L.veins ?? 0) * k * (lite ? 0 : 1)
+  out[42] = (L.veins ?? 0) * k * (lite ? 0 : 1) * plusBoost(it.plus)
   out[43] = lite ? 1 : L.dim
   // the heart of the item (blade units): the veins' pulse runs out from it
   out[44] = it.kind === 'glaive' ? it.heart ?? 0.5 : it.kind === 'spear' ? 0.1 : it.kind === 'shield' ? 0.5 : 0
-  out[45] = 0
+  // the exposure factor (the combined emissive's knee works in display units)
+  out[45] = scale * (lite ? LITE_GAIN : 1)
   out[46] = 0
   out[47] = 0
   return out
@@ -809,6 +901,7 @@ export class WeaponRarity implements RaritySource {
   writeUniforms(ubo: UniformBuffer, r: MeshRarity): void {
     const v = rarityValues(r, this.seconds, this.modeNow.lite, this.scale, this.values, this.night)
     for (let i = 0; i < RARITY_UNIFORMS.length; i++) ubo.updateFloat4(RARITY_UNIFORMS[i]!, v[i * 4]!, v[i * 4 + 1]!, v[i * 4 + 2]!, v[i * 4 + 3]!)
+    if (r.item.edges) ubo.updateFloatArray(RARITY_EDGE_UNIFORM, r.item.edges)
   }
 
   prepare(meshes: readonly AbstractMesh[]): void {
@@ -841,6 +934,7 @@ export class WeaponRarity implements RaritySource {
       : bladeFrame(spec, meshes, space.base, space.tip)
     const first = meshes[0]!
     const toFirst = itemToMesh(spec.root, first)
+    const itemPts = itemSpacePoints(spec, meshes)
     const item: RareItem = {
       owner,
       tier,
@@ -857,6 +951,8 @@ export class WeaponRarity implements RaritySource {
       span: frame.span,
       butt: region ? Vector3.TransformCoordinates(v3(region.butt), toFirst) : null,
       heart: 0.5,
+      plus: spec.plus ?? 0,
+      edges: edgeTable(itemPts.pts, itemPts.sway, space.base, space.tip, frame.across, frame.halfWidth),
       outline: outlineOf(first.getVerticesData(VertexBuffer.PositionKind) ?? [], first.getVerticesData(SWAY_KIND), Vector3.TransformCoordinates(space.base, toFirst), Vector3.TransformCoordinates(space.tip, toFirst), Vector3.TransformNormal(frame.across, toFirst)),
       tint: linear(look.tint),
       rim: linear(look.rim),
@@ -1001,7 +1097,7 @@ const v3 = (p: { x: number; y: number; z: number }): Vector3 => new Vector3(p.x,
 const REGIONS = new WeakMap<object, Map<string, WeaponRegion | null>>()
 
 export function modelRegion(spec: GlowItemSpec, meshes: readonly AbstractMesh[], kind: string): WeaponRegion | null {
-  const geo = (meshes[0] as { geometry?: object | null }).geometry ?? meshes[0]!
+  const geo = geometryKey(meshes[0]!)
   let byKind = REGIONS.get(geo)
   if (!byKind) REGIONS.set(geo, (byKind = new Map()))
   const rk = regionKindOf(kind)
@@ -1189,4 +1285,24 @@ export class RarityMotes {
   dispose(): void {
     if (this.ownBatch) this.batch.dispose()
   }
+}
+
+/** Every vertex of the item's meshes in the item root's space, with their sway weight (4 floats each, x the weight). */
+function itemSpacePoints(spec: GlowItemSpec, meshes: readonly AbstractMesh[]): { pts: number[]; sway: number[] } {
+  const pts: number[] = []
+  const sway: number[] = []
+  const inv = new Matrix()
+  const p = new Vector3()
+  for (const m of meshes) {
+    const data = m.getVerticesData(VertexBuffer.PositionKind)
+    if (!data) continue
+    const s = m.getVerticesData(SWAY_KIND)
+    itemToMesh(spec.root, m).invertToRef(inv)
+    for (let i = 0, v = 0; i + 2 < data.length; i += 3, v++) {
+      Vector3.TransformCoordinatesFromFloatsToRef(data[i]!, data[i + 1]!, data[i + 2]!, inv, p)
+      pts.push(p.x, p.y, p.z)
+      sway.push(s ? s[v * 4]! : 0, 0, 0, 0)
+    }
+  }
+  return { pts, sway }
 }

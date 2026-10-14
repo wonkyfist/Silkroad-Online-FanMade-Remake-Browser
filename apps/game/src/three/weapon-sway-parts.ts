@@ -331,3 +331,15 @@ export function subdivideParts(streams: Record<string, Stream>, indices: ArrayLi
   }
   return { streams: out, indices: idx }
 }
+
+/** A worn mesh's geometry before the cloth made it unique (weapon-sway.ts): caches keyed by the model keep working. */
+const MODEL_GEOMETRY = new WeakMap<object, object>()
+
+export function rememberModelGeometry(mesh: object, geometry: object): void {
+  if (!MODEL_GEOMETRY.has(mesh)) MODEL_GEOMETRY.set(mesh, geometry)
+}
+
+/** The key of a mesh's model geometry (its original geometry, else the mesh itself). */
+export function geometryKey(mesh: object): object {
+  return MODEL_GEOMETRY.get(mesh) ?? (mesh as { geometry?: object | null }).geometry ?? mesh
+}

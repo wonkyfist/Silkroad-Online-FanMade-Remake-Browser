@@ -29,6 +29,7 @@ import '@babylonjs/core/ShadersWGSL/pbr.fragment.js'
 import type { EntityState } from '@sro/shared'
 import { afterEach, describe, expect, it } from 'vitest'
 import { CharacterActor } from '../src/three/models.ts'
+import { plusBoost } from '../src/three/weapon-rarity.ts'
 import {
   GLINT_CAPS,
   GLINT_RANGE_M,
@@ -48,6 +49,7 @@ import {
   glowModeFor,
   glowTierFor,
   glowValues,
+  RARE_GLOW,
   pickGlinting,
   weaponGlowCode,
   weaponGlowPluginOf,
@@ -118,21 +120,21 @@ describe('tier table', () => {
     expect(glowTierFor(0)).toBeNull()
     expect(glowTierFor(undefined)).toBeNull()
     expect(glowTierFor(-1)).toBeNull()
-    for (let n = 1; n <= 7; n++) expect(glowTierFor(n)?.plus, `+${n}`).toBe(n)
-    for (const n of [8, 10, 12, 255]) expect(glowTierFor(n)?.plus, `+${n}`).toBe(7)
-    // Rows rise; a row added for +8 takes over +8 without code changes.
-    expect(WEAPON_GLOW_TIERS.map(t => t.plus)).toEqual([1, 2, 3, 4, 5, 6, 7])
-    const more = [...WEAPON_GLOW_TIERS, { ...WEAPON_GLOW_TIERS[6]!, plus: 8, glow: 1 }]
-    expect(glowTierFor(8, more)?.glow).toBe(1)
-    expect(glowTierFor(9, more)?.plus).toBe(8)
-    expect(glowTierFor(7, more)?.plus).toBe(7)
+    for (let n = 1; n <= 12; n++) expect(glowTierFor(n)?.plus, `+${n}`).toBe(n)
+    for (const n of [13, 255]) expect(glowTierFor(n)?.plus, `+${n}`).toBe(12)
+    // Rows rise; a row added for +13 takes over +13 without code changes.
+    expect(WEAPON_GLOW_TIERS.map(t => t.plus)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    const more = [...WEAPON_GLOW_TIERS, { ...WEAPON_GLOW_TIERS[11]!, plus: 13, glow: 1 }]
+    expect(glowTierFor(13, more)?.glow).toBe(1)
+    expect(glowTierFor(14, more)?.plus).toBe(13)
+    expect(glowTierFor(12, more)?.plus).toBe(12)
   })
 
-  it('grows with the + level: a shimmer first, colour from +3, a pulse from +5, glints only at +7', () => {
+  it('grows with the + level: a shimmer first, colour from +3, a pulse from +5, glints from +7, on to +12', () => {
     const t = (n: number) => glowTierFor(n)!
     expect([t(1).glow, t(1).rim]).toEqual([0, 0])
     expect(t(1).shimmer).toBeGreaterThan(0)
-    for (let n = 2; n <= 7; n++) {
+    for (let n = 2; n <= 12; n++) {
       expect(t(n).glow, `glow +${n}`).toBeGreaterThan(t(n - 1).glow)
       expect(t(n).rim, `rim +${n}`).toBeGreaterThan(t(n - 1).rim)
       expect(t(n).shimmer, `shimmer +${n}`).toBeGreaterThan(t(n - 1).shimmer)
@@ -142,7 +144,9 @@ describe('tier table', () => {
     expect([3, 4, 5, 6].every(n => t(n).color === RETAIL_BLUE)).toBe(true)
     expect([1, 2, 3, 4].every(n => t(n).pulse === 0)).toBe(true)
     expect([5, 6, 7].every(n => t(n).pulse > 0)).toBe(true)
-    expect(WEAPON_GLOW_TIERS.filter(r => r.glints > 0).map(r => r.plus)).toEqual([7])
+    expect(WEAPON_GLOW_TIERS.filter(r => r.glints > 0).map(r => r.plus)).toEqual([7, 8, 9, 10, 11, 12])
+    // never a bleach: the flat glow over the face stays low even at +12 (the rim and the band carry the level)
+    expect(t(12).glow).toBeLessThanOrEqual(0.16)
   })
 })
 
@@ -342,6 +346,17 @@ describe('uniform values', () => {
     // Shields glow at their strength; the exposure scale divides everything.
     expect(glowValues(mesh(7, SHIELD_STRENGTH), 0.2, false)[23]).toBeCloseTo(v[23]! * SHIELD_STRENGTH, 6)
     expect(glowValues(mesh(7), 0.2, false, 0.1)[20]).toBeCloseTo(v[20]! * 0.1, 6)
+  })
+
+  it('a seal weapon: the +N damps to a rim shimmer (the rarity is its look), and the rarity runs stronger with it', () => {
+    const plain = glowValues(mesh(12), 0.2, false)
+    const rare = glowValues({ ...mesh(12), item: { ...item(12), rare: true } }, 0.2, false)
+    expect(rare[20]).toBeCloseTo(plain[20]! * RARE_GLOW.glow, 6)
+    expect(rare[21]).toBeCloseTo(plain[21]! * RARE_GLOW.shimmer, 6)
+    expect(rare[23]).toBeCloseTo(plain[23]! * RARE_GLOW.rim, 6)
+    expect(plusBoost(0)).toBe(1)
+    expect(plusBoost(12)).toBeCloseTo(1.42, 6)
+    expect(plusBoost(20)).toBe(plusBoost(12))
   })
 
   it('lite (Low): two terms only, no band or rim, at LITE_GAIN of the full values', () => {

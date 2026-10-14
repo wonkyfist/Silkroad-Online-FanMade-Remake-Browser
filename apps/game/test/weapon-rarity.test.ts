@@ -42,6 +42,9 @@ import {
   RARITY_LOOKS,
   RARITY_PLUGIN,
   RARITY_UNIFORMS,
+  RARITY_EDGE_UNIFORM,
+  RARITY_EDGE_VEC4,
+  edgeTable,
   RarityMotes,
   WeaponRarity,
   moteAt,
@@ -167,13 +170,14 @@ describe('the plugin on a NullEngine PBRMaterial', () => {
     const plugin = rarityPluginOf(mat)!
     const written = (m: Mesh) => {
       const calls: Record<string, number[]> = {}
-      const ubo = { updateFloat4: (n: string, x: number, y: number, z: number, w: number) => void (calls[n] = [x, y, z, w]) } as unknown as UniformBuffer
+      const ubo = { updateFloat4: (n: string, x: number, y: number, z: number, w: number) => void (calls[n] = [x, y, z, w]), updateFloatArray: (n: string, a: Float32Array) => void (calls[n] = Array.from(a)) } as unknown as UniformBuffer
       plugin.hardBindForSubMesh(ubo, scene, scene.getEngine(), m.subMeshes[0]!)
       return calls
     }
     const wa = written(a.mesh)
     const wb = written(b.mesh)
-    expect(Object.keys(wa).sort()).toEqual([...RARITY_UNIFORMS].sort())
+    expect(Object.keys(wa).sort()).toEqual([...RARITY_UNIFORMS, RARITY_EDGE_UNIFORM].sort())
+    expect(wa[RARITY_EDGE_UNIFORM]!.length).toBe(RARITY_EDGE_VEC4 * 4)
     expect(wa.sroRareT![3]).toBe(1)
     expect(wb.sroRareT![3]).toBe(3)
     expect(Object.keys(written(c.mesh))).toEqual([])
@@ -418,5 +422,34 @@ describe('the weapon stays readable (owner pass: edges and fuller, restrained, n
       // v3: veins from the engraving, the breath and its flash, the heart the pulse runs out from
       for (const n of ['rrVein', 'rrBreath', 'rrFlash', 'rrVw', 'sroRareS2']) expect(full.includes(n), `${lang} ${n}`).toBe(true)
     }
+  })
+})
+
+describe('the local edge (a wide head or a curved limb has a rim, not a face all edge)', () => {
+  it('measures each bin against its own width; empty bins take the nearest; swaying parts are skipped', () => {
+    // a spear head: a 2 cm shaft from t 0 to 0.5, then a star 40 cm wide, all along +y; across = x
+    const pts: number[] = []
+    const sway: number[] = []
+    const add = (x: number, y: number, s = 0) => {
+      pts.push(x, y, 0)
+      sway.push(s, 0, 0, 0)
+    }
+    for (let y = 0; y < 0.5; y += 0.05) add(-0.01, y), add(0.01, y)
+    for (let y = 0.5; y <= 1; y += 0.05) add(-0.2, y), add(0.2, y)
+    add(3, 0.7, 1) // a tassel far out: skipped
+    const e = edgeTable(pts, sway, { x: 0, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 0, z: 0 }, 0.05)
+    expect(e.length).toBe(RARITY_EDGE_VEC4 * 4)
+    expect(e[0]).toBeCloseTo(-0.01, 5)
+    expect(e[1]).toBeCloseTo(0.01, 5)
+    const last = e.length - 2
+    expect(e[last]).toBeCloseTo(-0.2, 5)
+    expect(e[last + 1]).toBeCloseTo(0.2, 5)
+    // the old median width (≈ the shaft) would call the whole star head edge; locally only its rim is
+    const loc = (w: number) => Math.abs(w - (e[last]! + e[last + 1]!) / 2) / ((e[last + 1]! - e[last]!) / 2)
+    expect(loc(0.1)).toBeLessThan(0.72)
+    expect(loc(0.195)).toBeGreaterThan(0.72)
+    // empty: ± the half width
+    const none = edgeTable([], null, { x: 0, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 0, z: 0 }, 0.05)
+    expect([none[0], none[1]]).toEqual([-0.05, 0.05].map(v => Math.fround(v)))
   })
 })
