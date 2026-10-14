@@ -97,7 +97,7 @@ Every visible thing is an `EntityState` in `worldEnter.entities`, `spawn`, `desp
 
 **Kill rewards.** The killer gets `statsDelta {stats: {exp, sp, spExp, ...}, gain: {exp, spExp, from: mobId}}`.
 - EXP is `MobDef.exp` times the variant multiplier, a server config.
-- SP-EXP is `MobDef.spExp`, or the server rule when absent (default: equal to EXP). Every 400 SP-EXP (`CHARACTER_RULES.spExpPerSp`) becomes 1 SP.
+- SP-EXP is `MobDef.spExp`, or the server rule when absent (default: equal to EXP). Every 150 SP-EXP (`CHARACTER_RULES.spExpPerSp`; 400 in retail, docs/CLIMB.md §5.3) becomes 1 SP.
 - Loot spawns as item entities (section 6).
 
 ## 4. Stats, levelling and stat points

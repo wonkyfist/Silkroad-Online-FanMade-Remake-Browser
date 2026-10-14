@@ -398,8 +398,8 @@ describe('quest exploits that the server must refuse', () => {
     expect(h.turnIn(p, inbox, 'T_001')).toMatchObject({ ok: true })
     expect(p.gold).toBe(MAX_GOLD)
     expect(h.store.characterById(p.characterId)!.gold).toBe(MAX_GOLD)
-    // 29 SP from gmSetLevel(5) (typical SP of level 5 on the Climb's curve, progression.ts) + 1 from the quest's SP-EXP
-    expect(p.progress).toMatchObject({ level: 5, exp: 0, sp: 30, spExp: 20 })
+    // 58 SP from gmSetLevel(5) (typical SP of level 5 on the Climb's curve, progression.ts) + 1 from the quest's SP-EXP
+    expect(p.progress).toMatchObject({ level: 5, exp: 0, sp: 59, spExp: 20 })
     expect(CHARACTER_RULES.spExpPerSp).toBeGreaterThan(20)
   })
 })

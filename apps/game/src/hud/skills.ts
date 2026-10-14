@@ -9,7 +9,7 @@
  * skill points (#FFD953) and the mastery total (#97E0FF).
  * The page only sends intents and redraws from `skills` / `skillsUpdate` / `stats`.
  */
-import { CHARACTER_RULES, CLIMB_ARTS, CLIMB_ART_RESPEC_GOLD, CLIMB_ART_TIERS, MASTERY_CODES, climbArtKey, climbTreeLevel, type ClientMessage, type ClimbArtTree, type MasteryCode, type MasteryDef, type PlayerStats } from '@sro/shared'
+import { CHARACTER_RULES, masteryTotalLimit, CLIMB_ARTS, CLIMB_ART_RESPEC_GOLD, CLIMB_ART_TIERS, MASTERY_CODES, climbArtKey, climbTreeLevel, type ClientMessage, type ClimbArtTree, type MasteryCode, type MasteryDef, type PlayerStats } from '@sro/shared'
 import { climbState } from './climb-state.ts'
 import type { SkillCatalog, SkillLine, SkillState } from '../content/skills.ts'
 import { t } from '../i18n/index.ts'
@@ -133,8 +133,8 @@ export class SkillWindow extends MainPage {
     if (art.has('skill/skl_wnd_box')) box.style.backgroundImage = art.cssUrl('skill/skl_wnd_box')
     else box.classList.add('no-art')
     this.spEl = place(el('div', 'skl-sp-num kit-num'), [86, 12, 90, 13])
-    this.totalEl = place(el('div', 'skl-total-num kit-num'), [293, 12, 48, 13])
-    box.append(place(el('div', 'skl-sp-label', t('skills.win.sp')), [14, 12, 72, 13]), this.spEl, place(el('div', 'skl-total-label', t('skills.win.total')), [183, 12, 110, 13]), this.totalEl)
+    this.totalEl = place(el('div', 'skl-total-num kit-num'), [263, 12, 78, 13])
+    box.append(place(el('div', 'skl-sp-label', t('skills.win.sp')), [14, 12, 72, 13]), this.spEl, place(el('div', 'skl-total-label', t('skills.win.total')), [183, 12, 80, 13]), this.totalEl)
     // Free SP: the tooltip says where SP comes from.
     box.title = t('skills.win.spHint', { max: formatNumber(CHARACTER_RULES.spExpPerSp) })
     panel.append(frame.root, tabBg, this.masteryTabs, board.root, this.headEl, this.list.root, box)
@@ -184,7 +184,7 @@ export class SkillWindow extends MainPage {
     this.tabs.weapon.classList.toggle('on', this.tab === 'weapon')
     this.tabs.force.classList.toggle('on', this.tab === 'force')
     this.spEl.textContent = formatNumber(sp)
-    this.totalEl.textContent = String(masteryTotal(state.masteries))
+    this.totalEl.textContent = `${masteryTotal(state.masteries)} / ${masteryTotalLimit(stats?.level ?? 1)}`
     const masteries = catalog.masteries(this.tab)
     if (!masteries.length) {
       this.masteryTabs.replaceChildren()
@@ -236,7 +236,7 @@ export class SkillWindow extends MainPage {
     const tip = (): TooltipLine[] => {
       const lines: TooltipLine[] = [{ text: t('skills.win.masteryUp', { name: m.name ?? m.code, level: level + 1 }), cls: 'title' }]
       if (cost !== null) lines.push({ text: t('skills.win.cost', { sp: cost }), cls: 'stat' })
-      if (block) lines.push({ text: block === 'sp' ? t('skills.lock.sp', { need: cost ?? 0, have: sp }) : catalog.blockText(block, null, sp), cls: 'bad' })
+      if (block) lines.push({ text: block === 'sp' ? t('skills.lock.sp', { need: cost ?? 0, have: sp }) : catalog.blockText(block, null, sp, charLevel, masteryTotal(state.masteries)), cls: 'bad' })
       lines.push({ text: t('skills.win.masteryHint'), cls: 'hint' })
       return lines
     }

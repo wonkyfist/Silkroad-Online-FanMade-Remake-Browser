@@ -360,7 +360,7 @@ real server start (`work/tmp/balance/live-nests.json`, 700 nests spawned) [confi
 - **Kill EXP** = `MobDef.exp × variant` (`gameplay.ts` `killExp`), and retail's monster EXP is 23.5 × level for every
   Jangan monster (24, 47, 71 … 447) [confirmed: mobs.json]. **No penalty for monsters below you** [confirmed:
   `killExp` has no level term].
-- **SP-EXP = kill EXP** (no mob has `spExp`; `CHARACTER_RULES.spExpPerSp` 400) [confirmed: BALANCE §4, content.ts].
+- **SP-EXP = kill EXP** (no mob has `spExp`; `CHARACTER_RULES.spExpPerSp` 400, 150 since 2026-10-14: §5.3) [confirmed: BALANCE §4, content.ts].
 - **Quests**: 35 quests; the non-repeatable ones give 342,890 EXP (30.5 %), 576 SP and 116,200 gold
   [confirmed: QUESTS §3.4; gold summed from `content/quests/jangan.json`].
 - **Rates**: the live server runs EXP/SP/GOLD ×3 and DROP ×2 in the mini PC's `~/silkroad/silkroad.local.env`
@@ -1211,6 +1211,51 @@ new clip, no new effect (the existing effect plays).
   4,000–4,200. SP stays a choice at the cap; SP-EXP at 25 keeps flowing from every kill (≈ 70 SP an hour).
 - **No fourth Art tier** [decision: the 21–25 retail rows are the reward for those masteries; a tier at 25 would be a
   new balance pass for 24 Arts]. The Art at mastery 20 stays the last choice.
+
+### 5.3 SP at 25 and the mastery total (2026-10-14) [decision: the user; numbers confirmed: skills.json, levels.json, jangan.json]
+
+The rule: at 25 a player can max **one weapon tree and all three elements** (Cold, Fire, Lightning), every mastery
+level 1–25 and every skill row up to mastery 25; **Force needs one element given up**. This replaces the "SP stays a
+choice at the cap" estimate above.
+
+- **Demand** (mastery 0 → 25 = **734 SP** per tree from `levels.json` `masterySp`, plus every skill row of the tree up
+  to mastery 25 from `skills.json`; chain segments after the first cost 0):
+
+  | Tree | Rows to 25 | + mastery 0 → 25 |
+  |---|---|---|
+  | Bicheon | 1,849 | **2,583** |
+  | Heuksal | 1,562 | 2,296 |
+  | Pacheon | 1,465 | 2,199 |
+  | Cold | 1,319 | 2,053 |
+  | Fire | 1,126 | 1,860 |
+  | Lightning | 1,044 | 1,778 |
+  | Force | 1,147 | 1,881 |
+
+  Three elements = 5,691. **Bicheon (the most expensive weapon) + 3 elements = 8,274** (Heuksal 7,987, Pacheon
+  7,890); + Force = **10,155**. Arts cost gold, not SP.
+- **Hard rule**: the mastery total is **character level × 4** (at most 330, the retail total): **100 at 25** = weapon
+  25 + three elements at 25. `masteryTotalLimit` (shared `content.ts`) is used by the server (`learn.ts`
+  `checkMasteryUp`, message "Mastery total N / L …") and the client (skill window lock reason, header "87 / 100").
+  A character already above it keeps every mastery but cannot raise one until under it (no data loss, no refund).
+- **Supply**: `CHARACTER_RULES.spExpPerSp` **400 → 150** (kill SP-EXP = kill EXP unchanged; quest SP is paid as
+  `sp × spExpPerSp` SP-EXP, so it stays whole points). Two ways to count SP at 25 at x1, no Rested:
+
+  | | Before (400) | **Now (150)** | vs 8,274 / 10,155 |
+  |---|---|---|---|
+  | `TYPICAL_SP_BY_LEVEL` (the §5.2 band model: quests take 50/35/30/25/20 % of each level's EXP, quest SP = EXP / 600) | 3,575 | **8,487** | +213 (+2.6 %) / −1,668 |
+  | The real questline (`content/quests/jangan.json`: 342,890 quest EXP and 576 SP, levels 1–19; kill EXP = the curve's 1,555,570 − 342,890 = 1,212,680) | 3,607 | **8,660** | +386 (+4.7 %) / −1,495 |
+
+  `TYPICAL_SP_BY_LEVEL` at 150: 397 at 10, 1,378 at 15, 3,547 at 20, 8,487 at 25 (was 183 / 612 / 1,533 / 3,575).
+  If Rested adds ≈ 13 % of the curve as SP-EXP (≈ +1,350 SP at 150) the real questline gives ≈ 10,000, still under
+  the 10,155 of a fifth tree; and the mastery total stops Force at 25 whatever the SP. 155 was too tight (the model
+  gives 8,233, under the budget), 145 too loose (≈ 8,940 real; ≈ 10,300 with Rested). The early game is not flooded:
+  397 SP at 10 against a mastery total of 40.
+- **Live characters** (`climb.ts` `topUpClimbSp` at startup, after the curve move; `characters.curve_version` 1 → 2,
+  new characters are created at 2; no new migration: the column is migration 21's): once each,
+  `spRateTopUp(level, bar EXP)` = the typical kill SP-EXP to that point (the band model) paid again at 150 minus at
+  400 (never negative; ≈ +214 at 10, +767 at 15, +2,014 at 20, +4,912 at 25), and the saved SP-EXP bar carried into
+  SP at the new rate. Spent SP, masteries and skills are untouched. Tests: `sp-progress.test.ts` (table, budget,
+  tree costs from the export, top-up), `skills-book.test.ts` (limit), `climb.test.ts` (idempotence).
 
 ---
 

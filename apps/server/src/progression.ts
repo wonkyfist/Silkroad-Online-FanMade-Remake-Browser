@@ -16,7 +16,7 @@ export interface Progress {
 /**
  * Adds EXP and SP-EXP (research report §4.5, CHARACTER_RULES): EXP overflow carries across several levels,
  * each level gives +1 STR, +1 INT and 3 stat points; at `cap` no EXP is kept (SP-EXP still counts);
- * every 400 SP-EXP becomes 1 SP. `expToNext(level)` = EXP from level to level + 1 (0 = unknown: stop).
+ * every CHARACTER_RULES.spExpPerSp (150) SP-EXP becomes 1 SP. `expToNext(level)` = EXP from level to level + 1 (0 = unknown: stop).
  * Mutates `p`; returns the number of levels gained.
  */
 export function gainExp(p: Progress, exp: number, spExp: number, cap: number, expToNext: (level: number) => number): number {
@@ -43,21 +43,34 @@ export function gainExp(p: Progress, exp: number, spExp: number, cap: number, ex
 }
 
 /**
- * SP a typical player owns on reaching `level` at SP_RATE 1 on the Climb's curve (docs/CLIMB.md §5.2, cap 25): the
- * kill SP-EXP of levels 1 … level−1 (kill SP-EXP = kill EXP = each level's EXP minus its quest share: 50 / 35 / 30 /
- * 25 / 20 % by band, 1–5, 6–10, 11–15, 16–20, 21–24) / 400, plus the quest SP (quest EXP / 600), over
- * content/climb/levels.json. Index = level − 1. Level 20 = 1,533 SP, level 25 = 3,575 (CLIMB §5.2's ≈ 3,575).
- * (The pre-Climb table, retail curve and the old questline: 0, 2, 4, 7, 10, 16, 28, 48, 78, 118, 171, 250, 357, 499,
- * 676, 894, 1182, 1546, 1993, 2530.)
- *
- *   level  1  2  3   4   5   6   7   8    9   10   11   12   13   14   15   16   17    18    19    20    21    22    23    24    25
- *   SP     0  3  9  17  29  45  67  97  135  183  241  312  396  496  611  746  903  1085  1293  1533  1813  2144  2536  3005  3575
+ * Share of a level's EXP the questline pays on the Climb's curve (docs/CLIMB.md §5.2, §5.3): 50 / 35 / 30 / 25 / 20 %
+ * by band (1–5, 6–10, 11–15, 16–20, 21–24). The rest is kill EXP = SP-EXP.
  */
-export const TYPICAL_SP_BY_LEVEL: readonly number[] = [0, 3, 9, 17, 29, 45, 67, 97, 135, 183, 241, 312, 396, 496, 611, 746, 903, 1085, 1293, 1533, 1813, 2144, 2536, 3005, 3575]
+export function climbQuestShare(level: number): number {
+  return level <= 5 ? 0.5 : level <= 10 ? 0.35 : level <= 15 ? 0.3 : level <= 20 ? 0.25 : 0.2
+}
+
+/** Quest SP: quest EXP / 600 (QUESTS §3.4; the quests' `sp` is authored that way and paid as whole points). */
+export const QUEST_EXP_PER_SP = 600
+
+/**
+ * SP a typical player owns on reaching `level` at SP_RATE 1 on the Climb's curve (docs/CLIMB.md §5.2, §5.3, cap 25):
+ * the kill SP-EXP of levels 1 … level−1 (each level's EXP minus its quest share, climbQuestShare) / spExpPerSp (150),
+ * plus the quest SP (quest EXP / 600), over content/climb/levels.json. Index = level − 1. No Rested bonus counted (it
+ * adds ≈ 13 % of the climb's EXP as SP-EXP). Before 2026-10-14 (400 SP-EXP per SP): 183 at 10, 1,533 at 20, 3,575 at 25.
+ *
+ *   level  1  2   3   4   5   6    7    8    9   10   11   12   13    14    15    16    17    18    19    20
+ *   SP     0  7  18  35  58  90  141  207  292  397  526  689  883  1112  1378  1686  2058  2486  2979  3547
+ *   level 21    22    23    24    25
+ *   SP  4208  5013  5965  7104  8487
+ */
+export const TYPICAL_SP_BY_LEVEL: readonly number[] = [
+  0, 7, 18, 35, 58, 90, 141, 207, 292, 397, 526, 689, 883, 1112, 1378, 1686, 2058, 2486, 2979, 3547, 4208, 5013, 5965, 7104, 8487,
+]
 
 /**
  * `TYPICAL_SP_BY_LEVEL` for any level. Past the table (LEVEL_CAP > 25) every further level adds its kill SP-EXP, which
- * is the whole level's EXP there (no questline): floor(expToNext(l) / 400) for l = 25 … level−1 (0 without `expToNext`).
+ * is the whole level's EXP there (no questline): floor(expToNext(l) / spExpPerSp) for l = 25 … level−1 (0 without `expToNext`).
  */
 export function typicalSp(level: number, expToNext?: (level: number) => number): number {
   const table = TYPICAL_SP_BY_LEVEL
@@ -66,6 +79,24 @@ export function typicalSp(level: number, expToNext?: (level: number) => number):
   let sp = table[table.length - 1]!
   if (expToNext) for (let k = table.length; k < l; k++) sp += Math.floor(Math.max(0, expToNext(k)) / CHARACTER_RULES.spExpPerSp)
   return sp
+}
+
+/** SP-EXP per SP before the cap-25 SP retune (2026-10-14, CLIMB §5.3). */
+export const OLD_SP_EXP_PER_SP = 400
+
+/**
+ * The one-time SP top-up of a saved character for the SP-EXP rate change 400 → spExpPerSp (CLIMB §5.3): the kill
+ * SP-EXP a typical player earned to `level` and `barExp` into it (climbQuestShare), paid again at the new rate:
+ * floor(killSpExp / new) − floor(killSpExp / 400), never negative. Quest SP was paid in whole points and is unchanged;
+ * spent SP is never refunded or touched. `expToNext(l)` = EXP from l to l + 1 on the curve the character is on.
+ */
+export function spRateTopUp(level: number, barExp: number, expToNext: (level: number) => number): number {
+  const l = Math.max(1, Math.floor(level))
+  let kill = 0
+  for (let k = 1; k < l; k++) kill += Math.max(0, expToNext(k)) * (1 - climbQuestShare(k))
+  const need = Math.max(0, expToNext(l))
+  if (need > 0) kill += Math.min(Math.max(0, barExp), need) * (1 - climbQuestShare(l))
+  return Math.max(0, Math.floor(kill / CHARACTER_RULES.spExpPerSp) - Math.floor(kill / OLD_SP_EXP_PER_SP))
 }
 
 /** What a GM setlevel changed, for the reply and the gm_audit row (never silent: docs/PLAYTEST.md, apps/server/README.md). */

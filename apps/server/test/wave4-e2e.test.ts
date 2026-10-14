@@ -186,7 +186,7 @@ describe.skipIf(!HAVE_FIELDS)('wave 4 flows on WORLD_EXPORT=jangan-fields', () =
     expect((await h.c.next('npcDialog', (m) => m.npc === chief.id)).services).toContain('quest')
     expect(await act(h.c, { t: 'questTurnIn', npc: chief.id, quest: 'JG_001' })).toMatchObject({ ok: true })
     expect(await h.c.next('questUpdate', (m) => m.quest === 'JG_001')).toMatchObject({ event: 'completed', progress: null, done: { quest: 'JG_001', times: 1 } })
-    expect((await h.c.next('statsDelta', (m) => m.gain?.quest === 'JG_001')).gain).toEqual({ exp: 60, spExp: 400, quest: 'JG_001' })
+    expect((await h.c.next('statsDelta', (m) => m.gain?.quest === 'JG_001')).gain).toEqual({ exp: 60, spExp: 150, quest: 'JG_001' })
     expect(count(h.ch.id, 'ITEM_ETC_HP_POTION_01')).toBe(5)
     // done once: not offered again
     expect(await act(h.c, { t: 'questAccept', npc: fengil.id, quest: 'JG_001' })).toMatchObject({ ok: false })

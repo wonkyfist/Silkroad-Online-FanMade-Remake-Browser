@@ -9,11 +9,11 @@
  * N-1, the row's `masteryLevel` in its mastery, its `sp` and its `requires`. Chain segments after the first share
  * the head's group and level and are never learned on their own.
  */
-import { HOTBAR_SLOTS, MASTERY_CODES, MOUSE_SLOT, type HotbarEntry, type LevelDef, type MasteryCode, type MasteryDef, type ServerMessage, type SkillDef, type SkillKind } from '@sro/shared'
+import { HOTBAR_SLOTS, MASTERY_CODES, MOUSE_SLOT, masteryTotalLimit, type HotbarEntry, type LevelDef, type MasteryCode, type MasteryDef, type ServerMessage, type SkillDef, type SkillKind } from '@sro/shared'
 import type { TooltipLine } from '../hud/items.ts'
 import { t, type StringKey } from '../i18n/index.ts'
 
-/** The Chinese mastery total cap (SKILLS.md §1.2); never reached below level 47. */
+/** The retail Chinese mastery total (SKILLS.md §1.2); the shared masteryTotalLimit (level × 4) applies first. */
 export const CH_MASTERY_TOTAL = 330
 
 /** Why the next level of a skill (or a mastery) cannot be learned now. */
@@ -159,7 +159,7 @@ export class SkillCatalog {
     if (level >= charLevel) return 'cap'
     let total = 0
     for (const c of MASTERY_CODES) total += state.masteries[c] ?? 0
-    if (total >= CH_MASTERY_TOTAL) return 'total'
+    if (total >= masteryTotalLimit(charLevel)) return 'total'
     const cost = this.masteryCost(level + 1)
     if (cost === null) return 'unknown'
     return sp < cost ? 'sp' : null
@@ -176,7 +176,7 @@ export class SkillCatalog {
   }
 
   /** The tooltip caption of a learn block. */
-  blockText(block: LearnBlock, row: SkillDef | null, sp = 0): string {
+  blockText(block: LearnBlock, row: SkillDef | null, sp = 0, charLevel = 1, total = 0): string {
     switch (block) {
       case 'max':
         return t('skills.lock.max')
@@ -191,7 +191,7 @@ export class SkillCatalog {
       case 'cap':
         return t('skills.lock.cap')
       case 'total':
-        return t('skills.lock.total', { total: CH_MASTERY_TOTAL })
+        return t('skills.lock.total', { total, limit: masteryTotalLimit(charLevel), level: charLevel })
       case 'unknown':
         return t('skills.lock.unknown')
     }

@@ -157,7 +157,7 @@ describe('rate knobs', () => {
     const m2 = rated.gameplay.createMob(TOMB, 'normal', 1, 0, 0, null, now)
     m2.damage.set(rated.p.id, 50)
     rated.gameplay.mobDied(m2, now, true)
-    expect(rated.p.progress).toMatchObject({ exp: 15, spExp: 200 })
+    expect(rated.p.progress).toMatchObject({ exp: 15, sp: 1, spExp: 50 }) // 200 SP-EXP = 1 SP (150) + 50
     const gain = rated.inbox.find((m): m is Extract<ServerMessage, { t: 'statsDelta' }> => m.t === 'statsDelta' && m.gain !== undefined)
     expect(gain?.gain).toMatchObject({ exp: 15, spExp: 200, from: m2.id })
   })

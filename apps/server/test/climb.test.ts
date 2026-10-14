@@ -34,12 +34,12 @@ import {
   type UniquesFile,
 } from '@sro/shared'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { applyClimbContent, climbGm, convertClimbCharacters, remapClimbNests } from '../src/climb.ts'
+import { CLIMB_SP_VERSION, applyClimbContent, climbGm, convertClimbCharacters, remapClimbNests, topUpClimbSp } from '../src/climb.ts'
 import { REPO_ROOT, loadConfig } from '../src/config.ts'
 import { migrate, openStore } from '../src/db.ts'
 import { layerRepoOverrides } from '../src/editors/overrides.ts'
 import { GameData } from '../src/gamedata.ts'
-import { gainExp } from '../src/progression.ts'
+import { gainExp, spRateTopUp } from '../src/progression.ts'
 import { rollRareDrops } from '../src/rarity.ts'
 import { gearPool } from '../src/uniques.ts'
 import { item, mob, nest } from './fixtures.ts'
@@ -305,6 +305,25 @@ describe('migration 21 on a copy of a schema-20 database', () => {
     const fresh = store.createCharacter(1, 'Fresh', 'CHAR_CH_MAN_ADVENTURER', 'sword', 'jangan', 8)
     expect(typeof fresh === 'object' && fresh.curve_version).toBe(1)
     expect(convertClimbCharacters(store.db, () => 1, () => 2, () => {})).toBe(0)
+
+    // the cap-25 SP top-up (CLIMB §5.3): once, never touching what was spent, SP-EXP carried at the new rate
+    const need = (l: number) => CURVE[l - 1] ?? 0
+    expect(topUpClimbSp(store.db, need, (l) => logs.push(l))).toBe(5)
+    const topped = store.db.prepare('SELECT name, sp, sp_exp, curve_version FROM characters ORDER BY id').all() as { name: string; sp: number; sp_exp: number; curve_version: number }[]
+    const owed = (level: number, exp: number) => spRateTopUp(level, exp, need)
+    expect(topped).toEqual([
+      { name: 'Rookie', sp: 3 + owed(1, 890), sp_exp: 100, curve_version: CLIMB_SP_VERSION },
+      { name: 'Middle', sp: 700 + owed(15, 29_800), sp_exp: 50, curve_version: CLIMB_SP_VERSION },
+      { name: 'Almost', sp: 2000 + owed(19, 104_999), sp_exp: 10, curve_version: CLIMB_SP_VERSION },
+      { name: 'Capped', sp: 2600 + owed(20, 0) + 2, sp_exp: 399 - 2 * 150, curve_version: CLIMB_SP_VERSION },
+      { name: 'Fresh', sp: 0, sp_exp: 0, curve_version: CLIMB_SP_VERSION },
+    ])
+    expect(owed(20, 0)).toBeGreaterThan(1000)
+    expect(topUpClimbSp(store.db, need, () => {})).toBe(0)
+    store.setNewCharacterCurve(CLIMB_SP_VERSION)
+    const later = store.createCharacter(1, 'Later', 'CHAR_CH_MAN_ADVENTURER', 'sword', 'jangan', 8)
+    expect(typeof later === 'object' && later.curve_version).toBe(CLIMB_SP_VERSION)
+    expect(topUpClimbSp(store.db, need, () => {})).toBe(0)
   })
   it('a fresh database is at schema 21 and new characters start at curve 0 until the server sets the curve', () => {
     const store = openStore(tmp())

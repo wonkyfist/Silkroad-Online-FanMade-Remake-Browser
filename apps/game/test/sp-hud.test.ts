@@ -4,7 +4,7 @@ import { spExpFraction, spExpTooltip, spGained, spGainedText } from '../src/hud/
 
 describe('SP on the HUD (EXP bar SP-EXP gauge, "+1 SP", chat line)', () => {
   it('fills the SP-EXP gauge out of 400 and clamps it', () => {
-    expect(CHARACTER_RULES.spExpPerSp).toBe(400)
+    expect(CHARACTER_RULES.spExpPerSp).toBe(150) // CLIMB §5.3 (400 in retail; the gauge maths below is rate-free)
     expect(spExpFraction(0, 400)).toBe(0)
     expect(spExpFraction(192, 400)).toBe(0.48)
     expect(spExpFraction(399, 400)).toBeCloseTo(0.9975)

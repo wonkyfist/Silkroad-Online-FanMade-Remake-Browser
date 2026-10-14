@@ -1001,11 +1001,26 @@ export const CHARACTER_RULES = {
   baseInt: 20,
   /** Every level-up adds 1 STR, 1 INT and this many free stat points. */
   statPointsPerLevel: 3,
-  /** SP-EXP per skill point. */
-  spExpPerSp: 400,
+  /**
+   * SP-EXP per skill point: 150 on the cap-25 Climb (docs/CLIMB.md §5.3; 400 in retail and before 2026-10-14), so a
+   * x1 player reaches 25 with ≈ 8,500–8,700 SP: one weapon tree plus Cold, Fire and Lightning, not Force as well.
+   */
+  spExpPerSp: 150,
+  /** Mastery levels allowed in total per character level (CLIMB §5.3: 100 at 25 = one weapon + three elements). */
+  masteryPerLevel: 4,
+  /** The retail ceiling on the mastery total (RR §4.4: 330 for a Chinese character). */
+  masteryTotalMax: 330,
   /** Bag slots of a new character. */
   bagSize: 48,
 } as const
+
+/**
+ * The most mastery levels a character of `level` may hold in total (server learn.ts, the client skill window):
+ * level × 4, at most 330. A character already above it keeps every mastery but cannot raise one until under it.
+ */
+export function masteryTotalLimit(level: number): number {
+  return Math.min(CHARACTER_RULES.masteryTotalMax, Math.max(1, Math.floor(level)) * CHARACTER_RULES.masteryPerLevel)
+}
 
 // ---- reading helpers ---------------------------------------------------------------------------------
 

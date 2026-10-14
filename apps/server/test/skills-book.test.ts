@@ -2,6 +2,7 @@
  * Skills engine, pure parts (docs/SKILLS.md §1-§5; docs/WAVE_PLAN.md §4.3): the skill book, the learning rules, the
  * action timeline, area target selection and the stat-mod table.
  */
+import { masteryTotalLimit } from '@sro/shared'
 import { describe, expect, it } from 'vitest'
 import { SkillBook } from '../src/skills/book.ts'
 import { CH_MASTERY_TOTAL, checkLearn, checkMasteryUp, masteryCost } from '../src/skills/learn.ts'
@@ -66,6 +67,27 @@ describe('learning rules', () => {
     const full = emptyMasteries()
     full.BICHEON = CH_MASTERY_TOTAL
     expect(checkMasteryUp({ level: 400, sp: 1e6 }, full, 'COLD', SKILL_LEVELS)).toMatchObject({ ok: false, reason: 'mastery_cap' })
+  })
+
+  it('the mastery total is level × 4 (CLIMB §5.3): weapon + three elements at 25 leaves no room for Force', () => {
+    expect([1, 10, 25, 82, 83, 400].map(masteryTotalLimit)).toEqual([4, 40, 100, 328, 330, 330])
+    const L25 = Array.from({ length: 25 }, (_, i) => ({ level: i + 1, exp: 100, masterySp: 1 }))
+    const m = emptyMasteries()
+    m.BICHEON = 25
+    m.COLD = 25
+    m.FIRE = 25
+    m.LIGHTNING = 24
+    expect(checkMasteryUp({ level: 25, sp: 1e6 }, m, 'FORCE', L25)).toMatchObject({ ok: true })
+    m.LIGHTNING = 25
+    const no = checkMasteryUp({ level: 25, sp: 1e6 }, m, 'FORCE', L25)
+    expect(no).toMatchObject({ ok: false, reason: 'mastery_cap' })
+    expect(no.ok === false && no.message).toContain('100 / 100')
+    // over the limit (lowered or learned before the rule): everything kept, nothing raised until under it
+    m.FORCE = 10
+    m.FIRE = 24
+    expect(checkMasteryUp({ level: 25, sp: 1e6 }, m, 'FIRE', L25)).toMatchObject({ ok: false, reason: 'mastery_cap', message: expect.stringContaining('109 / 100') })
+    m.COLD = 0
+    expect(checkMasteryUp({ level: 25, sp: 1e6 }, m, 'FORCE', L25)).toMatchObject({ ok: true })
   })
 
   it('a skill level needs the previous level, the mastery, the SP and its prerequisites', () => {

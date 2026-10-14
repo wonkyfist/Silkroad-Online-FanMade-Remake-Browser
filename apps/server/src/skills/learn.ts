@@ -1,13 +1,13 @@
-import type { ActionFailReason, LevelDef, MasteryCode, SkillDef } from '@sro/shared'
+import { masteryTotalLimit, type ActionFailReason, type LevelDef, type MasteryCode, type SkillDef } from '@sro/shared'
 import type { SkillBook } from './book.ts'
 
 /**
  * Learning rules (docs/SKILLS.md §1.2-§1.3): a mastery level costs levels.json `masterySp` of the level reached
- * (1, 1, 1, 2, 2, 4, ...), stops at the character level and at CH_MASTERY_TOTAL over all masteries; skill level N
+ * (1, 1, 1, 2, 2, 4, ...), stops at the character level and at masteryTotalLimit (level × 4, CLIMB §5.3); skill level N
  * needs level N - 1 of the group, the mastery at the row's level, its SP and its prerequisites.
  */
 
-/** RR §4.4: total mastery levels of a Chinese character (never reached below level 47). */
+/** RR §4.4: the retail ceiling on the mastery total (masteryTotalLimit caps it at level × 4 first). */
 export const CH_MASTERY_TOTAL = 330
 
 export type LearnCheck = { ok: true; sp: number } | { ok: false; reason: ActionFailReason; message?: string }
@@ -24,7 +24,9 @@ export function checkMasteryUp(p: { level: number; sp: number }, masteries: Reco
   const next = (masteries[code] ?? 0) + 1
   if (next > p.level) return no('mastery_cap', 'A mastery cannot go above your character level.')
   const total = Object.values(masteries).reduce((s, l) => s + l, 0)
-  if (total + 1 > CH_MASTERY_TOTAL) return no('mastery_cap', `At most ${CH_MASTERY_TOTAL} mastery levels in total.`)
+  const limit = masteryTotalLimit(p.level)
+  if (total + 1 > limit)
+    return no('mastery_cap', `Mastery total ${total} / ${limit}: at level ${p.level} you may hold ${limit} mastery levels in total (4 per level).`)
   const cost = masteryCost(levels, next)
   if (cost === null) return no('mastery_cap')
   if (p.sp < cost) return no('no_sp')

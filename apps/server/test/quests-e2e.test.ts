@@ -129,7 +129,7 @@ describe('quests over the wire', () => {
     expect(await act(c, { t: 'questTurnIn', npc: chief, quest: 'T_001' })).toMatchObject({ ok: true })
     expect(await c.next('questUpdate', (m) => m.quest === 'T_001')).toMatchObject({ event: 'completed', progress: null, done: { quest: 'T_001', times: 1 } })
     expect((await c.next('inventoryUpdate')).bag).toEqual([{ slot: 0, item: { code: 'ITEM_ETC_HP_POTION_01', count: 5 } }])
-    expect((await c.next('statsDelta', (m) => !!m.gain)).gain).toEqual({ exp: 20, spExp: 400, quest: 'T_001' })
+    expect((await c.next('statsDelta', (m) => !!m.gain)).gain).toEqual({ exp: 20, spExp: 150, quest: 'T_001' })
 
     // the kill quest
     expect(await act(c, { t: 'questAccept', npc: chief, quest: 'T_002' })).toMatchObject({ ok: true })
@@ -147,7 +147,7 @@ describe('quests over the wire', () => {
     await c.next('questUpdate', (m) => m.quest === 'T_002' && m.event === 'completed')
     const inv = await c.next('inventoryUpdate', (m) => !!m.bag?.some((b) => b.item?.code === 'ITEM_CH_SHIELD_01_A'))
     expect(inv.bag!.some((b) => b.item?.code === 'ITEM_CH_SHIELD_01_A')).toBe(true)
-    expect((await c.next('statsDelta', (m) => m.gain?.quest === 'T_002')).gain).toMatchObject({ exp: 30, spExp: 400 })
+    expect((await c.next('statsDelta', (m) => m.gain?.quest === 'T_002')).gain).toMatchObject({ exp: 30, spExp: 150 })
 
     // relog: the log comes back from the database
     c.send({ t: 'leaveWorld' })

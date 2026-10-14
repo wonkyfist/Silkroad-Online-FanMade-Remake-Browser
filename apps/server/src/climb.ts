@@ -18,6 +18,7 @@
  */
 import { join } from 'node:path'
 import {
+  CHARACTER_RULES,
   CLIMB_BANDS,
   CLIMB_CURVE_VERSION,
   CLIMB_DEGREE_LEVELS,
@@ -42,6 +43,7 @@ import type Database from 'better-sqlite3'
 import type { GameData } from './gamedata.ts'
 import { readJsonFile } from './editors/overrides.ts'
 import type { GmResult } from './gm.ts'
+import { spRateTopUp } from './progression.ts'
 
 export const CLIMB_USAGE = 'climb | climb mob <code> | climb exp <player level> <monster level> | climb gear [item code]'
 
@@ -136,6 +138,38 @@ export function convertClimbCharacters(db: Database.Database, oldNeed: (level: n
     }
   })()
   log(`climb: ${rows.length} characters moved to the cap-25 curve (${atCap} at level ${PRE_CLIMB_CAP} start the next bar at 0 %; the rest keep their bar fraction)`)
+  return rows.length
+}
+
+/**
+ * characters.curve_version once a character has had the cap-25 SP top-up (docs/CLIMB.md §5.3): 2. Rows at
+ * CLIMB_CURVE_VERSION (1, on the Climb's curve) still owe it; new characters are created at 2 (earned at the new rate).
+ */
+export const CLIMB_SP_VERSION = 2
+
+/**
+ * The one-time SP top-up for the SP-EXP rate change 400 → 150 (CLIMB §5.3), in one transaction, after
+ * convertClimbCharacters: every character with curve_version < CLIMB_SP_VERSION gets spRateTopUp(level, bar EXP) SP,
+ * its SP-EXP carried into SP at the new rate (a bar of up to 399 is now up to two points), and curve_version 2.
+ * Idempotent (the version guards it); spent SP, masteries and skills are untouched. Returns how many rows changed.
+ */
+export function topUpClimbSp(db: Database.Database, need: (level: number) => number, log: (line: string) => void): number {
+  const rows = db
+    .prepare<[number], { id: number; level: number; exp: number; sp: number; sp_exp: number }>('SELECT id, level, exp, sp, sp_exp FROM characters WHERE curve_version < ?')
+    .all(CLIMB_SP_VERSION)
+  if (rows.length === 0) return 0
+  const set = db.prepare<[number, number, number, number]>('UPDATE characters SET sp = ?, sp_exp = ?, curve_version = ? WHERE id = ?')
+  const per = CHARACTER_RULES.spExpPerSp
+  let total = 0
+  db.transaction(() => {
+    for (const r of rows) {
+      const add = spRateTopUp(r.level, r.exp, need)
+      const spExp = Math.max(0, r.sp_exp)
+      total += add
+      set.run(r.sp + add + Math.floor(spExp / per), spExp % per, CLIMB_SP_VERSION, r.id)
+    }
+  })()
+  log(`climb: ${rows.length} characters topped up to the cap-25 SP rate (${per} SP-EXP per SP): +${total.toLocaleString('en-US')} SP in all`)
   return rows.length
 }
 

@@ -3,7 +3,6 @@ import type { AddressInfo } from 'node:net'
 import { dirname, join } from 'node:path'
 import {
   ACCOUNT_NAME,
-  CLIMB_CURVE_VERSION,
   CLOSE_CODE,
   NEWS_ID,
   NEWS_IMAGE_NAME,
@@ -47,7 +46,7 @@ import { holdStats } from './services/hold.ts'
 import { routeChat } from './chat.ts'
 import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
-import { applyClimbContent, convertClimbCharacters, remapClimbNests } from './climb.ts'
+import { CLIMB_SP_VERSION, applyClimbContent, convertClimbCharacters, remapClimbNests, topUpClimbSp } from './climb.ts'
 import { NewsStore } from './news.ts'
 import { originAllowed } from './origin.ts'
 import { NetStats, isLoopback } from './netstats.ts'
@@ -328,7 +327,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     // Saved characters move to the cap-25 curve once (docs/CLIMB.md §9.3a; migration 21), and new ones start on it.
     if (climb.levels > 0) {
       convertClimbCharacters(store.db, (l) => climb.oldNeed[l - 1] ?? 0, (l) => data.levels[l - 1]?.exp ?? 0, config.log)
-      store.setNewCharacterCurve(CLIMB_CURVE_VERSION)
+      // and once more for the cap-25 SP rate (CLIMB §5.3): the SP the old 400 SP-EXP per SP held back, then new rows skip it
+      topUpClimbSp(store.db, (l) => data.levels[l - 1]?.exp ?? 0, config.log)
+      store.setNewCharacterCurve(CLIMB_SP_VERSION)
     }
   }
   config.log(`level cap ${config.levelCap}${climb ? ' (the Climb on)' : config.climb === false ? ' (the Climb off: CLIMB=off)' : ''}`)

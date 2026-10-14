@@ -144,6 +144,9 @@ describe('SkillCatalog', () => {
     expect(c.masteryBlock('BICHEON', s, 10, 5)).toBe('cap')
     expect(c.masteryBlock('BICHEON', s, 3, 20)).toBe('sp')
     expect(c.masteryBlock('BICHEON', s, 4, 20)).toBeNull()
+    // the total is level × 4 (CLIMB §5.3): Bicheon 5 at level 1 is already over 4
+    expect(c.masteryBlock('COLD', s, 99, 1)).toBe('total')
+    expect(c.blockText('total', null, 0, 1, 5)).toBe('Mastery total 5 / 4: level 1 allows 4 mastery levels (4 per level).')
   })
 
   it('writes the Strike Smash L1 tooltip numbers (19 MP, 411 / 1022 / 3000)', () => {

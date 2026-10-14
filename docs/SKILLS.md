@@ -49,7 +49,7 @@ No source code was copied. Scratch scripts used for the measurements were delete
   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
   | SP | 1 | 1 | 1 | 2 | 2 | 4 | 5 | 6 | 7 | 9 | 12 | 15 | 18 | 21 | 24 | 30 | 35 | 41 | 47 | 53 |
 
-- **SP income.** Kills give SP-EXP, and 400 SP-EXP become 1 SP (`CHARACTER_RULES.spExpPerSp`, PROTOCOL §3). Learning every skill up to mastery 20 costs 413 (Lightning) to 756 (Bicheon) SP per mastery, plus the 334 for the mastery itself.
+- **SP income.** Kills give SP-EXP, and 150 SP-EXP become 1 SP (`CHARACTER_RULES.spExpPerSp`, PROTOCOL §3; 400 in retail and before 2026-10-14, docs/CLIMB.md §5.3). The mastery total is capped at character level × 4 (100 at 25). Learning every skill up to mastery 20 costs 413 (Lightning) to 756 (Bicheon) SP per mastery, plus the 334 for the mastery itself.
 - **Withdrawal** (the `UIIT_STT_SKILL_LEV_POINT_RECOVER*` strings) is out of scope for the first slice.
 
 ### 1.3 Learning a skill [confirmed from the data layout]

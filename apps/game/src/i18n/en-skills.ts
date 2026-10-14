@@ -32,7 +32,7 @@ export const enSkills = {
   'skills.lock.requires': 'Requires {skill} level {level}.',
   'skills.lock.sp': 'Not enough skill points ({have} / {need}).',
   'skills.lock.cap': 'A mastery cannot go above your character level.',
-  'skills.lock.total': 'Your masteries have reached the total of {total}.',
+  'skills.lock.total': 'Mastery total {total} / {limit}: level {level} allows {limit} mastery levels (4 per level).',
   'skills.lock.unknown': 'Not available yet.',
 
   // ---- tooltips ----

@@ -128,7 +128,7 @@ describe.skipIf(!HAVE_FIELDS)('The Tiger\'s Shadow on jangan-fields', () => {
     const chief = await near(h.c, 'NPC_CH_CHEF')
     expect(await act(h.c, { t: 'questTurnIn', npc: chief.id, quest: 'JG_001' })).toMatchObject({ ok: true })
     expect(await h.c.next('questUpdate', (m) => m.quest === 'JG_001')).toMatchObject({ event: 'completed', progress: null })
-    expect((await h.c.next('statsDelta', (m) => m.gain?.quest === 'JG_001')).gain).toEqual({ exp: 60, spExp: 400, quest: 'JG_001' })
+    expect((await h.c.next('statsDelta', (m) => m.gain?.quest === 'JG_001')).gain).toEqual({ exp: 60, spExp: 150, quest: 'JG_001' })
     const bag = s.ctx.store.loadInventory(h.ch.id).bag
     expect(bag.filter((i) => i?.code === 'ITEM_ETC_HP_POTION_01').reduce((n, i) => n + i!.count, 0)).toBe(5)
 
