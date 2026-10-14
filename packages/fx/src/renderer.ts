@@ -341,6 +341,14 @@ export class FxInstance {
   private disposed = false
   /** Opacity multiplier (0..1) of everything drawn: skilleffect fade-in/out (docs/EFFECTS.md M15). */
   fade = 1
+  /**
+   * Brightness of everything drawn (0..1). Below 1 the texture stage is also saturated at 1 first, as Direct3D's fixed
+   * function did: the HDR target otherwise keeps a 2x/4x stage above 1 and the bloom turns additive glows into a white
+   * blob (the imbue loops, docs/EFFECTS.md M14). 1 = the stage as authored.
+   */
+  gain = 1
+  /** Largest side of a drawn plate (m): bigger plates are shrunk to it (the imbue loops' hand flares). */
+  maxPlate = Infinity
 
   constructor(readonly library: FxLibrary, readonly effect: FxEffect, options: FxInstanceOptions = {}) {
     this.sim = new FxSimulation(effect, options)
@@ -450,10 +458,12 @@ export class FxInstance {
       // fade (0..1) scales alpha; ONE/ONE ignores alpha, so it scales the colour there.
       const fk = this.fade < 1 ? Math.max(0, this.fade) : 1
       const kc = m.blend === 'oneone' ? fk : 1
+      const g = this.gain
+      const sat = g < 1 ? 1 : Infinity
       const colorOf = (e: FxElement): [number, number, number, number] => [
-        (cf ? e.color[0] * cf : 1) * kc,
-        (cf ? e.color[1] * cf : 1) * kc,
-        (cf ? e.color[2] * cf : 1) * kc,
+        Math.min(sat, cf ? e.color[0] * cf : 1) * kc * g,
+        Math.min(sat, cf ? e.color[1] * cf : 1) * kc * g,
+        Math.min(sat, cf ? e.color[2] * cf : 1) * kc * g,
         (af ? Math.min(1, e.color[3] * af) : 1) * fk,
       ]
       if (b.kind === 'pipe' || b.kind === 'dpipe') {
@@ -475,10 +485,14 @@ export class FxInstance {
         p[2] = (e.prev[2] + (e.pos[2] - e.prev[2]) * ti) * s
         const basis = this.basisInto(node, e, p, right, up, back, eye, S_B)
         const l = linearInto(S_L, basis, e.shape, e.scale, s)
+        if (b.kind === 'plate' && this.maxPlate < Infinity) {
+          const side = Math.max(Math.abs(e.scale[0]), Math.abs(e.scale[1])) * FX_PLATE_SIZE * s
+          if (side > this.maxPlate) for (let i = 0; i < 9; i++) l[i] = l[i]! * (this.maxPlate / side)
+        }
         const c = S_C
-        c[0] = (cf ? e.color[0] * cf : 1) * kc
-        c[1] = (cf ? e.color[1] * cf : 1) * kc
-        c[2] = (cf ? e.color[2] * cf : 1) * kc
+        c[0] = Math.min(sat, cf ? e.color[0] * cf : 1) * kc * g
+        c[1] = Math.min(sat, cf ? e.color[1] * cf : 1) * kc * g
+        c[2] = Math.min(sat, cf ? e.color[2] * cf : 1) * kc * g
         c[3] = (af ? Math.min(1, e.color[3] * af) : 1) * fk
         const uv = e.uv
         const base = k * vp

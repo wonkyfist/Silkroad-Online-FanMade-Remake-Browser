@@ -12,7 +12,7 @@ import { FX_FORMAT, FX_FPS, FX_VERSION, FxLibrary, type FxEffect } from '@sro/fx
 import type { MasteryDef, SkillDef } from '@sro/shared'
 import { SkillCatalog } from '../src/content/skills.ts'
 import type { EntityView } from '../src/world/entities.ts'
-import { damageStages, HOLD_MS, isImbue, readFxSkills, scheduleStages, SkillFx, stageRoll, STATUS_FX, type FxSkill, type FxStage } from '../src/world/skill-fx.ts'
+import { damageStages, HOLD_MS, IMBUE_LOOK, isImbue, readFxSkills, scheduleStages, SkillFx, stageRoll, STATUS_FX, type FxSkill, type FxStage } from '../src/world/skill-fx.ts'
 import { ActionPlayer, mobSkillDef, type ActionPort, type CastMessage, type ClipFacts, type PhasePlan, type SkillCombat } from '../src/world/skills-view.ts'
 import { pruneSamples, stripPoints, trailStyle } from '../src/world/fx/trail.ts'
 
@@ -443,6 +443,11 @@ describe('stage schedule', () => {
     await r.step(300, 20)
     expect(scene.meshes.filter(m => m.name.startsWith('fx:imbue'))).toHaveLength(0)
     expect(r.fx.imbueOf(1)).toBe('SKILL_CH_COLD_GIGONGTA_A')
+    // The imbue loop is toned down (no body-sized blob that blooms white at night): plates capped, colour saturated.
+    const lives = (r.fx as unknown as { live: { fx: { gain?: number; maxPlate?: number }; owner: number | null }[] }).live
+    const imbued = lives.filter(l => l.owner === 1)
+    expect(imbued.length).toBeGreaterThan(0)
+    for (const l of imbued) expect(l.fx).toMatchObject({ gain: IMBUE_LOOK.gain, maxPlate: IMBUE_LOOK.maxPlate })
     r.fx.stopLoop('1:9')
     expect(r.fx.imbueOf(1)).toBeNull()
     await r.step(1200, 20)

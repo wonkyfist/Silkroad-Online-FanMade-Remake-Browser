@@ -291,6 +291,15 @@ export function damageStages(skill: FxSkill, cue: HitCueRef): FxStage[] {
   return skill.stages.filter(st => st.dmg === true && !isFlight(st.actType) && st.phase === cue.phase && st.startEvent === cue.event)
 }
 
+/**
+ * How an imbue's ACT_L loop is drawn (docs/EFFECTS.md M14). The C/D tier keeps carry a 1.3 m "jung ang" flare and
+ * 0.9 m smoke plates at the hand; Direct3D saturated their 2x stages at 1 and had no bloom, but here they summed past
+ * 1 in the HDR target and the bloom (worse at night, and with a Sun weapon's glow on the same shaft) turned them into
+ * a white blob hiding the whole body. The loop keeps its retail anchor (the grip, on the weapon) and draws as a modest
+ * glow: plates at most `maxPlate` m (x the carrier's scale), colour saturated at 1 and scaled by `gain`.
+ */
+export const IMBUE_LOOK = { gain: 0.65, maxPlate: 0.55 } as const
+
 /** Imbues (SKILLS.md §7.2) loop their ACT_L on `Bip01 R Finger2`. */
 export function isImbue(skill: FxSkill): boolean {
   return skill.stages.some(st => st.phase === 'ACT_L' && /finger2/i.test(st.startBone ?? ''))
@@ -411,6 +420,9 @@ interface SpawnOptions {
   guard?: boolean
   /** A hit effect of a fight the own character is not in (G-11: counted against the preset's `otherHits` cap). */
   other?: boolean
+  /** FxInstance.gain / maxPlate (m): the imbue loops' tone-down (IMBUE_LOOK). */
+  gain?: number
+  maxPlate?: number
 }
 
 export interface StageContext {
@@ -884,6 +896,7 @@ export class SkillFx {
       else this.halt(l)
     }
     const info = infoOf(carrier, this.chars)
+    const imbue = isImbue(skill)
     for (const st of skill.stages) {
       if (st.phase !== 'ACT_L') continue
       const offset = parseOffset(st.startOffset)
@@ -914,11 +927,12 @@ export class SkillFx {
           until: Infinity,
           scale: stageScale(st.scale, carrier, info),
           ...stageFade(st),
+          ...(imbue ? { gain: IMBUE_LOOK.gain, maxPlate: IMBUE_LOOK.maxPlate * stageScale(st.scale, carrier, info) } : {}),
         },
         keep,
       )
     }
-    if (isImbue(skill) || (skill.priority ?? 0) > 0) this.carry(carrier.id, handle, group)
+    if (imbue || (skill.priority ?? 0) > 0) this.carry(carrier.id, handle, group)
   }
 
   /**
@@ -1535,6 +1549,8 @@ export class SkillFx {
     if (!o.loop && effect.duration !== null && Number.isFinite(effect.duration)) until = Math.max(until, this.now() + effect.duration * 50 + 1500)
     const fx = new FxInstance(this.lib, effect, { pose: o.pose, loop: o.loop, camera: this.lib.scene.activeCamera, ...(o.scale && o.scale !== 1 ? { scale: o.scale } : {}) })
     if (o.fade?.inMs) fx.fade = 0
+    if (o.gain !== undefined) fx.gain = o.gain
+    if (o.maxPlate !== undefined) fx.maxPlate = o.maxPlate
     const l = this.add(fx, { ...o, until })
     if (this.onSpawn) {
       let pos: V3 | undefined
