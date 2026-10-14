@@ -66,7 +66,6 @@ export const TOOL_ACTIONS: readonly ToolAction[] = [
   { id: 'starter', group: 'items', params: [who], build: (v) => ({ cmd: 'starter', args: a(v.player) }) },
   { id: 'potions', group: 'items', params: [who, P('count', 'number', { optional: true, def: '50' })], build: (v) => ({ cmd: 'potions', args: a(self(v.player), v.count) }) },
   { id: 'give', group: 'items', params: [who, P('item', 'item'), P('count', 'number', { optional: true, def: '1' }), P('plus', 'number', { optional: true })], build: (v) => ({ cmd: 'give', args: a(self(v.player), v.item.toUpperCase(), v.count, v.plus && v.plus !== '0' ? `+${v.plus}` : '') }) },
-  { id: 'wings', group: 'items', params: [who, P('kind', 'select', { options: ['angel', 'fairy', 'devil', 'black'] }), P('tier', 'select', { options: TIERS })], build: (v) => ({ cmd: 'wings', args: a('give', self(v.player), v.kind, v.tier !== 'normal' ? v.tier : '') }) },
   { id: 'rewardall', group: 'items', confirm: true, params: [P('item', 'item', { def: 'gold' }), P('count', 'number', { def: '1' })], build: (v) => ({ cmd: 'rewardall', args: a(v.item, v.count) }) },
   // ---- inventory ----
   { id: 'inv', group: 'inventory', params: [who], build: (v) => ({ cmd: 'inv', args: a(v.player) }) },
@@ -86,7 +85,6 @@ export const TOOL_ACTIONS: readonly ToolAction[] = [
   { id: 'berserk', group: 'character', params: [], build: () => ({ cmd: 'hwan', args: ['5'] }) },
   { id: 'invis', group: 'character', params: [P('state', 'select', { options: ['on', 'off'] })], build: (v) => ({ cmd: 'invis', args: a(v.state) }) },
   { id: 'god', group: 'character', params: [P('state', 'select', { options: ['on', 'off'] })], build: (v) => ({ cmd: 'god', args: a(v.state) }) },
-  { id: 'fly', group: 'character', params: [P('state', 'select', { options: ['on', 'off'] })], build: (v) => ({ cmd: 'fly', args: a(v.state) }) },
   { id: 'speed', group: 'character', params: [P('mul', 'number', { def: '2' })], build: (v) => ({ cmd: 'speed', args: a(v.mul) }) },
   { id: 'tpplace', group: 'character', params: [P('place', 'place')], build: (v) => ({ cmd: 'tp', args: a(v.place.toLowerCase()) }) },
   { id: 'tpplayer', group: 'character', params: [target], build: (v) => ({ cmd: 'tp', args: a(`@${v.player.replace(/^@/, '')}`) }) },

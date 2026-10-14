@@ -27,7 +27,7 @@ requests cannot share one free slot. Players see the wait: "Too many accounts fr
 §3.2 The client address is the socket's, unless `TRUST_PROXY=true` and the socket's peer is in `TRUSTED_PROXIES`
 (default `127.0.0.1/32, ::1/128`: Caddy on the same host). Then `X-Forwarded-For` is read from the right, past every
 trusted proxy; the first other address is the client. A header sent by anyone else is ignored. Behind Cloudflare: add
-Cloudflare's ranges to `TRUSTED_PROXIES` (or keep Caddy resolving them, see deploy/vps/Caddyfile) and optionally set
+Cloudflare's ranges to `TRUSTED_PROXIES` (or keep your reverse proxy resolving them) and optionally set
 `CLIENT_IP_HEADER=cf-connecting-ip`.
 
 ## 4. VPN, proxy and hosting detection

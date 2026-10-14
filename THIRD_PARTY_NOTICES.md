@@ -71,3 +71,9 @@ SOFTWARE.
   `content/antialt/hosting-ranges.txt` by `pnpm antialt:update`. No code.
 - The same file also holds the IP ranges AWS, Google Cloud, Oracle Cloud, DigitalOcean and Linode publish for public
   use, and `content/antialt/tor-exits.txt` the Tor Project's public exit list.
+
+## Tor exit list (data)
+
+- Source: the Tor Project's public bulk exit list, https://check.torproject.org/torbulkexitlist
+- What is used (docs/ANTI_ALT.md §4): the exit node addresses, saved as `content/antialt/tor-exits.txt` by
+  `pnpm antialt:update`. A public list of facts published for this purpose; no licence is stated and no code is used.

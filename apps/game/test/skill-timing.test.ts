@@ -4,7 +4,7 @@
  * cue in the real export, with the real clip events of a retail body (bow and default packs), at 4, 8 and 14 m.
  * The ActionPlayer (skills-view.ts) shows hit i at the server's `combat.at` plus the launch lag; the client launches at
  * the clip's hit event (+ the row's delay) and flies `distance / speed`: shown >= launch + travel, and within a frame
- * or two of it (no hit waits needlessly). The attack stance in the air (air-stance.ts) and the chest's bend and recoil
+ * or two of it (no hit waits needlessly). The chest's aim (air-stance.ts), bend and recoil
  * (upper-aim.ts) are checked here too.
  */
 import { existsSync, readFileSync } from 'node:fs'
@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vitest'
 import { arrivalGroups, hitArrivalsMs, type LevelDef, type MasteryDef, type SkillDef } from '@sro/shared'
 import { SkillCatalog } from '../src/content/skills.ts'
 import { recoilAt, RECOIL_PEAK_S, RECOIL_RAD, upperPitch } from '../src/three/upper-aim.ts'
-import { aimPitchTo, AIM_PITCH_MAX, airStance, HOVER_ATTACK_PITCH, HOVER_ATTACK_RATE, SWOOP_SPEED } from '../src/world/air-stance.ts'
+import { aimPitchTo, AIM_PITCH_MAX } from '../src/world/air-stance.ts'
 import { isFlight, scheduleStages, type FxSkill } from '../src/world/skill-fx.ts'
 import { ActionPlayer, segmentEvents, type ActionPort, type CastMessage, type ClipFacts, type PhasePlan, type SkillCombat } from '../src/world/skills-view.ts'
 
@@ -188,34 +188,7 @@ describe.skipIf(!have || !existsSync(FX_JSON))('bow rows: one arrow per hit, eac
   })
 })
 
-describe('the attack stance in the air (air-stance.ts) and the chest bend (upper-aim.ts)', () => {
-  const glide = { pitch: 1.1, roll: 0.3, clip: 'FLY_GLIDE' as const, rate: 1 }
-
-  it('blends into an upright, slow-beating hover while an upper-body action plays, and back out', () => {
-    let w = 0
-    let s = airStance(w, glide, [0, 0, 0], true, 0.05)
-    expect(s.weight).toBeCloseTo(0.2, 5)
-    for (let i = 0; i < 10; i++) s = airStance(s.weight, glide, [0, 0, 0], true, 0.05)
-    expect(s.weight).toBe(1)
-    expect(s.pitch).toBeCloseTo(HOVER_ATTACK_PITCH, 5)
-    expect(s.roll).toBe(0)
-    expect(s.clip).toBe('FLY_HOVER')
-    expect(s.rate).toBe(HOVER_ATTACK_RATE)
-    expect(s.swoop).toBe(false)
-    w = s.weight
-    for (let i = 0; i < 10; i++) w = airStance(w, glide, [0, 0, 0], false, 0.05).weight
-    const out = airStance(w, glide, [0, 0, 0], false, 0.05)
-    expect(out.weight).toBe(0)
-    expect(out).toMatchObject({ pitch: glide.pitch, roll: glide.roll, clip: 'FLY_GLIDE', rate: 1 })
-  })
-
-  it('a fast approach while attacking (the melee dash) leans into a swoop instead', () => {
-    const s = airStance(1, glide, [SWOOP_SPEED + 14, 0, 0], true, 0.016)
-    expect(s.swoop).toBe(true)
-    expect(s.pitch).toBeGreaterThan(0.5)
-    expect(s.clip).toBe('FLY_GLIDE')
-  })
-
+describe('the chest aim (air-stance.ts) and bend (upper-aim.ts)', () => {
   it('aims the chest at targets above and below, clamped', () => {
     expect(aimPitchTo(3, 4)).toBeCloseTo(Math.atan2(3, 4), 5)
     expect(aimPitchTo(-3, 8)).toBeLessThan(0)
