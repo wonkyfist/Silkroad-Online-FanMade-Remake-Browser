@@ -62,6 +62,7 @@ const W = WALL_DEFAULTS
 
 export const SETTINGS: readonly SettingSpec[] = [
   bool('registrationOpen', 'REGISTRATION', 'Registration open', ACCESS, true, 'live', 'Off: the server refuses new accounts and the login screen hides Register. Admins can still create accounts here.'),
+  bool('maintenanceRegistration', 'MAINT_REGISTRATION', 'Registration open during maintenance', ACCESS, false, 'live', 'On: players can still create accounts while maintenance is on (e.g. before a launch); they can log in once maintenance ends. Off: maintenance also closes registration.'),
   int('capacity', 'CAPACITY', 'Capacity (players in the world)', ACCESS, 1, 10000, 50, 'live'),
   // 'Registrations per IP per hour' (registerPerHour) moved to the Registration & anti-alt page (docs/ANTI_ALT.md): any count per any window
 

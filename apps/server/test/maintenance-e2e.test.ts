@@ -98,6 +98,11 @@ describe('maintenance mode on a live server', () => {
     expect((await api(s.url, '/api/login', { username: gm.username, password: 'password1' })).status).toBe(200)
     expect((await api(s.url, '/api/login', { username: player.username, password: 'wrong-password' })).status).toBe(401)
     expect((await api(s.url, '/api/register', { username: `late${n}`, password: 'password1' })).status).toBe(503)
+    // the admin's "Registration open during maintenance" switch: the account is made, logging in still waits
+    ;(s.ctx.config as { maintenanceRegistration?: boolean }).maintenanceRegistration = true
+    expect((await api(s.url, '/api/register', { username: `early${n}`, password: 'password1' })).status).toBe(201)
+    expect((await api(s.url, '/api/login', { username: `early${n}`, password: 'password1' })).status).toBe(503)
+    ;(s.ctx.config as { maintenanceRegistration?: boolean }).maintenanceRegistration = false
     const again = await hello(player.token)
     expect(await again.next('error')).toMatchObject({ code: 'maintenance', re: 'hello', message: expect.stringMatching(/under maintenance/) })
     expect((await again.closed).code).toBe(CLOSE_CODE.maintenance)

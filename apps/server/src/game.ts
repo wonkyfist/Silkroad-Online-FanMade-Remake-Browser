@@ -540,8 +540,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     if (path === '/api/register' && method === 'POST') {
       // The admin panel's switch (docs/ADMIN.md): authoritative here, whatever the client shows.
       if (config.registrationOpen === false) throw new HttpError(403, 'forbidden', 'Registration is closed on this server.')
-      // docs/ADMIN.md §8: a new account is a player, who could not play now
-      const maint = ctx.maintenance?.refusal('player')
+      // docs/ADMIN.md §8: a new account is a player, who could not play now (unless the admin keeps sign-ups open
+      // during maintenance, e.g. before a launch: the account is made, logging in waits for the end)
+      const maint = config.maintenanceRegistration === true ? null : ctx.maintenance?.refusal('player')
       if (maint) throw new HttpError(503, 'maintenance', maint)
       const { username, password, device, fp, captcha } = credentials(await readJson(req))
       if (!ACCOUNT_NAME.test(username)) throw new HttpError(400, 'bad_request', 'username must be 3-16 letters, digits or _')

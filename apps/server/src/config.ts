@@ -313,6 +313,8 @@ export interface ServerConfig {
   // ---- admin panel (docs/ADMIN.md); optional like wave 3's, absent = the default ----
   /** New accounts may register through POST /api/register (REGISTRATION, open (default) | closed). Read as `!== false`. */
   registrationOpen?: boolean
+  /** Registration stays open while maintenance is on (MAINT_REGISTRATION, on | off (default)). New accounts still cannot log in until it ends. Read as `=== true`. */
+  maintenanceRegistration?: boolean
   /** The admin panel at /admin/ and its API /api/admin/* (ADMIN_PANEL, on (default) | off). Read as `!== false`. */
   adminPanel?: boolean
   /** Built admin panel, served at /admin/ (ADMIN_DIST, default <repo>/apps/admin/dist). Unset = that default. */
@@ -672,6 +674,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     uniques: onOff(env, 'UNIQUES', true),
     // admin panel (docs/ADMIN.md)
     registrationOpen: registration(env.REGISTRATION),
+    maintenanceRegistration: onOff(env, 'MAINT_REGISTRATION', false),
     adminPanel: onOff(env, 'ADMIN_PANEL', true),
     adminDist: resolve(env.ADMIN_DIST || resolve(REPO_ROOT, 'apps/admin/dist')),
     log:(msg) => console.log(`[${new Date().toISOString()}] ${msg}`),
