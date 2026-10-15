@@ -49,6 +49,13 @@ export class BodyHolds {
     return this.held.size
   }
 
+  /** Saves and removes every held body `pick` chooses (maintenance mode: the non-staff ones). Returns how many. */
+  releaseWhere(pick: (p: Player) => boolean): number {
+    let n = 0
+    for (const [id, h] of [...this.held]) if (pick(h.p) && this.release(id)) n++
+    return n
+  }
+
   /** Server shutdown: every held body is saved and removed. */
   releaseAll(): void {
     for (const id of [...this.held.keys()]) this.release(id)

@@ -33,12 +33,20 @@ const FATAL_CLOSE: Record<number, { reason: string; message: string }> = {
   [CLOSE_CODE.versionMismatch]: { reason: 'version_mismatch', message: t('net.versionMismatch') },
   [CLOSE_CODE.abuse]: { reason: 'abuse', message: t('net.abuse') },
   [CLOSE_CODE.kicked]: { reason: 'kicked', message: t('net.kicked') },
+  // docs/ADMIN.md §8: the server went into maintenance (the close reason says when it is expected back)
+  [CLOSE_CODE.maintenance]: { reason: 'maintenance', message: t('net.maintenance') },
 }
 
 /** The server's close reason for a GM kick is `kicked` or `kicked: <reason>`. */
 export function kickMessage(closeReason: string): string {
   const why = closeReason.replace(/^kicked:?\s*/i, '').trim()
   return why ? t('net.kickedWhy', { reason: why }) : t('net.kicked')
+}
+
+/** Maintenance (docs/ADMIN.md §8): the server's close reason is the sentence to show; our own wording when it has none. */
+export function maintenanceMessage(closeReason: string): string {
+  const why = closeReason.trim()
+  return why.includes(' ') ? why : t('net.maintenance')
 }
 
 /**
@@ -146,7 +154,7 @@ export class Session {
       if (fatal) {
         this.closed = true
         // Our own wording wins over the server's raw close reason, except for a GM kick's reason (UX_GAPS R2).
-        const message = info.code === CLOSE_CODE.kicked ? kickMessage(info.reason) : fatal.message
+        const message = info.code === CLOSE_CODE.kicked ? kickMessage(info.reason) : info.code === CLOSE_CODE.maintenance ? maintenanceMessage(info.reason) : fatal.message
         this.setStatus({ status: 'closed', reason: fatal.reason, message })
         return
       }

@@ -448,6 +448,33 @@ body:has(.screen.world) .corner {
   z-index: 30;
 }
 
+
+/* Maintenance mode's countdown banner (ui/maintenance-banner.ts; docs/ADMIN.md §7): small, top centre, never clickable. */
+.maint-banner {
+  position: fixed;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(92vw, 720px);
+  background: rgba(70, 18, 12, 0.88);
+  border: 1px solid #d08850;
+  color: #ffe6c8;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 3px 12px;
+  border-radius: 3px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  z-index: 31;
+}
+.maint-banner.on {
+  background: rgba(20, 30, 60, 0.88);
+  border-color: #7f9fd8;
+  color: #dfe8ff;
+}
 /* A lost graphics device (gpu-loss.ts): what happens next, over the black 3D view. */
 .gpu-notice {
   position: fixed;

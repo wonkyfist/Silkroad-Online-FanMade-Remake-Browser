@@ -48,6 +48,8 @@ import { GameData } from './gamedata.ts'
 import { FlatNav, MeshNav, type NavProvider } from './nav.ts'
 import { CLIMB_SP_VERSION, applyClimbContent, convertClimbCharacters, remapClimbNests, topUpClimbSp } from './climb.ts'
 import { NewsStore } from './news.ts'
+import { Maintenance } from './maintenance.ts'
+import { registerMaintenanceAdmin } from './admin/maintenance-admin.ts'
 import { originAllowed } from './origin.ts'
 import { NetStats, isLoopback } from './netstats.ts'
 import { BodyHolds } from './resume.ts'
@@ -104,6 +106,8 @@ export interface GameContext {
   updater?: Updater
   /** docs/SERVER_ARCHITECTURE.md P1a: the gateway processes owning the client sockets (null: GATEWAYS=0, in this process). */
   gateways?: GatewayHub | null
+  /** Maintenance mode (docs/ADMIN.md §8; maintenance.ts). Absent in bare test contexts (= never in maintenance). */
+  maintenance?: Maintenance
 }
 
 export interface GameServer {
@@ -395,7 +399,8 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     serverInfo: () => ({
       id: config.world,
       name: setup.displayName,
-      status: 'online',
+      // docs/ADMIN.md §8: 'maintenance' while only staff may log in
+      status: ctx.maintenance?.on ? 'maintenance' : 'online',
       online: world.online,
       capacity: config.capacity,
       // The export folder the client loads (docs/FIELDS.md §6.1); only a name the client's validator accepts.
@@ -436,6 +441,18 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     },
   }
   let dataVersion = store.dataVersion()
+  // docs/ADMIN.md §8: maintenance mode, restored from DATA_DIR/maintenance.json (a deploy during maintenance keeps it on)
+  ctx.maintenance = new Maintenance(
+    {
+      sockets,
+      accountRole: (id) => store.accountRole(id),
+      releaseHeld: () => ctx.holds.releaseWhere((p) => !p.staff),
+      log: config.log,
+    },
+    config.dataDir,
+  )
+  ctx.maintenance.load()
+  registerMaintenanceAdmin()
   // docs/SERVER_ARCHITECTURE.md §3.11 (P0): the tick timers, the outbound backlog, the switches in force
   world.timers = ctx.net.phases
   ctx.net.switches = switches
@@ -523,6 +540,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
     if (path === '/api/register' && method === 'POST') {
       // The admin panel's switch (docs/ADMIN.md): authoritative here, whatever the client shows.
       if (config.registrationOpen === false) throw new HttpError(403, 'forbidden', 'Registration is closed on this server.')
+      // docs/ADMIN.md §8: a new account is a player, who could not play now
+      const maint = ctx.maintenance?.refusal('player')
+      if (maint) throw new HttpError(503, 'maintenance', maint)
       const { username, password, device, fp, captcha } = credentials(await readJson(req))
       if (!ACCOUNT_NAME.test(username)) throw new HttpError(400, 'bad_request', 'username must be 3-16 letters, digits or _')
       checkPasswordRule(password)
@@ -568,6 +588,9 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
       // Admin panel bans (docs/ADMIN.md): the right password of a banned account gets the reason, no session.
       const ban = adminStore.banOf(account.id)
       if (ban) throw new HttpError(403, 'forbidden', `This account is banned${ban.reason ? `: ${ban.reason}` : '.'}`)
+      // docs/ADMIN.md §8: while maintenance is on only staff get a session (after the password, so the role is known)
+      const maint = ctx.maintenance?.refusal(store.accountRole(account.id))
+      if (maint) throw new HttpError(503, 'maintenance', maint)
       // docs/ANTI_ALT.md §4: a detection set to block_login refuses players (never staff); the login is recorded
       if (account.role === 'player') {
         const refusal = await antiAlt.checkLogin(account.id, { ip, device, fp, account: account.username })
@@ -943,6 +966,7 @@ export async function startServer(config: ServerConfig): Promise<GameServer> {
         clearInterval(saver)
         clearInterval(purger)
         clearInterval(rolePoll)
+        ctx.maintenance?.dispose()
         world.stop()
         for (const c of [...sockets.values()]) {
           c.send({ t: 'chat', channel: 'system', text: 'The server is shutting down.' })

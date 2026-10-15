@@ -20,6 +20,7 @@ import type { HazardCause, StrikeKind, StrikeSource } from './lightning.ts'
 import type { StormEffect, StormPhase } from './storm.ts'
 import type { RarityTier } from './rarity.ts'
 import type { CharLook } from './look.ts'
+import type { MaintenanceSync } from './maintenance.ts'
 // Play the Boss (docs/PLAY_THE_BOSS.md §5): its messages, requests and fail reasons live in pilot.ts.
 import { PILOT_FAIL_REASONS, PILOT_RATE_LIMITS, PILOT_REQUESTS, type PilotClientMessage, type PilotFailReason, type PilotRequest, type PilotServerMessage } from './pilot.ts'
 import type { WinterClientMessage, WinterServerMessage } from './winter-play.ts'
@@ -56,6 +57,8 @@ export type ErrorCode =
   | 'server_error'
   /** GM addition: a non-GM account sent `gm` or typed a slash command in chat. */
   | 'forbidden'
+  /** Maintenance mode (docs/ADMIN.md §8): only admins and GMs may log in or enter the world; the message says when it ends. */
+  | 'maintenance'
 
 /**
  * GM addition. Account role, stored in accounts.role and changed with `pnpm gm grant|revoke`.
@@ -717,6 +720,11 @@ export type ServerMessage =
   /** GM addition: server-wide announcement (GM `notice`), sent to every connected socket, lobby included. Show prominently. */
   | { t: 'notice'; text: string; from?: string }
   /**
+   * Maintenance mode (docs/ADMIN.md §8; maintenance.ts MaintenanceSync): the countdown banner's state, to every socket
+   * (lobby included) when it changes and after `welcome` while it counts down or is on.
+   */
+  | ({ t: 'maintenance' } & MaintenanceSync)
+  /**
    * GM addition: instant relocation of an entity (teleport, summon). Any move in progress is over;
    * the client snaps the entity to `pos` (y is a hint, snap to the ground) and cancels interpolation.
    * Sent to everyone who can see the entity, including its own client.
@@ -1095,6 +1103,11 @@ export const CLOSE_CODE = {
    * server hands its character back (docs/NETWORK_AUDIT.md N5). Older servers used `abuse` here.
    */
   slow: 4011,
+  /**
+   * Maintenance mode (docs/ADMIN.md §8): the server went into maintenance and this account is not staff. The reason is
+   * the text to show ("The server is under maintenance. Expected back: ..."); the client does not reconnect.
+   */
+  maintenance: 4012,
 } as const
 
 // ---- GM (Game Master) additions (additive, protocol v1) -----------------------------------------

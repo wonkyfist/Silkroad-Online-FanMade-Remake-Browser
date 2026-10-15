@@ -245,3 +245,44 @@ In development (`pnpm server`, no supervisor) the button is hidden and the panel
   on any server.
 - Making an account admin: `pnpm deploy:gm grant <name> --role admin` (or `pnpm gm grant <name> --role admin` on the
   host). The panel is then at `http://<host>:7000/admin/`. See docs/PLAYTEST.md "Admin panel".
+
+## 8. Maintenance mode
+
+Puts the server into maintenance: a countdown everyone hears, then every player is saved and sent back to the login
+screen, and until an admin ends it only admins and GMs can log in. Server: `apps/server/src/maintenance.ts` (the
+state machine), `admin/maintenance-admin.ts` (the panel's routes), the GM command in `gm-tools.ts`; client:
+`ui/maintenance-banner.ts`; shared types and texts: `packages/shared/src/maintenance.ts`. It depends on no other
+game system.
+
+**Admin panel** (Dashboard, *Maintenance* card): the state (off / counting down with the time left / ON since when, by
+whom, with the message and the expected end), and
+
+- *Start maintenance…*: a countdown (now, 1, 5, 10, 15, 30 minutes or custom up to 180), an optional message to players
+  and an optional expected downtime in minutes ("back in about N minutes"). *Now* asks once more.
+- *Cancel countdown* (before zero) and *End maintenance…* (with or without a "Maintenance is over" message).
+
+Routes: `GET /api/admin/maintenance`, `POST /api/admin/maintenance/start {minutes, reason?, durationMin?}`,
+`POST …/cancel`, `POST …/end {silent?}`. Every write is in the panel's audit log (`maintenance.post`) and in the GM
+audit (command `maintenance`, with the arguments and the answer).
+
+**GM command** (admins only; GMs are refused): `/maintenance` (status), `/maintenance start <minutes|now> [~<expected
+minutes>] [reason]`, `/maintenance cancel`, `/maintenance end [silent]`. Example: `/maintenance start 10 ~30 Winter
+update`.
+
+**What players see**
+
+| When | What |
+| --- | --- |
+| Start | A centre-screen notice and a `[Maintenance]` chat line: "Server maintenance in 10 minutes: <message>. Expected downtime: about 30 minutes. Please find a safe place and log out…"; a small countdown strip at the top ("Server maintenance in 9:59 · <message> · expected downtime about 30 min"), in the world and in character select. |
+| 30, 15, 10, 5, 3, 2, 1 min, 30 s, 10 s | The same notice and chat line again (steps longer than the countdown are skipped). |
+| Zero | Every connection whose account is not staff (the role read from the database at that moment) gets a chat line and is closed with code 4012: the ordinary logout path (character settled and saved, trades, stalls and the rest ended by their modules, never held for a reconnect; bodies already held for a reconnect are saved and removed). The login screen shows "The server is under maintenance. Expected back: in about 30 minutes." Staff stay and get "Maintenance mode is ON"; their strip says so. |
+| While on | The server list shows *Maintenance*. Logging in (`/api/login`, 503 `maintenance`), registering, picking the server (the socket's `hello`, also a reconnect or a saved-session resume) and entering the world are refused for players with the same sentence (plus the message); staff log in and play as usual. A GM demoted meanwhile is disconnected as soon as the role change is seen (≤ the role poll). |
+| Cancel | "The scheduled server maintenance was cancelled. Carry on!"; the strip goes. |
+| End | The server list shows *Online*; whoever is online hears "Server maintenance is over. Welcome back!" (unless silent). |
+
+**Rules and edge cases**: one maintenance at a time (a second start, from any admin, is refused with who started the
+running one; any admin may cancel or end it). A cancel that arrives after zero is refused ("end it instead"). A player
+loading or in character select at zero is disconnected like the rest. The state is saved in
+`DATA_DIR/maintenance.json` on every change, so a restart or deploy keeps maintenance on until it is ended; a countdown
+resumes where it was, or comes back on if its time ran out while the server was down. Admin requests use the panel's
+rate limit, the GM command the GM command budget; a refused player does not reconnect by itself (close 4012 is final).

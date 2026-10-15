@@ -48,6 +48,7 @@ import { enPvp } from './en-pvp.ts'
 import { enJobs } from './en-jobs.ts'
 import { enJobsLooks } from './en-jobs-looks.ts'
 import { enNews } from './en-news.ts'
+import { enMaintenance } from './en-maintenance.ts'
 import { enWinterPlay } from './en-winter-play.ts'
 import { enClimb } from './en-climb.ts'
 import { enRarity } from './en-rarity.ts'
@@ -106,6 +107,7 @@ export const en = {
   ...enGpu,
   // The "What's new" window (docs/CHANGELOG_WINDOW.md).
   ...enNews,
+  ...enMaintenance,
   // The winter gameplay layer (docs/WINTER.md §13).
   ...enWinterPlay,
   ...enClimb,
@@ -159,7 +161,7 @@ export const en = {
   'servers.select': 'Select',
   'servers.cancel': 'Cancel',
   'servers.load': '{online}/{capacity}',
-  'servers.maintenance': 'Check',
+  'servers.maintenance': 'Maintenance',
   'servers.offline': 'Offline',
   'servers.rowTitle': '{name}: {status}, {online} online',
   'servers.status.online': 'online',

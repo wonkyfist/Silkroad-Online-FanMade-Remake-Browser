@@ -356,7 +356,7 @@ const MAX_ID = Number.MAX_SAFE_INTEGER
 
 const ERROR_CODES: readonly ErrorCode[] = [
   'bad_request', 'unauthorized', 'version_mismatch', 'name_taken', 'name_invalid', 'slots_full',
-  'not_found', 'not_in_world', 'already_in_world', 'rate_limited', 'server_error', 'forbidden',
+  'not_found', 'not_in_world', 'already_in_world', 'rate_limited', 'server_error', 'forbidden', 'maintenance',
 ]
 
 class Invalid extends Error {}
@@ -1774,6 +1774,14 @@ function serverMessage(v: unknown): ServerMessage {
     case 'notice': {
       const m: ServerMessage = { t: 'notice', text: str(o, 'text', 1000, 1) }
       if (o.from !== undefined) m.from = str(o, 'from', 64)
+      return m
+    }
+    case 'maintenance': {
+      // docs/ADMIN.md §8: the countdown banner
+      const m: Extract<ServerMessage, { t: 'maintenance' }> = { t: 'maintenance', state: oneOf(o, 'state', ['off', 'countdown', 'on'] as const) }
+      if (o.endsIn !== undefined) m.endsIn = num(o, 'endsIn', 0, 7 * 86_400_000)
+      if (o.reason !== undefined) m.reason = str(o, 'reason', 400)
+      if (o.back !== undefined) m.back = int(o, 'back', 0, 100_000)
       return m
     }
     case 'warp':

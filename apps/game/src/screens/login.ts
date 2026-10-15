@@ -50,6 +50,8 @@ export function describeError(err: unknown): string {
         return t('error.versionMismatch', { detail: err.message })
       case 'forbidden':
         return err.message || t('error.forbidden')
+      case 'maintenance':
+        return err.message || t('error.maintenance')
       default:
         return err.message || t('error.generic', { code: err.code })
     }

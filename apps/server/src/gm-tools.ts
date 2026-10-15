@@ -1,6 +1,7 @@
 import {
   CLOSE_CODE,
   CODE_NAME,
+  MAINTENANCE_COUNTDOWN_MAX_MIN,
   MAX_GOLD,
   MAX_ITEM_COUNT,
   RARITY,
@@ -23,6 +24,7 @@ import type { GameContext } from './game.ts'
 import type { Command, GmCall, GmResult } from './gm.ts'
 import { addGold, addItem, newItem, type InvDraft, type InvItem, type Result } from './inventory.ts'
 import type { Player } from './world.ts'
+import { backText } from './maintenance.ts'
 
 /**
  * GM toolbox commands (the in-game GM panel's Toolbox tab): one-click gear sets, starter kits, potions, inventory
@@ -50,6 +52,7 @@ export const BOOST_MAX_MUL = 10
 export const BOOST_MAX_MIN = 480
 export const POTION_DEFAULT = 50
 export const REWARD_MAX = 1000
+export const MAINTENANCE_USAGE = 'maintenance [status] | start <minutes|now> [~<expected minutes>] [reason] | cancel | end [silent]'
 
 const ok = (message: string, data?: unknown): GmResult => (data === undefined ? { ok: true, message } : { ok: true, message, data })
 const fail = (message: string): GmResult => ({ ok: false, message })
@@ -664,6 +667,46 @@ export const TOOL_COMMANDS: Record<string, Command> = {
       if (codePointLength(text) > 300) return fail('An announcement is at most 300 characters.')
       const n = announce(ctx, text, conn.player?.name ?? conn.account)
       return ok(`Announced to ${n} connection${n === 1 ? '' : 's'}.`, { recipients: n })
+    },
+  },
+  maintenance: {
+    usage: MAINTENANCE_USAGE,
+    about: 'Admins: server maintenance mode. A countdown announced to everyone, then every player is saved and sent to the login screen; only staff may log in until it ends.',
+    run: ({ ctx, conn, role, args }) => {
+      if (role !== 'admin') return fail('Maintenance mode is for admins only.')
+      const m = ctx.maintenance
+      if (!m) return fail('Maintenance mode is not available on this server.')
+      const sub = (args[0] ?? 'status').toLowerCase()
+      const by = conn.account
+      if (sub === 'status') {
+        const v = m.view()
+        if (v.state === 'off') return ok('Maintenance is off.', v)
+        if (v.state === 'countdown') return ok(`Maintenance starts in ${Math.ceil((v.deadline! - v.now) / 1000)} s (by ${v.by}${v.reason ? `: ${v.reason}` : ''}).`, v)
+        return ok(`Maintenance is ON since ${new Date(v.since!).toISOString()} (by ${v.by}); expected back ${backText(m)}. ${v.staff} staff connected.`, v)
+      }
+      if (sub === 'start') {
+        const raw = (args[1] ?? '').toLowerCase()
+        const min = raw === 'now' ? 0 : int(raw, 0, MAINTENANCE_COUNTDOWN_MAX_MIN)
+        if (min === null) return fail(`Usage: ${MAINTENANCE_USAGE}`)
+        let rest = args.slice(2).join(' ').trim()
+        let durationMin = 0
+        const dur = /^~(\d{1,4})\b\s*/.exec(rest)
+        if (dur) {
+          durationMin = Number(dur[1])
+          rest = rest.slice(dur[0].length)
+        }
+        const r = m.start({ delayS: min * 60, reason: cleanChat(rest), durationMin, by, via: 'gm' })
+        return r.ok ? ok(r.message) : fail(r.message)
+      }
+      if (sub === 'cancel') {
+        const r = m.cancel(by, 'gm')
+        return r.ok ? ok(r.message) : fail(r.message)
+      }
+      if (sub === 'end') {
+        const r = m.end(by, 'gm', (args[1] ?? '').toLowerCase() === 'silent')
+        return r.ok ? ok(r.message) : fail(r.message)
+      }
+      return fail(`Usage: ${MAINTENANCE_USAGE}`)
     },
   },
   warn: {

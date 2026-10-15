@@ -24,6 +24,7 @@ import { setKitArt } from './ui/kit/host.ts'
 import { artRendering, uiScale } from './ui/kit/scale.ts'
 import { ensureKitStyles } from './ui/kit/tokens.ts'
 import { NoticeBanner } from './ui/notice.ts'
+import { MaintenanceBanner } from './ui/maintenance-banner.ts'
 import { framePace } from './world/frame-pace.ts'
 
 export interface ScreenParams {
@@ -63,6 +64,8 @@ export class App {
   private sessionOff: (() => void) | null = null
   /** Server-wide GM announcements, shown on every screen. */
   readonly notices = new NoticeBanner()
+  /** Maintenance mode's countdown strip (docs/ADMIN.md §8): lives with the session. */
+  readonly maintenance = new MaintenanceBanner()
   current: ScreenName | null = null
   /** The params the current screen was opened with (gpu-loss.ts reads the world's character). */
   currentParams: unknown = undefined
@@ -201,10 +204,12 @@ export class App {
     if (this.session && this.session !== session) this.session.close('logout')
     this.session = session
     this.showBanner(null)
+    this.maintenance.hide()
     if (!session) return
     const offStatus = session.onStatus(ev => this.onSessionStatus(ev))
     const offMsg = session.on(msg => {
       if (msg.t === 'notice') this.notices.show(msg.text, msg.from)
+      else if (msg.t === 'maintenance') this.maintenance.update(msg)
       // Wave 11 (UNIQUES §3.3, WAVE_PLAN7 D8): a unique monster appeared or fell (world sockets only): the banner + cue.
       else if (msg.t === 'uniqueNotice') showUniqueNotice(msg, { notices: this.notices, audio: this.audio })
     })

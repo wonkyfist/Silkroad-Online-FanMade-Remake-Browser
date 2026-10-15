@@ -1,6 +1,7 @@
 import { ADMIN_NOTICE_MAX, type AdminDashboard } from '@sro/shared'
 import { get, post } from '../api.ts'
 import { svgIcon, type IconName } from '../icons.ts'
+import { maintenanceCard } from './maintenance.ts'
 import { attempt, badge, button, card, cardHead, clear, confirmDialog, emptyState, errorText, fmtBytes, fmtDuration, fmtNum, fmtTime, formDialog, h, kv, link, pageHeader, stackTable, toast } from '../ui.ts'
 
 /** Server stats, live players (kick, send to town), the lobby, server details, a notice box. Refreshes every 5 s. */
@@ -11,12 +12,14 @@ export function dashboardPage(root: HTMLElement): () => void {
   const perf = h('div', null, h('p', { class: 'dim' }, 'Loading…'))
   const count = h('span')
   const notice = noticeBox()
+  // docs/ADMIN.md §8: maintenance mode
+  const maint = maintenanceCard()
   root.append(
     pageHeader('Dashboard', 'The running server and who is on it.'),
     info,
     card(null, cardHead('Players in the world', count), players),
     h('div', { class: 'grid grid-2' }, card('Server', health), card('Performance', perf)),
-    card('Broadcast notice', notice),
+    h('div', { class: 'grid grid-2' }, card('Maintenance', maint.node), card('Broadcast notice', notice)),
   )
   let stopped = false
   const load = async () => {
@@ -24,6 +27,7 @@ export function dashboardPage(root: HTMLElement): () => void {
       const d = await get<AdminDashboard>('dashboard')
       if (stopped) return
       render(d)
+      void maint.refresh()
     } catch (e) {
       if (!stopped) clear(players, emptyState(errorText(e), 'alert', true))
     }
@@ -113,6 +117,7 @@ export function dashboardPage(root: HTMLElement): () => void {
   return () => {
     stopped = true
     clearInterval(timer)
+    maint.dispose()
   }
 }
 
@@ -169,7 +174,7 @@ function stat(iconName: IconName, label: string, value: string | Node, sub: stri
 }
 
 export function noticeBox(): HTMLElement {
-  const text = h('textarea', { class: 'input', rows: 3, maxlength: ADMIN_NOTICE_MAX, placeholder: 'Server maintenance in 10 minutes…', 'aria-label': 'Notice text' })
+  const text = h('textarea', { class: 'input', rows: 3, maxlength: ADMIN_NOTICE_MAX, placeholder: 'The arena opens in 10 minutes…', 'aria-label': 'Notice text' })
   const count = h('span', { class: 'dim small' }, `0 / ${ADMIN_NOTICE_MAX}`)
   text.addEventListener('input', () => (count.textContent = `${[...text.value].length} / ${ADMIN_NOTICE_MAX}`))
   const send = button('Send to everyone', async () => {

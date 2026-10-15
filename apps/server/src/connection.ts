@@ -18,6 +18,7 @@ import {
 import type { WebSocket } from 'ws'
 import { TokenBucket, hashToken } from './auth.ts'
 import { dropHoldsBody } from './resume.ts'
+import { clipUtf8 } from './maintenance.ts'
 import { routeChat } from './chat.ts'
 import { knob } from './config.ts'
 import type { Appearance, CharacterRow } from './db.ts'
@@ -513,6 +514,14 @@ export class Connection {
       this.close(CLOSE_CODE.unauthorized, 'unauthorized')
       return
     }
+    // docs/ADMIN.md §8: while maintenance is on only staff come in (a reconnect or resume of a player too); the
+    // connection already in the world, if any, is not touched
+    const maint = this.game.maintenance?.refusal(account.role)
+    if (maint) {
+      this.error('maintenance', maint, 'hello')
+      this.close(CLOSE_CODE.maintenance, clipUtf8(this.game.maintenance?.refusal('player', false) ?? maint))
+      return
+    }
     const previous = this.game.sockets.get(account.id)
     if (previous && previous !== this) {
       previous.error('unauthorized', 'logged in from another connection')
@@ -529,6 +538,8 @@ export class Connection {
     // "What's new" (docs/CHANGELOG_WINDOW.md): how many entries this account has not seen; the client shows them in the world.
     const news = this.game.news?.unseenFor(this.game.store, account.id).length ?? 0
     this.send({ t: 'welcome', account: account.username, server: this.game.serverInfo(), slots: MAX_CHARACTER_SLOTS, role: this.role, ...(news > 0 ? { news } : {}) })
+    // the maintenance banner while it counts down or is on
+    this.game.maintenance?.greet(this)
   }
 
   /**
@@ -540,6 +551,9 @@ export class Connection {
     this.game.config.log(`${this.account} role ${this.role} -> ${role}`)
     this.role = role
     this.send({ t: 'role', role })
+    // docs/ADMIN.md §8: a GM demoted during maintenance leaves now (saved like a logout)
+    this.game.maintenance?.roleChanged(this)
+    if (this.state === 'closed') return
     const p = this.player
     if (!p) return
     const staff = isStaff(role)
@@ -678,6 +692,14 @@ export class Connection {
     // Bow characters made before arrows counted get one stack, once (migration 30).
     this.game.gameplay.grantArrowsOnce(row.id)
     this.applyRole(this.game.store.accountRole(this.accountId))
+    if (this.state === 'closed') return
+    // docs/ADMIN.md §8: maintenance on: only staff enter (the hello refused players already; this is the backstop)
+    const maint = this.game.maintenance?.refusal(this.role)
+    if (maint) {
+      this.error('maintenance', maint, 'enterWorld')
+      this.close(CLOSE_CODE.maintenance, clipUtf8(this.game.maintenance?.refusal('player', false) ?? maint))
+      return
+    }
     const { world } = this.game
     // docs/NETWORK_AUDIT.md N5: a reconnect takes back the body its dropped connection left (held, or lingering in a
     // fight): saved and removed now, then entered from that save below, so it continues where it stood.

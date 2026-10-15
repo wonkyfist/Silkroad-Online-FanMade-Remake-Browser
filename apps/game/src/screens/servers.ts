@@ -23,6 +23,14 @@ const REFRESH_MS = 10_000
 const WIN_W = 250
 const WIN_H = 355
 
+/**
+ * A server can be picked unless it is offline. One under maintenance (docs/ADMIN.md §8) still lets admins and GMs in; a
+ * player who picks it gets the server's own "under maintenance, expected back ..." line under the list.
+ */
+export function pickable(s: Pick<ServerInfo, 'status'>): boolean {
+  return s.status !== 'offline'
+}
+
 const STATUS_KEY: Record<ServerInfo['status'], StringKey> = {
   online: 'servers.status.online',
   maintenance: 'servers.status.maintenance',
@@ -71,19 +79,19 @@ export function serversScreen(app: App): Screen {
       row.append(el('span', 'name', s.name), el('span', 'load', load))
       row.title = t('servers.rowTitle', { name: s.name, status: t(STATUS_KEY[s.status] ?? 'servers.status.offline'), online: s.online })
       row.addEventListener('click', () => {
-        if (s.status !== 'online') return
+        if (!pickable(s)) return
         selected = s.id
         render()
       })
       row.addEventListener('dblclick', () => {
-        if (s.status !== 'online') return
+        if (!pickable(s)) return
         selected = s.id
         void connect()
       })
       list.append(row)
     }
     if (!servers.length) list.append(el('div', 'server-empty', t('servers.empty')))
-    setDisabled([select], busy || !servers.some(s => s.id === selected && s.status === 'online'))
+    setDisabled([select], busy || !servers.some(s => s.id === selected && pickable(s)))
     scroll.refresh()
   }
 
@@ -91,8 +99,8 @@ export function serversScreen(app: App): Screen {
     try {
       servers = await app.transport.api.servers()
       if (disposed) return
-      if (!selected || !servers.some(s => s.id === selected && s.status === 'online')) {
-        selected = servers.find(s => s.status === 'online')?.id ?? null
+      if (!selected || !servers.some(s => s.id === selected && pickable(s))) {
+        selected = (servers.find(s => s.status === 'online') ?? servers.find(pickable))?.id ?? null
       }
       if (!busy) status.textContent = ''
       render()
