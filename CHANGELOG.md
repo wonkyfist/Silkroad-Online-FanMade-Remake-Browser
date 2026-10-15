@@ -3,6 +3,7 @@
 Every update to Jangan, newest first. This is the same text and pictures the game shows in its **What's new**
 window (press **J** in game). It is generated from `content/changelog/` by `pnpm changelog`; edit the entries there.
 
+- [October 15: maintenance mode](#october-15-maintenance-mode)
 - [October 14 (evening): more skill points, a mastery limit, and STR/INT that count through your gear](#october-14-evening-more-skill-points-a-mastery-limit-and-strint-that-count-through-your-gear)
 - [October 14: horses that follow you, real arrows, Ghost Walk and a walk mode](#october-14-horses-that-follow-you-real-arrows-ghost-walk-and-a-walk-mode)
 - [The Job System: Traders, Bounty Hunters and Thieves](#the-job-system-traders-bounty-hunters-and-thieves)
@@ -15,6 +16,22 @@ window (press **J** in game). It is generated from `content/changelog/` by `pnpm
 - [October 6: No more stuck black screens](#october-6-no-more-stuck-black-screens)
 - [October 5 (evening): Storms, lightning, a tornado and a new Berserk](#october-5-evening-storms-lightning-a-tornado-and-a-new-berserk)
 - [October 5: Play the Boss, the black-screen fix and more](#october-5-play-the-boss-the-black-screen-fix-and-more)
+
+---
+
+## October 15: maintenance mode
+
+*October 15, 2026*
+
+**Admins can now put the server into maintenance with a countdown. Everyone gets warned in time, is saved and sent to the login screen at zero, and can log back in as soon as maintenance ends.**
+
+## Maintenance mode
+
+- **A warning first:** when maintenance is scheduled, everyone online sees a notice in the middle of the screen and in chat, with the reason and roughly how long it will take. A small countdown stays at the top of the screen, and reminders come at 30, 15, 10, 5, 3, 2 and 1 minutes, 30 seconds and 10 seconds.
+- **At zero:** your character is saved exactly like a normal logout, and you're taken back to the login screen with a message saying when the server is expected back.
+- **While it's on:** the server list shows **Maintenance** and logging in is paused. Admins and GMs stay in to do their work.
+- **When it's over:** the server shows Online again, and you can log straight back in.
+- For admins: a Maintenance card on the admin dashboard (start with a countdown, cancel, end), and `/maintenance start | cancel | end` in game. It survives server restarts, so updates can be deployed during maintenance.
 
 ---
 
